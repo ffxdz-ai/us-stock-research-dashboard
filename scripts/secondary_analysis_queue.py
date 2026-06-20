@@ -27,6 +27,7 @@ REPORTS_DIR = ROOT / "reports"
 
 DEFAULT_CONFIG = CONFIG_DIR / "agent_config.json"
 DEFAULT_RADAR = DATA_DIR / "latest_supply_chain_radar.json"
+DEFAULT_OPPORTUNITY_RADAR = DATA_DIR / "latest_opportunity_radar.json"
 DEFAULT_MARKET_PACK = DATA_DIR / "latest_market_pack.json"
 DEFAULT_STATE = DOCS_DATA_DIR / "secondary_analysis_queue.json"
 DEFAULT_OUTPUT = DATA_DIR / "latest_secondary_analysis_queue.json"
@@ -162,10 +163,58 @@ def market_pack_index(pack: dict[str, Any]) -> dict[str, dict[str, Any]]:
     return output
 
 
+def opportunity_candidate_rows(opportunity_radar: dict[str, Any]) -> list[dict[str, Any]]:
+    rows: list[dict[str, Any]] = []
+    raw = opportunity_radar.get("secondary_candidates")
+    if not isinstance(raw, list):
+        return rows
+    for item in raw:
+        if not isinstance(item, dict):
+            continue
+        code = normalize_code(item.get("code"))
+        if not code:
+            continue
+        action = str(item.get("action") or "")
+        rows.append(
+            {
+                "code": code,
+                "name": item.get("name") or code,
+                "market": item.get("market") or code.split(".", 1)[0],
+                "layer_name": item.get("layer") or item.get("theme_name") or "机会雷达",
+                "chain_name": item.get("theme_name") or "机会发现雷达",
+                "role": "预期差/未来机会候选",
+                "price": item.get("price"),
+                "layer_score": item.get("opportunity_score"),
+                "market_confirmation_score": item.get("trend_score"),
+                "data_status": "Opportunity Radar candidate",
+                "action": action or "进入机会雷达观察",
+                "source": "opportunity_radar",
+            }
+        )
+    return rows
+
+
+def merged_candidates(supply_radar: dict[str, Any], opportunity_radar: dict[str, Any]) -> list[dict[str, Any]]:
+    rows: list[dict[str, Any]] = []
+    supply = supply_radar.get("candidates") if isinstance(supply_radar.get("candidates"), list) else []
+    rows.extend([item for item in supply if isinstance(item, dict)])
+    rows.extend(opportunity_candidate_rows(opportunity_radar))
+
+    by_code: dict[str, dict[str, Any]] = {}
+    for item in rows:
+        code = normalize_code(item.get("code"))
+        if not code:
+            continue
+        existing = by_code.get(code)
+        if existing is None or candidate_priority(item) > candidate_priority(existing):
+            by_code[code] = item
+    return list(by_code.values())
+
+
 def secondary_config(config: dict[str, Any]) -> dict[str, Any]:
     defaults = {
         "review_interval_days": 2,
-        "max_active": 20,
+        "max_active": None,
         "review_timezone": "Asia/Shanghai",
         "review_hour": 12,
         "review_minute": 0,
@@ -263,6 +312,7 @@ def evaluate_record(record: dict[str, Any], current: dict[str, Any] | None, pack
 
 def update_queue(
     radar: dict[str, Any],
+    opportunity_radar: dict[str, Any],
     state: dict[str, Any],
     pack: dict[str, Any],
     config: dict[str, Any],
@@ -273,13 +323,18 @@ def update_queue(
 
     now = now_local(str(cfg.get("review_timezone") or "Asia/Shanghai"))
     current_review_slot = review_slot(now, cfg)
-    candidates = [item for item in radar.get("candidates", []) if isinstance(item, dict) and normalize_code(item.get("code"))]
+    candidates = [item for item in merged_candidates(radar, opportunity_radar) if normalize_code(item.get("code"))]
     current_by_code = {normalize_code(item.get("code")): item for item in candidates}
     eligible = [item for item in candidates if candidate_is_eligible(item, cfg)]
     eligible.sort(key=candidate_priority, reverse=True)
 
     records = state_records(state)
-    max_active = int(cfg["max_active"])
+    max_active_raw = cfg.get("max_active")
+    max_active: int | None
+    if max_active_raw is None or str(max_active_raw).strip().lower() in {"", "none", "null", "unlimited", "false"}:
+        max_active = None
+    else:
+        max_active = int(max_active_raw)
 
     new_entries = 0
     reentries = 0
@@ -302,7 +357,7 @@ def update_queue(
             reentries += 1
         elif not record:
             active_count = sum(1 for value in records.values() if value.get("status") == "active")
-            if active_count >= max_active:
+            if max_active is not None and active_count >= max_active:
                 continue
             record = {
                 "status": "active",
@@ -420,6 +475,7 @@ def update_queue(
 
     summary = {
         "eligible_candidates": len(eligible),
+        "opportunity_candidates": len(opportunity_candidate_rows(opportunity_radar)),
         "new_entries": new_entries,
         "reentries": reentries,
         "reviewed": len(reviews),
@@ -429,6 +485,7 @@ def update_queue(
         "retreated_count": len(retreated),
         "due_remaining": len(due_remaining),
         "processing_limit": "none",
+        "active_capacity": "unlimited" if max_active is None else max_active,
         "review_time_beijing": f"{int(cfg.get('review_hour', 12)):02d}:{int(cfg.get('review_minute', 0)):02d}",
     }
     next_state = {
@@ -465,9 +522,9 @@ def render_report(payload: dict[str, Any]) -> str:
         "",
         "## 本轮概览",
         "",
-        "| 合格候选 | 新进队列 | 重新触发 | 本轮复核 | 通过 | 退回观察 | 活跃队列 | 已到期未处理 |",
-        "|---:|---:|---:|---:|---:|---:|---:|---:|",
-        f"| {summary.get('eligible_candidates', 0)} | {summary.get('new_entries', 0)} | {summary.get('reentries', 0)} | {summary.get('reviewed', 0)} | {summary.get('passed', 0)} | {summary.get('retreated', 0)} | {summary.get('active_count', 0)} | {summary.get('due_remaining', 0)} |",
+        "| 合格候选 | 机会雷达候选 | 队列容量 | 新进队列 | 重新触发 | 本轮复核 | 通过 | 退回观察 | 活跃队列 | 已到期未处理 |",
+        "|---:|---:|---|---:|---:|---:|---:|---:|---:|---:|",
+        f"| {summary.get('eligible_candidates', 0)} | {summary.get('opportunity_candidates', 0)} | {summary.get('active_capacity', 'unlimited')} | {summary.get('new_entries', 0)} | {summary.get('reentries', 0)} | {summary.get('reviewed', 0)} | {summary.get('passed', 0)} | {summary.get('retreated', 0)} | {summary.get('active_count', 0)} | {summary.get('due_remaining', 0)} |",
         "",
         "## 本轮二次分析复核",
         "",
@@ -541,6 +598,7 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--config", type=Path, default=DEFAULT_CONFIG)
     parser.add_argument("--radar", type=Path, default=DEFAULT_RADAR)
+    parser.add_argument("--opportunity-radar", type=Path, default=DEFAULT_OPPORTUNITY_RADAR)
     parser.add_argument("--market-pack", type=Path, default=DEFAULT_MARKET_PACK)
     parser.add_argument("--state", type=Path, default=DEFAULT_STATE)
     parser.add_argument("--out", type=Path, default=DEFAULT_OUTPUT)
@@ -552,9 +610,10 @@ def main() -> int:
     radar = load_json(args.radar, {})
     if not radar:
         raise SystemExit(f"Supply-chain radar not found or invalid: {args.radar}")
+    opportunity_radar = load_json(args.opportunity_radar, {})
     pack = load_json(args.market_pack, {})
     state = load_json(args.state, {})
-    next_state, latest = update_queue(radar, state, pack, config)
+    next_state, latest = update_queue(radar, opportunity_radar, state, pack, config)
     write_json(args.state, next_state)
     write_json(args.out, latest)
     write_text(args.report, render_report(latest))

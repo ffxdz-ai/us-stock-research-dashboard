@@ -70,6 +70,16 @@ jobs:
           fi
           python scripts/supply_chain_radar.py --market-pack "$MARKET_PACK"
 
+      - name: Generate opportunity radar
+        shell: bash
+        run: |
+          if [ "$REPORT_MODE" = "weekly" ]; then
+            MARKET_PACK="data/latest_weekly_market_pack.json"
+          else
+            MARKET_PACK="data/latest_market_pack.json"
+          fi
+          python scripts/opportunity_radar.py --market-pack "$MARKET_PACK"
+
       - name: Update secondary-analysis queue
         shell: bash
         run: |
@@ -78,7 +88,7 @@ jobs:
           else
             MARKET_PACK="data/latest_market_pack.json"
           fi
-          python scripts/secondary_analysis_queue.py --market-pack "$MARKET_PACK"
+          python scripts/secondary_analysis_queue.py --market-pack "$MARKET_PACK" --opportunity-radar data/latest_opportunity_radar.json
 
       - name: Generate DeepSeek cloud report
         shell: bash
@@ -90,7 +100,7 @@ jobs:
             MARKET_PACK="data/latest_market_pack.json"
             AGENT_INPUT="data/latest_agent_input.json"
           fi
-          python scripts/run_deepseek_cloud_report.py --mode "$REPORT_MODE" --input "$AGENT_INPUT" --market-pack "$MARKET_PACK"
+          python scripts/run_deepseek_cloud_report.py --mode "$REPORT_MODE" --input "$AGENT_INPUT" --market-pack "$MARKET_PACK" --opportunity-radar data/latest_opportunity_radar.json
 
       - name: Export public archive
         run: python scripts/export_public_reports.py --limit 80
@@ -103,7 +113,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add docs/data/reports.json docs/data/secondary_analysis_queue.json
+          git add docs/data/reports.json docs/data/secondary_analysis_queue.json docs/data/opportunity_radar.json docs/data/opportunity_journal.json
           if git diff --cached --quiet; then
             echo "No public archive changes to commit."
           else

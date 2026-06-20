@@ -62,11 +62,12 @@ KIND_LABELS = {
     "missed-review": "错过复盘",
     "future-audit": "未来函数审计",
     "supply-chain": "产业链雷达",
+    "opportunity-radar": "机会雷达",
     "secondary-queue": "二次分析队列",
     "daily": "每日分析",
 }
 
-ONE_REPORT_PER_DAY_KINDS = {"supply-chain", "secondary-queue"}
+ONE_REPORT_PER_DAY_KINDS = {"supply-chain", "opportunity-radar", "secondary-queue"}
 
 
 def report_kind(name: str) -> str:
@@ -79,6 +80,8 @@ def report_kind(name: str) -> str:
         return "future-audit"
     if "supply-chain" in lowered or "supply_chain" in lowered:
         return "supply-chain"
+    if "opportunity-radar" in lowered or "opportunity_radar" in lowered:
+        return "opportunity-radar"
     if "secondary-analysis" in lowered or "secondary_analysis" in lowered:
         return "secondary-queue"
     if "deepseek-cloud" in lowered:

@@ -23,6 +23,7 @@ PROMPT_PATH = ROOT / "prompts" / "deepseek_cloud_research_skill_pack.md"
 DEFAULT_COMPACT_INPUT = DATA_DIR / "latest_agent_input.json"
 DEFAULT_MARKET_PACK = DATA_DIR / "latest_market_pack.json"
 DEFAULT_SECONDARY_QUEUE = DATA_DIR / "latest_secondary_analysis_queue.json"
+DEFAULT_OPPORTUNITY_RADAR = DATA_DIR / "latest_opportunity_radar.json"
 DEFAULT_API_URL = "https://api.deepseek.com/chat/completions"
 DEFAULT_MODEL = "deepseek-v4-pro"
 
@@ -165,7 +166,78 @@ def top_candidates(pack: dict[str, Any], limit: int = 14) -> list[dict[str, Any]
     return [concise_candidate(item) for item in ordered[:limit]]
 
 
-def prepare_public_context(compact: dict[str, Any], pack: dict[str, Any], secondary_queue: dict[str, Any]) -> dict[str, Any]:
+def compact_opportunity_radar(opportunity_radar: dict[str, Any]) -> dict[str, Any]:
+    if not opportunity_radar:
+        return {}
+    top_opportunities: list[dict[str, Any]] = []
+    for item in opportunity_radar.get("top_opportunities", []) if isinstance(opportunity_radar.get("top_opportunities"), list) else []:
+        if not isinstance(item, dict):
+            continue
+        top_opportunities.append(
+            {
+                "id": item.get("id"),
+                "name": item.get("name"),
+                "stage": item.get("stage"),
+                "score": item.get("score"),
+                "beneficiary_layers": item.get("beneficiary_layers"),
+                "top_candidates": item.get("top_candidates"),
+            }
+        )
+
+    themes: list[dict[str, Any]] = []
+    for theme in opportunity_radar.get("themes", []) if isinstance(opportunity_radar.get("themes"), list) else []:
+        if not isinstance(theme, dict):
+            continue
+        themes.append(
+            {
+                "id": theme.get("id"),
+                "name": theme.get("name"),
+                "stage": theme.get("stage"),
+                "expectation_gap_score": theme.get("expectation_gap_score"),
+                "score_components": theme.get("score_components"),
+                "thesis": theme.get("thesis"),
+                "leading_indicators": theme.get("leading_indicators"),
+                "top_evidence": theme.get("top_evidence"),
+                "securities": [
+                    {
+                        "code": sec.get("code"),
+                        "name": sec.get("name"),
+                        "market": sec.get("market"),
+                        "layer": sec.get("layer"),
+                        "price": sec.get("price"),
+                        "valuation_pe": sec.get("valuation_pe"),
+                        "opportunity_score": sec.get("opportunity_score"),
+                        "trend_score": sec.get("trend_score"),
+                        "underpricing_score": sec.get("underpricing_score"),
+                        "crowding_score": sec.get("crowding_score"),
+                        "action": sec.get("action"),
+                    }
+                    for sec in theme.get("securities", [])[:8]
+                    if isinstance(sec, dict)
+                ],
+            }
+        )
+
+    return {
+        "generated_label": opportunity_radar.get("generated_label"),
+        "summary": opportunity_radar.get("summary") if isinstance(opportunity_radar.get("summary"), dict) else {},
+        "rule": "机会雷达只负责提前发现预期差主题和候选股票；不等于买入建议，交易必须回到 Buy-Side/RR/估值/整股纪律。",
+        "top_opportunities": top_opportunities[:8],
+        "themes": themes[:8],
+        "filing_changes": opportunity_radar.get("filing_changes", [])[:12] if isinstance(opportunity_radar.get("filing_changes"), list) else [],
+        "metric_changes": opportunity_radar.get("metric_changes", [])[:12] if isinstance(opportunity_radar.get("metric_changes"), list) else [],
+        "review_due": opportunity_radar.get("review_due", [])[:12] if isinstance(opportunity_radar.get("review_due"), list) else [],
+        "completed_reviews": opportunity_radar.get("completed_reviews", [])[:12] if isinstance(opportunity_radar.get("completed_reviews"), list) else [],
+        "secondary_candidates": opportunity_radar.get("secondary_candidates", [])[:20] if isinstance(opportunity_radar.get("secondary_candidates"), list) else [],
+    }
+
+
+def prepare_public_context(
+    compact: dict[str, Any],
+    pack: dict[str, Any],
+    secondary_queue: dict[str, Any],
+    opportunity_radar: dict[str, Any],
+) -> dict[str, Any]:
     """Drop private portfolio fields before sending context to DeepSeek."""
     market = compact.get("market") if isinstance(compact.get("market"), dict) else pack.get("market", {})
     research_candidates = compact.get("research_candidates") if isinstance(compact.get("research_candidates"), list) else []
@@ -198,6 +270,7 @@ def prepare_public_context(compact: dict[str, Any], pack: dict[str, Any], second
         "candidate_pool": candidates,
         "mechanical_buyable_now": buyable,
         "physical_ai_watchlist": watchlist,
+        "opportunity_radar": compact_opportunity_radar(opportunity_radar),
         "secondary_analysis_queue": {
             "rule": "进入二次分析后每两天复核一次；不合格则退回观察，不再占用高频 Buy-Side 分析名额；无固定冷却期，重新满足触发条件即可回池。",
             "generated_label": secondary_queue.get("generated_label"),
@@ -245,6 +318,9 @@ def build_user_prompt(context: dict[str, Any], mode: str) -> str:
 - 不要输出真实持仓、现金、成本、股数、本地路径、API Key。
 - 对 secondary_analysis_queue.deepseek_priority 中的股票全部覆盖；如果数量较多，先用表格逐只给结论，再挑最重要标的展开。
 - 如果 secondary_analysis_queue.deepseek_priority 为空，再从候选池中选择最值得复核的重点股票，宁缺毋滥。
+- 必须先阅读 opportunity_radar：区分“提前发现的主题机会”和“已满足买入纪律的股票”；机会雷达不等于买入建议。
+- 如果 opportunity_radar.top_opportunities 不为空，报告必须增加“未来机会雷达”小节，写明主题、受益环节、验证指标、拥挤风险和需要交给 Buy-Side 二次分析的股票。
+- 对 opportunity_radar.filing_changes / metric_changes 中的重要变化，说明它们是逻辑增强、逻辑削弱，还是仅仅价格波动。
 - 估值优先使用 valuation_pe 和 valuation_pe_source；forward_pe/trailing_pe 缺失时，不得忽略 Finnhub P/E 或 SEC 市值/净利润估算 P/E。
 - 每只重点股票必须分别评估：当前价试仓、理想回调、突破确认。
 - 每条可执行买入路径必须独立满足 R/R >= 2:1；不满足就写观察或等待。
@@ -347,6 +423,7 @@ def main() -> int:
     parser.add_argument("--input", type=Path, default=DEFAULT_COMPACT_INPUT)
     parser.add_argument("--market-pack", type=Path, default=DEFAULT_MARKET_PACK)
     parser.add_argument("--secondary-queue", type=Path, default=DEFAULT_SECONDARY_QUEUE)
+    parser.add_argument("--opportunity-radar", type=Path, default=DEFAULT_OPPORTUNITY_RADAR)
     parser.add_argument("--out-dir", type=Path, default=REPORTS_DIR)
     parser.add_argument("--dry-run", action="store_true", help="Write the sanitized prompt context without calling DeepSeek.")
     args = parser.parse_args()
@@ -355,7 +432,8 @@ def main() -> int:
     compact = load_json(args.input, {})
     pack = load_json(args.market_pack, {})
     secondary_queue = load_json(args.secondary_queue, {})
-    context = prepare_public_context(compact, pack, secondary_queue)
+    opportunity_radar = load_json(args.opportunity_radar, {})
+    context = prepare_public_context(compact, pack, secondary_queue, opportunity_radar)
     context_text = json.dumps(context, ensure_ascii=False, indent=2)
     validate_public_text(context_text)
 
