@@ -325,7 +325,7 @@ def market_confirmation_score(
     change_pct: float | None,
 ) -> tuple[float | None, list[str]]:
     if price is None:
-        return None, ["缺少价格，不能做市场确认"]
+        return None, ["缺少价格，不能做趋势确认"]
     score = 40.0
     notes: list[str] = []
     if ma50:
@@ -561,7 +561,7 @@ def render_report(radar: dict[str, Any]) -> str:
             lines.append("")
         lines.append("### 环节强度")
         lines.append("")
-        lines.extend(["| 环节 | 位置 | 机会分 | 市场确认 | 状态 | 核心逻辑 |", "|---|---|---:|---:|---|---|"])
+        lines.extend(["| 环节 | 位置 | 机会分 | 趋势确认 | 状态 | 核心逻辑 |", "|---|---|---:|---:|---|---|"])
         for layer in chain.get("layers", []):
             evidence = "；".join(layer.get("evidence", [])[:2])
             lines.append(
@@ -569,7 +569,7 @@ def render_report(radar: dict[str, Any]) -> str:
             )
 
     lines.extend(["", "## 候选股票池", ""])
-    lines.extend(["| 市场 | 代码 | 名称 | 环节 | 角色 | 价格 | 市场确认 | 动作 |", "|---|---|---|---|---|---:|---:|---|"])
+    lines.extend(["| 市场 | 代码 | 名称 | 环节 | 角色 | 价格 | 趋势确认 | 动作 |", "|---|---|---|---|---|---:|---:|---|"])
     for item in radar.get("candidates", [])[:50]:
         lines.append(
             f"| {item.get('market')} | {item.get('code')} | {item.get('name')} | {item.get('layer_name')} | {item.get('role')} | {fmt_price(item.get('price'))} | {fmt_num(item.get('market_confirmation_score'))} | {item.get('action')} |"
