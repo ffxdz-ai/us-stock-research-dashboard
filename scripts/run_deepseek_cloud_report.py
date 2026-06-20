@@ -235,8 +235,8 @@ def build_user_prompt(context: dict[str, Any], mode: str) -> str:
 - 不要重复输出一级标题；标题由外层系统生成。
 - 必须写明“云端公开数据版”，并说明 Futu OpenD 云端不可用。
 - 不要输出真实持仓、现金、成本、股数、本地路径、API Key。
-- 对最多 5 只重点股票做 Buy-Side 分析，宁缺毋滥。
-- 如果 secondary_analysis_queue.deepseek_priority 非空，优先分析这些到期复核通过的标的。
+- 对 secondary_analysis_queue.deepseek_priority 中的股票全部覆盖；如果数量较多，先用表格逐只给结论，再挑最重要标的展开。
+- 如果 secondary_analysis_queue.deepseek_priority 为空，再从候选池中选择最值得复核的重点股票，宁缺毋滥。
 - 每只重点股票必须分别评估：当前价试仓、理想回调、突破确认。
 - 每条可执行买入路径必须独立满足 R/R >= 2:1；不满足就写观察或等待。
 - 公开版不得给最终买入股数；整股执行写“需本地组合复核”。

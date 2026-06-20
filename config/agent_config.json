@@ -10,8 +10,10 @@
   "secondary_analysis": {
     "review_interval_days": 2,
     "cooldown_days": 14,
-    "max_due_per_run": 5,
     "max_active": 20,
+    "review_timezone": "Asia/Shanghai",
+    "review_hour": 12,
+    "review_minute": 0,
     "min_entry_layer_score": 75,
     "min_entry_trend_score": 70,
     "min_keep_layer_score": 70,

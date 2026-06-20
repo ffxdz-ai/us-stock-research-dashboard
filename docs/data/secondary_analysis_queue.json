@@ -1,12 +1,14 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-06-21T02:01:41+08:00",
-  "generated_label": "2026-06-21 02:01",
+  "generated_at": "2026-06-21T02:22:20+08:00",
+  "generated_label": "2026-06-21 02:22",
   "rules": {
     "review_interval_days": 2,
     "cooldown_days": 14,
-    "max_due_per_run": 5,
     "max_active": 20,
+    "review_timezone": "Asia/Shanghai",
+    "review_hour": 12,
+    "review_minute": 0,
     "min_entry_layer_score": 75,
     "min_entry_trend_score": 70,
     "min_keep_layer_score": 70,
@@ -18,20 +20,22 @@
   },
   "summary": {
     "eligible_candidates": 33,
-    "new_entries": 20,
-    "reentries": 0,
-    "reviewed": 5,
-    "passed": 1,
-    "retreated": 4,
-    "active_count": 16,
-    "retreated_count": 4,
-    "due_remaining": 15
+    "new_entries": 0,
+    "reentries": 4,
+    "reviewed": 0,
+    "passed": 0,
+    "retreated": 0,
+    "active_count": 20,
+    "retreated_count": 0,
+    "due_remaining": 0,
+    "processing_limit": "none",
+    "review_time_beijing": "12:00"
   },
   "records": {
     "HK.00148": {
       "status": "active",
       "entered_at": "2026-06-21T02:01:41+08:00",
-      "next_analysis_due_at": "2026-06-21T02:01:41+08:00",
+      "next_analysis_due_at": "2026-06-21T12:00:00+08:00",
       "review_count": 0,
       "pass_count": 0,
       "fail_count": 0,
@@ -49,13 +53,13 @@
       "trend_score": 88.0,
       "data_status": "公开日线行情已接入；需 Futu/券商复核",
       "radar_action": "跨市场强候选；进入二次分析候选池，需 Futu/财报/流动性复核",
-      "last_seen_at": "2026-06-21T02:01:41+08:00",
+      "last_seen_at": "2026-06-21T02:22:20+08:00",
       "priority": 181.36
     },
     "HK.01347": {
       "status": "active",
       "entered_at": "2026-06-21T02:01:41+08:00",
-      "next_analysis_due_at": "2026-06-21T02:01:41+08:00",
+      "next_analysis_due_at": "2026-06-21T12:00:00+08:00",
       "review_count": 0,
       "pass_count": 0,
       "fail_count": 0,
@@ -73,13 +77,13 @@
       "trend_score": 88.0,
       "data_status": "公开日线行情已接入；需 Futu/券商复核",
       "radar_action": "跨市场强候选；进入二次分析候选池，需 Futu/财报/流动性复核",
-      "last_seen_at": "2026-06-21T02:01:41+08:00",
+      "last_seen_at": "2026-06-21T02:22:20+08:00",
       "priority": 185.2
     },
     "HK.01888": {
       "status": "active",
       "entered_at": "2026-06-21T02:01:41+08:00",
-      "next_analysis_due_at": "2026-06-21T02:01:41+08:00",
+      "next_analysis_due_at": "2026-06-21T12:00:00+08:00",
       "review_count": 0,
       "pass_count": 0,
       "fail_count": 0,
@@ -97,13 +101,13 @@
       "trend_score": 88.0,
       "data_status": "公开日线行情已接入；需 Futu/券商复核",
       "radar_action": "跨市场强候选；进入二次分析候选池，需 Futu/财报/流动性复核",
-      "last_seen_at": "2026-06-21T02:01:41+08:00",
+      "last_seen_at": "2026-06-21T02:22:20+08:00",
       "priority": 181.36
     },
     "SH.600183": {
       "status": "active",
       "entered_at": "2026-06-21T02:01:41+08:00",
-      "next_analysis_due_at": "2026-06-21T02:01:41+08:00",
+      "next_analysis_due_at": "2026-06-21T12:00:00+08:00",
       "review_count": 0,
       "pass_count": 0,
       "fail_count": 0,
@@ -121,13 +125,13 @@
       "trend_score": 88.0,
       "data_status": "公开日线行情已接入；需 Futu/券商复核",
       "radar_action": "跨市场强候选；进入二次分析候选池，需 Futu/财报/流动性复核",
-      "last_seen_at": "2026-06-21T02:01:41+08:00",
+      "last_seen_at": "2026-06-21T02:22:20+08:00",
       "priority": 181.36
     },
     "SH.603256": {
       "status": "active",
       "entered_at": "2026-06-21T02:01:41+08:00",
-      "next_analysis_due_at": "2026-06-21T02:01:41+08:00",
+      "next_analysis_due_at": "2026-06-21T12:00:00+08:00",
       "review_count": 0,
       "pass_count": 0,
       "fail_count": 0,
@@ -145,13 +149,13 @@
       "trend_score": 88.0,
       "data_status": "公开日线行情已接入；需 Futu/券商复核",
       "radar_action": "跨市场强候选；进入二次分析候选池，需 Futu/财报/流动性复核",
-      "last_seen_at": "2026-06-21T02:01:41+08:00",
+      "last_seen_at": "2026-06-21T02:22:20+08:00",
       "priority": 181.36
     },
     "SZ.000988": {
       "status": "active",
       "entered_at": "2026-06-21T02:01:41+08:00",
-      "next_analysis_due_at": "2026-06-21T02:01:41+08:00",
+      "next_analysis_due_at": "2026-06-21T12:00:00+08:00",
       "review_count": 0,
       "pass_count": 0,
       "fail_count": 0,
@@ -169,13 +173,13 @@
       "trend_score": 88.0,
       "data_status": "公开日线行情已接入；需 Futu/券商复核",
       "radar_action": "跨市场强候选；进入二次分析候选池，需 Futu/财报/流动性复核",
-      "last_seen_at": "2026-06-21T02:01:41+08:00",
+      "last_seen_at": "2026-06-21T02:22:20+08:00",
       "priority": 181.72
     },
     "SZ.002916": {
       "status": "active",
       "entered_at": "2026-06-21T02:01:41+08:00",
-      "next_analysis_due_at": "2026-06-21T02:01:41+08:00",
+      "next_analysis_due_at": "2026-06-21T12:00:00+08:00",
       "review_count": 0,
       "pass_count": 0,
       "fail_count": 0,
@@ -193,13 +197,13 @@
       "trend_score": 88.0,
       "data_status": "公开日线行情已接入；需 Futu/券商复核",
       "radar_action": "跨市场强候选；进入二次分析候选池，需 Futu/财报/流动性复核",
-      "last_seen_at": "2026-06-21T02:01:41+08:00",
+      "last_seen_at": "2026-06-21T02:22:20+08:00",
       "priority": 181.36
     },
     "SZ.002938": {
       "status": "active",
       "entered_at": "2026-06-21T02:01:41+08:00",
-      "next_analysis_due_at": "2026-06-21T02:01:41+08:00",
+      "next_analysis_due_at": "2026-06-21T12:00:00+08:00",
       "review_count": 0,
       "pass_count": 0,
       "fail_count": 0,
@@ -217,13 +221,13 @@
       "trend_score": 88.0,
       "data_status": "公开日线行情已接入；需 Futu/券商复核",
       "radar_action": "跨市场强候选；进入二次分析候选池，需 Futu/财报/流动性复核",
-      "last_seen_at": "2026-06-21T02:01:41+08:00",
+      "last_seen_at": "2026-06-21T02:22:20+08:00",
       "priority": 181.36
     },
     "SZ.300308": {
       "status": "active",
       "entered_at": "2026-06-21T02:01:41+08:00",
-      "next_analysis_due_at": "2026-06-21T02:01:41+08:00",
+      "next_analysis_due_at": "2026-06-21T12:00:00+08:00",
       "review_count": 0,
       "pass_count": 0,
       "fail_count": 0,
@@ -241,13 +245,13 @@
       "trend_score": 88.0,
       "data_status": "公开日线行情已接入；需 Futu/券商复核",
       "radar_action": "跨市场强候选；进入二次分析候选池，需 Futu/财报/流动性复核",
-      "last_seen_at": "2026-06-21T02:01:41+08:00",
+      "last_seen_at": "2026-06-21T02:22:20+08:00",
       "priority": 181.72
     },
     "SZ.300502": {
       "status": "active",
       "entered_at": "2026-06-21T02:01:41+08:00",
-      "next_analysis_due_at": "2026-06-21T02:01:41+08:00",
+      "next_analysis_due_at": "2026-06-21T12:00:00+08:00",
       "review_count": 0,
       "pass_count": 0,
       "fail_count": 0,
@@ -265,19 +269,19 @@
       "trend_score": 88.0,
       "data_status": "公开日线行情已接入；需 Futu/券商复核",
       "radar_action": "跨市场强候选；进入二次分析候选池，需 Futu/财报/流动性复核",
-      "last_seen_at": "2026-06-21T02:01:41+08:00",
+      "last_seen_at": "2026-06-21T02:22:20+08:00",
       "priority": 181.72
     },
     "US.AMD": {
-      "status": "retreated",
+      "status": "active",
       "entered_at": "2026-06-21T02:01:41+08:00",
-      "next_analysis_due_at": null,
+      "next_analysis_due_at": "2026-06-21T12:00:00+08:00",
       "review_count": 1,
       "pass_count": 0,
       "fail_count": 1,
       "history": [
         {
-          "reviewed_at": "2026-06-21T02:01:41+08:00",
+          "reviewed_at": "2026-06-21T12:00:00+08:00",
           "result": "退回观察",
           "reason": "美股候选 R/R 0.28:1 低于 2.0:1，退回观察。",
           "layer_score": 81.0,
@@ -285,8 +289,8 @@
           "price": 537.37
         }
       ],
-      "last_result": "退回观察",
-      "last_reason": "美股候选 R/R 0.28:1 低于 2.0:1，退回观察。",
+      "last_result": "重新触发",
+      "last_reason": "趋势确认和产业链机会分重新达到触发门槛。",
       "code": "US.AMD",
       "name": "AMD",
       "market": "US",
@@ -298,15 +302,16 @@
       "trend_score": 88.0,
       "data_status": "行情已接入",
       "radar_action": "进入二次分析候选池；等待 Buy-Side 复核",
-      "last_seen_at": "2026-06-21T02:01:41+08:00",
+      "last_seen_at": "2026-06-21T02:22:20+08:00",
       "priority": 185.2,
-      "last_analysis_at": "2026-06-21T02:01:41+08:00",
-      "cooldown_until": "2026-07-05T02:01:41+08:00"
+      "last_analysis_at": "2026-06-21T12:00:00+08:00",
+      "cooldown_until": null,
+      "reentered_at": "2026-06-21T02:22:20+08:00"
     },
     "US.ANET": {
       "status": "active",
       "entered_at": "2026-06-21T02:01:41+08:00",
-      "next_analysis_due_at": "2026-06-21T02:01:41+08:00",
+      "next_analysis_due_at": "2026-06-21T12:00:00+08:00",
       "review_count": 0,
       "pass_count": 0,
       "fail_count": 0,
@@ -324,19 +329,19 @@
       "trend_score": 88.0,
       "data_status": "行情已接入",
       "radar_action": "进入二次分析候选池；等待 Buy-Side 复核",
-      "last_seen_at": "2026-06-21T02:01:41+08:00",
+      "last_seen_at": "2026-06-21T02:22:20+08:00",
       "priority": 181.72
     },
     "US.ASML": {
-      "status": "retreated",
+      "status": "active",
       "entered_at": "2026-06-21T02:01:41+08:00",
-      "next_analysis_due_at": null,
+      "next_analysis_due_at": "2026-06-21T12:00:00+08:00",
       "review_count": 1,
       "pass_count": 0,
       "fail_count": 1,
       "history": [
         {
-          "reviewed_at": "2026-06-21T02:01:41+08:00",
+          "reviewed_at": "2026-06-21T12:00:00+08:00",
           "result": "退回观察",
           "reason": "美股候选 R/R 0.45:1 低于 2.0:1，退回观察。",
           "layer_score": 81.0,
@@ -344,8 +349,8 @@
           "price": 1929.68
         }
       ],
-      "last_result": "退回观察",
-      "last_reason": "美股候选 R/R 0.45:1 低于 2.0:1，退回观察。",
+      "last_result": "重新触发",
+      "last_reason": "趋势确认和产业链机会分重新达到触发门槛。",
       "code": "US.ASML",
       "name": "ASML ADR",
       "market": "US",
@@ -357,15 +362,16 @@
       "trend_score": 88.0,
       "data_status": "行情已接入",
       "radar_action": "进入二次分析候选池；等待 Buy-Side 复核",
-      "last_seen_at": "2026-06-21T02:01:41+08:00",
+      "last_seen_at": "2026-06-21T02:22:20+08:00",
       "priority": 185.2,
-      "last_analysis_at": "2026-06-21T02:01:41+08:00",
-      "cooldown_until": "2026-07-05T02:01:41+08:00"
+      "last_analysis_at": "2026-06-21T12:00:00+08:00",
+      "cooldown_until": null,
+      "reentered_at": "2026-06-21T02:22:20+08:00"
     },
     "US.ETN": {
       "status": "active",
       "entered_at": "2026-06-21T02:01:41+08:00",
-      "next_analysis_due_at": "2026-06-21T02:01:41+08:00",
+      "next_analysis_due_at": "2026-06-21T12:00:00+08:00",
       "review_count": 0,
       "pass_count": 0,
       "fail_count": 0,
@@ -383,13 +389,13 @@
       "trend_score": 88.0,
       "data_status": "行情已接入",
       "radar_action": "进入二次分析候选池；等待 Buy-Side 复核",
-      "last_seen_at": "2026-06-21T02:01:41+08:00",
+      "last_seen_at": "2026-06-21T02:22:20+08:00",
       "priority": 178.96
     },
     "US.GE": {
       "status": "active",
       "entered_at": "2026-06-21T02:01:41+08:00",
-      "next_analysis_due_at": "2026-06-21T02:01:41+08:00",
+      "next_analysis_due_at": "2026-06-21T12:00:00+08:00",
       "review_count": 0,
       "pass_count": 0,
       "fail_count": 0,
@@ -407,13 +413,13 @@
       "trend_score": 88.0,
       "data_status": "行情已接入",
       "radar_action": "进入二次分析候选池；等待 Buy-Side 复核",
-      "last_seen_at": "2026-06-21T02:01:41+08:00",
+      "last_seen_at": "2026-06-21T02:22:20+08:00",
       "priority": 178.96
     },
     "US.MRVL": {
       "status": "active",
       "entered_at": "2026-06-21T02:01:41+08:00",
-      "next_analysis_due_at": "2026-06-21T02:01:41+08:00",
+      "next_analysis_due_at": "2026-06-21T12:00:00+08:00",
       "review_count": 0,
       "pass_count": 0,
       "fail_count": 0,
@@ -431,19 +437,19 @@
       "trend_score": 88.0,
       "data_status": "行情已接入",
       "radar_action": "进入二次分析候选池；等待 Buy-Side 复核",
-      "last_seen_at": "2026-06-21T02:01:41+08:00",
+      "last_seen_at": "2026-06-21T02:22:20+08:00",
       "priority": 181.72
     },
     "US.MU": {
-      "status": "retreated",
+      "status": "active",
       "entered_at": "2026-06-21T02:01:41+08:00",
-      "next_analysis_due_at": null,
+      "next_analysis_due_at": "2026-06-21T12:00:00+08:00",
       "review_count": 1,
       "pass_count": 0,
       "fail_count": 1,
       "history": [
         {
-          "reviewed_at": "2026-06-21T02:01:41+08:00",
+          "reviewed_at": "2026-06-21T12:00:00+08:00",
           "result": "退回观察",
           "reason": "美股候选 R/R 0.17:1 低于 2.0:1，退回观察。",
           "layer_score": 81.0,
@@ -451,8 +457,8 @@
           "price": 1133.99
         }
       ],
-      "last_result": "退回观察",
-      "last_reason": "美股候选 R/R 0.17:1 低于 2.0:1，退回观察。",
+      "last_result": "重新触发",
+      "last_reason": "趋势确认和产业链机会分重新达到触发门槛。",
       "code": "US.MU",
       "name": "Micron",
       "market": "US",
@@ -464,15 +470,16 @@
       "trend_score": 88.0,
       "data_status": "行情已接入",
       "radar_action": "进入二次分析候选池；等待 Buy-Side 复核",
-      "last_seen_at": "2026-06-21T02:01:41+08:00",
+      "last_seen_at": "2026-06-21T02:22:20+08:00",
       "priority": 185.2,
-      "last_analysis_at": "2026-06-21T02:01:41+08:00",
-      "cooldown_until": "2026-07-05T02:01:41+08:00"
+      "last_analysis_at": "2026-06-21T12:00:00+08:00",
+      "cooldown_until": null,
+      "reentered_at": "2026-06-21T02:22:20+08:00"
     },
     "US.PH": {
       "status": "active",
       "entered_at": "2026-06-21T02:01:41+08:00",
-      "next_analysis_due_at": "2026-06-21T02:01:41+08:00",
+      "next_analysis_due_at": "2026-06-21T12:00:00+08:00",
       "review_count": 0,
       "pass_count": 0,
       "fail_count": 0,
@@ -490,19 +497,19 @@
       "trend_score": 88.0,
       "data_status": "行情已接入",
       "radar_action": "进入二次分析候选池；等待 Buy-Side 复核",
-      "last_seen_at": "2026-06-21T02:01:41+08:00",
+      "last_seen_at": "2026-06-21T02:22:20+08:00",
       "priority": 178.96
     },
     "US.TSM": {
-      "status": "retreated",
+      "status": "active",
       "entered_at": "2026-06-21T02:01:41+08:00",
-      "next_analysis_due_at": null,
+      "next_analysis_due_at": "2026-06-21T12:00:00+08:00",
       "review_count": 1,
       "pass_count": 0,
       "fail_count": 1,
       "history": [
         {
-          "reviewed_at": "2026-06-21T02:01:41+08:00",
+          "reviewed_at": "2026-06-21T12:00:00+08:00",
           "result": "退回观察",
           "reason": "美股候选 R/R 0.54:1 低于 2.0:1，退回观察。",
           "layer_score": 81.0,
@@ -510,8 +517,8 @@
           "price": 462.12
         }
       ],
-      "last_result": "退回观察",
-      "last_reason": "美股候选 R/R 0.54:1 低于 2.0:1，退回观察。",
+      "last_result": "重新触发",
+      "last_reason": "趋势确认和产业链机会分重新达到触发门槛。",
       "code": "US.TSM",
       "name": "TSMC ADR",
       "market": "US",
@@ -523,21 +530,22 @@
       "trend_score": 88.0,
       "data_status": "行情已接入",
       "radar_action": "进入二次分析候选池；等待 Buy-Side 复核",
-      "last_seen_at": "2026-06-21T02:01:41+08:00",
+      "last_seen_at": "2026-06-21T02:22:20+08:00",
       "priority": 185.2,
-      "last_analysis_at": "2026-06-21T02:01:41+08:00",
-      "cooldown_until": "2026-07-05T02:01:41+08:00"
+      "last_analysis_at": "2026-06-21T12:00:00+08:00",
+      "cooldown_until": null,
+      "reentered_at": "2026-06-21T02:22:20+08:00"
     },
     "US.TTMI": {
       "status": "active",
       "entered_at": "2026-06-21T02:01:41+08:00",
-      "next_analysis_due_at": "2026-06-23T02:01:41+08:00",
+      "next_analysis_due_at": "2026-06-23T12:00:00+08:00",
       "review_count": 1,
       "pass_count": 1,
       "fail_count": 0,
       "history": [
         {
-          "reviewed_at": "2026-06-21T02:01:41+08:00",
+          "reviewed_at": "2026-06-21T12:00:00+08:00",
           "result": "通过复核",
           "reason": "产业链和趋势仍达标；R/R 尚未在机械包中完整给出，继续保留给 Buy-Side 完整复核。",
           "layer_score": 77.8,
@@ -558,9 +566,9 @@
       "trend_score": 94.0,
       "data_status": "行情已接入",
       "radar_action": "进入二次分析候选池；等待 Buy-Side 复核",
-      "last_seen_at": "2026-06-21T02:01:41+08:00",
+      "last_seen_at": "2026-06-21T02:22:20+08:00",
       "priority": 187.36,
-      "last_analysis_at": "2026-06-21T02:01:41+08:00"
+      "last_analysis_at": "2026-06-21T12:00:00+08:00"
     }
   }
 }

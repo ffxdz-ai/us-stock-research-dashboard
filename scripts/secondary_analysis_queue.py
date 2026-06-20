@@ -15,6 +15,7 @@ import math
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any
+from zoneinfo import ZoneInfo
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -50,8 +51,15 @@ def write_text(path: Path, content: str) -> None:
     path.write_text(content, encoding="utf-8")
 
 
-def now_local() -> datetime:
-    return datetime.now().astimezone()
+def review_timezone(name: str = "Asia/Shanghai") -> timezone:
+    try:
+        return ZoneInfo(name)
+    except Exception:
+        return timezone(timedelta(hours=8), "Asia/Shanghai")
+
+
+def now_local(tz_name: str = "Asia/Shanghai") -> datetime:
+    return datetime.now(review_timezone(tz_name))
 
 
 def number(value: Any) -> float | None:
@@ -88,11 +96,28 @@ def iso(value: datetime) -> str:
     return value.isoformat(timespec="seconds")
 
 
+def review_slot(base: datetime, cfg: dict[str, Any], *, days: int = 0) -> datetime:
+    tz_name = str(cfg.get("review_timezone") or "Asia/Shanghai")
+    tz = review_timezone(tz_name)
+    local = base.astimezone(tz) + timedelta(days=days)
+    return local.replace(
+        hour=int(cfg.get("review_hour", 12)),
+        minute=int(cfg.get("review_minute", 0)),
+        second=0,
+        microsecond=0,
+    )
+
+
+def normalize_review_slot(value: Any, fallback: datetime, cfg: dict[str, Any]) -> str:
+    parsed = parse_time(value) or fallback
+    return iso(review_slot(parsed, cfg))
+
+
 def label_time(value: Any) -> str:
     parsed = parse_time(value)
     if parsed is None:
         return "未安排"
-    return parsed.strftime("%Y-%m-%d %H:%M")
+    return parsed.astimezone(review_timezone()).strftime("%Y-%m-%d %H:%M")
 
 
 def fmt_num(value: Any, digits: int = 1) -> str:
@@ -140,8 +165,10 @@ def secondary_config(config: dict[str, Any]) -> dict[str, Any]:
     defaults = {
         "review_interval_days": 2,
         "cooldown_days": 14,
-        "max_due_per_run": 5,
         "max_active": 20,
+        "review_timezone": "Asia/Shanghai",
+        "review_hour": 12,
+        "review_minute": 0,
         "min_entry_layer_score": 75,
         "min_entry_trend_score": 70,
         "min_keep_layer_score": 70,
@@ -244,7 +271,8 @@ def update_queue(
     cfg["min_reward_risk_for_buy"] = float(config.get("min_reward_risk_for_buy", 2.0) or 2.0)
     cfg["min_data_confidence_for_buy"] = float(config.get("min_data_confidence_for_buy", 0.68) or 0.68)
 
-    now = now_local()
+    now = now_local(str(cfg.get("review_timezone") or "Asia/Shanghai"))
+    current_review_slot = review_slot(now, cfg)
     candidates = [item for item in radar.get("candidates", []) if isinstance(item, dict) and normalize_code(item.get("code"))]
     current_by_code = {normalize_code(item.get("code")): item for item in candidates}
     eligible = [item for item in candidates if candidate_is_eligible(item, cfg)]
@@ -269,7 +297,7 @@ def update_queue(
             record["status"] = "active"
             record["reentered_at"] = iso(now)
             record["cooldown_until"] = None
-            record["next_analysis_due_at"] = iso(now)
+            record["next_analysis_due_at"] = iso(current_review_slot)
             record["last_result"] = "重新触发"
             record["last_reason"] = "趋势确认和产业链机会分重新达到触发门槛。"
             reentries += 1
@@ -280,7 +308,7 @@ def update_queue(
             record = {
                 "status": "active",
                 "entered_at": iso(now),
-                "next_analysis_due_at": iso(now),
+                "next_analysis_due_at": iso(current_review_slot),
                 "review_count": 0,
                 "pass_count": 0,
                 "fail_count": 0,
@@ -292,6 +320,19 @@ def update_queue(
         enrich_record(record, item, now)
         records[code] = record
 
+    for record in records.values():
+        if record.get("last_analysis_at"):
+            record["last_analysis_at"] = normalize_review_slot(record.get("last_analysis_at"), now, cfg)
+        history = record.get("history")
+        if isinstance(history, list):
+            for event in history:
+                if isinstance(event, dict) and event.get("reviewed_at"):
+                    event["reviewed_at"] = normalize_review_slot(event.get("reviewed_at"), now, cfg)
+        if record.get("status") == "active":
+            record["next_analysis_due_at"] = normalize_review_slot(record.get("next_analysis_due_at"), now, cfg)
+        elif record.get("status") == "retreated" and record.get("cooldown_until"):
+            record["cooldown_until"] = normalize_review_slot(record.get("cooldown_until"), now + timedelta(days=cooldown_days), cfg)
+
     active_due: list[dict[str, Any]] = []
     for record in records.values():
         if record.get("status") != "active":
@@ -300,34 +341,35 @@ def update_queue(
         if due_at is None or due_at <= now:
             active_due.append(record)
     active_due.sort(key=lambda item: float(item.get("priority") or 0), reverse=True)
-    due_to_review = active_due[: int(cfg["max_due_per_run"])]
+    due_to_review = active_due
 
     pack_index = market_pack_index(pack)
     reviews: list[dict[str, Any]] = []
-    interval = timedelta(days=int(cfg["review_interval_days"]))
+    interval_days = int(cfg["review_interval_days"])
+    analysis_time = current_review_slot
     for record in due_to_review:
         code = normalize_code(record.get("code"))
         current = current_by_code.get(code)
         passed, reason = evaluate_record(record, current, pack_index, cfg)
         record["review_count"] = int(record.get("review_count") or 0) + 1
-        record["last_analysis_at"] = iso(now)
+        record["last_analysis_at"] = iso(analysis_time)
         if passed:
             record["status"] = "active"
             record["pass_count"] = int(record.get("pass_count") or 0) + 1
-            record["next_analysis_due_at"] = iso(now + interval)
+            record["next_analysis_due_at"] = iso(review_slot(analysis_time, cfg, days=interval_days))
             record["last_result"] = "通过复核"
             record["last_reason"] = reason
         else:
             record["status"] = "retreated"
             record["fail_count"] = int(record.get("fail_count") or 0) + 1
             record["next_analysis_due_at"] = None
-            record["cooldown_until"] = iso(now + timedelta(days=cooldown_days))
+            record["cooldown_until"] = iso(review_slot(analysis_time, cfg, days=cooldown_days))
             record["last_result"] = "退回观察"
             record["last_reason"] = reason
         history = record.get("history") if isinstance(record.get("history"), list) else []
         history.append(
             {
-                "reviewed_at": iso(now),
+                "reviewed_at": iso(analysis_time),
                 "result": record["last_result"],
                 "reason": reason,
                 "layer_score": record.get("layer_score"),
@@ -375,7 +417,7 @@ def update_queue(
         }
         for item in reviews
         if item.get("result") == "通过复核"
-    ][: int(cfg["max_due_per_run"])]
+    ]
 
     summary = {
         "eligible_candidates": len(eligible),
@@ -387,6 +429,8 @@ def update_queue(
         "active_count": len(active),
         "retreated_count": len(retreated),
         "due_remaining": len(due_remaining),
+        "processing_limit": "none",
+        "review_time_beijing": f"{int(cfg.get('review_hour', 12)):02d}:{int(cfg.get('review_minute', 0)):02d}",
     }
     next_state = {
         "schema_version": 1,
@@ -417,12 +461,12 @@ def render_report(payload: dict[str, Any]) -> str:
         "# 二次分析队列",
         "",
         f"- 生成时间：{payload.get('generated_label')}",
-        f"- 规则：进入二次分析后每 {rules.get('review_interval_days', 2)} 天复核一次；不合格则退回观察，冷却 {rules.get('cooldown_days', 14)} 天。",
+        f"- 规则：进入二次分析后每 {rules.get('review_interval_days', 2)} 天复核一次；统一在北京时间 {int(rules.get('review_hour', 12)):02d}:{int(rules.get('review_minute', 0)):02d} 处理；不设每轮处理数量上限；不合格则退回观察，冷却 {rules.get('cooldown_days', 14)} 天。",
         "- 定位：这是研究资源调度层，不生成买入指令；最终交易仍需完整 Buy-Side 分析、R/R 和整股仓位复核。",
         "",
         "## 本轮概览",
         "",
-        "| 合格候选 | 新进队列 | 重新触发 | 本轮复核 | 通过 | 退回观察 | 活跃队列 | 待下轮处理 |",
+        "| 合格候选 | 新进队列 | 重新触发 | 本轮复核 | 通过 | 退回观察 | 活跃队列 | 已到期未处理 |",
         "|---:|---:|---:|---:|---:|---:|---:|---:|",
         f"| {summary.get('eligible_candidates', 0)} | {summary.get('new_entries', 0)} | {summary.get('reentries', 0)} | {summary.get('reviewed', 0)} | {summary.get('passed', 0)} | {summary.get('retreated', 0)} | {summary.get('active_count', 0)} | {summary.get('due_remaining', 0)} |",
         "",

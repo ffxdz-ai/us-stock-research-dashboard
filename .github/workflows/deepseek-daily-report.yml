@@ -2,8 +2,8 @@ name: DeepSeek cloud daily report
 
 on:
   schedule:
-    # 12:10 Asia/Shanghai every day.
-    - cron: "10 4 * * *"
+    # 12:00 Asia/Shanghai every day.
+    - cron: "0 4 * * *"
   workflow_dispatch:
     inputs:
       mode:
