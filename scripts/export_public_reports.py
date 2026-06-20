@@ -61,8 +61,11 @@ KIND_LABELS = {
     "entry-radar": "入场雷达",
     "missed-review": "错过复盘",
     "future-audit": "未来函数审计",
+    "supply-chain": "产业链雷达",
     "daily": "每日分析",
 }
+
+ONE_REPORT_PER_DAY_KINDS = {"supply-chain"}
 
 
 def report_kind(name: str) -> str:
@@ -73,6 +76,8 @@ def report_kind(name: str) -> str:
         return "missed-review"
     if "future-function-audit" in lowered:
         return "future-audit"
+    if "supply-chain" in lowered or "supply_chain" in lowered:
+        return "supply-chain"
     if "deepseek-cloud" in lowered:
         return "deepseek-cloud"
     if "weekly" in lowered:
@@ -255,6 +260,9 @@ def build_archive(output: Path, limit: int = 80, merge_existing: bool = True) ->
         logical_identity = f"{item.get('filename')}:{item.get('published_at')}"
         title_time_identity = f"{item.get('kind')}:{item.get('title')}:{item.get('published_at')}:{stable_digest}"
         identities = {identity, stable_digest, logical_identity, title_time_identity}
+        if item.get("kind") in ONE_REPORT_PER_DAY_KINDS:
+            published_day = str(item.get("published_label") or item.get("published_at") or "")[:10]
+            identities.add(f"one-per-day:{item.get('kind')}:{item.get('title')}:{published_day}")
         if any(value in seen for value in identities):
             continue
         seen.update(identities)
