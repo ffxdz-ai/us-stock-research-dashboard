@@ -23,6 +23,7 @@ DATA_DIR = ROOT / "data"
 REPORT_DIR = ROOT / "reports"
 CACHE_DIR = DATA_DIR / "cache"
 CHART_CACHE_PATH = CACHE_DIR / "daily_charts.json"
+FINNHUB_METRICS_CACHE_PATH = CACHE_DIR / "finnhub_metrics.json"
 FULL_PACK_PATH = DATA_DIR / "latest_market_pack.json"
 BUY_SIDE_METRICS_PATH = DATA_DIR / "latest_buy_side_metrics.json"
 SEC_QUARTER_METRICS_PATH = DATA_DIR / "latest_sec_quarter_metrics.json"
@@ -837,16 +838,131 @@ def number(value: Any) -> float | None:
     return float(value) if isinstance(value, (int, float)) else None
 
 
+def first_number(mapping: dict[str, Any], keys: list[str]) -> tuple[float | None, str | None]:
+    for key in keys:
+        value = number(mapping.get(key))
+        if value is not None and math.isfinite(value):
+            return value, key
+    return None, None
+
+
+def finnhub_metric(symbol: str, api_key: str) -> dict[str, Any]:
+    params = urllib.parse.urlencode({"symbol": symbol, "metric": "all", "token": api_key})
+    url = f"https://finnhub.io/api/v1/stock/metric?{params}"
+    data, error = safe_http_json(url, timeout=10)
+    if error or not isinstance(data, dict):
+        return {"symbol": symbol, "error": error or "empty Finnhub response"}
+    metric = data.get("metric") if isinstance(data.get("metric"), dict) else {}
+    if not metric:
+        return {"symbol": symbol, "error": "empty Finnhub metric"}
+    return {
+        "symbol": symbol,
+        "metric": metric,
+        "source": "Finnhub Basic Financials API",
+        "fetched_at_utc": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+    }
+
+
+def collect_finnhub_metrics(symbols: list[str], max_age_hours: float = 30.0) -> dict[str, dict[str, Any]]:
+    api_key = os.getenv("FINNHUB_API_KEY", "").strip()
+    if not api_key:
+        return {}
+
+    stock_symbols = [
+        symbol
+        for symbol in dict.fromkeys(str(item or "").strip().upper() for item in symbols)
+        if symbol and "." not in symbol and not symbol.startswith("^") and symbol not in ETF_SYMBOLS
+    ]
+    if not stock_symbols:
+        return {}
+
+    cache = load_json(FINNHUB_METRICS_CACHE_PATH, {}) if FINNHUB_METRICS_CACHE_PATH.exists() else {}
+    output: dict[str, dict[str, Any]] = {}
+    refresh: list[str] = []
+    now = datetime.now(timezone.utc)
+    for symbol in stock_symbols:
+        cached = cache.get(symbol) if isinstance(cache, dict) else None
+        fetched_at_raw = cached.get("fetched_at_utc") if isinstance(cached, dict) else None
+        try:
+            fetched_at = datetime.fromisoformat(str(fetched_at_raw)) if fetched_at_raw else None
+        except ValueError:
+            fetched_at = None
+        if fetched_at and fetched_at.tzinfo is None:
+            fetched_at = fetched_at.replace(tzinfo=timezone.utc)
+        if (
+            isinstance(cached, dict)
+            and cached.get("metric")
+            and fetched_at
+            and (now - fetched_at.astimezone(timezone.utc)).total_seconds() / 3600 <= max_age_hours
+        ):
+            output[symbol] = cached
+        else:
+            refresh.append(symbol)
+
+    if refresh:
+        with ThreadPoolExecutor(max_workers=3) as executor:
+            futures = {executor.submit(finnhub_metric, symbol, api_key): symbol for symbol in refresh}
+            for future in as_completed(futures):
+                symbol = futures[future]
+                try:
+                    result = future.result()
+                except Exception as exc:  # noqa: BLE001
+                    result = {"symbol": symbol, "error": str(exc)}
+                if result.get("metric"):
+                    output[symbol] = result
+                    cache[symbol] = result
+    if refresh:
+        write_json(FINNHUB_METRICS_CACHE_PATH, cache)
+    return output
+
+
+def finnhub_valuation_fields(finnhub: dict[str, Any]) -> dict[str, Any]:
+    metric = finnhub.get("metric") if isinstance(finnhub.get("metric"), dict) else {}
+    if not metric:
+        return {}
+    pe, pe_key = first_number(
+        metric,
+        [
+            "forwardPE",
+            "peForwardAnnual",
+            "peForward",
+            "peNormalizedAnnual",
+            "peBasicExclExtraTTM",
+            "peExclExtraTTM",
+            "peInclExtraTTM",
+            "peTTM",
+            "peAnnual",
+        ],
+    )
+    pb, pb_key = first_number(metric, ["pbQuarterly", "pbAnnual", "priceToBookQuarterly", "priceToBookAnnual"])
+    ps, ps_key = first_number(metric, ["psTTM", "psAnnual", "priceToSalesTTM", "priceToSalesAnnual"])
+    roe, roe_key = first_number(metric, ["roeTTM", "roeRfy", "roeAnnual"])
+    return {
+        "finnhub_pe": pe,
+        "finnhub_pe_metric": pe_key,
+        "finnhub_pb": pb,
+        "finnhub_pb_metric": pb_key,
+        "finnhub_ps": ps,
+        "finnhub_ps_metric": ps_key,
+        "finnhub_roe": roe,
+        "finnhub_roe_metric": roe_key,
+        "finnhub_source": finnhub.get("source"),
+    }
+
+
 def evaluate_candidate(
     ticker: str,
     quote: dict[str, Any],
     chart: dict[str, Any],
     sec: dict[str, Any],
     config: dict[str, Any],
+    finnhub: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     price = number(quote.get("regularMarketPrice") or quote.get("postMarketPrice") or chart.get("last_close"))
     forward_pe = number(quote.get("forwardPE"))
     trailing_pe = number(quote.get("trailingPE"))
+    finnhub_fields = finnhub_valuation_fields(finnhub or {})
+    finnhub_pe = number(finnhub_fields.get("finnhub_pe"))
     market_cap = number(quote.get("marketCap"))
     latest_net_income = sec.get("latest_annual_net_income") if isinstance(sec.get("latest_annual_net_income"), dict) else {}
     latest_net_income_value = number(latest_net_income.get("val")) if isinstance(latest_net_income, dict) else None
@@ -885,7 +1001,13 @@ def evaluate_candidate(
     if sec.get("latest_annual_fcf", {}).get("val", 0) > 0:
         quality_score += 0.5
 
-    pe = forward_pe or trailing_pe
+    pe_sources = [
+        (forward_pe, "Yahoo/Futu forwardPE"),
+        (trailing_pe, "Yahoo/Futu trailingPE"),
+        (finnhub_pe, f"Finnhub {finnhub_fields.get('finnhub_pe_metric')}"),
+        (estimated_pe_from_sec, "SEC market cap / latest annual net income"),
+    ]
+    pe, pe_source = next(((value, source) for value, source in pe_sources if value and value > 0), (None, None))
     valuation_score = 0.0
     if pe and pe > 0:
         valuation_score = max(-1.5, min(1.2, (pe_cap - pe) / pe_cap))
@@ -960,8 +1082,18 @@ def evaluate_candidate(
         "market_cap": market_cap,
         "forward_pe": forward_pe,
         "trailing_pe": trailing_pe,
+        "finnhub_pe": finnhub_pe,
+        "finnhub_pe_metric": finnhub_fields.get("finnhub_pe_metric"),
+        "finnhub_pb": finnhub_fields.get("finnhub_pb"),
+        "finnhub_ps": finnhub_fields.get("finnhub_ps"),
+        "finnhub_roe": finnhub_fields.get("finnhub_roe"),
         "estimated_pe_from_sec": estimated_pe_from_sec,
-        "valuation_source": quote.get("fundamental_source") or quote.get("source"),
+        "valuation_pe": pe,
+        "valuation_pe_source": pe_source,
+        "valuation_source": pe_source
+        or finnhub_fields.get("finnhub_source")
+        or quote.get("fundamental_source")
+        or quote.get("source"),
         "data_confidence": data_confidence,
         "quality_score": round(quality_score, 2),
         "valuation_score": round(valuation_score, 2),
@@ -1013,12 +1145,18 @@ def build_pack(
     public_quotes = collect_nasdaq_quotes(public_needed)
     quotes = dict(public_quotes)
     quotes.update(futu_quotes)
+    finnhub_metrics = collect_finnhub_metrics(
+        requested_universe,
+        max_age_hours=float(config.get("valuation_cache_hours", 30)),
+    )
 
     cache_stats: dict[str, Any] = {
         "mode": mode,
         "quotes_refreshed": len(quote_symbols),
         "futu_quotes": len(futu_quotes),
         "public_quote_fallbacks": len(public_needed),
+        "finnhub_metrics": len(finnhub_metrics),
+        "finnhub_enabled": bool(os.getenv("FINNHUB_API_KEY", "").strip()),
     }
     cached_full = load_json(FULL_PACK_PATH, {}) if FULL_PACK_PATH.exists() else {}
     cached_candidates = {
@@ -1074,7 +1212,16 @@ def build_pack(
     candidates = []
     for ticker in requested_universe:
         sec = sec_summaries.get(ticker, {"ticker": ticker, "sec_coverage": False, "error": "missing SEC summary"})
-        candidates.append(evaluate_candidate(ticker, quotes.get(ticker, {}), charts.get(ticker, {}), sec, config))
+        candidates.append(
+            evaluate_candidate(
+                ticker,
+                quotes.get(ticker, {}),
+                charts.get(ticker, {}),
+                sec,
+                config,
+                finnhub_metrics.get(ticker),
+            )
+        )
 
     candidates.sort(key=lambda item: item.get("overall_score", -99), reverse=True)
     buyable = [item for item in candidates if item.get("buyable_now")][: config.get("max_buy_ideas", 5)]
@@ -1090,6 +1237,7 @@ def build_pack(
         "cache_stats": cache_stats,
         "source_notes": [
             "Quotes: Futu OpenD session-aware market snapshot first when connected; Nasdaq/Yahoo public quote fields are fallback/enrichment only.",
+            "Valuation metrics: forward/trailing PE first; Finnhub Basic Financials fills PE/PB/PS/ROE when FINNHUB_API_KEY is configured; SEC market-cap/net-income PE is the final fallback.",
             "Chart data: Futu OpenD daily K-line first when connected; Nasdaq historical endpoint is fallback only; daily values are cached.",
             "Financial statements and recent filings: SEC EDGAR companyfacts/submissions; financial facts refresh only when a new 10-Q/10-K/20-F/40-F is detected.",
             "Mechanical scores are only a pre-screen; the Codex Buy-Side Stock Analysis pass must verify every actionable conclusion.",
@@ -1147,7 +1295,14 @@ def compact_candidate(
         "sec_filing_poll_time_utc": item.get("sec_filing_poll_time_utc"),
         "forward_pe": item.get("forward_pe"),
         "trailing_pe": item.get("trailing_pe"),
+        "finnhub_pe": item.get("finnhub_pe"),
+        "finnhub_pe_metric": item.get("finnhub_pe_metric"),
+        "finnhub_pb": item.get("finnhub_pb"),
+        "finnhub_ps": item.get("finnhub_ps"),
+        "finnhub_roe": item.get("finnhub_roe"),
         "estimated_pe_from_sec": item.get("estimated_pe_from_sec"),
+        "valuation_pe": item.get("valuation_pe"),
+        "valuation_pe_source": item.get("valuation_pe_source"),
         "valuation_source": item.get("valuation_source"),
         "data_confidence": item.get("data_confidence"),
         "mechanical_scores": {
@@ -1199,6 +1354,15 @@ def compact_candidate(
             "quarter_net_income_growth_yoy": quarter_net_income.get("growth"),
             "quarter_gross_margin": quarter.get("gross_margin"),
             "prior_quarter_gross_margin": quarter.get("prior_gross_margin"),
+            "estimated_pe_from_sec": item.get("estimated_pe_from_sec"),
+            "finnhub_pe": item.get("finnhub_pe"),
+            "finnhub_pe_metric": item.get("finnhub_pe_metric"),
+            "finnhub_pb": item.get("finnhub_pb"),
+            "finnhub_ps": item.get("finnhub_ps"),
+            "finnhub_roe": item.get("finnhub_roe"),
+            "valuation_pe": item.get("valuation_pe"),
+            "valuation_pe_source": item.get("valuation_pe_source"),
+            "valuation_source": item.get("valuation_source"),
         },
     }
     if extra_metrics:
@@ -1405,13 +1569,14 @@ def render_report(pack: dict[str, Any]) -> str:
             )
 
     lines.extend(["", "## 物理 AI 观察清单", ""])
-    lines.extend(["| Ticker | 价格 | 严格首买价 | Fwd P/E | 数据置信度 | 备注 |", "|---|---:|---:|---:|---:|---|"])
+    lines.extend(["| Ticker | 价格 | 严格首买价 | 估值 P/E | 数据置信度 | 备注 |", "|---|---:|---:|---:|---:|---|"])
     for item in pack.get("physical_ai_watchlist", []):
         sec = item.get("sec", {})
         growth = sec.get("revenue_growth_yoy")
         note = f"收入同比 {pct(growth)}" if isinstance(growth, (int, float)) else "等待财报/估值复核"
+        display_pe = item.get("valuation_pe") or item.get("forward_pe") or item.get("trailing_pe") or item.get("estimated_pe_from_sec")
         lines.append(
-            f"| {item['ticker']} | {money(item.get('price'))} | {money(item.get('strict_entry'))} | {item.get('forward_pe') or item.get('trailing_pe') or 'n/a'} | {item.get('data_confidence')} | {note} |"
+            f"| {item['ticker']} | {money(item.get('price'))} | {money(item.get('strict_entry'))} | {display_pe or 'n/a'} | {item.get('data_confidence')} | {note} |"
         )
 
     lines.extend(["", "## 数据源限制", ""])

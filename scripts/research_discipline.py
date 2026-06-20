@@ -141,6 +141,14 @@ def valuation_summary(row: dict[str, Any]) -> str:
         f"Forward P/E {pe_value(row.get('forward_pe'))}",
         f"Trailing P/E {pe_value(row.get('trailing_pe'))}",
     ]
+    valuation_pe = row.get("valuation_pe")
+    if valuation_pe is not None:
+        source = str(row.get("valuation_pe_source") or row.get("valuation_source") or "").strip()
+        parts.append(f"采用估值P/E {pe_value(valuation_pe)}" + (f"（{source}）" if source else ""))
+    finnhub_pe = row.get("finnhub_pe")
+    if finnhub_pe is not None:
+        metric = str(row.get("finnhub_pe_metric") or "").strip()
+        parts.append(f"Finnhub P/E {pe_value(finnhub_pe)}" + (f"（{metric}）" if metric else ""))
     estimated = row.get("estimated_pe_from_sec")
     if estimated is not None:
         parts.append(f"粗算市值/年净利PE {pe_value(estimated)}")
@@ -305,7 +313,11 @@ def extract_candidate_fields(ticker: str, item: dict[str, Any]) -> dict[str, Any
         "data_confidence": number(item.get("data_confidence")),
         "forward_pe": number(item.get("forward_pe")),
         "trailing_pe": number(item.get("trailing_pe")),
+        "finnhub_pe": number(item.get("finnhub_pe") or financials.get("finnhub_pe")),
+        "finnhub_pe_metric": item.get("finnhub_pe_metric") or financials.get("finnhub_pe_metric"),
         "estimated_pe_from_sec": number(item.get("estimated_pe_from_sec") or financials.get("estimated_pe_from_sec")),
+        "valuation_pe": number(item.get("valuation_pe") or financials.get("valuation_pe")),
+        "valuation_pe_source": item.get("valuation_pe_source") or financials.get("valuation_pe_source"),
         "valuation_source": item.get("valuation_source") or financials.get("valuation_source"),
         "ma20": number(chart.get("ma20") or technicals.get("ma20")),
         "ma50": number(chart.get("ma50") or technicals.get("ma50")),

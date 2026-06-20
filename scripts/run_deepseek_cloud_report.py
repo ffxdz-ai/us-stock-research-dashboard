@@ -106,6 +106,14 @@ def concise_candidate(item: dict[str, Any]) -> dict[str, Any]:
         "quote_source": item.get("quote_source"),
         "forward_pe": item.get("forward_pe"),
         "trailing_pe": item.get("trailing_pe"),
+        "valuation_pe": item.get("valuation_pe") or financials.get("valuation_pe"),
+        "valuation_pe_source": item.get("valuation_pe_source") or financials.get("valuation_pe_source"),
+        "estimated_pe_from_sec": item.get("estimated_pe_from_sec") or financials.get("estimated_pe_from_sec"),
+        "finnhub_pe": item.get("finnhub_pe") or financials.get("finnhub_pe"),
+        "finnhub_pe_metric": item.get("finnhub_pe_metric") or financials.get("finnhub_pe_metric"),
+        "finnhub_pb": item.get("finnhub_pb") or financials.get("finnhub_pb"),
+        "finnhub_ps": item.get("finnhub_ps") or financials.get("finnhub_ps"),
+        "finnhub_roe": item.get("finnhub_roe") or financials.get("finnhub_roe"),
         "data_confidence": item.get("data_confidence"),
         "scores": {
             "quality": item.get("quality_score") or mechanical_scores.get("quality"),
@@ -237,6 +245,7 @@ def build_user_prompt(context: dict[str, Any], mode: str) -> str:
 - 不要输出真实持仓、现金、成本、股数、本地路径、API Key。
 - 对 secondary_analysis_queue.deepseek_priority 中的股票全部覆盖；如果数量较多，先用表格逐只给结论，再挑最重要标的展开。
 - 如果 secondary_analysis_queue.deepseek_priority 为空，再从候选池中选择最值得复核的重点股票，宁缺毋滥。
+- 估值优先使用 valuation_pe 和 valuation_pe_source；forward_pe/trailing_pe 缺失时，不得忽略 Finnhub P/E 或 SEC 市值/净利润估算 P/E。
 - 每只重点股票必须分别评估：当前价试仓、理想回调、突破确认。
 - 每条可执行买入路径必须独立满足 R/R >= 2:1；不满足就写观察或等待。
 - 公开版不得给最终买入股数；整股执行写“需本地组合复核”。
