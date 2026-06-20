@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>美股持仓管理</title>
+    <link rel="stylesheet" href="./styles.css?v=20260620" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="topbar">
+        <div class="topbar-title">
+          <h1>美股持仓管理</h1>
+          <p id="fileStatus">config/portfolio.json</p>
+        </div>
+        <div class="topbar-actions">
+          <button class="ghost-button" id="reportsButton" type="button" title="查看每日分析报告">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3h14v18H5z"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>
+            <span>每日报告</span>
+          </button>
+          <button class="ghost-button" id="reloadButton" type="button" title="重新读取配置">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11a8 8 0 1 0-2.34 5.66M20 11V5m0 6h-6"/></svg>
+            <span>重新读取</span>
+          </button>
+          <button class="ghost-button" id="refreshPricesButton" type="button" title="通过互联网刷新持仓现价">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4v6h6M20 20v-6h-6"/><path d="M20 9a7 7 0 0 0-12.04-4.9L4 8M4 15a7 7 0 0 0 12.04 4.9L20 16"/></svg>
+            <span>刷新现价</span>
+          </button>
+          <button class="ghost-button" id="runButton" type="button" title="运行一次报告">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m8 5 11 7-11 7V5Z"/></svg>
+            <span>运行一次报告</span>
+          </button>
+          <button class="primary-button" id="saveButton" type="button" title="保存配置">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3h12l2 2v16H5V3Z"/><path d="M8 3v6h8V3M8 21v-8h8v8"/></svg>
+            <span>保存配置</span>
+          </button>
+        </div>
+      </header>
+
+      <section class="workspace">
+        <aside class="summary-panel" aria-label="账户摘要">
+          <div class="panel-title">
+            <span>总资产</span>
+            <strong id="assetValue">$0.00</strong>
+          </div>
+
+          <label class="field">
+            <span>剩余资金</span>
+            <input id="cashUsd" type="number" min="0" step="0.01" inputmode="decimal" />
+          </label>
+
+          <div class="metric-grid">
+            <div>
+              <span>现金比例</span>
+              <strong id="cashPct">0.00%</strong>
+            </div>
+            <div>
+              <span>持仓市值</span>
+              <strong id="equityValue">$0.00</strong>
+            </div>
+            <div>
+              <span>浮动盈亏</span>
+              <strong id="unrealizedPnl">$0.00</strong>
+            </div>
+            <div>
+              <span>持仓数量</span>
+              <strong id="positionCount">0</strong>
+            </div>
+          </div>
+
+          <div class="capital-card">
+            <div class="capital-heading">
+              <div>
+                <h3>账户本金</h3>
+                <p>充值 - 提取</p>
+              </div>
+              <strong id="principalValue">$0.00</strong>
+            </div>
+
+            <div class="capital-metrics">
+              <div>
+                <span>累计充值</span>
+                <strong id="depositTotal">$0.00</strong>
+              </div>
+              <div>
+                <span>累计提取</span>
+                <strong id="withdrawalTotal">$0.00</strong>
+              </div>
+              <div>
+                <span>账户收益</span>
+                <strong id="accountPnl">$0.00</strong>
+              </div>
+              <div>
+                <span>收益率</span>
+                <strong id="accountReturnPct">0.00%</strong>
+              </div>
+            </div>
+
+            <div class="capital-actions">
+              <span>资金记录</span>
+              <button class="secondary-button compact-button" id="addCapitalFlowButton" type="button" title="新增充值或提取记录">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+                <span>新增</span>
+              </button>
+            </div>
+            <div class="capital-flow-list" id="capitalFlowsList"></div>
+          </div>
+
+          <label class="field">
+            <span>现金目标</span>
+            <input id="cashTargetPct" type="number" min="0" max="100" step="0.1" inputmode="decimal" />
+          </label>
+
+          <label class="field">
+            <span>单票上限</span>
+            <input id="maxSinglePositionPct" type="number" min="0" max="100" step="0.1" inputmode="decimal" />
+          </label>
+
+          <label class="field">
+            <span>风险偏好</span>
+            <select id="riskProfile">
+              <option value="conservative">conservative</option>
+              <option value="balanced">balanced</option>
+              <option value="aggressive">aggressive</option>
+            </select>
+          </label>
+
+          <div class="status-list">
+            <div>
+              <span>飞书</span>
+              <strong id="feishuStatus">检查中</strong>
+            </div>
+            <div>
+              <span>最近报告</span>
+              <strong id="reportStatus">未读取</strong>
+            </div>
+          </div>
+        </aside>
+
+        <section class="holdings-panel" aria-label="持仓">
+          <div class="section-heading">
+            <div>
+              <h2>持仓</h2>
+              <p id="asOfText">--</p>
+            </div>
+            <button class="secondary-button" id="addHoldingButton" type="button" title="新增持仓">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+              <span>新增</span>
+            </button>
+          </div>
+
+          <div class="table-wrap">
+            <table>
+              <colgroup>
+                <col class="ticker-col" />
+                <col class="name-col" />
+                <col class="business-col" />
+                <col class="shares-col" />
+                <col class="price-col" />
+                <col class="price-col" />
+                <col class="money-col" />
+                <col class="money-col" />
+                <col class="target-col" />
+                <col class="action-col" />
+              </colgroup>
+              <thead>
+                <tr>
+                  <th>代码</th>
+                  <th>名称</th>
+                  <th>主营业务</th>
+                  <th>股数</th>
+                  <th>成本</th>
+                  <th>时段现价</th>
+                  <th>市值</th>
+                  <th>浮盈</th>
+                  <th>目标仓位</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="holdingsBody"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <aside class="watch-panel" aria-label="观察列表">
+          <div class="section-heading compact">
+            <div>
+              <h2>观察列表</h2>
+              <p id="watchCount">0 个标的</p>
+            </div>
+          </div>
+
+          <div class="watch-input">
+            <input id="watchInput" type="text" placeholder="输入代码" autocomplete="off" />
+            <button class="secondary-button icon-only" id="addWatchButton" type="button" title="加入观察列表">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+            </button>
+          </div>
+
+          <div class="watch-list" id="watchList"></div>
+
+          <div class="run-output" id="runOutput" aria-live="polite"></div>
+        </aside>
+      </section>
+
+      <section class="reports-panel" id="reportsSection" aria-label="每日分析报告">
+        <div class="reports-heading">
+          <div>
+            <span class="eyebrow">RESEARCH ARCHIVE</span>
+            <h2>每日分析报告</h2>
+            <p>读取本机 reports 目录中的完整报告；GitHub公开站使用脱敏版本。</p>
+          </div>
+          <button class="secondary-button" id="refreshReportsButton" type="button" title="重新扫描报告目录">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4v6h6M20 20v-6h-6"/><path d="M20 9a7 7 0 0 0-12.04-4.9L4 8M4 15a7 7 0 0 0 12.04 4.9L20 16"/></svg>
+            <span>刷新报告</span>
+          </button>
+        </div>
+        <div class="reports-layout">
+          <aside class="report-browser" aria-label="报告列表">
+            <label class="report-search">
+              <span>搜索报告</span>
+              <input id="reportSearch" type="search" placeholder="日期、类型或标题" autocomplete="off" />
+            </label>
+            <div class="report-list" id="reportList"></div>
+          </aside>
+          <article class="report-viewer">
+            <header class="report-viewer-heading">
+              <div>
+                <span id="reportKind">请选择报告</span>
+                <h3 id="reportTitle">报告内容将在这里显示</h3>
+              </div>
+              <time id="reportUpdated"></time>
+            </header>
+            <div class="markdown-body report-content" id="reportContent">
+              <p class="report-placeholder">正在读取报告目录…</p>
+            </div>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script src="./app.js?v=20260620"></script>
+  </body>
+</html>

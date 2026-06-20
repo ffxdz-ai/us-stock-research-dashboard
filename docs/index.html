@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="美股每日分析报告公开脱敏归档" />
+    <title>美股每日分析</title>
+    <link rel="stylesheet" href="./styles.css?v=20260620" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="header-inner">
+        <div>
+          <span class="eyebrow">US EQUITY RESEARCH</span>
+          <h1>美股每日分析</h1>
+          <p>市场、个股与观察名单的只读研究归档</p>
+        </div>
+        <div class="privacy-note">
+          <strong>公开脱敏版</strong>
+          <span>不包含账户金额、股数、成本或交易接口</span>
+        </div>
+      </div>
+    </header>
+
+    <main class="page-shell">
+      <section class="toolbar" aria-label="报告筛选">
+        <div class="filter-group" id="filters">
+          <button class="filter active" data-kind="all" type="button">全部</button>
+          <button class="filter" data-kind="buy-side" type="button">Buy-Side</button>
+          <button class="filter" data-kind="daily" type="button">每日分析</button>
+          <button class="filter" data-kind="weekly" type="button">周度扫描</button>
+          <button class="filter" data-kind="quick" type="button">快速更新</button>
+        </div>
+        <label class="search-box">
+          <span>搜索</span>
+          <input id="searchInput" type="search" placeholder="标题、日期或正文" autocomplete="off" />
+        </label>
+      </section>
+
+      <section class="research-layout">
+        <aside class="archive-panel" aria-label="报告归档">
+          <div class="archive-heading">
+            <div>
+              <span>报告归档</span>
+              <strong id="reportCount">0</strong>
+            </div>
+            <time id="generatedAt">读取中</time>
+          </div>
+          <div class="report-list" id="reportList"></div>
+        </aside>
+
+        <article class="report-panel">
+          <header class="report-heading">
+            <div>
+              <span class="report-kind" id="reportKind">报告</span>
+              <h2 id="reportTitle">正在读取报告</h2>
+            </div>
+            <time id="reportDate"></time>
+          </header>
+          <div class="markdown-body" id="reportContent">
+            <p class="placeholder">正在加载公开报告数据…</p>
+          </div>
+        </article>
+      </section>
+    </main>
+
+    <footer>
+      <p>数据与观点具有时效性，仅供研究记录，不构成投资建议或交易指令。</p>
+    </footer>
+    <script src="./app.js?v=20260620"></script>
+  </body>
+</html>
