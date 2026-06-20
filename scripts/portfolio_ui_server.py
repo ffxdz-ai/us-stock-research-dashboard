@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import os
 import re
@@ -11,7 +12,7 @@ import shutil
 import socket
 import subprocess
 import sys
-from datetime import datetime, time, timezone
+from datetime import datetime, time, timedelta, timezone
 from functools import lru_cache
 from http import HTTPStatus
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
@@ -28,7 +29,10 @@ UI_ROOT = ROOT / "portfolio-ui"
 PORTFOLIO_PATH = ROOT / "config" / "portfolio.json"
 REPORT_PATH = ROOT / "reports" / "latest-market-brief.md"
 REPORTS_DIR = ROOT / "reports"
-NEW_YORK_TZ = ZoneInfo("America/New_York")
+try:
+    NEW_YORK_TZ = ZoneInfo("America/New_York")
+except Exception:
+    NEW_YORK_TZ = timezone(timedelta(hours=-4), "America/New_York")
 SESSION_LABELS = {
     "pre": "盘前",
     "regular": "盘中",
@@ -41,12 +45,27 @@ REPORT_KIND_LABELS = {
     "weekly": "周度扫描",
     "quick": "快速更新",
     "buy-side": "Buy-Side",
+    "deepseek-cloud": "DeepSeek云端",
+    "entry-radar": "入场雷达",
+    "missed-review": "错过复盘",
+    "future-audit": "未来函数审计",
     "daily": "每日分析",
 }
+
+PUBLIC_FOOTER_RE = re.compile(r"\n{0,2}---\n\n> 公开脱敏版：.*$", re.DOTALL)
+VOLATILE_REPORT_LINE_RE = re.compile(r"^-\s+(?:生成时间|不可覆盖快照)：")
 
 
 def report_kind(filename: str) -> str:
     lowered = filename.lower()
+    if "entry-radar" in lowered:
+        return "entry-radar"
+    if "missed-opportunity" in lowered:
+        return "missed-review"
+    if "future-function-audit" in lowered:
+        return "future-audit"
+    if "deepseek-cloud" in lowered:
+        return "deepseek-cloud"
     if "weekly" in lowered:
         return "weekly"
     if "quick" in lowered:
@@ -62,6 +81,18 @@ def report_title(content: str, fallback: str) -> str:
         if match:
             return match.group(1).strip()
     return fallback
+
+
+def report_identity_digest(content: str) -> str:
+    """Digest report content while ignoring export footers and rerun-only lines."""
+    normalized = PUBLIC_FOOTER_RE.sub("", content.replace("\r\n", "\n"))
+    stable_lines = [
+        line.rstrip()
+        for line in normalized.split("\n")
+        if not VOLATILE_REPORT_LINE_RE.match(line.strip())
+    ]
+    stable = "\n".join(stable_lines).strip()
+    return hashlib.sha256(stable.encode("utf-8")).hexdigest()
 
 
 def list_reports() -> list[dict[str, object]]:
@@ -85,10 +116,23 @@ def list_reports() -> list[dict[str, object]]:
                 "updated_label": datetime.fromtimestamp(stat.st_mtime).strftime("%Y-%m-%d %H:%M"),
                 "size": stat.st_size,
                 "is_latest": path.name.startswith("latest-"),
+                "_digest": report_identity_digest(content),
             }
         )
     reports.sort(key=lambda item: str(item["updated_at"]), reverse=True)
-    return reports
+    deduped: list[dict[str, object]] = []
+    digest_index: dict[str, int] = {}
+    for item in reports:
+        digest = str(item.pop("_digest"))
+        existing_index = digest_index.get(digest)
+        if existing_index is None:
+            digest_index[digest] = len(deduped)
+            deduped.append(item)
+            continue
+        existing = deduped[existing_index]
+        if bool(existing.get("is_latest")) and not bool(item.get("is_latest")):
+            deduped[existing_index] = item
+    return deduped
 
 
 def resolve_report(name: str) -> Path:
