@@ -64,6 +64,11 @@ if ($LASTEXITCODE -ne 0) {
     exit $LASTEXITCODE
 }
 
+& $Python (Join-Path $PSScriptRoot "secondary_analysis_queue.py") --market-pack $PackPath
+if ($LASTEXITCODE -ne 0) {
+    exit $LASTEXITCODE
+}
+
 if ($Send) {
     & $Python (Join-Path $PSScriptRoot "send_feishu.py") --file $LatestReportPath
 }

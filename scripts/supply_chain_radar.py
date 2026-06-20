@@ -388,12 +388,12 @@ def security_action(security: dict[str, Any], score: float, market_score: float 
         return "补行情后再判断"
     if market != "US":
         if score >= 75 and market_score >= 70:
-            return "跨市场强候选；需 Futu/财报/流动性复核后进入二次分析"
+            return "跨市场强候选；进入二次分析候选池，需 Futu/财报/流动性复核"
         if score >= 75:
             return "产业强但股价未确认；跨市场观察"
         return "跨市场观察；需 Futu 复核"
     if score >= 75 and market_score >= 70:
-        return "加入观察池，交给 Buy-Side 二次分析"
+        return "进入二次分析候选池；等待 Buy-Side 复核"
     if score >= 75 and market_score < 55:
         return "产业强但股价未确认，等待转强"
     if market_score >= 78:
@@ -514,7 +514,7 @@ def build_radar(config: dict[str, Any], market_pack: dict[str, Any]) -> dict[str
         "discipline": [
             "产业链雷达只发现候选，不直接给买入指令。",
             "港股/A股候选必须回到 Futu/券商行情、财报与交易规则复核。",
-            "所有候选进入 Buy-Side 二次分析和入场路径雷达后，才允许讨论仓位。"
+            "所有候选进入二次分析队列、Buy-Side 复核和入场路径雷达后，才允许讨论仓位。"
         ],
         "chains": chains,
         "candidates": candidates[:80],
@@ -537,7 +537,7 @@ def render_report(radar: dict[str, Any]) -> str:
         "",
         f"- 生成时间：{radar.get('generated_label')}",
         "- 定位：从终端需求和供应链瓶颈发现候选股票；不构成买入建议。",
-        "- 执行纪律：候选必须进入 Buy-Side 二次分析、重新计算 R/R，并按券商实时价复核。",
+        "- 执行纪律：候选必须进入二次分析队列、重新计算 R/R，并按券商实时价复核。",
         "",
         "## 数据边界",
         "",

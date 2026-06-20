@@ -59,9 +59,6 @@ jobs:
       - name: Collect public market data
         run: python scripts/collect_market_data.py --mode "$REPORT_MODE"
 
-      - name: Generate DeepSeek cloud report
-        run: python scripts/run_deepseek_cloud_report.py --mode "$REPORT_MODE"
-
       - name: Generate supply-chain radar
         shell: bash
         run: |
@@ -71,6 +68,28 @@ jobs:
             MARKET_PACK="data/latest_market_pack.json"
           fi
           python scripts/supply_chain_radar.py --market-pack "$MARKET_PACK"
+
+      - name: Update secondary-analysis queue
+        shell: bash
+        run: |
+          if [ "$REPORT_MODE" = "weekly" ]; then
+            MARKET_PACK="data/latest_weekly_market_pack.json"
+          else
+            MARKET_PACK="data/latest_market_pack.json"
+          fi
+          python scripts/secondary_analysis_queue.py --market-pack "$MARKET_PACK"
+
+      - name: Generate DeepSeek cloud report
+        shell: bash
+        run: |
+          if [ "$REPORT_MODE" = "weekly" ]; then
+            MARKET_PACK="data/latest_weekly_market_pack.json"
+            AGENT_INPUT="data/latest_weekly_agent_input.json"
+          else
+            MARKET_PACK="data/latest_market_pack.json"
+            AGENT_INPUT="data/latest_agent_input.json"
+          fi
+          python scripts/run_deepseek_cloud_report.py --mode "$REPORT_MODE" --input "$AGENT_INPUT" --market-pack "$MARKET_PACK"
 
       - name: Export public archive
         run: python scripts/export_public_reports.py --limit 80
@@ -83,7 +102,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add docs/data/reports.json
+          git add docs/data/reports.json docs/data/secondary_analysis_queue.json
           if git diff --cached --quiet; then
             echo "No public archive changes to commit."
           else
