@@ -1,13 +1,19 @@
 param(
-    [switch]$NoPush
+    [switch]$NoPush,
+    [string]$Repository = "ffxdz-ai/us-stock-research-dashboard",
+    [string]$Branch = "main"
 )
 
 $ErrorActionPreference = "Stop"
 $Root = Split-Path -Parent $PSScriptRoot
 $Python = Join-Path $env:USERPROFILE ".cache\codex-runtimes\codex-primary-runtime\dependencies\python\python.exe"
+$GitHubCli = "C:\Program Files\GitHub CLI\gh.exe"
 
 if (-not (Test-Path $Python)) {
     $Python = "python"
+}
+if (-not (Test-Path $GitHubCli)) {
+    $GitHubCli = "gh"
 }
 
 Set-Location $Root
@@ -19,9 +25,10 @@ if ($LASTEXITCODE -ne 0) {
 $Forbidden = @(
     'portfolio\.json',
     '[A-Z]:\\',
-    '估算总资产\s*[:：]',
-    '现金比例\s*[:：]',
-    '\|\s*Ticker\s*\|\s*股数\s*\|'
+    'cash_usd',
+    'cost_basis',
+    'estimated_total_assets',
+    '\|\s*Ticker\s*\|\s*shares\s*\|'
 )
 $PayloadPath = Join-Path $Root "docs\data\reports.json"
 $Payload = Get-Content -Raw -Encoding UTF8 $PayloadPath
@@ -31,28 +38,51 @@ foreach ($Pattern in $Forbidden) {
     }
 }
 
-git add -- "docs/data/reports.json"
-git diff --cached --quiet -- "docs/data/reports.json"
-if ($LASTEXITCODE -eq 0) {
-    Write-Output "Public report archive is already up to date."
+if ($NoPush) {
+    Write-Output "Public report archive exported and validated without publishing."
     exit 0
 }
 
-$Stamp = Get-Date -Format "yyyy-MM-dd"
-git commit -m "Update public reports $Stamp" -- "docs/data/reports.json"
+& $GitHubCli auth status | Out-Null
 if ($LASTEXITCODE -ne 0) {
-    throw "Unable to commit the public report archive."
+    throw "GitHub CLI is not authenticated."
 }
 
-if (-not $NoPush) {
-    $Branch = git branch --show-current
-    if (-not $Branch) {
-        throw "Cannot push from a detached HEAD."
+$ApiPath = "repos/$Repository/contents/docs/data/reports.json"
+$Remote = $null
+try {
+    $RemoteJson = & $GitHubCli api "$ApiPath`?ref=$Branch" 2>$null
+    if ($LASTEXITCODE -eq 0 -and $RemoteJson) {
+        $Remote = $RemoteJson | ConvertFrom-Json
     }
-    git push origin $Branch
-    if ($LASTEXITCODE -ne 0) {
-        throw "Unable to push public report archive."
+} catch {
+    $Remote = $null
+}
+
+$LocalBytes = [System.IO.File]::ReadAllBytes($PayloadPath)
+$LocalBase64 = [Convert]::ToBase64String($LocalBytes)
+if ($Remote -and $Remote.content) {
+    $RemoteBase64 = [string]$Remote.content -replace '\s', ''
+    if ($RemoteBase64 -eq $LocalBase64) {
+        Write-Output "Public report archive is already up to date."
+        exit 0
     }
 }
 
-Write-Output "Public report archive synchronized."
+$Stamp = Get-Date -Format "yyyy-MM-dd HH:mm"
+$Request = @{
+    message = "Update public reports $Stamp"
+    content = $LocalBase64
+    branch = $Branch
+}
+if ($Remote -and $Remote.sha) {
+    $Request.sha = [string]$Remote.sha
+}
+
+$RequestJson = $Request | ConvertTo-Json -Compress
+$RequestJson | & $GitHubCli api --method PUT $ApiPath --input - | Out-Null
+if ($LASTEXITCODE -ne 0) {
+    throw "Unable to publish the public report archive through GitHub API."
+}
+
+Write-Output "Public report archive synchronized to $Repository ($Branch)."
