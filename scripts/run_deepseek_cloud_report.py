@@ -191,7 +191,7 @@ def prepare_public_context(compact: dict[str, Any], pack: dict[str, Any], second
         "mechanical_buyable_now": buyable,
         "physical_ai_watchlist": watchlist,
         "secondary_analysis_queue": {
-            "rule": "进入二次分析后每两天复核一次；不合格则退回观察，不再占用高频 Buy-Side 分析名额，除非重新触发。",
+            "rule": "进入二次分析后每两天复核一次；不合格则退回观察，不再占用高频 Buy-Side 分析名额；无固定冷却期，重新满足触发条件即可回池。",
             "generated_label": secondary_queue.get("generated_label"),
             "summary": secondary_queue.get("summary") if isinstance(secondary_queue.get("summary"), dict) else {},
             "deepseek_priority": secondary_queue.get("deepseek_priority") if isinstance(secondary_queue.get("deepseek_priority"), list) else [],

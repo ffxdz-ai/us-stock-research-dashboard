@@ -4,7 +4,8 @@
 The queue is a scheduling and discipline layer, not a trade generator. It takes
 strong supply-chain radar candidates, reviews them every two days, and demotes
 failed names back to observation so they stop consuming high-cost Buy-Side
-analysis slots unless they re-trigger.
+analysis slots unless they re-trigger. There is no time-based cooldown:
+qualified names can re-enter as soon as they satisfy the re-trigger gates.
 """
 
 from __future__ import annotations
@@ -164,7 +165,6 @@ def market_pack_index(pack: dict[str, Any]) -> dict[str, dict[str, Any]]:
 def secondary_config(config: dict[str, Any]) -> dict[str, Any]:
     defaults = {
         "review_interval_days": 2,
-        "cooldown_days": 14,
         "max_active": 20,
         "review_timezone": "Asia/Shanghai",
         "review_hour": 12,
@@ -279,7 +279,6 @@ def update_queue(
     eligible.sort(key=candidate_priority, reverse=True)
 
     records = state_records(state)
-    cooldown_days = int(cfg["cooldown_days"])
     max_active = int(cfg["max_active"])
 
     new_entries = 0
@@ -287,11 +286,11 @@ def update_queue(
     for item in eligible:
         code = normalize_code(item.get("code"))
         record = records.get(code, {})
-        cooldown_until = parse_time(record.get("cooldown_until"))
         if record.get("status") == "retreated":
-            if cooldown_until and cooldown_until > now and not retriggered(item, cfg):
+            if not retriggered(item, cfg):
                 enrich_record(record, item, now)
-                record["last_result"] = "退回观察冷却中"
+                record["cooldown_until"] = None
+                record["last_result"] = "退回观察，等待重新触发"
                 records[code] = record
                 continue
             record["status"] = "active"
@@ -330,8 +329,8 @@ def update_queue(
                     event["reviewed_at"] = normalize_review_slot(event.get("reviewed_at"), now, cfg)
         if record.get("status") == "active":
             record["next_analysis_due_at"] = normalize_review_slot(record.get("next_analysis_due_at"), now, cfg)
-        elif record.get("status") == "retreated" and record.get("cooldown_until"):
-            record["cooldown_until"] = normalize_review_slot(record.get("cooldown_until"), now + timedelta(days=cooldown_days), cfg)
+        elif record.get("status") == "retreated":
+            record["cooldown_until"] = None
 
     active_due: list[dict[str, Any]] = []
     for record in records.values():
@@ -363,7 +362,7 @@ def update_queue(
             record["status"] = "retreated"
             record["fail_count"] = int(record.get("fail_count") or 0) + 1
             record["next_analysis_due_at"] = None
-            record["cooldown_until"] = iso(review_slot(analysis_time, cfg, days=cooldown_days))
+            record["cooldown_until"] = None
             record["last_result"] = "退回观察"
             record["last_reason"] = reason
         history = record.get("history") if isinstance(record.get("history"), list) else []
@@ -449,7 +448,7 @@ def update_queue(
         "reviews": reviews,
         "deepseek_priority": deepseek_priority,
         "active": sorted(active, key=lambda item: str(item.get("next_analysis_due_at") or ""))[:80],
-        "retreated": sorted(retreated, key=lambda item: str(item.get("cooldown_until") or ""), reverse=True)[:80],
+        "retreated": sorted(retreated, key=lambda item: float(item.get("priority") or 0), reverse=True)[:80],
     }
     return next_state, latest
 
@@ -461,7 +460,7 @@ def render_report(payload: dict[str, Any]) -> str:
         "# 二次分析队列",
         "",
         f"- 生成时间：{payload.get('generated_label')}",
-        f"- 规则：进入二次分析后每 {rules.get('review_interval_days', 2)} 天复核一次；统一在北京时间 {int(rules.get('review_hour', 12)):02d}:{int(rules.get('review_minute', 0)):02d} 处理；不设每轮处理数量上限；不合格则退回观察，冷却 {rules.get('cooldown_days', 14)} 天。",
+        f"- 规则：进入二次分析后每 {rules.get('review_interval_days', 2)} 天复核一次；统一在北京时间 {int(rules.get('review_hour', 12)):02d}:{int(rules.get('review_minute', 0)):02d} 处理；不设每轮处理数量上限；不合格则退回观察；无冷却期，重新满足触发条件即可回到二次分析。",
         "- 定位：这是研究资源调度层，不生成买入指令；最终交易仍需完整 Buy-Side 分析、R/R 和整股仓位复核。",
         "",
         "## 本轮概览",
@@ -479,7 +478,7 @@ def render_report(payload: dict[str, Any]) -> str:
     else:
         lines.extend(["| 结果 | 市场 | 代码 | 名称 | 环节 | 价格 | 机会分 | 趋势确认 | 原因 | 下次动作 |", "|---|---|---|---|---|---:|---:|---:|---|---|"])
         for item in reviews:
-            next_action = label_time(item.get("next_analysis_due_at")) if item.get("result") == "通过复核" else f"冷却至 {label_time(item.get('cooldown_until'))}"
+            next_action = label_time(item.get("next_analysis_due_at")) if item.get("result") == "通过复核" else f"等待重新触发：机会分 >= {rules.get('retrigger_layer_score')} 且趋势确认 >= {rules.get('retrigger_trend_score')}"
             lines.append(
                 f"| {item.get('result')} | {item.get('market')} | {item.get('code')} | {item.get('name')} | {item.get('layer_name')} | {fmt_price(item.get('price'))} | {fmt_num(item.get('layer_score'))} | {fmt_num(item.get('trend_score'))} | {item.get('reason')} | {next_action} |"
             )
@@ -511,10 +510,10 @@ def render_report(payload: dict[str, Any]) -> str:
     if not retreated:
         lines.append("当前没有退回观察的标的。")
     else:
-        lines.extend(["| 市场 | 代码 | 名称 | 环节 | 冷却至 | 退回原因 | 重新触发条件 |", "|---|---|---|---|---|---|---|"])
+        lines.extend(["| 市场 | 代码 | 名称 | 环节 | 重新触发状态 | 退回原因 | 重新触发条件 |", "|---|---|---|---|---|---|---|"])
         for item in retreated[:40]:
             lines.append(
-                f"| {item.get('market')} | {item.get('code')} | {item.get('name')} | {item.get('layer_name')} | {label_time(item.get('cooldown_until'))} | {item.get('last_reason')} | 机会分 >= {rules.get('retrigger_layer_score')} 且趋势确认 >= {rules.get('retrigger_trend_score')} |"
+                f"| {item.get('market')} | {item.get('code')} | {item.get('name')} | {item.get('layer_name')} | 无冷却，达标即回池 | {item.get('last_reason')} | 机会分 >= {rules.get('retrigger_layer_score')} 且趋势确认 >= {rules.get('retrigger_trend_score')} |"
             )
 
     lines.extend(
@@ -523,7 +522,7 @@ def render_report(payload: dict[str, Any]) -> str:
             "## 执行纪律",
             "",
             "- 通过复核只代表继续占用研究名额，不代表可以买。",
-            "- 退回观察不是永久放弃；冷却后或重新触发后可以再次进入队列。",
+            "- 退回观察不是永久放弃；没有时间冷却，只要重新满足触发条件就可以再次进入队列。",
             "- 港股/A股即使通过队列复核，也必须单独用 Futu/财报/流动性确认后才允许进一步讨论交易。",
             "- 如果 R/R 明确低于 2:1，或趋势明显转弱，直接退回观察。",
         ]
