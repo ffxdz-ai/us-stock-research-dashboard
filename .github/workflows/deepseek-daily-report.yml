@@ -62,6 +62,16 @@ jobs:
       - name: Generate DeepSeek cloud report
         run: python scripts/run_deepseek_cloud_report.py --mode "$REPORT_MODE"
 
+      - name: Generate supply-chain radar
+        shell: bash
+        run: |
+          if [ "$REPORT_MODE" = "weekly" ]; then
+            MARKET_PACK="data/latest_weekly_market_pack.json"
+          else
+            MARKET_PACK="data/latest_market_pack.json"
+          fi
+          python scripts/supply_chain_radar.py --market-pack "$MARKET_PACK"
+
       - name: Export public archive
         run: python scripts/export_public_reports.py --limit 80
 

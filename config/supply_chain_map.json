@@ -1,0 +1,207 @@
+{
+  "schema_version": 1,
+  "updated": "2026-06-21",
+  "description": "产业链需求雷达配置。用于从终端需求、供应瓶颈、财报兑现和股价相对强度中发现跨市场候选股票；只进入观察和二次分析，不直接生成交易指令。",
+  "default_chain_weights": {
+    "downstream_demand": 0.3,
+    "supply_constraint": 0.2,
+    "earnings_translation": 0.15,
+    "margin_leverage": 0.15,
+    "market_confirmation": 0.1,
+    "valuation_gap": 0.1
+  },
+  "markets": {
+    "US": {
+      "name": "美股",
+      "quote_mode": "public_or_futu",
+      "code_examples": ["US.NVDA", "US.AVGO"]
+    },
+    "HK": {
+      "name": "港股",
+      "quote_mode": "futu_required",
+      "code_examples": ["HK.01888", "HK.00981"]
+    },
+    "CN": {
+      "name": "A股",
+      "quote_mode": "futu_required",
+      "code_examples": ["SH.600183", "SZ.300308"]
+    }
+  },
+  "chains": [
+    {
+      "id": "ai_compute_supply_chain",
+      "name": "AI 算力供应链",
+      "horizon": "3-12个月",
+      "base_case_probability": 0.6,
+      "bull_case_probability": 0.25,
+      "bear_case_probability": 0.15,
+      "watch_indicators": [
+        "云厂商 CAPEX 是否继续上修",
+        "AI 服务器、GPU、ASIC 订单能见度",
+        "800G/1.6T 光模块放量与 CPO 进展",
+        "CoWoS/HBM/先进封装产能扩张",
+        "高速 PCB、Low-Dk/Low-loss 覆铜板、电子布涨价或交期拉长",
+        "数据中心电力、液冷、UPS、机柜建设瓶颈"
+      ],
+      "layers": [
+        {
+          "id": "cloud_capex",
+          "name": "云厂商 CAPEX 与 AI 基础设施",
+          "chain_position": "终端需求",
+          "structural_score": 88,
+          "supply_constraint_score": 62,
+          "earnings_translation_score": 78,
+          "margin_leverage_score": 60,
+          "valuation_gap_score": 45,
+          "evidence": [
+            "云厂商资本开支是 AI 算力链最上游的需求确认信号",
+            "若 CAPEX 上修但 GPU/网络/电力供应紧张，需求会继续向中上游扩散"
+          ],
+          "keywords": ["CAPEX", "AI infrastructure", "data center", "GPU cluster", "cloud demand"],
+          "securities": [
+            {"code": "US.MSFT", "name": "Microsoft", "market": "US", "role": "云与 AI 基础设施支出"},
+            {"code": "US.GOOGL", "name": "Alphabet", "market": "US", "role": "云与 TPU/AI 基建"},
+            {"code": "US.AMZN", "name": "Amazon", "market": "US", "role": "AWS AI 基建"},
+            {"code": "US.META", "name": "Meta Platforms", "market": "US", "role": "AI 训练与推理 CAPEX"},
+            {"code": "US.ORCL", "name": "Oracle", "market": "US", "role": "AI 云基础设施"}
+          ]
+        },
+        {
+          "id": "gpu_asic_hbm_packaging",
+          "name": "GPU / ASIC / HBM / 先进封装",
+          "chain_position": "核心算力与封装",
+          "structural_score": 92,
+          "supply_constraint_score": 86,
+          "earnings_translation_score": 84,
+          "margin_leverage_score": 78,
+          "valuation_gap_score": 38,
+          "evidence": [
+            "AI 训练和推理需求首先兑现到 GPU、ASIC、HBM、先进封装和晶圆代工",
+            "该环节景气度高，但部分龙头估值和拥挤度也高，需要更严格入场纪律"
+          ],
+          "keywords": ["GPU", "ASIC", "HBM", "CoWoS", "advanced packaging", "AI accelerator"],
+          "securities": [
+            {"code": "US.NVDA", "name": "NVIDIA", "market": "US", "role": "GPU/AI 加速器龙头"},
+            {"code": "US.AVGO", "name": "Broadcom", "market": "US", "role": "AI ASIC 与网络芯片"},
+            {"code": "US.AMD", "name": "AMD", "market": "US", "role": "GPU/CPU/AI 加速器"},
+            {"code": "US.MRVL", "name": "Marvell", "market": "US", "role": "定制芯片与 AI 网络"},
+            {"code": "US.MU", "name": "Micron", "market": "US", "role": "HBM/存储周期"},
+            {"code": "US.TSM", "name": "TSMC ADR", "market": "US", "role": "先进制程与封装"},
+            {"code": "US.ASML", "name": "ASML ADR", "market": "US", "role": "先进制程设备瓶颈"},
+            {"code": "HK.00981", "name": "中芯国际", "market": "HK", "role": "中国晶圆代工映射"},
+            {"code": "HK.01347", "name": "华虹半导体", "market": "HK", "role": "特色工艺/功率半导体映射"},
+            {"code": "SH.688981", "name": "中芯国际", "market": "CN", "role": "A股晶圆代工映射"}
+          ]
+        },
+        {
+          "id": "optical_cpo_networking",
+          "name": "光模块 / CPO / AI 网络",
+          "chain_position": "高速互连",
+          "structural_score": 90,
+          "supply_constraint_score": 82,
+          "earnings_translation_score": 80,
+          "margin_leverage_score": 76,
+          "valuation_gap_score": 46,
+          "evidence": [
+            "AI 集群规模扩大后，瓶颈从单卡算力扩散到网络互连",
+            "800G、1.6T、CPO、硅光、交换机升级会放大利润弹性"
+          ],
+          "keywords": ["800G", "1.6T", "CPO", "optical module", "silicon photonics", "AI networking"],
+          "securities": [
+            {"code": "US.ANET", "name": "Arista Networks", "market": "US", "role": "AI 数据中心交换机"},
+            {"code": "US.CIEN", "name": "Ciena", "market": "US", "role": "光网络设备"},
+            {"code": "US.COHR", "name": "Coherent", "market": "US", "role": "光器件/材料"},
+            {"code": "US.LITE", "name": "Lumentum", "market": "US", "role": "光器件"},
+            {"code": "US.MRVL", "name": "Marvell", "market": "US", "role": "DSP/网络芯片"},
+            {"code": "SZ.300308", "name": "中际旭创", "market": "CN", "role": "高速光模块"},
+            {"code": "SZ.300502", "name": "新易盛", "market": "CN", "role": "高速光模块"},
+            {"code": "SZ.300394", "name": "天孚通信", "market": "CN", "role": "光器件"},
+            {"code": "SZ.000988", "name": "华工科技", "market": "CN", "role": "光模块/激光设备"},
+            {"code": "HK.00763", "name": "中兴通讯", "market": "HK", "role": "通信设备/网络侧映射"},
+            {"code": "SZ.000063", "name": "中兴通讯", "market": "CN", "role": "通信设备/网络侧映射"}
+          ]
+        },
+        {
+          "id": "pcb_ccl_glass_fabric",
+          "name": "高速 PCB / 覆铜板 / 电子布 / 铜箔",
+          "chain_position": "上游材料与载板",
+          "structural_score": 84,
+          "supply_constraint_score": 78,
+          "earnings_translation_score": 70,
+          "margin_leverage_score": 82,
+          "valuation_gap_score": 58,
+          "evidence": [
+            "AI 服务器和高速交换机需要更高层数、更低损耗的 PCB 与 CCL 材料",
+            "若电子布、铜箔、树脂或高端覆铜板涨价，利润弹性可能从设备/光模块向材料端扩散"
+          ],
+          "keywords": ["PCB", "CCL", "copper clad laminate", "glass fiber fabric", "Low-Dk", "Low-loss", "copper foil"],
+          "securities": [
+            {"code": "US.TTMI", "name": "TTM Technologies", "market": "US", "role": "高端 PCB 美股代理"},
+            {"code": "US.JBL", "name": "Jabil", "market": "US", "role": "AI 服务器/电子制造代理"},
+            {"code": "US.FLEX", "name": "Flex", "market": "US", "role": "数据中心硬件制造代理"},
+            {"code": "HK.01888", "name": "建滔积层板", "market": "HK", "role": "覆铜板"},
+            {"code": "HK.00148", "name": "建滔集团", "market": "HK", "role": "覆铜板/材料"},
+            {"code": "SH.600183", "name": "生益科技", "market": "CN", "role": "覆铜板"},
+            {"code": "SH.688183", "name": "生益电子", "market": "CN", "role": "PCB"},
+            {"code": "SZ.002916", "name": "深南电路", "market": "CN", "role": "PCB/封装基板"},
+            {"code": "SZ.002938", "name": "鹏鼎控股", "market": "CN", "role": "PCB"},
+            {"code": "SZ.300476", "name": "胜宏科技", "market": "CN", "role": "AI 服务器 PCB"},
+            {"code": "SH.603256", "name": "宏和科技", "market": "CN", "role": "电子布"}
+          ]
+        },
+        {
+          "id": "data_center_power_cooling",
+          "name": "数据中心电力 / 液冷 / 配电",
+          "chain_position": "基础设施瓶颈",
+          "structural_score": 86,
+          "supply_constraint_score": 80,
+          "earnings_translation_score": 78,
+          "margin_leverage_score": 72,
+          "valuation_gap_score": 50,
+          "evidence": [
+            "AI 数据中心功耗密度提升，电力、UPS、配电、液冷、机柜成为非芯片瓶颈",
+            "该环节通常滞后于 GPU 订单，但业绩兑现更稳定"
+          ],
+          "keywords": ["power capacity", "liquid cooling", "UPS", "switchgear", "data center electrical", "thermal management"],
+          "securities": [
+            {"code": "US.VRT", "name": "Vertiv", "market": "US", "role": "数据中心电源与液冷"},
+            {"code": "US.ETN", "name": "Eaton", "market": "US", "role": "电气设备"},
+            {"code": "US.PWR", "name": "Quanta Services", "market": "US", "role": "电网/数据中心建设"},
+            {"code": "US.GE", "name": "GE Aerospace", "market": "US", "role": "工业强势股/电力链参考"},
+            {"code": "US.EMR", "name": "Emerson", "market": "US", "role": "自动化与电气控制"},
+            {"code": "US.PH", "name": "Parker-Hannifin", "market": "US", "role": "工业流体与热管理"},
+            {"code": "SZ.300274", "name": "阳光电源", "market": "CN", "role": "电源设备映射"},
+            {"code": "SZ.002335", "name": "科华数据", "market": "CN", "role": "UPS/数据中心电源"},
+            {"code": "SZ.300499", "name": "高澜股份", "market": "CN", "role": "液冷散热映射"}
+          ]
+        },
+        {
+          "id": "semicap_equipment",
+          "name": "半导体设备 / 测试 / 制造自动化",
+          "chain_position": "资本开支与产能扩张",
+          "structural_score": 82,
+          "supply_constraint_score": 72,
+          "earnings_translation_score": 74,
+          "margin_leverage_score": 68,
+          "valuation_gap_score": 48,
+          "evidence": [
+            "HBM、先进封装、AI ASIC 与先进制程扩产会拉动设备链",
+            "设备链通常更周期化，需要结合订单、book-to-bill 与库存周期判断"
+          ],
+          "keywords": ["semicap", "wafer fab equipment", "advanced packaging equipment", "test equipment", "book-to-bill"],
+          "securities": [
+            {"code": "US.AMAT", "name": "Applied Materials", "market": "US", "role": "半导体设备"},
+            {"code": "US.LRCX", "name": "Lam Research", "market": "US", "role": "刻蚀/沉积设备"},
+            {"code": "US.KLAC", "name": "KLA", "market": "US", "role": "检测量测"},
+            {"code": "US.TER", "name": "Teradyne", "market": "US", "role": "测试设备"},
+            {"code": "US.ASML", "name": "ASML", "market": "US", "role": "光刻设备"},
+            {"code": "SH.688012", "name": "中微公司", "market": "CN", "role": "刻蚀设备"},
+            {"code": "SH.688082", "name": "盛美上海", "market": "CN", "role": "清洗/先进封装设备"},
+            {"code": "SZ.002371", "name": "北方华创", "market": "CN", "role": "半导体设备"},
+            {"code": "SH.688072", "name": "拓荆科技", "market": "CN", "role": "薄膜沉积设备"}
+          ]
+        }
+      ]
+    }
+  ]
+}
