@@ -1,0 +1,94 @@
+name: DeepSeek cloud daily report
+
+on:
+  schedule:
+    # 12:10 Asia/Shanghai every day.
+    - cron: "10 4 * * *"
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "Report mode"
+        type: choice
+        required: true
+        default: full
+        options:
+          - full
+          - weekly
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: deepseek-cloud-daily-report
+  cancel-in-progress: false
+
+jobs:
+  generate-and-deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    env:
+      DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+      DEEPSEEK_MODEL: ${{ vars.DEEPSEEK_MODEL || 'deepseek-v4-pro' }}
+      SEC_USER_AGENT: "ffxdz-ai public research dashboard contact@example.com"
+      REPORT_MODE: ${{ github.event.inputs.mode || 'full' }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Ensure required secret exists
+        shell: bash
+        run: |
+          if [ -z "$DEEPSEEK_API_KEY" ]; then
+            echo "DEEPSEEK_API_KEY secret is not configured."
+            exit 1
+          fi
+
+      - name: Collect public market data
+        run: python scripts/collect_market_data.py --mode "$REPORT_MODE"
+
+      - name: Generate DeepSeek cloud report
+        run: python scripts/run_deepseek_cloud_report.py --mode "$REPORT_MODE"
+
+      - name: Export public archive
+        run: python scripts/export_public_reports.py --limit 80
+
+      - name: Validate public archive
+        run: python scripts/validate_public_archive.py docs/data/reports.json
+
+      - name: Commit public archive
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/data/reports.json
+          if git diff --cached --quiet; then
+            echo "No public archive changes to commit."
+          else
+            git commit -m "Update DeepSeek cloud report"
+            git push origin HEAD:main
+          fi
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload static site
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
