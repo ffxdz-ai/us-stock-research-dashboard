@@ -22,6 +22,7 @@ REPORTS_DIR = ROOT / "reports"
 PROMPT_PATH = ROOT / "prompts" / "deepseek_cloud_research_skill_pack.md"
 DEFAULT_COMPACT_INPUT = DATA_DIR / "latest_agent_input.json"
 DEFAULT_MARKET_PACK = DATA_DIR / "latest_market_pack.json"
+DEFAULT_SECONDARY_QUEUE = DATA_DIR / "latest_secondary_analysis_queue.json"
 DEFAULT_API_URL = "https://api.deepseek.com/chat/completions"
 DEFAULT_MODEL = "deepseek-v4-pro"
 
@@ -156,7 +157,7 @@ def top_candidates(pack: dict[str, Any], limit: int = 14) -> list[dict[str, Any]
     return [concise_candidate(item) for item in ordered[:limit]]
 
 
-def prepare_public_context(compact: dict[str, Any], pack: dict[str, Any]) -> dict[str, Any]:
+def prepare_public_context(compact: dict[str, Any], pack: dict[str, Any], secondary_queue: dict[str, Any]) -> dict[str, Any]:
     """Drop private portfolio fields before sending context to DeepSeek."""
     market = compact.get("market") if isinstance(compact.get("market"), dict) else pack.get("market", {})
     research_candidates = compact.get("research_candidates") if isinstance(compact.get("research_candidates"), list) else []
@@ -189,6 +190,13 @@ def prepare_public_context(compact: dict[str, Any], pack: dict[str, Any]) -> dic
         "candidate_pool": candidates,
         "mechanical_buyable_now": buyable,
         "physical_ai_watchlist": watchlist,
+        "secondary_analysis_queue": {
+            "rule": "进入二次分析后每两天复核一次；不合格则退回观察，不再占用高频 Buy-Side 分析名额，除非重新触发。",
+            "generated_label": secondary_queue.get("generated_label"),
+            "summary": secondary_queue.get("summary") if isinstance(secondary_queue.get("summary"), dict) else {},
+            "deepseek_priority": secondary_queue.get("deepseek_priority") if isinstance(secondary_queue.get("deepseek_priority"), list) else [],
+            "recent_reviews": secondary_queue.get("reviews") if isinstance(secondary_queue.get("reviews"), list) else [],
+        },
         "source_notes": pack.get("source_notes") or compact.get("source_notes") or [],
         "cache_stats": pack.get("cache_stats") or compact.get("cache_stats") or {},
     }
@@ -228,6 +236,7 @@ def build_user_prompt(context: dict[str, Any], mode: str) -> str:
 - 必须写明“云端公开数据版”，并说明 Futu OpenD 云端不可用。
 - 不要输出真实持仓、现金、成本、股数、本地路径、API Key。
 - 对最多 5 只重点股票做 Buy-Side 分析，宁缺毋滥。
+- 如果 secondary_analysis_queue.deepseek_priority 非空，优先分析这些到期复核通过的标的。
 - 每只重点股票必须分别评估：当前价试仓、理想回调、突破确认。
 - 每条可执行买入路径必须独立满足 R/R >= 2:1；不满足就写观察或等待。
 - 公开版不得给最终买入股数；整股执行写“需本地组合复核”。
@@ -328,6 +337,7 @@ def main() -> int:
     parser.add_argument("--mode", default="full", choices=("quick", "full", "weekly"))
     parser.add_argument("--input", type=Path, default=DEFAULT_COMPACT_INPUT)
     parser.add_argument("--market-pack", type=Path, default=DEFAULT_MARKET_PACK)
+    parser.add_argument("--secondary-queue", type=Path, default=DEFAULT_SECONDARY_QUEUE)
     parser.add_argument("--out-dir", type=Path, default=REPORTS_DIR)
     parser.add_argument("--dry-run", action="store_true", help="Write the sanitized prompt context without calling DeepSeek.")
     args = parser.parse_args()
@@ -335,7 +345,8 @@ def main() -> int:
     load_environment()
     compact = load_json(args.input, {})
     pack = load_json(args.market_pack, {})
-    context = prepare_public_context(compact, pack)
+    secondary_queue = load_json(args.secondary_queue, {})
+    context = prepare_public_context(compact, pack, secondary_queue)
     context_text = json.dumps(context, ensure_ascii=False, indent=2)
     validate_public_text(context_text)
 

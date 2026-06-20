@@ -7,6 +7,18 @@
   "valuation_cache_hours": 30,
   "min_data_confidence_for_buy": 0.68,
   "min_reward_risk_for_buy": 2.0,
+  "secondary_analysis": {
+    "review_interval_days": 2,
+    "cooldown_days": 14,
+    "max_due_per_run": 5,
+    "max_active": 20,
+    "min_entry_layer_score": 75,
+    "min_entry_trend_score": 70,
+    "min_keep_layer_score": 70,
+    "min_keep_trend_score": 55,
+    "retrigger_layer_score": 78,
+    "retrigger_trend_score": 80
+  },
   "market_symbols": ["SPY", "QQQ", "DIA", "IWM", "TLT", "GLD", "USO", "^VIX"],
   "universe": [
     "NVDA",
