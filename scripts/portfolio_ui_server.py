@@ -11,7 +11,7 @@ import shutil
 import socket
 import subprocess
 import sys
-from datetime import datetime, time, timezone
+from datetime import datetime, time, timedelta, timezone
 from functools import lru_cache
 from http import HTTPStatus
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
@@ -28,7 +28,10 @@ UI_ROOT = ROOT / "portfolio-ui"
 PORTFOLIO_PATH = ROOT / "config" / "portfolio.json"
 REPORT_PATH = ROOT / "reports" / "latest-market-brief.md"
 REPORTS_DIR = ROOT / "reports"
-NEW_YORK_TZ = ZoneInfo("America/New_York")
+try:
+    NEW_YORK_TZ = ZoneInfo("America/New_York")
+except Exception:
+    NEW_YORK_TZ = timezone(timedelta(hours=-4), "America/New_York")
 SESSION_LABELS = {
     "pre": "盘前",
     "regular": "盘中",
@@ -41,12 +44,24 @@ REPORT_KIND_LABELS = {
     "weekly": "周度扫描",
     "quick": "快速更新",
     "buy-side": "Buy-Side",
+    "deepseek-cloud": "DeepSeek云端",
+    "entry-radar": "入场雷达",
+    "missed-review": "错过复盘",
+    "future-audit": "未来函数审计",
     "daily": "每日分析",
 }
 
 
 def report_kind(filename: str) -> str:
     lowered = filename.lower()
+    if "entry-radar" in lowered:
+        return "entry-radar"
+    if "missed-opportunity" in lowered:
+        return "missed-review"
+    if "future-function-audit" in lowered:
+        return "future-audit"
+    if "deepseek-cloud" in lowered:
+        return "deepseek-cloud"
     if "weekly" in lowered:
         return "weekly"
     if "quick" in lowered:

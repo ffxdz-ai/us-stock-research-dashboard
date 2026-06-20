@@ -265,6 +265,7 @@ def yahoo_chart(symbol: str) -> dict[str, Any]:
         return fallback
     result = (data.get("chart", {}).get("result") or [{}])[0]
     quote = ((result.get("indicators") or {}).get("quote") or [{}])[0]
+    timestamps = [x for x in result.get("timestamp", []) if isinstance(x, (int, float))]
     closes = [float(x) for x in quote.get("close", []) if isinstance(x, (int, float))]
     highs = [float(x) for x in quote.get("high", []) if isinstance(x, (int, float))]
     lows = [float(x) for x in quote.get("low", []) if isinstance(x, (int, float))]
@@ -294,8 +295,11 @@ def yahoo_chart(symbol: str) -> dict[str, Any]:
         "low20": low(lows or closes, 20),
         "low60": low(lows or closes, 60),
         "high252": round(max(highs or closes), 4),
+        "prior_high252": round(max((highs or closes)[:-1]), 4) if len(highs or closes) > 1 else None,
         "low252": round(min(lows or closes), 4),
         "realized_vol20": vol20,
+        "chart_time": datetime.fromtimestamp(timestamps[-1], timezone.utc).isoformat() if timestamps else None,
+        "source": "Yahoo chart API fallback",
     }
 
 
@@ -321,16 +325,20 @@ def nasdaq_chart(symbol: str) -> dict[str, Any]:
     closes: list[float] = []
     highs: list[float] = []
     lows: list[float] = []
+    bar_times: list[str] = []
     for row in reversed(rows):
         close = parse_market_number(row.get("close"))
         high = parse_market_number(row.get("high"))
         low = parse_market_number(row.get("low"))
+        bar_time = row.get("date")
         if close is not None:
             closes.append(close)
         if high is not None:
             highs.append(high)
         if low is not None:
             lows.append(low)
+        if bar_time:
+            bar_times.append(str(bar_time))
     if not closes:
         return {"symbol": symbol, "error": "no Nasdaq closes"}
 
@@ -354,8 +362,10 @@ def nasdaq_chart(symbol: str) -> dict[str, Any]:
         "low20": low(lows or closes, 20),
         "low60": low(lows or closes, 60),
         "high252": round(max(highs or closes), 4),
+        "prior_high252": round(max((highs or closes)[:-1]), 4) if len(highs or closes) > 1 else None,
         "low252": round(min(lows or closes), 4),
         "realized_vol20": vol20,
+        "chart_time": bar_times[-1] if bar_times else None,
         "source": "Nasdaq historical API fallback",
     }
 
@@ -401,6 +411,11 @@ def futu_chart(symbol: str) -> dict[str, Any]:
         closes = numeric_values("close")
         highs = numeric_values("high")
         lows = numeric_values("low")
+        bar_times = [
+            str(value)
+            for value in data.get("time_key", [])
+            if str(value).strip()
+        ]
     except Exception as exc:  # noqa: BLE001
         return {"symbol": symbol, "error": f"Futu K-line error: {exc}"}
     finally:
@@ -433,8 +448,10 @@ def futu_chart(symbol: str) -> dict[str, Any]:
         "low20": low(lows or closes, 20),
         "low60": low(lows or closes, 60),
         "high252": round(max(highs or closes), 4),
+        "prior_high252": round(max((highs or closes)[:-1]), 4) if len(highs or closes) > 1 else None,
         "low252": round(min(lows or closes), 4),
         "realized_vol20": vol20,
+        "chart_time": bar_times[-1] if bar_times else None,
         "source": "Futu OpenD daily K-line",
     }
 
@@ -490,9 +507,15 @@ def collect_charts_cached(
             and now - cached_at <= max_age_hours * 3600
             and isinstance(value, dict)
             and value.get("last_close")
+            and value.get("chart_time")
+            and value.get("prior_high252") is not None
         )
         if fresh:
-            charts[symbol] = value
+            charts[symbol] = {
+                **value,
+                "cache_status": "reused",
+                "cached_at_utc": record.get("cached_at_utc"),
+            }
         else:
             refresh.append(symbol)
 
@@ -500,9 +523,14 @@ def collect_charts_cached(
         refreshed = collect_charts(refresh)
         for symbol in refresh:
             value = refreshed.get(symbol, {"symbol": symbol, "error": "missing chart result"})
+            value = {
+                **value,
+                "cache_status": "refreshed",
+                "cached_at_utc": datetime.fromtimestamp(now, timezone.utc).isoformat(),
+            }
             charts[symbol] = value
             if value.get("last_close"):
-                records[symbol] = {"cached_at": now, "value": value}
+                records[symbol] = {"cached_at": now, "cached_at_utc": value.get("cached_at_utc"), "value": value}
 
     write_json(
         CHART_CACHE_PATH,
@@ -885,6 +913,11 @@ def evaluate_candidate(
         "quote_session": quote.get("futu_session"),
         "quote_source_session": quote.get("futu_source_session"),
         "quote_source_priority": quote.get("source_priority"),
+        "chart_source": chart.get("source"),
+        "chart_time": chart.get("chart_time"),
+        "chart_cache_status": chart.get("cache_status"),
+        "chart_cached_at_utc": chart.get("cached_at_utc"),
+        "sec_filing_poll_time_utc": sec.get("filing_poll_time_utc"),
         "market_cap": quote.get("marketCap"),
         "forward_pe": forward_pe,
         "trailing_pe": trailing_pe,
@@ -1066,6 +1099,11 @@ def compact_candidate(
         "quote_time": item.get("quote_time"),
         "quote_source": item.get("quote_source"),
         "quote_session": item.get("quote_session"),
+        "chart_time": item.get("chart_time"),
+        "chart_source": item.get("chart_source"),
+        "chart_cache_status": item.get("chart_cache_status"),
+        "chart_cached_at_utc": item.get("chart_cached_at_utc"),
+        "sec_filing_poll_time_utc": item.get("sec_filing_poll_time_utc"),
         "forward_pe": item.get("forward_pe"),
         "trailing_pe": item.get("trailing_pe"),
         "data_confidence": item.get("data_confidence"),
@@ -1085,7 +1123,22 @@ def compact_candidate(
         },
         "technicals": {
             key: chart.get(key)
-            for key in ("last_close", "ma20", "ma50", "ma200", "low20", "low60", "high252", "low252", "realized_vol20", "source")
+            for key in (
+                "last_close",
+                "ma20",
+                "ma50",
+                "ma200",
+                "low20",
+                "low60",
+                "high252",
+                "prior_high252",
+                "low252",
+                "realized_vol20",
+                "chart_time",
+                "cached_at_utc",
+                "cache_status",
+                "source",
+            )
         },
         "financials": {
             "sec_coverage": sec.get("sec_coverage"),

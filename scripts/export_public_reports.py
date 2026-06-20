@@ -39,10 +39,14 @@ PRIVATE_LINE_PATTERNS = (
     re.compile(r"单票上限\s*[:：]"),
     re.compile(r"累计(?:充值|提取)\s*[:：]"),
     re.compile(r"(?:持有|加仓|卖出)\s*\d+(?:\.\d+)?\s*股"),
-    re.compile(r"\b(?:shares|cost_basis|cash_usd|estimated_total_assets|net_deposit_usd)\b", re.IGNORECASE),
+    re.compile(r"\b(?:shares|cost_basis|cash_usd|estimated_total_assets|net_deposit_usd|account_id|account_number)\b", re.IGNORECASE),
     re.compile(r"[A-Z]:\\", re.IGNORECASE),
     re.compile(r"portfolio\.json", re.IGNORECASE),
-    re.compile(r"sk-[A-Za-z0-9_-]{12,}"),
+    re.compile(r"sk-(?:proj-)?[A-Za-z0-9_-]{12,}"),
+    re.compile(r"\bgh[pousr]_[A-Za-z0-9_]{20,}\b"),
+    re.compile(r"\bgithub_pat_[A-Za-z0-9_]{20,}\b"),
+    re.compile(r"\b(?:DEEPSEEK|OPENAI|GITHUB|FUTU)_[A-Z0-9_]*(?:KEY|TOKEN|SECRET)\b", re.IGNORECASE),
+    re.compile(r"\.env(?:\b|$)", re.IGNORECASE),
 )
 
 KIND_LABELS = {
@@ -50,12 +54,21 @@ KIND_LABELS = {
     "quick": "快速更新",
     "buy-side": "Buy-Side",
     "deepseek-cloud": "DeepSeek云端",
+    "entry-radar": "入场雷达",
+    "missed-review": "错过复盘",
+    "future-audit": "未来函数审计",
     "daily": "每日分析",
 }
 
 
 def report_kind(name: str) -> str:
     lowered = name.lower()
+    if "entry-radar" in lowered:
+        return "entry-radar"
+    if "missed-opportunity" in lowered:
+        return "missed-review"
+    if "future-function-audit" in lowered:
+        return "future-audit"
     if "deepseek-cloud" in lowered:
         return "deepseek-cloud"
     if "weekly" in lowered:

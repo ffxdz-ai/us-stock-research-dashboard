@@ -10,10 +10,14 @@ from pathlib import Path
 
 
 FORBIDDEN_PATTERNS = (
-    re.compile(r"sk-[A-Za-z0-9_-]{12,}"),
+    re.compile(r"sk-(?:proj-)?[A-Za-z0-9_-]{12,}"),
+    re.compile(r"\bgh[pousr]_[A-Za-z0-9_]{20,}\b"),
+    re.compile(r"\bgithub_pat_[A-Za-z0-9_]{20,}\b"),
+    re.compile(r"\b(?:DEEPSEEK|OPENAI|GITHUB|FUTU)_[A-Z0-9_]*(?:KEY|TOKEN|SECRET)\b", re.IGNORECASE),
+    re.compile(r"\.env(?:\b|$)", re.IGNORECASE),
     re.compile(r"[A-Z]:\\", re.IGNORECASE),
     re.compile(r"portfolio\.json", re.IGNORECASE),
-    re.compile(r"\b(?:cash_usd|cost_basis|estimated_total_assets|net_deposit_usd)\b", re.IGNORECASE),
+    re.compile(r"\b(?:cash_usd|cost_basis|estimated_total_assets|net_deposit_usd|account_id|account_number)\b", re.IGNORECASE),
     re.compile(r"(?:持有|买入|加仓|卖出)\s*\d+(?:\.\d+)?\s*股"),
 )
 
