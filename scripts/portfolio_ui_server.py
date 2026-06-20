@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import os
 import re
@@ -51,6 +52,9 @@ REPORT_KIND_LABELS = {
     "daily": "每日分析",
 }
 
+PUBLIC_FOOTER_RE = re.compile(r"\n{0,2}---\n\n> 公开脱敏版：.*$", re.DOTALL)
+VOLATILE_REPORT_LINE_RE = re.compile(r"^-\s+(?:生成时间|不可覆盖快照)：")
+
 
 def report_kind(filename: str) -> str:
     lowered = filename.lower()
@@ -79,6 +83,18 @@ def report_title(content: str, fallback: str) -> str:
     return fallback
 
 
+def report_identity_digest(content: str) -> str:
+    """Digest report content while ignoring export footers and rerun-only lines."""
+    normalized = PUBLIC_FOOTER_RE.sub("", content.replace("\r\n", "\n"))
+    stable_lines = [
+        line.rstrip()
+        for line in normalized.split("\n")
+        if not VOLATILE_REPORT_LINE_RE.match(line.strip())
+    ]
+    stable = "\n".join(stable_lines).strip()
+    return hashlib.sha256(stable.encode("utf-8")).hexdigest()
+
+
 def list_reports() -> list[dict[str, object]]:
     if not REPORTS_DIR.exists():
         return []
@@ -100,10 +116,23 @@ def list_reports() -> list[dict[str, object]]:
                 "updated_label": datetime.fromtimestamp(stat.st_mtime).strftime("%Y-%m-%d %H:%M"),
                 "size": stat.st_size,
                 "is_latest": path.name.startswith("latest-"),
+                "_digest": report_identity_digest(content),
             }
         )
     reports.sort(key=lambda item: str(item["updated_at"]), reverse=True)
-    return reports
+    deduped: list[dict[str, object]] = []
+    digest_index: dict[str, int] = {}
+    for item in reports:
+        digest = str(item.pop("_digest"))
+        existing_index = digest_index.get(digest)
+        if existing_index is None:
+            digest_index[digest] = len(deduped)
+            deduped.append(item)
+            continue
+        existing = deduped[existing_index]
+        if bool(existing.get("is_latest")) and not bool(item.get("is_latest")):
+            deduped[existing_index] = item
+    return deduped
 
 
 def resolve_report(name: str) -> Path:

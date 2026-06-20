@@ -130,6 +130,28 @@ def ratio(value: float | None) -> str:
     return f"{value:.2f}:1"
 
 
+def pe_value(value: float | None) -> str:
+    if value is None:
+        return "数据不足"
+    return f"{value:.1f}x"
+
+
+def valuation_summary(row: dict[str, Any]) -> str:
+    parts = [
+        f"Forward P/E {pe_value(row.get('forward_pe'))}",
+        f"Trailing P/E {pe_value(row.get('trailing_pe'))}",
+    ]
+    estimated = row.get("estimated_pe_from_sec")
+    if estimated is not None:
+        parts.append(f"粗算市值/年净利PE {pe_value(estimated)}")
+    else:
+        parts.append("粗算市值/年净利PE 数据不足")
+    source = str(row.get("valuation_source") or "").strip()
+    if source:
+        parts.append(f"来源：{source}")
+    return "；".join(parts)
+
+
 def rr(entry: float | None, target: float | None, stop: float | None) -> float | None:
     if entry is None or target is None or stop is None:
         return None
@@ -192,11 +214,23 @@ def classify_pullback_path(
         return PathCheck("理想回调", None, stop, target, None, "数据不足", "缺少支撑/回调价，不能设为计划。")
     if path_rr is None or path_rr < min_rr:
         return PathCheck("理想回调", pullback_entry, stop, target, path_rr, "不满足", "即使回调到该位置，R/R 仍不足。")
-    gap = gap_pct(price, pullback_entry)
+    gap = None
+    if price is not None and price > 0:
+        gap = round((price - pullback_entry) / price * 100, 2)
     if gap is not None and gap <= 2:
         return PathCheck("理想回调", pullback_entry, stop, target, path_rr, "接近/进入", "价格已接近回调区，进入本地组合复核。")
     if gap is not None and gap <= 8:
         return PathCheck("理想回调", pullback_entry, stop, target, path_rr, "临近", "距离回调区不远，设置提醒，不机械错过。")
+    if gap is not None and gap > 15:
+        return PathCheck(
+            "理想回调",
+            pullback_entry,
+            stop,
+            target,
+            path_rr,
+            "深度等待",
+            f"需要从当前价回落约 {gap:.1f}%，这是低概率深回调，不作为主入场；优先跟踪突破确认/浅回踩，避免长期踏空。",
+        )
     return PathCheck("理想回调", pullback_entry, stop, target, path_rr, "等待", "回调价仍较远，不能把它当作唯一入场方案。")
 
 
@@ -271,6 +305,8 @@ def extract_candidate_fields(ticker: str, item: dict[str, Any]) -> dict[str, Any
         "data_confidence": number(item.get("data_confidence")),
         "forward_pe": number(item.get("forward_pe")),
         "trailing_pe": number(item.get("trailing_pe")),
+        "estimated_pe_from_sec": number(item.get("estimated_pe_from_sec") or financials.get("estimated_pe_from_sec")),
+        "valuation_source": item.get("valuation_source") or financials.get("valuation_source"),
         "ma20": number(chart.get("ma20") or technicals.get("ma20")),
         "ma50": number(chart.get("ma50") or technicals.get("ma50")),
         "ma200": number(chart.get("ma200") or technicals.get("ma200")),
@@ -397,7 +433,7 @@ def render_entry_radar(
         lines.append(f"### {row['ticker']} - {row.get('name') or row['ticker']}")
         lines.append("")
         lines.append(f"- 当前价：{money(row['price'])}")
-        lines.append(f"- 估值：Forward P/E {row['forward_pe'] if row.get('forward_pe') is not None else '数据不足'}；Trailing P/E {row['trailing_pe'] if row.get('trailing_pe') is not None else '数据不足'}")
+        lines.append(f"- 估值：{valuation_summary(row)}")
         lines.append(f"- 技术：MA50 {money(row['ma50'])}；MA200 {money(row['ma200'])}；52周高点 {money(row['high252'])}")
         for path in row["paths"]:
             lines.append(f"- {path.label}：{path_summary(path)}。{path.action}")
@@ -407,6 +443,7 @@ def render_entry_radar(
         [
             "## 使用纪律",
             "",
+            "- 理想回调超过当前价 15% 时只作为深度等待，不作为主方案；用突破确认/浅回踩提醒防止长期踏空。",
             "- 不因为理想回调价遥远就追高；突破确认也必须重新计算 R/R。",
             "- 如果当前价、回调、突破三条路径都不满足 R/R，结论就是等待。",
             "- 如果标的进入“重点”，只代表进入本地组合复核，不代表自动买入。",

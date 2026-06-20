@@ -39,7 +39,8 @@ PRIVATE_LINE_PATTERNS = (
     re.compile(r"单票上限\s*[:：]"),
     re.compile(r"累计(?:充值|提取)\s*[:：]"),
     re.compile(r"(?:持有|加仓|卖出)\s*\d+(?:\.\d+)?\s*股"),
-    re.compile(r"\b(?:shares|cost_basis|cash_usd|estimated_total_assets|net_deposit_usd|account_id|account_number)\b", re.IGNORECASE),
+    re.compile(r"\b(?:cost_basis|cash_usd|estimated_total_assets|net_deposit_usd|account_id|account_number)\b", re.IGNORECASE),
+    re.compile(r"['\"]?shares['\"]?\s*[:=]", re.IGNORECASE),
     re.compile(r"[A-Z]:\\", re.IGNORECASE),
     re.compile(r"portfolio\.json", re.IGNORECASE),
     re.compile(r"sk-(?:proj-)?[A-Za-z0-9_-]{12,}"),
@@ -48,6 +49,9 @@ PRIVATE_LINE_PATTERNS = (
     re.compile(r"\b(?:DEEPSEEK|OPENAI|GITHUB|FUTU)_[A-Z0-9_]*(?:KEY|TOKEN|SECRET)\b", re.IGNORECASE),
     re.compile(r"\.env(?:\b|$)", re.IGNORECASE),
 )
+
+PUBLIC_FOOTER_RE = re.compile(r"\n{0,2}---\n\n> 公开脱敏版：.*$", re.DOTALL)
+VOLATILE_REPORT_LINE_RE = re.compile(r"^-\s+(?:生成时间|不可覆盖快照)：")
 
 KIND_LABELS = {
     "weekly": "周度扫描",
@@ -88,10 +92,24 @@ def first_title(content: str, fallback: str) -> str:
     return fallback
 
 
+def strip_public_footer(content: str) -> str:
+    return PUBLIC_FOOTER_RE.sub("", content.replace("\r\n", "\n")).strip()
+
+
+def stable_content_identity(content: str) -> str:
+    clean = strip_public_footer(content)
+    lines = [
+        line.rstrip()
+        for line in clean.split("\n")
+        if not VOLATILE_REPORT_LINE_RE.match(line.strip())
+    ]
+    return hashlib.sha256("\n".join(lines).strip().encode("utf-8")).hexdigest()
+
+
 def sanitize_report(content: str) -> str:
     output: list[str] = []
     excluded_depth: int | None = None
-    lines = content.replace("\r\n", "\n").split("\n")
+    lines = strip_public_footer(content).split("\n")
     for line in lines:
         heading = re.match(r"^(#{1,6})\s+(.+?)\s*$", line)
         if heading:
@@ -174,6 +192,7 @@ def load_existing_reports(path: Path) -> list[dict[str, Any]]:
             continue
         content = sanitize_report(str(item.get("content", "")))
         digest = hashlib.sha256(content.encode("utf-8")).hexdigest()
+        stable_digest = stable_content_identity(content)
         clean.append(
             {
                 "id": str(item.get("id") or digest[:16]),
@@ -186,6 +205,7 @@ def load_existing_reports(path: Path) -> list[dict[str, Any]]:
                 "is_latest": bool(item.get("is_latest")),
                 "content": content,
                 "digest": digest,
+                "stable_digest": stable_digest,
             }
         )
     return clean
@@ -199,6 +219,7 @@ def collect_report_files() -> list[dict[str, Any]]:
         content = path.read_text(encoding="utf-8")
         sanitized = sanitize_report(content)
         digest = hashlib.sha256(sanitized.encode("utf-8")).hexdigest()
+        stable_digest = stable_content_identity(sanitized)
         timestamp = parse_report_time(path, content)
         kind = report_kind(path.name)
         candidates.append(
@@ -213,6 +234,7 @@ def collect_report_files() -> list[dict[str, Any]]:
                 "is_latest": path.name.startswith("latest-"),
                 "content": sanitized,
                 "digest": digest,
+                "stable_digest": stable_digest,
             }
         )
     return candidates
@@ -228,12 +250,14 @@ def build_archive(output: Path, limit: int = 80, merge_existing: bool = True) ->
     reports: list[dict[str, Any]] = []
     for item in candidates:
         digest = str(item.pop("digest"))
+        stable_digest = str(item.pop("stable_digest", digest))
         identity = f"{item.get('id')}:{digest}"
-        content_identity = digest
-        if identity in seen or content_identity in seen:
+        logical_identity = f"{item.get('filename')}:{item.get('published_at')}"
+        title_time_identity = f"{item.get('kind')}:{item.get('title')}:{item.get('published_at')}:{stable_digest}"
+        identities = {identity, stable_digest, logical_identity, title_time_identity}
+        if any(value in seen for value in identities):
             continue
-        seen.add(identity)
-        seen.add(content_identity)
+        seen.update(identities)
         reports.append(item)
         if len(reports) >= limit:
             break
@@ -259,7 +283,7 @@ def main() -> int:
     output = args.output.resolve()
     output.parent.mkdir(parents=True, exist_ok=True)
     payload = build_archive(output, max(1, args.limit), merge_existing=not args.no_merge_existing)
-    output.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    output.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8", newline="\n")
     print(f"Exported {payload['report_count']} sanitized reports to {output}")
     return 0
 

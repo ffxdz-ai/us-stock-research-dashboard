@@ -229,7 +229,7 @@ def nasdaq_quote(symbol: str) -> dict[str, Any]:
     primary = payload.get("primaryData") or {}
     price = parse_market_number(primary.get("lastSalePrice"))
     change_pct = parse_market_number(primary.get("percentageChange"))
-    return {
+    quote = {
         "symbol": symbol,
         "shortName": payload.get("companyName"),
         "regularMarketPrice": price,
@@ -240,6 +240,39 @@ def nasdaq_quote(symbol: str) -> dict[str, Any]:
         "regularMarketVolume": parse_market_number(primary.get("volume")),
         "source": "Nasdaq quote API fallback",
     }
+    quote.update(nasdaq_summary_fields(symbol))
+    return quote
+
+
+def nasdaq_summary_fields(symbol: str) -> dict[str, Any]:
+    asset_class = nasdaq_asset_class(symbol)
+    if not asset_class:
+        return {}
+    url = (
+        f"https://api.nasdaq.com/api/quote/{urllib.parse.quote(symbol)}/summary?"
+        + urllib.parse.urlencode({"assetclass": asset_class})
+    )
+    data, error = safe_http_json(url, timeout=8)
+    if error or not data:
+        return {}
+    summary = ((data.get("data") or {}).get("summaryData") or {})
+
+    def value(key: str) -> Any:
+        item = summary.get(key)
+        if isinstance(item, dict):
+            return item.get("value")
+        return item
+
+    output: dict[str, Any] = {}
+    market_cap = parse_market_number(value("MarketCap"))
+    one_year_target = parse_market_number(value("OneYrTarget"))
+    if market_cap is not None:
+        output["marketCap"] = market_cap
+    if one_year_target is not None:
+        output["targetMeanPrice"] = one_year_target
+    if output:
+        output["fundamental_source"] = "Nasdaq summary API fallback"
+    return output
 
 
 def collect_nasdaq_quotes(symbols: list[str]) -> dict[str, dict[str, Any]]:
@@ -814,6 +847,12 @@ def evaluate_candidate(
     price = number(quote.get("regularMarketPrice") or quote.get("postMarketPrice") or chart.get("last_close"))
     forward_pe = number(quote.get("forwardPE"))
     trailing_pe = number(quote.get("trailingPE"))
+    market_cap = number(quote.get("marketCap"))
+    latest_net_income = sec.get("latest_annual_net_income") if isinstance(sec.get("latest_annual_net_income"), dict) else {}
+    latest_net_income_value = number(latest_net_income.get("val")) if isinstance(latest_net_income, dict) else None
+    estimated_pe_from_sec = None
+    if market_cap and latest_net_income_value and latest_net_income_value > 0:
+        estimated_pe_from_sec = round(market_cap / latest_net_income_value, 2)
     ma50 = number(chart.get("ma50"))
     ma200 = number(chart.get("ma200"))
     low20 = number(chart.get("low20"))
@@ -918,9 +957,11 @@ def evaluate_candidate(
         "chart_cache_status": chart.get("cache_status"),
         "chart_cached_at_utc": chart.get("cached_at_utc"),
         "sec_filing_poll_time_utc": sec.get("filing_poll_time_utc"),
-        "market_cap": quote.get("marketCap"),
+        "market_cap": market_cap,
         "forward_pe": forward_pe,
         "trailing_pe": trailing_pe,
+        "estimated_pe_from_sec": estimated_pe_from_sec,
+        "valuation_source": quote.get("fundamental_source") or quote.get("source"),
         "data_confidence": data_confidence,
         "quality_score": round(quality_score, 2),
         "valuation_score": round(valuation_score, 2),
@@ -1106,6 +1147,8 @@ def compact_candidate(
         "sec_filing_poll_time_utc": item.get("sec_filing_poll_time_utc"),
         "forward_pe": item.get("forward_pe"),
         "trailing_pe": item.get("trailing_pe"),
+        "estimated_pe_from_sec": item.get("estimated_pe_from_sec"),
+        "valuation_source": item.get("valuation_source"),
         "data_confidence": item.get("data_confidence"),
         "mechanical_scores": {
             "quality": item.get("quality_score"),
