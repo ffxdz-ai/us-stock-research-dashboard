@@ -127,6 +127,7 @@ h1 {
 .search-box input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(8, 127, 112, 0.12); }
 
 .decision-dashboard,
+.gap-breakdown-panel,
 .data-health-panel,
 .review-stats-panel,
 .opportunity-panel {
@@ -238,6 +239,94 @@ h1 {
   line-height: 1.35;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.gap-breakdown-summary {
+  margin: 0 0 12px;
+  color: #405762;
+  font-size: 12px;
+  line-height: 1.65;
+}
+
+.gap-breakdown-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.gap-card,
+.gap-category {
+  border: 1px solid #dce6eb;
+  border-radius: 9px;
+  background: linear-gradient(180deg, #fbfefd, #f5f9fa);
+  padding: 12px 13px;
+}
+
+.gap-card {
+  min-height: 108px;
+}
+
+.gap-card span {
+  display: block;
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 760;
+}
+
+.gap-card strong {
+  display: block;
+  margin: 8px 0 8px;
+  color: #132832;
+  font-size: 26px;
+  line-height: 1;
+}
+
+.gap-card small,
+.gap-category small {
+  display: block;
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.45;
+}
+
+.gap-category-list {
+  display: grid;
+  grid-column: 1 / -1;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.gap-category {
+  display: grid;
+  gap: 7px;
+}
+
+.gap-category div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.gap-category strong {
+  color: #132832;
+  font-size: 12px;
+}
+
+.gap-category span {
+  border-radius: 999px;
+  background: #edf3f6;
+  padding: 3px 8px;
+  color: #405762;
+  font-size: 11px;
+  font-weight: 820;
+}
+
+.gap-category p {
+  margin: 0;
+  color: #405762;
+  font-size: 11px;
+  line-height: 1.5;
 }
 
 .health-list {
@@ -626,6 +715,8 @@ footer { width: min(1460px, calc(100% - 36px)); margin: 0 auto; padding: 0 0 30p
   .section-heading time, .section-heading > span { text-align: left; }
   .dashboard-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .dashboard-report-strip { grid-template-columns: 1fr; }
+  .gap-breakdown-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .gap-category-list { grid-template-columns: 1fr; }
   .review-metric-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .opportunity-toolbar { align-items: stretch; flex-direction: column; }
   .opportunity-search { min-width: 0; }
@@ -641,8 +732,9 @@ footer { width: min(1460px, calc(100% - 36px)); margin: 0 auto; padding: 0 0 30p
 
 @media (max-width: 520px) {
   .header-inner, .page-shell, footer { width: min(100% - 20px, 1460px); }
-  .decision-dashboard, .data-health-panel, .review-stats-panel, .opportunity-panel { padding: 12px; }
+  .decision-dashboard, .gap-breakdown-panel, .data-health-panel, .review-stats-panel, .opportunity-panel { padding: 12px; }
   .dashboard-grid { grid-template-columns: 1fr; }
+  .gap-breakdown-grid { grid-template-columns: 1fr; }
   .review-metric-grid { grid-template-columns: 1fr; }
   .opportunity-cards { grid-template-columns: 1fr; }
   .opportunity-scores { grid-template-columns: 1fr; }
@@ -721,6 +813,7 @@ h1 {
 
 .toolbar,
 .decision-dashboard,
+.gap-breakdown-panel,
 .data-health-panel,
 .review-stats-panel,
 .opportunity-panel,
@@ -732,16 +825,18 @@ h1 {
 
 .toolbar,
 .decision-dashboard,
+.gap-breakdown-panel,
 .data-health-panel,
 .review-stats-panel,
 .opportunity-panel { margin-bottom: 0; }
 
 .toolbar { order: 1; }
 .decision-dashboard { order: 2; }
-.data-health-panel { order: 3; }
-.opportunity-panel { order: 4; }
-.review-stats-panel { order: 5; }
-.research-layout { order: 6; }
+.gap-breakdown-panel { order: 3; }
+.data-health-panel { order: 4; }
+.opportunity-panel { order: 5; }
+.review-stats-panel { order: 6; }
+.research-layout { order: 7; }
 
 .filter,
 .status-filter,
@@ -784,6 +879,8 @@ h1 {
 
 .metric-card,
 .dashboard-report-card,
+.gap-card,
+.gap-category,
 .health-card,
 .review-metric-card,
 .opportunity-card,
@@ -858,11 +955,61 @@ h1 {
 }
 
 .dashboard-report-card strong,
+.gap-category strong,
 .health-card strong,
 .review-metric-card strong,
 .report-item strong,
 .opportunity-card-header strong {
   color: #edf7fa;
+}
+
+.gap-breakdown-summary {
+  color: #a8bdc7;
+}
+
+.gap-card,
+.gap-category {
+  position: relative;
+  overflow: hidden;
+}
+
+.gap-card::before,
+.gap-category::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 3px;
+  background: var(--gray);
+}
+
+.gap-data::before { background: var(--yellow); }
+.gap-permission::before { background: var(--orange); }
+.gap-entry::before { background: #a78bfa; }
+.gap-discipline::before { background: var(--red); }
+.gap-other::before { background: var(--gray); }
+
+.gap-card span,
+.gap-category p,
+.gap-category small {
+  color: #8fa8b3;
+}
+
+.gap-card strong {
+  color: #f8fafc;
+}
+
+.gap-data strong,
+.gap-data span:last-child { color: #fde68a; }
+.gap-permission strong,
+.gap-permission span:last-child { color: #fdba74; }
+.gap-entry strong,
+.gap-entry span:last-child { color: #c4b5fd; }
+.gap-discipline strong,
+.gap-discipline span:last-child { color: #fca5a5; }
+
+.gap-category span {
+  background: rgba(148, 163, 184, 0.13);
+  color: #cbd5e1;
 }
 
 .health-card {
@@ -1088,16 +1235,17 @@ footer {
   }
 
   .decision-dashboard { order: 1; }
+  .gap-breakdown-panel { order: 2; }
   .opportunity-panel {
-    order: 2;
+    order: 3;
     max-height: min(780px, 76vh);
     overflow: auto;
     overscroll-behavior: contain;
   }
-  .data-health-panel { order: 3; }
-  .toolbar { order: 4; }
-  .research-layout { order: 5; }
-  .review-stats-panel { order: 6; }
+  .data-health-panel { order: 4; }
+  .toolbar { order: 5; }
+  .research-layout { order: 6; }
+  .review-stats-panel { order: 7; }
 
   .opportunity-panel .section-title,
   .opportunity-panel .opportunity-controls {

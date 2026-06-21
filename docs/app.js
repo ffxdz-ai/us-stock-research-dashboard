@@ -30,6 +30,9 @@ const els = {
   latestReportTime: document.querySelector("#latestReportTime"),
   pendingReviewCount: document.querySelector("#pendingReviewCount"),
   dashboardReports: document.querySelector("#dashboardReports"),
+  gapBreakdownUpdated: document.querySelector("#gapBreakdownUpdated"),
+  gapBreakdownSummary: document.querySelector("#gapBreakdownSummary"),
+  gapBreakdownGrid: document.querySelector("#gapBreakdownGrid"),
   dataHealthSource: document.querySelector("#dataHealthSource"),
   dataHealthList: document.querySelector("#dataHealthList"),
   reviewStatsUpdated: document.querySelector("#reviewStatsUpdated"),
@@ -257,6 +260,202 @@ function countLabel(value) {
   return value === null || value === undefined ? "待确认" : String(value);
 }
 
+function splitMarkdownRow(line) {
+  return String(line || "").trim().replace(/^\|/, "").replace(/\|$/, "").split("|").map((cell) => cell.trim());
+}
+
+function looksLikeSymbol(value) {
+  return /^(US|HK|CN|SH|SZ)\.[A-Z0-9]+$/.test(String(value || "").trim()) || /^[A-Z]{1,6}$/.test(String(value || "").trim());
+}
+
+function gapCategoryMeta(key) {
+  const meta = {
+    fmp_estimate_snapshot: {
+      label: "缺少 FMP 预期/财报快照",
+      group: "data",
+      groupLabel: "数据缺口",
+      severity: "medium",
+      fallback: "Finnhub / SEC / Nasdaq earnings fallback",
+    },
+    non_us_data_source: {
+      label: "非美股统一财务/公告数据不足",
+      group: "data",
+      groupLabel: "数据缺口",
+      severity: "medium",
+      fallback: "AkShare / Tushare / Futu 本地镜像",
+    },
+    analyst_estimate: {
+      label: "缺少年/季度分析师预期",
+      group: "data",
+      groupLabel: "数据缺口",
+      severity: "medium",
+      fallback: "Finnhub estimates / FMP estimates",
+    },
+    earnings_surprise: {
+      label: "缺少最近财报 surprise",
+      group: "data",
+      groupLabel: "数据缺口",
+      severity: "medium",
+      fallback: "FMP earnings surprise / Nasdaq earnings",
+    },
+    sec_recent_filing: {
+      label: "缺少 SEC 最近申报记录",
+      group: "data",
+      groupLabel: "数据缺口",
+      severity: "high",
+      fallback: "SEC submissions / companyfacts",
+    },
+    sec_financial_facts: {
+      label: "缺少 SEC 财务事实",
+      group: "data",
+      groupLabel: "数据缺口",
+      severity: "high",
+      fallback: "SEC companyfacts",
+    },
+    entry_path_missing: {
+      label: "缺少完整 R/R 或机械入场路径",
+      group: "entry",
+      groupLabel: "入场路径缺失",
+      severity: "medium",
+      fallback: "补齐当前价、支撑、止损、目标价、R/R",
+    },
+    rr_discipline: {
+      label: "R/R 未达 2:1",
+      group: "discipline",
+      groupLabel: "交易纪律不通过",
+      severity: "warning",
+      fallback: "等待回调、上修目标价或提高止损逻辑质量",
+    },
+    permission_limited: {
+      label: "接口权限/限流受限",
+      group: "permission",
+      groupLabel: "权限受限",
+      severity: "warning",
+      fallback: "升级套餐、降低频率或使用 SEC/公司 IR 替代证据",
+    },
+    other: {
+      label: "其他待复核缺口",
+      group: "other",
+      groupLabel: "待人工复核",
+      severity: "unknown",
+      fallback: "人工检查报告正文",
+    },
+  };
+  return meta[key] || meta.other;
+}
+
+function classifyEvidenceGapItem(item) {
+  const text = String(item || "");
+  if (/R\/R\s*未达|风险收益比.*不足|不能进入普通买入/.test(text)) return "rr_discipline";
+  if (/完整\s*R\/R|机械入场路径|入场路径/.test(text)) return "entry_path_missing";
+  if (/FMP.*预期|财报快照/.test(text)) return "fmp_estimate_snapshot";
+  if (/非美股.*统一财务|公告正文数据源/.test(text)) return "non_us_data_source";
+  if (/年\/季度分析师预期|分析师预期/.test(text)) return "analyst_estimate";
+  if (/surprise|财报\s*surprise/i.test(text)) return "earnings_surprise";
+  if (/SEC\s*最近申报记录/.test(text)) return "sec_recent_filing";
+  if (/SEC\s*财务事实/.test(text)) return "sec_financial_facts";
+  return "other";
+}
+
+function addGapCategory(bucket, key, count, affected) {
+  if (!count) return;
+  const meta = gapCategoryMeta(key);
+  if (!bucket[key]) {
+    bucket[key] = {
+      key,
+      label: meta.label,
+      group: meta.group,
+      groupLabel: meta.groupLabel,
+      severity: meta.severity,
+      fallback: meta.fallback,
+      count: 0,
+      affected: new Set(),
+    };
+  }
+  bucket[key].count += count;
+  (Array.isArray(affected) ? affected : [affected]).filter(Boolean).forEach((item) => bucket[key].affected.add(item));
+}
+
+function normalizeGapCategories(categories) {
+  return Object.values(categories).map((item) => ({
+    ...item,
+    affected: Array.from(item.affected || []),
+  })).sort((a, b) => {
+    const order = { data: 1, permission: 2, entry: 3, discipline: 4, other: 5 };
+    return (order[a.group] || 9) - (order[b.group] || 9) || b.count - a.count;
+  });
+}
+
+function structuredGapBreakdown() {
+  const archive = archiveObject();
+  const source = archive.evidence_gap_breakdown || archive.gap_breakdown || archive.data_gap_breakdown;
+  if (!source || typeof source !== "object" || Array.isArray(source)) return null;
+  const categories = {};
+  const rawCategories = Array.isArray(source.categories) ? source.categories : Array.isArray(source.items) ? source.items : [];
+  rawCategories.forEach((item) => {
+    const key = item.key || item.type || "other";
+    addGapCategory(categories, key, Number(item.count) || 0, item.affected_symbols || item.affected || []);
+  });
+  const normalized = normalizeGapCategories(categories);
+  return {
+    source: "structured",
+    updatedAt: source.updated_at || latestReportTimeLabel(),
+    originalTotal: Number(source.original_total ?? source.total) || null,
+    dataGap: Number(source.data_gap ?? source.data_gap_count) || normalized.filter((item) => item.group === "data").reduce((sum, item) => sum + item.count, 0),
+    permission: Number(source.permission_limited ?? source.permission_count) || normalized.filter((item) => item.group === "permission").reduce((sum, item) => sum + item.count, 0),
+    entryPath: Number(source.entry_path_missing ?? source.entry_path_count) || normalized.filter((item) => item.group === "entry").reduce((sum, item) => sum + item.count, 0),
+    rrDiscipline: Number(source.rr_discipline ?? source.rr_fail_count) || normalized.filter((item) => item.group === "discipline").reduce((sum, item) => sum + item.count, 0),
+    other: normalized.filter((item) => item.group === "other").reduce((sum, item) => sum + item.count, 0),
+    categories: normalized,
+  };
+}
+
+function deriveEvidenceGapBreakdown() {
+  const structured = structuredGapBreakdown();
+  if (structured) return structured;
+  const report = latestReportByKind("event-evidence") || latestReport();
+  const text = reportText(report);
+  const categories = {};
+  const originalTotal = firstRegexNumber(text, [/证据缺口[：:]\s*(\d+)/, /数据缺口[：:]\s*(\d+)/]);
+  const permissionCount = firstRegexNumber(text, [/权限缺口[：:]\s*(\d+)/, /受限端点[：:]\s*(\d+)/]);
+  const permissionAffected = [];
+
+  text.split(/\n+/).forEach((line) => {
+    if (!line.trim().startsWith("|") || line.includes("---")) return;
+    const cells = splitMarkdownRow(line);
+    if (cells[0] && cells[0].startsWith("/") && /^(4\d\d|5\d\d|limited|restricted|rate_limited|429)$/i.test(cells[1] || "")) {
+      permissionAffected.push(cells[0]);
+    }
+    if (cells.length < 10 || !looksLikeSymbol(cells[0])) return;
+    const symbol = cells[0];
+    const gapCell = cells[8] || "";
+    gapCell.split(/[；;]/).map((item) => item.trim()).filter(Boolean).forEach((item) => {
+      addGapCategory(categories, classifyEvidenceGapItem(item), 1, symbol);
+    });
+  });
+
+  if (permissionCount) addGapCategory(categories, "permission_limited", permissionCount, permissionAffected.length ? permissionAffected : "FMP 受限端点");
+  const normalized = normalizeGapCategories(categories);
+  const dataGap = normalized.filter((item) => item.group === "data").reduce((sum, item) => sum + item.count, 0);
+  const permission = normalized.filter((item) => item.group === "permission").reduce((sum, item) => sum + item.count, 0);
+  const entryPath = normalized.filter((item) => item.group === "entry").reduce((sum, item) => sum + item.count, 0);
+  const rrDiscipline = normalized.filter((item) => item.group === "discipline").reduce((sum, item) => sum + item.count, 0);
+  const other = normalized.filter((item) => item.group === "other").reduce((sum, item) => sum + item.count, 0);
+  const computedTotal = dataGap + permission + entryPath + rrDiscipline + other;
+
+  return {
+    source: report ? "event-evidence-report" : "fallback",
+    updatedAt: report ? report.published_label : latestReportTimeLabel(),
+    originalTotal: originalTotal ?? (computedTotal || null),
+    dataGap: dataGap || null,
+    permission: permission || null,
+    entryPath: entryPath || null,
+    rrDiscipline: rrDiscipline || null,
+    other: other || null,
+    categories: normalized,
+  };
+}
+
 function extractMarketStatusText() {
   const direct = directField(["market_status", "risk_status", "today_market_status", "market_regime"]);
   if (direct) return String(direct);
@@ -307,6 +506,7 @@ function buildDashboardMetrics() {
   const fmp = latestReportByKind("fmp-research");
   const market = normalizeMarketStatus(extractMarketStatusText());
   const reviewStats = deriveReviewStats();
+  const gapBreakdown = deriveEvidenceGapBreakdown();
   const opportunityStatusCounts = state.opportunities.reduce((acc, item) => {
     acc[item.status] = (acc[item.status] || 0) + 1;
     return acc;
@@ -331,7 +531,7 @@ function buildDashboardMetrics() {
     [/禁止追高(?:数量)?[：:]\s*(\d+)/, /严禁追高[：:]\s*(\d+)/, /不追高[：:]\s*(\d+)/],
     opportunityStatusCounts.avoid_chasing || countKeywordLines([deepseek, secondary, opportunity], ["禁止追高", "严禁追高", "不追高", "不能普通买入", "不允许普通买入", "R/R 未达标"])
   );
-  const dataGap = dashboardCount(
+  const dataGap = directNumber(["true_data_gap_count", "data_source_gap_count"]) ?? gapBreakdown.dataGap ?? dashboardCount(
     ["data_gap_count", "evidence_gap_count", "gap_count", "permission_gap_count"],
     [evidence, fmp, deepseek, latest],
     [/数据缺口[：:]\s*(\d+)/, /证据缺口[：:]\s*(\d+)/, /权限缺口[：:]\s*(\d+)/, /受限端点[：:]\s*(\d+)/],
@@ -340,7 +540,7 @@ function buildDashboardMetrics() {
 
   const pendingReview = directNumber(["pending_review_count", "pending_count", "review_pending_count"]) ?? reviewStats?.pending_count ?? null;
 
-  return { market, executable, waiting, noChase, dataGap, pendingReview, latestTime: latestReportTimeLabel() };
+  return { market, executable, waiting, noChase, dataGap, pendingReview, latestTime: latestReportTimeLabel(), gapBreakdown };
 }
 
 function renderDashboardReports() {
@@ -378,6 +578,62 @@ function renderDecisionDashboard() {
   if (els.latestReportTime) els.latestReportTime.textContent = metrics.latestTime;
   if (els.pendingReviewCount) els.pendingReviewCount.textContent = countLabel(metrics.pendingReview);
   renderDashboardReports();
+}
+
+function gapCountLabel(value) {
+  return value === null || value === undefined ? "待确认" : String(value);
+}
+
+function renderGapBreakdown() {
+  if (!els.gapBreakdownGrid) return;
+  const breakdown = deriveEvidenceGapBreakdown();
+  if (els.gapBreakdownUpdated) els.gapBreakdownUpdated.textContent = breakdown.updatedAt ? `更新 ${breakdown.updatedAt}` : "等待结构化数据";
+  if (els.gapBreakdownSummary) {
+    els.gapBreakdownSummary.textContent = `原始合计 ${gapCountLabel(breakdown.originalTotal)} = 真实数据缺口 ${gapCountLabel(breakdown.dataGap)} + 权限受限 ${gapCountLabel(breakdown.permission)} + 入场路径缺失 ${gapCountLabel(breakdown.entryPath)} + R/R 纪律不通过 ${gapCountLabel(breakdown.rrDiscipline)}。`;
+  }
+  els.gapBreakdownGrid.replaceChildren();
+
+  const aggregateCards = [
+    { label: "真实数据缺口", count: breakdown.dataGap, group: "data", detail: "财务、预期、SEC、港/A统一数据等缺失" },
+    { label: "权限受限", count: breakdown.permission, group: "permission", detail: "接口 429、套餐限制或端点不可用" },
+    { label: "入场路径缺失", count: breakdown.entryPath, group: "entry", detail: "缺少完整买点、止损、目标价、R/R" },
+    { label: "R/R 纪律不通过", count: breakdown.rrDiscipline, group: "discipline", detail: "交易条件不达标，不算数据抓取失败" },
+  ];
+
+  aggregateCards.forEach((item) => {
+    const card = document.createElement("article");
+    card.className = `gap-card gap-${item.group}`;
+    const label = document.createElement("span"); label.textContent = item.label;
+    const count = document.createElement("strong"); count.textContent = gapCountLabel(item.count);
+    const detail = document.createElement("small"); detail.textContent = item.detail;
+    card.append(label, count, detail);
+    els.gapBreakdownGrid.appendChild(card);
+  });
+
+  const categories = document.createElement("div");
+  categories.className = "gap-category-list";
+  breakdown.categories.forEach((item) => {
+    const row = document.createElement("article");
+    row.className = `gap-category gap-${item.group}`;
+    const header = document.createElement("div");
+    const title = document.createElement("strong"); title.textContent = item.label;
+    const badge = document.createElement("span"); badge.textContent = `${item.count}`;
+    header.append(title, badge);
+    const meta = document.createElement("p");
+    const affected = item.affected && item.affected.length ? item.affected.slice(0, 10).join("、") : "待确认";
+    const more = item.affected && item.affected.length > 10 ? ` 等 ${item.affected.length} 项` : "";
+    meta.textContent = `${item.groupLabel}｜影响：${affected}${more}`;
+    const fallback = document.createElement("small"); fallback.textContent = `处理方式：${item.fallback}`;
+    row.append(header, meta, fallback);
+    categories.appendChild(row);
+  });
+  if (!breakdown.categories.length) {
+    const empty = document.createElement("p");
+    empty.className = "placeholder";
+    empty.textContent = "缺口拆解：等待结构化数据或事件证据报告。";
+    categories.appendChild(empty);
+  }
+  els.gapBreakdownGrid.appendChild(categories);
 }
 
 function normalizeHealthStatus(status) {
@@ -1053,6 +1309,7 @@ async function loadArchive() {
   await preloadFallbackReportContent();
   state.opportunities = deriveOpportunities();
   renderDecisionDashboard();
+  renderGapBreakdown();
   renderDataHealth();
   renderReviewStats();
   renderOpportunityCards();
