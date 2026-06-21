@@ -1127,7 +1127,7 @@ function formatDelta(value) {
 
 function formatScoreMetric(label, value, delta, options = {}) {
   const missing = value === null || value === undefined || value === "";
-  const display = missing ? "待结构化" : (options.rr ? `${value}:1` : String(value));
+  const display = missing ? (options.rr ? "待计算" : "待确认") : (options.rr ? `${value}:1` : String(value));
   return `${label} ${display}${formatDelta(delta)}`;
 }
 
@@ -1242,9 +1242,9 @@ function renderOpportunityCards() {
 
     const conditions = document.createElement("div");
     conditions.className = "opportunity-conditions";
-    appendListBlock(conditions, "买入条件", opportunity.buy_conditions, "待结构化");
-    appendListBlock(conditions, "回避条件", opportunity.avoid_conditions, "待结构化");
-    appendListBlock(conditions, "失效条件", opportunity.invalid_conditions, "待结构化");
+    appendListBlock(conditions, "买入条件", opportunity.buy_conditions, "待补充");
+    appendListBlock(conditions, "回避条件", opportunity.avoid_conditions, "待补充");
+    appendListBlock(conditions, "失效条件", opportunity.invalid_conditions, "待补充");
 
     const source = document.createElement("small");
     source.className = "opportunity-source";

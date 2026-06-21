@@ -20,6 +20,9 @@ DEFAULT_DETAIL_DIR = ROOT / "docs" / "data" / "reports"
 DEFAULT_REVIEW_METRICS_PATH = ROOT / "docs" / "data" / "opportunity_review_metrics.json"
 DEFAULT_EVENT_EVIDENCE_PATH = ROOT / "data" / "latest_event_evidence.json"
 DEFAULT_DOCS_EVENT_EVIDENCE_PATH = ROOT / "docs" / "data" / "event_evidence.json"
+DEFAULT_OPPORTUNITY_RADAR_PATH = ROOT / "docs" / "data" / "opportunity_radar.json"
+DEFAULT_CROSS_MARKET_PATH = ROOT / "docs" / "data" / "cross_market_intelligence.json"
+DEFAULT_SECONDARY_QUEUE_PATH = ROOT / "docs" / "data" / "secondary_analysis_queue.json"
 
 PRIVATE_SECTION_MARKERS = (
     "持仓输入",
@@ -378,6 +381,402 @@ def date_label(value: Any) -> str | None:
     return text[:10]
 
 
+def number(value: Any) -> float | None:
+    if isinstance(value, bool):
+        return None
+    if isinstance(value, (int, float)) and value == value:
+        return float(value)
+    if isinstance(value, str):
+        cleaned = value.replace(",", "").replace("$", "").replace("%", "").strip()
+        if not cleaned or cleaned.lower() in {"n/a", "nan", "none", "null", "--", "数据不足", "待确认"}:
+            return None
+        try:
+            return float(cleaned)
+        except ValueError:
+            return None
+    return None
+
+
+def clean_text(value: Any) -> str:
+    return re.sub(r"\s+", " ", str(value or "")).strip()
+
+
+def unique_list(values: list[Any], limit: int = 8) -> list[str]:
+    result: list[str] = []
+    seen: set[str] = set()
+    for value in values:
+        text = clean_text(value)
+        if not text or text in seen:
+            continue
+        seen.add(text)
+        result.append(text)
+        if len(result) >= limit:
+            break
+    return result
+
+
+def load_first_json(*paths: Path) -> dict[str, Any]:
+    for path in paths:
+        payload = load_json_file(path)
+        if payload:
+            return payload
+    return {}
+
+
+def opportunity_status(action: str, rr_ratio: float | None, queue_status: str = "", evidence_status: str = "") -> str:
+    text = f"{action} {queue_status} {evidence_status}"
+    if re.search(r"失效|invalid", text, re.IGNORECASE):
+        return "invalidated"
+    if re.search(r"复盘|review", text, re.IGNORECASE):
+        return "review"
+    if re.search(r"退回观察", text):
+        return "watchlist"
+    if re.search(r"二次分析|Buy-Side|重点池", text, re.IGNORECASE) or queue_status == "active":
+        return "secondary_analysis"
+    if re.search(r"避免追高|禁止追高|不追高|严禁追高", text):
+        return "avoid_chasing"
+    if rr_ratio is not None and rr_ratio < 2:
+        return "avoid_chasing"
+    if re.search(r"等待|回踩|回调|买点|突破确认", text):
+        return "waiting_entry"
+    if rr_ratio is not None and rr_ratio >= 2:
+        return "executable"
+    return "watchlist"
+
+
+def status_label(status: str) -> str:
+    return {
+        "executable": "可执行观察",
+        "waiting_entry": "等待买点",
+        "avoid_chasing": "禁止追高",
+        "secondary_analysis": "二次分析",
+        "watchlist": "观察",
+        "invalidated": "逻辑失效",
+        "review": "复盘中",
+    }.get(status, "待确认")
+
+
+def merge_opportunity(base: dict[str, Any] | None, incoming: dict[str, Any]) -> dict[str, Any]:
+    if not base:
+        return dict(incoming)
+    merged = dict(base)
+    for key, value in incoming.items():
+        if key in {"why_changed", "buy_conditions", "avoid_conditions", "invalid_conditions"}:
+            merged[key] = unique_list([*(merged.get(key) or []), *(value or [])], limit=8)
+            continue
+        if key == "score_delta":
+            existing = merged.get("score_delta") if isinstance(merged.get("score_delta"), dict) else {}
+            extra = value if isinstance(value, dict) else {}
+            merged[key] = {**existing, **{k: v for k, v in extra.items() if v is not None}}
+            continue
+        if value not in (None, "", [], {}):
+            if merged.get(key) in (None, "", [], {}) or key in {"action", "status", "status_label"}:
+                merged[key] = value
+    return merged
+
+
+def upsert_opportunity(items: dict[str, dict[str, Any]], incoming: dict[str, Any]) -> None:
+    symbol = clean_text(incoming.get("symbol") or incoming.get("code")).upper()
+    if not symbol:
+        return
+    incoming["symbol"] = symbol
+    incoming.setdefault("market", market_from_symbol(symbol))
+    incoming.setdefault("currency", currency_for_symbol(symbol))
+    items[symbol] = merge_opportunity(items.get(symbol), incoming)
+
+
+def market_from_symbol(symbol: str) -> str:
+    if symbol.startswith("US."):
+        return "US"
+    if symbol.startswith("HK."):
+        return "HK"
+    if symbol.startswith(("CN.", "SH.", "SZ.")):
+        return "CN"
+    return ""
+
+
+def build_metric_change_index(opportunity_radar: dict[str, Any]) -> dict[str, dict[str, Any]]:
+    index: dict[str, dict[str, Any]] = {}
+    for row in opportunity_radar.get("metric_changes", []) if isinstance(opportunity_radar.get("metric_changes"), list) else []:
+        if not isinstance(row, dict):
+            continue
+        symbol = clean_text(row.get("code")).upper()
+        if not symbol:
+            continue
+        metric = clean_text(row.get("metric"))
+        previous = number(row.get("previous"))
+        current = number(row.get("current"))
+        delta = None if previous is None or current is None else round(current - previous, 2)
+        target = index.setdefault(symbol, {"score_delta": {}, "why_changed": []})
+        if metric == "opportunity_score":
+            target["score_delta"]["opportunity_score"] = delta
+        elif metric == "trend_score":
+            target["score_delta"]["trend_score"] = delta
+        target["why_changed"].append(clean_text(row.get("note")) or f"{clean_text(row.get('label'))}发生变化")
+    return index
+
+
+def derive_opportunity_conditions(item: dict[str, Any]) -> tuple[list[str], list[str], list[str]]:
+    rr = number(item.get("rr_ratio"))
+    buy = [
+        "R/R 回到 2:1 以上" if rr is None or rr < 2 else "R/R 已达到 2:1 以上，仍需人工复核",
+        "价格接近支撑、严格触发或突破确认位",
+        "估值、趋势、催化至少一项继续改善",
+    ]
+    avoid = [
+        "R/R 低于 2:1 不追高",
+        "数据缺口未修复前不升级为买入",
+        "高开大幅追涨或财报前波动率过高",
+    ]
+    invalid = [
+        "产业链需求、订单或价格弱于预期",
+        "财报/指引/申报显示核心假设恶化",
+        "跌破后续 Buy-Side 分析定义的失效位",
+    ]
+    return buy, avoid, invalid
+
+
+def finalize_opportunities(items: dict[str, dict[str, Any]], limit: int = 80) -> list[dict[str, Any]]:
+    finalized: list[dict[str, Any]] = []
+    for item in items.values():
+        rr = number(item.get("rr_ratio"))
+        status = opportunity_status(
+            clean_text(item.get("action")),
+            rr,
+            clean_text(item.get("queue_status")),
+            clean_text(item.get("evidence_status")),
+        )
+        item["status"] = status
+        item["status_label"] = status_label(status)
+        if not item.get("price_source") and item.get("price") is not None:
+            item["price_source"] = "公开行情快照"
+        if not item.get("price_time"):
+            item["price_time"] = item.get("updated_at") or item.get("last_seen_at") or ""
+        buy, avoid, invalid = derive_opportunity_conditions(item)
+        item["buy_conditions"] = unique_list([*(item.get("buy_conditions") or []), *buy], limit=5)
+        item["avoid_conditions"] = unique_list([*(item.get("avoid_conditions") or []), *avoid], limit=5)
+        item["invalid_conditions"] = unique_list([*(item.get("invalid_conditions") or []), *invalid], limit=5)
+        item["why_changed"] = unique_list(item.get("why_changed") or [], limit=6)
+        finalized.append(
+            {
+                "symbol": item.get("symbol"),
+                "name": item.get("name") or "",
+                "market": item.get("market") or market_from_symbol(str(item.get("symbol") or "")),
+                "theme": item.get("theme") or "",
+                "segment": item.get("segment") or "",
+                "status": item.get("status"),
+                "status_label": item.get("status_label"),
+                "action": item.get("action") or "保留观察，等待结构化复核",
+                "price": item.get("price"),
+                "currency": item.get("currency") or currency_for_symbol(str(item.get("symbol") or "")),
+                "price_time": item.get("price_time") or "",
+                "price_source": item.get("price_source") or "",
+                "opportunity_score": item.get("opportunity_score"),
+                "trend_score": item.get("trend_score"),
+                "crowding_score": item.get("crowding_score"),
+                "rr_ratio": item.get("rr_ratio"),
+                "rr_required": item.get("rr_required") or 2,
+                "score_delta": item.get("score_delta") if item.get("score_delta") else None,
+                "why_changed": item.get("why_changed") or [],
+                "buy_conditions": item.get("buy_conditions") or [],
+                "avoid_conditions": item.get("avoid_conditions") or [],
+                "invalid_conditions": item.get("invalid_conditions") or [],
+                "source": item.get("source") or "structured-public-data",
+                "updated_at": item.get("updated_at") or "",
+            }
+        )
+    return sorted(
+        finalized,
+        key=lambda row: (
+            {"executable": 0, "secondary_analysis": 1, "waiting_entry": 2, "avoid_chasing": 3, "watchlist": 4}.get(str(row.get("status")), 9),
+            -(number(row.get("opportunity_score")) or 0),
+            str(row.get("symbol") or ""),
+        ),
+    )[:limit]
+
+
+def derive_opportunities() -> list[dict[str, Any]]:
+    opportunity_radar = load_json_file(DEFAULT_OPPORTUNITY_RADAR_PATH)
+    cross_market = load_json_file(DEFAULT_CROSS_MARKET_PATH)
+    secondary_queue = load_json_file(DEFAULT_SECONDARY_QUEUE_PATH)
+    event_evidence = load_first_json(DEFAULT_EVENT_EVIDENCE_PATH, DEFAULT_DOCS_EVENT_EVIDENCE_PATH)
+    if not any((opportunity_radar, cross_market, secondary_queue, event_evidence)):
+        return []
+
+    items: dict[str, dict[str, Any]] = {}
+    metric_changes = build_metric_change_index(opportunity_radar)
+    generated_at = (
+        event_evidence.get("generated_label")
+        or cross_market.get("generated_label")
+        or opportunity_radar.get("generated_label")
+        or secondary_queue.get("generated_label")
+        or ""
+    )
+
+    for theme in opportunity_radar.get("top_opportunities", []) if isinstance(opportunity_radar.get("top_opportunities"), list) else []:
+        if not isinstance(theme, dict):
+            continue
+        theme_name = clean_text(theme.get("name"))
+        for candidate in theme.get("top_candidates", []) if isinstance(theme.get("top_candidates"), list) else []:
+            if not isinstance(candidate, dict):
+                continue
+            symbol = clean_text(candidate.get("code")).upper()
+            change = metric_changes.get(symbol, {})
+            upsert_opportunity(
+                items,
+                {
+                    "symbol": symbol,
+                    "name": clean_text(candidate.get("name")),
+                    "market": clean_text(candidate.get("market")),
+                    "theme": theme_name,
+                    "segment": clean_text(candidate.get("layer")),
+                    "action": clean_text(candidate.get("action")),
+                    "opportunity_score": number(candidate.get("score")),
+                    "currency": currency_for_symbol(symbol),
+                    "updated_at": opportunity_radar.get("generated_label") or generated_at,
+                    "score_delta": change.get("score_delta"),
+                    "why_changed": change.get("why_changed", []),
+                    "source": "opportunity_radar",
+                },
+            )
+
+    for candidate in cross_market.get("secondary_research_candidates", []) if isinstance(cross_market.get("secondary_research_candidates"), list) else []:
+        if not isinstance(candidate, dict):
+            continue
+        symbol = clean_text(candidate.get("code")).upper()
+        change = metric_changes.get(symbol, {})
+        upsert_opportunity(
+            items,
+            {
+                "symbol": symbol,
+                "name": clean_text(candidate.get("name")),
+                "market": clean_text(candidate.get("market")),
+                "theme": clean_text(candidate.get("theme")),
+                "segment": clean_text(candidate.get("layer")),
+                "action": clean_text(candidate.get("reason")) or "进入二次研究候选",
+                "price": number(candidate.get("price")),
+                "currency": currency_for_symbol(symbol),
+                "price_time": cross_market.get("generated_label") or generated_at,
+                "price_source": "跨市场情报行情快照",
+                "opportunity_score": number(candidate.get("opportunity_score")),
+                "trend_score": number(candidate.get("trend_score")),
+                "crowding_score": number(candidate.get("crowding_score")),
+                "rr_ratio": number(candidate.get("reward_risk")),
+                "rr_required": 2,
+                "updated_at": cross_market.get("generated_label") or generated_at,
+                "score_delta": change.get("score_delta"),
+                "why_changed": change.get("why_changed", []),
+                "source": "cross_market_intelligence",
+            },
+        )
+
+    for theme in cross_market.get("themes", []) if isinstance(cross_market.get("themes"), list) else []:
+        if not isinstance(theme, dict):
+            continue
+        theme_name = clean_text(theme.get("name"))
+        securities: list[Any] = []
+        if isinstance(theme.get("securities"), list):
+            securities.extend(theme.get("securities") or [])
+        for layer in theme.get("layers", []) if isinstance(theme.get("layers"), list) else []:
+            if isinstance(layer, dict) and isinstance(layer.get("leaders"), list):
+                securities.extend(layer.get("leaders") or [])
+        for security in securities:
+            if not isinstance(security, dict):
+                continue
+            symbol = clean_text(security.get("code")).upper()
+            change = metric_changes.get(symbol, {})
+            upsert_opportunity(
+                items,
+                {
+                    "symbol": symbol,
+                    "name": clean_text(security.get("name")),
+                    "market": clean_text(security.get("market")),
+                    "theme": theme_name,
+                    "segment": clean_text(security.get("layer") or security.get("role")),
+                    "action": clean_text(security.get("action")),
+                    "price": number(security.get("price")),
+                    "currency": currency_for_symbol(symbol),
+                    "price_time": cross_market.get("generated_label") or generated_at,
+                    "price_source": clean_text(security.get("data_status")) or "跨市场情报行情快照",
+                    "opportunity_score": number(security.get("opportunity_score")),
+                    "trend_score": number(security.get("trend_score")),
+                    "crowding_score": number(security.get("crowding_score")),
+                    "rr_ratio": number(security.get("reward_risk")),
+                    "rr_required": 2,
+                    "updated_at": cross_market.get("generated_label") or generated_at,
+                    "score_delta": change.get("score_delta") or security.get("score_delta"),
+                    "why_changed": change.get("why_changed", []),
+                    "source": "cross_market_intelligence",
+                },
+            )
+
+    records = secondary_queue.get("records")
+    if isinstance(records, dict):
+        iterable_records = records.values()
+    elif isinstance(records, list):
+        iterable_records = records
+    else:
+        iterable_records = []
+    for record in iterable_records:
+        if not isinstance(record, dict):
+            continue
+        symbol = clean_text(record.get("code")).upper()
+        upsert_opportunity(
+            items,
+            {
+                "symbol": symbol,
+                "name": clean_text(record.get("name")),
+                "market": clean_text(record.get("market")),
+                "theme": clean_text(record.get("layer_name")),
+                "segment": clean_text(record.get("role")),
+                "action": clean_text(record.get("radar_action") or record.get("last_reason")),
+                "price": number(record.get("price")),
+                "currency": currency_for_symbol(symbol),
+                "price_time": clean_text(record.get("last_seen_at") or secondary_queue.get("generated_label") or generated_at),
+                "price_source": clean_text(record.get("data_status")) or "二次分析队列行情快照",
+                "opportunity_score": number(record.get("layer_score")),
+                "trend_score": number(record.get("trend_score")),
+                "updated_at": secondary_queue.get("generated_label") or generated_at,
+                "queue_status": clean_text(record.get("status")),
+                "why_changed": [clean_text(record.get("last_result")), clean_text(record.get("last_reason"))],
+                "source": "secondary_analysis_queue",
+            },
+        )
+
+    for card in event_evidence.get("cards", []) if isinstance(event_evidence.get("cards"), list) else []:
+        if not isinstance(card, dict):
+            continue
+        symbol = clean_text(card.get("code")).upper()
+        price = card.get("price") if isinstance(card.get("price"), dict) else {}
+        gaps = card.get("gaps") if isinstance(card.get("gaps"), list) else []
+        upsert_opportunity(
+            items,
+            {
+                "symbol": symbol,
+                "name": clean_text(card.get("name")),
+                "market": market_from_symbol(symbol),
+                "theme": " / ".join(unique_list(card.get("themes") or [], limit=3)),
+                "action": clean_text(card.get("action")),
+                "price": number(price.get("price")),
+                "currency": currency_for_symbol(symbol),
+                "price_time": clean_text(price.get("quote_time") or event_evidence.get("generated_label") or generated_at),
+                "price_source": clean_text(price.get("source")) or "事件证据行情快照",
+                "trend_score": number(price.get("trend_score")),
+                "rr_ratio": number(price.get("reward_risk")),
+                "rr_required": 2,
+                "evidence_status": clean_text(card.get("evidence_status")),
+                "updated_at": event_evidence.get("generated_label") or generated_at,
+                "why_changed": [
+                    clean_text(card.get("evidence_status")),
+                    *[clean_text(gap) for gap in gaps],
+                ],
+                "source": "event_evidence",
+            },
+        )
+
+    return finalize_opportunities(items)
+
+
 def derive_review_stats(metrics_path: Path = DEFAULT_REVIEW_METRICS_PATH) -> dict[str, Any] | None:
     payload = load_json_file(metrics_path)
     if not payload:
@@ -542,6 +941,9 @@ def build_archive(output: Path, limit: int = 80, merge_existing: bool = True) ->
     evidence_gap_breakdown = derive_evidence_gap_breakdown()
     if evidence_gap_breakdown:
         payload["evidence_gap_breakdown"] = evidence_gap_breakdown
+    opportunities = derive_opportunities()
+    if opportunities:
+        payload["opportunities"] = opportunities
     return payload
 
 
