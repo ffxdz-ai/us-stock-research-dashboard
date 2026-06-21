@@ -297,13 +297,15 @@ def target_upside(consensus: dict[str, Any], price: float | None) -> float | Non
     return round((target / price - 1) * 100, 2)
 
 
-def score_symbol(row: dict[str, Any]) -> tuple[float, list[str]]:
+def score_symbol(row: dict[str, Any]) -> tuple[float | None, list[str]]:
     if row.get("coverage_status") == "restricted":
-        return 0.0, ["FMP 套餐或 symbol 权限受限，不能评价预期差"]
+        return None, ["FMP 套餐或 symbol 权限受限，不能评价预期差"]
     if row.get("coverage_status") == "rate_limited":
-        return 0.0, ["FMP 今日额度/频率限制，等待下次刷新"]
+        return None, ["FMP 今日额度/频率限制，等待下次刷新"]
     if row.get("coverage_status") == "unavailable":
-        return 0.0, ["FMP 临时请求失败，暂不评价预期差"]
+        return None, ["FMP 临时请求失败，暂不评价预期差"]
+    if row.get("coverage_status") == "empty":
+        return None, ["FMP 无有效返回，暂不评价预期差"]
     score = 45.0
     notes: list[str] = []
     if row.get("coverage_status") == "stale":
@@ -381,6 +383,8 @@ def action_for_score(row: dict[str, Any]) -> str:
         return "FMP 限流，等待下次刷新"
     if row.get("coverage_status") == "unavailable":
         return "FMP 请求失败，等待下次刷新"
+    if row.get("coverage_status") == "empty":
+        return "FMP 无有效返回，暂不评价"
     score = number(row.get("expectation_score")) or 0
     upside = number(row.get("price_target_upside_pct"))
     revision = row.get("estimate_revision") if isinstance(row.get("estimate_revision"), dict) else {}
@@ -759,8 +763,9 @@ def render_report(payload: dict[str, Any]) -> str:
             "stale": "沿用旧快照",
             "empty": "无返回",
         }.get(coverage_status, coverage_status)
+        score_text = "n/a" if coverage_status in {"restricted", "rate_limited", "unavailable", "empty"} else fmt_num(row.get("expectation_score"))
         lines.append(
-            f"| {row.get('symbol')} | {coverage_label} | {fmt_num(row.get('expectation_score')) if coverage_status != 'restricted' else 'n/a'} | {fmt_pct(row.get('price_target_upside_pct'))} | {fmt_money(consensus.get('targetConsensus'))} | {rating.get('rating', 'n/a')} | {revision_display(revision)} | {'；'.join(row.get('score_notes', [])[:3])} |"
+            f"| {row.get('symbol')} | {coverage_label} | {score_text} | {fmt_pct(row.get('price_target_upside_pct'))} | {fmt_money(consensus.get('targetConsensus'))} | {rating.get('rating', 'n/a')} | {revision_display(revision)} | {'；'.join(row.get('score_notes', [])[:3])} |"
         )
 
     lines.extend(["", "## 使用纪律", ""])
