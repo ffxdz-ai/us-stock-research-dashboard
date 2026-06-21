@@ -3,8 +3,9 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="美股每日分析报告公开脱敏归档" />
-    <title>美股每日分析</title>
+    <meta name="description" content="AI 美股投研驾驶舱公开脱敏版" />
+    <title>AI投研驾驶舱</title>
+    <link rel="icon" href="data:," />
     <link rel="stylesheet" href="./styles.css?v=20260620" />
   </head>
   <body>
@@ -12,8 +13,8 @@
       <div class="header-inner">
         <div>
           <span class="eyebrow">US EQUITY RESEARCH</span>
-          <h1>美股每日分析</h1>
-          <p>市场、个股与观察名单的只读研究归档</p>
+          <h1>AI投研驾驶舱</h1>
+          <p>市场状态、机会卡片、复盘统计与公开脱敏报告归档</p>
         </div>
         <div class="privacy-note">
           <strong>公开脱敏版</strong>
@@ -31,6 +32,9 @@
           <button class="filter" data-kind="macro-regime" type="button">宏观雷达</button>
           <button class="filter" data-kind="fmp-research" type="button">FMP预期</button>
           <button class="filter" data-kind="opportunity-radar" type="button">机会雷达</button>
+          <button class="filter" data-kind="cross-market-intelligence" type="button">跨市场情报</button>
+          <button class="filter" data-kind="event-evidence" type="button">事件证据</button>
+          <button class="filter" data-kind="opportunity-review-metrics" type="button">机会复盘</button>
           <button class="filter" data-kind="supply-chain" type="button">产业链</button>
           <button class="filter" data-kind="daily" type="button">每日分析</button>
           <button class="filter" data-kind="weekly" type="button">周度扫描</button>
@@ -40,6 +44,128 @@
           <span>搜索</span>
           <input id="searchInput" type="search" placeholder="标题、日期或正文" autocomplete="off" />
         </label>
+      </section>
+
+      <section class="decision-dashboard" aria-labelledby="dashboardTitle">
+        <div class="section-heading">
+          <div>
+            <span class="section-kicker">TODAY DECISION DASHBOARD</span>
+            <h2 id="dashboardTitle">今日决策驾驶舱</h2>
+          </div>
+          <time id="dashboardUpdated">读取中</time>
+        </div>
+
+        <div class="dashboard-grid" id="dashboardMetrics" aria-live="polite">
+          <article class="metric-card metric-market">
+            <span>今日市场状态</span>
+            <strong id="marketStatus">待确认</strong>
+            <small id="marketStatusNote">等待最新宏观或市场报告</small>
+          </article>
+          <article class="metric-card metric-executable">
+            <span>今日可执行机会</span>
+            <strong id="executableCount">待确认</strong>
+            <small>公开脱敏版只显示数量</small>
+          </article>
+          <article class="metric-card metric-waiting">
+            <span>等待买点</span>
+            <strong id="waitEntryCount">待确认</strong>
+            <small>回调、突破或二次确认</small>
+          </article>
+          <article class="metric-card metric-avoid">
+            <span>禁止追高</span>
+            <strong id="noChaseCount">待确认</strong>
+            <small>R/R 不足或技术过热</small>
+          </article>
+          <article class="metric-card metric-gap">
+            <span>数据缺口</span>
+            <strong id="dataGapCount">待确认</strong>
+            <small>影响证据完整性</small>
+          </article>
+          <article class="metric-card metric-review">
+            <span>待复盘</span>
+            <strong id="pendingReviewCount">待确认</strong>
+            <small>等待 7/30/60/90D 验证</small>
+          </article>
+        </div>
+
+        <div class="dashboard-report-strip" id="dashboardReports" aria-label="重点报告快捷入口"></div>
+      </section>
+
+      <section class="data-health-panel" aria-labelledby="dataHealthTitle">
+        <div class="section-heading compact">
+          <div>
+            <span class="section-kicker">DATA SOURCE HEALTH</span>
+            <h2 id="dataHealthTitle">数据源健康状态</h2>
+          </div>
+          <span id="dataHealthSource">等待检测</span>
+        </div>
+        <div class="health-list" id="dataHealthList" aria-live="polite">
+          <p class="placeholder">正在读取数据源健康状态…</p>
+        </div>
+      </section>
+
+      <section class="review-stats-panel" aria-labelledby="reviewStatsTitle">
+        <div class="section-heading">
+          <div>
+            <span class="section-kicker">OPPORTUNITY REVIEW STATS</span>
+            <h2 id="reviewStatsTitle">复盘统计</h2>
+          </div>
+          <span id="reviewStatsUpdated">等待结构化数据</span>
+        </div>
+
+        <div class="review-metric-grid" id="reviewMetricGrid" aria-live="polite"></div>
+
+        <div class="review-table-wrap">
+          <table class="review-table">
+            <thead>
+              <tr>
+                <th>股票</th>
+                <th>首次发现</th>
+                <th>首次价格</th>
+                <th>7D</th>
+                <th>30D</th>
+                <th>最大回撤</th>
+                <th>最大浮盈</th>
+                <th>状态</th>
+                <th>经验</th>
+              </tr>
+            </thead>
+            <tbody id="reviewStatsRows">
+              <tr><td colspan="9">复盘统计：等待结构化数据</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="opportunity-panel" aria-labelledby="opportunityTitle">
+        <div class="section-heading">
+          <div>
+            <span class="section-kicker">STOCK STATUS CARDS</span>
+            <h2 id="opportunityTitle">股票状态卡</h2>
+          </div>
+          <span id="opportunityCount">读取中</span>
+        </div>
+
+        <div class="opportunity-toolbar" aria-label="股票状态筛选">
+          <div class="opportunity-status-filters" id="opportunityStatusFilters">
+            <button class="status-filter active" data-status="all" type="button">全部</button>
+            <button class="status-filter" data-status="executable" type="button">可执行观察</button>
+            <button class="status-filter" data-status="waiting_entry" type="button">等待买点</button>
+            <button class="status-filter" data-status="avoid_chasing" type="button">禁止追高</button>
+            <button class="status-filter" data-status="secondary_analysis" type="button">二次分析</button>
+            <button class="status-filter" data-status="watchlist" type="button">观察</button>
+            <button class="status-filter" data-status="invalidated" type="button">逻辑失效</button>
+            <button class="status-filter" data-status="review" type="button">复盘中</button>
+          </div>
+          <label class="opportunity-search">
+            <span>股票搜索</span>
+            <input id="opportunitySearch" type="search" placeholder="代码或名称" autocomplete="off" />
+          </label>
+        </div>
+
+        <div class="opportunity-cards" id="opportunityCards" aria-live="polite">
+          <p class="placeholder">正在提取股票状态卡…</p>
+        </div>
       </section>
 
       <section class="research-layout">
