@@ -25,6 +25,7 @@ DEFAULT_MARKET_PACK = DATA_DIR / "latest_market_pack.json"
 DEFAULT_SECONDARY_QUEUE = DATA_DIR / "latest_secondary_analysis_queue.json"
 DEFAULT_OPPORTUNITY_RADAR = DATA_DIR / "latest_opportunity_radar.json"
 DEFAULT_MACRO_REGIME = DATA_DIR / "latest_macro_regime.json"
+DEFAULT_FMP_RESEARCH = DATA_DIR / "latest_fmp_research.json"
 DEFAULT_API_URL = "https://api.deepseek.com/chat/completions"
 DEFAULT_MODEL = "deepseek-v4-pro"
 
@@ -303,12 +304,81 @@ def compact_macro_regime(macro_regime: dict[str, Any]) -> dict[str, Any]:
     }
 
 
+def compact_fmp_research(fmp_research: dict[str, Any]) -> dict[str, Any]:
+    if not fmp_research:
+        return {}
+    symbols = fmp_research.get("symbols") if isinstance(fmp_research.get("symbols"), list) else []
+    compact_symbols: list[dict[str, Any]] = []
+    for item in symbols[:18]:
+        if not isinstance(item, dict):
+            continue
+        annual = item.get("annual_estimate") if isinstance(item.get("annual_estimate"), dict) else {}
+        quarterly = item.get("quarterly_estimate") if isinstance(item.get("quarterly_estimate"), dict) else {}
+        revision = item.get("estimate_revision") if isinstance(item.get("estimate_revision"), dict) else {}
+        consensus = item.get("price_target_consensus") if isinstance(item.get("price_target_consensus"), dict) else {}
+        summary = item.get("price_target_summary") if isinstance(item.get("price_target_summary"), dict) else {}
+        surprise = item.get("latest_earnings_surprise") if isinstance(item.get("latest_earnings_surprise"), dict) else {}
+        rating = item.get("rating_snapshot") if isinstance(item.get("rating_snapshot"), dict) else {}
+        compact_symbols.append(
+            {
+                "symbol": item.get("symbol"),
+                "name": item.get("name"),
+                "price": item.get("price"),
+                "expectation_score": item.get("expectation_score"),
+                "action": item.get("action"),
+                "score_notes": item.get("score_notes"),
+                "annual_estimate": {
+                    "date": annual.get("date"),
+                    "epsAvg": annual.get("epsAvg"),
+                    "revenueAvg": annual.get("revenueAvg"),
+                    "numAnalystsEps": annual.get("numAnalystsEps"),
+                    "numAnalystsRevenue": annual.get("numAnalystsRevenue"),
+                },
+                "quarterly_estimate": {
+                    "date": quarterly.get("date"),
+                    "epsAvg": quarterly.get("epsAvg"),
+                    "revenueAvg": quarterly.get("revenueAvg"),
+                    "numAnalystsEps": quarterly.get("numAnalystsEps"),
+                    "numAnalystsRevenue": quarterly.get("numAnalystsRevenue"),
+                },
+                "estimate_revision": revision,
+                "price_target": {
+                    "targetConsensus": consensus.get("targetConsensus"),
+                    "targetMedian": consensus.get("targetMedian"),
+                    "targetHigh": consensus.get("targetHigh"),
+                    "targetLow": consensus.get("targetLow"),
+                    "upside_pct": item.get("price_target_upside_pct"),
+                    "lastQuarterCount": summary.get("lastQuarterCount"),
+                    "lastQuarterAvgPriceTarget": summary.get("lastQuarterAvgPriceTarget"),
+                },
+                "latest_earnings_surprise": surprise,
+                "rating_snapshot": {
+                    "rating": rating.get("rating"),
+                    "overallScore": rating.get("overallScore"),
+                },
+            }
+        )
+    return {
+        "generated_label": fmp_research.get("generated_label"),
+        "fmp_enabled": fmp_research.get("fmp_enabled"),
+        "data_boundary": fmp_research.get("data_boundary") if isinstance(fmp_research.get("data_boundary"), dict) else {},
+        "summary": fmp_research.get("summary") if isinstance(fmp_research.get("summary"), dict) else {},
+        "data_availability": fmp_research.get("data_availability", [])[:8]
+        if isinstance(fmp_research.get("data_availability"), list)
+        else [],
+        "symbols": compact_symbols,
+        "actionable": fmp_research.get("actionable", [])[:10] if isinstance(fmp_research.get("actionable"), list) else [],
+        "rule": "FMP 预期、目标价和评级只作为市场预期输入；不能替代 Buy-Side 估值、风险收益和整股执行。",
+    }
+
+
 def prepare_public_context(
     compact: dict[str, Any],
     pack: dict[str, Any],
     secondary_queue: dict[str, Any],
     opportunity_radar: dict[str, Any],
     macro_regime: dict[str, Any],
+    fmp_research: dict[str, Any],
 ) -> dict[str, Any]:
     """Drop private portfolio fields before sending context to DeepSeek."""
     market = compact.get("market") if isinstance(compact.get("market"), dict) else pack.get("market", {})
@@ -338,6 +408,7 @@ def prepare_public_context(
         },
         "market": market,
         "macro_regime": compact_macro_regime(macro_regime),
+        "fmp_research": compact_fmp_research(fmp_research),
         "prescreen": compact.get("prescreen", {}),
         "candidate_limit_note": "候选池为机械预筛和公开数据压缩输入；模型必须重新审查，不得把机械分数当作最终结论。",
         "candidate_pool": candidates,
@@ -391,6 +462,8 @@ def build_user_prompt(context: dict[str, Any], mode: str) -> str:
 - 不要输出真实持仓、现金、成本、股数、本地路径、API Key。
 - 必须先阅读 macro_regime：按经济周期、政策利率、通胀、流动性、风险偏好判断今天是进攻、平衡还是防守。
 - 如果 macro_regime.fred_enabled 为 true，宏观部分必须引用 FRED 指标的数据日期；如果缺失，则明确“宏观 FRED 数据不足”。
+- 必须阅读 fmp_research：把分析师预期、目标价共识、财报 surprise 和评级快照作为“市场预期”输入，但不得把 FMP 目标价当作你的最终目标价。
+- 如果 fmp_research.data_availability 显示 transcript/news 端点受限，必须写明电话会/新闻正文未接入，不得编造管理层表述。
 - 对 secondary_analysis_queue.deepseek_priority 中的股票全部覆盖；如果数量较多，先用表格逐只给结论，再挑最重要标的展开。
 - 如果 secondary_analysis_queue.deepseek_priority 为空，再从候选池中选择最值得复核的重点股票，宁缺毋滥。
 - 必须先阅读 opportunity_radar：区分“提前发现的主题机会”和“已满足买入纪律的股票”；机会雷达不等于买入建议。
@@ -500,6 +573,7 @@ def main() -> int:
     parser.add_argument("--secondary-queue", type=Path, default=DEFAULT_SECONDARY_QUEUE)
     parser.add_argument("--opportunity-radar", type=Path, default=DEFAULT_OPPORTUNITY_RADAR)
     parser.add_argument("--macro-regime", type=Path, default=DEFAULT_MACRO_REGIME)
+    parser.add_argument("--fmp-research", type=Path, default=DEFAULT_FMP_RESEARCH)
     parser.add_argument("--out-dir", type=Path, default=REPORTS_DIR)
     parser.add_argument("--dry-run", action="store_true", help="Write the sanitized prompt context without calling DeepSeek.")
     args = parser.parse_args()
@@ -510,7 +584,8 @@ def main() -> int:
     secondary_queue = load_json(args.secondary_queue, {})
     opportunity_radar = load_json(args.opportunity_radar, {})
     macro_regime = load_json(args.macro_regime, {})
-    context = prepare_public_context(compact, pack, secondary_queue, opportunity_radar, macro_regime)
+    fmp_research = load_json(args.fmp_research, {})
+    context = prepare_public_context(compact, pack, secondary_queue, opportunity_radar, macro_regime, fmp_research)
     context_text = json.dumps(context, ensure_ascii=False, indent=2)
     validate_public_text(context_text)
 

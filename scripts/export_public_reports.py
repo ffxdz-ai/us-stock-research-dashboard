@@ -46,7 +46,7 @@ PRIVATE_LINE_PATTERNS = (
     re.compile(r"sk-(?:proj-)?[A-Za-z0-9_-]{12,}"),
     re.compile(r"\bgh[pousr]_[A-Za-z0-9_]{20,}\b"),
     re.compile(r"\bgithub_pat_[A-Za-z0-9_]{20,}\b"),
-    re.compile(r"\b(?:DEEPSEEK|OPENAI|GITHUB|FUTU)_[A-Z0-9_]*(?:KEY|TOKEN|SECRET)\b", re.IGNORECASE),
+    re.compile(r"\b(?:DEEPSEEK|OPENAI|GITHUB|FUTU|FINNHUB|FRED|FMP)_[A-Z0-9_]*(?:KEY|TOKEN|SECRET)\b", re.IGNORECASE),
     re.compile(r"\.env(?:\b|$)", re.IGNORECASE),
 )
 
@@ -64,11 +64,12 @@ KIND_LABELS = {
     "supply-chain": "产业链雷达",
     "opportunity-radar": "机会雷达",
     "macro-regime": "宏观雷达",
+    "fmp-research": "FMP预期",
     "secondary-queue": "二次分析队列",
     "daily": "每日分析",
 }
 
-ONE_REPORT_PER_DAY_KINDS = {"supply-chain", "opportunity-radar", "macro-regime", "secondary-queue"}
+ONE_REPORT_PER_DAY_KINDS = {"supply-chain", "opportunity-radar", "macro-regime", "fmp-research", "secondary-queue"}
 
 
 def report_kind(name: str) -> str:
@@ -85,6 +86,8 @@ def report_kind(name: str) -> str:
         return "opportunity-radar"
     if "macro-regime" in lowered or "macro_regime" in lowered:
         return "macro-regime"
+    if "fmp-research" in lowered or "fmp_research" in lowered:
+        return "fmp-research"
     if "secondary-analysis" in lowered or "secondary_analysis" in lowered:
         return "secondary-queue"
     if "deepseek-cloud" in lowered:

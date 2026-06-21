@@ -36,6 +36,7 @@ jobs:
       DEEPSEEK_MODEL: ${{ vars.DEEPSEEK_MODEL || 'deepseek-v4-pro' }}
       FINNHUB_API_KEY: ${{ secrets.FINNHUB_API_KEY }}
       FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
+      FMP_API_KEY: ${{ secrets.FMP_API_KEY }}
       SEC_USER_AGENT: "ffxdz-ai public research dashboard contact@example.com"
       REPORT_MODE: ${{ github.event.inputs.mode || 'full' }}
     steps:
@@ -63,6 +64,16 @@ jobs:
 
       - name: Generate FRED macro regime
         run: python scripts/macro_regime.py
+
+      - name: Generate FMP expectations radar
+        shell: bash
+        run: |
+          if [ "$REPORT_MODE" = "weekly" ]; then
+            MARKET_PACK="data/latest_weekly_market_pack.json"
+          else
+            MARKET_PACK="data/latest_market_pack.json"
+          fi
+          python scripts/fmp_research.py --market-pack "$MARKET_PACK" --limit 12
 
       - name: Generate supply-chain radar
         shell: bash
@@ -104,7 +115,7 @@ jobs:
             MARKET_PACK="data/latest_market_pack.json"
             AGENT_INPUT="data/latest_agent_input.json"
           fi
-          python scripts/run_deepseek_cloud_report.py --mode "$REPORT_MODE" --input "$AGENT_INPUT" --market-pack "$MARKET_PACK" --opportunity-radar data/latest_opportunity_radar.json --macro-regime data/latest_macro_regime.json
+          python scripts/run_deepseek_cloud_report.py --mode "$REPORT_MODE" --input "$AGENT_INPUT" --market-pack "$MARKET_PACK" --opportunity-radar data/latest_opportunity_radar.json --macro-regime data/latest_macro_regime.json --fmp-research data/latest_fmp_research.json
 
       - name: Export public archive
         run: python scripts/export_public_reports.py --limit 80
@@ -117,7 +128,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add docs/data/reports.json docs/data/secondary_analysis_queue.json docs/data/opportunity_radar.json docs/data/opportunity_journal.json docs/data/macro_regime.json
+          git add docs/data/reports.json docs/data/secondary_analysis_queue.json docs/data/opportunity_radar.json docs/data/opportunity_journal.json docs/data/macro_regime.json docs/data/fmp_research.json docs/data/fmp_research_state.json
           if git diff --cached --quiet; then
             echo "No public archive changes to commit."
           else
