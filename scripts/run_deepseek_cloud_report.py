@@ -24,6 +24,7 @@ DEFAULT_COMPACT_INPUT = DATA_DIR / "latest_agent_input.json"
 DEFAULT_MARKET_PACK = DATA_DIR / "latest_market_pack.json"
 DEFAULT_SECONDARY_QUEUE = DATA_DIR / "latest_secondary_analysis_queue.json"
 DEFAULT_OPPORTUNITY_RADAR = DATA_DIR / "latest_opportunity_radar.json"
+DEFAULT_MACRO_REGIME = DATA_DIR / "latest_macro_regime.json"
 DEFAULT_API_URL = "https://api.deepseek.com/chat/completions"
 DEFAULT_MODEL = "deepseek-v4-pro"
 
@@ -232,11 +233,82 @@ def compact_opportunity_radar(opportunity_radar: dict[str, Any]) -> dict[str, An
     }
 
 
+def compact_macro_regime(macro_regime: dict[str, Any]) -> dict[str, Any]:
+    if not macro_regime:
+        return {}
+    indicators = macro_regime.get("indicators") if isinstance(macro_regime.get("indicators"), dict) else {}
+    level_change_series = {
+        "UNRATE",
+        "FEDFUNDS",
+        "DGS10",
+        "DGS2",
+        "DGS3MO",
+        "T10Y2Y",
+        "T10Y3M",
+        "NFCI",
+        "BAA10Y",
+        "VIXCLS",
+    }
+    important = [
+        "GDPC1",
+        "PAYEMS",
+        "UNRATE",
+        "CPILFESL",
+        "PCEPILFE",
+        "FEDFUNDS",
+        "DGS10",
+        "T10Y3M",
+        "M2SL",
+        "NFCI",
+        "BAA10Y",
+        "VIXCLS",
+    ]
+    return {
+        "generated_label": macro_regime.get("generated_label"),
+        "fred_enabled": macro_regime.get("fred_enabled"),
+        "data_boundary": macro_regime.get("data_boundary"),
+        "as_of": macro_regime.get("as_of") if isinstance(macro_regime.get("as_of"), dict) else {},
+        "dimensions": macro_regime.get("dimensions") if isinstance(macro_regime.get("dimensions"), dict) else {},
+        "regime": macro_regime.get("regime") if isinstance(macro_regime.get("regime"), dict) else {},
+        "key_indicators": {
+            series_id: {
+                "name": indicators.get(series_id, {}).get("name") if isinstance(indicators.get(series_id), dict) else series_id,
+                "latest_date": indicators.get(series_id, {}).get("latest_date") if isinstance(indicators.get(series_id), dict) else None,
+                "latest_value": indicators.get(series_id, {}).get("latest_value") if isinstance(indicators.get(series_id), dict) else None,
+                "one_year_change": indicators.get(series_id, {}).get("one_year_change") if isinstance(indicators.get(series_id), dict) else None,
+                "yoy_pct_change": None
+                if series_id in level_change_series
+                else indicators.get(series_id, {}).get("yoy_pct_change")
+                if isinstance(indicators.get(series_id), dict)
+                else None,
+                "three_month_change": indicators.get(series_id, {}).get("three_month_change") if isinstance(indicators.get(series_id), dict) else None,
+                "three_month_pct_change": None
+                if series_id in level_change_series
+                else indicators.get(series_id, {}).get("three_month_pct_change")
+                if isinstance(indicators.get(series_id), dict)
+                else None,
+                "three_month_annualized_pct": None
+                if series_id in level_change_series
+                else indicators.get(series_id, {}).get("three_month_annualized_pct")
+                if isinstance(indicators.get(series_id), dict)
+                else None,
+            }
+            for series_id in important
+            if isinstance(indicators.get(series_id), dict)
+        },
+        "scoring_rules_triggered": macro_regime.get("scoring_rules_triggered", [])[:16]
+        if isinstance(macro_regime.get("scoring_rules_triggered"), list)
+        else [],
+        "watchlist": macro_regime.get("watchlist", [])[:8] if isinstance(macro_regime.get("watchlist"), list) else [],
+    }
+
+
 def prepare_public_context(
     compact: dict[str, Any],
     pack: dict[str, Any],
     secondary_queue: dict[str, Any],
     opportunity_radar: dict[str, Any],
+    macro_regime: dict[str, Any],
 ) -> dict[str, Any]:
     """Drop private portfolio fields before sending context to DeepSeek."""
     market = compact.get("market") if isinstance(compact.get("market"), dict) else pack.get("market", {})
@@ -265,6 +337,7 @@ def prepare_public_context(
             "do_not_chase_overheated_setups": True,
         },
         "market": market,
+        "macro_regime": compact_macro_regime(macro_regime),
         "prescreen": compact.get("prescreen", {}),
         "candidate_limit_note": "候选池为机械预筛和公开数据压缩输入；模型必须重新审查，不得把机械分数当作最终结论。",
         "candidate_pool": candidates,
@@ -316,6 +389,8 @@ def build_user_prompt(context: dict[str, Any], mode: str) -> str:
 - 不要重复输出一级标题；标题由外层系统生成。
 - 必须写明“云端公开数据版”，并说明 Futu OpenD 云端不可用。
 - 不要输出真实持仓、现金、成本、股数、本地路径、API Key。
+- 必须先阅读 macro_regime：按经济周期、政策利率、通胀、流动性、风险偏好判断今天是进攻、平衡还是防守。
+- 如果 macro_regime.fred_enabled 为 true，宏观部分必须引用 FRED 指标的数据日期；如果缺失，则明确“宏观 FRED 数据不足”。
 - 对 secondary_analysis_queue.deepseek_priority 中的股票全部覆盖；如果数量较多，先用表格逐只给结论，再挑最重要标的展开。
 - 如果 secondary_analysis_queue.deepseek_priority 为空，再从候选池中选择最值得复核的重点股票，宁缺毋滥。
 - 必须先阅读 opportunity_radar：区分“提前发现的主题机会”和“已满足买入纪律的股票”；机会雷达不等于买入建议。
@@ -424,6 +499,7 @@ def main() -> int:
     parser.add_argument("--market-pack", type=Path, default=DEFAULT_MARKET_PACK)
     parser.add_argument("--secondary-queue", type=Path, default=DEFAULT_SECONDARY_QUEUE)
     parser.add_argument("--opportunity-radar", type=Path, default=DEFAULT_OPPORTUNITY_RADAR)
+    parser.add_argument("--macro-regime", type=Path, default=DEFAULT_MACRO_REGIME)
     parser.add_argument("--out-dir", type=Path, default=REPORTS_DIR)
     parser.add_argument("--dry-run", action="store_true", help="Write the sanitized prompt context without calling DeepSeek.")
     args = parser.parse_args()
@@ -433,7 +509,8 @@ def main() -> int:
     pack = load_json(args.market_pack, {})
     secondary_queue = load_json(args.secondary_queue, {})
     opportunity_radar = load_json(args.opportunity_radar, {})
-    context = prepare_public_context(compact, pack, secondary_queue, opportunity_radar)
+    macro_regime = load_json(args.macro_regime, {})
+    context = prepare_public_context(compact, pack, secondary_queue, opportunity_radar, macro_regime)
     context_text = json.dumps(context, ensure_ascii=False, indent=2)
     validate_public_text(context_text)
 

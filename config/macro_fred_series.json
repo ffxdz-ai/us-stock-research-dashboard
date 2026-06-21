@@ -1,0 +1,154 @@
+{
+  "schema_version": 1,
+  "updated": "2026-06-21",
+  "description": "FRED 宏观指标配置。用于判断经济周期、通胀、政策利率、流动性和市场风险偏好，不直接生成股票买卖指令。",
+  "series": [
+    {
+      "id": "GDPC1",
+      "name": "实际 GDP",
+      "dimension": "growth",
+      "unit": "billions chained 2017 dollars",
+      "frequency_hint": "quarterly"
+    },
+    {
+      "id": "INDPRO",
+      "name": "工业生产指数",
+      "dimension": "growth",
+      "unit": "index",
+      "frequency_hint": "monthly"
+    },
+    {
+      "id": "PAYEMS",
+      "name": "非农就业",
+      "dimension": "labor",
+      "unit": "thousand persons",
+      "frequency_hint": "monthly"
+    },
+    {
+      "id": "UNRATE",
+      "name": "失业率",
+      "dimension": "labor",
+      "unit": "percent",
+      "frequency_hint": "monthly"
+    },
+    {
+      "id": "CPIAUCSL",
+      "name": "CPI",
+      "dimension": "inflation",
+      "unit": "index",
+      "frequency_hint": "monthly"
+    },
+    {
+      "id": "CPILFESL",
+      "name": "核心 CPI",
+      "dimension": "inflation",
+      "unit": "index",
+      "frequency_hint": "monthly"
+    },
+    {
+      "id": "PCEPI",
+      "name": "PCE 物价指数",
+      "dimension": "inflation",
+      "unit": "index",
+      "frequency_hint": "monthly"
+    },
+    {
+      "id": "PCEPILFE",
+      "name": "核心 PCE 物价指数",
+      "dimension": "inflation",
+      "unit": "index",
+      "frequency_hint": "monthly"
+    },
+    {
+      "id": "FEDFUNDS",
+      "name": "有效联邦基金利率",
+      "dimension": "policy",
+      "unit": "percent",
+      "frequency_hint": "monthly"
+    },
+    {
+      "id": "DGS10",
+      "name": "10年期美债收益率",
+      "dimension": "rates",
+      "unit": "percent",
+      "frequency_hint": "daily"
+    },
+    {
+      "id": "DGS2",
+      "name": "2年期美债收益率",
+      "dimension": "rates",
+      "unit": "percent",
+      "frequency_hint": "daily"
+    },
+    {
+      "id": "DGS3MO",
+      "name": "3个月美债收益率",
+      "dimension": "rates",
+      "unit": "percent",
+      "frequency_hint": "daily"
+    },
+    {
+      "id": "T10Y2Y",
+      "name": "10年-2年美债利差",
+      "dimension": "rates",
+      "unit": "percent",
+      "frequency_hint": "daily"
+    },
+    {
+      "id": "T10Y3M",
+      "name": "10年-3个月美债利差",
+      "dimension": "rates",
+      "unit": "percent",
+      "frequency_hint": "daily"
+    },
+    {
+      "id": "M2SL",
+      "name": "M2 货币供应",
+      "dimension": "liquidity",
+      "unit": "billions dollars",
+      "frequency_hint": "monthly"
+    },
+    {
+      "id": "WALCL",
+      "name": "美联储资产负债表",
+      "dimension": "liquidity",
+      "unit": "millions dollars",
+      "frequency_hint": "weekly"
+    },
+    {
+      "id": "NFCI",
+      "name": "芝加哥联储金融状况指数",
+      "dimension": "liquidity",
+      "unit": "index",
+      "frequency_hint": "weekly"
+    },
+    {
+      "id": "BAA10Y",
+      "name": "BAA 公司债-10年美债利差",
+      "dimension": "credit",
+      "unit": "percent",
+      "frequency_hint": "daily"
+    },
+    {
+      "id": "VIXCLS",
+      "name": "VIX 波动率指数",
+      "dimension": "risk",
+      "unit": "index",
+      "frequency_hint": "daily"
+    },
+    {
+      "id": "DTWEXBGS",
+      "name": "美元广义指数",
+      "dimension": "risk",
+      "unit": "index",
+      "frequency_hint": "daily"
+    },
+    {
+      "id": "DCOILWTICO",
+      "name": "WTI 原油",
+      "dimension": "risk",
+      "unit": "dollars per barrel",
+      "frequency_hint": "daily"
+    }
+  ]
+}
