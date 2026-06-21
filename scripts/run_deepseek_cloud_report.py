@@ -27,6 +27,7 @@ DEFAULT_OPPORTUNITY_RADAR = DATA_DIR / "latest_opportunity_radar.json"
 DEFAULT_CROSS_MARKET_INTELLIGENCE = DATA_DIR / "latest_cross_market_intelligence.json"
 DEFAULT_EVENT_EVIDENCE = DATA_DIR / "latest_event_evidence.json"
 DEFAULT_OPPORTUNITY_REVIEW_METRICS = DATA_DIR / "latest_opportunity_review_metrics.json"
+DEFAULT_FREE_DATA_FALLBACK = DATA_DIR / "latest_free_data_fallback.json"
 DEFAULT_MACRO_REGIME = DATA_DIR / "latest_macro_regime.json"
 DEFAULT_FMP_RESEARCH = DATA_DIR / "latest_fmp_research.json"
 DEFAULT_API_URL = "https://api.deepseek.com/chat/completions"
@@ -398,6 +399,38 @@ def compact_opportunity_review_metrics(opportunity_review_metrics: dict[str, Any
     }
 
 
+def compact_free_data_fallback(free_data_fallback: dict[str, Any]) -> dict[str, Any]:
+    if not free_data_fallback:
+        return {}
+    fields: list[dict[str, Any]] = []
+    for item in free_data_fallback.get("fields", []) if isinstance(free_data_fallback.get("fields"), list) else []:
+        if not isinstance(item, dict):
+            continue
+        fields.append(
+            {
+                "field": item.get("field"),
+                "source": item.get("source"),
+                "source_type": item.get("source_type"),
+                "confidence": item.get("confidence"),
+                "fallback_used": item.get("fallback_used"),
+                "data_gap": item.get("data_gap"),
+            }
+        )
+    return {
+        "generated_label": free_data_fallback.get("generated_label"),
+        "summary": free_data_fallback.get("summary") if isinstance(free_data_fallback.get("summary"), dict) else {},
+        "rule": "优先官方源：SEC/FRED/CNINFO/HKEXnews；Alpha Vantage/OpenFIGI/AkShare/Tushare/Yahoo 只能作为降级 fallback，必须标 source_type/confidence；缺数据必须写 data_gap，不得编造。",
+        "source_priority": free_data_fallback.get("source_priority") if isinstance(free_data_fallback.get("source_priority"), dict) else {},
+        "data_health": free_data_fallback.get("data_health", [])[:12]
+        if isinstance(free_data_fallback.get("data_health"), list)
+        else [],
+        "sample_fields": fields[:40],
+        "data_gaps": free_data_fallback.get("data_gaps", [])[:40]
+        if isinstance(free_data_fallback.get("data_gaps"), list)
+        else [],
+    }
+
+
 def compact_macro_regime(macro_regime: dict[str, Any]) -> dict[str, Any]:
     if not macro_regime:
         return {}
@@ -546,6 +579,7 @@ def prepare_public_context(
     cross_market_intelligence: dict[str, Any],
     event_evidence: dict[str, Any],
     opportunity_review_metrics: dict[str, Any],
+    free_data_fallback: dict[str, Any],
     macro_regime: dict[str, Any],
     fmp_research: dict[str, Any],
 ) -> dict[str, Any]:
@@ -587,6 +621,7 @@ def prepare_public_context(
         "cross_market_intelligence": compact_cross_market_intelligence(cross_market_intelligence),
         "event_evidence": compact_event_evidence(event_evidence),
         "opportunity_review_metrics": compact_opportunity_review_metrics(opportunity_review_metrics),
+        "free_data_fallback": compact_free_data_fallback(free_data_fallback),
         "secondary_analysis_queue": {
             "rule": "进入二次分析后每两天复核一次；不合格则退回观察，不再占用高频 Buy-Side 分析名额；无固定冷却期，重新满足触发条件即可回池。",
             "generated_label": secondary_queue.get("generated_label"),
@@ -766,6 +801,7 @@ def build_user_prompt(context: dict[str, Any], mode: str) -> str:
 - 对 cross_market_intelligence.event_extraction_backlog 中的高优先级缺口，必须写明下一步需要补什么数据：新闻、公告、电话会、价格、订单或财务指标。
 - 必须阅读 event_evidence：区分“证据较完整”“证据可用但需补强”“证据不足”；如果新闻/电话会权限缺口存在，必须明确未读取正文。
 - 必须阅读 opportunity_review_metrics：报告中要说明机会雷达当前命中率是否成熟；未满 30 天或未完成 checkpoint 的主题不得被当作已验证成功。
+- 必须阅读 free_data_fallback：当 FMP/Finnhub 不可用、限流或缺字段时，优先引用 SEC/FRED 官方源；Alpha Vantage/OpenFIGI/AkShare/Tushare/Yahoo 只能标为降级 fallback；任何 data_gap 不得编造。
 - 估值优先使用 valuation_pe 和 valuation_pe_source；forward_pe/trailing_pe 缺失时，不得忽略 Finnhub P/E 或 SEC 市值/净利润估算 P/E。
 - 每只重点股票必须分别评估：当前价试仓、理想回调、突破确认。
 - 每条可执行买入路径必须独立满足 R/R >= 2:1；不满足就写观察或等待。
@@ -879,6 +915,7 @@ def main() -> int:
     parser.add_argument("--cross-market-intelligence", type=Path, default=DEFAULT_CROSS_MARKET_INTELLIGENCE)
     parser.add_argument("--event-evidence", type=Path, default=DEFAULT_EVENT_EVIDENCE)
     parser.add_argument("--opportunity-review-metrics", type=Path, default=DEFAULT_OPPORTUNITY_REVIEW_METRICS)
+    parser.add_argument("--free-data-fallback", type=Path, default=DEFAULT_FREE_DATA_FALLBACK)
     parser.add_argument("--macro-regime", type=Path, default=DEFAULT_MACRO_REGIME)
     parser.add_argument("--fmp-research", type=Path, default=DEFAULT_FMP_RESEARCH)
     parser.add_argument("--out-dir", type=Path, default=REPORTS_DIR)
@@ -893,6 +930,7 @@ def main() -> int:
     cross_market_intelligence = load_json(args.cross_market_intelligence, {})
     event_evidence = load_json(args.event_evidence, {})
     opportunity_review_metrics = load_json(args.opportunity_review_metrics, {})
+    free_data_fallback = load_json(args.free_data_fallback, {})
     macro_regime = load_json(args.macro_regime, {})
     fmp_research = load_json(args.fmp_research, {})
     context = prepare_public_context(
@@ -903,6 +941,7 @@ def main() -> int:
         cross_market_intelligence,
         event_evidence,
         opportunity_review_metrics,
+        free_data_fallback,
         macro_regime,
         fmp_research,
     )

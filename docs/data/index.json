@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-06-21T19:34:01+00:00",
-  "generated_label": "2026-06-22 03:34",
+  "generated_at": "2026-06-21T20:31:39+00:00",
+  "generated_label": "2026-06-22 04:31",
   "privacy": "public-sanitized",
   "report_count": 80,
   "review_stats": {
@@ -2458,8 +2458,136 @@
       "updated_at": "2026-06-22 02:20"
     }
   ],
+  "data_health": [
+    {
+      "name": "SEC EDGAR",
+      "source": "SEC EDGAR",
+      "status": "normal",
+      "message": "SEC ticker mapping available.",
+      "impact": "Impacts US official filing/companyfacts fallback.",
+      "updated_at": "2026-06-22T04:30:04+08:00"
+    },
+    {
+      "name": "SEC EDGAR company data",
+      "source": "SEC EDGAR company data",
+      "status": "normal",
+      "message": "SEC fallback returned data for 8/8 checked US symbols.",
+      "impact": "Impacts official US filing and financial statement evidence.",
+      "updated_at": "2026-06-22T04:31:05+08:00"
+    },
+    {
+      "name": "FRED",
+      "source": "FRED",
+      "status": "normal",
+      "message": "FRED returned 8/8 configured macro/liquidity series.",
+      "impact": "Impacts macro regime, rates, inflation, labor and credit spread evidence.",
+      "updated_at": "2026-06-22T04:31:05+08:00"
+    },
+    {
+      "name": "Alpha Vantage",
+      "source": "Alpha Vantage",
+      "status": "unknown",
+      "message": "ALPHA_VANTAGE_API_KEY is not configured.",
+      "impact": "Earnings estimates, surprise, calendar and transcript fallback disabled.",
+      "updated_at": "2026-06-22T04:31:12+08:00"
+    },
+    {
+      "name": "OpenFIGI",
+      "source": "OpenFIGI",
+      "status": "unknown",
+      "message": "OPENFIGI_API_KEY is not configured.",
+      "impact": "Security identifier mapping fallback is limited to SEC ticker files.",
+      "updated_at": "2026-06-22T04:31:12+08:00"
+    },
+    {
+      "name": "CNINFO",
+      "source": "CNINFO",
+      "status": "unknown",
+      "message": "CNINFO connector is not configured; no official A-share announcement pull was attempted.",
+      "impact": "Impacts A-share announcement/financial statement confidence.",
+      "updated_at": "2026-06-22T04:31:12+08:00"
+    },
+    {
+      "name": "HKEXnews",
+      "source": "HKEXnews",
+      "status": "unknown",
+      "message": "HKEXnews connector is not configured; no official HK announcement pull was attempted.",
+      "impact": "Impacts HK announcement/financial statement confidence.",
+      "updated_at": "2026-06-22T04:31:12+08:00"
+    }
+  ],
+  "free_data_fallback": {
+    "generated_at": "2026-06-22T04:30:04+08:00",
+    "generated_label": "2026-06-22 04:30",
+    "summary": {
+      "symbol_count": 45,
+      "field_count": 41,
+      "data_gap_count": 17,
+      "health_normal_count": 3,
+      "health_limited_count": 0,
+      "health_error_count": 0,
+      "health_unknown_count": 4
+    },
+    "source_priority": {
+      "us_filings_financials": [
+        "SEC EDGAR submissions",
+        "SEC EDGAR companyfacts"
+      ],
+      "macro_liquidity": [
+        "FRED"
+      ],
+      "earnings_expectations_surprise_calendar": [
+        "Alpha Vantage vendor fallback"
+      ],
+      "transcripts": [
+        "Company IR or SEC 8-K attachment",
+        "Alpha Vantage transcript fallback"
+      ],
+      "a_share_disclosures": [
+        "CNINFO official",
+        "AkShare/Tushare open-source fallback"
+      ],
+      "hk_disclosures": [
+        "HKEXnews official",
+        "Futu/AkShare/Yahoo fallback"
+      ],
+      "symbol_mapping": [
+        "SEC ticker files",
+        "OpenFIGI"
+      ]
+    }
+  },
   "schema_version": 2,
   "reports": [
+    {
+      "id": "20260622-0430-latest-free-data-fallback",
+      "filename": "latest-free-data-fallback.md",
+      "title": "免费数据源 fallback 雷达",
+      "kind": "free-data-fallback",
+      "kind_label": "免费数据源",
+      "published_at": "2026-06-22T04:30+08:00",
+      "published_label": "2026-06-22 04:30",
+      "is_latest": true,
+      "summary": "免费数据源 fallback 雷达",
+      "symbols": [
+        "SZ.300308",
+        "SZ.300502",
+        "SZ.300394",
+        "SZ.300499",
+        "SZ.002747",
+        "SH.600183",
+        "SH.603256",
+        "SH.688183",
+        "SZ.002335",
+        "SH.688322",
+        "SZ.300476",
+        "HK.01888",
+        "HK.00148",
+        "HK.01347",
+        "HK.00981"
+      ],
+      "themes": []
+    },
     {
       "id": "20260622-0310-latest-event-evidence",
       "filename": "latest-event-evidence.md",
@@ -4001,19 +4129,6 @@
       "kind_label": "每日分析",
       "published_at": "2026-06-16T21:32+08:00",
       "published_label": "2026-06-16 21:32",
-      "is_latest": false,
-      "summary": "美股市场机械预筛报告",
-      "symbols": [],
-      "themes": []
-    },
-    {
-      "id": "20260616-2129-20260616-2129-market-brief",
-      "filename": "20260616-2129-market-brief.md",
-      "title": "美股市场机械预筛报告",
-      "kind": "daily",
-      "kind_label": "每日分析",
-      "published_at": "2026-06-16T21:29+08:00",
-      "published_label": "2026-06-16 21:29",
       "is_latest": false,
       "summary": "美股市场机械预筛报告",
       "symbols": [],

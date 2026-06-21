@@ -37,6 +37,8 @@ jobs:
       FINNHUB_API_KEY: ${{ secrets.FINNHUB_API_KEY }}
       FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
       FMP_API_KEY: ${{ secrets.FMP_API_KEY }}
+      ALPHA_VANTAGE_API_KEY: ${{ secrets.ALPHA_VANTAGE_API_KEY }}
+      OPENFIGI_API_KEY: ${{ secrets.OPENFIGI_API_KEY }}
       SEC_USER_AGENT: "ffxdz-ai public research dashboard contact@example.com"
       REPORT_MODE: ${{ github.event.inputs.mode || 'full' }}
     steps:
@@ -135,6 +137,16 @@ jobs:
           fi
           python scripts/secondary_analysis_queue.py --market-pack "$MARKET_PACK" --opportunity-radar data/latest_opportunity_radar.json --cross-market-intelligence data/latest_cross_market_intelligence.json
 
+      - name: Generate free data fallback layer
+        shell: bash
+        run: |
+          if [ "$REPORT_MODE" = "weekly" ]; then
+            MARKET_PACK="data/latest_weekly_market_pack.json"
+          else
+            MARKET_PACK="data/latest_market_pack.json"
+          fi
+          python scripts/free_data_fallback.py --market-pack "$MARKET_PACK" --fmp-research data/latest_fmp_research.json --macro-regime data/latest_macro_regime.json --opportunity-radar data/latest_opportunity_radar.json --cross-market data/latest_cross_market_intelligence.json --secondary-queue data/latest_secondary_analysis_queue.json
+
       - name: Generate DeepSeek cloud report
         shell: bash
         run: |
@@ -145,7 +157,7 @@ jobs:
             MARKET_PACK="data/latest_market_pack.json"
             AGENT_INPUT="data/latest_agent_input.json"
           fi
-          python scripts/run_deepseek_cloud_report.py --mode "$REPORT_MODE" --input "$AGENT_INPUT" --market-pack "$MARKET_PACK" --opportunity-radar data/latest_opportunity_radar.json --cross-market-intelligence data/latest_cross_market_intelligence.json --event-evidence data/latest_event_evidence.json --opportunity-review-metrics data/latest_opportunity_review_metrics.json --macro-regime data/latest_macro_regime.json --fmp-research data/latest_fmp_research.json
+          python scripts/run_deepseek_cloud_report.py --mode "$REPORT_MODE" --input "$AGENT_INPUT" --market-pack "$MARKET_PACK" --opportunity-radar data/latest_opportunity_radar.json --cross-market-intelligence data/latest_cross_market_intelligence.json --event-evidence data/latest_event_evidence.json --opportunity-review-metrics data/latest_opportunity_review_metrics.json --free-data-fallback data/latest_free_data_fallback.json --macro-regime data/latest_macro_regime.json --fmp-research data/latest_fmp_research.json
 
       - name: Export public archive
         run: python scripts/export_public_reports.py --limit 80
@@ -158,7 +170,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add docs/data/reports.json docs/data/index.json docs/data/reports docs/data/secondary_analysis_queue.json docs/data/opportunity_radar.json docs/data/opportunity_journal.json docs/data/cross_market_intelligence.json docs/data/event_evidence.json docs/data/opportunity_review_metrics.json docs/data/macro_regime.json docs/data/fmp_research.json docs/data/fmp_research_state.json
+          git add docs/data/reports.json docs/data/index.json docs/data/reports docs/data/secondary_analysis_queue.json docs/data/opportunity_radar.json docs/data/opportunity_journal.json docs/data/cross_market_intelligence.json docs/data/event_evidence.json docs/data/opportunity_review_metrics.json docs/data/free_data_fallback.json docs/data/macro_regime.json docs/data/fmp_research.json docs/data/fmp_research_state.json
           if git diff --cached --quiet; then
             echo "No public archive changes to commit."
           else

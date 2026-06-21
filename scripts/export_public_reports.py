@@ -23,6 +23,7 @@ DEFAULT_DOCS_EVENT_EVIDENCE_PATH = ROOT / "docs" / "data" / "event_evidence.json
 DEFAULT_OPPORTUNITY_RADAR_PATH = ROOT / "docs" / "data" / "opportunity_radar.json"
 DEFAULT_CROSS_MARKET_PATH = ROOT / "docs" / "data" / "cross_market_intelligence.json"
 DEFAULT_SECONDARY_QUEUE_PATH = ROOT / "docs" / "data" / "secondary_analysis_queue.json"
+DEFAULT_FREE_DATA_FALLBACK_PATH = ROOT / "docs" / "data" / "free_data_fallback.json"
 
 PRIVATE_SECTION_MARKERS = (
     "持仓输入",
@@ -74,6 +75,7 @@ KIND_LABELS = {
     "cross-market-intelligence": "跨市场情报",
     "event-evidence": "事件证据",
     "opportunity-review-metrics": "机会复盘",
+    "free-data-fallback": "免费数据源",
     "macro-regime": "宏观雷达",
     "fmp-research": "FMP预期",
     "secondary-queue": "二次分析队列",
@@ -86,6 +88,7 @@ ONE_REPORT_PER_DAY_KINDS = {
     "cross-market-intelligence",
     "event-evidence",
     "opportunity-review-metrics",
+    "free-data-fallback",
     "macro-regime",
     "fmp-research",
     "secondary-queue",
@@ -128,6 +131,8 @@ def report_kind(name: str) -> str:
         return "event-evidence"
     if "opportunity-review-metrics" in lowered or "opportunity_review_metrics" in lowered:
         return "opportunity-review-metrics"
+    if "free-data-fallback" in lowered or "free_data_fallback" in lowered:
+        return "free-data-fallback"
     if "macro-regime" in lowered or "macro_regime" in lowered:
         return "macro-regime"
     if "fmp-research" in lowered or "fmp_research" in lowered:
@@ -864,6 +869,39 @@ def derive_evidence_gap_breakdown() -> dict[str, Any] | None:
     }
 
 
+def derive_data_health() -> list[dict[str, Any]]:
+    payload = load_json_file(DEFAULT_FREE_DATA_FALLBACK_PATH)
+    health = payload.get("data_health") if isinstance(payload.get("data_health"), list) else []
+    output: list[dict[str, Any]] = []
+    for item in health:
+        if not isinstance(item, dict):
+            continue
+        output.append(
+            {
+                "name": item.get("name") or item.get("source"),
+                "source": item.get("source") or item.get("name"),
+                "status": item.get("status") or "unknown",
+                "message": item.get("message") or "",
+                "impact": item.get("impact") or "",
+                "updated_at": item.get("updated_at") or payload.get("generated_label") or payload.get("generated_at"),
+            }
+        )
+    return output
+
+
+def derive_free_data_fallback_summary() -> dict[str, Any] | None:
+    payload = load_json_file(DEFAULT_FREE_DATA_FALLBACK_PATH)
+    if not payload:
+        return None
+    summary = payload.get("summary") if isinstance(payload.get("summary"), dict) else {}
+    return {
+        "generated_at": payload.get("generated_at"),
+        "generated_label": payload.get("generated_label"),
+        "summary": summary,
+        "source_priority": payload.get("source_priority") if isinstance(payload.get("source_priority"), dict) else {},
+    }
+
+
 def build_split_index(payload: dict[str, Any]) -> dict[str, Any]:
     index_payload = {
         key: value
@@ -944,6 +982,12 @@ def build_archive(output: Path, limit: int = 80, merge_existing: bool = True) ->
     opportunities = derive_opportunities()
     if opportunities:
         payload["opportunities"] = opportunities
+    data_health = derive_data_health()
+    if data_health:
+        payload["data_health"] = data_health
+    free_data_fallback = derive_free_data_fallback_summary()
+    if free_data_fallback:
+        payload["free_data_fallback"] = free_data_fallback
     return payload
 
 

@@ -94,6 +94,11 @@ if ($LASTEXITCODE -ne 0) {
     exit $LASTEXITCODE
 }
 
+& $Python (Join-Path $PSScriptRoot "free_data_fallback.py") --market-pack $PackPath --fmp-research (Join-Path $DataDir "latest_fmp_research.json") --macro-regime (Join-Path $DataDir "latest_macro_regime.json") --opportunity-radar (Join-Path $DataDir "latest_opportunity_radar.json") --cross-market (Join-Path $DataDir "latest_cross_market_intelligence.json") --secondary-queue (Join-Path $DataDir "latest_secondary_analysis_queue.json")
+if ($LASTEXITCODE -ne 0) {
+    exit $LASTEXITCODE
+}
+
 if ($Send) {
     & $Python (Join-Path $PSScriptRoot "send_feishu.py") --file $LatestReportPath
 }

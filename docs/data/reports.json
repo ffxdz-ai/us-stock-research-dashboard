@@ -1,10 +1,21 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-06-21T19:34:01+00:00",
-  "generated_label": "2026-06-22 03:34",
+  "generated_at": "2026-06-21T20:31:39+00:00",
+  "generated_label": "2026-06-22 04:31",
   "privacy": "public-sanitized",
   "report_count": 80,
   "reports": [
+    {
+      "id": "20260622-0430-latest-free-data-fallback",
+      "filename": "latest-free-data-fallback.md",
+      "title": "免费数据源 fallback 雷达",
+      "kind": "free-data-fallback",
+      "kind_label": "免费数据源",
+      "published_at": "2026-06-22T04:30+08:00",
+      "published_label": "2026-06-22 04:30",
+      "is_latest": true,
+      "content": "# 免费数据源 fallback 雷达\n\n- 生成时间：2026-06-22 04:30\n- 定位：当 FMP / Finnhub 权限不足、限流或失败时，提供官方/免费数据源的可追溯证据层。\n- 纪律：免费源不够稳定时只记录 data_gap，不编造数值；所有结论必须回到 source/source_type/confidence。\n\n## 概览\n\n- 覆盖标的：45；字段记录：41；数据缺口：17。\n- 健康状态：normal 3 / limited 0 / error 0 / unknown 4。\n\n## 数据源健康\n\n| 数据源 | 状态 | 说明 | 影响 |\n|---|---|---|---|\n| SEC EDGAR | normal | SEC ticker mapping available. | Impacts US official filing/companyfacts fallback. |\n| SEC EDGAR company data | normal | SEC fallback returned data for 8/8 checked US symbols. | Impacts official US filing and financial statement evidence. |\n| FRED | normal | FRED returned 8/8 configured macro/liquidity series. | Impacts macro regime, rates, inflation, labor and credit spread evidence. |\n| Alpha Vantage | unknown | ALPHA_VANTAGE_API_KEY is not configured. | Earnings estimates, surprise, calendar and transcript fallback disabled. |\n| OpenFIGI | unknown | OPENFIGI_API_KEY is not configured. | Security identifier mapping fallback is limited to SEC ticker files. |\n| CNINFO | unknown | CNINFO connector is not configured; no official A-share announcement pull was attempted. | Impacts A-share announcement/financial statement confidence. |\n| HKEXnews | unknown | HKEXnews connector is not configured; no official HK announcement pull was attempted. | Impacts HK announcement/financial statement confidence. |\n\n## fallback 规则\n\n- us_filings_financials: SEC EDGAR submissions → SEC EDGAR companyfacts\n- macro_liquidity: FRED\n- earnings_expectations_surprise_calendar: Alpha Vantage vendor fallback\n- transcripts: Company IR or SEC 8-K attachment → Alpha Vantage transcript fallback\n- a_share_disclosures: CNINFO official → AkShare/Tushare open-source fallback\n- hk_disclosures: HKEXnews official → Futu/AkShare/Yahoo fallback\n- symbol_mapping: SEC ticker files → OpenFIGI\n\n## 主要 data_gap\n\n| 来源 | 标的/字段 | 缺口 |\n|---|---|---|\n| Alpha Vantage |  | ALPHA_VANTAGE_API_KEY is not configured |\n| OpenFIGI |  | OPENFIGI_API_KEY is not configured |\n| CNINFO | SZ.300308 | CNINFO official disclosure connector is not configured |\n| CNINFO | SZ.300502 | CNINFO official disclosure connector is not configured |\n| CNINFO | SZ.300394 | CNINFO official disclosure connector is not configured |\n| CNINFO | SZ.300499 | CNINFO official disclosure connector is not configured |\n| CNINFO | SZ.002747 | CNINFO official disclosure connector is not configured |\n| CNINFO | SH.600183 | CNINFO official disclosure connector is not configured |\n| CNINFO | SH.603256 | CNINFO official disclosure connector is not configured |\n| CNINFO | SH.688183 | CNINFO official disclosure connector is not configured |\n| CNINFO | SZ.002335 | CNINFO official disclosure connector is not configured |\n| CNINFO | SH.688322 | CNINFO official disclosure connector is not configured |\n| CNINFO | SZ.300476 | CNINFO official disclosure connector is not configured |\n| HKEXnews | HK.01888 | HKEXnews official disclosure connector is not configured |\n| HKEXnews | HK.00148 | HKEXnews official disclosure connector is not configured |\n| HKEXnews | HK.01347 | HKEXnews official disclosure connector is not configured |\n| HKEXnews | HK.00981 | HKEXnews official disclosure connector is not configured |\n\n---\n\n> 公开脱敏版：已移除账户金额、现金、股数、成本、本地路径、API Key 与持仓明细。仅供投研记录，不构成投资建议。\n"
+    },
     {
       "id": "20260622-0310-latest-event-evidence",
       "filename": "latest-event-evidence.md",
@@ -873,17 +884,6 @@
       "published_label": "2026-06-16 21:32",
       "is_latest": false,
       "content": "# 美股市场机械预筛报告\n\n- 数据时间 UTC: 2026-06-16T13:33:31.183704+00:00\n- 说明: 这是脚本生成的基础数据包，不替代 Public Equity Investing 的人工级判断。\n\n## 市场概览\n\n| 标的 | 价格 | 日涨跌 |\n|---|---:|---:|\n| SPY | $754.84 | 0.0% |\n| QQQ | $741.31 | -0.4% |\n| DIA | $520.93 | 0.5% |\n| IWM | $296.27 | 0.6% |\n| TLT | $85.98 | 0.3% |\n| GLD | $398.28 | 0.4% |\n| USO | $116.38 | -4.0% |\n| ^VIX | n/a | n/a |\n\n## 当前价位可入手预筛\n\n今日机械预筛没有足够高置信度的“当前价位可入手”标的。正式自动化应宁缺毋滥，不要硬凑 5 支。\n\n## 物理 AI 观察清单\n\n| Ticker | 价格 | 严格首买价 | Fwd P/E | 数据置信度 | 备注 |\n|---|---:|---:|---:|---:|---|\n| NVDA | $209.94 | $177.41 | n/a | 1.0 | 收入同比 65.5% |\n| PLTR | $132.51 | $125.88 | n/a | 1.0 | 收入同比 56.2% |\n| AVGO | $388.40 | $313.16 | n/a | 1.0 | 收入同比 23.9% |\n| ISRG | $416.06 | $395.25 | n/a | 1.0 | 收入同比 20.5% |\n| SYM | $41.41 | $39.34 | n/a | 0.67 | 收入同比 25.7% |\n| TSLA | $402.62 | $364.22 | n/a | 1.0 | 收入同比 -2.9% |\n| ASML | $1,870.74 | $1,347.96 | n/a | 0.83 | 收入同比 15.6% |\n| COHR | $413.28 | $232.79 | n/a | 1.0 | 收入同比 23.4% |\n| HON | $227.21 | $215.80 | n/a | 0.5 | 等待财报/估值复核 |\n| PH | $931.46 | $855.76 | n/a | 0.5 | 等待财报/估值复核 |\n| DE | $582.93 | $540.91 | n/a | 0.5 | 等待财报/估值复核 |\n| AMAT | $587.94 | $346.35 | n/a | 1.0 | 收入同比 4.4% |\n\n## 数据源限制\n\n- Quotes and chart data: Nasdaq public quote and historical endpoints where available.\n- Financial statements and recent filings: SEC EDGAR companyfacts/submissions where available.\n- Mechanical scores are only a pre-screen; the Codex Public Equity Investing pass must verify sources and entry prices.\n- 仅供投研辅助，不是投资建议或交易指令。\n\n---\n\n> 公开脱敏版：已移除账户金额、现金、股数、成本、本地路径、API Key 与持仓明细。仅供投研记录，不构成投资建议。\n"
-    },
-    {
-      "id": "20260616-2129-20260616-2129-market-brief",
-      "filename": "20260616-2129-market-brief.md",
-      "title": "美股市场机械预筛报告",
-      "kind": "daily",
-      "kind_label": "每日分析",
-      "published_at": "2026-06-16T21:29+08:00",
-      "published_label": "2026-06-16 21:29",
-      "is_latest": false,
-      "content": "# 美股市场机械预筛报告\n\n- 数据时间 UTC: 2026-06-16T13:30:53.845977+00:00\n- 说明: 这是脚本生成的基础数据包，不替代 Public Equity Investing 的人工级判断。\n\n## 市场概览\n\n| 标的 | 价格 | 日涨跌 |\n|---|---:|---:|\n| SPY | $754.72 | -0.0% |\n| QQQ | $742.72 | -0.2% |\n| DIA | $520.06 | 0.3% |\n| IWM | $295.35 | 0.2% |\n| TLT | $85.97 | 0.3% |\n| GLD | $397.91 | 0.3% |\n| USO | $116.34 | -4.0% |\n| ^VIX | n/a | n/a |\n\n## 当前价位可入手预筛\n\n今日机械预筛没有足够高置信度的“当前价位可入手”标的。正式自动化应宁缺毋滥，不要硬凑 5 支。\n\n## 物理 AI 观察清单\n\n| Ticker | 价格 | 严格首买价 | Fwd P/E | 数据置信度 | 备注 |\n|---|---:|---:|---:|---:|---|\n| NVDA | $211.07 | $177.41 | n/a | 1.0 | 收入同比 65.5% |\n| PLTR | $134.26 | $127.55 | n/a | 1.0 | 收入同比 56.2% |\n| AVGO | $389.84 | $313.16 | n/a | 1.0 | 收入同比 23.9% |\n| ISRG | $418.00 | $397.10 | n/a | 1.0 | 收入同比 20.5% |\n| SYM | $41.80 | $39.71 | n/a | 0.67 | 收入同比 25.7% |\n| TSLA | $404.02 | $364.22 | n/a | 1.0 | 收入同比 -2.9% |\n| ASML | $1,871.02 | $1,347.96 | n/a | 0.83 | 收入同比 15.6% |\n| COHR | $423.99 | $232.79 | n/a | 1.0 | 收入同比 23.4% |\n| PH | $918.02 | $855.76 | n/a | 0.5 | 等待财报/估值复核 |\n| DE | $576.36 | $540.91 | n/a | 0.5 | 等待财报/估值复核 |\n| AMAT | $580.93 | $346.35 | n/a | 1.0 | 收入同比 4.4% |\n| HON | $228.49 | $215.80 | n/a | 0.5 | 等待财报/估值复核 |\n\n## 数据源限制\n\n- Quotes and chart data: Nasdaq public quote and historical endpoints where available.\n- Financial statements and recent filings: SEC EDGAR companyfacts/submissions where available.\n- Mechanical scores are only a pre-screen; the Codex Public Equity Investing pass must verify sources and entry prices.\n- 仅供投研辅助，不是投资建议或交易指令。\n\n---\n\n> 公开脱敏版：已移除账户金额、现金、股数、成本、本地路径、API Key 与持仓明细。仅供投研记录，不构成投资建议。\n"
     }
   ],
   "review_stats": {
@@ -3340,5 +3340,104 @@
       "source": "cross_market_intelligence",
       "updated_at": "2026-06-22 02:20"
     }
-  ]
+  ],
+  "data_health": [
+    {
+      "name": "SEC EDGAR",
+      "source": "SEC EDGAR",
+      "status": "normal",
+      "message": "SEC ticker mapping available.",
+      "impact": "Impacts US official filing/companyfacts fallback.",
+      "updated_at": "2026-06-22T04:30:04+08:00"
+    },
+    {
+      "name": "SEC EDGAR company data",
+      "source": "SEC EDGAR company data",
+      "status": "normal",
+      "message": "SEC fallback returned data for 8/8 checked US symbols.",
+      "impact": "Impacts official US filing and financial statement evidence.",
+      "updated_at": "2026-06-22T04:31:05+08:00"
+    },
+    {
+      "name": "FRED",
+      "source": "FRED",
+      "status": "normal",
+      "message": "FRED returned 8/8 configured macro/liquidity series.",
+      "impact": "Impacts macro regime, rates, inflation, labor and credit spread evidence.",
+      "updated_at": "2026-06-22T04:31:05+08:00"
+    },
+    {
+      "name": "Alpha Vantage",
+      "source": "Alpha Vantage",
+      "status": "unknown",
+      "message": "ALPHA_VANTAGE_API_KEY is not configured.",
+      "impact": "Earnings estimates, surprise, calendar and transcript fallback disabled.",
+      "updated_at": "2026-06-22T04:31:12+08:00"
+    },
+    {
+      "name": "OpenFIGI",
+      "source": "OpenFIGI",
+      "status": "unknown",
+      "message": "OPENFIGI_API_KEY is not configured.",
+      "impact": "Security identifier mapping fallback is limited to SEC ticker files.",
+      "updated_at": "2026-06-22T04:31:12+08:00"
+    },
+    {
+      "name": "CNINFO",
+      "source": "CNINFO",
+      "status": "unknown",
+      "message": "CNINFO connector is not configured; no official A-share announcement pull was attempted.",
+      "impact": "Impacts A-share announcement/financial statement confidence.",
+      "updated_at": "2026-06-22T04:31:12+08:00"
+    },
+    {
+      "name": "HKEXnews",
+      "source": "HKEXnews",
+      "status": "unknown",
+      "message": "HKEXnews connector is not configured; no official HK announcement pull was attempted.",
+      "impact": "Impacts HK announcement/financial statement confidence.",
+      "updated_at": "2026-06-22T04:31:12+08:00"
+    }
+  ],
+  "free_data_fallback": {
+    "generated_at": "2026-06-22T04:30:04+08:00",
+    "generated_label": "2026-06-22 04:30",
+    "summary": {
+      "symbol_count": 45,
+      "field_count": 41,
+      "data_gap_count": 17,
+      "health_normal_count": 3,
+      "health_limited_count": 0,
+      "health_error_count": 0,
+      "health_unknown_count": 4
+    },
+    "source_priority": {
+      "us_filings_financials": [
+        "SEC EDGAR submissions",
+        "SEC EDGAR companyfacts"
+      ],
+      "macro_liquidity": [
+        "FRED"
+      ],
+      "earnings_expectations_surprise_calendar": [
+        "Alpha Vantage vendor fallback"
+      ],
+      "transcripts": [
+        "Company IR or SEC 8-K attachment",
+        "Alpha Vantage transcript fallback"
+      ],
+      "a_share_disclosures": [
+        "CNINFO official",
+        "AkShare/Tushare open-source fallback"
+      ],
+      "hk_disclosures": [
+        "HKEXnews official",
+        "Futu/AkShare/Yahoo fallback"
+      ],
+      "symbol_mapping": [
+        "SEC ticker files",
+        "OpenFIGI"
+      ]
+    }
+  }
 }
