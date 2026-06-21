@@ -74,6 +74,7 @@
 - 必须把 FMP 的 analyst estimates、price target consensus、earnings surprise 和 ratings snapshot 作为“市场预期”输入。
 - FMP 目标价不是最终目标价；最终目标价必须由 Buy-Side 估值方法独立给出。
 - 预期上修/下修只说明市场共识变化，不自动代表买入或卖出。
+- 如果 `coverage_status` 是 `restricted`、`rate_limited`、`unavailable` 或 `stale`，必须降低该股票 FMP 预期层置信度；不能把缺失值当成负面基本面。
 - 如果 `data_availability` 显示 earnings transcript、press releases 或 stock news 端点受限，必须写“电话会/新闻正文未接入”，不得编造管理层表述、订单或新闻内容。
 - 当 FMP 预期与机会雷达/产业链雷达冲突时，必须指出冲突：例如“产业强但预期已下修”或“预期上修但股价已透支”。
 

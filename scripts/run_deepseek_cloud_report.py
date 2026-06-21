@@ -324,6 +324,8 @@ def compact_fmp_research(fmp_research: dict[str, Any]) -> dict[str, Any]:
                 "symbol": item.get("symbol"),
                 "name": item.get("name"),
                 "price": item.get("price"),
+                "coverage_status": item.get("coverage_status"),
+                "restricted_endpoints": item.get("restricted_endpoints"),
                 "expectation_score": item.get("expectation_score"),
                 "action": item.get("action"),
                 "score_notes": item.get("score_notes"),

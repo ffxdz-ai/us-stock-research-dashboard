@@ -140,7 +140,12 @@ def fmp_get(api_key: str, endpoint: str, params: dict[str, Any]) -> tuple[Any, d
             body = exc.read().decode("utf-8", errors="replace")
             if api_key:
                 body = body.replace(api_key, "[REDACTED]")
-            kind = "restricted" if exc.code == 402 or "Restricted Endpoint" in body or "Premium Query Parameter" in body else "http_error"
+            if exc.code == 429 or "Limit Reach" in body:
+                kind = "rate_limited"
+            elif exc.code == 402 or "Restricted Endpoint" in body or "Premium Query Parameter" in body:
+                kind = "restricted"
+            else:
+                kind = "http_error"
             return None, {"endpoint": endpoint, "status": exc.code, "kind": kind, "message": body[:240]}
         except (urllib.error.URLError, TimeoutError, json.JSONDecodeError, OSError) as exc:
             last_error = {"endpoint": endpoint, "status": "error", "kind": "runtime_error", "message": str(exc)[:240]}
@@ -163,6 +168,17 @@ def dict_list(payload: Any, limit: int = 10) -> list[dict[str, Any]]:
     if not isinstance(payload, list):
         return []
     return [item for item in payload[:limit] if isinstance(item, dict)]
+
+
+def select_estimate_row(rows: list[dict[str, Any]], now: datetime) -> dict[str, Any] | None:
+    dated = [(parse_date(row.get("date")), row) for row in rows]
+    clean = [(date, row) for date, row in dated if date is not None]
+    if not clean:
+        return rows[0] if rows else None
+    future = [(date, row) for date, row in clean if date.date() >= now.date()]
+    if future:
+        return sorted(future, key=lambda item: item[0])[0][1]
+    return sorted(clean, key=lambda item: item[0], reverse=True)[0][1]
 
 
 def market_pack_index(pack: dict[str, Any]) -> dict[str, dict[str, Any]]:
@@ -215,23 +231,42 @@ def estimate_snapshot(row: dict[str, Any] | None) -> dict[str, Any] | None:
 
 def estimate_revision(current: dict[str, Any] | None, previous: dict[str, Any] | None) -> dict[str, Any]:
     if not current:
-        return {"status": "missing"}
+        return {"status": "missing", "status_label": "缺少分析师预期"}
     if not previous:
-        return {"status": "new_snapshot"}
+        return {"status": "new_snapshot", "status_label": "新建基准快照"}
+    if current.get("date") and previous.get("date") and current.get("date") != previous.get("date"):
+        return {
+            "status": "new_period",
+            "status_label": "估计财年切换，重建基准",
+            "current_date": current.get("date"),
+            "previous_date": previous.get("date"),
+        }
     output: dict[str, Any] = {"status": "compared"}
+    material = False
     for field in ["epsAvg", "revenueAvg", "ebitdaAvg"]:
         cur = number(current.get(field))
         prev = number(previous.get(field))
         if cur is None or prev is None:
             continue
         output[f"{field}_change"] = round(cur - prev, 4)
-        output[f"{field}_change_pct"] = round((cur / prev - 1) * 100, 4) if prev != 0 else None
+        change_pct = round((cur / prev - 1) * 100, 4) if prev != 0 else None
+        output[f"{field}_change_pct"] = change_pct
+        if change_pct is not None and abs(change_pct) >= 0.5:
+            material = True
+    output["status_label"] = "有明显修正" if material else "无明显修正"
     return output
 
 
 def latest_earnings_surprise(rows: list[dict[str, Any]]) -> dict[str, Any] | None:
+    now = datetime.now(timezone.utc)
     dated = sorted(
-        [row for row in rows if parse_date(row.get("date")) is not None],
+        [
+            row
+            for row in rows
+            if parse_date(row.get("date")) is not None
+            and parse_date(row.get("date")) <= now
+            and (number(row.get("epsActual")) is not None or number(row.get("revenueActual")) is not None)
+        ],
         key=lambda row: str(row.get("date")),
         reverse=True,
     )
@@ -263,8 +298,17 @@ def target_upside(consensus: dict[str, Any], price: float | None) -> float | Non
 
 
 def score_symbol(row: dict[str, Any]) -> tuple[float, list[str]]:
+    if row.get("coverage_status") == "restricted":
+        return 0.0, ["FMP 套餐或 symbol 权限受限，不能评价预期差"]
+    if row.get("coverage_status") == "rate_limited":
+        return 0.0, ["FMP 今日额度/频率限制，等待下次刷新"]
+    if row.get("coverage_status") == "unavailable":
+        return 0.0, ["FMP 临时请求失败，暂不评价预期差"]
     score = 45.0
     notes: list[str] = []
+    if row.get("coverage_status") == "stale":
+        notes.append("沿用上次 FMP 快照，需下次刷新确认")
+        score -= 6
     upside = number(row.get("price_target_upside_pct"))
     if upside is not None:
         if upside >= 25:
@@ -331,6 +375,12 @@ def score_symbol(row: dict[str, Any]) -> tuple[float, list[str]]:
 
 
 def action_for_score(row: dict[str, Any]) -> str:
+    if row.get("coverage_status") == "restricted":
+        return "FMP 权限受限，暂不评价"
+    if row.get("coverage_status") == "rate_limited":
+        return "FMP 限流，等待下次刷新"
+    if row.get("coverage_status") == "unavailable":
+        return "FMP 请求失败，等待下次刷新"
     score = number(row.get("expectation_score")) or 0
     upside = number(row.get("price_target_upside_pct"))
     revision = row.get("estimate_revision") if isinstance(row.get("estimate_revision"), dict) else {}
@@ -374,18 +424,44 @@ def collect_symbol(
     if err:
         errors.append({"symbol": symbol, **err})
 
-    annual_estimates = dict_list(annual_payload, 3)
+    annual_estimates = dict_list(annual_payload, 6)
     quarterly_estimates = dict_list(quarterly_payload, 3)
-    annual = estimate_snapshot(annual_estimates[0] if annual_estimates else None)
-    quarterly = estimate_snapshot(quarterly_estimates[0] if quarterly_estimates else None)
+    annual = estimate_snapshot(select_estimate_row(annual_estimates, now_local()) if annual_estimates else None)
+    quarterly = estimate_snapshot(select_estimate_row(quarterly_estimates, now_local()) if quarterly_estimates else None)
     prev_estimates = previous.get("estimates") if isinstance(previous.get("estimates"), dict) else {}
     revision = estimate_revision(annual, prev_estimates.get("annual") if isinstance(prev_estimates.get("annual"), dict) else None)
     target_summary = first_dict(target_summary_payload)
     target_consensus = first_dict(target_consensus_payload)
     earnings = dict_list(earnings_payload, 4)
+    restricted_errors = [item for item in errors if item.get("kind") == "restricted"]
+    rate_limited_errors = [item for item in errors if item.get("kind") == "rate_limited"]
+    has_any_core_data = bool(annual or target_consensus or target_summary or earnings or first_dict(rating_payload))
+    if not has_any_core_data:
+        prev_estimates = previous.get("estimates") if isinstance(previous.get("estimates"), dict) else {}
+        prev_target = previous.get("price_target_consensus") if isinstance(previous.get("price_target_consensus"), dict) else {}
+        if rate_limited_errors and (prev_estimates.get("annual") or prev_target):
+            annual = prev_estimates.get("annual") if isinstance(prev_estimates.get("annual"), dict) else annual
+            quarterly = prev_estimates.get("quarterly") if isinstance(prev_estimates.get("quarterly"), dict) else quarterly
+            target_consensus = prev_target
+            coverage_status = "stale"
+            revision = {"status": "stale_fallback", "status_label": "沿用上次快照"}
+        elif rate_limited_errors:
+            coverage_status = "rate_limited"
+        elif restricted_errors:
+            coverage_status = "restricted"
+        elif errors:
+            coverage_status = "unavailable"
+        else:
+            coverage_status = "empty"
+    elif restricted_errors:
+        coverage_status = "partial"
+    else:
+        coverage_status = "ok"
     row = {
         "symbol": symbol,
         "name": market_item.get("name") or symbol,
+        "coverage_status": coverage_status,
+        "restricted_endpoints": sorted({str(item.get("endpoint")) for item in restricted_errors if item.get("endpoint")}),
         "price": price,
         "quote_time": market_item.get("quote_time"),
         "annual_estimate": annual,
@@ -428,6 +504,11 @@ def update_state(previous_state: dict[str, Any], rows: list[dict[str, Any]], now
         if not symbol:
             continue
         old = symbols.get(symbol) if isinstance(symbols.get(symbol), dict) else {}
+        if row.get("coverage_status") in {"rate_limited", "unavailable"} and old:
+            old["last_refresh_error_at"] = iso(now)
+            old["last_refresh_error"] = row.get("coverage_status")
+            symbols[symbol] = old
+            continue
         history = old.get("history") if isinstance(old.get("history"), list) else []
         history.append(
             {
@@ -496,7 +577,8 @@ def build_research(
     rows.sort(key=lambda item: number(item.get("expectation_score")) or 0, reverse=True)
     data_availability = probe_restricted_endpoints(api_key)
     restricted_results = [item for item in errors if item.get("kind") == "restricted"]
-    operational_errors = [item for item in errors if item.get("kind") != "restricted"]
+    rate_limited_results = [item for item in errors if item.get("kind") == "rate_limited"]
+    operational_errors = [item for item in errors if item.get("kind") not in {"restricted", "rate_limited"}]
     next_state = update_state(previous_state, rows, now)
     actionable = [row for row in rows if "Buy-Side" in str(row.get("action")) or "改善" in str(row.get("action"))]
     payload = {
@@ -521,12 +603,14 @@ def build_research(
             "actionable_count": len(actionable),
             "restricted_endpoint_count": sum(1 for item in data_availability if not item.get("available")),
             "restricted_result_count": len(restricted_results),
+            "rate_limited_result_count": len(rate_limited_results),
             "error_count": len(operational_errors),
         },
         "symbols": rows,
         "actionable": actionable[:20],
         "data_availability": data_availability,
         "restricted_results": restricted_results[:80],
+        "rate_limited_results": rate_limited_results[:80],
         "errors": operational_errors[:80],
         "discipline": [
             "FMP 目标价不是目标价结论，只是卖方预期输入。",
@@ -543,9 +627,55 @@ def fmt_num(value: Any, digits: int = 1) -> str:
     return "数据不足" if parsed is None else f"{parsed:.{digits}f}"
 
 
+def fmt_pct(value: Any, digits: int = 1) -> str:
+    parsed = number(value)
+    return "数据不足" if parsed is None else f"{parsed:.{digits}f}%"
+
+
 def fmt_money(value: Any) -> str:
     parsed = number(value)
     return "n/a" if parsed is None else f"{parsed:,.2f}"
+
+
+def fmt_compact_money(value: Any) -> str:
+    parsed = number(value)
+    if parsed is None:
+        return "n/a"
+    abs_value = abs(parsed)
+    if abs_value >= 1_000_000_000_000:
+        return f"{parsed / 1_000_000_000_000:.2f}T"
+    if abs_value >= 1_000_000_000:
+        return f"{parsed / 1_000_000_000:.1f}B"
+    if abs_value >= 1_000_000:
+        return f"{parsed / 1_000_000:.1f}M"
+    return f"{parsed:,.2f}"
+
+
+def permission_explanation(endpoint: Any, status: Any, message: Any) -> str:
+    endpoint_text = str(endpoint or "")
+    if str(status) == "429":
+        return "FMP 今日额度或调用频率达到上限；系统会等待下次刷新。"
+    if str(status) == "402":
+        if "transcript" in endpoint_text:
+            return "当前 FMP 套餐未开通电话会 transcript 权限。"
+        if "news" in endpoint_text or "press" in endpoint_text:
+            return "当前 FMP 套餐未开通新闻/公告正文权限。"
+        return "当前 FMP 套餐或该 symbol 未开通此查询权限。"
+    return str(message or "")[:120]
+
+
+def revision_display(revision: dict[str, Any]) -> str:
+    status = str(revision.get("status") or "")
+    if status in {"missing", "new_snapshot", "new_period"}:
+        return str(revision.get("status_label") or status)
+    eps = number(revision.get("epsAvg_change_pct"))
+    revenue = number(revision.get("revenueAvg_change_pct"))
+    parts: list[str] = []
+    if eps is not None and abs(eps) >= 0.5:
+        parts.append(f"EPS {eps:.1f}%")
+    if revenue is not None and abs(revenue) >= 0.5:
+        parts.append(f"收入 {revenue:.1f}%")
+    return "；".join(parts) if parts else str(revision.get("status_label") or "无明显修正")
 
 
 def render_report(payload: dict[str, Any]) -> str:
@@ -566,7 +696,7 @@ def render_report(payload: dict[str, Any]) -> str:
         [
             "## 本轮概览",
             "",
-            f"- 覆盖标的：{summary.get('symbol_count', 0)}；预期面候选：{summary.get('actionable_count', 0)}；受限端点：{summary.get('restricted_endpoint_count', 0)}；受限查询：{summary.get('restricted_result_count', 0)}；错误：{summary.get('error_count', 0)}。",
+            f"- 覆盖标的：{summary.get('symbol_count', 0)}；预期面候选：{summary.get('actionable_count', 0)}；受限端点：{summary.get('restricted_endpoint_count', 0)}；受限查询：{summary.get('restricted_result_count', 0)}；限流查询：{summary.get('rate_limited_result_count', 0)}；错误：{summary.get('error_count', 0)}。",
             "",
         ]
     )
@@ -576,7 +706,7 @@ def render_report(payload: dict[str, Any]) -> str:
         lines.extend(["| 端点 | 可用 | 状态 | 说明 |", "|---|---|---|---|"])
         for item in availability:
             lines.append(
-                f"| {item.get('endpoint')} | {'是' if item.get('available') else '否'} | {item.get('status', '')} | {str(item.get('message') or '')[:80]} |"
+                f"| {item.get('endpoint')} | {'是' if item.get('available') else '否'} | {item.get('status', '')} | {permission_explanation(item.get('endpoint'), item.get('status'), item.get('message'))} |"
             )
         lines.append("")
 
@@ -589,9 +719,15 @@ def render_report(payload: dict[str, Any]) -> str:
         lines.extend(["## 受限查询", ""])
         lines.append("以下是套餐或 symbol 权限限制，不代表系统错误；受限股票的 FMP 预期层置信度会降低。")
         lines.append("")
-        lines.extend(["| 代码 | 受限次数 |", "|---|---:|"])
+        lines.extend(["| 代码 | 受限次数 | 说明 |", "|---|---:|---|"])
         for symbol, count in sorted(by_symbol.items(), key=lambda item: item[1], reverse=True)[:20]:
-            lines.append(f"| {symbol} | {count} |")
+            lines.append(f"| {symbol} | {count} | 当前套餐对该 symbol 的部分 FMP 查询受限，不能据此判断预期差。 |")
+        lines.append("")
+
+    rate_limited = payload.get("rate_limited_results") if isinstance(payload.get("rate_limited_results"), list) else []
+    if rate_limited:
+        lines.extend(["## 限流保护", ""])
+        lines.append("本轮部分 FMP 请求触发 429 限流；系统不会用限流结果覆盖旧快照，等待下次自动刷新。")
         lines.append("")
 
     lines.extend(["## 预期差候选", ""])
@@ -604,22 +740,27 @@ def render_report(payload: dict[str, Any]) -> str:
             annual = row.get("annual_estimate") if isinstance(row.get("annual_estimate"), dict) else {}
             surprise = row.get("latest_earnings_surprise") if isinstance(row.get("latest_earnings_surprise"), dict) else {}
             lines.append(
-                f"| {row.get('symbol')} | {fmt_money(row.get('price'))} | {fmt_num(row.get('expectation_score'))} | {fmt_num(row.get('price_target_upside_pct'))}% | {fmt_num(annual.get('epsAvg'), 2)} | {fmt_money(annual.get('revenueAvg'))} | {fmt_num(surprise.get('eps_surprise_pct'))}% | {row.get('action')} |"
+                f"| {row.get('symbol')} | {fmt_money(row.get('price'))} | {fmt_num(row.get('expectation_score'))} | {fmt_pct(row.get('price_target_upside_pct'))} | {fmt_num(annual.get('epsAvg'), 2)} | {fmt_compact_money(annual.get('revenueAvg'))} | {fmt_pct(surprise.get('eps_surprise_pct'))} | {row.get('action')} |"
             )
 
     lines.extend(["", "## 全量跟踪表", ""])
-    lines.extend(["| 代码 | 预期分 | 目标价上行 | 目标价共识 | 评级 | 预期修正 | 核心证据 |", "|---|---:|---:|---:|---|---|---|"])
+    lines.extend(["| 代码 | 数据状态 | 预期分 | 目标价上行 | 目标价共识 | 评级 | 预期修正 | 核心证据 |", "|---|---|---:|---:|---:|---|---|---|"])
     for row in payload.get("symbols", [])[:40]:
         consensus = row.get("price_target_consensus") if isinstance(row.get("price_target_consensus"), dict) else {}
         rating = row.get("rating_snapshot") if isinstance(row.get("rating_snapshot"), dict) else {}
         revision = row.get("estimate_revision") if isinstance(row.get("estimate_revision"), dict) else {}
-        rev_text = []
-        if revision.get("epsAvg_change_pct") is not None:
-            rev_text.append(f"EPS {fmt_num(revision.get('epsAvg_change_pct'))}%")
-        if revision.get("revenueAvg_change_pct") is not None:
-            rev_text.append(f"收入 {fmt_num(revision.get('revenueAvg_change_pct'))}%")
+        coverage_status = str(row.get("coverage_status") or "ok")
+        coverage_label = {
+            "ok": "可用",
+            "partial": "部分受限",
+            "restricted": "权限受限",
+            "rate_limited": "FMP限流",
+            "unavailable": "请求失败",
+            "stale": "沿用旧快照",
+            "empty": "无返回",
+        }.get(coverage_status, coverage_status)
         lines.append(
-            f"| {row.get('symbol')} | {fmt_num(row.get('expectation_score'))} | {fmt_num(row.get('price_target_upside_pct'))}% | {fmt_money(consensus.get('targetConsensus'))} | {rating.get('rating', 'n/a')} | {'；'.join(rev_text) or revision.get('status', 'n/a')} | {'；'.join(row.get('score_notes', [])[:3])} |"
+            f"| {row.get('symbol')} | {coverage_label} | {fmt_num(row.get('expectation_score')) if coverage_status != 'restricted' else 'n/a'} | {fmt_pct(row.get('price_target_upside_pct'))} | {fmt_money(consensus.get('targetConsensus'))} | {rating.get('rating', 'n/a')} | {revision_display(revision)} | {'；'.join(row.get('score_notes', [])[:3])} |"
         )
 
     lines.extend(["", "## 使用纪律", ""])
