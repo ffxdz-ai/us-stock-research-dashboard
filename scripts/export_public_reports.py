@@ -63,13 +63,21 @@ KIND_LABELS = {
     "future-audit": "未来函数审计",
     "supply-chain": "产业链雷达",
     "opportunity-radar": "机会雷达",
+    "cross-market-intelligence": "跨市场情报",
     "macro-regime": "宏观雷达",
     "fmp-research": "FMP预期",
     "secondary-queue": "二次分析队列",
     "daily": "每日分析",
 }
 
-ONE_REPORT_PER_DAY_KINDS = {"supply-chain", "opportunity-radar", "macro-regime", "fmp-research", "secondary-queue"}
+ONE_REPORT_PER_DAY_KINDS = {
+    "supply-chain",
+    "opportunity-radar",
+    "cross-market-intelligence",
+    "macro-regime",
+    "fmp-research",
+    "secondary-queue",
+}
 
 
 def report_kind(name: str) -> str:
@@ -84,6 +92,8 @@ def report_kind(name: str) -> str:
         return "supply-chain"
     if "opportunity-radar" in lowered or "opportunity_radar" in lowered:
         return "opportunity-radar"
+    if "cross-market-intelligence" in lowered or "cross_market_intelligence" in lowered:
+        return "cross-market-intelligence"
     if "macro-regime" in lowered or "macro_regime" in lowered:
         return "macro-regime"
     if "fmp-research" in lowered or "fmp_research" in lowered:

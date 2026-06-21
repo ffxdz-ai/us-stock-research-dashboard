@@ -28,6 +28,7 @@ REPORTS_DIR = ROOT / "reports"
 DEFAULT_CONFIG = CONFIG_DIR / "agent_config.json"
 DEFAULT_RADAR = DATA_DIR / "latest_supply_chain_radar.json"
 DEFAULT_OPPORTUNITY_RADAR = DATA_DIR / "latest_opportunity_radar.json"
+DEFAULT_CROSS_MARKET_INTELLIGENCE = DATA_DIR / "latest_cross_market_intelligence.json"
 DEFAULT_MARKET_PACK = DATA_DIR / "latest_market_pack.json"
 DEFAULT_STATE = DOCS_DATA_DIR / "secondary_analysis_queue.json"
 DEFAULT_OUTPUT = DATA_DIR / "latest_secondary_analysis_queue.json"
@@ -194,11 +195,52 @@ def opportunity_candidate_rows(opportunity_radar: dict[str, Any]) -> list[dict[s
     return rows
 
 
-def merged_candidates(supply_radar: dict[str, Any], opportunity_radar: dict[str, Any]) -> list[dict[str, Any]]:
+def cross_market_candidate_rows(cross_market_intelligence: dict[str, Any]) -> list[dict[str, Any]]:
+    rows: list[dict[str, Any]] = []
+    raw = cross_market_intelligence.get("secondary_research_candidates")
+    if not isinstance(raw, list):
+        return rows
+    for item in raw:
+        if not isinstance(item, dict):
+            continue
+        code = normalize_code(item.get("code"))
+        if not code:
+            continue
+        opportunity_score = number(item.get("opportunity_score"))
+        demand_score = number(item.get("demand_acceleration_score"))
+        layer_score = max(value for value in [opportunity_score, demand_score] if value is not None) if any(
+            value is not None for value in [opportunity_score, demand_score]
+        ) else None
+        reason = str(item.get("reason") or "")
+        rows.append(
+            {
+                "code": code,
+                "name": item.get("name") or code,
+                "market": item.get("market") or code.split(".", 1)[0],
+                "layer_name": item.get("layer") or item.get("theme") or "跨市场情报",
+                "chain_name": item.get("theme") or "跨市场需求加速",
+                "role": "需求加速 / 跨市场扩散候选",
+                "price": item.get("price"),
+                "layer_score": layer_score,
+                "market_confirmation_score": item.get("trend_score"),
+                "data_status": "Cross-market intelligence candidate",
+                "action": reason or "加入观察池，交给 Buy-Side 二次分析",
+                "source": "cross_market_intelligence",
+            }
+        )
+    return rows
+
+
+def merged_candidates(
+    supply_radar: dict[str, Any],
+    opportunity_radar: dict[str, Any],
+    cross_market_intelligence: dict[str, Any],
+) -> list[dict[str, Any]]:
     rows: list[dict[str, Any]] = []
     supply = supply_radar.get("candidates") if isinstance(supply_radar.get("candidates"), list) else []
     rows.extend([item for item in supply if isinstance(item, dict)])
     rows.extend(opportunity_candidate_rows(opportunity_radar))
+    rows.extend(cross_market_candidate_rows(cross_market_intelligence))
 
     by_code: dict[str, dict[str, Any]] = {}
     for item in rows:
@@ -313,6 +355,7 @@ def evaluate_record(record: dict[str, Any], current: dict[str, Any] | None, pack
 def update_queue(
     radar: dict[str, Any],
     opportunity_radar: dict[str, Any],
+    cross_market_intelligence: dict[str, Any],
     state: dict[str, Any],
     pack: dict[str, Any],
     config: dict[str, Any],
@@ -323,7 +366,11 @@ def update_queue(
 
     now = now_local(str(cfg.get("review_timezone") or "Asia/Shanghai"))
     current_review_slot = review_slot(now, cfg)
-    candidates = [item for item in merged_candidates(radar, opportunity_radar) if normalize_code(item.get("code"))]
+    candidates = [
+        item
+        for item in merged_candidates(radar, opportunity_radar, cross_market_intelligence)
+        if normalize_code(item.get("code"))
+    ]
     current_by_code = {normalize_code(item.get("code")): item for item in candidates}
     eligible = [item for item in candidates if candidate_is_eligible(item, cfg)]
     eligible.sort(key=candidate_priority, reverse=True)
@@ -476,6 +523,7 @@ def update_queue(
     summary = {
         "eligible_candidates": len(eligible),
         "opportunity_candidates": len(opportunity_candidate_rows(opportunity_radar)),
+        "cross_market_candidates": len(cross_market_candidate_rows(cross_market_intelligence)),
         "new_entries": new_entries,
         "reentries": reentries,
         "reviewed": len(reviews),
@@ -522,9 +570,9 @@ def render_report(payload: dict[str, Any]) -> str:
         "",
         "## 本轮概览",
         "",
-        "| 合格候选 | 机会雷达候选 | 队列容量 | 新进队列 | 重新触发 | 本轮复核 | 通过 | 退回观察 | 活跃队列 | 已到期未处理 |",
-        "|---:|---:|---|---:|---:|---:|---:|---:|---:|---:|",
-        f"| {summary.get('eligible_candidates', 0)} | {summary.get('opportunity_candidates', 0)} | {summary.get('active_capacity', 'unlimited')} | {summary.get('new_entries', 0)} | {summary.get('reentries', 0)} | {summary.get('reviewed', 0)} | {summary.get('passed', 0)} | {summary.get('retreated', 0)} | {summary.get('active_count', 0)} | {summary.get('due_remaining', 0)} |",
+        "| 合格候选 | 机会雷达候选 | 跨市场候选 | 队列容量 | 新进队列 | 重新触发 | 本轮复核 | 通过 | 退回观察 | 活跃队列 | 已到期未处理 |",
+        "|---:|---:|---:|---|---:|---:|---:|---:|---:|---:|---:|",
+        f"| {summary.get('eligible_candidates', 0)} | {summary.get('opportunity_candidates', 0)} | {summary.get('cross_market_candidates', 0)} | {summary.get('active_capacity', 'unlimited')} | {summary.get('new_entries', 0)} | {summary.get('reentries', 0)} | {summary.get('reviewed', 0)} | {summary.get('passed', 0)} | {summary.get('retreated', 0)} | {summary.get('active_count', 0)} | {summary.get('due_remaining', 0)} |",
         "",
         "## 本轮二次分析复核",
         "",
@@ -599,6 +647,7 @@ def main() -> int:
     parser.add_argument("--config", type=Path, default=DEFAULT_CONFIG)
     parser.add_argument("--radar", type=Path, default=DEFAULT_RADAR)
     parser.add_argument("--opportunity-radar", type=Path, default=DEFAULT_OPPORTUNITY_RADAR)
+    parser.add_argument("--cross-market-intelligence", type=Path, default=DEFAULT_CROSS_MARKET_INTELLIGENCE)
     parser.add_argument("--market-pack", type=Path, default=DEFAULT_MARKET_PACK)
     parser.add_argument("--state", type=Path, default=DEFAULT_STATE)
     parser.add_argument("--out", type=Path, default=DEFAULT_OUTPUT)
@@ -611,9 +660,10 @@ def main() -> int:
     if not radar:
         raise SystemExit(f"Supply-chain radar not found or invalid: {args.radar}")
     opportunity_radar = load_json(args.opportunity_radar, {})
+    cross_market_intelligence = load_json(args.cross_market_intelligence, {})
     pack = load_json(args.market_pack, {})
     state = load_json(args.state, {})
-    next_state, latest = update_queue(radar, opportunity_radar, state, pack, config)
+    next_state, latest = update_queue(radar, opportunity_radar, cross_market_intelligence, state, pack, config)
     write_json(args.state, next_state)
     write_json(args.out, latest)
     write_text(args.report, render_report(latest))

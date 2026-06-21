@@ -24,6 +24,7 @@ DEFAULT_COMPACT_INPUT = DATA_DIR / "latest_agent_input.json"
 DEFAULT_MARKET_PACK = DATA_DIR / "latest_market_pack.json"
 DEFAULT_SECONDARY_QUEUE = DATA_DIR / "latest_secondary_analysis_queue.json"
 DEFAULT_OPPORTUNITY_RADAR = DATA_DIR / "latest_opportunity_radar.json"
+DEFAULT_CROSS_MARKET_INTELLIGENCE = DATA_DIR / "latest_cross_market_intelligence.json"
 DEFAULT_MACRO_REGIME = DATA_DIR / "latest_macro_regime.json"
 DEFAULT_FMP_RESEARCH = DATA_DIR / "latest_fmp_research.json"
 DEFAULT_API_URL = "https://api.deepseek.com/chat/completions"
@@ -234,6 +235,65 @@ def compact_opportunity_radar(opportunity_radar: dict[str, Any]) -> dict[str, An
     }
 
 
+def compact_cross_market_intelligence(cross_market_intelligence: dict[str, Any]) -> dict[str, Any]:
+    if not cross_market_intelligence:
+        return {}
+
+    themes: list[dict[str, Any]] = []
+    for theme in cross_market_intelligence.get("themes", []) if isinstance(cross_market_intelligence.get("themes"), list) else []:
+        if not isinstance(theme, dict):
+            continue
+        layers = theme.get("layers") if isinstance(theme.get("layers"), list) else []
+        compact_layers: list[dict[str, Any]] = []
+        for layer in layers[:6]:
+            if not isinstance(layer, dict):
+                continue
+            compact_layers.append(
+                {
+                    "layer": layer.get("layer"),
+                    "score": layer.get("score"),
+                    "market_count": layer.get("market_count"),
+                    "leaders": layer.get("leaders", [])[:5] if isinstance(layer.get("leaders"), list) else [],
+                }
+            )
+        themes.append(
+            {
+                "id": theme.get("id"),
+                "name": theme.get("name"),
+                "status": theme.get("status"),
+                "stage": theme.get("stage"),
+                "theme_score": theme.get("theme_score"),
+                "demand_acceleration_score": theme.get("demand_acceleration_score"),
+                "score_components": theme.get("score_components") if isinstance(theme.get("score_components"), dict) else {},
+                "market_breadth": theme.get("market_breadth") if isinstance(theme.get("market_breadth"), dict) else {},
+                "top_evidence": theme.get("top_evidence", [])[:6] if isinstance(theme.get("top_evidence"), list) else [],
+                "layers": compact_layers,
+                "secondary_research_candidates": theme.get("secondary_research_candidates", [])[:8]
+                if isinstance(theme.get("secondary_research_candidates"), list)
+                else [],
+            }
+        )
+
+    return {
+        "generated_label": cross_market_intelligence.get("generated_label"),
+        "summary": cross_market_intelligence.get("summary")
+        if isinstance(cross_market_intelligence.get("summary"), dict)
+        else {},
+        "rule": "跨市场情报只用于发现需求加速、产业扩散和证据缺口；不能直接替代 Buy-Side 估值、R/R 和整股执行纪律。",
+        "themes": themes[:8],
+        "lead_lag_signals": cross_market_intelligence.get("lead_lag_signals", [])[:12]
+        if isinstance(cross_market_intelligence.get("lead_lag_signals"), list)
+        else [],
+        "secondary_research_candidates": cross_market_intelligence.get("secondary_research_candidates", [])[:24]
+        if isinstance(cross_market_intelligence.get("secondary_research_candidates"), list)
+        else [],
+        "event_extraction_backlog": cross_market_intelligence.get("event_extraction_backlog", [])[:16]
+        if isinstance(cross_market_intelligence.get("event_extraction_backlog"), list)
+        else [],
+        "feedback": cross_market_intelligence.get("feedback") if isinstance(cross_market_intelligence.get("feedback"), dict) else {},
+    }
+
+
 def compact_macro_regime(macro_regime: dict[str, Any]) -> dict[str, Any]:
     if not macro_regime:
         return {}
@@ -379,6 +439,7 @@ def prepare_public_context(
     pack: dict[str, Any],
     secondary_queue: dict[str, Any],
     opportunity_radar: dict[str, Any],
+    cross_market_intelligence: dict[str, Any],
     macro_regime: dict[str, Any],
     fmp_research: dict[str, Any],
 ) -> dict[str, Any]:
@@ -417,6 +478,7 @@ def prepare_public_context(
         "mechanical_buyable_now": buyable,
         "physical_ai_watchlist": watchlist,
         "opportunity_radar": compact_opportunity_radar(opportunity_radar),
+        "cross_market_intelligence": compact_cross_market_intelligence(cross_market_intelligence),
         "secondary_analysis_queue": {
             "rule": "进入二次分析后每两天复核一次；不合格则退回观察，不再占用高频 Buy-Side 分析名额；无固定冷却期，重新满足触发条件即可回池。",
             "generated_label": secondary_queue.get("generated_label"),
@@ -471,6 +533,9 @@ def build_user_prompt(context: dict[str, Any], mode: str) -> str:
 - 必须先阅读 opportunity_radar：区分“提前发现的主题机会”和“已满足买入纪律的股票”；机会雷达不等于买入建议。
 - 如果 opportunity_radar.top_opportunities 不为空，报告必须增加“未来机会雷达”小节，写明主题、受益环节、验证指标、拥挤风险和需要交给 Buy-Side 二次分析的股票。
 - 对 opportunity_radar.filing_changes / metric_changes 中的重要变化，说明它们是逻辑增强、逻辑削弱，还是仅仅价格波动。
+- 必须阅读 cross_market_intelligence：优先识别需求加速、跨市场扩散、领先/滞后信号和证据缺口。
+- 如果 cross_market_intelligence.secondary_research_candidates 不为空，必须结合 secondary_analysis_queue 优先覆盖；但不得把需求加速分当作买入建议。
+- 对 cross_market_intelligence.event_extraction_backlog 中的高优先级缺口，必须写明下一步需要补什么数据：新闻、公告、电话会、价格、订单或财务指标。
 - 估值优先使用 valuation_pe 和 valuation_pe_source；forward_pe/trailing_pe 缺失时，不得忽略 Finnhub P/E 或 SEC 市值/净利润估算 P/E。
 - 每只重点股票必须分别评估：当前价试仓、理想回调、突破确认。
 - 每条可执行买入路径必须独立满足 R/R >= 2:1；不满足就写观察或等待。
@@ -574,6 +639,7 @@ def main() -> int:
     parser.add_argument("--market-pack", type=Path, default=DEFAULT_MARKET_PACK)
     parser.add_argument("--secondary-queue", type=Path, default=DEFAULT_SECONDARY_QUEUE)
     parser.add_argument("--opportunity-radar", type=Path, default=DEFAULT_OPPORTUNITY_RADAR)
+    parser.add_argument("--cross-market-intelligence", type=Path, default=DEFAULT_CROSS_MARKET_INTELLIGENCE)
     parser.add_argument("--macro-regime", type=Path, default=DEFAULT_MACRO_REGIME)
     parser.add_argument("--fmp-research", type=Path, default=DEFAULT_FMP_RESEARCH)
     parser.add_argument("--out-dir", type=Path, default=REPORTS_DIR)
@@ -585,9 +651,18 @@ def main() -> int:
     pack = load_json(args.market_pack, {})
     secondary_queue = load_json(args.secondary_queue, {})
     opportunity_radar = load_json(args.opportunity_radar, {})
+    cross_market_intelligence = load_json(args.cross_market_intelligence, {})
     macro_regime = load_json(args.macro_regime, {})
     fmp_research = load_json(args.fmp_research, {})
-    context = prepare_public_context(compact, pack, secondary_queue, opportunity_radar, macro_regime, fmp_research)
+    context = prepare_public_context(
+        compact,
+        pack,
+        secondary_queue,
+        opportunity_radar,
+        cross_market_intelligence,
+        macro_regime,
+        fmp_research,
+    )
     context_text = json.dumps(context, ensure_ascii=False, indent=2)
     validate_public_text(context_text)
 

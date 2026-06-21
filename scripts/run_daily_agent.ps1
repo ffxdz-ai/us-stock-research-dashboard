@@ -48,6 +48,11 @@ switch ($Mode) {
     }
 }
 
+& $Python (Join-Path $PSScriptRoot "sync_futu_local_snapshot.py") --scope core
+if ($LASTEXITCODE -ne 0) {
+    exit $LASTEXITCODE
+}
+
 & $Python (Join-Path $PSScriptRoot "collect_market_data.py") --mode $ModeLower --out $PackPath --compact-out $CompactPath --report $ReportPath
 if ($LASTEXITCODE -ne 0) {
     exit $LASTEXITCODE
@@ -64,7 +69,17 @@ if ($LASTEXITCODE -ne 0) {
     exit $LASTEXITCODE
 }
 
-& $Python (Join-Path $PSScriptRoot "secondary_analysis_queue.py") --market-pack $PackPath
+& $Python (Join-Path $PSScriptRoot "opportunity_radar.py") --market-pack $PackPath --supply-radar (Join-Path $DataDir "latest_supply_chain_radar.json")
+if ($LASTEXITCODE -ne 0) {
+    exit $LASTEXITCODE
+}
+
+& $Python (Join-Path $PSScriptRoot "cross_market_intelligence.py") --market-pack $PackPath --supply-radar (Join-Path $DataDir "latest_supply_chain_radar.json") --opportunity-radar (Join-Path $DataDir "latest_opportunity_radar.json") --fmp-research (Join-Path $DataDir "latest_fmp_research.json")
+if ($LASTEXITCODE -ne 0) {
+    exit $LASTEXITCODE
+}
+
+& $Python (Join-Path $PSScriptRoot "secondary_analysis_queue.py") --market-pack $PackPath --opportunity-radar (Join-Path $DataDir "latest_opportunity_radar.json") --cross-market-intelligence (Join-Path $DataDir "latest_cross_market_intelligence.json")
 if ($LASTEXITCODE -ne 0) {
     exit $LASTEXITCODE
 }

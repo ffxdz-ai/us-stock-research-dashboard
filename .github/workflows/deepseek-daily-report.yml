@@ -95,6 +95,16 @@ jobs:
           fi
           python scripts/opportunity_radar.py --market-pack "$MARKET_PACK"
 
+      - name: Generate cross-market intelligence
+        shell: bash
+        run: |
+          if [ "$REPORT_MODE" = "weekly" ]; then
+            MARKET_PACK="data/latest_weekly_market_pack.json"
+          else
+            MARKET_PACK="data/latest_market_pack.json"
+          fi
+          python scripts/cross_market_intelligence.py --market-pack "$MARKET_PACK" --supply-radar data/latest_supply_chain_radar.json --opportunity-radar data/latest_opportunity_radar.json --fmp-research data/latest_fmp_research.json
+
       - name: Update secondary-analysis queue
         shell: bash
         run: |
@@ -103,7 +113,7 @@ jobs:
           else
             MARKET_PACK="data/latest_market_pack.json"
           fi
-          python scripts/secondary_analysis_queue.py --market-pack "$MARKET_PACK" --opportunity-radar data/latest_opportunity_radar.json
+          python scripts/secondary_analysis_queue.py --market-pack "$MARKET_PACK" --opportunity-radar data/latest_opportunity_radar.json --cross-market-intelligence data/latest_cross_market_intelligence.json
 
       - name: Generate DeepSeek cloud report
         shell: bash
@@ -115,7 +125,7 @@ jobs:
             MARKET_PACK="data/latest_market_pack.json"
             AGENT_INPUT="data/latest_agent_input.json"
           fi
-          python scripts/run_deepseek_cloud_report.py --mode "$REPORT_MODE" --input "$AGENT_INPUT" --market-pack "$MARKET_PACK" --opportunity-radar data/latest_opportunity_radar.json --macro-regime data/latest_macro_regime.json --fmp-research data/latest_fmp_research.json
+          python scripts/run_deepseek_cloud_report.py --mode "$REPORT_MODE" --input "$AGENT_INPUT" --market-pack "$MARKET_PACK" --opportunity-radar data/latest_opportunity_radar.json --cross-market-intelligence data/latest_cross_market_intelligence.json --macro-regime data/latest_macro_regime.json --fmp-research data/latest_fmp_research.json
 
       - name: Export public archive
         run: python scripts/export_public_reports.py --limit 80
@@ -128,12 +138,17 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add docs/data/reports.json docs/data/secondary_analysis_queue.json docs/data/opportunity_radar.json docs/data/opportunity_journal.json docs/data/macro_regime.json docs/data/fmp_research.json docs/data/fmp_research_state.json
+          git add docs/data/reports.json docs/data/secondary_analysis_queue.json docs/data/opportunity_radar.json docs/data/opportunity_journal.json docs/data/cross_market_intelligence.json docs/data/macro_regime.json docs/data/fmp_research.json docs/data/fmp_research_state.json
           if git diff --cached --quiet; then
             echo "No public archive changes to commit."
           else
             git commit -m "Update DeepSeek cloud report"
-            git push origin HEAD:main
+            git push origin HEAD:main || {
+              echo "Push rejected; rebasing generated report commit onto latest main and retrying."
+              git fetch origin main
+              git rebase origin/main
+              git push origin HEAD:main
+            }
           fi
 
       - name: Configure Pages

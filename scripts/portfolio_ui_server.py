@@ -29,6 +29,7 @@ UI_ROOT = ROOT / "portfolio-ui"
 PORTFOLIO_PATH = ROOT / "config" / "portfolio.json"
 REPORT_PATH = ROOT / "reports" / "latest-market-brief.md"
 REPORTS_DIR = ROOT / "reports"
+PUBLIC_REPORTS_PATH = ROOT / "docs" / "data" / "reports.json"
 try:
     NEW_YORK_TZ = ZoneInfo("America/New_York")
 except Exception:
@@ -49,6 +50,12 @@ REPORT_KIND_LABELS = {
     "entry-radar": "入场雷达",
     "missed-review": "错过复盘",
     "future-audit": "未来函数审计",
+    "fmp-research": "FMP预期",
+    "macro-regime": "宏观雷达",
+    "opportunity-radar": "机会雷达",
+    "cross-market-intelligence": "跨市场情报",
+    "secondary-queue": "二次分析",
+    "supply-chain": "供应链",
     "daily": "每日分析",
 }
 
@@ -64,6 +71,18 @@ def report_kind(filename: str) -> str:
         return "missed-review"
     if "future-function-audit" in lowered:
         return "future-audit"
+    if "supply-chain" in lowered or "supply_chain" in lowered:
+        return "supply-chain"
+    if "opportunity-radar" in lowered or "opportunity_radar" in lowered:
+        return "opportunity-radar"
+    if "cross-market-intelligence" in lowered or "cross_market_intelligence" in lowered:
+        return "cross-market-intelligence"
+    if "macro-regime" in lowered or "macro_regime" in lowered:
+        return "macro-regime"
+    if "fmp-research" in lowered or "fmp_research" in lowered:
+        return "fmp-research"
+    if "secondary-analysis" in lowered or "secondary_analysis" in lowered:
+        return "secondary-queue"
     if "deepseek-cloud" in lowered:
         return "deepseek-cloud"
     if "weekly" in lowered:
@@ -96,8 +115,9 @@ def report_identity_digest(content: str) -> str:
 
 
 def list_reports() -> list[dict[str, object]]:
+    public_reports = load_public_archive_reports()
     if not REPORTS_DIR.exists():
-        return []
+        return public_reports
     reports: list[dict[str, object]] = []
     for path in REPORTS_DIR.glob("*.md"):
         try:
@@ -132,7 +152,99 @@ def list_reports() -> list[dict[str, object]]:
         existing = deduped[existing_index]
         if bool(existing.get("is_latest")) and not bool(item.get("is_latest")):
             deduped[existing_index] = item
-    return deduped
+    return merge_public_archive_reports(public_reports, deduped)
+
+
+def load_public_archive() -> dict[str, object]:
+    if not PUBLIC_REPORTS_PATH.exists():
+        return {}
+    try:
+        payload = json.loads(PUBLIC_REPORTS_PATH.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return {}
+    return payload if isinstance(payload, dict) else {}
+
+
+def public_report_name(item: dict[str, object]) -> str:
+    filename = str(item.get("filename") or "").strip()
+    if filename.endswith(".md"):
+        return Path(filename).name
+    report_id = str(item.get("id") or "").strip()
+    if report_id.endswith(".md"):
+        return Path(report_id).name
+    return ""
+
+
+def load_public_archive_reports() -> list[dict[str, object]]:
+    payload = load_public_archive()
+    archive_reports = payload.get("reports")
+    if not isinstance(archive_reports, list):
+        return []
+    reports: list[dict[str, object]] = []
+    for raw in archive_reports:
+        if not isinstance(raw, dict):
+            continue
+        name = public_report_name(raw)
+        if not name:
+            continue
+        content = str(raw.get("content") or "")
+        kind = str(raw.get("kind") or report_kind(name))
+        published_label = str(raw.get("published_label") or raw.get("updated_label") or "").strip()
+        published_at = str(raw.get("published_at") or raw.get("updated_at") or "").strip()
+        reports.append(
+            {
+                "name": name,
+                "title": str(raw.get("title") or report_title(content, Path(name).stem)),
+                "kind": kind,
+                "kind_label": str(raw.get("kind_label") or REPORT_KIND_LABELS.get(kind, "分析报告")),
+                "updated_at": published_at,
+                "updated_label": published_label,
+                "size": len(content.encode("utf-8")),
+                "is_latest": bool(raw.get("is_latest")) or name.startswith("latest-"),
+                "source": "public_archive",
+            }
+        )
+    reports.sort(key=lambda item: str(item.get("updated_at") or item.get("updated_label") or ""), reverse=True)
+    return reports
+
+
+def merge_public_archive_reports(public_reports: list[dict[str, object]], local_reports: list[dict[str, object]]) -> list[dict[str, object]]:
+    merged: dict[str, dict[str, object]] = {}
+    for item in local_reports:
+        merged[str(item["name"])] = item
+    for item in public_reports:
+        # Public archive is what GitHub Pages serves. Prefer it for the same filename
+        # so the local dashboard does not show stale markdown generated before a cloud run.
+        merged[str(item["name"])] = item
+    output = list(merged.values())
+    output.sort(key=lambda item: str(item.get("updated_at") or item.get("updated_label") or ""), reverse=True)
+    return output
+
+
+def load_public_report_content(name: str) -> dict[str, object] | None:
+    clean_name = Path(name).name
+    if clean_name != name or not clean_name.endswith(".md"):
+        return None
+    payload = load_public_archive()
+    archive_reports = payload.get("reports")
+    if not isinstance(archive_reports, list):
+        return None
+    for raw in archive_reports:
+        if not isinstance(raw, dict):
+            continue
+        if public_report_name(raw) != clean_name:
+            continue
+        content = str(raw.get("content") or "")
+        kind = str(raw.get("kind") or report_kind(clean_name))
+        return {
+            "name": clean_name,
+            "title": str(raw.get("title") or report_title(content, Path(clean_name).stem)),
+            "kind": kind,
+            "kind_label": str(raw.get("kind_label") or REPORT_KIND_LABELS.get(kind, "分析报告")),
+            "content": content,
+            "source": "public_archive",
+        }
+    return None
 
 
 def resolve_report(name: str) -> Path:
@@ -845,6 +957,10 @@ class PortfolioHandler(SimpleHTTPRequestHandler):
             try:
                 query = parse_qs(parsed_path.query)
                 name = (query.get("name") or [""])[0]
+                public_report = load_public_report_content(name)
+                if public_report is not None:
+                    self.send_json({"report": public_report})
+                    return
                 path = resolve_report(name)
                 content = path.read_text(encoding="utf-8")
                 kind = report_kind(path.name)
