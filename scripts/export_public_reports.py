@@ -15,6 +15,11 @@ from typing import Any
 ROOT = Path(__file__).resolve().parents[1]
 REPORTS_DIR = ROOT / "reports"
 DEFAULT_OUTPUT = ROOT / "docs" / "data" / "reports.json"
+DEFAULT_INDEX_OUTPUT = ROOT / "docs" / "data" / "index.json"
+DEFAULT_DETAIL_DIR = ROOT / "docs" / "data" / "reports"
+DEFAULT_REVIEW_METRICS_PATH = ROOT / "docs" / "data" / "opportunity_review_metrics.json"
+DEFAULT_EVENT_EVIDENCE_PATH = ROOT / "data" / "latest_event_evidence.json"
+DEFAULT_DOCS_EVENT_EVIDENCE_PATH = ROOT / "docs" / "data" / "event_evidence.json"
 
 PRIVATE_SECTION_MARKERS = (
     "持仓输入",
@@ -64,6 +69,8 @@ KIND_LABELS = {
     "supply-chain": "产业链雷达",
     "opportunity-radar": "机会雷达",
     "cross-market-intelligence": "跨市场情报",
+    "event-evidence": "事件证据",
+    "opportunity-review-metrics": "机会复盘",
     "macro-regime": "宏观雷达",
     "fmp-research": "FMP预期",
     "secondary-queue": "二次分析队列",
@@ -74,10 +81,30 @@ ONE_REPORT_PER_DAY_KINDS = {
     "supply-chain",
     "opportunity-radar",
     "cross-market-intelligence",
+    "event-evidence",
+    "opportunity-review-metrics",
     "macro-regime",
     "fmp-research",
     "secondary-queue",
 }
+
+SYMBOL_RE = re.compile(r"\b(?:US|HK|CN|SH|SZ)\.[A-Z0-9]+\b")
+THEME_HINTS = (
+    "GPU",
+    "ASIC",
+    "HBM",
+    "先进封装",
+    "光模块",
+    "CPO",
+    "PCB",
+    "覆铜板",
+    "电子布",
+    "铜箔",
+    "液冷",
+    "电力",
+    "机器人",
+    "Physical AI",
+)
 
 
 def report_kind(name: str) -> str:
@@ -94,6 +121,10 @@ def report_kind(name: str) -> str:
         return "opportunity-radar"
     if "cross-market-intelligence" in lowered or "cross_market_intelligence" in lowered:
         return "cross-market-intelligence"
+    if "event-evidence" in lowered or "event_evidence" in lowered:
+        return "event-evidence"
+    if "opportunity-review-metrics" in lowered or "opportunity_review_metrics" in lowered:
+        return "opportunity-review-metrics"
     if "macro-regime" in lowered or "macro_regime" in lowered:
         return "macro-regime"
     if "fmp-research" in lowered or "fmp_research" in lowered:
@@ -117,6 +148,59 @@ def first_title(content: str, fallback: str) -> str:
         if match:
             return match.group(1).strip()
     return fallback
+
+
+def report_summary(content: str, max_length: int = 130) -> str:
+    for raw_line in content.splitlines():
+        line = re.sub(r"^[#>\-\*\s]+", "", raw_line).strip()
+        if not line or line.startswith("|") or set(line) <= {"-", ":"}:
+            continue
+        if line.startswith("公开脱敏版"):
+            continue
+        return line[:max_length]
+    return ""
+
+
+def report_symbols(content: str, limit: int = 24) -> list[str]:
+    symbols: list[str] = []
+    seen: set[str] = set()
+    for match in SYMBOL_RE.finditer(content):
+        symbol = match.group(0)
+        if symbol in seen:
+            continue
+        seen.add(symbol)
+        symbols.append(symbol)
+        if len(symbols) >= limit:
+            break
+    return symbols
+
+
+def report_themes(content: str, limit: int = 12) -> list[str]:
+    themes: list[str] = []
+    lowered = content.lower()
+    for theme in THEME_HINTS:
+        if theme.lower() in lowered and theme not in themes:
+            themes.append(theme)
+        if len(themes) >= limit:
+            break
+    return themes
+
+
+def public_report_metadata(item: dict[str, Any]) -> dict[str, Any]:
+    content = str(item.get("content", ""))
+    return {
+        "id": item.get("id"),
+        "filename": item.get("filename"),
+        "title": item.get("title"),
+        "kind": item.get("kind"),
+        "kind_label": item.get("kind_label"),
+        "published_at": item.get("published_at"),
+        "published_label": item.get("published_label"),
+        "is_latest": item.get("is_latest", False),
+        "summary": item.get("summary") or report_summary(content),
+        "symbols": item.get("symbols") if isinstance(item.get("symbols"), list) else report_symbols(content),
+        "themes": item.get("themes") if isinstance(item.get("themes"), list) else report_themes(content),
+    }
 
 
 def strip_public_footer(content: str) -> str:
@@ -267,6 +351,157 @@ def collect_report_files() -> list[dict[str, Any]]:
     return candidates
 
 
+def load_json_file(path: Path) -> dict[str, Any]:
+    if not path.exists():
+        return {}
+    try:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return {}
+    return payload if isinstance(payload, dict) else {}
+
+
+def currency_for_symbol(symbol: str) -> str:
+    if symbol.startswith("US."):
+        return "USD"
+    if symbol.startswith("HK."):
+        return "HKD"
+    if symbol.startswith(("CN.", "SH.", "SZ.")):
+        return "CNY"
+    return ""
+
+
+def date_label(value: Any) -> str | None:
+    text = str(value or "").strip()
+    if not text:
+        return None
+    return text[:10]
+
+
+def derive_review_stats(metrics_path: Path = DEFAULT_REVIEW_METRICS_PATH) -> dict[str, Any] | None:
+    payload = load_json_file(metrics_path)
+    if not payload:
+        return None
+    summary = payload.get("summary") if isinstance(payload.get("summary"), dict) else {}
+    themes = payload.get("themes") if isinstance(payload.get("themes"), list) else []
+    items_by_symbol: dict[str, dict[str, Any]] = {}
+    for theme in themes:
+        if not isinstance(theme, dict):
+            continue
+        first_seen = date_label(theme.get("first_seen_at"))
+        status = str(theme.get("status") or "pending")
+        for row in theme.get("returns", []) if isinstance(theme.get("returns"), list) else []:
+            if not isinstance(row, dict):
+                continue
+            symbol = str(row.get("code") or "").strip()
+            if not symbol or symbol in items_by_symbol:
+                continue
+            items_by_symbol[symbol] = {
+                "symbol": symbol,
+                "name": "",
+                "first_seen": first_seen,
+                "first_price": row.get("initial_price"),
+                "currency": currency_for_symbol(symbol),
+                "status": "pending" if "未成熟" in status or "观察" in status else status,
+                "return_7d": None,
+                "return_30d": None,
+                "return_60d": None,
+                "return_90d": None,
+                "max_drawdown": None,
+                "max_gain": None,
+                "error_type": None,
+                "lesson": None,
+            }
+
+    completed_count = summary.get("completed_review_count")
+    pending_count = summary.get("pending_checkpoint_count")
+    return {
+        "updated_at": payload.get("generated_label") or payload.get("generated_at"),
+        "tracked_count": len(items_by_symbol),
+        "completed_count": completed_count,
+        "pending_count": pending_count,
+        "win_rate_30d": summary.get("hit_rate_pct"),
+        "avg_max_drawdown": None,
+        "avg_max_gain": None,
+        "best_theme": summary.get("best_theme"),
+        "worst_error_type": None,
+        "items": list(items_by_symbol.values())[:80],
+    }
+
+
+def derive_evidence_gap_breakdown() -> dict[str, Any] | None:
+    payload = load_json_file(DEFAULT_EVENT_EVIDENCE_PATH) or load_json_file(DEFAULT_DOCS_EVENT_EVIDENCE_PATH)
+    if not payload:
+        return None
+    breakdown = payload.get("evidence_gap_breakdown")
+    if not isinstance(breakdown, dict):
+        return None
+    categories = breakdown.get("categories") if isinstance(breakdown.get("categories"), list) else []
+    safe_categories: list[dict[str, Any]] = []
+    for item in categories:
+        if not isinstance(item, dict):
+            continue
+        affected = item.get("affected_symbols") if isinstance(item.get("affected_symbols"), list) else []
+        safe_categories.append(
+            {
+                "key": item.get("key"),
+                "label": item.get("label"),
+                "group": item.get("group"),
+                "group_label": item.get("group_label"),
+                "count": item.get("count"),
+                "affected_symbols": [str(symbol) for symbol in affected[:60]],
+                "fallback": item.get("fallback"),
+            }
+        )
+    return {
+        "updated_at": payload.get("generated_label") or payload.get("generated_at"),
+        "original_total": breakdown.get("original_total"),
+        "data_gap": breakdown.get("data_gap"),
+        "permission_limited": breakdown.get("permission_limited"),
+        "entry_path_missing": breakdown.get("entry_path_missing"),
+        "rr_discipline": breakdown.get("rr_discipline"),
+        "other": breakdown.get("other"),
+        "categories": safe_categories,
+    }
+
+
+def build_split_index(payload: dict[str, Any]) -> dict[str, Any]:
+    index_payload = {
+        key: value
+        for key, value in payload.items()
+        if key not in {"schema_version", "reports"}
+    }
+    index_payload["schema_version"] = 2
+    index_payload["reports"] = [public_report_metadata(item) for item in payload.get("reports", []) if isinstance(item, dict)]
+    return index_payload
+
+
+def write_split_archive(payload: dict[str, Any], index_output: Path, detail_dir: Path) -> None:
+    detail_dir.mkdir(parents=True, exist_ok=True)
+    active_ids: set[str] = set()
+    for item in payload.get("reports", []):
+        if not isinstance(item, dict):
+            continue
+        report_id = str(item.get("id") or "").strip()
+        if not report_id:
+            continue
+        active_ids.add(report_id)
+        detail_path = detail_dir / f"{report_id}.json"
+        detail_payload = {
+            "id": report_id,
+            "content": str(item.get("content") or ""),
+        }
+        detail_path.write_text(json.dumps(detail_payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8", newline="\n")
+
+    for stale in detail_dir.glob("*.json"):
+        if stale.stem not in active_ids:
+            stale.unlink()
+
+    index_output.parent.mkdir(parents=True, exist_ok=True)
+    index_payload = build_split_index(payload)
+    index_output.write_text(json.dumps(index_payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8", newline="\n")
+
+
 def build_archive(output: Path, limit: int = 80, merge_existing: bool = True) -> dict[str, Any]:
     candidates = collect_report_files()
     if merge_existing:
@@ -293,7 +528,7 @@ def build_archive(output: Path, limit: int = 80, merge_existing: bool = True) ->
             break
 
     now = datetime.now(timezone.utc)
-    return {
+    payload = {
         "schema_version": 1,
         "generated_at": now.isoformat(timespec="seconds"),
         "generated_label": now.astimezone().strftime("%Y-%m-%d %H:%M"),
@@ -301,11 +536,20 @@ def build_archive(output: Path, limit: int = 80, merge_existing: bool = True) ->
         "report_count": len(reports),
         "reports": reports,
     }
+    review_stats = derive_review_stats()
+    if review_stats:
+        payload["review_stats"] = review_stats
+    evidence_gap_breakdown = derive_evidence_gap_breakdown()
+    if evidence_gap_breakdown:
+        payload["evidence_gap_breakdown"] = evidence_gap_breakdown
+    return payload
 
 
 def main() -> int:
     parser = argparse.ArgumentParser(description="Export sanitized reports for GitHub Pages.")
     parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT)
+    parser.add_argument("--index-output", type=Path, default=DEFAULT_INDEX_OUTPUT)
+    parser.add_argument("--detail-dir", type=Path, default=DEFAULT_DETAIL_DIR)
     parser.add_argument("--limit", type=int, default=80)
     parser.add_argument("--no-merge-existing", action="store_true")
     args = parser.parse_args()
@@ -314,7 +558,9 @@ def main() -> int:
     output.parent.mkdir(parents=True, exist_ok=True)
     payload = build_archive(output, max(1, args.limit), merge_existing=not args.no_merge_existing)
     output.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8", newline="\n")
+    write_split_archive(payload, args.index_output.resolve(), args.detail_dir.resolve())
     print(f"Exported {payload['report_count']} sanitized reports to {output}")
+    print(f"Exported split index to {args.index_output.resolve()} and details to {args.detail_dir.resolve()}")
     return 0
 
 

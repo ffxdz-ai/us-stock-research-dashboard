@@ -333,6 +333,13 @@ function gapCategoryMeta(key) {
       severity: "warning",
       fallback: "升级套餐、降低频率或使用 SEC/公司 IR 替代证据",
     },
+    fmp_symbol_permission_limited: {
+      label: "FMP 个股端点受限",
+      group: "permission",
+      groupLabel: "权限受限",
+      severity: "warning",
+      fallback: "降低 FMP 预期层置信度；等待额度恢复或升级套餐",
+    },
     other: {
       label: "其他待复核缺口",
       group: "other",
@@ -354,20 +361,21 @@ function classifyEvidenceGapItem(item) {
   if (/surprise|财报\s*surprise/i.test(text)) return "earnings_surprise";
   if (/SEC\s*最近申报记录/.test(text)) return "sec_recent_filing";
   if (/SEC\s*财务事实/.test(text)) return "sec_financial_facts";
+  if (/端点受限|限流|权限受限/.test(text)) return "fmp_symbol_permission_limited";
   return "other";
 }
 
-function addGapCategory(bucket, key, count, affected) {
+function addGapCategory(bucket, key, count, affected, overrides = {}) {
   if (!count) return;
   const meta = gapCategoryMeta(key);
   if (!bucket[key]) {
     bucket[key] = {
       key,
-      label: meta.label,
-      group: meta.group,
-      groupLabel: meta.groupLabel,
-      severity: meta.severity,
-      fallback: meta.fallback,
+      label: overrides.label || meta.label,
+      group: overrides.group || meta.group,
+      groupLabel: overrides.groupLabel || overrides.group_label || meta.groupLabel,
+      severity: overrides.severity || meta.severity,
+      fallback: overrides.fallback || meta.fallback,
       count: 0,
       affected: new Set(),
     };
@@ -394,7 +402,13 @@ function structuredGapBreakdown() {
   const rawCategories = Array.isArray(source.categories) ? source.categories : Array.isArray(source.items) ? source.items : [];
   rawCategories.forEach((item) => {
     const key = item.key || item.type || "other";
-    addGapCategory(categories, key, Number(item.count) || 0, item.affected_symbols || item.affected || []);
+    addGapCategory(categories, key, Number(item.count) || 0, item.affected_symbols || item.affected || [], {
+      label: item.label,
+      group: item.group,
+      groupLabel: item.group_label,
+      fallback: item.fallback,
+      severity: item.severity,
+    });
   });
   const normalized = normalizeGapCategories(categories);
   return {

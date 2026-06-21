@@ -1,35 +1,35 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-06-21T22:47:04+08:00",
-  "generated_label": "2026-06-21 22:47",
+  "generated_at": "2026-06-22T02:20:34+08:00",
+  "generated_label": "2026-06-22 02:20",
   "summary": {
     "theme_count": 5,
-    "accelerating_theme_count": 1,
+    "accelerating_theme_count": 2,
     "cross_market_signal_count": 1,
-    "secondary_research_candidate_count": 8,
-    "event_backlog_count": 5,
+    "secondary_research_candidate_count": 16,
+    "event_backlog_count": 7,
     "tracked_security_count": 38
   },
   "themes": [
     {
       "id": "ai_advanced_packaging_hbm",
       "name": "GPU / ASIC / HBM / 先进封装",
-      "stage": "景气拥挤",
+      "stage": "确认中",
       "status": "需求加速，等待更多市场确认",
       "horizon": "3-12个月",
       "thesis": "训练和推理需求首先兑现到 GPU、ASIC、HBM、先进制程和 CoWoS/先进封装；但龙头可能已被充分定价，系统重点识别估值、利润兑现和拥挤度的错配。",
-      "demand_acceleration_score": 73.8,
-      "theme_score": 70.8,
+      "demand_acceleration_score": 76.5,
+      "theme_score": 72.9,
       "score_components": {
         "demand_shift": 92.0,
         "supply_constraint": 86.0,
-        "earnings_leverage": 83.8,
+        "earnings_leverage": 78.8,
         "catalyst_timing": 76.0,
-        "market_underpricing": 48.4,
-        "trend_avg": 80.2,
-        "market_breadth": 74,
-        "change_signal": 0,
-        "crowding_penalty": 74.0
+        "market_underpricing": 58.9,
+        "trend_avg": 75.5,
+        "market_breadth": 77,
+        "change_signal": 12,
+        "crowding_penalty": 48.4
       },
       "market_breadth": {
         "active_markets": [
@@ -37,7 +37,7 @@
           "HK"
         ],
         "active_market_count": 2,
-        "strong_security_count": 1,
+        "strong_security_count": 2,
         "market_counts": {
           "US": 6,
           "HK": 2
@@ -63,8 +63,8 @@
       ],
       "layers": [
         {
-          "layer": "GPU",
-          "score": 72.5,
+          "layer": "HBM/存储",
+          "score": 75.4,
           "market_breadth": {
             "active_markets": [
               "US"
@@ -77,19 +77,19 @@
           },
           "leaders": [
             {
-              "code": "US.NVDA",
+              "code": "US.MU",
               "market": "US",
-              "name": "NVIDIA",
-              "layer": "GPU",
-              "role": "AI 加速器龙头",
-              "price": 210.69,
-              "valuation_pe": 42.47,
-              "reward_risk": 0.82,
-              "opportunity_score": 79.1,
-              "supply_layer_score": 81.0,
-              "trend_score": 76.0,
-              "underpricing_score": 60.0,
-              "crowding_score": 34.0,
+              "name": "Micron",
+              "layer": "HBM/存储",
+              "role": "HBM/存储周期",
+              "price": 1086.1,
+              "valuation_pe": 10.75232,
+              "reward_risk": 0.17,
+              "opportunity_score": 76.4,
+              "supply_layer_score": 80.6,
+              "trend_score": 88.0,
+              "underpricing_score": 61.1,
+              "crowding_score": 66.0,
               "score_delta": null,
               "first_seen_at": "2026-06-21T04:10:31+08:00",
               "secondary_status": "retreated",
@@ -99,8 +99,8 @@
           ]
         },
         {
-          "layer": "ASIC/网络",
-          "score": 71.6,
+          "layer": "代工/封装",
+          "score": 69.4,
           "market_breadth": {
             "active_markets": [
               "US"
@@ -113,55 +113,19 @@
           },
           "leaders": [
             {
-              "code": "US.MRVL",
+              "code": "US.TSM",
               "market": "US",
-              "name": "Marvell",
-              "layer": "ASIC/网络",
-              "role": "定制芯片与 AI 网络",
-              "price": 310.58,
-              "valuation_pe": 101.75,
-              "reward_risk": 0.25,
-              "opportunity_score": 68.9,
-              "supply_layer_score": 78.1,
+              "name": "TSMC ADR",
+              "layer": "代工/封装",
+              "role": "先进制程与封装",
+              "price": 440.37,
+              "valuation_pe": 21.864,
+              "reward_risk": 0.59,
+              "opportunity_score": 63.7,
+              "supply_layer_score": 80.6,
               "trend_score": 88.0,
-              "underpricing_score": 45.0,
-              "crowding_score": 92.0,
-              "score_delta": null,
-              "first_seen_at": "2026-06-21T04:10:31+08:00",
-              "secondary_status": "retreated",
-              "data_status": "行情已接入",
-              "action": "已在二次分析生命周期中；趋势强，等待基本面/估值确认"
-            }
-          ]
-        },
-        {
-          "layer": "HBM/存储",
-          "score": 71.1,
-          "market_breadth": {
-            "active_markets": [
-              "US"
-            ],
-            "active_market_count": 1,
-            "strong_security_count": 0,
-            "market_counts": {
-              "US": 1
-            }
-          },
-          "leaders": [
-            {
-              "code": "US.MU",
-              "market": "US",
-              "name": "Micron",
-              "layer": "HBM/存储",
-              "role": "HBM/存储周期",
-              "price": 1133.99,
-              "valuation_pe": 149.76,
-              "reward_risk": 0.17,
-              "opportunity_score": 67.7,
-              "supply_layer_score": 81.0,
-              "trend_score": 88.0,
-              "underpricing_score": 42.6,
-              "crowding_score": 100.0,
+              "underpricing_score": 63.4,
+              "crowding_score": 50.2,
               "score_delta": null,
               "first_seen_at": "2026-06-21T04:10:31+08:00",
               "secondary_status": "retreated",
@@ -172,7 +136,7 @@
         },
         {
           "layer": "GPU/CPU",
-          "score": 69.2,
+          "score": 69.3,
           "market_breadth": {
             "active_markets": [
               "US"
@@ -190,14 +154,14 @@
               "name": "AMD",
               "layer": "GPU/CPU",
               "role": "GPU/CPU/AI 加速器",
-              "price": 537.37,
-              "valuation_pe": 202.13,
+              "price": 527.36,
+              "valuation_pe": 53.22306,
               "reward_risk": 0.28,
-              "opportunity_score": 63.2,
-              "supply_layer_score": 81.0,
+              "opportunity_score": 63.5,
+              "supply_layer_score": 80.6,
               "trend_score": 88.0,
-              "underpricing_score": 42.6,
-              "crowding_score": 100.0,
+              "underpricing_score": 42.4,
+              "crowding_score": 82.0,
               "score_delta": null,
               "first_seen_at": "2026-06-21T04:10:31+08:00",
               "secondary_status": "retreated",
@@ -230,21 +194,21 @@
               "valuation_pe": null,
               "reward_risk": null,
               "opportunity_score": 60.0,
-              "supply_layer_score": 81.0,
+              "supply_layer_score": 80.6,
               "trend_score": 88.0,
               "underpricing_score": 63.5,
               "crowding_score": 22.0,
               "score_delta": null,
               "first_seen_at": "2026-06-21T04:10:31+08:00",
               "secondary_status": "active",
-              "data_status": "公开日线行情已接入；需 Futu/券商复核",
+              "data_status": "Futu/OpenD 行情已接入",
               "action": "已在二次分析生命周期中；趋势强，等待基本面/估值确认"
             }
           ]
         },
         {
-          "layer": "代工/封装",
-          "score": 66.6,
+          "layer": "ASIC/网络",
+          "score": 66.7,
           "market_breadth": {
             "active_markets": [
               "US"
@@ -257,24 +221,60 @@
           },
           "leaders": [
             {
-              "code": "US.TSM",
+              "code": "US.MRVL",
               "market": "US",
-              "name": "TSMC ADR",
-              "layer": "代工/封装",
-              "role": "先进制程与封装",
-              "price": 462.12,
-              "valuation_pe": null,
-              "reward_risk": 0.54,
-              "opportunity_score": 57.0,
-              "supply_layer_score": 81.0,
-              "trend_score": 88.0,
-              "underpricing_score": 49.3,
-              "crowding_score": 77.6,
+              "name": "Marvell",
+              "layer": "ASIC/网络",
+              "role": "定制芯片与 AI 网络",
+              "price": 300.39,
+              "valuation_pe": 44.22647,
+              "reward_risk": 0.25,
+              "opportunity_score": 67.0,
+              "supply_layer_score": 78.0,
+              "trend_score": 76.0,
+              "underpricing_score": 43.4,
+              "crowding_score": 82.0,
               "score_delta": null,
               "first_seen_at": "2026-06-21T04:10:31+08:00",
               "secondary_status": "retreated",
               "data_status": "行情已接入",
-              "action": "已在二次分析生命周期中；趋势强，等待基本面/估值确认"
+              "action": "已在二次分析生命周期中；观察"
+            }
+          ]
+        },
+        {
+          "layer": "GPU",
+          "score": 63.4,
+          "market_breadth": {
+            "active_markets": [
+              "US"
+            ],
+            "active_market_count": 1,
+            "strong_security_count": 1,
+            "market_counts": {
+              "US": 1
+            }
+          },
+          "leaders": [
+            {
+              "code": "US.NVDA",
+              "market": "US",
+              "name": "NVIDIA",
+              "layer": "GPU",
+              "role": "AI 加速器龙头",
+              "price": 206.58,
+              "valuation_pe": 20.8185,
+              "reward_risk": 0.87,
+              "opportunity_score": 78.5,
+              "supply_layer_score": 80.6,
+              "trend_score": 50.0,
+              "underpricing_score": 64.7,
+              "crowding_score": 22.0,
+              "score_delta": null,
+              "first_seen_at": "2026-06-21T04:10:31+08:00",
+              "secondary_status": "retreated",
+              "data_status": "行情已接入",
+              "action": "已在二次分析生命周期中；交给 Buy-Side 二次分析"
             }
           ]
         },
@@ -302,24 +302,26 @@
               "valuation_pe": null,
               "reward_risk": null,
               "opportunity_score": 57.7,
-              "supply_layer_score": 81.0,
+              "supply_layer_score": 80.6,
               "trend_score": 76.0,
               "underpricing_score": 61.1,
               "crowding_score": 22.0,
               "score_delta": null,
               "first_seen_at": "2026-06-21T04:10:31+08:00",
               "secondary_status": "active",
-              "data_status": "公开日线行情已接入；需 Futu/券商复核",
+              "data_status": "Futu/OpenD 行情已接入",
               "action": "已在二次分析生命周期中；观察"
             }
           ]
         },
         {
           "layer": "ASIC/网络芯片",
-          "score": 53.1,
+          "score": 59.5,
           "market_breadth": {
-            "active_markets": [],
-            "active_market_count": 0,
+            "active_markets": [
+              "US"
+            ],
+            "active_market_count": 1,
             "strong_security_count": 0,
             "market_counts": {
               "US": 1
@@ -332,14 +334,14 @@
               "name": "Broadcom",
               "layer": "ASIC/网络芯片",
               "role": "AI ASIC 与网络芯片",
-              "price": 411.35,
-              "valuation_pe": 84.62,
-              "reward_risk": 0.61,
-              "opportunity_score": 65.9,
-              "supply_layer_score": 81.0,
+              "price": 404.76,
+              "valuation_pe": 28.06981,
+              "reward_risk": 0.63,
+              "opportunity_score": 70.8,
+              "supply_layer_score": 80.6,
               "trend_score": 50.0,
-              "underpricing_score": 51.8,
-              "crowding_score": 44.0,
+              "underpricing_score": 62.0,
+              "crowding_score": 22.0,
               "score_delta": null,
               "first_seen_at": "2026-06-21T04:10:31+08:00",
               "secondary_status": null,
@@ -356,14 +358,14 @@
           "name": "NVIDIA",
           "layer": "GPU",
           "role": "AI 加速器龙头",
-          "price": 210.69,
-          "valuation_pe": 42.47,
-          "reward_risk": 0.82,
-          "opportunity_score": 79.1,
-          "supply_layer_score": 81.0,
-          "trend_score": 76.0,
-          "underpricing_score": 60.0,
-          "crowding_score": 34.0,
+          "price": 206.58,
+          "valuation_pe": 20.8185,
+          "reward_risk": 0.87,
+          "opportunity_score": 78.5,
+          "supply_layer_score": 80.6,
+          "trend_score": 50.0,
+          "underpricing_score": 64.7,
+          "crowding_score": 22.0,
           "score_delta": null,
           "first_seen_at": "2026-06-21T04:10:31+08:00",
           "secondary_status": "retreated",
@@ -371,44 +373,24 @@
           "action": "已在二次分析生命周期中；交给 Buy-Side 二次分析"
         },
         {
-          "code": "US.MRVL",
-          "market": "US",
-          "name": "Marvell",
-          "layer": "ASIC/网络",
-          "role": "定制芯片与 AI 网络",
-          "price": 310.58,
-          "valuation_pe": 101.75,
-          "reward_risk": 0.25,
-          "opportunity_score": 68.9,
-          "supply_layer_score": 78.1,
-          "trend_score": 88.0,
-          "underpricing_score": 45.0,
-          "crowding_score": 92.0,
-          "score_delta": null,
-          "first_seen_at": "2026-06-21T04:10:31+08:00",
-          "secondary_status": "retreated",
-          "data_status": "行情已接入",
-          "action": "已在二次分析生命周期中；趋势强，等待基本面/估值确认"
-        },
-        {
           "code": "US.MU",
           "market": "US",
           "name": "Micron",
           "layer": "HBM/存储",
           "role": "HBM/存储周期",
-          "price": 1133.99,
-          "valuation_pe": 149.76,
+          "price": 1086.1,
+          "valuation_pe": 10.75232,
           "reward_risk": 0.17,
-          "opportunity_score": 67.7,
-          "supply_layer_score": 81.0,
+          "opportunity_score": 76.4,
+          "supply_layer_score": 80.6,
           "trend_score": 88.0,
-          "underpricing_score": 42.6,
-          "crowding_score": 100.0,
+          "underpricing_score": 61.1,
+          "crowding_score": 66.0,
           "score_delta": null,
           "first_seen_at": "2026-06-21T04:10:31+08:00",
           "secondary_status": "retreated",
           "data_status": "行情已接入",
-          "action": "已在二次分析生命周期中；趋势强，等待基本面/估值确认"
+          "action": "已在二次分析生命周期中；交给 Buy-Side 二次分析"
         },
         {
           "code": "US.AVGO",
@@ -416,14 +398,14 @@
           "name": "Broadcom",
           "layer": "ASIC/网络芯片",
           "role": "AI ASIC 与网络芯片",
-          "price": 411.35,
-          "valuation_pe": 84.62,
-          "reward_risk": 0.61,
-          "opportunity_score": 65.9,
-          "supply_layer_score": 81.0,
+          "price": 404.76,
+          "valuation_pe": 28.06981,
+          "reward_risk": 0.63,
+          "opportunity_score": 70.8,
+          "supply_layer_score": 80.6,
           "trend_score": 50.0,
-          "underpricing_score": 51.8,
-          "crowding_score": 44.0,
+          "underpricing_score": 62.0,
+          "crowding_score": 22.0,
           "score_delta": null,
           "first_seen_at": "2026-06-21T04:10:31+08:00",
           "secondary_status": null,
@@ -431,19 +413,59 @@
           "action": "产业强但价格未确认"
         },
         {
+          "code": "US.MRVL",
+          "market": "US",
+          "name": "Marvell",
+          "layer": "ASIC/网络",
+          "role": "定制芯片与 AI 网络",
+          "price": 300.39,
+          "valuation_pe": 44.22647,
+          "reward_risk": 0.25,
+          "opportunity_score": 67.0,
+          "supply_layer_score": 78.0,
+          "trend_score": 76.0,
+          "underpricing_score": 43.4,
+          "crowding_score": 82.0,
+          "score_delta": null,
+          "first_seen_at": "2026-06-21T04:10:31+08:00",
+          "secondary_status": "retreated",
+          "data_status": "行情已接入",
+          "action": "已在二次分析生命周期中；观察"
+        },
+        {
+          "code": "US.TSM",
+          "market": "US",
+          "name": "TSMC ADR",
+          "layer": "代工/封装",
+          "role": "先进制程与封装",
+          "price": 440.37,
+          "valuation_pe": 21.864,
+          "reward_risk": 0.59,
+          "opportunity_score": 63.7,
+          "supply_layer_score": 80.6,
+          "trend_score": 88.0,
+          "underpricing_score": 63.4,
+          "crowding_score": 50.2,
+          "score_delta": null,
+          "first_seen_at": "2026-06-21T04:10:31+08:00",
+          "secondary_status": "retreated",
+          "data_status": "行情已接入",
+          "action": "已在二次分析生命周期中；趋势强，等待基本面/估值确认"
+        },
+        {
           "code": "US.AMD",
           "market": "US",
           "name": "AMD",
           "layer": "GPU/CPU",
           "role": "GPU/CPU/AI 加速器",
-          "price": 537.37,
-          "valuation_pe": 202.13,
+          "price": 527.36,
+          "valuation_pe": 53.22306,
           "reward_risk": 0.28,
-          "opportunity_score": 63.2,
-          "supply_layer_score": 81.0,
+          "opportunity_score": 63.5,
+          "supply_layer_score": 80.6,
           "trend_score": 88.0,
-          "underpricing_score": 42.6,
-          "crowding_score": 100.0,
+          "underpricing_score": 42.4,
+          "crowding_score": 82.0,
           "score_delta": null,
           "first_seen_at": "2026-06-21T04:10:31+08:00",
           "secondary_status": "retreated",
@@ -460,14 +482,14 @@
           "valuation_pe": null,
           "reward_risk": null,
           "opportunity_score": 60.0,
-          "supply_layer_score": 81.0,
+          "supply_layer_score": 80.6,
           "trend_score": 88.0,
           "underpricing_score": 63.5,
           "crowding_score": 22.0,
           "score_delta": null,
           "first_seen_at": "2026-06-21T04:10:31+08:00",
           "secondary_status": "active",
-          "data_status": "公开日线行情已接入；需 Futu/券商复核",
+          "data_status": "Futu/OpenD 行情已接入",
           "action": "已在二次分析生命周期中；趋势强，等待基本面/估值确认"
         },
         {
@@ -480,35 +502,15 @@
           "valuation_pe": null,
           "reward_risk": null,
           "opportunity_score": 57.7,
-          "supply_layer_score": 81.0,
+          "supply_layer_score": 80.6,
           "trend_score": 76.0,
           "underpricing_score": 61.1,
           "crowding_score": 22.0,
           "score_delta": null,
           "first_seen_at": "2026-06-21T04:10:31+08:00",
           "secondary_status": "active",
-          "data_status": "公开日线行情已接入；需 Futu/券商复核",
+          "data_status": "Futu/OpenD 行情已接入",
           "action": "已在二次分析生命周期中；观察"
-        },
-        {
-          "code": "US.TSM",
-          "market": "US",
-          "name": "TSMC ADR",
-          "layer": "代工/封装",
-          "role": "先进制程与封装",
-          "price": 462.12,
-          "valuation_pe": null,
-          "reward_risk": 0.54,
-          "opportunity_score": 57.0,
-          "supply_layer_score": 81.0,
-          "trend_score": 88.0,
-          "underpricing_score": 49.3,
-          "crowding_score": 77.6,
-          "score_delta": null,
-          "first_seen_at": "2026-06-21T04:10:31+08:00",
-          "secondary_status": "retreated",
-          "data_status": "行情已接入",
-          "action": "已在二次分析生命周期中；趋势强，等待基本面/估值确认"
         }
       ]
     },
@@ -516,21 +518,21 @@
       "id": "ai_optical_cpo_networking",
       "name": "AI 光模块 / CPO / 数据中心网络",
       "stage": "观察跟踪",
-      "status": "观察跟踪",
+      "status": "需求加速，等待更多市场确认",
       "horizon": "3-12个月",
       "thesis": "AI 集群从单卡算力扩展到网络互连瓶颈，800G、1.6T、硅光、CPO 和交换机升级会把需求向光器件、DSP、交换机和上游材料扩散。",
-      "demand_acceleration_score": 71.9,
-      "theme_score": 67.2,
+      "demand_acceleration_score": 72.6,
+      "theme_score": 66.9,
       "score_components": {
         "demand_shift": 90.0,
         "supply_constraint": 82.0,
-        "earnings_leverage": 65.0,
+        "earnings_leverage": 60.6,
         "catalyst_timing": 76.0,
-        "market_underpricing": 55.6,
-        "trend_avg": 74.5,
+        "market_underpricing": 58.1,
+        "trend_avg": 74.0,
         "market_breadth": 74,
-        "change_signal": 0,
-        "crowding_penalty": 51.8
+        "change_signal": 12,
+        "crowding_penalty": 36.4
       },
       "market_breadth": {
         "active_markets": [
@@ -583,55 +585,19 @@
               "name": "Arista Networks",
               "layer": "交换机",
               "role": "AI 数据中心网络",
-              "price": 169.67,
-              "valuation_pe": 60.84,
-              "reward_risk": 0.56,
-              "opportunity_score": 75.0,
-              "supply_layer_score": 78.1,
+              "price": 168.47,
+              "valuation_pe": 46.744034329466785,
+              "reward_risk": 0.57,
+              "opportunity_score": 75.1,
+              "supply_layer_score": 78.0,
               "trend_score": 88.0,
-              "underpricing_score": 59.4,
-              "crowding_score": 44.0,
+              "underpricing_score": 59.2,
+              "crowding_score": 34.0,
               "score_delta": null,
               "first_seen_at": "2026-06-21T04:10:31+08:00",
               "secondary_status": "retreated",
               "data_status": "行情已接入",
               "action": "已在二次分析生命周期中；观察"
-            }
-          ]
-        },
-        {
-          "layer": "DSP/网络芯片",
-          "score": 71.6,
-          "market_breadth": {
-            "active_markets": [
-              "US"
-            ],
-            "active_market_count": 1,
-            "strong_security_count": 0,
-            "market_counts": {
-              "US": 1
-            }
-          },
-          "leaders": [
-            {
-              "code": "US.MRVL",
-              "market": "US",
-              "name": "Marvell",
-              "layer": "DSP/网络芯片",
-              "role": "AI 网络与定制芯片",
-              "price": 310.58,
-              "valuation_pe": 101.75,
-              "reward_risk": 0.25,
-              "opportunity_score": 68.9,
-              "supply_layer_score": 78.1,
-              "trend_score": 88.0,
-              "underpricing_score": 45.0,
-              "crowding_score": 92.0,
-              "score_delta": null,
-              "first_seen_at": "2026-06-21T04:10:31+08:00",
-              "secondary_status": "retreated",
-              "data_status": "行情已接入",
-              "action": "已在二次分析生命周期中；趋势强，等待基本面/估值确认"
             }
           ]
         },
@@ -659,14 +625,14 @@
               "valuation_pe": null,
               "reward_risk": null,
               "opportunity_score": 60.0,
-              "supply_layer_score": 78.1,
+              "supply_layer_score": 78.0,
               "trend_score": 88.0,
               "underpricing_score": 63.5,
               "crowding_score": 22.0,
               "score_delta": null,
               "first_seen_at": "2026-06-21T04:10:31+08:00",
               "secondary_status": "active",
-              "data_status": "公开日线行情已接入；需 Futu/券商复核",
+              "data_status": "Futu/OpenD 行情已接入",
               "action": "已在二次分析生命周期中；趋势强，等待基本面/估值确认"
             },
             {
@@ -679,54 +645,70 @@
               "valuation_pe": null,
               "reward_risk": null,
               "opportunity_score": 60.0,
-              "supply_layer_score": 78.1,
+              "supply_layer_score": 78.0,
               "trend_score": 88.0,
               "underpricing_score": 63.5,
               "crowding_score": 22.0,
               "score_delta": null,
               "first_seen_at": "2026-06-21T04:10:31+08:00",
               "secondary_status": "active",
-              "data_status": "公开日线行情已接入；需 Futu/券商复核",
+              "data_status": "Futu/OpenD 行情已接入",
               "action": "已在二次分析生命周期中；趋势强，等待基本面/估值确认"
             }
           ]
         },
         {
-          "layer": "光器件",
-          "score": 64.2,
+          "layer": "DSP/网络芯片",
+          "score": 66.7,
           "market_breadth": {
             "active_markets": [
-              "US",
-              "CN"
+              "US"
             ],
-            "active_market_count": 2,
+            "active_market_count": 1,
             "strong_security_count": 0,
             "market_counts": {
-              "US": 2,
-              "CN": 1
+              "US": 1
             }
           },
           "leaders": [
             {
-              "code": "US.COHR",
+              "code": "US.MRVL",
               "market": "US",
-              "name": "Coherent",
-              "layer": "光器件",
-              "role": "光器件/材料",
-              "price": 389.57,
-              "valuation_pe": 1543.94,
-              "reward_risk": 0.38,
-              "opportunity_score": 63.1,
-              "supply_layer_score": 78.1,
+              "name": "Marvell",
+              "layer": "DSP/网络芯片",
+              "role": "AI 网络与定制芯片",
+              "price": 300.39,
+              "valuation_pe": 44.22647,
+              "reward_risk": 0.25,
+              "opportunity_score": 67.0,
+              "supply_layer_score": 78.0,
               "trend_score": 76.0,
-              "underpricing_score": 46.5,
-              "crowding_score": 78.9,
+              "underpricing_score": 43.4,
+              "crowding_score": 82.0,
               "score_delta": null,
               "first_seen_at": "2026-06-21T04:10:31+08:00",
               "secondary_status": "retreated",
               "data_status": "行情已接入",
               "action": "已在二次分析生命周期中；观察"
-            },
+            }
+          ]
+        },
+        {
+          "layer": "光器件",
+          "score": 62.4,
+          "market_breadth": {
+            "active_markets": [
+              "CN",
+              "US"
+            ],
+            "active_market_count": 2,
+            "strong_security_count": 0,
+            "market_counts": {
+              "CN": 1,
+              "US": 2
+            }
+          },
+          "leaders": [
             {
               "code": "SZ.300394",
               "market": "CN",
@@ -737,14 +719,34 @@
               "valuation_pe": null,
               "reward_risk": null,
               "opportunity_score": 57.7,
-              "supply_layer_score": 78.1,
+              "supply_layer_score": 78.0,
               "trend_score": 76.0,
               "underpricing_score": 61.1,
               "crowding_score": 22.0,
               "score_delta": null,
               "first_seen_at": "2026-06-21T04:10:31+08:00",
               "secondary_status": "active",
-              "data_status": "公开日线行情已接入；需 Futu/券商复核",
+              "data_status": "Futu/OpenD 行情已接入",
+              "action": "已在二次分析生命周期中；观察"
+            },
+            {
+              "code": "US.COHR",
+              "market": "US",
+              "name": "Coherent",
+              "layer": "光器件",
+              "role": "光器件/材料",
+              "price": 391.11,
+              "valuation_pe": 71.4316623589226,
+              "reward_risk": 0.38,
+              "opportunity_score": 57.6,
+              "supply_layer_score": 78.0,
+              "trend_score": 76.0,
+              "underpricing_score": 34.1,
+              "crowding_score": 79.4,
+              "score_delta": null,
+              "first_seen_at": "2026-06-21T04:10:31+08:00",
+              "secondary_status": "retreated",
+              "data_status": "行情已接入",
               "action": "已在二次分析生命周期中；观察"
             },
             {
@@ -753,14 +755,14 @@
               "name": "Lumentum",
               "layer": "光器件",
               "role": "光器件",
-              "price": 850.0,
-              "valuation_pe": null,
-              "reward_risk": null,
-              "opportunity_score": 52.5,
-              "supply_layer_score": 78.1,
+              "price": 890.88,
+              "valuation_pe": 49.73479,
+              "reward_risk": 0.38,
+              "opportunity_score": 45.5,
+              "supply_layer_score": 78.0,
               "trend_score": 50.0,
-              "underpricing_score": 55.9,
-              "crowding_score": 22.0,
+              "underpricing_score": 43.2,
+              "crowding_score": 58.0,
               "score_delta": null,
               "first_seen_at": "2026-06-21T04:10:31+08:00",
               "secondary_status": null,
@@ -771,7 +773,7 @@
         },
         {
           "layer": "光网络设备",
-          "score": 44.0,
+          "score": 43.7,
           "market_breadth": {
             "active_markets": [],
             "active_market_count": 0,
@@ -787,14 +789,14 @@
               "name": "Ciena",
               "layer": "光网络设备",
               "role": "光网络设备",
-              "price": 428.22,
-              "valuation_pe": null,
-              "reward_risk": null,
-              "opportunity_score": 50.8,
-              "supply_layer_score": 78.1,
-              "trend_score": 42.0,
-              "underpricing_score": 54.3,
-              "crowding_score": 22.0,
+              "price": 447.0,
+              "valuation_pe": 65.59644172008447,
+              "reward_risk": 0.5,
+              "opportunity_score": 43.5,
+              "supply_layer_score": 78.0,
+              "trend_score": 50.0,
+              "underpricing_score": 38.6,
+              "crowding_score": 54.0,
               "score_delta": null,
               "first_seen_at": "2026-06-21T04:10:31+08:00",
               "secondary_status": null,
@@ -811,14 +813,14 @@
           "name": "Arista Networks",
           "layer": "交换机",
           "role": "AI 数据中心网络",
-          "price": 169.67,
-          "valuation_pe": 60.84,
-          "reward_risk": 0.56,
-          "opportunity_score": 75.0,
-          "supply_layer_score": 78.1,
+          "price": 168.47,
+          "valuation_pe": 46.744034329466785,
+          "reward_risk": 0.57,
+          "opportunity_score": 75.1,
+          "supply_layer_score": 78.0,
           "trend_score": 88.0,
-          "underpricing_score": 59.4,
-          "crowding_score": 44.0,
+          "underpricing_score": 59.2,
+          "crowding_score": 34.0,
           "score_delta": null,
           "first_seen_at": "2026-06-21T04:10:31+08:00",
           "secondary_status": "retreated",
@@ -831,34 +833,14 @@
           "name": "Marvell",
           "layer": "DSP/网络芯片",
           "role": "AI 网络与定制芯片",
-          "price": 310.58,
-          "valuation_pe": 101.75,
+          "price": 300.39,
+          "valuation_pe": 44.22647,
           "reward_risk": 0.25,
-          "opportunity_score": 68.9,
-          "supply_layer_score": 78.1,
-          "trend_score": 88.0,
-          "underpricing_score": 45.0,
-          "crowding_score": 92.0,
-          "score_delta": null,
-          "first_seen_at": "2026-06-21T04:10:31+08:00",
-          "secondary_status": "retreated",
-          "data_status": "行情已接入",
-          "action": "已在二次分析生命周期中；趋势强，等待基本面/估值确认"
-        },
-        {
-          "code": "US.COHR",
-          "market": "US",
-          "name": "Coherent",
-          "layer": "光器件",
-          "role": "光器件/材料",
-          "price": 389.57,
-          "valuation_pe": 1543.94,
-          "reward_risk": 0.38,
-          "opportunity_score": 63.1,
-          "supply_layer_score": 78.1,
+          "opportunity_score": 67.0,
+          "supply_layer_score": 78.0,
           "trend_score": 76.0,
-          "underpricing_score": 46.5,
-          "crowding_score": 78.9,
+          "underpricing_score": 43.4,
+          "crowding_score": 82.0,
           "score_delta": null,
           "first_seen_at": "2026-06-21T04:10:31+08:00",
           "secondary_status": "retreated",
@@ -875,14 +857,14 @@
           "valuation_pe": null,
           "reward_risk": null,
           "opportunity_score": 60.0,
-          "supply_layer_score": 78.1,
+          "supply_layer_score": 78.0,
           "trend_score": 88.0,
           "underpricing_score": 63.5,
           "crowding_score": 22.0,
           "score_delta": null,
           "first_seen_at": "2026-06-21T04:10:31+08:00",
           "secondary_status": "active",
-          "data_status": "公开日线行情已接入；需 Futu/券商复核",
+          "data_status": "Futu/OpenD 行情已接入",
           "action": "已在二次分析生命周期中；趋势强，等待基本面/估值确认"
         },
         {
@@ -895,14 +877,14 @@
           "valuation_pe": null,
           "reward_risk": null,
           "opportunity_score": 60.0,
-          "supply_layer_score": 78.1,
+          "supply_layer_score": 78.0,
           "trend_score": 88.0,
           "underpricing_score": 63.5,
           "crowding_score": 22.0,
           "score_delta": null,
           "first_seen_at": "2026-06-21T04:10:31+08:00",
           "secondary_status": "active",
-          "data_status": "公开日线行情已接入；需 Futu/券商复核",
+          "data_status": "Futu/OpenD 行情已接入",
           "action": "已在二次分析生命周期中；趋势强，等待基本面/估值确认"
         },
         {
@@ -915,14 +897,34 @@
           "valuation_pe": null,
           "reward_risk": null,
           "opportunity_score": 57.7,
-          "supply_layer_score": 78.1,
+          "supply_layer_score": 78.0,
           "trend_score": 76.0,
           "underpricing_score": 61.1,
           "crowding_score": 22.0,
           "score_delta": null,
           "first_seen_at": "2026-06-21T04:10:31+08:00",
           "secondary_status": "active",
-          "data_status": "公开日线行情已接入；需 Futu/券商复核",
+          "data_status": "Futu/OpenD 行情已接入",
+          "action": "已在二次分析生命周期中；观察"
+        },
+        {
+          "code": "US.COHR",
+          "market": "US",
+          "name": "Coherent",
+          "layer": "光器件",
+          "role": "光器件/材料",
+          "price": 391.11,
+          "valuation_pe": 71.4316623589226,
+          "reward_risk": 0.38,
+          "opportunity_score": 57.6,
+          "supply_layer_score": 78.0,
+          "trend_score": 76.0,
+          "underpricing_score": 34.1,
+          "crowding_score": 79.4,
+          "score_delta": null,
+          "first_seen_at": "2026-06-21T04:10:31+08:00",
+          "secondary_status": "retreated",
+          "data_status": "行情已接入",
           "action": "已在二次分析生命周期中；观察"
         },
         {
@@ -931,14 +933,14 @@
           "name": "Lumentum",
           "layer": "光器件",
           "role": "光器件",
-          "price": 850.0,
-          "valuation_pe": null,
-          "reward_risk": null,
-          "opportunity_score": 52.5,
-          "supply_layer_score": 78.1,
+          "price": 890.88,
+          "valuation_pe": 49.73479,
+          "reward_risk": 0.38,
+          "opportunity_score": 45.5,
+          "supply_layer_score": 78.0,
           "trend_score": 50.0,
-          "underpricing_score": 55.9,
-          "crowding_score": 22.0,
+          "underpricing_score": 43.2,
+          "crowding_score": 58.0,
           "score_delta": null,
           "first_seen_at": "2026-06-21T04:10:31+08:00",
           "secondary_status": null,
@@ -951,14 +953,14 @@
           "name": "Ciena",
           "layer": "光网络设备",
           "role": "光网络设备",
-          "price": 428.22,
-          "valuation_pe": null,
-          "reward_risk": null,
-          "opportunity_score": 50.8,
-          "supply_layer_score": 78.1,
-          "trend_score": 42.0,
-          "underpricing_score": 54.3,
-          "crowding_score": 22.0,
+          "price": 447.0,
+          "valuation_pe": 65.59644172008447,
+          "reward_risk": 0.5,
+          "opportunity_score": 43.5,
+          "supply_layer_score": 78.0,
+          "trend_score": 50.0,
+          "underpricing_score": 38.6,
+          "crowding_score": 54.0,
           "score_delta": null,
           "first_seen_at": "2026-06-21T04:10:31+08:00",
           "secondary_status": null,
@@ -974,31 +976,31 @@
       "status": "观察跟踪",
       "horizon": "3-12个月",
       "thesis": "AI 服务器和高速交换机需要高层数、低损耗 PCB 与高端 CCL，若电子布、铜箔、树脂和高端覆铜板涨价，利润弹性可能从设备和光模块向材料端扩散。",
-      "demand_acceleration_score": 70.5,
-      "theme_score": 61.8,
+      "demand_acceleration_score": 70.3,
+      "theme_score": 61.7,
       "score_components": {
         "demand_shift": 84.0,
         "supply_constraint": 78.0,
         "earnings_leverage": 45.0,
         "catalyst_timing": 72.0,
-        "market_underpricing": 63.7,
-        "trend_avg": 83.7,
+        "market_underpricing": 63.0,
+        "trend_avg": 82.7,
         "market_breadth": 89,
         "change_signal": 0,
         "crowding_penalty": 22.0
       },
       "market_breadth": {
         "active_markets": [
-          "US",
           "HK",
-          "CN"
+          "CN",
+          "US"
         ],
         "active_market_count": 3,
         "strong_security_count": 0,
         "market_counts": {
-          "US": 3,
           "HK": 2,
-          "CN": 4
+          "CN": 4,
+          "US": 3
         }
       },
       "leading_indicators": [
@@ -1053,7 +1055,7 @@
               "score_delta": null,
               "first_seen_at": "2026-06-21T04:10:31+08:00",
               "secondary_status": "active",
-              "data_status": "公开日线行情已接入；需 Futu/券商复核",
+              "data_status": "Futu/OpenD 行情已接入",
               "action": "已在二次分析生命周期中；趋势强，等待基本面/估值确认"
             },
             {
@@ -1073,43 +1075,7 @@
               "score_delta": null,
               "first_seen_at": "2026-06-21T04:10:31+08:00",
               "secondary_status": "active",
-              "data_status": "公开日线行情已接入；需 Futu/券商复核",
-              "action": "已在二次分析生命周期中；趋势强，等待基本面/估值确认"
-            }
-          ]
-        },
-        {
-          "layer": "高端 PCB",
-          "score": 70.4,
-          "market_breadth": {
-            "active_markets": [
-              "US"
-            ],
-            "active_market_count": 1,
-            "strong_security_count": 0,
-            "market_counts": {
-              "US": 1
-            }
-          },
-          "leaders": [
-            {
-              "code": "US.TTMI",
-              "market": "US",
-              "name": "TTM Technologies",
-              "layer": "高端 PCB",
-              "role": "AI 服务器/网络 PCB 美股代理",
-              "price": 216.44,
-              "valuation_pe": null,
-              "reward_risk": null,
-              "opportunity_score": 61.2,
-              "supply_layer_score": 77.8,
-              "trend_score": 94.0,
-              "underpricing_score": 64.7,
-              "crowding_score": 22.0,
-              "score_delta": null,
-              "first_seen_at": "2026-06-21T04:10:31+08:00",
-              "secondary_status": "active",
-              "data_status": "行情已接入",
+              "data_status": "Futu/OpenD 行情已接入",
               "action": "已在二次分析生命周期中；趋势强，等待基本面/估值确认"
             }
           ]
@@ -1145,7 +1111,7 @@
               "score_delta": null,
               "first_seen_at": "2026-06-21T04:10:31+08:00",
               "secondary_status": "active",
-              "data_status": "公开日线行情已接入；需 Futu/券商复核",
+              "data_status": "Futu/OpenD 行情已接入",
               "action": "已在二次分析生命周期中；趋势强，等待基本面/估值确认"
             }
           ]
@@ -1181,14 +1147,14 @@
               "score_delta": null,
               "first_seen_at": "2026-06-21T04:10:31+08:00",
               "secondary_status": "active",
-              "data_status": "公开日线行情已接入；需 Futu/券商复核",
+              "data_status": "Futu/OpenD 行情已接入",
               "action": "已在二次分析生命周期中；趋势强，等待基本面/估值确认"
             }
           ]
         },
         {
-          "layer": "电子制造",
-          "score": 63.4,
+          "layer": "高端 PCB",
+          "score": 64.9,
           "market_breadth": {
             "active_markets": [
               "US"
@@ -1196,49 +1162,29 @@
             "active_market_count": 1,
             "strong_security_count": 0,
             "market_counts": {
-              "US": 2
+              "US": 1
             }
           },
           "leaders": [
             {
-              "code": "US.FLEX",
+              "code": "US.TTMI",
               "market": "US",
-              "name": "Flex",
-              "layer": "电子制造",
-              "role": "数据中心硬件制造代理",
-              "price": 147.61,
-              "valuation_pe": null,
-              "reward_risk": null,
-              "opportunity_score": 58.3,
+              "name": "TTM Technologies",
+              "layer": "高端 PCB",
+              "role": "AI 服务器/网络 PCB 美股代理",
+              "price": 205.87,
+              "valuation_pe": 38.23457,
+              "reward_risk": 0.31,
+              "opportunity_score": 53.1,
               "supply_layer_score": 77.8,
-              "trend_score": 79.1,
-              "underpricing_score": 61.7,
-              "crowding_score": 22.0,
+              "trend_score": 88.0,
+              "underpricing_score": 51.5,
+              "crowding_score": 70.0,
               "score_delta": null,
               "first_seen_at": "2026-06-21T04:10:31+08:00",
-              "secondary_status": "retreated",
+              "secondary_status": "active",
               "data_status": "行情已接入",
               "action": "已在二次分析生命周期中；趋势强，等待基本面/估值确认"
-            },
-            {
-              "code": "US.JBL",
-              "market": "US",
-              "name": "Jabil",
-              "layer": "电子制造",
-              "role": "AI 服务器制造代理",
-              "price": 371.88,
-              "valuation_pe": null,
-              "reward_risk": null,
-              "opportunity_score": 57.7,
-              "supply_layer_score": 77.8,
-              "trend_score": 76.0,
-              "underpricing_score": 61.1,
-              "crowding_score": 22.0,
-              "score_delta": null,
-              "first_seen_at": "2026-06-21T04:10:31+08:00",
-              "secondary_status": "retreated",
-              "data_status": "行情已接入",
-              "action": "已在二次分析生命周期中；观察"
             }
           ]
         },
@@ -1273,7 +1219,7 @@
               "score_delta": null,
               "first_seen_at": "2026-06-21T04:10:31+08:00",
               "secondary_status": "active",
-              "data_status": "公开日线行情已接入；需 Futu/券商复核",
+              "data_status": "Futu/OpenD 行情已接入",
               "action": "已在二次分析生命周期中；观察"
             },
             {
@@ -1293,33 +1239,69 @@
               "score_delta": null,
               "first_seen_at": "2026-06-21T04:10:31+08:00",
               "secondary_status": "active",
-              "data_status": "公开日线行情已接入；需 Futu/券商复核",
+              "data_status": "Futu/OpenD 行情已接入",
+              "action": "已在二次分析生命周期中；观察"
+            }
+          ]
+        },
+        {
+          "layer": "电子制造",
+          "score": 60.9,
+          "market_breadth": {
+            "active_markets": [
+              "US"
+            ],
+            "active_market_count": 1,
+            "strong_security_count": 0,
+            "market_counts": {
+              "US": 2
+            }
+          },
+          "leaders": [
+            {
+              "code": "US.JBL",
+              "market": "US",
+              "name": "Jabil",
+              "layer": "电子制造",
+              "role": "AI 服务器制造代理",
+              "price": 382.67,
+              "valuation_pe": 26.11611,
+              "reward_risk": 0.48,
+              "opportunity_score": 54.6,
+              "supply_layer_score": 77.8,
+              "trend_score": 76.0,
+              "underpricing_score": 57.2,
+              "crowding_score": 57.7,
+              "score_delta": null,
+              "first_seen_at": "2026-06-21T04:10:31+08:00",
+              "secondary_status": "retreated",
+              "data_status": "行情已接入",
+              "action": "已在二次分析生命周期中；观察"
+            },
+            {
+              "code": "US.FLEX",
+              "market": "US",
+              "name": "Flex",
+              "layer": "电子制造",
+              "role": "数据中心硬件制造代理",
+              "price": 146.0,
+              "valuation_pe": 32.48486,
+              "reward_risk": 0.31,
+              "opportunity_score": 51.7,
+              "supply_layer_score": 77.8,
+              "trend_score": 76.0,
+              "underpricing_score": 51.3,
+              "crowding_score": 69.9,
+              "score_delta": null,
+              "first_seen_at": "2026-06-21T04:10:31+08:00",
+              "secondary_status": "retreated",
+              "data_status": "行情已接入",
               "action": "已在二次分析生命周期中；观察"
             }
           ]
         }
       ],
       "securities": [
-        {
-          "code": "US.TTMI",
-          "market": "US",
-          "name": "TTM Technologies",
-          "layer": "高端 PCB",
-          "role": "AI 服务器/网络 PCB 美股代理",
-          "price": 216.44,
-          "valuation_pe": null,
-          "reward_risk": null,
-          "opportunity_score": 61.2,
-          "supply_layer_score": 77.8,
-          "trend_score": 94.0,
-          "underpricing_score": 64.7,
-          "crowding_score": 22.0,
-          "score_delta": null,
-          "first_seen_at": "2026-06-21T04:10:31+08:00",
-          "secondary_status": "active",
-          "data_status": "行情已接入",
-          "action": "已在二次分析生命周期中；趋势强，等待基本面/估值确认"
-        },
         {
           "code": "HK.01888",
           "market": "HK",
@@ -1337,7 +1319,7 @@
           "score_delta": null,
           "first_seen_at": "2026-06-21T04:10:31+08:00",
           "secondary_status": "active",
-          "data_status": "公开日线行情已接入；需 Futu/券商复核",
+          "data_status": "Futu/OpenD 行情已接入",
           "action": "已在二次分析生命周期中；趋势强，等待基本面/估值确认"
         },
         {
@@ -1357,7 +1339,7 @@
           "score_delta": null,
           "first_seen_at": "2026-06-21T04:10:31+08:00",
           "secondary_status": "active",
-          "data_status": "公开日线行情已接入；需 Futu/券商复核",
+          "data_status": "Futu/OpenD 行情已接入",
           "action": "已在二次分析生命周期中；趋势强，等待基本面/估值确认"
         },
         {
@@ -1377,7 +1359,7 @@
           "score_delta": null,
           "first_seen_at": "2026-06-21T04:10:31+08:00",
           "secondary_status": "active",
-          "data_status": "公开日线行情已接入；需 Futu/券商复核",
+          "data_status": "Futu/OpenD 行情已接入",
           "action": "已在二次分析生命周期中；趋势强，等待基本面/估值确认"
         },
         {
@@ -1397,48 +1379,8 @@
           "score_delta": null,
           "first_seen_at": "2026-06-21T04:10:31+08:00",
           "secondary_status": "active",
-          "data_status": "公开日线行情已接入；需 Futu/券商复核",
+          "data_status": "Futu/OpenD 行情已接入",
           "action": "已在二次分析生命周期中；趋势强，等待基本面/估值确认"
-        },
-        {
-          "code": "US.FLEX",
-          "market": "US",
-          "name": "Flex",
-          "layer": "电子制造",
-          "role": "数据中心硬件制造代理",
-          "price": 147.61,
-          "valuation_pe": null,
-          "reward_risk": null,
-          "opportunity_score": 58.3,
-          "supply_layer_score": 77.8,
-          "trend_score": 79.1,
-          "underpricing_score": 61.7,
-          "crowding_score": 22.0,
-          "score_delta": null,
-          "first_seen_at": "2026-06-21T04:10:31+08:00",
-          "secondary_status": "retreated",
-          "data_status": "行情已接入",
-          "action": "已在二次分析生命周期中；趋势强，等待基本面/估值确认"
-        },
-        {
-          "code": "US.JBL",
-          "market": "US",
-          "name": "Jabil",
-          "layer": "电子制造",
-          "role": "AI 服务器制造代理",
-          "price": 371.88,
-          "valuation_pe": null,
-          "reward_risk": null,
-          "opportunity_score": 57.7,
-          "supply_layer_score": 77.8,
-          "trend_score": 76.0,
-          "underpricing_score": 61.1,
-          "crowding_score": 22.0,
-          "score_delta": null,
-          "first_seen_at": "2026-06-21T04:10:31+08:00",
-          "secondary_status": "retreated",
-          "data_status": "行情已接入",
-          "action": "已在二次分析生命周期中；观察"
         },
         {
           "code": "SH.688183",
@@ -1457,7 +1399,7 @@
           "score_delta": null,
           "first_seen_at": "2026-06-21T04:10:31+08:00",
           "secondary_status": "active",
-          "data_status": "公开日线行情已接入；需 Futu/券商复核",
+          "data_status": "Futu/OpenD 行情已接入",
           "action": "已在二次分析生命周期中；观察"
         },
         {
@@ -1477,7 +1419,67 @@
           "score_delta": null,
           "first_seen_at": "2026-06-21T04:10:31+08:00",
           "secondary_status": "active",
-          "data_status": "公开日线行情已接入；需 Futu/券商复核",
+          "data_status": "Futu/OpenD 行情已接入",
+          "action": "已在二次分析生命周期中；观察"
+        },
+        {
+          "code": "US.JBL",
+          "market": "US",
+          "name": "Jabil",
+          "layer": "电子制造",
+          "role": "AI 服务器制造代理",
+          "price": 382.67,
+          "valuation_pe": 26.11611,
+          "reward_risk": 0.48,
+          "opportunity_score": 54.6,
+          "supply_layer_score": 77.8,
+          "trend_score": 76.0,
+          "underpricing_score": 57.2,
+          "crowding_score": 57.7,
+          "score_delta": null,
+          "first_seen_at": "2026-06-21T04:10:31+08:00",
+          "secondary_status": "retreated",
+          "data_status": "行情已接入",
+          "action": "已在二次分析生命周期中；观察"
+        },
+        {
+          "code": "US.TTMI",
+          "market": "US",
+          "name": "TTM Technologies",
+          "layer": "高端 PCB",
+          "role": "AI 服务器/网络 PCB 美股代理",
+          "price": 205.87,
+          "valuation_pe": 38.23457,
+          "reward_risk": 0.31,
+          "opportunity_score": 53.1,
+          "supply_layer_score": 77.8,
+          "trend_score": 88.0,
+          "underpricing_score": 51.5,
+          "crowding_score": 70.0,
+          "score_delta": null,
+          "first_seen_at": "2026-06-21T04:10:31+08:00",
+          "secondary_status": "active",
+          "data_status": "行情已接入",
+          "action": "已在二次分析生命周期中；趋势强，等待基本面/估值确认"
+        },
+        {
+          "code": "US.FLEX",
+          "market": "US",
+          "name": "Flex",
+          "layer": "电子制造",
+          "role": "数据中心硬件制造代理",
+          "price": 146.0,
+          "valuation_pe": 32.48486,
+          "reward_risk": 0.31,
+          "opportunity_score": 51.7,
+          "supply_layer_score": 77.8,
+          "trend_score": 76.0,
+          "underpricing_score": 51.3,
+          "crowding_score": 69.9,
+          "score_delta": null,
+          "first_seen_at": "2026-06-21T04:10:31+08:00",
+          "secondary_status": "retreated",
+          "data_status": "行情已接入",
           "action": "已在二次分析生命周期中；观察"
         }
       ]
@@ -1489,25 +1491,25 @@
       "status": "观察跟踪",
       "horizon": "6-18个月",
       "thesis": "AI 数据中心功耗密度抬升后，瓶颈从芯片扩散到电力接入、UPS、配电、液冷和工程建设；这些环节通常滞后兑现，但持续性可能更强。",
-      "demand_acceleration_score": 67.3,
-      "theme_score": 66.4,
+      "demand_acceleration_score": 69.0,
+      "theme_score": 66.5,
       "score_components": {
         "demand_shift": 86.0,
         "supply_constraint": 80.0,
         "earnings_leverage": 53.9,
         "catalyst_timing": 74.0,
-        "market_underpricing": 62.0,
-        "trend_avg": 68.4,
-        "market_breadth": 56,
-        "change_signal": 0,
-        "crowding_penalty": 28.0
+        "market_underpricing": 63.5,
+        "trend_avg": 67.7,
+        "market_breadth": 59,
+        "change_signal": 16,
+        "crowding_penalty": 29.2
       },
       "market_breadth": {
         "active_markets": [
           "US"
         ],
         "active_market_count": 1,
-        "strong_security_count": 1,
+        "strong_security_count": 2,
         "market_counts": {
           "US": 5,
           "CN": 2
@@ -1534,7 +1536,7 @@
       "layers": [
         {
           "layer": "热管理",
-          "score": 73.7,
+          "score": 74.6,
           "market_breadth": {
             "active_markets": [
               "US"
@@ -1552,13 +1554,13 @@
               "name": "Parker-Hannifin",
               "layer": "热管理",
               "role": "流体与热管理",
-              "price": 953.27,
-              "valuation_pe": 34.03,
-              "reward_risk": 1.17,
-              "opportunity_score": 72.2,
+              "price": 956.0,
+              "valuation_pe": 25.00958,
+              "reward_risk": 1.13,
+              "opportunity_score": 74.3,
               "supply_layer_score": 75.8,
               "trend_score": 88.0,
-              "underpricing_score": 66.0,
+              "underpricing_score": 70.8,
               "crowding_score": 22.0,
               "score_delta": null,
               "first_seen_at": "2026-06-21T04:10:31+08:00",
@@ -1570,13 +1572,13 @@
         },
         {
           "layer": "电气设备",
-          "score": 71.2,
+          "score": 74.5,
           "market_breadth": {
             "active_markets": [
               "US"
             ],
             "active_market_count": 1,
-            "strong_security_count": 0,
+            "strong_security_count": 1,
             "market_counts": {
               "US": 1
             }
@@ -1588,25 +1590,25 @@
               "name": "Eaton",
               "layer": "电气设备",
               "role": "配电与电气设备",
-              "price": 421.77,
-              "valuation_pe": 40.07,
-              "reward_risk": 0.92,
-              "opportunity_score": 68.0,
+              "price": 415.98,
+              "valuation_pe": 28.15622,
+              "reward_risk": 0.96,
+              "opportunity_score": 74.1,
               "supply_layer_score": 75.8,
               "trend_score": 88.0,
-              "underpricing_score": 57.0,
-              "crowding_score": 52.0,
+              "underpricing_score": 69.7,
+              "crowding_score": 22.0,
               "score_delta": null,
               "first_seen_at": "2026-06-21T04:10:31+08:00",
               "secondary_status": "retreated",
               "data_status": "行情已接入",
-              "action": "已在二次分析生命周期中；趋势强，等待基本面/估值确认"
+              "action": "已在二次分析生命周期中；观察"
             }
           ]
         },
         {
           "layer": "自动化",
-          "score": 67.6,
+          "score": 68.8,
           "market_breadth": {
             "active_markets": [
               "US"
@@ -1624,13 +1626,13 @@
               "name": "Emerson",
               "layer": "自动化",
               "role": "自动化与控制",
-              "price": 150.66,
-              "valuation_pe": 36.8,
+              "price": 149.98,
+              "valuation_pe": 20.70101,
               "reward_risk": 0.97,
-              "opportunity_score": 69.1,
+              "opportunity_score": 71.9,
               "supply_layer_score": 75.8,
               "trend_score": 76.0,
-              "underpricing_score": 63.6,
+              "underpricing_score": 70.0,
               "crowding_score": 22.0,
               "score_delta": null,
               "first_seen_at": "2026-06-21T04:10:31+08:00",
@@ -1642,7 +1644,7 @@
         },
         {
           "layer": "电源/液冷",
-          "score": 64.8,
+          "score": 60.4,
           "market_breadth": {
             "active_markets": [
               "US"
@@ -1660,25 +1662,25 @@
               "name": "Vertiv",
               "layer": "电源/液冷",
               "role": "数据中心电源与液冷",
-              "price": 333.05,
-              "valuation_pe": null,
-              "reward_risk": null,
-              "opportunity_score": 58.6,
+              "price": 326.06,
+              "valuation_pe": 42.70536,
+              "reward_risk": 0.49,
+              "opportunity_score": 51.9,
               "supply_layer_score": 75.8,
-              "trend_score": 80.9,
-              "underpricing_score": 62.1,
-              "crowding_score": 22.0,
+              "trend_score": 76.0,
+              "underpricing_score": 51.1,
+              "crowding_score": 58.0,
               "score_delta": null,
               "first_seen_at": "2026-06-21T04:10:31+08:00",
               "secondary_status": "retreated",
               "data_status": "行情已接入",
-              "action": "已在二次分析生命周期中；趋势强，等待基本面/估值确认"
+              "action": "已在二次分析生命周期中；观察"
             }
           ]
         },
         {
           "layer": "工程建设",
-          "score": 62.8,
+          "score": 60.2,
           "market_breadth": {
             "active_markets": [
               "US"
@@ -1696,14 +1698,14 @@
               "name": "Quanta Services",
               "layer": "工程建设",
               "role": "电网/数据中心建设",
-              "price": 702.25,
-              "valuation_pe": null,
-              "reward_risk": null,
-              "opportunity_score": 57.7,
+              "price": 720.73,
+              "valuation_pe": 47.53462,
+              "reward_risk": 0.54,
+              "opportunity_score": 51.6,
               "supply_layer_score": 75.8,
               "trend_score": 76.0,
-              "underpricing_score": 61.1,
-              "crowding_score": 22.0,
+              "underpricing_score": 50.3,
+              "crowding_score": 54.7,
               "score_delta": null,
               "first_seen_at": "2026-06-21T04:10:31+08:00",
               "secondary_status": "retreated",
@@ -1741,7 +1743,7 @@
               "score_delta": null,
               "first_seen_at": "2026-06-21T04:10:31+08:00",
               "secondary_status": null,
-              "data_status": "公开日线行情已接入；需 Futu/券商复核",
+              "data_status": "Futu/OpenD 行情已接入",
               "action": "观察"
             }
           ]
@@ -1775,7 +1777,7 @@
               "score_delta": null,
               "first_seen_at": "2026-06-21T04:10:31+08:00",
               "secondary_status": null,
-              "data_status": "公开日线行情已接入；需 Futu/券商复核",
+              "data_status": "Futu/OpenD 行情已接入",
               "action": "观察"
             }
           ]
@@ -1788,33 +1790,13 @@
           "name": "Parker-Hannifin",
           "layer": "热管理",
           "role": "流体与热管理",
-          "price": 953.27,
-          "valuation_pe": 34.03,
-          "reward_risk": 1.17,
-          "opportunity_score": 72.2,
+          "price": 956.0,
+          "valuation_pe": 25.00958,
+          "reward_risk": 1.13,
+          "opportunity_score": 74.3,
           "supply_layer_score": 75.8,
           "trend_score": 88.0,
-          "underpricing_score": 66.0,
-          "crowding_score": 22.0,
-          "score_delta": null,
-          "first_seen_at": "2026-06-21T04:10:31+08:00",
-          "secondary_status": "retreated",
-          "data_status": "行情已接入",
-          "action": "已在二次分析生命周期中；观察"
-        },
-        {
-          "code": "US.EMR",
-          "market": "US",
-          "name": "Emerson",
-          "layer": "自动化",
-          "role": "自动化与控制",
-          "price": 150.66,
-          "valuation_pe": 36.8,
-          "reward_risk": 0.97,
-          "opportunity_score": 69.1,
-          "supply_layer_score": 75.8,
-          "trend_score": 76.0,
-          "underpricing_score": 63.6,
+          "underpricing_score": 70.8,
           "crowding_score": 22.0,
           "score_delta": null,
           "first_seen_at": "2026-06-21T04:10:31+08:00",
@@ -1828,53 +1810,33 @@
           "name": "Eaton",
           "layer": "电气设备",
           "role": "配电与电气设备",
-          "price": 421.77,
-          "valuation_pe": 40.07,
-          "reward_risk": 0.92,
-          "opportunity_score": 68.0,
+          "price": 415.98,
+          "valuation_pe": 28.15622,
+          "reward_risk": 0.96,
+          "opportunity_score": 74.1,
           "supply_layer_score": 75.8,
           "trend_score": 88.0,
-          "underpricing_score": 57.0,
-          "crowding_score": 52.0,
-          "score_delta": null,
-          "first_seen_at": "2026-06-21T04:10:31+08:00",
-          "secondary_status": "retreated",
-          "data_status": "行情已接入",
-          "action": "已在二次分析生命周期中；趋势强，等待基本面/估值确认"
-        },
-        {
-          "code": "US.VRT",
-          "market": "US",
-          "name": "Vertiv",
-          "layer": "电源/液冷",
-          "role": "数据中心电源与液冷",
-          "price": 333.05,
-          "valuation_pe": null,
-          "reward_risk": null,
-          "opportunity_score": 58.6,
-          "supply_layer_score": 75.8,
-          "trend_score": 80.9,
-          "underpricing_score": 62.1,
+          "underpricing_score": 69.7,
           "crowding_score": 22.0,
           "score_delta": null,
           "first_seen_at": "2026-06-21T04:10:31+08:00",
           "secondary_status": "retreated",
           "data_status": "行情已接入",
-          "action": "已在二次分析生命周期中；趋势强，等待基本面/估值确认"
+          "action": "已在二次分析生命周期中；观察"
         },
         {
-          "code": "US.PWR",
+          "code": "US.EMR",
           "market": "US",
-          "name": "Quanta Services",
-          "layer": "工程建设",
-          "role": "电网/数据中心建设",
-          "price": 702.25,
-          "valuation_pe": null,
-          "reward_risk": null,
-          "opportunity_score": 57.7,
+          "name": "Emerson",
+          "layer": "自动化",
+          "role": "自动化与控制",
+          "price": 149.98,
+          "valuation_pe": 20.70101,
+          "reward_risk": 0.97,
+          "opportunity_score": 71.9,
           "supply_layer_score": 75.8,
           "trend_score": 76.0,
-          "underpricing_score": 61.1,
+          "underpricing_score": 70.0,
           "crowding_score": 22.0,
           "score_delta": null,
           "first_seen_at": "2026-06-21T04:10:31+08:00",
@@ -1899,8 +1861,48 @@
           "score_delta": null,
           "first_seen_at": "2026-06-21T04:10:31+08:00",
           "secondary_status": null,
-          "data_status": "公开日线行情已接入；需 Futu/券商复核",
+          "data_status": "Futu/OpenD 行情已接入",
           "action": "观察"
+        },
+        {
+          "code": "US.VRT",
+          "market": "US",
+          "name": "Vertiv",
+          "layer": "电源/液冷",
+          "role": "数据中心电源与液冷",
+          "price": 326.06,
+          "valuation_pe": 42.70536,
+          "reward_risk": 0.49,
+          "opportunity_score": 51.9,
+          "supply_layer_score": 75.8,
+          "trend_score": 76.0,
+          "underpricing_score": 51.1,
+          "crowding_score": 58.0,
+          "score_delta": null,
+          "first_seen_at": "2026-06-21T04:10:31+08:00",
+          "secondary_status": "retreated",
+          "data_status": "行情已接入",
+          "action": "已在二次分析生命周期中；观察"
+        },
+        {
+          "code": "US.PWR",
+          "market": "US",
+          "name": "Quanta Services",
+          "layer": "工程建设",
+          "role": "电网/数据中心建设",
+          "price": 720.73,
+          "valuation_pe": 47.53462,
+          "reward_risk": 0.54,
+          "opportunity_score": 51.6,
+          "supply_layer_score": 75.8,
+          "trend_score": 76.0,
+          "underpricing_score": 50.3,
+          "crowding_score": 54.7,
+          "score_delta": null,
+          "first_seen_at": "2026-06-21T04:10:31+08:00",
+          "secondary_status": "retreated",
+          "data_status": "行情已接入",
+          "action": "已在二次分析生命周期中；观察"
         },
         {
           "code": "SZ.002335",
@@ -1919,7 +1921,7 @@
           "score_delta": null,
           "first_seen_at": "2026-06-21T04:10:31+08:00",
           "secondary_status": null,
-          "data_status": "公开日线行情已接入；需 Futu/券商复核",
+          "data_status": "Futu/OpenD 行情已接入",
           "action": "观察"
         }
       ]
@@ -1931,25 +1933,25 @@
       "status": "证据不足",
       "horizon": "6-24个月",
       "thesis": "大模型从数字世界扩展到物理世界后，机器人、工业自动化、传感器、执行器和边缘 AI 可能形成新的需求曲线；当前仍处早期，必须用订单和应用落地验证。",
-      "demand_acceleration_score": 59.5,
-      "theme_score": 62.4,
+      "demand_acceleration_score": 61.3,
+      "theme_score": 62.2,
       "score_components": {
         "demand_shift": 78.0,
         "supply_constraint": 62.0,
-        "earnings_leverage": 60.3,
+        "earnings_leverage": 58.0,
         "catalyst_timing": 66.0,
-        "market_underpricing": 54.4,
+        "market_underpricing": 58.9,
         "trend_avg": 49.1,
-        "market_breadth": 53,
-        "change_signal": 0,
-        "crowding_penalty": 33.3
+        "market_breadth": 56,
+        "change_signal": 16,
+        "crowding_penalty": 22.4
       },
       "market_breadth": {
         "active_markets": [
           "US"
         ],
         "active_market_count": 1,
-        "strong_security_count": 0,
+        "strong_security_count": 1,
         "market_counts": {
           "US": 5,
           "CN": 2
@@ -1976,13 +1978,13 @@
       "layers": [
         {
           "layer": "自动化/工业",
-          "score": 74.1,
+          "score": 75.9,
           "market_breadth": {
             "active_markets": [
               "US"
             ],
             "active_market_count": 1,
-            "strong_security_count": 0,
+            "strong_security_count": 1,
             "market_counts": {
               "US": 1
             }
@@ -1994,25 +1996,25 @@
               "name": "Honeywell",
               "layer": "自动化/工业",
               "role": "工业自动化与控制",
-              "price": 229.01,
-              "valuation_pe": 30.69,
-              "reward_risk": 1.27,
-              "opportunity_score": 71.6,
+              "price": 229.94,
+              "valuation_pe": 21.80152,
+              "reward_risk": 1.17,
+              "opportunity_score": 74.2,
               "supply_layer_score": null,
               "trend_score": 92.0,
-              "underpricing_score": 66.8,
+              "underpricing_score": 72.8,
               "crowding_score": 22.0,
               "score_delta": null,
               "first_seen_at": "2026-06-21T04:10:31+08:00",
               "secondary_status": null,
               "data_status": null,
-              "action": "趋势强，等待基本面/估值确认"
+              "action": "观察"
             }
           ]
         },
         {
           "layer": "工业自动化",
-          "score": 71.0,
+          "score": 73.4,
           "market_breadth": {
             "active_markets": [
               "US"
@@ -2030,14 +2032,14 @@
               "name": "Rockwell Automation",
               "layer": "工业自动化",
               "role": "工业自动化周期",
-              "price": 473.79,
-              "valuation_pe": 60.67,
-              "reward_risk": 0.68,
-              "opportunity_score": 64.2,
+              "price": 463.2,
+              "valuation_pe": 32.3153,
+              "reward_risk": 0.71,
+              "opportunity_score": 70.0,
               "supply_layer_score": null,
               "trend_score": 92.0,
-              "underpricing_score": 51.7,
-              "crowding_score": 72.5,
+              "underpricing_score": 63.5,
+              "crowding_score": 40.0,
               "score_delta": null,
               "first_seen_at": "2026-06-21T04:10:31+08:00",
               "secondary_status": null,
@@ -2116,7 +2118,7 @@
         },
         {
           "layer": "医疗机器人",
-          "score": 38.8,
+          "score": 39.5,
           "market_breadth": {
             "active_markets": [],
             "active_market_count": 0,
@@ -2132,48 +2134,14 @@
               "name": "Intuitive Surgical",
               "layer": "医疗机器人",
               "role": "高确定性机器人商业模式",
-              "price": 406.78,
-              "valuation_pe": 50.44,
-              "reward_risk": 7.25,
-              "opportunity_score": 61.1,
+              "price": 404.1,
+              "valuation_pe": 38.65305,
+              "reward_risk": 9.8,
+              "opportunity_score": 62.8,
               "supply_layer_score": null,
               "trend_score": 14.0,
-              "underpricing_score": 51.8,
-              "crowding_score": 20.0,
-              "score_delta": null,
-              "first_seen_at": "2026-06-21T04:10:31+08:00",
-              "secondary_status": null,
-              "data_status": null,
-              "action": "观察"
-            }
-          ]
-        },
-        {
-          "layer": "人形机器人/AI",
-          "score": 38.8,
-          "market_breadth": {
-            "active_markets": [],
-            "active_market_count": 0,
-            "strong_security_count": 0,
-            "market_counts": {
-              "US": 1
-            }
-          },
-          "leaders": [
-            {
-              "code": "US.TSLA",
-              "market": "US",
-              "name": "Tesla",
-              "layer": "人形机器人/AI",
-              "role": "Optimus 期权价值",
-              "price": 400.49,
-              "valuation_pe": 396.45,
-              "reward_risk": 1.14,
-              "opportunity_score": 54.6,
-              "supply_layer_score": null,
-              "trend_score": 22.0,
-              "underpricing_score": 46.2,
-              "crowding_score": 44.0,
+              "underpricing_score": 55.1,
+              "crowding_score": 8.0,
               "score_delta": null,
               "first_seen_at": "2026-06-21T04:10:31+08:00",
               "secondary_status": null,
@@ -2184,7 +2152,7 @@
         },
         {
           "layer": "仓储机器人",
-          "score": 38.2,
+          "score": 36.4,
           "market_breadth": {
             "active_markets": [],
             "active_market_count": 0,
@@ -2200,14 +2168,48 @@
               "name": "Symbotic",
               "layer": "仓储机器人",
               "role": "自动化仓储",
-              "price": 41.68,
-              "valuation_pe": null,
-              "reward_risk": 3.49,
-              "opportunity_score": 59.7,
+              "price": 40.8,
+              "valuation_pe": 53.38974,
+              "reward_risk": 5.78,
+              "opportunity_score": 55.4,
               "supply_layer_score": null,
               "trend_score": 14.0,
-              "underpricing_score": 55.4,
-              "crowding_score": 8.0,
+              "underpricing_score": 46.2,
+              "crowding_score": 20.0,
+              "score_delta": null,
+              "first_seen_at": "2026-06-21T04:10:31+08:00",
+              "secondary_status": null,
+              "data_status": null,
+              "action": "观察"
+            }
+          ]
+        },
+        {
+          "layer": "人形机器人/AI",
+          "score": 34.9,
+          "market_breadth": {
+            "active_markets": [],
+            "active_market_count": 0,
+            "strong_security_count": 0,
+            "market_counts": {
+              "US": 1
+            }
+          },
+          "leaders": [
+            {
+              "code": "US.TSLA",
+              "market": "US",
+              "name": "Tesla",
+              "layer": "人形机器人/AI",
+              "role": "Optimus 期权价值",
+              "price": 399.22,
+              "valuation_pe": 200.65302,
+              "reward_risk": 1.16,
+              "opportunity_score": 45.4,
+              "supply_layer_score": null,
+              "trend_score": 22.0,
+              "underpricing_score": 25.2,
+              "crowding_score": 44.0,
               "score_delta": null,
               "first_seen_at": "2026-06-21T04:10:31+08:00",
               "secondary_status": null,
@@ -2224,19 +2226,19 @@
           "name": "Honeywell",
           "layer": "自动化/工业",
           "role": "工业自动化与控制",
-          "price": 229.01,
-          "valuation_pe": 30.69,
-          "reward_risk": 1.27,
-          "opportunity_score": 71.6,
+          "price": 229.94,
+          "valuation_pe": 21.80152,
+          "reward_risk": 1.17,
+          "opportunity_score": 74.2,
           "supply_layer_score": null,
           "trend_score": 92.0,
-          "underpricing_score": 66.8,
+          "underpricing_score": 72.8,
           "crowding_score": 22.0,
           "score_delta": null,
           "first_seen_at": "2026-06-21T04:10:31+08:00",
           "secondary_status": null,
           "data_status": null,
-          "action": "趋势强，等待基本面/估值确认"
+          "action": "观察"
         },
         {
           "code": "US.ROK",
@@ -2244,14 +2246,14 @@
           "name": "Rockwell Automation",
           "layer": "工业自动化",
           "role": "工业自动化周期",
-          "price": 473.79,
-          "valuation_pe": 60.67,
-          "reward_risk": 0.68,
-          "opportunity_score": 64.2,
+          "price": 463.2,
+          "valuation_pe": 32.3153,
+          "reward_risk": 0.71,
+          "opportunity_score": 70.0,
           "supply_layer_score": null,
           "trend_score": 92.0,
-          "underpricing_score": 51.7,
-          "crowding_score": 72.5,
+          "underpricing_score": 63.5,
+          "crowding_score": 40.0,
           "score_delta": null,
           "first_seen_at": "2026-06-21T04:10:31+08:00",
           "secondary_status": null,
@@ -2264,14 +2266,14 @@
           "name": "Intuitive Surgical",
           "layer": "医疗机器人",
           "role": "高确定性机器人商业模式",
-          "price": 406.78,
-          "valuation_pe": 50.44,
-          "reward_risk": 7.25,
-          "opportunity_score": 61.1,
+          "price": 404.1,
+          "valuation_pe": 38.65305,
+          "reward_risk": 9.8,
+          "opportunity_score": 62.8,
           "supply_layer_score": null,
           "trend_score": 14.0,
-          "underpricing_score": 51.8,
-          "crowding_score": 20.0,
+          "underpricing_score": 55.1,
+          "crowding_score": 8.0,
           "score_delta": null,
           "first_seen_at": "2026-06-21T04:10:31+08:00",
           "secondary_status": null,
@@ -2284,34 +2286,14 @@
           "name": "Symbotic",
           "layer": "仓储机器人",
           "role": "自动化仓储",
-          "price": 41.68,
-          "valuation_pe": null,
-          "reward_risk": 3.49,
-          "opportunity_score": 59.7,
+          "price": 40.8,
+          "valuation_pe": 53.38974,
+          "reward_risk": 5.78,
+          "opportunity_score": 55.4,
           "supply_layer_score": null,
           "trend_score": 14.0,
-          "underpricing_score": 55.4,
-          "crowding_score": 8.0,
-          "score_delta": null,
-          "first_seen_at": "2026-06-21T04:10:31+08:00",
-          "secondary_status": null,
-          "data_status": null,
-          "action": "观察"
-        },
-        {
-          "code": "US.TSLA",
-          "market": "US",
-          "name": "Tesla",
-          "layer": "人形机器人/AI",
-          "role": "Optimus 期权价值",
-          "price": 400.49,
-          "valuation_pe": 396.45,
-          "reward_risk": 1.14,
-          "opportunity_score": 54.6,
-          "supply_layer_score": null,
-          "trend_score": 22.0,
           "underpricing_score": 46.2,
-          "crowding_score": 44.0,
+          "crowding_score": 20.0,
           "score_delta": null,
           "first_seen_at": "2026-06-21T04:10:31+08:00",
           "secondary_status": null,
@@ -2357,6 +2339,26 @@
           "secondary_status": null,
           "data_status": null,
           "action": "观察"
+        },
+        {
+          "code": "US.TSLA",
+          "market": "US",
+          "name": "Tesla",
+          "layer": "人形机器人/AI",
+          "role": "Optimus 期权价值",
+          "price": 399.22,
+          "valuation_pe": 200.65302,
+          "reward_risk": 1.16,
+          "opportunity_score": 45.4,
+          "supply_layer_score": null,
+          "trend_score": 22.0,
+          "underpricing_score": 25.2,
+          "crowding_score": 44.0,
+          "score_delta": null,
+          "first_seen_at": "2026-06-21T04:10:31+08:00",
+          "secondary_status": null,
+          "data_status": null,
+          "action": "观察"
         }
       ]
     }
@@ -2384,11 +2386,24 @@
       "name": "NVIDIA",
       "market": "US",
       "layer": "GPU",
-      "price": 210.69,
-      "opportunity_score": 79.1,
-      "trend_score": 76.0,
-      "crowding_score": 34.0,
-      "demand_acceleration_score": 73.8,
+      "price": 206.58,
+      "opportunity_score": 78.5,
+      "trend_score": 50.0,
+      "crowding_score": 22.0,
+      "demand_acceleration_score": 76.5,
+      "reason": "已在二次分析生命周期中；交给 Buy-Side 二次分析"
+    },
+    {
+      "theme": "GPU / ASIC / HBM / 先进封装",
+      "code": "US.MU",
+      "name": "Micron",
+      "market": "US",
+      "layer": "HBM/存储",
+      "price": 1086.1,
+      "opportunity_score": 76.4,
+      "trend_score": 88.0,
+      "crowding_score": 66.0,
+      "demand_acceleration_score": 76.5,
       "reason": "已在二次分析生命周期中；交给 Buy-Side 二次分析"
     },
     {
@@ -2397,24 +2412,24 @@
       "name": "Marvell",
       "market": "US",
       "layer": "ASIC/网络",
-      "price": 310.58,
-      "opportunity_score": 68.9,
-      "trend_score": 88.0,
-      "crowding_score": 92.0,
-      "demand_acceleration_score": 73.8,
-      "reason": "已在二次分析生命周期中；趋势强，等待基本面/估值确认"
+      "price": 300.39,
+      "opportunity_score": 67.0,
+      "trend_score": 76.0,
+      "crowding_score": 82.0,
+      "demand_acceleration_score": 76.5,
+      "reason": "已在二次分析生命周期中；观察"
     },
     {
       "theme": "GPU / ASIC / HBM / 先进封装",
-      "code": "US.MU",
-      "name": "Micron",
+      "code": "US.TSM",
+      "name": "TSMC ADR",
       "market": "US",
-      "layer": "HBM/存储",
-      "price": 1133.99,
-      "opportunity_score": 67.7,
+      "layer": "代工/封装",
+      "price": 440.37,
+      "opportunity_score": 63.7,
       "trend_score": 88.0,
-      "crowding_score": 100.0,
-      "demand_acceleration_score": 73.8,
+      "crowding_score": 50.2,
+      "demand_acceleration_score": 76.5,
       "reason": "已在二次分析生命周期中；趋势强，等待基本面/估值确认"
     },
     {
@@ -2423,11 +2438,11 @@
       "name": "AMD",
       "market": "US",
       "layer": "GPU/CPU",
-      "price": 537.37,
-      "opportunity_score": 63.2,
+      "price": 527.36,
+      "opportunity_score": 63.5,
       "trend_score": 88.0,
-      "crowding_score": 100.0,
-      "demand_acceleration_score": 73.8,
+      "crowding_score": 82.0,
+      "demand_acceleration_score": 76.5,
       "reason": "已在二次分析生命周期中；趋势强，等待基本面/估值确认"
     },
     {
@@ -2440,7 +2455,7 @@
       "opportunity_score": 60.0,
       "trend_score": 88.0,
       "crowding_score": 22.0,
-      "demand_acceleration_score": 73.8,
+      "demand_acceleration_score": 76.5,
       "reason": "已在二次分析生命周期中；趋势强，等待基本面/估值确认"
     },
     {
@@ -2453,21 +2468,8 @@
       "opportunity_score": 57.7,
       "trend_score": 76.0,
       "crowding_score": 22.0,
-      "demand_acceleration_score": 73.8,
+      "demand_acceleration_score": 76.5,
       "reason": "已在二次分析生命周期中；观察"
-    },
-    {
-      "theme": "GPU / ASIC / HBM / 先进封装",
-      "code": "US.TSM",
-      "name": "TSMC ADR",
-      "market": "US",
-      "layer": "代工/封装",
-      "price": 462.12,
-      "opportunity_score": 57.0,
-      "trend_score": 88.0,
-      "crowding_score": 77.6,
-      "demand_acceleration_score": 73.8,
-      "reason": "已在二次分析生命周期中；趋势强，等待基本面/估值确认"
     },
     {
       "theme": "AI 光模块 / CPO / 数据中心网络",
@@ -2475,15 +2477,129 @@
       "name": "Arista Networks",
       "market": "US",
       "layer": "交换机",
-      "price": 169.67,
-      "opportunity_score": 75.0,
+      "price": 168.47,
+      "opportunity_score": 75.1,
       "trend_score": 88.0,
-      "crowding_score": 44.0,
-      "demand_acceleration_score": 71.9,
+      "crowding_score": 34.0,
+      "demand_acceleration_score": 72.6,
       "reason": "已在二次分析生命周期中；观察"
+    },
+    {
+      "theme": "AI 光模块 / CPO / 数据中心网络",
+      "code": "US.MRVL",
+      "name": "Marvell",
+      "market": "US",
+      "layer": "DSP/网络芯片",
+      "price": 300.39,
+      "opportunity_score": 67.0,
+      "trend_score": 76.0,
+      "crowding_score": 82.0,
+      "demand_acceleration_score": 72.6,
+      "reason": "已在二次分析生命周期中；观察"
+    },
+    {
+      "theme": "AI 光模块 / CPO / 数据中心网络",
+      "code": "SZ.300308",
+      "name": "中际旭创",
+      "market": "CN",
+      "layer": "光模块",
+      "price": 1367.88,
+      "opportunity_score": 60.0,
+      "trend_score": 88.0,
+      "crowding_score": 22.0,
+      "demand_acceleration_score": 72.6,
+      "reason": "已在二次分析生命周期中；趋势强，等待基本面/估值确认"
+    },
+    {
+      "theme": "AI 光模块 / CPO / 数据中心网络",
+      "code": "SZ.300502",
+      "name": "新易盛",
+      "market": "CN",
+      "layer": "光模块",
+      "price": 581.48,
+      "opportunity_score": 60.0,
+      "trend_score": 88.0,
+      "crowding_score": 22.0,
+      "demand_acceleration_score": 72.6,
+      "reason": "已在二次分析生命周期中；趋势强，等待基本面/估值确认"
+    },
+    {
+      "theme": "AI 光模块 / CPO / 数据中心网络",
+      "code": "SZ.300394",
+      "name": "天孚通信",
+      "market": "CN",
+      "layer": "光器件",
+      "price": 336.6,
+      "opportunity_score": 57.7,
+      "trend_score": 76.0,
+      "crowding_score": 22.0,
+      "demand_acceleration_score": 72.6,
+      "reason": "已在二次分析生命周期中；观察"
+    },
+    {
+      "theme": "AI 光模块 / CPO / 数据中心网络",
+      "code": "US.COHR",
+      "name": "Coherent",
+      "market": "US",
+      "layer": "光器件",
+      "price": 391.11,
+      "opportunity_score": 57.6,
+      "trend_score": 76.0,
+      "crowding_score": 79.4,
+      "demand_acceleration_score": 72.6,
+      "reason": "已在二次分析生命周期中；观察"
+    },
+    {
+      "theme": "AI 数据中心电力 / 液冷 / 配电",
+      "code": "US.PH",
+      "name": "Parker-Hannifin",
+      "market": "US",
+      "layer": "热管理",
+      "price": 956.0,
+      "opportunity_score": 74.3,
+      "trend_score": 88.0,
+      "crowding_score": 22.0,
+      "demand_acceleration_score": 69.0,
+      "reason": "已在二次分析生命周期中；观察"
+    },
+    {
+      "theme": "AI 数据中心电力 / 液冷 / 配电",
+      "code": "US.ETN",
+      "name": "Eaton",
+      "market": "US",
+      "layer": "电气设备",
+      "price": 415.98,
+      "opportunity_score": 74.1,
+      "trend_score": 88.0,
+      "crowding_score": 22.0,
+      "demand_acceleration_score": 69.0,
+      "reason": "已在二次分析生命周期中；观察"
+    },
+    {
+      "theme": "Physical AI / 机器人 / 自动化",
+      "code": "US.HON",
+      "name": "Honeywell",
+      "market": "US",
+      "layer": "自动化/工业",
+      "price": 229.94,
+      "opportunity_score": 74.2,
+      "trend_score": 92.0,
+      "crowding_score": 22.0,
+      "demand_acceleration_score": 61.3,
+      "reason": "观察"
     }
   ],
   "event_extraction_backlog": [
+    {
+      "type": "filing",
+      "priority": "high",
+      "item": "本轮新增 7 条申报变化，需要抽取业务/订单/风险措辞。"
+    },
+    {
+      "type": "metric",
+      "priority": "medium",
+      "item": "本轮新增 10 条指标变化，需要判断是逻辑增强还是价格波动。"
+    },
     {
       "type": "permission",
       "priority": "high",

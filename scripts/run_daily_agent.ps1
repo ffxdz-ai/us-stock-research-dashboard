@@ -79,6 +79,16 @@ if ($LASTEXITCODE -ne 0) {
     exit $LASTEXITCODE
 }
 
+& $Python (Join-Path $PSScriptRoot "event_evidence.py") --market-pack $PackPath --opportunity-radar (Join-Path $DataDir "latest_opportunity_radar.json") --cross-market-intelligence (Join-Path $DataDir "latest_cross_market_intelligence.json") --fmp-research (Join-Path $DataDir "latest_fmp_research.json")
+if ($LASTEXITCODE -ne 0) {
+    exit $LASTEXITCODE
+}
+
+& $Python (Join-Path $PSScriptRoot "opportunity_review_metrics.py") --market-pack $PackPath --opportunity-radar (Join-Path $DataDir "latest_opportunity_radar.json") --journal (Join-Path $Root "docs\data\opportunity_journal.json")
+if ($LASTEXITCODE -ne 0) {
+    exit $LASTEXITCODE
+}
+
 & $Python (Join-Path $PSScriptRoot "secondary_analysis_queue.py") --market-pack $PackPath --opportunity-radar (Join-Path $DataDir "latest_opportunity_radar.json") --cross-market-intelligence (Join-Path $DataDir "latest_cross_market_intelligence.json")
 if ($LASTEXITCODE -ne 0) {
     exit $LASTEXITCODE

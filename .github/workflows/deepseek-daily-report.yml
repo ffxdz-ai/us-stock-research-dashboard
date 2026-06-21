@@ -105,6 +105,26 @@ jobs:
           fi
           python scripts/cross_market_intelligence.py --market-pack "$MARKET_PACK" --supply-radar data/latest_supply_chain_radar.json --opportunity-radar data/latest_opportunity_radar.json --fmp-research data/latest_fmp_research.json
 
+      - name: Generate event evidence radar
+        shell: bash
+        run: |
+          if [ "$REPORT_MODE" = "weekly" ]; then
+            MARKET_PACK="data/latest_weekly_market_pack.json"
+          else
+            MARKET_PACK="data/latest_market_pack.json"
+          fi
+          python scripts/event_evidence.py --market-pack "$MARKET_PACK" --opportunity-radar data/latest_opportunity_radar.json --cross-market-intelligence data/latest_cross_market_intelligence.json --fmp-research data/latest_fmp_research.json
+
+      - name: Generate opportunity review metrics
+        shell: bash
+        run: |
+          if [ "$REPORT_MODE" = "weekly" ]; then
+            MARKET_PACK="data/latest_weekly_market_pack.json"
+          else
+            MARKET_PACK="data/latest_market_pack.json"
+          fi
+          python scripts/opportunity_review_metrics.py --market-pack "$MARKET_PACK" --opportunity-radar data/latest_opportunity_radar.json --journal docs/data/opportunity_journal.json
+
       - name: Update secondary-analysis queue
         shell: bash
         run: |
@@ -125,7 +145,7 @@ jobs:
             MARKET_PACK="data/latest_market_pack.json"
             AGENT_INPUT="data/latest_agent_input.json"
           fi
-          python scripts/run_deepseek_cloud_report.py --mode "$REPORT_MODE" --input "$AGENT_INPUT" --market-pack "$MARKET_PACK" --opportunity-radar data/latest_opportunity_radar.json --cross-market-intelligence data/latest_cross_market_intelligence.json --macro-regime data/latest_macro_regime.json --fmp-research data/latest_fmp_research.json
+          python scripts/run_deepseek_cloud_report.py --mode "$REPORT_MODE" --input "$AGENT_INPUT" --market-pack "$MARKET_PACK" --opportunity-radar data/latest_opportunity_radar.json --cross-market-intelligence data/latest_cross_market_intelligence.json --event-evidence data/latest_event_evidence.json --opportunity-review-metrics data/latest_opportunity_review_metrics.json --macro-regime data/latest_macro_regime.json --fmp-research data/latest_fmp_research.json
 
       - name: Export public archive
         run: python scripts/export_public_reports.py --limit 80
@@ -138,7 +158,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add docs/data/reports.json docs/data/secondary_analysis_queue.json docs/data/opportunity_radar.json docs/data/opportunity_journal.json docs/data/cross_market_intelligence.json docs/data/macro_regime.json docs/data/fmp_research.json docs/data/fmp_research_state.json
+          git add docs/data/reports.json docs/data/index.json docs/data/reports docs/data/secondary_analysis_queue.json docs/data/opportunity_radar.json docs/data/opportunity_journal.json docs/data/cross_market_intelligence.json docs/data/event_evidence.json docs/data/opportunity_review_metrics.json docs/data/macro_regime.json docs/data/fmp_research.json docs/data/fmp_research_state.json
           if git diff --cached --quiet; then
             echo "No public archive changes to commit."
           else

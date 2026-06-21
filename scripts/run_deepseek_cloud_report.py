@@ -25,6 +25,8 @@ DEFAULT_MARKET_PACK = DATA_DIR / "latest_market_pack.json"
 DEFAULT_SECONDARY_QUEUE = DATA_DIR / "latest_secondary_analysis_queue.json"
 DEFAULT_OPPORTUNITY_RADAR = DATA_DIR / "latest_opportunity_radar.json"
 DEFAULT_CROSS_MARKET_INTELLIGENCE = DATA_DIR / "latest_cross_market_intelligence.json"
+DEFAULT_EVENT_EVIDENCE = DATA_DIR / "latest_event_evidence.json"
+DEFAULT_OPPORTUNITY_REVIEW_METRICS = DATA_DIR / "latest_opportunity_review_metrics.json"
 DEFAULT_MACRO_REGIME = DATA_DIR / "latest_macro_regime.json"
 DEFAULT_FMP_RESEARCH = DATA_DIR / "latest_fmp_research.json"
 DEFAULT_API_URL = "https://api.deepseek.com/chat/completions"
@@ -294,6 +296,108 @@ def compact_cross_market_intelligence(cross_market_intelligence: dict[str, Any])
     }
 
 
+def compact_event_evidence(event_evidence: dict[str, Any]) -> dict[str, Any]:
+    if not event_evidence:
+        return {}
+    cards: list[dict[str, Any]] = []
+    for card in event_evidence.get("cards", []) if isinstance(event_evidence.get("cards"), list) else []:
+        if not isinstance(card, dict):
+            continue
+        filing = card.get("filing") if isinstance(card.get("filing"), dict) else {}
+        financials = card.get("financials") if isinstance(card.get("financials"), dict) else {}
+        fmp = card.get("fmp") if isinstance(card.get("fmp"), dict) else {}
+        price = card.get("price") if isinstance(card.get("price"), dict) else {}
+        cards.append(
+            {
+                "code": card.get("code"),
+                "name": card.get("name"),
+                "themes": card.get("themes", [])[:4] if isinstance(card.get("themes"), list) else [],
+                "evidence_status": card.get("evidence_status"),
+                "evidence_score": card.get("evidence_score"),
+                "filing": {
+                    "form": filing.get("form"),
+                    "filed": filing.get("filed"),
+                    "age_days": filing.get("age_days"),
+                },
+                "financials": {
+                    "revenue_growth_yoy": financials.get("revenue_growth_yoy"),
+                    "net_margin": financials.get("net_margin"),
+                    "latest_annual_revenue_filed": financials.get("latest_annual_revenue_filed"),
+                },
+                "fmp": {
+                    "available": fmp.get("available"),
+                    "coverage_status": fmp.get("coverage_status"),
+                    "expectation_score": fmp.get("expectation_score"),
+                    "price_target_upside_pct": fmp.get("price_target_upside_pct"),
+                    "eps_revision_pct": fmp.get("eps_revision_pct"),
+                    "eps_surprise_pct": fmp.get("eps_surprise_pct"),
+                },
+                "price": {
+                    "price": price.get("price"),
+                    "reward_risk": price.get("reward_risk"),
+                    "strict_entry": price.get("strict_entry"),
+                    "invalidation": price.get("invalidation"),
+                    "mechanical_target": price.get("mechanical_target"),
+                },
+                "gaps": card.get("gaps", [])[:5] if isinstance(card.get("gaps"), list) else [],
+                "action": card.get("action"),
+            }
+        )
+    return {
+        "generated_label": event_evidence.get("generated_label"),
+        "summary": event_evidence.get("summary") if isinstance(event_evidence.get("summary"), dict) else {},
+        "rule": "事件证据层只说明证据强弱和缺口；新闻/电话会未接入时不得假装已读正文；R/R 不达标不得转成买入建议。",
+        "theme_evidence": event_evidence.get("theme_evidence", [])[:12]
+        if isinstance(event_evidence.get("theme_evidence"), list)
+        else [],
+        "permission_gaps": event_evidence.get("permission_gaps", [])[:10]
+        if isinstance(event_evidence.get("permission_gaps"), list)
+        else [],
+        "cards": cards[:24],
+    }
+
+
+def compact_opportunity_review_metrics(opportunity_review_metrics: dict[str, Any]) -> dict[str, Any]:
+    if not opportunity_review_metrics:
+        return {}
+    themes: list[dict[str, Any]] = []
+    for item in opportunity_review_metrics.get("themes", []) if isinstance(opportunity_review_metrics.get("themes"), list) else []:
+        if not isinstance(item, dict):
+            continue
+        best = item.get("best_security") if isinstance(item.get("best_security"), dict) else {}
+        worst = item.get("worst_security") if isinstance(item.get("worst_security"), dict) else {}
+        themes.append(
+            {
+                "theme_id": item.get("theme_id"),
+                "theme_name": item.get("theme_name"),
+                "status": item.get("status"),
+                "age_days": item.get("age_days"),
+                "initial_score": item.get("initial_score"),
+                "current_score": item.get("current_score"),
+                "score_delta": item.get("score_delta"),
+                "avg_return_pct": item.get("avg_return_pct"),
+                "median_return_pct": item.get("median_return_pct"),
+                "mature": item.get("mature"),
+                "hit": item.get("hit"),
+                "best_security": best,
+                "worst_security": worst,
+                "due_checkpoint_count": item.get("due_checkpoint_count"),
+                "pending_checkpoint_count": item.get("pending_checkpoint_count"),
+            }
+        )
+    return {
+        "generated_label": opportunity_review_metrics.get("generated_label"),
+        "summary": opportunity_review_metrics.get("summary")
+        if isinstance(opportunity_review_metrics.get("summary"), dict)
+        else {},
+        "rule": "机会复盘命中率只统计成熟主题或已完成 checkpoint；未满 30 天的机会不能算胜利。",
+        "themes": themes[:20],
+        "completed_reviews": opportunity_review_metrics.get("completed_reviews", [])[:20]
+        if isinstance(opportunity_review_metrics.get("completed_reviews"), list)
+        else [],
+    }
+
+
 def compact_macro_regime(macro_regime: dict[str, Any]) -> dict[str, Any]:
     if not macro_regime:
         return {}
@@ -440,6 +544,8 @@ def prepare_public_context(
     secondary_queue: dict[str, Any],
     opportunity_radar: dict[str, Any],
     cross_market_intelligence: dict[str, Any],
+    event_evidence: dict[str, Any],
+    opportunity_review_metrics: dict[str, Any],
     macro_regime: dict[str, Any],
     fmp_research: dict[str, Any],
 ) -> dict[str, Any]:
@@ -479,6 +585,8 @@ def prepare_public_context(
         "physical_ai_watchlist": watchlist,
         "opportunity_radar": compact_opportunity_radar(opportunity_radar),
         "cross_market_intelligence": compact_cross_market_intelligence(cross_market_intelligence),
+        "event_evidence": compact_event_evidence(event_evidence),
+        "opportunity_review_metrics": compact_opportunity_review_metrics(opportunity_review_metrics),
         "secondary_analysis_queue": {
             "rule": "进入二次分析后每两天复核一次；不合格则退回观察，不再占用高频 Buy-Side 分析名额；无固定冷却期，重新满足触发条件即可回池。",
             "generated_label": secondary_queue.get("generated_label"),
@@ -512,6 +620,123 @@ def normalize_model_markdown(content: str) -> str:
     return "\n".join(lines).strip()
 
 
+def fmt_brief_number(value: Any, digits: int = 1, suffix: str = "") -> str:
+    parsed = number(value)
+    if parsed is None:
+        return "数据不足"
+    return f"{parsed:.{digits}f}{suffix}"
+
+
+def fmt_brief_price(value: Any) -> str:
+    parsed = number(value)
+    if parsed is None:
+        return "n/a"
+    return f"${parsed:,.2f}"
+
+
+def market_change_line(market: dict[str, Any], symbol: str) -> str:
+    item = market.get(symbol) if isinstance(market.get(symbol), dict) else {}
+    price = number(item.get("regularMarketPrice") or item.get("price"))
+    change = number(item.get("regularMarketChangePercent") or item.get("change_pct"))
+    if price is None and change is None:
+        return f"{symbol} 数据不足"
+    change_text = "数据不足" if change is None else f"{change:+.1f}%"
+    price_text = "n/a" if price is None else f"{price:,.2f}"
+    return f"{symbol} {price_text} / {change_text}"
+
+
+def build_focus_brief(context: dict[str, Any]) -> str:
+    """Create a deterministic first-screen summary before the model narrative."""
+    macro = context.get("macro_regime") if isinstance(context.get("macro_regime"), dict) else {}
+    regime = macro.get("regime") if isinstance(macro.get("regime"), dict) else {}
+    market = context.get("market") if isinstance(context.get("market"), dict) else {}
+    queue = context.get("secondary_analysis_queue") if isinstance(context.get("secondary_analysis_queue"), dict) else {}
+    queue_summary = queue.get("summary") if isinstance(queue.get("summary"), dict) else {}
+    cross = context.get("cross_market_intelligence") if isinstance(context.get("cross_market_intelligence"), dict) else {}
+    event = context.get("event_evidence") if isinstance(context.get("event_evidence"), dict) else {}
+    review = context.get("opportunity_review_metrics") if isinstance(context.get("opportunity_review_metrics"), dict) else {}
+    fmp = context.get("fmp_research") if isinstance(context.get("fmp_research"), dict) else {}
+
+    buyable_count = len(context.get("mechanical_buyable_now") or [])
+    deepseek_priority = queue.get("deepseek_priority") if isinstance(queue.get("deepseek_priority"), list) else []
+    priority_count = len(deepseek_priority)
+    retreated = queue_summary.get("retreated", 0)
+    active_count = queue_summary.get("active_count", 0)
+    macro_label = regime.get("label") or "宏观状态数据不足"
+
+    if buyable_count > 0:
+        action_line = f"有 {buyable_count} 个机械可买候选，但仍需 Buy-Side / R/R / 整股复核。"
+    elif priority_count > 0:
+        action_line = f"有 {priority_count} 个进入 DeepSeek / Buy-Side 优先复核；先分析，不直接下单。"
+    else:
+        action_line = "没有普通买入优先级；以观察、二次研究和等待 R/R 改善为主。"
+
+    index_line = "；".join(
+        [
+            market_change_line(market, "SPY"),
+            market_change_line(market, "QQQ"),
+            market_change_line(market, "IWM"),
+            market_change_line(market, "TLT"),
+        ]
+    )
+
+    cross_summary = cross.get("summary") if isinstance(cross.get("summary"), dict) else {}
+    event_summary = event.get("summary") if isinstance(event.get("summary"), dict) else {}
+    review_summary = review.get("summary") if isinstance(review.get("summary"), dict) else {}
+    fmp_summary = fmp.get("summary") if isinstance(fmp.get("summary"), dict) else {}
+
+    lines = [
+        "## 重点先看",
+        "",
+        "| 模块 | 今天最重要的结论 |",
+        "|---|---|",
+        f"| 总判断 | {macro_label}；{action_line} |",
+        f"| 市场快照 | {index_line} |",
+        f"| 交易纪律 | 二次分析活跃 {active_count} 个；本轮退回观察 {retreated} 个；R/R 不达 2:1 的标的不能普通买入。 |",
+        f"| 机会发现 | 需求加速主题 {cross_summary.get('accelerating_theme_count', 0)} 个；跨市场信号 {cross_summary.get('cross_market_signal_count', 0)} 个；二次研究候选 {cross_summary.get('secondary_research_candidate_count', 0)} 个。 |",
+        f"| 证据质量 | 可用证据 {event_summary.get('usable_evidence_count', 0)} 个；证据缺口 {event_summary.get('gap_count', 0)} 个；新闻/电话会权限缺口 {event_summary.get('permission_gap_count', 0)} 个。 |",
+        f"| 机会复盘 | 成熟主题 {review_summary.get('mature_theme_count', 0)} 个；命中率 {fmt_brief_number(review_summary.get('hit_rate_pct'), 1, '%')}；未满 30 天的机会不算验证成功。 |",
+        f"| FMP 预期 | 覆盖 {fmp_summary.get('symbol_count', 0)} 个；预期候选 {fmp_summary.get('actionable_count', 0)} 个；受限/错误查询需要降低置信度。 |",
+        "",
+    ]
+
+    themes = cross.get("themes") if isinstance(cross.get("themes"), list) else []
+    if themes:
+        lines.extend(["### 今日最值得跟踪的主题", "", "| 优先级 | 主题 | 加速分 | 状态 | 当前动作 |", "|---:|---|---:|---|---|"])
+        for idx, theme in enumerate(themes[:4], 1):
+            lines.append(
+                f"| {idx} | {theme.get('name')} | {fmt_brief_number(theme.get('demand_acceleration_score'))} | {theme.get('status') or '观察'} | 只提高研究优先级，不替代买入纪律 |"
+            )
+        lines.append("")
+
+    cards = event.get("cards") if isinstance(event.get("cards"), list) else []
+    usable_cards = [card for card in cards if str(card.get("evidence_status") or "") != "证据不足"]
+    if usable_cards:
+        lines.extend(["### 重点标的证据卡", "", "| 标的 | 证据状态 | 证据分 | R/R | 关键动作 |", "|---|---|---:|---:|---|"])
+        for card in usable_cards[:6]:
+            price = card.get("price") if isinstance(card.get("price"), dict) else {}
+            lines.append(
+                f"| {card.get('code')} {card.get('name') or ''} | {card.get('evidence_status')} | {fmt_brief_number(card.get('evidence_score'))} | {fmt_brief_number(price.get('reward_risk'), 2)} | {card.get('action')} |"
+            )
+        lines.append("")
+
+    permission_gaps = event.get("permission_gaps") if isinstance(event.get("permission_gaps"), list) else []
+    if permission_gaps:
+        endpoints = "、".join(str(item.get("endpoint")) for item in permission_gaps[:4] if isinstance(item, dict))
+        lines.extend(
+            [
+                "### 今天不能忽略的限制",
+                "",
+                f"- 新闻/电话会正文仍未接入或受限：{endpoints}；报告不能编造管理层表述。",
+                "- 机会雷达仍处在早期跟踪阶段，未完成 30/60/90 天 checkpoint 前，不统计为命中。",
+                "- 若当前价试仓、突破确认或普通买入路径无法独立满足 R/R >= 2:1，只能观察或等待。",
+                "",
+            ]
+        )
+
+    return "\n".join(lines).strip()
+
+
 def build_user_prompt(context: dict[str, Any], mode: str) -> str:
     context_text = json.dumps(context, ensure_ascii=False, indent=2)
     return f"""请基于下面的公开数据，生成今天的 DeepSeek 云端美股投研报告。
@@ -522,6 +747,9 @@ def build_user_prompt(context: dict[str, Any], mode: str) -> str:
 - 输出 Markdown。
 - 不要寒暄，不要写“好的/以下是”，直接从报告正文开始。
 - 不要重复输出一级标题；标题由外层系统生成。
+- 报告必须先给结论，不要先铺背景；重点信息必须放在开头。
+- 正文开头必须用短表格或短清单回答：今天能不能主动买、最重要机会、最大风险、下一步看什么。
+- 详细宏观、FMP、个股分析放在后面，不要把关键结论埋在中段。
 - 必须写明“云端公开数据版”，并说明 Futu OpenD 云端不可用。
 - 不要输出真实持仓、现金、成本、股数、本地路径、API Key。
 - 必须先阅读 macro_regime：按经济周期、政策利率、通胀、流动性、风险偏好判断今天是进攻、平衡还是防守。
@@ -536,6 +764,8 @@ def build_user_prompt(context: dict[str, Any], mode: str) -> str:
 - 必须阅读 cross_market_intelligence：优先识别需求加速、跨市场扩散、领先/滞后信号和证据缺口。
 - 如果 cross_market_intelligence.secondary_research_candidates 不为空，必须结合 secondary_analysis_queue 优先覆盖；但不得把需求加速分当作买入建议。
 - 对 cross_market_intelligence.event_extraction_backlog 中的高优先级缺口，必须写明下一步需要补什么数据：新闻、公告、电话会、价格、订单或财务指标。
+- 必须阅读 event_evidence：区分“证据较完整”“证据可用但需补强”“证据不足”；如果新闻/电话会权限缺口存在，必须明确未读取正文。
+- 必须阅读 opportunity_review_metrics：报告中要说明机会雷达当前命中率是否成熟；未满 30 天或未完成 checkpoint 的主题不得被当作已验证成功。
 - 估值优先使用 valuation_pe 和 valuation_pe_source；forward_pe/trailing_pe 缺失时，不得忽略 Finnhub P/E 或 SEC 市值/净利润估算 P/E。
 - 每只重点股票必须分别评估：当前价试仓、理想回调、突破确认。
 - 每条可执行买入路径必须独立满足 R/R >= 2:1；不满足就写观察或等待。
@@ -629,7 +859,14 @@ def wrap_report(content: str, context: dict[str, Any], mode: str) -> str:
         "- 版本：云端公开数据版",
         "",
     ]
-    return "\n".join(header) + content.strip() + "\n"
+    focus = build_focus_brief(context)
+    detail = content.strip()
+    parts = ["\n".join(header).strip()]
+    if focus:
+        parts.append(focus)
+    if detail:
+        parts.append("## 详细分析\n\n" + detail)
+    return "\n\n".join(parts).strip() + "\n"
 
 
 def main() -> int:
@@ -640,6 +877,8 @@ def main() -> int:
     parser.add_argument("--secondary-queue", type=Path, default=DEFAULT_SECONDARY_QUEUE)
     parser.add_argument("--opportunity-radar", type=Path, default=DEFAULT_OPPORTUNITY_RADAR)
     parser.add_argument("--cross-market-intelligence", type=Path, default=DEFAULT_CROSS_MARKET_INTELLIGENCE)
+    parser.add_argument("--event-evidence", type=Path, default=DEFAULT_EVENT_EVIDENCE)
+    parser.add_argument("--opportunity-review-metrics", type=Path, default=DEFAULT_OPPORTUNITY_REVIEW_METRICS)
     parser.add_argument("--macro-regime", type=Path, default=DEFAULT_MACRO_REGIME)
     parser.add_argument("--fmp-research", type=Path, default=DEFAULT_FMP_RESEARCH)
     parser.add_argument("--out-dir", type=Path, default=REPORTS_DIR)
@@ -652,6 +891,8 @@ def main() -> int:
     secondary_queue = load_json(args.secondary_queue, {})
     opportunity_radar = load_json(args.opportunity_radar, {})
     cross_market_intelligence = load_json(args.cross_market_intelligence, {})
+    event_evidence = load_json(args.event_evidence, {})
+    opportunity_review_metrics = load_json(args.opportunity_review_metrics, {})
     macro_regime = load_json(args.macro_regime, {})
     fmp_research = load_json(args.fmp_research, {})
     context = prepare_public_context(
@@ -660,6 +901,8 @@ def main() -> int:
         secondary_queue,
         opportunity_radar,
         cross_market_intelligence,
+        event_evidence,
+        opportunity_review_metrics,
         macro_regime,
         fmp_research,
     )

@@ -1,0 +1,2102 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-06-22T03:10:31+08:00",
+  "generated_label": "2026-06-22 03:10",
+  "data_boundary": {
+    "role": "event, filing, earnings and evidence extraction; not trading instruction",
+    "private_portfolio": "disabled",
+    "news_transcripts": "Only marked as available when an upstream endpoint returns content; otherwise treated as evidence gap."
+  },
+  "summary": {
+    "symbol_count": 28,
+    "high_quality_evidence_count": 0,
+    "usable_evidence_count": 6,
+    "gap_count": 72,
+    "data_gap_count": 46,
+    "entry_path_missing_count": 12,
+    "rr_discipline_count": 14,
+    "permission_gap_count": 3,
+    "sec_fallback_used_count": 2
+  },
+  "cards": [
+    {
+      "code": "US.ANET",
+      "symbol": "ANET",
+      "name": "Arista Networks, Inc.",
+      "themes": [
+        "AI 光模块 / CPO / 数据中心网络"
+      ],
+      "evidence_status": "证据可用但需补强",
+      "evidence_score": 69.5,
+      "filing": {
+        "available": true,
+        "form": "8-K",
+        "filed": "2026-06-02",
+        "age_days": 20,
+        "accession": "0001596532-26-000118",
+        "recent_forms": [
+          "8-K",
+          "10-Q",
+          "8-K",
+          "10-K",
+          "8-K"
+        ],
+        "score": 90
+      },
+      "financials": {
+        "available": true,
+        "revenue_growth_yoy": 0.286,
+        "net_margin": 0.3899,
+        "liabilities_to_assets": 0.3772,
+        "latest_annual_revenue": 9005700000,
+        "latest_annual_revenue_filed": "2026-02-17",
+        "latest_annual_fcf": 4356149000.0,
+        "score": 84.5
+      },
+      "fmp": {
+        "available": true,
+        "coverage_status": "ok",
+        "expectation_score": 35.0,
+        "price_target_upside_pct": null,
+        "eps_revision_pct": null,
+        "revenue_revision_pct": null,
+        "eps_surprise_pct": null,
+        "rating": null,
+        "annual_eps_estimate": null,
+        "annual_revenue_estimate": null,
+        "score": 35.0,
+        "gaps": [
+          "缺少年/季度分析师预期",
+          "缺少最近财报 surprise"
+        ]
+      },
+      "price": {
+        "available": true,
+        "price": 168.47,
+        "quote_time": "2026-06-18 20:01:32.227",
+        "reward_risk": 0.57,
+        "entry_path_complete": true,
+        "entry_path_fallback": null,
+        "trend_score": 88.0,
+        "source": "market_pack",
+        "strict_entry": 124.65,
+        "invalidation": 115.42,
+        "mechanical_target": 198.79,
+        "ma50": 158.535,
+        "ma200": 142.1681,
+        "high252": 179.8,
+        "score": 77.0
+      },
+      "sec_fallback_used": false,
+      "gaps": [
+        "缺少年/季度分析师预期",
+        "缺少最近财报 surprise",
+        "R/R 未达 2:1，不能进入普通买入"
+      ],
+      "action": "证据只支持观察/二次研究；R/R 未达标，不允许普通买入。"
+    },
+    {
+      "code": "US.NVDA",
+      "symbol": "NVDA",
+      "name": "NVIDIA CORP",
+      "themes": [
+        "GPU / ASIC / HBM / 先进封装"
+      ],
+      "evidence_status": "证据可用但需补强",
+      "evidence_score": 64.6,
+      "filing": {
+        "available": true,
+        "form": "8-K",
+        "filed": "2026-06-18",
+        "age_days": 4,
+        "accession": "0001193125-26-275783",
+        "recent_forms": [
+          "8-K",
+          "10-Q",
+          "8-K",
+          "8-K",
+          "8-K"
+        ],
+        "score": 90
+      },
+      "financials": {
+        "available": true,
+        "revenue_growth_yoy": 0.6547,
+        "net_margin": 0.556,
+        "liabilities_to_assets": 0.2467,
+        "latest_annual_revenue": 215938000000,
+        "latest_annual_revenue_filed": "2026-02-25",
+        "latest_annual_fcf": 102579265000.0,
+        "score": 97.0
+      },
+      "fmp": {
+        "available": true,
+        "coverage_status": "ok",
+        "expectation_score": 35.0,
+        "price_target_upside_pct": null,
+        "eps_revision_pct": null,
+        "revenue_revision_pct": null,
+        "eps_surprise_pct": null,
+        "rating": null,
+        "annual_eps_estimate": null,
+        "annual_revenue_estimate": null,
+        "score": 35.0,
+        "gaps": [
+          "缺少年/季度分析师预期",
+          "缺少最近财报 surprise"
+        ]
+      },
+      "price": {
+        "available": true,
+        "price": 206.58,
+        "quote_time": "2026-06-18 20:01:29.719",
+        "reward_risk": 0.87,
+        "entry_path_complete": true,
+        "entry_path_fallback": null,
+        "trend_score": 50.0,
+        "source": "market_pack",
+        "strict_entry": 177.21,
+        "invalidation": 164.08,
+        "mechanical_target": 243.76,
+        "ma50": 209.121,
+        "ma200": 189.6844,
+        "high252": 236.2646,
+        "score": 35.0
+      },
+      "sec_fallback_used": false,
+      "gaps": [
+        "缺少年/季度分析师预期",
+        "缺少最近财报 surprise",
+        "R/R 未达 2:1，不能进入普通买入"
+      ],
+      "action": "证据只支持观察/二次研究；R/R 未达标，不允许普通买入。"
+    },
+    {
+      "code": "US.MU",
+      "symbol": "MU",
+      "name": "MICRON TECHNOLOGY INC",
+      "themes": [
+        "GPU / ASIC / HBM / 先进封装"
+      ],
+      "evidence_status": "证据可用但需补强",
+      "evidence_score": 62.4,
+      "filing": {
+        "available": true,
+        "form": "8-K",
+        "filed": "2026-06-09",
+        "age_days": 13,
+        "accession": "0001104659-26-071845",
+        "recent_forms": [
+          "8-K",
+          "8-K",
+          "8-K",
+          "10-Q",
+          "8-K"
+        ],
+        "score": 90
+      },
+      "financials": {
+        "available": true,
+        "revenue_growth_yoy": 0.4885,
+        "net_margin": 0.2284,
+        "liabilities_to_assets": 0.2862,
+        "latest_annual_revenue": 37378000000,
+        "latest_annual_revenue_filed": "2025-10-03",
+        "latest_annual_fcf": 1668000000.0,
+        "score": 84.4
+      },
+      "fmp": {
+        "available": false,
+        "score": 0,
+        "gaps": [
+          "缺少 FMP 预期/财报快照"
+        ]
+      },
+      "price": {
+        "available": true,
+        "price": 1086.1,
+        "quote_time": "2026-06-18 20:01:42.552",
+        "reward_risk": 0.17,
+        "entry_path_complete": true,
+        "entry_path_fallback": null,
+        "trend_score": 88.0,
+        "source": "market_pack",
+        "strict_entry": 336.41,
+        "invalidation": 311.49,
+        "mechanical_target": 1216.43,
+        "ma50": 732.7992,
+        "ma200": 400.6219,
+        "high252": 1149.43,
+        "score": 77.0
+      },
+      "sec_fallback_used": false,
+      "gaps": [
+        "缺少 FMP 预期/财报快照",
+        "R/R 未达 2:1，不能进入普通买入"
+      ],
+      "action": "证据只支持观察/二次研究；R/R 未达标，不允许普通买入。"
+    },
+    {
+      "code": "US.MRVL",
+      "symbol": "MRVL",
+      "name": "Marvell Technology, Inc.",
+      "themes": [
+        "GPU / ASIC / HBM / 先进封装",
+        "AI 光模块 / CPO / 数据中心网络"
+      ],
+      "evidence_status": "证据可用但需补强",
+      "evidence_score": 61.4,
+      "filing": {
+        "available": true,
+        "form": "8-K",
+        "filed": "2026-06-11",
+        "age_days": 11,
+        "accession": "0001193125-26-267688",
+        "recent_forms": [
+          "8-K",
+          "10-Q",
+          "8-K",
+          "8-K",
+          "8-K"
+        ],
+        "score": 90
+      },
+      "financials": {
+        "available": true,
+        "revenue_growth_yoy": 0.4209,
+        "net_margin": 0.3258,
+        "liabilities_to_assets": 0.324,
+        "latest_annual_revenue": 8194600000,
+        "latest_annual_revenue_filed": "2026-03-11",
+        "latest_annual_fcf": 1396400000.0,
+        "score": 89.3
+      },
+      "fmp": {
+        "available": false,
+        "score": 0,
+        "gaps": [
+          "缺少 FMP 预期/财报快照"
+        ]
+      },
+      "price": {
+        "available": true,
+        "price": 300.39,
+        "quote_time": "2026-06-18 20:01:39.659",
+        "reward_risk": 0.25,
+        "entry_path_complete": true,
+        "entry_path_fallback": null,
+        "trend_score": 76.0,
+        "source": "market_pack",
+        "strict_entry": 93.49,
+        "invalidation": 86.57,
+        "mechanical_target": 354.46,
+        "ma50": 197.9408,
+        "ma200": 112.997,
+        "high252": 329.88,
+        "score": 65.0
+      },
+      "sec_fallback_used": false,
+      "gaps": [
+        "缺少 FMP 预期/财报快照",
+        "R/R 未达 2:1，不能进入普通买入"
+      ],
+      "action": "证据只支持观察/二次研究；R/R 未达标，不允许普通买入。"
+    },
+    {
+      "code": "US.AMD",
+      "symbol": "AMD",
+      "name": "ADVANCED MICRO DEVICES INC",
+      "themes": [
+        "GPU / ASIC / HBM / 先进封装"
+      ],
+      "evidence_status": "证据可用但需补强",
+      "evidence_score": 59.9,
+      "filing": {
+        "available": true,
+        "form": "8-K",
+        "filed": "2026-05-15",
+        "age_days": 38,
+        "accession": "0001193125-26-226746",
+        "recent_forms": [
+          "8-K",
+          "10-Q",
+          "8-K",
+          "8-K",
+          "8-K"
+        ],
+        "score": 90
+      },
+      "financials": {
+        "available": true,
+        "revenue_growth_yoy": 0.3434,
+        "net_margin": 0.1251,
+        "liabilities_to_assets": null,
+        "latest_annual_revenue": 34639000000,
+        "latest_annual_revenue_filed": "2026-02-04",
+        "latest_annual_fcf": 6735000000.0,
+        "score": 75.3
+      },
+      "fmp": {
+        "available": false,
+        "score": 0,
+        "gaps": [
+          "缺少 FMP 预期/财报快照"
+        ]
+      },
+      "price": {
+        "available": true,
+        "price": 527.36,
+        "quote_time": "2026-06-18 20:01:28.560",
+        "reward_risk": 0.28,
+        "entry_path_complete": true,
+        "entry_path_fallback": null,
+        "trend_score": 88.0,
+        "source": "market_pack",
+        "strict_entry": 208.29,
+        "invalidation": 192.87,
+        "mechanical_target": 622.28,
+        "ma50": 411.0471,
+        "ma200": 261.1502,
+        "high252": 558.37,
+        "score": 77.0
+      },
+      "sec_fallback_used": false,
+      "gaps": [
+        "缺少 FMP 预期/财报快照",
+        "R/R 未达 2:1，不能进入普通买入"
+      ],
+      "action": "证据只支持观察/二次研究；R/R 未达标，不允许普通买入。"
+    },
+    {
+      "code": "US.AVGO",
+      "symbol": "AVGO",
+      "name": "Broadcom Inc.",
+      "themes": [
+        "GPU / ASIC / HBM / 先进封装"
+      ],
+      "evidence_status": "证据可用但需补强",
+      "evidence_score": 59.7,
+      "filing": {
+        "available": true,
+        "form": "8-K",
+        "filed": "2026-06-18",
+        "age_days": 4,
+        "accession": "0001193125-26-275077",
+        "recent_forms": [
+          "8-K",
+          "8-K",
+          "10-Q",
+          "8-K",
+          "8-K"
+        ],
+        "score": 90
+      },
+      "financials": {
+        "available": true,
+        "revenue_growth_yoy": 0.2387,
+        "net_margin": 0.362,
+        "liabilities_to_assets": 0.5105,
+        "latest_annual_revenue": 63887000000,
+        "latest_annual_revenue_filed": "2025-12-18",
+        "latest_annual_fcf": 26914000000.0,
+        "score": 79.8
+      },
+      "fmp": {
+        "available": true,
+        "coverage_status": "ok",
+        "expectation_score": 35.0,
+        "price_target_upside_pct": null,
+        "eps_revision_pct": null,
+        "revenue_revision_pct": null,
+        "eps_surprise_pct": null,
+        "rating": null,
+        "annual_eps_estimate": null,
+        "annual_revenue_estimate": null,
+        "score": 35.0,
+        "gaps": [
+          "缺少年/季度分析师预期",
+          "缺少最近财报 surprise"
+        ]
+      },
+      "price": {
+        "available": true,
+        "price": 404.76,
+        "quote_time": "2026-06-18 20:01:25.233",
+        "reward_risk": 0.63,
+        "entry_path_complete": true,
+        "entry_path_fallback": null,
+        "trend_score": 50.0,
+        "source": "market_pack",
+        "strict_entry": 313.16,
+        "invalidation": 289.96,
+        "mechanical_target": 477.62,
+        "ma50": 411.674,
+        "ma200": 359.1572,
+        "high252": 495.0,
+        "score": 35.0
+      },
+      "sec_fallback_used": false,
+      "gaps": [
+        "缺少年/季度分析师预期",
+        "缺少最近财报 surprise",
+        "R/R 未达 2:1，不能进入普通买入"
+      ],
+      "action": "证据只支持观察/二次研究；R/R 未达标，不允许普通买入。"
+    },
+    {
+      "code": "US.ISRG",
+      "symbol": "ISRG",
+      "name": "INTUITIVE SURGICAL INC",
+      "themes": [
+        "Physical AI / 机器人 / 自动化"
+      ],
+      "evidence_status": "证据不足",
+      "evidence_score": 57.0,
+      "filing": {
+        "available": true,
+        "form": "8-K",
+        "filed": "2026-05-28",
+        "age_days": 25,
+        "accession": "0001035267-26-000042",
+        "recent_forms": [
+          "8-K",
+          "8-K",
+          "10-Q",
+          "8-K",
+          "8-K"
+        ],
+        "score": 90
+      },
+      "financials": {
+        "available": true,
+        "revenue_growth_yoy": 0.2051,
+        "net_margin": 0.2838,
+        "liabilities_to_assets": 0.125,
+        "latest_annual_revenue": 10064700000,
+        "latest_annual_revenue_filed": "2026-02-03",
+        "latest_annual_fcf": null,
+        "score": 63.5
+      },
+      "fmp": {
+        "available": true,
+        "coverage_status": "ok",
+        "expectation_score": 35.0,
+        "price_target_upside_pct": null,
+        "eps_revision_pct": null,
+        "revenue_revision_pct": null,
+        "eps_surprise_pct": null,
+        "rating": null,
+        "annual_eps_estimate": null,
+        "annual_revenue_estimate": null,
+        "score": 35.0,
+        "gaps": [
+          "缺少年/季度分析师预期",
+          "缺少最近财报 surprise"
+        ]
+      },
+      "price": {
+        "available": true,
+        "price": 404.1,
+        "quote_time": "2026-06-18 20:01:40.541",
+        "reward_risk": 9.8,
+        "entry_path_complete": true,
+        "entry_path_fallback": null,
+        "trend_score": 14.0,
+        "source": "market_pack",
+        "strict_entry": 397.27,
+        "invalidation": 396.68,
+        "mechanical_target": 476.84,
+        "ma50": 439.7316,
+        "ma200": 490.6895,
+        "high252": 603.88,
+        "score": 37.0
+      },
+      "sec_fallback_used": false,
+      "gaps": [
+        "缺少年/季度分析师预期",
+        "缺少最近财报 surprise"
+      ],
+      "action": "保留观察，等待财务、价格或事件证据补强。"
+    },
+    {
+      "code": "US.VRT",
+      "symbol": "VRT",
+      "name": "Vertiv",
+      "themes": [
+        "AI 数据中心电力 / 液冷 / 配电"
+      ],
+      "evidence_status": "证据不足",
+      "evidence_score": 56.3,
+      "filing": {
+        "available": true,
+        "form": "8-K",
+        "filed": "2026-06-18",
+        "age_days": 4,
+        "accession": "0001628280-26-044317",
+        "recent_forms": [
+          "8-K",
+          "8-K",
+          "8-K",
+          "8-K",
+          "10-Q"
+        ],
+        "score": 90
+      },
+      "financials": {
+        "available": true,
+        "revenue_growth_yoy": 0.2769,
+        "net_margin": 0.1303,
+        "liabilities_to_assets": 0.6832,
+        "latest_annual_revenue": 10229900000,
+        "latest_annual_revenue_filed": "2026-02-13",
+        "latest_annual_fcf": 1893800000.0,
+        "score": 70.9
+      },
+      "fmp": {
+        "available": false,
+        "score": 0,
+        "gaps": [
+          "缺少 FMP 预期/财报快照"
+        ]
+      },
+      "price": {
+        "available": true,
+        "price": 326.06,
+        "quote_time": "2026-06-18 20:01:11.859",
+        "reward_risk": 0.49,
+        "entry_path_complete": true,
+        "entry_path_fallback": null,
+        "trend_score": 76.0,
+        "source": "market_pack",
+        "strict_entry": 250.18,
+        "invalidation": 205.94,
+        "mechanical_target": 384.75,
+        "ma50": 321.4747,
+        "ma200": 223.8485,
+        "high252": 379.8566,
+        "score": 65.0
+      },
+      "sec_fallback_used": true,
+      "gaps": [
+        "缺少 FMP 预期/财报快照",
+        "R/R 未达 2:1，不能进入普通买入"
+      ],
+      "action": "证据只支持观察/二次研究；R/R 未达标，不允许普通买入。"
+    },
+    {
+      "code": "US.ETN",
+      "symbol": "ETN",
+      "name": "Eaton Corp plc",
+      "themes": [
+        "AI 数据中心电力 / 液冷 / 配电"
+      ],
+      "evidence_status": "证据不足",
+      "evidence_score": 55.5,
+      "filing": {
+        "available": true,
+        "form": "8-K",
+        "filed": "2026-06-11",
+        "age_days": 11,
+        "accession": "0000950142-26-001733",
+        "recent_forms": [
+          "8-K",
+          "10-Q",
+          "8-K",
+          "8-K",
+          "8-K"
+        ],
+        "score": 90
+      },
+      "financials": {
+        "available": true,
+        "revenue_growth_yoy": 0.1033,
+        "net_margin": 0.1489,
+        "liabilities_to_assets": null,
+        "latest_annual_revenue": 27448000000,
+        "latest_annual_revenue_filed": "2026-02-26",
+        "latest_annual_fcf": 3553000000.0,
+        "score": 59.7
+      },
+      "fmp": {
+        "available": false,
+        "score": 0,
+        "gaps": [
+          "缺少 FMP 预期/财报快照"
+        ]
+      },
+      "price": {
+        "available": true,
+        "price": 415.98,
+        "quote_time": "2026-06-18 20:01:38.443",
+        "reward_risk": 0.96,
+        "entry_path_complete": true,
+        "entry_path_fallback": null,
+        "trend_score": 88.0,
+        "source": "market_pack",
+        "strict_entry": 368.34,
+        "invalidation": 337.65,
+        "mechanical_target": 490.86,
+        "ma50": 404.6264,
+        "ma200": 367.013,
+        "high252": 434.23,
+        "score": 77.0
+      },
+      "sec_fallback_used": false,
+      "gaps": [
+        "缺少 FMP 预期/财报快照",
+        "R/R 未达 2:1，不能进入普通买入"
+      ],
+      "action": "证据只支持观察/二次研究；R/R 未达标，不允许普通买入。"
+    },
+    {
+      "code": "US.SYM",
+      "symbol": "SYM",
+      "name": "Symbotic Inc.",
+      "themes": [
+        "Physical AI / 机器人 / 自动化"
+      ],
+      "evidence_status": "证据不足",
+      "evidence_score": 53.5,
+      "filing": {
+        "available": true,
+        "form": "10-Q",
+        "filed": "2026-05-06",
+        "age_days": 47,
+        "accession": "0001837240-26-000024",
+        "recent_forms": [
+          "10-Q",
+          "8-K",
+          "8-K",
+          "10-Q",
+          "8-K"
+        ],
+        "score": 72
+      },
+      "financials": {
+        "available": true,
+        "revenue_growth_yoy": 0.2565,
+        "net_margin": -0.0075,
+        "liabilities_to_assets": 0.706,
+        "latest_annual_revenue": 2246922000,
+        "latest_annual_revenue_filed": "2025-11-24",
+        "latest_annual_fcf": 824702000.0,
+        "score": 62.6
+      },
+      "fmp": {
+        "available": true,
+        "coverage_status": "ok",
+        "expectation_score": 35.0,
+        "price_target_upside_pct": null,
+        "eps_revision_pct": null,
+        "revenue_revision_pct": null,
+        "eps_surprise_pct": null,
+        "rating": null,
+        "annual_eps_estimate": null,
+        "annual_revenue_estimate": null,
+        "score": 35.0,
+        "gaps": [
+          "缺少年/季度分析师预期",
+          "缺少最近财报 surprise"
+        ]
+      },
+      "price": {
+        "available": true,
+        "price": 40.8,
+        "quote_time": "2026-06-18 20:01:24.929",
+        "reward_risk": 5.78,
+        "entry_path_complete": true,
+        "entry_path_fallback": null,
+        "trend_score": 14.0,
+        "source": "market_pack",
+        "strict_entry": 29.04,
+        "invalidation": 39.53,
+        "mechanical_target": 48.14,
+        "ma50": 52.0959,
+        "ma200": 58.0569,
+        "high252": 87.88,
+        "score": 37.0
+      },
+      "sec_fallback_used": false,
+      "gaps": [
+        "缺少年/季度分析师预期",
+        "缺少最近财报 surprise"
+      ],
+      "action": "保留观察，等待财务、价格或事件证据补强。"
+    },
+    {
+      "code": "US.HON",
+      "symbol": "HON",
+      "name": "HONEYWELL INTERNATIONAL INC",
+      "themes": [
+        "Physical AI / 机器人 / 自动化"
+      ],
+      "evidence_status": "证据不足",
+      "evidence_score": 52.6,
+      "filing": {
+        "available": true,
+        "form": "8-K",
+        "filed": "2026-06-15",
+        "age_days": 7,
+        "accession": "0000773840-26-000080",
+        "recent_forms": [
+          "8-K",
+          "8-K",
+          "8-K",
+          "8-K",
+          "8-K"
+        ],
+        "score": 90
+      },
+      "financials": {
+        "available": true,
+        "revenue_growth_yoy": -0.0274,
+        "net_margin": 0.1263,
+        "liabilities_to_assets": null,
+        "latest_annual_revenue": 37442000000,
+        "latest_annual_revenue_filed": "2026-02-17",
+        "latest_annual_fcf": 5422000000.0,
+        "score": 49.4
+      },
+      "fmp": {
+        "available": false,
+        "score": 0,
+        "gaps": [
+          "缺少 FMP 预期/财报快照"
+        ]
+      },
+      "price": {
+        "available": true,
+        "price": 229.94,
+        "quote_time": "2026-06-18 20:01:39.613",
+        "reward_risk": 1.17,
+        "entry_path_complete": true,
+        "entry_path_fallback": null,
+        "trend_score": 92.0,
+        "source": "market_pack",
+        "strict_entry": 215.8,
+        "invalidation": 194.54,
+        "mechanical_target": 271.33,
+        "ma50": 221.3235,
+        "ma200": 211.4556,
+        "high252": 246.8235,
+        "score": 77.0
+      },
+      "sec_fallback_used": false,
+      "gaps": [
+        "缺少 FMP 预期/财报快照",
+        "R/R 未达 2:1，不能进入普通买入"
+      ],
+      "action": "证据只支持观察/二次研究；R/R 未达标，不允许普通买入。"
+    },
+    {
+      "code": "US.PH",
+      "symbol": "PH",
+      "name": "Parker-Hannifin Corp",
+      "themes": [
+        "AI 数据中心电力 / 液冷 / 配电"
+      ],
+      "evidence_status": "证据不足",
+      "evidence_score": 50.6,
+      "filing": {
+        "available": true,
+        "form": "10-Q",
+        "filed": "2026-05-01",
+        "age_days": 52,
+        "accession": "0000076334-26-000073",
+        "recent_forms": [
+          "10-Q",
+          "8-K",
+          "8-K",
+          "10-Q",
+          "8-K"
+        ],
+        "score": 72
+      },
+      "financials": {
+        "available": true,
+        "revenue_growth_yoy": -0.004,
+        "net_margin": 0.1779,
+        "liabilities_to_assets": 0.5236,
+        "latest_annual_revenue": 19850000000,
+        "latest_annual_revenue_filed": "2025-08-22",
+        "latest_annual_fcf": 3341000000.0,
+        "score": 53.6
+      },
+      "fmp": {
+        "available": false,
+        "score": 0,
+        "gaps": [
+          "缺少 FMP 预期/财报快照"
+        ]
+      },
+      "price": {
+        "available": true,
+        "price": 956.0,
+        "quote_time": "2026-06-18 20:01:15.604",
+        "reward_risk": 1.13,
+        "entry_path_complete": true,
+        "entry_path_fallback": null,
+        "trend_score": 88.0,
+        "source": "market_pack",
+        "strict_entry": 855.76,
+        "invalidation": 803.49,
+        "mechanical_target": 1128.08,
+        "ma50": 907.1987,
+        "ma200": 873.3631,
+        "high252": 1032.626,
+        "score": 77.0
+      },
+      "sec_fallback_used": false,
+      "gaps": [
+        "缺少 FMP 预期/财报快照",
+        "R/R 未达 2:1，不能进入普通买入"
+      ],
+      "action": "证据只支持观察/二次研究；R/R 未达标，不允许普通买入。"
+    },
+    {
+      "code": "US.COHR",
+      "symbol": "COHR",
+      "name": "COHERENT CORP.",
+      "themes": [
+        "AI 光模块 / CPO / 数据中心网络"
+      ],
+      "evidence_status": "证据不足",
+      "evidence_score": 50.5,
+      "filing": {
+        "available": true,
+        "form": "8-K",
+        "filed": "2026-05-06",
+        "age_days": 47,
+        "accession": "0001193125-26-208972",
+        "recent_forms": [
+          "8-K",
+          "10-Q",
+          "8-K",
+          "8-K",
+          "10-Q"
+        ],
+        "score": 72
+      },
+      "financials": {
+        "available": true,
+        "revenue_growth_yoy": 0.2342,
+        "net_margin": 0.0085,
+        "liabilities_to_assets": 0.3628,
+        "latest_annual_revenue": 5810115000,
+        "latest_annual_revenue_filed": "2025-08-15",
+        "latest_annual_fcf": 192764000.0,
+        "score": 61.8
+      },
+      "fmp": {
+        "available": false,
+        "score": 0,
+        "gaps": [
+          "缺少 FMP 预期/财报快照"
+        ]
+      },
+      "price": {
+        "available": true,
+        "price": 391.11,
+        "quote_time": "2026-06-18 20:01:33.615",
+        "reward_risk": 0.38,
+        "entry_path_complete": true,
+        "entry_path_fallback": null,
+        "trend_score": 76.0,
+        "source": "market_pack",
+        "strict_entry": 208.06,
+        "invalidation": 205.99,
+        "mechanical_target": 461.51,
+        "ma50": 357.2374,
+        "ma200": 223.9017,
+        "high252": 440.0,
+        "score": 65.0
+      },
+      "sec_fallback_used": false,
+      "gaps": [
+        "缺少 FMP 预期/财报快照",
+        "R/R 未达 2:1，不能进入普通买入"
+      ],
+      "action": "证据只支持观察/二次研究；R/R 未达标，不允许普通买入。"
+    },
+    {
+      "code": "US.ROK",
+      "symbol": "ROK",
+      "name": "ROCKWELL AUTOMATION, INC",
+      "themes": [
+        "Physical AI / 机器人 / 自动化"
+      ],
+      "evidence_status": "证据不足",
+      "evidence_score": 49.8,
+      "filing": {
+        "available": true,
+        "form": "10-Q",
+        "filed": "2026-05-05",
+        "age_days": 48,
+        "accession": "0001024478-26-000022",
+        "recent_forms": [
+          "10-Q",
+          "8-K",
+          "8-K",
+          "8-K",
+          "8-K"
+        ],
+        "score": 72
+      },
+      "financials": {
+        "available": true,
+        "revenue_growth_yoy": 0.0094,
+        "net_margin": 0.1042,
+        "liabilities_to_assets": null,
+        "latest_annual_revenue": 8342000000,
+        "latest_annual_revenue_filed": "2025-11-12",
+        "latest_annual_fcf": 1383500000.0,
+        "score": 50.9
+      },
+      "fmp": {
+        "available": false,
+        "score": 0,
+        "gaps": [
+          "缺少 FMP 预期/财报快照"
+        ]
+      },
+      "price": {
+        "available": true,
+        "price": 463.2,
+        "quote_time": "2026-06-18 20:01:36.262",
+        "reward_risk": 0.71,
+        "entry_path_complete": true,
+        "entry_path_fallback": null,
+        "trend_score": 92.0,
+        "source": "market_pack",
+        "strict_entry": 374.18,
+        "invalidation": 346.46,
+        "mechanical_target": 546.58,
+        "ma50": 434.9712,
+        "ma200": 391.1021,
+        "high252": 475.9199,
+        "score": 77.0
+      },
+      "sec_fallback_used": false,
+      "gaps": [
+        "缺少 FMP 预期/财报快照",
+        "R/R 未达 2:1，不能进入普通买入"
+      ],
+      "action": "证据只支持观察/二次研究；R/R 未达标，不允许普通买入。"
+    },
+    {
+      "code": "US.EMR",
+      "symbol": "EMR",
+      "name": "EMERSON ELECTRIC CO",
+      "themes": [
+        "AI 数据中心电力 / 液冷 / 配电"
+      ],
+      "evidence_status": "证据不足",
+      "evidence_score": 48.1,
+      "filing": {
+        "available": true,
+        "form": "10-Q",
+        "filed": "2026-05-05",
+        "age_days": 48,
+        "accession": "0000032604-26-000035",
+        "recent_forms": [
+          "10-Q",
+          "8-K",
+          "8-K",
+          "8-K",
+          "10-Q"
+        ],
+        "score": 72
+      },
+      "financials": {
+        "available": true,
+        "revenue_growth_yoy": 0.03,
+        "net_margin": 0.1273,
+        "liabilities_to_assets": null,
+        "latest_annual_revenue": 18016000000,
+        "latest_annual_revenue_filed": "2025-11-10",
+        "latest_annual_fcf": 2667000000.0,
+        "score": 53.5
+      },
+      "fmp": {
+        "available": false,
+        "score": 0,
+        "gaps": [
+          "缺少 FMP 预期/财报快照"
+        ]
+      },
+      "price": {
+        "available": true,
+        "price": 149.98,
+        "quote_time": "2026-06-18 20:01:23.990",
+        "reward_risk": 0.97,
+        "entry_path_complete": true,
+        "entry_path_fallback": null,
+        "trend_score": 76.0,
+        "source": "market_pack",
+        "strict_entry": 131.91,
+        "invalidation": 122.14,
+        "mechanical_target": 176.98,
+        "ma50": 140.5753,
+        "ma200": 137.1738,
+        "high252": 163.8556,
+        "score": 65.0
+      },
+      "sec_fallback_used": false,
+      "gaps": [
+        "缺少 FMP 预期/财报快照",
+        "R/R 未达 2:1，不能进入普通买入"
+      ],
+      "action": "证据只支持观察/二次研究；R/R 未达标，不允许普通买入。"
+    },
+    {
+      "code": "US.TSM",
+      "symbol": "TSM",
+      "name": "TAIWAN SEMICONDUCTOR MANUFACTURING CO LTD",
+      "themes": [
+        "GPU / ASIC / HBM / 先进封装"
+      ],
+      "evidence_status": "证据不足",
+      "evidence_score": 34.2,
+      "filing": {
+        "available": true,
+        "form": "20-F",
+        "filed": "2026-04-16",
+        "age_days": 67,
+        "accession": "0001628280-26-025362",
+        "recent_forms": [
+          "20-F",
+          "20-F",
+          "20-F",
+          "20-F",
+          "20-F"
+        ],
+        "score": 72
+      },
+      "financials": {
+        "available": false,
+        "revenue_growth_yoy": null,
+        "net_margin": null,
+        "liabilities_to_assets": null,
+        "latest_annual_revenue": null,
+        "latest_annual_revenue_filed": null,
+        "latest_annual_fcf": null,
+        "score": 0
+      },
+      "fmp": {
+        "available": false,
+        "score": 0,
+        "gaps": [
+          "缺少 FMP 预期/财报快照"
+        ]
+      },
+      "price": {
+        "available": true,
+        "price": 440.37,
+        "quote_time": "2026-06-18 20:01:38.289",
+        "reward_risk": 0.59,
+        "entry_path_complete": true,
+        "entry_path_fallback": null,
+        "trend_score": 88.0,
+        "source": "market_pack",
+        "strict_entry": 338.11,
+        "invalidation": 306.85,
+        "mechanical_target": 519.64,
+        "ma50": 404.7857,
+        "ma200": 333.5372,
+        "high252": 465.22,
+        "score": 77.0
+      },
+      "sec_fallback_used": true,
+      "gaps": [
+        "缺少 SEC 财务事实",
+        "缺少 FMP 预期/财报快照",
+        "R/R 未达 2:1，不能进入普通买入"
+      ],
+      "action": "证据只支持观察/二次研究；R/R 未达标，不允许普通买入。"
+    },
+    {
+      "code": "HK.01347",
+      "symbol": null,
+      "name": "华虹半导体",
+      "themes": [
+        "GPU / ASIC / HBM / 先进封装"
+      ],
+      "evidence_status": "证据不足",
+      "evidence_score": 16.8,
+      "filing": {
+        "available": false,
+        "form": null,
+        "filed": null,
+        "age_days": null,
+        "accession": null,
+        "recent_forms": [],
+        "score": 0
+      },
+      "financials": {
+        "available": false,
+        "revenue_growth_yoy": null,
+        "net_margin": null,
+        "liabilities_to_assets": null,
+        "latest_annual_revenue": null,
+        "latest_annual_revenue_filed": null,
+        "latest_annual_fcf": null,
+        "score": 0
+      },
+      "fmp": {
+        "available": false,
+        "score": 0,
+        "gaps": [
+          "缺少 FMP 预期/财报快照"
+        ]
+      },
+      "price": {
+        "available": true,
+        "price": 168.1,
+        "quote_time": null,
+        "reward_risk": null,
+        "entry_path_complete": false,
+        "entry_path_fallback": null,
+        "trend_score": 88.0,
+        "source": "cross_market_intelligence",
+        "strict_entry": null,
+        "invalidation": null,
+        "mechanical_target": null,
+        "ma50": null,
+        "ma200": null,
+        "high252": null,
+        "score": 55.0
+      },
+      "sec_fallback_used": false,
+      "gaps": [
+        "非美股标的缺少统一财务与公告正文数据源",
+        "缺少 FMP 预期/财报快照",
+        "缺少完整 R/R 或机械入场路径"
+      ],
+      "action": "保留观察，等待财务、价格或事件证据补强。"
+    },
+    {
+      "code": "HK.00981",
+      "symbol": null,
+      "name": "中芯国际",
+      "themes": [
+        "GPU / ASIC / HBM / 先进封装"
+      ],
+      "evidence_status": "证据不足",
+      "evidence_score": 16.8,
+      "filing": {
+        "available": false,
+        "form": null,
+        "filed": null,
+        "age_days": null,
+        "accession": null,
+        "recent_forms": [],
+        "score": 0
+      },
+      "financials": {
+        "available": false,
+        "revenue_growth_yoy": null,
+        "net_margin": null,
+        "liabilities_to_assets": null,
+        "latest_annual_revenue": null,
+        "latest_annual_revenue_filed": null,
+        "latest_annual_fcf": null,
+        "score": 0
+      },
+      "fmp": {
+        "available": false,
+        "score": 0,
+        "gaps": [
+          "缺少 FMP 预期/财报快照"
+        ]
+      },
+      "price": {
+        "available": true,
+        "price": 76.5,
+        "quote_time": null,
+        "reward_risk": null,
+        "entry_path_complete": false,
+        "entry_path_fallback": null,
+        "trend_score": 76.0,
+        "source": "cross_market_intelligence",
+        "strict_entry": null,
+        "invalidation": null,
+        "mechanical_target": null,
+        "ma50": null,
+        "ma200": null,
+        "high252": null,
+        "score": 55.0
+      },
+      "sec_fallback_used": false,
+      "gaps": [
+        "非美股标的缺少统一财务与公告正文数据源",
+        "缺少 FMP 预期/财报快照",
+        "缺少完整 R/R 或机械入场路径"
+      ],
+      "action": "保留观察，等待财务、价格或事件证据补强。"
+    },
+    {
+      "code": "SZ.300308",
+      "symbol": null,
+      "name": "中际旭创",
+      "themes": [
+        "AI 光模块 / CPO / 数据中心网络"
+      ],
+      "evidence_status": "证据不足",
+      "evidence_score": 16.8,
+      "filing": {
+        "available": false,
+        "form": null,
+        "filed": null,
+        "age_days": null,
+        "accession": null,
+        "recent_forms": [],
+        "score": 0
+      },
+      "financials": {
+        "available": false,
+        "revenue_growth_yoy": null,
+        "net_margin": null,
+        "liabilities_to_assets": null,
+        "latest_annual_revenue": null,
+        "latest_annual_revenue_filed": null,
+        "latest_annual_fcf": null,
+        "score": 0
+      },
+      "fmp": {
+        "available": false,
+        "score": 0,
+        "gaps": [
+          "缺少 FMP 预期/财报快照"
+        ]
+      },
+      "price": {
+        "available": true,
+        "price": 1367.88,
+        "quote_time": null,
+        "reward_risk": null,
+        "entry_path_complete": false,
+        "entry_path_fallback": null,
+        "trend_score": 88.0,
+        "source": "cross_market_intelligence",
+        "strict_entry": null,
+        "invalidation": null,
+        "mechanical_target": null,
+        "ma50": null,
+        "ma200": null,
+        "high252": null,
+        "score": 55.0
+      },
+      "sec_fallback_used": false,
+      "gaps": [
+        "非美股标的缺少统一财务与公告正文数据源",
+        "缺少 FMP 预期/财报快照",
+        "缺少完整 R/R 或机械入场路径"
+      ],
+      "action": "保留观察，等待财务、价格或事件证据补强。"
+    },
+    {
+      "code": "SZ.300502",
+      "symbol": null,
+      "name": "新易盛",
+      "themes": [
+        "AI 光模块 / CPO / 数据中心网络"
+      ],
+      "evidence_status": "证据不足",
+      "evidence_score": 16.8,
+      "filing": {
+        "available": false,
+        "form": null,
+        "filed": null,
+        "age_days": null,
+        "accession": null,
+        "recent_forms": [],
+        "score": 0
+      },
+      "financials": {
+        "available": false,
+        "revenue_growth_yoy": null,
+        "net_margin": null,
+        "liabilities_to_assets": null,
+        "latest_annual_revenue": null,
+        "latest_annual_revenue_filed": null,
+        "latest_annual_fcf": null,
+        "score": 0
+      },
+      "fmp": {
+        "available": false,
+        "score": 0,
+        "gaps": [
+          "缺少 FMP 预期/财报快照"
+        ]
+      },
+      "price": {
+        "available": true,
+        "price": 581.48,
+        "quote_time": null,
+        "reward_risk": null,
+        "entry_path_complete": false,
+        "entry_path_fallback": null,
+        "trend_score": 88.0,
+        "source": "cross_market_intelligence",
+        "strict_entry": null,
+        "invalidation": null,
+        "mechanical_target": null,
+        "ma50": null,
+        "ma200": null,
+        "high252": null,
+        "score": 55.0
+      },
+      "sec_fallback_used": false,
+      "gaps": [
+        "非美股标的缺少统一财务与公告正文数据源",
+        "缺少 FMP 预期/财报快照",
+        "缺少完整 R/R 或机械入场路径"
+      ],
+      "action": "保留观察，等待财务、价格或事件证据补强。"
+    },
+    {
+      "code": "SZ.300394",
+      "symbol": null,
+      "name": "天孚通信",
+      "themes": [
+        "AI 光模块 / CPO / 数据中心网络"
+      ],
+      "evidence_status": "证据不足",
+      "evidence_score": 16.8,
+      "filing": {
+        "available": false,
+        "form": null,
+        "filed": null,
+        "age_days": null,
+        "accession": null,
+        "recent_forms": [],
+        "score": 0
+      },
+      "financials": {
+        "available": false,
+        "revenue_growth_yoy": null,
+        "net_margin": null,
+        "liabilities_to_assets": null,
+        "latest_annual_revenue": null,
+        "latest_annual_revenue_filed": null,
+        "latest_annual_fcf": null,
+        "score": 0
+      },
+      "fmp": {
+        "available": false,
+        "score": 0,
+        "gaps": [
+          "缺少 FMP 预期/财报快照"
+        ]
+      },
+      "price": {
+        "available": true,
+        "price": 336.6,
+        "quote_time": null,
+        "reward_risk": null,
+        "entry_path_complete": false,
+        "entry_path_fallback": null,
+        "trend_score": 76.0,
+        "source": "cross_market_intelligence",
+        "strict_entry": null,
+        "invalidation": null,
+        "mechanical_target": null,
+        "ma50": null,
+        "ma200": null,
+        "high252": null,
+        "score": 55.0
+      },
+      "sec_fallback_used": false,
+      "gaps": [
+        "非美股标的缺少统一财务与公告正文数据源",
+        "缺少 FMP 预期/财报快照",
+        "缺少完整 R/R 或机械入场路径"
+      ],
+      "action": "保留观察，等待财务、价格或事件证据补强。"
+    },
+    {
+      "code": "HK.01888",
+      "symbol": null,
+      "name": "建滔积层板",
+      "themes": [
+        "高速 PCB / 覆铜板 / 电子布 / 铜箔"
+      ],
+      "evidence_status": "证据不足",
+      "evidence_score": 16.8,
+      "filing": {
+        "available": false,
+        "form": null,
+        "filed": null,
+        "age_days": null,
+        "accession": null,
+        "recent_forms": [],
+        "score": 0
+      },
+      "financials": {
+        "available": false,
+        "revenue_growth_yoy": null,
+        "net_margin": null,
+        "liabilities_to_assets": null,
+        "latest_annual_revenue": null,
+        "latest_annual_revenue_filed": null,
+        "latest_annual_fcf": null,
+        "score": 0
+      },
+      "fmp": {
+        "available": false,
+        "score": 0,
+        "gaps": [
+          "缺少 FMP 预期/财报快照"
+        ]
+      },
+      "price": {
+        "available": true,
+        "price": 91.85,
+        "quote_time": null,
+        "reward_risk": null,
+        "entry_path_complete": false,
+        "entry_path_fallback": null,
+        "trend_score": 88.0,
+        "source": "cross_market_intelligence",
+        "strict_entry": null,
+        "invalidation": null,
+        "mechanical_target": null,
+        "ma50": null,
+        "ma200": null,
+        "high252": null,
+        "score": 55.0
+      },
+      "sec_fallback_used": false,
+      "gaps": [
+        "非美股标的缺少统一财务与公告正文数据源",
+        "缺少 FMP 预期/财报快照",
+        "缺少完整 R/R 或机械入场路径"
+      ],
+      "action": "保留观察，等待财务、价格或事件证据补强。"
+    },
+    {
+      "code": "HK.00148",
+      "symbol": null,
+      "name": "建滔集团",
+      "themes": [
+        "高速 PCB / 覆铜板 / 电子布 / 铜箔"
+      ],
+      "evidence_status": "证据不足",
+      "evidence_score": 16.8,
+      "filing": {
+        "available": false,
+        "form": null,
+        "filed": null,
+        "age_days": null,
+        "accession": null,
+        "recent_forms": [],
+        "score": 0
+      },
+      "financials": {
+        "available": false,
+        "revenue_growth_yoy": null,
+        "net_margin": null,
+        "liabilities_to_assets": null,
+        "latest_annual_revenue": null,
+        "latest_annual_revenue_filed": null,
+        "latest_annual_fcf": null,
+        "score": 0
+      },
+      "fmp": {
+        "available": false,
+        "score": 0,
+        "gaps": [
+          "缺少 FMP 预期/财报快照"
+        ]
+      },
+      "price": {
+        "available": true,
+        "price": 126.6,
+        "quote_time": null,
+        "reward_risk": null,
+        "entry_path_complete": false,
+        "entry_path_fallback": null,
+        "trend_score": 88.0,
+        "source": "cross_market_intelligence",
+        "strict_entry": null,
+        "invalidation": null,
+        "mechanical_target": null,
+        "ma50": null,
+        "ma200": null,
+        "high252": null,
+        "score": 55.0
+      },
+      "sec_fallback_used": false,
+      "gaps": [
+        "非美股标的缺少统一财务与公告正文数据源",
+        "缺少 FMP 预期/财报快照",
+        "缺少完整 R/R 或机械入场路径"
+      ],
+      "action": "保留观察，等待财务、价格或事件证据补强。"
+    },
+    {
+      "code": "SH.600183",
+      "symbol": null,
+      "name": "生益科技",
+      "themes": [
+        "高速 PCB / 覆铜板 / 电子布 / 铜箔"
+      ],
+      "evidence_status": "证据不足",
+      "evidence_score": 16.8,
+      "filing": {
+        "available": false,
+        "form": null,
+        "filed": null,
+        "age_days": null,
+        "accession": null,
+        "recent_forms": [],
+        "score": 0
+      },
+      "financials": {
+        "available": false,
+        "revenue_growth_yoy": null,
+        "net_margin": null,
+        "liabilities_to_assets": null,
+        "latest_annual_revenue": null,
+        "latest_annual_revenue_filed": null,
+        "latest_annual_fcf": null,
+        "score": 0
+      },
+      "fmp": {
+        "available": false,
+        "score": 0,
+        "gaps": [
+          "缺少 FMP 预期/财报快照"
+        ]
+      },
+      "price": {
+        "available": true,
+        "price": 183.87,
+        "quote_time": null,
+        "reward_risk": null,
+        "entry_path_complete": false,
+        "entry_path_fallback": null,
+        "trend_score": 88.0,
+        "source": "cross_market_intelligence",
+        "strict_entry": null,
+        "invalidation": null,
+        "mechanical_target": null,
+        "ma50": null,
+        "ma200": null,
+        "high252": null,
+        "score": 55.0
+      },
+      "sec_fallback_used": false,
+      "gaps": [
+        "非美股标的缺少统一财务与公告正文数据源",
+        "缺少 FMP 预期/财报快照",
+        "缺少完整 R/R 或机械入场路径"
+      ],
+      "action": "保留观察，等待财务、价格或事件证据补强。"
+    },
+    {
+      "code": "SH.603256",
+      "symbol": null,
+      "name": "宏和科技",
+      "themes": [
+        "高速 PCB / 覆铜板 / 电子布 / 铜箔"
+      ],
+      "evidence_status": "证据不足",
+      "evidence_score": 16.8,
+      "filing": {
+        "available": false,
+        "form": null,
+        "filed": null,
+        "age_days": null,
+        "accession": null,
+        "recent_forms": [],
+        "score": 0
+      },
+      "financials": {
+        "available": false,
+        "revenue_growth_yoy": null,
+        "net_margin": null,
+        "liabilities_to_assets": null,
+        "latest_annual_revenue": null,
+        "latest_annual_revenue_filed": null,
+        "latest_annual_fcf": null,
+        "score": 0
+      },
+      "fmp": {
+        "available": false,
+        "score": 0,
+        "gaps": [
+          "缺少 FMP 预期/财报快照"
+        ]
+      },
+      "price": {
+        "available": true,
+        "price": 257.8,
+        "quote_time": null,
+        "reward_risk": null,
+        "entry_path_complete": false,
+        "entry_path_fallback": null,
+        "trend_score": 88.0,
+        "source": "cross_market_intelligence",
+        "strict_entry": null,
+        "invalidation": null,
+        "mechanical_target": null,
+        "ma50": null,
+        "ma200": null,
+        "high252": null,
+        "score": 55.0
+      },
+      "sec_fallback_used": false,
+      "gaps": [
+        "非美股标的缺少统一财务与公告正文数据源",
+        "缺少 FMP 预期/财报快照",
+        "缺少完整 R/R 或机械入场路径"
+      ],
+      "action": "保留观察，等待财务、价格或事件证据补强。"
+    },
+    {
+      "code": "SH.688183",
+      "symbol": null,
+      "name": "生益电子",
+      "themes": [
+        "高速 PCB / 覆铜板 / 电子布 / 铜箔"
+      ],
+      "evidence_status": "证据不足",
+      "evidence_score": 16.8,
+      "filing": {
+        "available": false,
+        "form": null,
+        "filed": null,
+        "age_days": null,
+        "accession": null,
+        "recent_forms": [],
+        "score": 0
+      },
+      "financials": {
+        "available": false,
+        "revenue_growth_yoy": null,
+        "net_margin": null,
+        "liabilities_to_assets": null,
+        "latest_annual_revenue": null,
+        "latest_annual_revenue_filed": null,
+        "latest_annual_fcf": null,
+        "score": 0
+      },
+      "fmp": {
+        "available": false,
+        "score": 0,
+        "gaps": [
+          "缺少 FMP 预期/财报快照"
+        ]
+      },
+      "price": {
+        "available": true,
+        "price": 138.5,
+        "quote_time": null,
+        "reward_risk": null,
+        "entry_path_complete": false,
+        "entry_path_fallback": null,
+        "trend_score": 76.0,
+        "source": "cross_market_intelligence",
+        "strict_entry": null,
+        "invalidation": null,
+        "mechanical_target": null,
+        "ma50": null,
+        "ma200": null,
+        "high252": null,
+        "score": 55.0
+      },
+      "sec_fallback_used": false,
+      "gaps": [
+        "非美股标的缺少统一财务与公告正文数据源",
+        "缺少 FMP 预期/财报快照",
+        "缺少完整 R/R 或机械入场路径"
+      ],
+      "action": "保留观察，等待财务、价格或事件证据补强。"
+    },
+    {
+      "code": "SZ.300499",
+      "symbol": null,
+      "name": "高澜股份",
+      "themes": [
+        "AI 数据中心电力 / 液冷 / 配电"
+      ],
+      "evidence_status": "证据不足",
+      "evidence_score": 14.8,
+      "filing": {
+        "available": false,
+        "form": null,
+        "filed": null,
+        "age_days": null,
+        "accession": null,
+        "recent_forms": [],
+        "score": 0
+      },
+      "financials": {
+        "available": false,
+        "revenue_growth_yoy": null,
+        "net_margin": null,
+        "liabilities_to_assets": null,
+        "latest_annual_revenue": null,
+        "latest_annual_revenue_filed": null,
+        "latest_annual_fcf": null,
+        "score": 0
+      },
+      "fmp": {
+        "available": false,
+        "score": 0,
+        "gaps": [
+          "缺少 FMP 预期/财报快照"
+        ]
+      },
+      "price": {
+        "available": true,
+        "price": 38.86,
+        "quote_time": null,
+        "reward_risk": null,
+        "entry_path_complete": false,
+        "entry_path_fallback": null,
+        "trend_score": 50.0,
+        "source": "cross_market_intelligence",
+        "strict_entry": null,
+        "invalidation": null,
+        "mechanical_target": null,
+        "ma50": null,
+        "ma200": null,
+        "high252": null,
+        "score": 45.0
+      },
+      "sec_fallback_used": false,
+      "gaps": [
+        "非美股标的缺少统一财务与公告正文数据源",
+        "缺少 FMP 预期/财报快照",
+        "缺少完整 R/R 或机械入场路径"
+      ],
+      "action": "保留观察，等待财务、价格或事件证据补强。"
+    },
+    {
+      "code": "SZ.002747",
+      "symbol": null,
+      "name": "埃斯顿",
+      "themes": [
+        "Physical AI / 机器人 / 自动化"
+      ],
+      "evidence_status": "证据不足",
+      "evidence_score": 5.8,
+      "filing": {
+        "available": false,
+        "form": null,
+        "filed": null,
+        "age_days": null,
+        "accession": null,
+        "recent_forms": [],
+        "score": 0
+      },
+      "financials": {
+        "available": false,
+        "revenue_growth_yoy": null,
+        "net_margin": null,
+        "liabilities_to_assets": null,
+        "latest_annual_revenue": null,
+        "latest_annual_revenue_filed": null,
+        "latest_annual_fcf": null,
+        "score": 0
+      },
+      "fmp": {
+        "available": false,
+        "score": 0,
+        "gaps": [
+          "缺少 FMP 预期/财报快照"
+        ]
+      },
+      "price": {
+        "available": false,
+        "price": null,
+        "quote_time": null,
+        "reward_risk": null,
+        "entry_path_complete": false,
+        "entry_path_fallback": null,
+        "trend_score": 55.0,
+        "source": null,
+        "strict_entry": null,
+        "invalidation": null,
+        "mechanical_target": null,
+        "ma50": null,
+        "ma200": null,
+        "high252": null,
+        "score": 0
+      },
+      "sec_fallback_used": false,
+      "gaps": [
+        "非美股标的缺少统一财务与公告正文数据源",
+        "缺少 FMP 预期/财报快照",
+        "缺少完整 R/R 或机械入场路径"
+      ],
+      "action": "保留观察，等待财务、价格或事件证据补强。"
+    }
+  ],
+  "theme_evidence": [
+    {
+      "theme": "GPU / ASIC / HBM / 先进封装",
+      "symbol_count": 8,
+      "avg_evidence_score": 47.0,
+      "median_evidence_score": 59.8,
+      "gap_count": 21,
+      "top_symbols": [
+        "US.NVDA",
+        "US.MU",
+        "US.MRVL",
+        "US.AMD",
+        "US.AVGO",
+        "US.TSM"
+      ]
+    },
+    {
+      "theme": "AI 数据中心电力 / 液冷 / 配电",
+      "symbol_count": 5,
+      "avg_evidence_score": 45.1,
+      "median_evidence_score": 50.6,
+      "gap_count": 11,
+      "top_symbols": [
+        "US.VRT",
+        "US.ETN",
+        "US.PH",
+        "US.EMR",
+        "SZ.300499"
+      ]
+    },
+    {
+      "theme": "Physical AI / 机器人 / 自动化",
+      "symbol_count": 5,
+      "avg_evidence_score": 43.7,
+      "median_evidence_score": 52.6,
+      "gap_count": 11,
+      "top_symbols": [
+        "US.ISRG",
+        "US.SYM",
+        "US.HON",
+        "US.ROK",
+        "SZ.002747"
+      ]
+    },
+    {
+      "theme": "AI 光模块 / CPO / 数据中心网络",
+      "symbol_count": 6,
+      "avg_evidence_score": 38.6,
+      "median_evidence_score": 33.6,
+      "gap_count": 16,
+      "top_symbols": [
+        "US.ANET",
+        "US.MRVL",
+        "US.COHR",
+        "SZ.300308",
+        "SZ.300502",
+        "SZ.300394"
+      ]
+    },
+    {
+      "theme": "高速 PCB / 覆铜板 / 电子布 / 铜箔",
+      "symbol_count": 5,
+      "avg_evidence_score": 16.8,
+      "median_evidence_score": 16.8,
+      "gap_count": 15,
+      "top_symbols": [
+        "HK.01888",
+        "HK.00148",
+        "SH.600183",
+        "SH.603256",
+        "SH.688183"
+      ]
+    }
+  ],
+  "permission_gaps": [
+    {
+      "endpoint": "/earning-call-transcript-dates",
+      "status": 429,
+      "impact": "新闻/电话会正文不能作为已读证据；只能标记为待补。",
+      "fallback": "使用 SEC 申报、FMP earnings/estimate、价格/RR 作为临时证据，不编造管理层表述。"
+    },
+    {
+      "endpoint": "/news/press-releases",
+      "status": 429,
+      "impact": "新闻/电话会正文不能作为已读证据；只能标记为待补。",
+      "fallback": "使用 SEC 申报、FMP earnings/estimate、价格/RR 作为临时证据，不编造管理层表述。"
+    },
+    {
+      "endpoint": "/news/stock",
+      "status": 429,
+      "impact": "新闻/电话会正文不能作为已读证据；只能标记为待补。",
+      "fallback": "使用 SEC 申报、FMP earnings/estimate、价格/RR 作为临时证据，不编造管理层表述。"
+    }
+  ],
+  "evidence_gap_breakdown": {
+    "original_total": 75,
+    "data_gap": 46,
+    "permission_limited": 3,
+    "entry_path_missing": 12,
+    "rr_discipline": 14,
+    "other": 0,
+    "categories": [
+      {
+        "key": "fmp_estimate_snapshot",
+        "label": "缺少 FMP 预期/财报快照",
+        "group": "data",
+        "group_label": "数据缺口",
+        "count": 23,
+        "affected_symbols": [
+          "US.MU",
+          "US.MRVL",
+          "US.AMD",
+          "US.VRT",
+          "US.ETN",
+          "US.HON",
+          "US.PH",
+          "US.COHR",
+          "US.ROK",
+          "US.EMR",
+          "US.TSM",
+          "HK.01347",
+          "HK.00981",
+          "SZ.300308",
+          "SZ.300502",
+          "SZ.300394",
+          "HK.01888",
+          "HK.00148",
+          "SH.600183",
+          "SH.603256",
+          "SH.688183",
+          "SZ.300499",
+          "SZ.002747"
+        ],
+        "fallback": "优先 FMP；失败时使用 Finnhub/SEC/Nasdaq earnings fallback。"
+      },
+      {
+        "key": "non_us_data_source",
+        "label": "非美股统一财务/公告数据不足",
+        "group": "data",
+        "group_label": "数据缺口",
+        "count": 12,
+        "affected_symbols": [
+          "HK.01347",
+          "HK.00981",
+          "SZ.300308",
+          "SZ.300502",
+          "SZ.300394",
+          "HK.01888",
+          "HK.00148",
+          "SH.600183",
+          "SH.603256",
+          "SH.688183",
+          "SZ.300499",
+          "SZ.002747"
+        ],
+        "fallback": "需要 AkShare/Tushare/Futu/HKEX 补港股/A股财务与公告。"
+      },
+      {
+        "key": "analyst_estimate",
+        "label": "缺少年/季度分析师预期",
+        "group": "data",
+        "group_label": "数据缺口",
+        "count": 5,
+        "affected_symbols": [
+          "US.ANET",
+          "US.NVDA",
+          "US.AVGO",
+          "US.ISRG",
+          "US.SYM"
+        ],
+        "fallback": "优先 FMP analyst-estimates；失败时使用 Finnhub estimates。"
+      },
+      {
+        "key": "earnings_surprise",
+        "label": "缺少最近财报 surprise",
+        "group": "data",
+        "group_label": "数据缺口",
+        "count": 5,
+        "affected_symbols": [
+          "US.ANET",
+          "US.NVDA",
+          "US.AVGO",
+          "US.ISRG",
+          "US.SYM"
+        ],
+        "fallback": "优先 FMP earnings；失败时使用 Nasdaq earnings calendar。"
+      },
+      {
+        "key": "sec_financial_facts",
+        "label": "缺少 SEC 财务事实",
+        "group": "data",
+        "group_label": "数据缺口",
+        "count": 1,
+        "affected_symbols": [
+          "US.TSM"
+        ],
+        "fallback": "使用 SEC companyfacts 兜底。"
+      },
+      {
+        "key": "permission_limited",
+        "label": "接口权限/限流受限",
+        "group": "permission",
+        "group_label": "权限受限",
+        "count": 3,
+        "affected_symbols": [
+          "/earning-call-transcript-dates",
+          "/news/press-releases",
+          "/news/stock"
+        ],
+        "fallback": "升级套餐、降低频率或使用 SEC/公司 IR 替代证据。"
+      },
+      {
+        "key": "entry_path_missing",
+        "label": "缺少完整 R/R 或机械入场路径",
+        "group": "entry",
+        "group_label": "入场路径缺失",
+        "count": 12,
+        "affected_symbols": [
+          "HK.01347",
+          "HK.00981",
+          "SZ.300308",
+          "SZ.300502",
+          "SZ.300394",
+          "HK.01888",
+          "HK.00148",
+          "SH.600183",
+          "SH.603256",
+          "SH.688183",
+          "SZ.300499",
+          "SZ.002747"
+        ],
+        "fallback": "补齐当前价、支撑/止损、目标价和 R/R。"
+      },
+      {
+        "key": "rr_discipline",
+        "label": "R/R 未达 2:1",
+        "group": "discipline",
+        "group_label": "交易纪律不通过",
+        "count": 14,
+        "affected_symbols": [
+          "US.ANET",
+          "US.NVDA",
+          "US.MU",
+          "US.MRVL",
+          "US.AMD",
+          "US.AVGO",
+          "US.VRT",
+          "US.ETN",
+          "US.HON",
+          "US.PH",
+          "US.COHR",
+          "US.ROK",
+          "US.EMR",
+          "US.TSM"
+        ],
+        "fallback": "等待回调、上修目标价或提高止损逻辑质量。"
+      }
+    ]
+  },
+  "discipline": [
+    "证据卡只解决“有什么证据/缺什么证据”，不直接给买入结论。",
+    "FMP 新闻或电话会端点受限时，系统必须明确未读取正文，不得编造管理层表述。",
+    "R/R 低于 2:1 时，即使产业逻辑增强，也只能进入观察或二次研究。"
+  ]
+}

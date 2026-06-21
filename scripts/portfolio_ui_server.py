@@ -54,6 +54,8 @@ REPORT_KIND_LABELS = {
     "macro-regime": "宏观雷达",
     "opportunity-radar": "机会雷达",
     "cross-market-intelligence": "跨市场情报",
+    "event-evidence": "事件证据",
+    "opportunity-review-metrics": "机会复盘",
     "secondary-queue": "二次分析",
     "supply-chain": "供应链",
     "daily": "每日分析",
@@ -77,6 +79,10 @@ def report_kind(filename: str) -> str:
         return "opportunity-radar"
     if "cross-market-intelligence" in lowered or "cross_market_intelligence" in lowered:
         return "cross-market-intelligence"
+    if "event-evidence" in lowered or "event_evidence" in lowered:
+        return "event-evidence"
+    if "opportunity-review-metrics" in lowered or "opportunity_review_metrics" in lowered:
+        return "opportunity-review-metrics"
     if "macro-regime" in lowered or "macro_regime" in lowered:
         return "macro-regime"
     if "fmp-research" in lowered or "fmp_research" in lowered:
