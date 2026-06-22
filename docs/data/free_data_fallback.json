@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-06-22T12:30:33+08:00",
-  "generated_label": "2026-06-22 12:30",
+  "generated_at": "2026-06-22T17:51:40+08:00",
+  "generated_label": "2026-06-22 17:51",
   "privacy": "public-sanitized",
   "data_boundary": {
     "role": "free fallback evidence layer; source tracing only; not trading instruction",
@@ -46,49 +46,48 @@
     "US.MRVL",
     "US.ASML",
     "US.CIEN",
+    "US.HON",
     "US.LRCX",
     "US.DE",
-    "US.TER",
     "US.AMD",
     "HK.01347",
     "SZ.300308",
     "SZ.300502",
-    "US.COHR",
+    "SZ.300394",
     "US.JBL",
     "US.FLEX",
     "US.TTMI",
-    "SH.600183",
     "HK.01888",
+    "HK.00148",
     "US.PH",
     "US.EMR",
     "US.ETN",
     "SZ.300499",
     "US.VRT",
-    "US.HON",
     "US.ROK",
     "SZ.002747",
     "US.TSM",
     "HK.00981",
     "US.MU",
-    "SZ.300394",
+    "US.COHR",
     "US.LITE",
-    "HK.00148",
+    "SH.600183",
+    "SH.603256",
     "SH.688183",
     "SZ.300476",
-    "SH.603256",
     "US.PWR",
     "SZ.002335",
     "SH.688322",
     "US.TSLA"
   ],
   "summary": {
-    "symbol_count": 43,
-    "field_count": 41,
-    "data_gap_count": 17,
+    "symbol_count": 42,
+    "field_count": 54,
+    "data_gap_count": 28,
     "health_normal_count": 3,
-    "health_limited_count": 0,
+    "health_limited_count": 1,
     "health_error_count": 0,
-    "health_unknown_count": 4
+    "health_unknown_count": 3
   },
   "fields": [
     {
@@ -100,7 +99,7 @@
       "source": "SEC",
       "source_type": "official",
       "source_url": "https://www.sec.gov/files/company_tickers.json",
-      "updated_at": "2026-06-22T12:30:33+08:00",
+      "updated_at": "2026-06-22T17:51:40+08:00",
       "confidence": "high",
       "fallback_used": true,
       "data_gap": null
@@ -114,7 +113,7 @@
       "source": "SEC",
       "source_type": "official",
       "source_url": "https://www.sec.gov/files/company_tickers_exchange.json",
-      "updated_at": "2026-06-22T12:30:33+08:00",
+      "updated_at": "2026-06-22T17:51:40+08:00",
       "confidence": "high",
       "fallback_used": true,
       "data_gap": null
@@ -178,7 +177,7 @@
       "source": "SEC",
       "source_type": "official",
       "source_url": "https://data.sec.gov/submissions/CIK0001045810.json",
-      "updated_at": "2026-06-22T12:30:34+08:00",
+      "updated_at": "2026-06-22T17:51:41+08:00",
       "confidence": "high",
       "fallback_used": true,
       "data_gap": null
@@ -228,7 +227,7 @@
       "source": "SEC",
       "source_type": "official",
       "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001045810.json",
-      "updated_at": "2026-06-22T12:30:34+08:00",
+      "updated_at": "2026-06-22T17:51:41+08:00",
       "confidence": "high",
       "fallback_used": true,
       "data_gap": null
@@ -292,7 +291,7 @@
       "source": "SEC",
       "source_type": "official",
       "source_url": "https://data.sec.gov/submissions/CIK0001730168.json",
-      "updated_at": "2026-06-22T12:30:34+08:00",
+      "updated_at": "2026-06-22T17:51:41+08:00",
       "confidence": "high",
       "fallback_used": true,
       "data_gap": null
@@ -342,7 +341,7 @@
       "source": "SEC",
       "source_type": "official",
       "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001730168.json",
-      "updated_at": "2026-06-22T12:30:34+08:00",
+      "updated_at": "2026-06-22T17:51:41+08:00",
       "confidence": "high",
       "fallback_used": true,
       "data_gap": null
@@ -406,7 +405,7 @@
       "source": "SEC",
       "source_type": "official",
       "source_url": "https://data.sec.gov/submissions/CIK0001035267.json",
-      "updated_at": "2026-06-22T12:30:35+08:00",
+      "updated_at": "2026-06-22T17:51:42+08:00",
       "confidence": "high",
       "fallback_used": true,
       "data_gap": null
@@ -456,7 +455,7 @@
       "source": "SEC",
       "source_type": "official",
       "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001035267.json",
-      "updated_at": "2026-06-22T12:30:35+08:00",
+      "updated_at": "2026-06-22T17:51:42+08:00",
       "confidence": "high",
       "fallback_used": true,
       "data_gap": null
@@ -520,7 +519,7 @@
       "source": "SEC",
       "source_type": "official",
       "source_url": "https://data.sec.gov/submissions/CIK0001596532.json",
-      "updated_at": "2026-06-22T12:30:35+08:00",
+      "updated_at": "2026-06-22T17:51:42+08:00",
       "confidence": "high",
       "fallback_used": true,
       "data_gap": null
@@ -570,7 +569,7 @@
       "source": "SEC",
       "source_type": "official",
       "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001596532.json",
-      "updated_at": "2026-06-22T12:30:35+08:00",
+      "updated_at": "2026-06-22T17:51:42+08:00",
       "confidence": "high",
       "fallback_used": true,
       "data_gap": null
@@ -634,7 +633,7 @@
       "source": "SEC",
       "source_type": "official",
       "source_url": "https://data.sec.gov/submissions/CIK0001837240.json",
-      "updated_at": "2026-06-22T12:30:35+08:00",
+      "updated_at": "2026-06-22T17:51:42+08:00",
       "confidence": "high",
       "fallback_used": true,
       "data_gap": null
@@ -684,7 +683,7 @@
       "source": "SEC",
       "source_type": "official",
       "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001837240.json",
-      "updated_at": "2026-06-22T12:30:35+08:00",
+      "updated_at": "2026-06-22T17:51:42+08:00",
       "confidence": "high",
       "fallback_used": true,
       "data_gap": null
@@ -748,7 +747,7 @@
       "source": "SEC",
       "source_type": "official",
       "source_url": "https://data.sec.gov/submissions/CIK0000319201.json",
-      "updated_at": "2026-06-22T12:30:35+08:00",
+      "updated_at": "2026-06-22T17:51:43+08:00",
       "confidence": "high",
       "fallback_used": true,
       "data_gap": null
@@ -798,7 +797,7 @@
       "source": "SEC",
       "source_type": "official",
       "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000319201.json",
-      "updated_at": "2026-06-22T12:30:35+08:00",
+      "updated_at": "2026-06-22T17:51:43+08:00",
       "confidence": "high",
       "fallback_used": true,
       "data_gap": null
@@ -862,7 +861,7 @@
       "source": "SEC",
       "source_type": "official",
       "source_url": "https://data.sec.gov/submissions/CIK0001835632.json",
-      "updated_at": "2026-06-22T12:30:36+08:00",
+      "updated_at": "2026-06-22T17:51:43+08:00",
       "confidence": "high",
       "fallback_used": true,
       "data_gap": null
@@ -912,7 +911,7 @@
       "source": "SEC",
       "source_type": "official",
       "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001835632.json",
-      "updated_at": "2026-06-22T12:30:36+08:00",
+      "updated_at": "2026-06-22T17:51:43+08:00",
       "confidence": "high",
       "fallback_used": true,
       "data_gap": null
@@ -976,7 +975,7 @@
       "source": "SEC",
       "source_type": "official",
       "source_url": "https://data.sec.gov/submissions/CIK0000937966.json",
-      "updated_at": "2026-06-22T12:30:36+08:00",
+      "updated_at": "2026-06-22T17:51:43+08:00",
       "confidence": "high",
       "fallback_used": true,
       "data_gap": null
@@ -1026,7 +1025,7 @@
       "source": "SEC",
       "source_type": "official",
       "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000937966.json",
-      "updated_at": "2026-06-22T12:30:36+08:00",
+      "updated_at": "2026-06-22T17:51:43+08:00",
       "confidence": "high",
       "fallback_used": true,
       "data_gap": null
@@ -1042,7 +1041,7 @@
       "source": "FRED",
       "source_type": "official",
       "source_url": "https://api.stlouisfed.org/fred/series/observations?series_id=DGS10&file_type=json",
-      "updated_at": "2026-06-22T12:30:36+08:00",
+      "updated_at": "2026-06-22T17:51:43+08:00",
       "confidence": "high",
       "fallback_used": true,
       "data_gap": null
@@ -1058,7 +1057,7 @@
       "source": "FRED",
       "source_type": "official",
       "source_url": "https://api.stlouisfed.org/fred/series/observations?series_id=DGS2&file_type=json",
-      "updated_at": "2026-06-22T12:30:36+08:00",
+      "updated_at": "2026-06-22T17:51:43+08:00",
       "confidence": "high",
       "fallback_used": true,
       "data_gap": null
@@ -1074,7 +1073,7 @@
       "source": "FRED",
       "source_type": "official",
       "source_url": "https://api.stlouisfed.org/fred/series/observations?series_id=FEDFUNDS&file_type=json",
-      "updated_at": "2026-06-22T12:30:36+08:00",
+      "updated_at": "2026-06-22T17:51:43+08:00",
       "confidence": "high",
       "fallback_used": true,
       "data_gap": null
@@ -1090,7 +1089,7 @@
       "source": "FRED",
       "source_type": "official",
       "source_url": "https://api.stlouisfed.org/fred/series/observations?series_id=CPIAUCSL&file_type=json",
-      "updated_at": "2026-06-22T12:30:36+08:00",
+      "updated_at": "2026-06-22T17:51:43+08:00",
       "confidence": "high",
       "fallback_used": true,
       "data_gap": null
@@ -1106,7 +1105,7 @@
       "source": "FRED",
       "source_type": "official",
       "source_url": "https://api.stlouisfed.org/fred/series/observations?series_id=PCEPI&file_type=json",
-      "updated_at": "2026-06-22T12:30:36+08:00",
+      "updated_at": "2026-06-22T17:51:43+08:00",
       "confidence": "high",
       "fallback_used": true,
       "data_gap": null
@@ -1122,7 +1121,7 @@
       "source": "FRED",
       "source_type": "official",
       "source_url": "https://api.stlouisfed.org/fred/series/observations?series_id=UNRATE&file_type=json",
-      "updated_at": "2026-06-22T12:30:36+08:00",
+      "updated_at": "2026-06-22T17:51:43+08:00",
       "confidence": "high",
       "fallback_used": true,
       "data_gap": null
@@ -1138,7 +1137,7 @@
       "source": "FRED",
       "source_type": "official",
       "source_url": "https://api.stlouisfed.org/fred/series/observations?series_id=PAYEMS&file_type=json",
-      "updated_at": "2026-06-22T12:30:36+08:00",
+      "updated_at": "2026-06-22T17:51:43+08:00",
       "confidence": "high",
       "fallback_used": true,
       "data_gap": null
@@ -1154,10 +1153,1958 @@
       "source": "FRED",
       "source_type": "official",
       "source_url": "https://api.stlouisfed.org/fred/series/observations?series_id=BAMLH0A0HYM2&file_type=json",
-      "updated_at": "2026-06-22T12:30:36+08:00",
+      "updated_at": "2026-06-22T17:51:43+08:00",
       "confidence": "high",
       "fallback_used": true,
       "data_gap": null
+    },
+    {
+      "field": "earnings.calendar",
+      "value": {
+        "format": "csv",
+        "rows": [
+          {
+            "symbol": "EBF",
+            "name": "ENNIS INCORPORATED",
+            "reportDate": "2026-06-22",
+            "fiscalDateEnding": "2026-05-31",
+            "estimate": "",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "FRVO",
+            "name": "FERVO ENERGY COMPANY",
+            "reportDate": "2026-06-22",
+            "fiscalDateEnding": "2026-03-31",
+            "estimate": "-0.09",
+            "currency": "USD",
+            "timeOfTheDay": "pre-market"
+          },
+          {
+            "symbol": "GNS",
+            "name": "GENIUS GROUP LTD",
+            "reportDate": "2026-06-22",
+            "fiscalDateEnding": "2026-03-31",
+            "estimate": "",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "IMTE",
+            "name": "INTEGRATED MEDIA TECHNOLOGY LIMITED",
+            "reportDate": "2026-06-22",
+            "fiscalDateEnding": "2026-03-31",
+            "estimate": "",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "MOB",
+            "name": "MOBILICOM LIMITED",
+            "reportDate": "2026-06-22",
+            "fiscalDateEnding": "2026-03-31",
+            "estimate": "",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "POWW",
+            "name": "OUTDOOR HOLDING COMPANY",
+            "reportDate": "2026-06-22",
+            "fiscalDateEnding": "2026-03-31",
+            "estimate": "-0.02",
+            "currency": "USD",
+            "timeOfTheDay": "pre-market"
+          },
+          {
+            "symbol": "RYOJ",
+            "name": "RYOJBABA COMPANY LIMITED",
+            "reportDate": "2026-06-22",
+            "fiscalDateEnding": "2026-03-31",
+            "estimate": "",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "VSTD",
+            "name": "VESTAND INCORPORATED",
+            "reportDate": "2026-06-22",
+            "fiscalDateEnding": "2026-03-31",
+            "estimate": "",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "WDS",
+            "name": "WOODSIDE ENERGY GROUP LTD",
+            "reportDate": "2026-06-22",
+            "fiscalDateEnding": "2026-03-31",
+            "estimate": "",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "AAME",
+            "name": "ATLANTIC AMERICAN CORPORATION",
+            "reportDate": "2026-06-23",
+            "fiscalDateEnding": "2026-03-31",
+            "estimate": "",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "ALPS",
+            "name": "ALPS GROUP INCORPORATED",
+            "reportDate": "2026-06-23",
+            "fiscalDateEnding": "2026-03-31",
+            "estimate": "",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "ATLN",
+            "name": "ATLANTIC INTERNATIONAL CORPORATION",
+            "reportDate": "2026-06-23",
+            "fiscalDateEnding": "2026-03-31",
+            "estimate": "",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "AVXL",
+            "name": "ANAVEX LIFE SCIENCES CORPORATION",
+            "reportDate": "2026-06-23",
+            "fiscalDateEnding": "2026-03-31",
+            "estimate": "-0.07",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "BRLS",
+            "name": "BOREALIS FOODS INCORPORATED",
+            "reportDate": "2026-06-23",
+            "fiscalDateEnding": "2026-03-31",
+            "estimate": "",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "CBRS",
+            "name": "CEREBRAS SYSTEMS INCORPORATED",
+            "reportDate": "2026-06-23",
+            "fiscalDateEnding": "2026-03-31",
+            "estimate": "-0.14",
+            "currency": "USD",
+            "timeOfTheDay": "post-market"
+          },
+          {
+            "symbol": "CCEP",
+            "name": "COCA-COLA EUROPACIFIC PARTNERS PLC",
+            "reportDate": "2026-06-23",
+            "fiscalDateEnding": "2026-03-31",
+            "estimate": "",
+            "currency": "EUR",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "CCL",
+            "name": "CARNIVAL CORPORATION LIMITED",
+            "reportDate": "2026-06-23",
+            "fiscalDateEnding": "2026-05-31",
+            "estimate": "0.34",
+            "currency": "USD",
+            "timeOfTheDay": "pre-market"
+          },
+          {
+            "symbol": "CETY",
+            "name": "CLEAN ENERGY TECHNOLOGIES INCORPORATED",
+            "reportDate": "2026-06-23",
+            "fiscalDateEnding": "2026-03-31",
+            "estimate": "",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "CURR",
+            "name": "CURRENC GROUP INCORPORATED",
+            "reportDate": "2026-06-23",
+            "fiscalDateEnding": "2026-03-31",
+            "estimate": "",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "CYD",
+            "name": "CHINA YUCHAI INTERNATIONAL",
+            "reportDate": "2026-06-23",
+            "fiscalDateEnding": "2026-03-31",
+            "estimate": "",
+            "currency": "CNY",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "FDX",
+            "name": "FEDEX CORPORATION",
+            "reportDate": "2026-06-23",
+            "fiscalDateEnding": "2026-05-31",
+            "estimate": "5.91",
+            "currency": "USD",
+            "timeOfTheDay": "post-market"
+          },
+          {
+            "symbol": "FTHM",
+            "name": "FATHOM HOLDINGS INCORPORATED",
+            "reportDate": "2026-06-23",
+            "fiscalDateEnding": "2026-03-31",
+            "estimate": "-0.1",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "GAUZ",
+            "name": "GAUZY LIMITED",
+            "reportDate": "2026-06-23",
+            "fiscalDateEnding": "2026-03-31",
+            "estimate": "",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "GITS",
+            "name": "GLOBAL INTERACTIVE TECHNOLOGIES INCORPORATED COMMON STOCK",
+            "reportDate": "2026-06-23",
+            "fiscalDateEnding": "2026-03-31",
+            "estimate": "",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "GURE",
+            "name": "GULF RESOURCES INCORPORATED",
+            "reportDate": "2026-06-23",
+            "fiscalDateEnding": "2026-03-31",
+            "estimate": "",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "ICLR",
+            "name": "ICON PUBLIC LIMITED COMPANY",
+            "reportDate": "2026-06-23",
+            "fiscalDateEnding": "2026-03-31",
+            "estimate": "2.18",
+            "currency": "USD",
+            "timeOfTheDay": "post-market"
+          },
+          {
+            "symbol": "IVF",
+            "name": "INVO FERTILITY INCORPORATED",
+            "reportDate": "2026-06-23",
+            "fiscalDateEnding": "2026-03-31",
+            "estimate": "",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "JFIN",
+            "name": "JIAYIN GROUP INCORPORATED",
+            "reportDate": "2026-06-23",
+            "fiscalDateEnding": "2026-03-31",
+            "estimate": "",
+            "currency": "USD",
+            "timeOfTheDay": "pre-market"
+          },
+          {
+            "symbol": "KBH",
+            "name": "KB HOME",
+            "reportDate": "2026-06-23",
+            "fiscalDateEnding": "2026-05-31",
+            "estimate": "0.44",
+            "currency": "USD",
+            "timeOfTheDay": "post-market"
+          },
+          {
+            "symbol": "KEQU",
+            "name": "KEWAUNEE SCIENTIFIC CORPORATION",
+            "reportDate": "2026-06-23",
+            "fiscalDateEnding": "2026-04-30",
+            "estimate": "",
+            "currency": "USD",
+            "timeOfTheDay": "post-market"
+          },
+          {
+            "symbol": "KFY",
+            "name": "KORN FERRY",
+            "reportDate": "2026-06-23",
+            "fiscalDateEnding": "2026-04-30",
+            "estimate": "1.37",
+            "currency": "USD",
+            "timeOfTheDay": "pre-market"
+          },
+          {
+            "symbol": "REBN",
+            "name": "REBORN COFFEE INCORPORATED",
+            "reportDate": "2026-06-23",
+            "fiscalDateEnding": "2026-03-31",
+            "estimate": "",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "RGNT",
+            "name": "REGENTIS BIOMATERIALS LIMITED",
+            "reportDate": "2026-06-23",
+            "fiscalDateEnding": "2026-03-31",
+            "estimate": "",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "RTB",
+            "name": "RTB DIGITAL INCORPORATED",
+            "reportDate": "2026-06-23",
+            "fiscalDateEnding": "2026-03-31",
+            "estimate": "",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "SUNB",
+            "name": "SUNBELT RENTALS HOLDINGS INCORPORATED",
+            "reportDate": "2026-06-23",
+            "fiscalDateEnding": "2026-04-30",
+            "estimate": "0.73",
+            "currency": "USD",
+            "timeOfTheDay": "pre-market"
+          },
+          {
+            "symbol": "UK",
+            "name": "UCOMMUNE INTERNATIONAL LIMITED",
+            "reportDate": "2026-06-23",
+            "fiscalDateEnding": "2026-03-31",
+            "estimate": "",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "UTSI",
+            "name": "UTSTARCOM HOLDINGS CORPORATION",
+            "reportDate": "2026-06-23",
+            "fiscalDateEnding": "2026-03-31",
+            "estimate": "",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "WOR",
+            "name": "WORTHINGTON ENTERPRISES INCORPORATED",
+            "reportDate": "2026-06-23",
+            "fiscalDateEnding": "2026-05-31",
+            "estimate": "1.04",
+            "currency": "USD",
+            "timeOfTheDay": "post-market"
+          },
+          {
+            "symbol": "XAIR",
+            "name": "BEYOND AIR INCORPORATED",
+            "reportDate": "2026-06-23",
+            "fiscalDateEnding": "2026-03-31",
+            "estimate": "",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "BNRG",
+            "name": "BRENMILLER ENERGY LIMITED",
+            "reportDate": "2026-06-24",
+            "fiscalDateEnding": "2026-03-31",
+            "estimate": "",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "BTTC",
+            "name": "BLACK TITAN CORPORATION",
+            "reportDate": "2026-06-24",
+            "fiscalDateEnding": "2026-03-31",
+            "estimate": "",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "CAAS",
+            "name": "CHINA AUTOMOTIVE SYSTEMS INCORPORATED",
+            "reportDate": "2026-06-24",
+            "fiscalDateEnding": "2026-03-31",
+            "estimate": "",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "CRWS",
+            "name": "CROWN CRAFTS INCORPORATED",
+            "reportDate": "2026-06-24",
+            "fiscalDateEnding": "2026-03-31",
+            "estimate": "",
+            "currency": "USD",
+            "timeOfTheDay": "pre-market"
+          },
+          {
+            "symbol": "CSHR",
+            "name": "COINSHARES PUBLIC LIMITED COMPANY",
+            "reportDate": "2026-06-24",
+            "fiscalDateEnding": "2026-03-31",
+            "estimate": "",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "CULP",
+            "name": "CULP INCORPORATED",
+            "reportDate": "2026-06-24",
+            "fiscalDateEnding": "2026-04-30",
+            "estimate": "-0.11",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "DAKT",
+            "name": "DAKTRONICS INCORPORATED",
+            "reportDate": "2026-06-24",
+            "fiscalDateEnding": "2026-04-30",
+            "estimate": "0.22",
+            "currency": "USD",
+            "timeOfTheDay": "pre-market"
+          },
+          {
+            "symbol": "DTSS",
+            "name": "DATASEA INTELLIGENT TECHNOLOGY LIMITED",
+            "reportDate": "2026-06-24",
+            "fiscalDateEnding": "2026-03-31",
+            "estimate": "",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "FER",
+            "name": "FERROVIAL NAAMLOZE VENNOOTSCHAP",
+            "reportDate": "2026-06-24",
+            "fiscalDateEnding": "2026-03-31",
+            "estimate": "",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "FUL",
+            "name": "H. B. FULLER COMPANY",
+            "reportDate": "2026-06-24",
+            "fiscalDateEnding": "2026-05-31",
+            "estimate": "1.37",
+            "currency": "USD",
+            "timeOfTheDay": "post-market"
+          },
+          {
+            "symbol": "JEF",
+            "name": "JEFFERIES FINANCIAL GROUP INCORPORATED",
+            "reportDate": "2026-06-24",
+            "fiscalDateEnding": "2026-05-31",
+            "estimate": "1.09",
+            "currency": "USD",
+            "timeOfTheDay": "post-market"
+          },
+          {
+            "symbol": "LOT",
+            "name": "LOTUS TECHNOLOGY INCORPORATED",
+            "reportDate": "2026-06-24",
+            "fiscalDateEnding": "2026-03-31",
+            "estimate": "-0.18",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "LPSN",
+            "name": "LIVEPERSON INCORPORATED",
+            "reportDate": "2026-06-24",
+            "fiscalDateEnding": "2026-03-31",
+            "estimate": "-1.02",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "LRHC",
+            "name": "LA ROSA HOLDINGS CORPORATION",
+            "reportDate": "2026-06-24",
+            "fiscalDateEnding": "2026-03-31",
+            "estimate": "",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "LVO",
+            "name": "LIVEONE INCORPORATED",
+            "reportDate": "2026-06-24",
+            "fiscalDateEnding": "2026-03-31",
+            "estimate": "-0.31",
+            "currency": "USD",
+            "timeOfTheDay": "pre-market"
+          },
+          {
+            "symbol": "MEI",
+            "name": "METHODE ELECTRONICS INCORPORATED",
+            "reportDate": "2026-06-24",
+            "fiscalDateEnding": "2026-04-30",
+            "estimate": "-0.11",
+            "currency": "USD",
+            "timeOfTheDay": "post-market"
+          },
+          {
+            "symbol": "MLKN",
+            "name": "MILLERKNOLL INCORPORATED",
+            "reportDate": "2026-06-24",
+            "fiscalDateEnding": "2026-05-31",
+            "estimate": "0.52",
+            "currency": "USD",
+            "timeOfTheDay": "post-market"
+          },
+          {
+            "symbol": "MNY",
+            "name": "MONEYHERO LIMITED",
+            "reportDate": "2026-06-24",
+            "fiscalDateEnding": "2026-03-31",
+            "estimate": "-0.06",
+            "currency": "USD",
+            "timeOfTheDay": "pre-market"
+          },
+          {
+            "symbol": "MU",
+            "name": "MICRON TECHNOLOGY INCORPORATED",
+            "reportDate": "2026-06-24",
+            "fiscalDateEnding": "2026-05-31",
+            "estimate": "19.54",
+            "currency": "USD",
+            "timeOfTheDay": "post-market"
+          },
+          {
+            "symbol": "NG",
+            "name": "NOVAGOLD RESOURCES INCORPORATED",
+            "reportDate": "2026-06-24",
+            "fiscalDateEnding": "2026-05-31",
+            "estimate": "-0.06",
+            "currency": "USD",
+            "timeOfTheDay": "pre-market"
+          },
+          {
+            "symbol": "NSRX",
+            "name": "NASUS PHARMA LIMITED",
+            "reportDate": "2026-06-24",
+            "fiscalDateEnding": "2026-03-31",
+            "estimate": "-0.27",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "PAYX",
+            "name": "PAYCHEX INCORPORATED",
+            "reportDate": "2026-06-24",
+            "fiscalDateEnding": "2026-05-31",
+            "estimate": "1.31",
+            "currency": "USD",
+            "timeOfTheDay": "pre-market"
+          },
+          {
+            "symbol": "PBM",
+            "name": "PSYENCE BIOMEDICAL LIMITED",
+            "reportDate": "2026-06-24",
+            "fiscalDateEnding": "2026-03-31",
+            "estimate": "",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "PLRZ",
+            "name": "POLYRIZON LIMITED",
+            "reportDate": "2026-06-24",
+            "fiscalDateEnding": "2026-03-31",
+            "estimate": "",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "PODC",
+            "name": "PODCASTONE INCORPORATED",
+            "reportDate": "2026-06-24",
+            "fiscalDateEnding": "2026-03-31",
+            "estimate": "-0.03",
+            "currency": "USD",
+            "timeOfTheDay": "pre-market"
+          },
+          {
+            "symbol": "RR",
+            "name": "RICHTECH ROBOTICS INCORPORATED",
+            "reportDate": "2026-06-24",
+            "fiscalDateEnding": "2026-03-31",
+            "estimate": "-0.03",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "SEGG",
+            "name": "SPORTS ENTERTAINMENT GAMING GLOBAL CORPORATION",
+            "reportDate": "2026-06-24",
+            "fiscalDateEnding": "2026-03-31",
+            "estimate": "",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "TCOM",
+            "name": "TRIP.COM GROUP LIMITED",
+            "reportDate": "2026-06-24",
+            "fiscalDateEnding": "2026-03-31",
+            "estimate": "0.74",
+            "currency": "USD",
+            "timeOfTheDay": "post-market"
+          },
+          {
+            "symbol": "VIOT",
+            "name": "VIOMI TECHNOLOGY COMPANY LIMITED",
+            "reportDate": "2026-06-24",
+            "fiscalDateEnding": "2026-03-31",
+            "estimate": "",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "WS",
+            "name": "WORTHINGTON STEEL INCORPORATED",
+            "reportDate": "2026-06-24",
+            "fiscalDateEnding": "2026-05-31",
+            "estimate": "0.73",
+            "currency": "USD",
+            "timeOfTheDay": "post-market"
+          },
+          {
+            "symbol": "AIV",
+            "name": "APARTMENT INVESTMENT & MANAGEMENT CO. - CLASS A",
+            "reportDate": "2026-06-25",
+            "fiscalDateEnding": "2026-03-31",
+            "estimate": "",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "AOUT",
+            "name": "AMERICAN OUTDOOR BRANDS INCORPORATED",
+            "reportDate": "2026-06-25",
+            "fiscalDateEnding": "2026-04-30",
+            "estimate": "-0.05",
+            "currency": "USD",
+            "timeOfTheDay": "post-market"
+          },
+          {
+            "symbol": "AYI",
+            "name": "ACUITY INCORPORATED",
+            "reportDate": "2026-06-25",
+            "fiscalDateEnding": "2026-05-31",
+            "estimate": "4.79",
+            "currency": "USD",
+            "timeOfTheDay": "pre-market"
+          },
+          {
+            "symbol": "BB",
+            "name": "BLACKBERRY LIMITED",
+            "reportDate": "2026-06-25",
+            "fiscalDateEnding": "2026-05-31",
+            "estimate": "0.02",
+            "currency": "USD",
+            "timeOfTheDay": "pre-market"
+          },
+          {
+            "symbol": "BGDE",
+            "name": "BIG DIGITAL ENERGY INCORPORATED",
+            "reportDate": "2026-06-25",
+            "fiscalDateEnding": "2026-03-31",
+            "estimate": "",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "BMR",
+            "name": "BEAMR IMAGING LIMITED",
+            "reportDate": "2026-06-25",
+            "fiscalDateEnding": "2026-03-31",
+            "estimate": "",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "CDT",
+            "name": "CDT EQUITY INCORPORATED",
+            "reportDate": "2026-06-25",
+            "fiscalDateEnding": "2026-03-31",
+            "estimate": "",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "CMC",
+            "name": "COMMERCIAL METALS COMPANY",
+            "reportDate": "2026-06-25",
+            "fiscalDateEnding": "2026-05-31",
+            "estimate": "1.63",
+            "currency": "USD",
+            "timeOfTheDay": "pre-market"
+          },
+          {
+            "symbol": "CRMT",
+            "name": "AMERICA'S CAR-MART INCORPORATED",
+            "reportDate": "2026-06-25",
+            "fiscalDateEnding": "2026-04-30",
+            "estimate": "",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "DRI",
+            "name": "DARDEN RESTAURANTS INCORPORATED",
+            "reportDate": "2026-06-25",
+            "fiscalDateEnding": "2026-05-31",
+            "estimate": "3.63",
+            "currency": "USD",
+            "timeOfTheDay": "pre-market"
+          },
+          {
+            "symbol": "ELME",
+            "name": "ELME COMMUNITIES",
+            "reportDate": "2026-06-25",
+            "fiscalDateEnding": "2026-03-31",
+            "estimate": "",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "EONR",
+            "name": "EON RESOURCES INCORPORATED",
+            "reportDate": "2026-06-25",
+            "fiscalDateEnding": "2026-03-31",
+            "estimate": "",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "EPAC",
+            "name": "ENERPAC TOOL GROUP CORPORATION",
+            "reportDate": "2026-06-25",
+            "fiscalDateEnding": "2026-05-31",
+            "estimate": "0.49",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "FDXF",
+            "name": "FEDEX FREIGHT HOLDING COMPANY INCORPORATED",
+            "reportDate": "2026-06-25",
+            "fiscalDateEnding": "2026-05-31",
+            "estimate": "1.48",
+            "currency": "USD",
+            "timeOfTheDay": "post-market"
+          },
+          {
+            "symbol": "GLMD",
+            "name": "GALMED PHARMACEUTICALS LIMITED",
+            "reportDate": "2026-06-25",
+            "fiscalDateEnding": "2026-03-31",
+            "estimate": "",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "GTLS",
+            "name": "CHART INDUSTRIES INCORPORATED",
+            "reportDate": "2026-06-25",
+            "fiscalDateEnding": "2026-03-31",
+            "estimate": "1.98",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "HCM",
+            "name": "HUTCHMED (CHINA) LIMITED",
+            "reportDate": "2026-06-25",
+            "fiscalDateEnding": "2026-03-31",
+            "estimate": "",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "HUBG",
+            "name": "HUB GROUP INCORPORATED",
+            "reportDate": "2026-06-25",
+            "fiscalDateEnding": "2026-03-31",
+            "estimate": "0.42",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "ICG",
+            "name": "INTCHAINS GROUP LIMITED",
+            "reportDate": "2026-06-25",
+            "fiscalDateEnding": "2026-03-31",
+            "estimate": "",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "IH",
+            "name": "IHUMAN INCORPORATED",
+            "reportDate": "2026-06-25",
+            "fiscalDateEnding": "2026-03-31",
+            "estimate": "",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "MKC",
+            "name": "MCCORMICK & COMPANY INCORPORATED",
+            "reportDate": "2026-06-25",
+            "fiscalDateEnding": "2026-05-31",
+            "estimate": "0.69",
+            "currency": "USD",
+            "timeOfTheDay": "pre-market"
+          },
+          {
+            "symbol": "MKC.V",
+            "name": "MCCORMICK & COMPANY INCORPORATED",
+            "reportDate": "2026-06-25",
+            "fiscalDateEnding": "2026-05-31",
+            "estimate": "",
+            "currency": "USD",
+            "timeOfTheDay": "pre-market"
+          },
+          {
+            "symbol": "NAMM",
+            "name": "NAMIB MINERALS",
+            "reportDate": "2026-06-25",
+            "fiscalDateEnding": "2026-03-31",
+            "estimate": "",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "NBP",
+            "name": "NOVABRIDGE BIOSCIENCES",
+            "reportDate": "2026-06-25",
+            "fiscalDateEnding": "2026-03-31",
+            "estimate": "-0.12",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "NNOX",
+            "name": "NANO-X IMAGING LIMITED",
+            "reportDate": "2026-06-25",
+            "fiscalDateEnding": "2026-03-31",
+            "estimate": "",
+            "currency": "USD",
+            "timeOfTheDay": "pre-market"
+          },
+          {
+            "symbol": "OMSE",
+            "name": "OMS ENERGY TECHNOLOGIES INCORPORATED",
+            "reportDate": "2026-06-25",
+            "fiscalDateEnding": "2026-03-31",
+            "estimate": "",
+            "currency": "USD",
+            "timeOfTheDay": "post-market"
+          },
+          {
+            "symbol": "PRFX",
+            "name": "PRF TECHNOLOGIES LIMITED",
+            "reportDate": "2026-06-25",
+            "fiscalDateEnding": "2026-03-31",
+            "estimate": "",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "PRZO",
+            "name": "PARAZERO TECHNOLOGIES LIMITED",
+            "reportDate": "2026-06-25",
+            "fiscalDateEnding": "2026-03-31",
+            "estimate": "",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "QTEX",
+            "name": "QTREX QUANTUM LIMITED",
+            "reportDate": "2026-06-25",
+            "fiscalDateEnding": "2026-03-31",
+            "estimate": "",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "RDZN",
+            "name": "ROADZEN INCORPORATED",
+            "reportDate": "2026-06-25",
+            "fiscalDateEnding": "2026-03-31",
+            "estimate": "",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "REPL",
+            "name": "REPLIMUNE GROUP INCORPORATED",
+            "reportDate": "2026-06-25",
+            "fiscalDateEnding": "2026-03-31",
+            "estimate": "-0.73",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "SNX",
+            "name": "TD SYNNEX CORPORATION",
+            "reportDate": "2026-06-25",
+            "fiscalDateEnding": "2026-05-31",
+            "estimate": "3.92",
+            "currency": "USD",
+            "timeOfTheDay": "pre-market"
+          },
+          {
+            "symbol": "SVRN",
+            "name": "OCEANPAL INCORPORATED",
+            "reportDate": "2026-06-25",
+            "fiscalDateEnding": "2026-03-31",
+            "estimate": "",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "TLX",
+            "name": "TELIX PHARMACEUTICALS LIMITED",
+            "reportDate": "2026-06-25",
+            "fiscalDateEnding": "2026-03-31",
+            "estimate": "-0.01",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "VIVS",
+            "name": "VIVOSIM LABS INCORPORATED",
+            "reportDate": "2026-06-25",
+            "fiscalDateEnding": "2026-03-31",
+            "estimate": "",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "VTIX",
+            "name": "VIRTUIX HOLDINGS INCORPORATED",
+            "reportDate": "2026-06-25",
+            "fiscalDateEnding": "2026-03-31",
+            "estimate": "-0.42",
+            "currency": "USD",
+            "timeOfTheDay": "pre-market"
+          },
+          {
+            "symbol": "WGO",
+            "name": "WINNEBAGO INDUSTRIES INCORPORATED",
+            "reportDate": "2026-06-25",
+            "fiscalDateEnding": "2026-05-31",
+            "estimate": "0.85",
+            "currency": "USD",
+            "timeOfTheDay": "pre-market"
+          },
+          {
+            "symbol": "WLDS",
+            "name": "WEARABLE DEVICES LIMITED",
+            "reportDate": "2026-06-25",
+            "fiscalDateEnding": "2026-03-31",
+            "estimate": "",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "YRD",
+            "name": "YIREN DIGITAL LIMITED",
+            "reportDate": "2026-06-25",
+            "fiscalDateEnding": "2026-03-31",
+            "estimate": "",
+            "currency": "USD",
+            "timeOfTheDay": "pre-market"
+          },
+          {
+            "symbol": "ZTEK",
+            "name": "ZENTEK LIMITED",
+            "reportDate": "2026-06-25",
+            "fiscalDateEnding": "2026-03-31",
+            "estimate": "",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "AIRT",
+            "name": "AIR T INCORPORATED",
+            "reportDate": "2026-06-26",
+            "fiscalDateEnding": "2026-03-31",
+            "estimate": "",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "APM",
+            "name": "APTORUM GROUP LIMITED",
+            "reportDate": "2026-06-26",
+            "fiscalDateEnding": "2026-03-31",
+            "estimate": "",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "APOG",
+            "name": "APOGEE ENTERPRISES INCORPORATED",
+            "reportDate": "2026-06-26",
+            "fiscalDateEnding": "2026-05-31",
+            "estimate": "0.43",
+            "currency": "USD",
+            "timeOfTheDay": "pre-market"
+          },
+          {
+            "symbol": "BDRX",
+            "name": "BIODEXA PHARMACEUTICALS PUBLIC LIMITED COMPANY",
+            "reportDate": "2026-06-26",
+            "fiscalDateEnding": "2026-03-31",
+            "estimate": "",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "CNVS",
+            "name": "CINEVERSE CORPORATION",
+            "reportDate": "2026-06-26",
+            "fiscalDateEnding": "2026-03-31",
+            "estimate": "",
+            "currency": "USD",
+            "timeOfTheDay": "pre-market"
+          },
+          {
+            "symbol": "HOLO",
+            "name": "MICROCLOUD HOLOGRAM INCORPORATED",
+            "reportDate": "2026-06-26",
+            "fiscalDateEnding": "2026-03-31",
+            "estimate": "",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "MSN",
+            "name": "EMERSON RADIO CORPORATION",
+            "reportDate": "2026-06-26",
+            "fiscalDateEnding": "2026-03-31",
+            "estimate": "",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "MXC",
+            "name": "MEXCO ENERGY CORPORATION",
+            "reportDate": "2026-06-26",
+            "fiscalDateEnding": "2026-03-31",
+            "estimate": "",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "SFHG",
+            "name": "SAMFINE CREATION HOLDINGS GROUP LIMITED",
+            "reportDate": "2026-06-26",
+            "fiscalDateEnding": "2026-03-31",
+            "estimate": "",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "SFWL",
+            "name": "SHENGFENG DEVELOPMENT LIMITED",
+            "reportDate": "2026-06-26",
+            "fiscalDateEnding": "2026-03-31",
+            "estimate": "",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "ZOOZ",
+            "name": "ZOOZ STRATEGY LIMITED",
+            "reportDate": "2026-06-26",
+            "fiscalDateEnding": "2026-03-31",
+            "estimate": "",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "ATXG",
+            "name": "ADDENTAX GROUP CORPORATION",
+            "reportDate": "2026-06-29",
+            "fiscalDateEnding": "2026-03-31",
+            "estimate": "",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "AVAV",
+            "name": "AEROVIRONMENT INCORPORATED",
+            "reportDate": "2026-06-29",
+            "fiscalDateEnding": "2026-04-30",
+            "estimate": "1.53",
+            "currency": "USD",
+            "timeOfTheDay": "post-market"
+          },
+          {
+            "symbol": "AXG",
+            "name": "SOLOWIN HOLDINGS",
+            "reportDate": "2026-06-29",
+            "fiscalDateEnding": "2026-03-31",
+            "estimate": "",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "CNXC",
+            "name": "CONCENTRIX CORPORATION",
+            "reportDate": "2026-06-29",
+            "fiscalDateEnding": "2026-05-31",
+            "estimate": "2.31",
+            "currency": "USD",
+            "timeOfTheDay": "post-market"
+          },
+          {
+            "symbol": "HELP",
+            "name": "CYBIN INCORPORATED",
+            "reportDate": "2026-06-29",
+            "fiscalDateEnding": "2026-03-31",
+            "estimate": "-1.04",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "ITOC",
+            "name": "ITONIC HOLDINGS LIMITED",
+            "reportDate": "2026-06-29",
+            "fiscalDateEnding": "2026-03-31",
+            "estimate": "",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "GDTC",
+            "name": "CYTOMED THERAPEUTICS LIMITED",
+            "reportDate": "2026-06-30",
+            "fiscalDateEnding": "2026-03-31",
+            "estimate": "",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "LAES",
+            "name": "SEALSQ CORP",
+            "reportDate": "2026-06-30",
+            "fiscalDateEnding": "2026-03-31",
+            "estimate": "",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "NIVF",
+            "name": "NEWGENIVF GROUP LIMITED",
+            "reportDate": "2026-06-30",
+            "fiscalDateEnding": "2026-03-31",
+            "estimate": "",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "NKE",
+            "name": "NIKE INCORPORATED",
+            "reportDate": "2026-06-30",
+            "fiscalDateEnding": "2026-05-31",
+            "estimate": "0.11",
+            "currency": "USD",
+            "timeOfTheDay": "post-market"
+          },
+          {
+            "symbol": "NRSN",
+            "name": "NEUROSENSE THERAPEUTICS LIMITED",
+            "reportDate": "2026-06-30",
+            "fiscalDateEnding": "2026-03-31",
+            "estimate": "",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "PRGS",
+            "name": "PROGRESS SOFTWARE CORPORATION",
+            "reportDate": "2026-06-30",
+            "fiscalDateEnding": "2026-05-31",
+            "estimate": "1.15",
+            "currency": "USD",
+            "timeOfTheDay": "post-market"
+          },
+          {
+            "symbol": "RVSN",
+            "name": "RAIL VISION LIMITED",
+            "reportDate": "2026-06-30",
+            "fiscalDateEnding": "2026-03-31",
+            "estimate": "",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "SOGP",
+            "name": "SOUND GROUP INCORPORATED",
+            "reportDate": "2026-06-30",
+            "fiscalDateEnding": "2026-03-31",
+            "estimate": "",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "STZ",
+            "name": "CONSTELLATION BRANDS INCORPORATED",
+            "reportDate": "2026-06-30",
+            "fiscalDateEnding": "2026-05-31",
+            "estimate": "3.28",
+            "currency": "USD",
+            "timeOfTheDay": "post-market"
+          },
+          {
+            "symbol": "UCFI",
+            "name": "CN HEALTHY FOOD TECH GROUP CORPORATION",
+            "reportDate": "2026-06-30",
+            "fiscalDateEnding": "2026-03-31",
+            "estimate": "",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "FC",
+            "name": "FRANKLIN COVEY COMPANY",
+            "reportDate": "2026-07-01",
+            "fiscalDateEnding": "2026-05-31",
+            "estimate": "0.24",
+            "currency": "USD",
+            "timeOfTheDay": "post-market"
+          },
+          {
+            "symbol": "FDS",
+            "name": "FACTSET RESEARCH SYSTEMS INCORPORATED",
+            "reportDate": "2026-07-01",
+            "fiscalDateEnding": "2026-05-31",
+            "estimate": "4.44",
+            "currency": "USD",
+            "timeOfTheDay": "pre-market"
+          },
+          {
+            "symbol": "FIZZ",
+            "name": "NATIONAL BEVERAGE CORPORATION",
+            "reportDate": "2026-07-01",
+            "fiscalDateEnding": "2026-04-30",
+            "estimate": "",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "GBX",
+            "name": "GREENBRIER COMPANIES INCORPORATED (THE)",
+            "reportDate": "2026-07-01",
+            "fiscalDateEnding": "2026-05-31",
+            "estimate": "0.57",
+            "currency": "USD",
+            "timeOfTheDay": "post-market"
+          },
+          {
+            "symbol": "GIS",
+            "name": "GENERAL MILLS INCORPORATED",
+            "reportDate": "2026-07-01",
+            "fiscalDateEnding": "2026-05-31",
+            "estimate": "0.82",
+            "currency": "USD",
+            "timeOfTheDay": "pre-market"
+          },
+          {
+            "symbol": "MLGO",
+            "name": "MICROALGO INCORPORATED",
+            "reportDate": "2026-07-01",
+            "fiscalDateEnding": "2026-03-31",
+            "estimate": "",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "MSM",
+            "name": "MSC INDUSTRIAL DIRECT COMPANY INCORPORATED",
+            "reportDate": "2026-07-01",
+            "fiscalDateEnding": "2026-05-31",
+            "estimate": "1.27",
+            "currency": "USD",
+            "timeOfTheDay": "pre-market"
+          },
+          {
+            "symbol": "NEXR",
+            "name": "NEXERA TECHNOLOGIES LIMITED",
+            "reportDate": "2026-07-01",
+            "fiscalDateEnding": "2026-03-31",
+            "estimate": "",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "TOPS",
+            "name": "TOP SHIPS INCORPORATED",
+            "reportDate": "2026-07-01",
+            "fiscalDateEnding": "2026-03-31",
+            "estimate": "",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "UNF",
+            "name": "UNIFIRST CORPORATION",
+            "reportDate": "2026-07-01",
+            "fiscalDateEnding": "2026-05-31",
+            "estimate": "1.93",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "VRAX",
+            "name": "VIRAX BIOLABS GROUP LIMITED",
+            "reportDate": "2026-07-01",
+            "fiscalDateEnding": "2026-03-31",
+            "estimate": "-0.07",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "CCG",
+            "name": "CHECHE GROUP INC - CLASS A",
+            "reportDate": "2026-07-02",
+            "fiscalDateEnding": "2026-03-31",
+            "estimate": "",
+            "currency": "CNY",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "IFBD",
+            "name": "INFOBIRD COMPANY LIMITED",
+            "reportDate": "2026-07-02",
+            "fiscalDateEnding": "2026-03-31",
+            "estimate": "",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "LNN",
+            "name": "LINDSAY CORPORATION",
+            "reportDate": "2026-07-02",
+            "fiscalDateEnding": "2026-05-31",
+            "estimate": "1.41",
+            "currency": "USD",
+            "timeOfTheDay": "pre-market"
+          },
+          {
+            "symbol": "MTC",
+            "name": "MMTEC INCORPORATED",
+            "reportDate": "2026-07-02",
+            "fiscalDateEnding": "2026-03-31",
+            "estimate": "",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "ZCMD",
+            "name": "ZHONGCHAO INCORPORATED",
+            "reportDate": "2026-07-03",
+            "fiscalDateEnding": "2026-03-31",
+            "estimate": "",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "HIHO",
+            "name": "HIGHWAY HOLDINGS LIMITED",
+            "reportDate": "2026-07-07",
+            "fiscalDateEnding": "2026-03-31",
+            "estimate": "",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "KRUS",
+            "name": "KURA SUSHI USA INCORPORATED",
+            "reportDate": "2026-07-07",
+            "fiscalDateEnding": "2026-05-31",
+            "estimate": "-0.05",
+            "currency": "USD",
+            "timeOfTheDay": "post-market"
+          },
+          {
+            "symbol": "KXIN",
+            "name": "KAIXIN HOLDINGS",
+            "reportDate": "2026-07-07",
+            "fiscalDateEnding": "2026-03-31",
+            "estimate": "",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "NNNN",
+            "name": "ANBIO BIOTECHNOLOGY",
+            "reportDate": "2026-07-07",
+            "fiscalDateEnding": "2026-03-31",
+            "estimate": "",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "PENG",
+            "name": "PENGUIN SOLUTIONS INCORPORATED",
+            "reportDate": "2026-07-07",
+            "fiscalDateEnding": "2026-05-31",
+            "estimate": "0.49",
+            "currency": "USD",
+            "timeOfTheDay": "post-market"
+          },
+          {
+            "symbol": "AZZ",
+            "name": "AZZ INCORPORATED",
+            "reportDate": "2026-07-08",
+            "fiscalDateEnding": "2026-05-31",
+            "estimate": "1.63",
+            "currency": "USD",
+            "timeOfTheDay": "post-market"
+          },
+          {
+            "symbol": "BSET",
+            "name": "BASSETT FURNITURE INDUSTRIES INCORPORATED",
+            "reportDate": "2026-07-08",
+            "fiscalDateEnding": "2026-05-31",
+            "estimate": "0.2",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "NRIX",
+            "name": "NURIX THERAPEUTICS INCORPORATED",
+            "reportDate": "2026-07-08",
+            "fiscalDateEnding": "2026-05-31",
+            "estimate": "-0.73",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "PCYO",
+            "name": "PURE CYCLE CORPORATION",
+            "reportDate": "2026-07-08",
+            "fiscalDateEnding": "2026-05-31",
+            "estimate": "",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "PSMT",
+            "name": "PRICESMART INCORPORATED",
+            "reportDate": "2026-07-08",
+            "fiscalDateEnding": "2026-05-31",
+            "estimate": "",
+            "currency": "USD",
+            "timeOfTheDay": "post-market"
+          },
+          {
+            "symbol": "SPPL",
+            "name": "SIMPPLE LIMITED",
+            "reportDate": "2026-07-08",
+            "fiscalDateEnding": "2026-03-31",
+            "estimate": "",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "WAI",
+            "name": "TOP KINGWIN LIMITED",
+            "reportDate": "2026-07-08",
+            "fiscalDateEnding": "2026-03-31",
+            "estimate": "",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "AIHS",
+            "name": "SENMIAO TECHNOLOGY LIMITED",
+            "reportDate": "2026-07-09",
+            "fiscalDateEnding": "2026-03-31",
+            "estimate": "",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "ARTW",
+            "name": "ART'S-WAY MANUFACTURING COMPANY INCORPORATED",
+            "reportDate": "2026-07-09",
+            "fiscalDateEnding": "2026-05-31",
+            "estimate": "",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "BYRN",
+            "name": "BYRNA TECHNOLOGIES INCORPORATED",
+            "reportDate": "2026-07-09",
+            "fiscalDateEnding": "2026-05-31",
+            "estimate": "-0.1",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "DAL",
+            "name": "DELTA AIR LINES INCORPORATED",
+            "reportDate": "2026-07-09",
+            "fiscalDateEnding": "2026-06-30",
+            "estimate": "1.49",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "EDUC",
+            "name": "EDUCATIONAL DEVELOPMENT CORPORATION",
+            "reportDate": "2026-07-09",
+            "fiscalDateEnding": "2026-05-31",
+            "estimate": "",
+            "currency": "USD",
+            "timeOfTheDay": "post-market"
+          },
+          {
+            "symbol": "FEIM",
+            "name": "FREQUENCY ELECTRONICS INCORPORATED",
+            "reportDate": "2026-07-09",
+            "fiscalDateEnding": "2026-04-30",
+            "estimate": "",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "HELE",
+            "name": "HELEN OF TROY LIMITED",
+            "reportDate": "2026-07-09",
+            "fiscalDateEnding": "2026-05-31",
+            "estimate": "-0.13",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "LEVI",
+            "name": "LEVI STRAUSS & COMPANY",
+            "reportDate": "2026-07-09",
+            "fiscalDateEnding": "2026-05-31",
+            "estimate": "0.24",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "NTIC",
+            "name": "NORTHERN TECHNOLOGIES INTERNATIONAL CORPORATION",
+            "reportDate": "2026-07-09",
+            "fiscalDateEnding": "2026-05-31",
+            "estimate": "0.04",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "PEP",
+            "name": "PEPSICO INCORPORATED",
+            "reportDate": "2026-07-09",
+            "fiscalDateEnding": "2026-06-30",
+            "estimate": "2.19",
+            "currency": "USD",
+            "timeOfTheDay": "pre-market"
+          },
+          {
+            "symbol": "SMPL",
+            "name": "THE SIMPLY GOOD FOODS COMPANY",
+            "reportDate": "2026-07-09",
+            "fiscalDateEnding": "2026-05-31",
+            "estimate": "0.33",
+            "currency": "USD",
+            "timeOfTheDay": "pre-market"
+          },
+          {
+            "symbol": "SOTK",
+            "name": "SONO-TEK CORPORATION",
+            "reportDate": "2026-07-09",
+            "fiscalDateEnding": "2026-05-31",
+            "estimate": "0.05",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "TKLF",
+            "name": "TOKYO LIFESTYLE COMPANY LIMITED",
+            "reportDate": "2026-07-09",
+            "fiscalDateEnding": "2026-03-31",
+            "estimate": "",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "TMQ",
+            "name": "TRILOGY METALS INCORPORATED",
+            "reportDate": "2026-07-09",
+            "fiscalDateEnding": "2026-05-31",
+            "estimate": "-0.01",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "WDFC",
+            "name": "WD-40 COMPANY",
+            "reportDate": "2026-07-09",
+            "fiscalDateEnding": "2026-05-31",
+            "estimate": "1.58",
+            "currency": "USD",
+            "timeOfTheDay": "post-market"
+          },
+          {
+            "symbol": "HIFS",
+            "name": "HINGHAM INSTITUTION FOR SAVINGS",
+            "reportDate": "2026-07-10",
+            "fiscalDateEnding": "2026-06-30",
+            "estimate": "",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "JDZG",
+            "name": "JIADE LIMITED",
+            "reportDate": "2026-07-10",
+            "fiscalDateEnding": "2026-03-31",
+            "estimate": "",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "LEDS",
+            "name": "SEMILEDS CORPORATION",
+            "reportDate": "2026-07-10",
+            "fiscalDateEnding": "2026-05-31",
+            "estimate": "",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "MEGL",
+            "name": "MAGIC EMPIRE GLOBAL LIMITED",
+            "reportDate": "2026-07-10",
+            "fiscalDateEnding": "2026-03-31",
+            "estimate": "",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "NB",
+            "name": "NIOCORP DEVELOPMENTS LIMITED",
+            "reportDate": "2026-07-10",
+            "fiscalDateEnding": "2026-06-30",
+            "estimate": "-0.06",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "PLG",
+            "name": "PLATINUM GROUP METALS LIMITED",
+            "reportDate": "2026-07-10",
+            "fiscalDateEnding": "2026-05-31",
+            "estimate": "",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "SKK",
+            "name": "SKK HOLDINGS LIMITED",
+            "reportDate": "2026-07-10",
+            "fiscalDateEnding": "2026-03-31",
+            "estimate": "",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "VMAR",
+            "name": "VISION MARINE TECHNOLOGIES INCORPORATED",
+            "reportDate": "2026-07-10",
+            "fiscalDateEnding": "2026-05-31",
+            "estimate": "",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "EQBK",
+            "name": "EQUITY BANCSHARES INCORPORATED",
+            "reportDate": "2026-07-13",
+            "fiscalDateEnding": "2026-06-30",
+            "estimate": "1.24",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "FAST",
+            "name": "FASTENAL COMPANY",
+            "reportDate": "2026-07-13",
+            "fiscalDateEnding": "2026-06-30",
+            "estimate": "0.33",
+            "currency": "USD",
+            "timeOfTheDay": "pre-market"
+          },
+          {
+            "symbol": "FBK",
+            "name": "FB FINANCIAL CORPORATION",
+            "reportDate": "2026-07-13",
+            "fiscalDateEnding": "2026-06-30",
+            "estimate": "1.16",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "GLDG",
+            "name": "GOLDMINING INCORPORATED",
+            "reportDate": "2026-07-13",
+            "fiscalDateEnding": "2026-05-31",
+            "estimate": "-0.02",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "JCTC",
+            "name": "JEWETT-CAMERON TRADING COMPANY",
+            "reportDate": "2026-07-13",
+            "fiscalDateEnding": "2026-05-31",
+            "estimate": "",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "LEXX",
+            "name": "LEXARIA BIOSCIENCE CORPORATION",
+            "reportDate": "2026-07-13",
+            "fiscalDateEnding": "2026-05-31",
+            "estimate": "-0.06",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "PAPL",
+            "name": "PINEAPPLE FINANCIAL INCORPORATED",
+            "reportDate": "2026-07-13",
+            "fiscalDateEnding": "2026-05-31",
+            "estimate": "",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "SLP",
+            "name": "SIMULATIONS PLUS INCORPORATED",
+            "reportDate": "2026-07-13",
+            "fiscalDateEnding": "2026-05-31",
+            "estimate": "0.23",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "TRX",
+            "name": "TRX GOLD CORPORATION",
+            "reportDate": "2026-07-13",
+            "fiscalDateEnding": "2026-05-31",
+            "estimate": "0.04",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "AEHR",
+            "name": "AEHR TEST SYSTEMS",
+            "reportDate": "2026-07-14",
+            "fiscalDateEnding": "2026-05-31",
+            "estimate": "-0.06",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "BAC",
+            "name": "BANK OF AMERICA CORPORATION",
+            "reportDate": "2026-07-14",
+            "fiscalDateEnding": "2026-06-30",
+            "estimate": "1.09",
+            "currency": "USD",
+            "timeOfTheDay": "pre-market"
+          },
+          {
+            "symbol": "C",
+            "name": "CITIGROUP INCORPORATED",
+            "reportDate": "2026-07-14",
+            "fiscalDateEnding": "2026-06-30",
+            "estimate": "2.62",
+            "currency": "USD",
+            "timeOfTheDay": "pre-market"
+          },
+          {
+            "symbol": "ERIC",
+            "name": "ERICSSON",
+            "reportDate": "2026-07-14",
+            "fiscalDateEnding": "2026-06-30",
+            "estimate": "0.13",
+            "currency": "USD",
+            "timeOfTheDay": "pre-market"
+          }
+        ],
+        "row_count": 6772
+      },
+      "source": "Alpha Vantage",
+      "source_type": "vendor_fallback",
+      "source_url": "https://www.alphavantage.co/query?function=EARNINGS_CALENDAR&apikey=REDACTED&horizon=3month",
+      "updated_at": "2026-06-22T17:51:45+08:00",
+      "confidence": "medium",
+      "fallback_used": true,
+      "data_gap": null
+    },
+    {
+      "field": "US.NVDA.earnings.actuals_surprise",
+      "value": null,
+      "source": "Alpha Vantage",
+      "source_type": "vendor_fallback",
+      "source_url": "https://www.alphavantage.co/query?function=EARNINGS&apikey=REDACTED&symbol=NVDA",
+      "updated_at": "2026-06-22T17:51:45+08:00",
+      "confidence": "low",
+      "fallback_used": true,
+      "data_gap": "Thank you for using Alpha Vantage! Please consider spreading out your free API requests more sparingly (1 request per second). You may subscribe to any of the premium plans at https://www.alphavantage.co/premium/ to lift the free key rate limit (25 requests per day), raise the per-second burst limit, and instantly unlock all premium endpoints"
+    },
+    {
+      "field": "US.NVDA.earnings.estimates",
+      "value": null,
+      "source": "Alpha Vantage",
+      "source_type": "vendor_fallback",
+      "source_url": "https://www.alphavantage.co/query?function=EARNINGS_ESTIMATES&apikey=REDACTED&symbol=NVDA",
+      "updated_at": "2026-06-22T17:51:45+08:00",
+      "confidence": "low",
+      "fallback_used": true,
+      "data_gap": "Thank you for using Alpha Vantage! Please consider spreading out your free API requests more sparingly (1 request per second). You may subscribe to any of the premium plans at https://www.alphavantage.co/premium/ to lift the free key rate limit (25 requests per day), raise the per-second burst limit, and instantly unlock all premium endpoints"
+    },
+    {
+      "field": "US.AVGO.earnings.actuals_surprise",
+      "value": null,
+      "source": "Alpha Vantage",
+      "source_type": "vendor_fallback",
+      "source_url": "https://www.alphavantage.co/query?function=EARNINGS&apikey=REDACTED&symbol=AVGO",
+      "updated_at": "2026-06-22T17:51:45+08:00",
+      "confidence": "low",
+      "fallback_used": true,
+      "data_gap": "Thank you for using Alpha Vantage! Please consider spreading out your free API requests more sparingly (1 request per second). You may subscribe to any of the premium plans at https://www.alphavantage.co/premium/ to lift the free key rate limit (25 requests per day), raise the per-second burst limit, and instantly unlock all premium endpoints"
+    },
+    {
+      "field": "US.AVGO.earnings.estimates",
+      "value": null,
+      "source": "Alpha Vantage",
+      "source_type": "vendor_fallback",
+      "source_url": "https://www.alphavantage.co/query?function=EARNINGS_ESTIMATES&apikey=REDACTED&symbol=AVGO",
+      "updated_at": "2026-06-22T17:51:45+08:00",
+      "confidence": "low",
+      "fallback_used": true,
+      "data_gap": "Thank you for using Alpha Vantage! Please consider spreading out your free API requests more sparingly (1 request per second). You may subscribe to any of the premium plans at https://www.alphavantage.co/premium/ to lift the free key rate limit (25 requests per day), raise the per-second burst limit, and instantly unlock all premium endpoints"
+    },
+    {
+      "field": "US.ISRG.earnings.actuals_surprise",
+      "value": null,
+      "source": "Alpha Vantage",
+      "source_type": "vendor_fallback",
+      "source_url": "https://www.alphavantage.co/query?function=EARNINGS&apikey=REDACTED&symbol=ISRG",
+      "updated_at": "2026-06-22T17:51:45+08:00",
+      "confidence": "low",
+      "fallback_used": true,
+      "data_gap": "Thank you for using Alpha Vantage! Please consider spreading out your free API requests more sparingly (1 request per second). You may subscribe to any of the premium plans at https://www.alphavantage.co/premium/ to lift the free key rate limit (25 requests per day), raise the per-second burst limit, and instantly unlock all premium endpoints"
+    },
+    {
+      "field": "US.ISRG.earnings.estimates",
+      "value": null,
+      "source": "Alpha Vantage",
+      "source_type": "vendor_fallback",
+      "source_url": "https://www.alphavantage.co/query?function=EARNINGS_ESTIMATES&apikey=REDACTED&symbol=ISRG",
+      "updated_at": "2026-06-22T17:51:45+08:00",
+      "confidence": "low",
+      "fallback_used": true,
+      "data_gap": "Thank you for using Alpha Vantage! Please consider spreading out your free API requests more sparingly (1 request per second). You may subscribe to any of the premium plans at https://www.alphavantage.co/premium/ to lift the free key rate limit (25 requests per day), raise the per-second burst limit, and instantly unlock all premium endpoints"
+    },
+    {
+      "field": "US.ANET.earnings.actuals_surprise",
+      "value": null,
+      "source": "Alpha Vantage",
+      "source_type": "vendor_fallback",
+      "source_url": "https://www.alphavantage.co/query?function=EARNINGS&apikey=REDACTED&symbol=ANET",
+      "updated_at": "2026-06-22T17:51:45+08:00",
+      "confidence": "low",
+      "fallback_used": true,
+      "data_gap": "Thank you for using Alpha Vantage! Please consider spreading out your free API requests more sparingly (1 request per second). You may subscribe to any of the premium plans at https://www.alphavantage.co/premium/ to lift the free key rate limit (25 requests per day), raise the per-second burst limit, and instantly unlock all premium endpoints"
+    },
+    {
+      "field": "US.ANET.earnings.estimates",
+      "value": null,
+      "source": "Alpha Vantage",
+      "source_type": "vendor_fallback",
+      "source_url": "https://www.alphavantage.co/query?function=EARNINGS_ESTIMATES&apikey=REDACTED&symbol=ANET",
+      "updated_at": "2026-06-22T17:51:45+08:00",
+      "confidence": "low",
+      "fallback_used": true,
+      "data_gap": "Thank you for using Alpha Vantage! Please consider spreading out your free API requests more sparingly (1 request per second). You may subscribe to any of the premium plans at https://www.alphavantage.co/premium/ to lift the free key rate limit (25 requests per day), raise the per-second burst limit, and instantly unlock all premium endpoints"
+    },
+    {
+      "field": "US.SYM.earnings.actuals_surprise",
+      "value": null,
+      "source": "Alpha Vantage",
+      "source_type": "vendor_fallback",
+      "source_url": "https://www.alphavantage.co/query?function=EARNINGS&apikey=REDACTED&symbol=SYM",
+      "updated_at": "2026-06-22T17:51:45+08:00",
+      "confidence": "low",
+      "fallback_used": true,
+      "data_gap": "Thank you for using Alpha Vantage! Please consider spreading out your free API requests more sparingly (1 request per second). You may subscribe to any of the premium plans at https://www.alphavantage.co/premium/ to lift the free key rate limit (25 requests per day), raise the per-second burst limit, and instantly unlock all premium endpoints"
+    },
+    {
+      "field": "US.SYM.earnings.estimates",
+      "value": null,
+      "source": "Alpha Vantage",
+      "source_type": "vendor_fallback",
+      "source_url": "https://www.alphavantage.co/query?function=EARNINGS_ESTIMATES&apikey=REDACTED&symbol=SYM",
+      "updated_at": "2026-06-22T17:51:45+08:00",
+      "confidence": "low",
+      "fallback_used": true,
+      "data_gap": "Thank you for using Alpha Vantage! Please consider spreading out your free API requests more sparingly (1 request per second). You may subscribe to any of the premium plans at https://www.alphavantage.co/premium/ to lift the free key rate limit (25 requests per day), raise the per-second burst limit, and instantly unlock all premium endpoints"
+    },
+    {
+      "field": "US.KLAC.earnings.actuals_surprise",
+      "value": null,
+      "source": "Alpha Vantage",
+      "source_type": "vendor_fallback",
+      "source_url": "https://www.alphavantage.co/query?function=EARNINGS&apikey=REDACTED&symbol=KLAC",
+      "updated_at": "2026-06-22T17:51:45+08:00",
+      "confidence": "low",
+      "fallback_used": true,
+      "data_gap": "Thank you for using Alpha Vantage! Please consider spreading out your free API requests more sparingly (1 request per second). You may subscribe to any of the premium plans at https://www.alphavantage.co/premium/ to lift the free key rate limit (25 requests per day), raise the per-second burst limit, and instantly unlock all premium endpoints"
+    },
+    {
+      "field": "US.KLAC.earnings.estimates",
+      "value": null,
+      "source": "Alpha Vantage",
+      "source_type": "vendor_fallback",
+      "source_url": "https://www.alphavantage.co/query?function=EARNINGS_ESTIMATES&apikey=REDACTED&symbol=KLAC",
+      "updated_at": "2026-06-22T17:51:45+08:00",
+      "confidence": "low",
+      "fallback_used": true,
+      "data_gap": "Thank you for using Alpha Vantage! Please consider spreading out your free API requests more sparingly (1 request per second). You may subscribe to any of the premium plans at https://www.alphavantage.co/premium/ to lift the free key rate limit (25 requests per day), raise the per-second burst limit, and instantly unlock all premium endpoints"
     },
     {
       "field": "SZ.300308.official_disclosure",
@@ -1165,7 +3112,7 @@
       "source": "CNINFO",
       "source_type": "official",
       "source_url": "http://www.cninfo.com.cn/",
-      "updated_at": "2026-06-22T12:30:39+08:00",
+      "updated_at": "2026-06-22T17:51:46+08:00",
       "confidence": "low",
       "fallback_used": true,
       "data_gap": "CNINFO official disclosure connector is not configured; use AkShare/Tushare fallback only with downgraded confidence."
@@ -1176,40 +3123,7 @@
       "source": "CNINFO",
       "source_type": "official",
       "source_url": "http://www.cninfo.com.cn/",
-      "updated_at": "2026-06-22T12:30:39+08:00",
-      "confidence": "low",
-      "fallback_used": true,
-      "data_gap": "CNINFO official disclosure connector is not configured; use AkShare/Tushare fallback only with downgraded confidence."
-    },
-    {
-      "field": "SH.600183.official_disclosure",
-      "value": null,
-      "source": "CNINFO",
-      "source_type": "official",
-      "source_url": "http://www.cninfo.com.cn/",
-      "updated_at": "2026-06-22T12:30:39+08:00",
-      "confidence": "low",
-      "fallback_used": true,
-      "data_gap": "CNINFO official disclosure connector is not configured; use AkShare/Tushare fallback only with downgraded confidence."
-    },
-    {
-      "field": "SZ.300499.official_disclosure",
-      "value": null,
-      "source": "CNINFO",
-      "source_type": "official",
-      "source_url": "http://www.cninfo.com.cn/",
-      "updated_at": "2026-06-22T12:30:39+08:00",
-      "confidence": "low",
-      "fallback_used": true,
-      "data_gap": "CNINFO official disclosure connector is not configured; use AkShare/Tushare fallback only with downgraded confidence."
-    },
-    {
-      "field": "SZ.002747.official_disclosure",
-      "value": null,
-      "source": "CNINFO",
-      "source_type": "official",
-      "source_url": "http://www.cninfo.com.cn/",
-      "updated_at": "2026-06-22T12:30:39+08:00",
+      "updated_at": "2026-06-22T17:51:46+08:00",
       "confidence": "low",
       "fallback_used": true,
       "data_gap": "CNINFO official disclosure connector is not configured; use AkShare/Tushare fallback only with downgraded confidence."
@@ -1220,29 +3134,40 @@
       "source": "CNINFO",
       "source_type": "official",
       "source_url": "http://www.cninfo.com.cn/",
-      "updated_at": "2026-06-22T12:30:39+08:00",
+      "updated_at": "2026-06-22T17:51:46+08:00",
       "confidence": "low",
       "fallback_used": true,
       "data_gap": "CNINFO official disclosure connector is not configured; use AkShare/Tushare fallback only with downgraded confidence."
     },
     {
-      "field": "SH.688183.official_disclosure",
+      "field": "SZ.300499.official_disclosure",
       "value": null,
       "source": "CNINFO",
       "source_type": "official",
       "source_url": "http://www.cninfo.com.cn/",
-      "updated_at": "2026-06-22T12:30:39+08:00",
+      "updated_at": "2026-06-22T17:51:46+08:00",
       "confidence": "low",
       "fallback_used": true,
       "data_gap": "CNINFO official disclosure connector is not configured; use AkShare/Tushare fallback only with downgraded confidence."
     },
     {
-      "field": "SZ.300476.official_disclosure",
+      "field": "SZ.002747.official_disclosure",
       "value": null,
       "source": "CNINFO",
       "source_type": "official",
       "source_url": "http://www.cninfo.com.cn/",
-      "updated_at": "2026-06-22T12:30:39+08:00",
+      "updated_at": "2026-06-22T17:51:46+08:00",
+      "confidence": "low",
+      "fallback_used": true,
+      "data_gap": "CNINFO official disclosure connector is not configured; use AkShare/Tushare fallback only with downgraded confidence."
+    },
+    {
+      "field": "SH.600183.official_disclosure",
+      "value": null,
+      "source": "CNINFO",
+      "source_type": "official",
+      "source_url": "http://www.cninfo.com.cn/",
+      "updated_at": "2026-06-22T17:51:46+08:00",
       "confidence": "low",
       "fallback_used": true,
       "data_gap": "CNINFO official disclosure connector is not configured; use AkShare/Tushare fallback only with downgraded confidence."
@@ -1253,7 +3178,29 @@
       "source": "CNINFO",
       "source_type": "official",
       "source_url": "http://www.cninfo.com.cn/",
-      "updated_at": "2026-06-22T12:30:39+08:00",
+      "updated_at": "2026-06-22T17:51:46+08:00",
+      "confidence": "low",
+      "fallback_used": true,
+      "data_gap": "CNINFO official disclosure connector is not configured; use AkShare/Tushare fallback only with downgraded confidence."
+    },
+    {
+      "field": "SH.688183.official_disclosure",
+      "value": null,
+      "source": "CNINFO",
+      "source_type": "official",
+      "source_url": "http://www.cninfo.com.cn/",
+      "updated_at": "2026-06-22T17:51:46+08:00",
+      "confidence": "low",
+      "fallback_used": true,
+      "data_gap": "CNINFO official disclosure connector is not configured; use AkShare/Tushare fallback only with downgraded confidence."
+    },
+    {
+      "field": "SZ.300476.official_disclosure",
+      "value": null,
+      "source": "CNINFO",
+      "source_type": "official",
+      "source_url": "http://www.cninfo.com.cn/",
+      "updated_at": "2026-06-22T17:51:46+08:00",
       "confidence": "low",
       "fallback_used": true,
       "data_gap": "CNINFO official disclosure connector is not configured; use AkShare/Tushare fallback only with downgraded confidence."
@@ -1264,7 +3211,7 @@
       "source": "CNINFO",
       "source_type": "official",
       "source_url": "http://www.cninfo.com.cn/",
-      "updated_at": "2026-06-22T12:30:39+08:00",
+      "updated_at": "2026-06-22T17:51:46+08:00",
       "confidence": "low",
       "fallback_used": true,
       "data_gap": "CNINFO official disclosure connector is not configured; use AkShare/Tushare fallback only with downgraded confidence."
@@ -1275,7 +3222,7 @@
       "source": "CNINFO",
       "source_type": "official",
       "source_url": "http://www.cninfo.com.cn/",
-      "updated_at": "2026-06-22T12:30:39+08:00",
+      "updated_at": "2026-06-22T17:51:46+08:00",
       "confidence": "low",
       "fallback_used": true,
       "data_gap": "CNINFO official disclosure connector is not configured; use AkShare/Tushare fallback only with downgraded confidence."
@@ -1286,7 +3233,7 @@
       "source": "HKEXnews",
       "source_type": "official",
       "source_url": "https://www.hkexnews.hk/",
-      "updated_at": "2026-06-22T12:30:39+08:00",
+      "updated_at": "2026-06-22T17:51:46+08:00",
       "confidence": "low",
       "fallback_used": true,
       "data_gap": "HKEXnews official disclosure connector is not configured; use Futu/AkShare/Yahoo fallback only with downgraded confidence."
@@ -1297,18 +3244,7 @@
       "source": "HKEXnews",
       "source_type": "official",
       "source_url": "https://www.hkexnews.hk/",
-      "updated_at": "2026-06-22T12:30:39+08:00",
-      "confidence": "low",
-      "fallback_used": true,
-      "data_gap": "HKEXnews official disclosure connector is not configured; use Futu/AkShare/Yahoo fallback only with downgraded confidence."
-    },
-    {
-      "field": "HK.00981.official_disclosure",
-      "value": null,
-      "source": "HKEXnews",
-      "source_type": "official",
-      "source_url": "https://www.hkexnews.hk/",
-      "updated_at": "2026-06-22T12:30:39+08:00",
+      "updated_at": "2026-06-22T17:51:46+08:00",
       "confidence": "low",
       "fallback_used": true,
       "data_gap": "HKEXnews official disclosure connector is not configured; use Futu/AkShare/Yahoo fallback only with downgraded confidence."
@@ -1319,7 +3255,18 @@
       "source": "HKEXnews",
       "source_type": "official",
       "source_url": "https://www.hkexnews.hk/",
-      "updated_at": "2026-06-22T12:30:39+08:00",
+      "updated_at": "2026-06-22T17:51:46+08:00",
+      "confidence": "low",
+      "fallback_used": true,
+      "data_gap": "HKEXnews official disclosure connector is not configured; use Futu/AkShare/Yahoo fallback only with downgraded confidence."
+    },
+    {
+      "field": "HK.00981.official_disclosure",
+      "value": null,
+      "source": "HKEXnews",
+      "source_type": "official",
+      "source_url": "https://www.hkexnews.hk/",
+      "updated_at": "2026-06-22T17:51:46+08:00",
       "confidence": "low",
       "fallback_used": true,
       "data_gap": "HKEXnews official disclosure connector is not configured; use Futu/AkShare/Yahoo fallback only with downgraded confidence."
@@ -1333,7 +3280,7 @@
         "source": "HKEXnews",
         "source_type": "official",
         "source_url": "https://www.hkexnews.hk/",
-        "updated_at": "2026-06-22T12:30:39+08:00",
+        "updated_at": "2026-06-22T17:51:46+08:00",
         "confidence": "low",
         "fallback_used": true,
         "data_gap": "HKEXnews official disclosure connector is not configured; use Futu/AkShare/Yahoo fallback only with downgraded confidence."
@@ -1346,7 +3293,7 @@
         "source": "HKEXnews",
         "source_type": "official",
         "source_url": "https://www.hkexnews.hk/",
-        "updated_at": "2026-06-22T12:30:39+08:00",
+        "updated_at": "2026-06-22T17:51:46+08:00",
         "confidence": "low",
         "fallback_used": true,
         "data_gap": "HKEXnews official disclosure connector is not configured; use Futu/AkShare/Yahoo fallback only with downgraded confidence."
@@ -1359,7 +3306,7 @@
         "source": "HKEXnews",
         "source_type": "official",
         "source_url": "https://www.hkexnews.hk/",
-        "updated_at": "2026-06-22T12:30:39+08:00",
+        "updated_at": "2026-06-22T17:51:46+08:00",
         "confidence": "low",
         "fallback_used": true,
         "data_gap": "HKEXnews official disclosure connector is not configured; use Futu/AkShare/Yahoo fallback only with downgraded confidence."
@@ -1372,7 +3319,7 @@
         "source": "HKEXnews",
         "source_type": "official",
         "source_url": "https://www.hkexnews.hk/",
-        "updated_at": "2026-06-22T12:30:39+08:00",
+        "updated_at": "2026-06-22T17:51:46+08:00",
         "confidence": "low",
         "fallback_used": true,
         "data_gap": "HKEXnews official disclosure connector is not configured; use Futu/AkShare/Yahoo fallback only with downgraded confidence."
@@ -1385,7 +3332,7 @@
         "source": "CNINFO",
         "source_type": "official",
         "source_url": "http://www.cninfo.com.cn/",
-        "updated_at": "2026-06-22T12:30:39+08:00",
+        "updated_at": "2026-06-22T17:51:46+08:00",
         "confidence": "low",
         "fallback_used": true,
         "data_gap": "CNINFO official disclosure connector is not configured; use AkShare/Tushare fallback only with downgraded confidence."
@@ -1398,7 +3345,7 @@
         "source": "CNINFO",
         "source_type": "official",
         "source_url": "http://www.cninfo.com.cn/",
-        "updated_at": "2026-06-22T12:30:39+08:00",
+        "updated_at": "2026-06-22T17:51:46+08:00",
         "confidence": "low",
         "fallback_used": true,
         "data_gap": "CNINFO official disclosure connector is not configured; use AkShare/Tushare fallback only with downgraded confidence."
@@ -1411,7 +3358,7 @@
         "source": "CNINFO",
         "source_type": "official",
         "source_url": "http://www.cninfo.com.cn/",
-        "updated_at": "2026-06-22T12:30:39+08:00",
+        "updated_at": "2026-06-22T17:51:46+08:00",
         "confidence": "low",
         "fallback_used": true,
         "data_gap": "CNINFO official disclosure connector is not configured; use AkShare/Tushare fallback only with downgraded confidence."
@@ -1424,7 +3371,7 @@
         "source": "CNINFO",
         "source_type": "official",
         "source_url": "http://www.cninfo.com.cn/",
-        "updated_at": "2026-06-22T12:30:39+08:00",
+        "updated_at": "2026-06-22T17:51:46+08:00",
         "confidence": "low",
         "fallback_used": true,
         "data_gap": "CNINFO official disclosure connector is not configured; use AkShare/Tushare fallback only with downgraded confidence."
@@ -1437,7 +3384,7 @@
         "source": "CNINFO",
         "source_type": "official",
         "source_url": "http://www.cninfo.com.cn/",
-        "updated_at": "2026-06-22T12:30:39+08:00",
+        "updated_at": "2026-06-22T17:51:46+08:00",
         "confidence": "low",
         "fallback_used": true,
         "data_gap": "CNINFO official disclosure connector is not configured; use AkShare/Tushare fallback only with downgraded confidence."
@@ -1450,7 +3397,7 @@
         "source": "CNINFO",
         "source_type": "official",
         "source_url": "http://www.cninfo.com.cn/",
-        "updated_at": "2026-06-22T12:30:39+08:00",
+        "updated_at": "2026-06-22T17:51:46+08:00",
         "confidence": "low",
         "fallback_used": true,
         "data_gap": "CNINFO official disclosure connector is not configured; use AkShare/Tushare fallback only with downgraded confidence."
@@ -1463,7 +3410,7 @@
         "source": "CNINFO",
         "source_type": "official",
         "source_url": "http://www.cninfo.com.cn/",
-        "updated_at": "2026-06-22T12:30:39+08:00",
+        "updated_at": "2026-06-22T17:51:46+08:00",
         "confidence": "low",
         "fallback_used": true,
         "data_gap": "CNINFO official disclosure connector is not configured; use AkShare/Tushare fallback only with downgraded confidence."
@@ -1476,7 +3423,7 @@
         "source": "CNINFO",
         "source_type": "official",
         "source_url": "http://www.cninfo.com.cn/",
-        "updated_at": "2026-06-22T12:30:39+08:00",
+        "updated_at": "2026-06-22T17:51:46+08:00",
         "confidence": "low",
         "fallback_used": true,
         "data_gap": "CNINFO official disclosure connector is not configured; use AkShare/Tushare fallback only with downgraded confidence."
@@ -1489,7 +3436,7 @@
         "source": "CNINFO",
         "source_type": "official",
         "source_url": "http://www.cninfo.com.cn/",
-        "updated_at": "2026-06-22T12:30:39+08:00",
+        "updated_at": "2026-06-22T17:51:46+08:00",
         "confidence": "low",
         "fallback_used": true,
         "data_gap": "CNINFO official disclosure connector is not configured; use AkShare/Tushare fallback only with downgraded confidence."
@@ -1502,7 +3449,7 @@
         "source": "CNINFO",
         "source_type": "official",
         "source_url": "http://www.cninfo.com.cn/",
-        "updated_at": "2026-06-22T12:30:39+08:00",
+        "updated_at": "2026-06-22T17:51:46+08:00",
         "confidence": "low",
         "fallback_used": true,
         "data_gap": "CNINFO official disclosure connector is not configured; use AkShare/Tushare fallback only with downgraded confidence."
@@ -1515,7 +3462,7 @@
         "source": "CNINFO",
         "source_type": "official",
         "source_url": "http://www.cninfo.com.cn/",
-        "updated_at": "2026-06-22T12:30:39+08:00",
+        "updated_at": "2026-06-22T17:51:46+08:00",
         "confidence": "low",
         "fallback_used": true,
         "data_gap": "CNINFO official disclosure connector is not configured; use AkShare/Tushare fallback only with downgraded confidence."
@@ -1581,7 +3528,7 @@
         "source": "SEC",
         "source_type": "official",
         "source_url": "https://data.sec.gov/submissions/CIK0001596532.json",
-        "updated_at": "2026-06-22T12:30:35+08:00",
+        "updated_at": "2026-06-22T17:51:42+08:00",
         "confidence": "high",
         "fallback_used": true,
         "data_gap": null
@@ -1631,10 +3578,32 @@
         "source": "SEC",
         "source_type": "official",
         "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001596532.json",
-        "updated_at": "2026-06-22T12:30:35+08:00",
+        "updated_at": "2026-06-22T17:51:42+08:00",
         "confidence": "high",
         "fallback_used": true,
         "data_gap": null
+      },
+      {
+        "field": "US.ANET.earnings.actuals_surprise",
+        "value": null,
+        "source": "Alpha Vantage",
+        "source_type": "vendor_fallback",
+        "source_url": "https://www.alphavantage.co/query?function=EARNINGS&apikey=REDACTED&symbol=ANET",
+        "updated_at": "2026-06-22T17:51:45+08:00",
+        "confidence": "low",
+        "fallback_used": true,
+        "data_gap": "Thank you for using Alpha Vantage! Please consider spreading out your free API requests more sparingly (1 request per second). You may subscribe to any of the premium plans at https://www.alphavantage.co/premium/ to lift the free key rate limit (25 requests per day), raise the per-second burst limit, and instantly unlock all premium endpoints"
+      },
+      {
+        "field": "US.ANET.earnings.estimates",
+        "value": null,
+        "source": "Alpha Vantage",
+        "source_type": "vendor_fallback",
+        "source_url": "https://www.alphavantage.co/query?function=EARNINGS_ESTIMATES&apikey=REDACTED&symbol=ANET",
+        "updated_at": "2026-06-22T17:51:45+08:00",
+        "confidence": "low",
+        "fallback_used": true,
+        "data_gap": "Thank you for using Alpha Vantage! Please consider spreading out your free API requests more sparingly (1 request per second). You may subscribe to any of the premium plans at https://www.alphavantage.co/premium/ to lift the free key rate limit (25 requests per day), raise the per-second burst limit, and instantly unlock all premium endpoints"
       }
     ],
     "US.ASML": [
@@ -1697,7 +3666,7 @@
         "source": "SEC",
         "source_type": "official",
         "source_url": "https://data.sec.gov/submissions/CIK0000937966.json",
-        "updated_at": "2026-06-22T12:30:36+08:00",
+        "updated_at": "2026-06-22T17:51:43+08:00",
         "confidence": "high",
         "fallback_used": true,
         "data_gap": null
@@ -1747,7 +3716,7 @@
         "source": "SEC",
         "source_type": "official",
         "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000937966.json",
-        "updated_at": "2026-06-22T12:30:36+08:00",
+        "updated_at": "2026-06-22T17:51:43+08:00",
         "confidence": "high",
         "fallback_used": true,
         "data_gap": null
@@ -1813,7 +3782,7 @@
         "source": "SEC",
         "source_type": "official",
         "source_url": "https://data.sec.gov/submissions/CIK0001730168.json",
-        "updated_at": "2026-06-22T12:30:34+08:00",
+        "updated_at": "2026-06-22T17:51:41+08:00",
         "confidence": "high",
         "fallback_used": true,
         "data_gap": null
@@ -1863,10 +3832,32 @@
         "source": "SEC",
         "source_type": "official",
         "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001730168.json",
-        "updated_at": "2026-06-22T12:30:34+08:00",
+        "updated_at": "2026-06-22T17:51:41+08:00",
         "confidence": "high",
         "fallback_used": true,
         "data_gap": null
+      },
+      {
+        "field": "US.AVGO.earnings.actuals_surprise",
+        "value": null,
+        "source": "Alpha Vantage",
+        "source_type": "vendor_fallback",
+        "source_url": "https://www.alphavantage.co/query?function=EARNINGS&apikey=REDACTED&symbol=AVGO",
+        "updated_at": "2026-06-22T17:51:45+08:00",
+        "confidence": "low",
+        "fallback_used": true,
+        "data_gap": "Thank you for using Alpha Vantage! Please consider spreading out your free API requests more sparingly (1 request per second). You may subscribe to any of the premium plans at https://www.alphavantage.co/premium/ to lift the free key rate limit (25 requests per day), raise the per-second burst limit, and instantly unlock all premium endpoints"
+      },
+      {
+        "field": "US.AVGO.earnings.estimates",
+        "value": null,
+        "source": "Alpha Vantage",
+        "source_type": "vendor_fallback",
+        "source_url": "https://www.alphavantage.co/query?function=EARNINGS_ESTIMATES&apikey=REDACTED&symbol=AVGO",
+        "updated_at": "2026-06-22T17:51:45+08:00",
+        "confidence": "low",
+        "fallback_used": true,
+        "data_gap": "Thank you for using Alpha Vantage! Please consider spreading out your free API requests more sparingly (1 request per second). You may subscribe to any of the premium plans at https://www.alphavantage.co/premium/ to lift the free key rate limit (25 requests per day), raise the per-second burst limit, and instantly unlock all premium endpoints"
       }
     ],
     "US.ISRG": [
@@ -1929,7 +3920,7 @@
         "source": "SEC",
         "source_type": "official",
         "source_url": "https://data.sec.gov/submissions/CIK0001035267.json",
-        "updated_at": "2026-06-22T12:30:35+08:00",
+        "updated_at": "2026-06-22T17:51:42+08:00",
         "confidence": "high",
         "fallback_used": true,
         "data_gap": null
@@ -1979,10 +3970,32 @@
         "source": "SEC",
         "source_type": "official",
         "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001035267.json",
-        "updated_at": "2026-06-22T12:30:35+08:00",
+        "updated_at": "2026-06-22T17:51:42+08:00",
         "confidence": "high",
         "fallback_used": true,
         "data_gap": null
+      },
+      {
+        "field": "US.ISRG.earnings.actuals_surprise",
+        "value": null,
+        "source": "Alpha Vantage",
+        "source_type": "vendor_fallback",
+        "source_url": "https://www.alphavantage.co/query?function=EARNINGS&apikey=REDACTED&symbol=ISRG",
+        "updated_at": "2026-06-22T17:51:45+08:00",
+        "confidence": "low",
+        "fallback_used": true,
+        "data_gap": "Thank you for using Alpha Vantage! Please consider spreading out your free API requests more sparingly (1 request per second). You may subscribe to any of the premium plans at https://www.alphavantage.co/premium/ to lift the free key rate limit (25 requests per day), raise the per-second burst limit, and instantly unlock all premium endpoints"
+      },
+      {
+        "field": "US.ISRG.earnings.estimates",
+        "value": null,
+        "source": "Alpha Vantage",
+        "source_type": "vendor_fallback",
+        "source_url": "https://www.alphavantage.co/query?function=EARNINGS_ESTIMATES&apikey=REDACTED&symbol=ISRG",
+        "updated_at": "2026-06-22T17:51:45+08:00",
+        "confidence": "low",
+        "fallback_used": true,
+        "data_gap": "Thank you for using Alpha Vantage! Please consider spreading out your free API requests more sparingly (1 request per second). You may subscribe to any of the premium plans at https://www.alphavantage.co/premium/ to lift the free key rate limit (25 requests per day), raise the per-second burst limit, and instantly unlock all premium endpoints"
       }
     ],
     "US.KLAC": [
@@ -2045,7 +4058,7 @@
         "source": "SEC",
         "source_type": "official",
         "source_url": "https://data.sec.gov/submissions/CIK0000319201.json",
-        "updated_at": "2026-06-22T12:30:35+08:00",
+        "updated_at": "2026-06-22T17:51:43+08:00",
         "confidence": "high",
         "fallback_used": true,
         "data_gap": null
@@ -2095,10 +4108,32 @@
         "source": "SEC",
         "source_type": "official",
         "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000319201.json",
-        "updated_at": "2026-06-22T12:30:35+08:00",
+        "updated_at": "2026-06-22T17:51:43+08:00",
         "confidence": "high",
         "fallback_used": true,
         "data_gap": null
+      },
+      {
+        "field": "US.KLAC.earnings.actuals_surprise",
+        "value": null,
+        "source": "Alpha Vantage",
+        "source_type": "vendor_fallback",
+        "source_url": "https://www.alphavantage.co/query?function=EARNINGS&apikey=REDACTED&symbol=KLAC",
+        "updated_at": "2026-06-22T17:51:45+08:00",
+        "confidence": "low",
+        "fallback_used": true,
+        "data_gap": "Thank you for using Alpha Vantage! Please consider spreading out your free API requests more sparingly (1 request per second). You may subscribe to any of the premium plans at https://www.alphavantage.co/premium/ to lift the free key rate limit (25 requests per day), raise the per-second burst limit, and instantly unlock all premium endpoints"
+      },
+      {
+        "field": "US.KLAC.earnings.estimates",
+        "value": null,
+        "source": "Alpha Vantage",
+        "source_type": "vendor_fallback",
+        "source_url": "https://www.alphavantage.co/query?function=EARNINGS_ESTIMATES&apikey=REDACTED&symbol=KLAC",
+        "updated_at": "2026-06-22T17:51:45+08:00",
+        "confidence": "low",
+        "fallback_used": true,
+        "data_gap": "Thank you for using Alpha Vantage! Please consider spreading out your free API requests more sparingly (1 request per second). You may subscribe to any of the premium plans at https://www.alphavantage.co/premium/ to lift the free key rate limit (25 requests per day), raise the per-second burst limit, and instantly unlock all premium endpoints"
       }
     ],
     "US.MRVL": [
@@ -2161,7 +4196,7 @@
         "source": "SEC",
         "source_type": "official",
         "source_url": "https://data.sec.gov/submissions/CIK0001835632.json",
-        "updated_at": "2026-06-22T12:30:36+08:00",
+        "updated_at": "2026-06-22T17:51:43+08:00",
         "confidence": "high",
         "fallback_used": true,
         "data_gap": null
@@ -2211,7 +4246,7 @@
         "source": "SEC",
         "source_type": "official",
         "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001835632.json",
-        "updated_at": "2026-06-22T12:30:36+08:00",
+        "updated_at": "2026-06-22T17:51:43+08:00",
         "confidence": "high",
         "fallback_used": true,
         "data_gap": null
@@ -2277,7 +4312,7 @@
         "source": "SEC",
         "source_type": "official",
         "source_url": "https://data.sec.gov/submissions/CIK0001045810.json",
-        "updated_at": "2026-06-22T12:30:34+08:00",
+        "updated_at": "2026-06-22T17:51:41+08:00",
         "confidence": "high",
         "fallback_used": true,
         "data_gap": null
@@ -2327,10 +4362,32 @@
         "source": "SEC",
         "source_type": "official",
         "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001045810.json",
-        "updated_at": "2026-06-22T12:30:34+08:00",
+        "updated_at": "2026-06-22T17:51:41+08:00",
         "confidence": "high",
         "fallback_used": true,
         "data_gap": null
+      },
+      {
+        "field": "US.NVDA.earnings.actuals_surprise",
+        "value": null,
+        "source": "Alpha Vantage",
+        "source_type": "vendor_fallback",
+        "source_url": "https://www.alphavantage.co/query?function=EARNINGS&apikey=REDACTED&symbol=NVDA",
+        "updated_at": "2026-06-22T17:51:45+08:00",
+        "confidence": "low",
+        "fallback_used": true,
+        "data_gap": "Thank you for using Alpha Vantage! Please consider spreading out your free API requests more sparingly (1 request per second). You may subscribe to any of the premium plans at https://www.alphavantage.co/premium/ to lift the free key rate limit (25 requests per day), raise the per-second burst limit, and instantly unlock all premium endpoints"
+      },
+      {
+        "field": "US.NVDA.earnings.estimates",
+        "value": null,
+        "source": "Alpha Vantage",
+        "source_type": "vendor_fallback",
+        "source_url": "https://www.alphavantage.co/query?function=EARNINGS_ESTIMATES&apikey=REDACTED&symbol=NVDA",
+        "updated_at": "2026-06-22T17:51:45+08:00",
+        "confidence": "low",
+        "fallback_used": true,
+        "data_gap": "Thank you for using Alpha Vantage! Please consider spreading out your free API requests more sparingly (1 request per second). You may subscribe to any of the premium plans at https://www.alphavantage.co/premium/ to lift the free key rate limit (25 requests per day), raise the per-second burst limit, and instantly unlock all premium endpoints"
       }
     ],
     "US.SYM": [
@@ -2393,7 +4450,7 @@
         "source": "SEC",
         "source_type": "official",
         "source_url": "https://data.sec.gov/submissions/CIK0001837240.json",
-        "updated_at": "2026-06-22T12:30:35+08:00",
+        "updated_at": "2026-06-22T17:51:42+08:00",
         "confidence": "high",
         "fallback_used": true,
         "data_gap": null
@@ -2443,10 +4500,32 @@
         "source": "SEC",
         "source_type": "official",
         "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001837240.json",
-        "updated_at": "2026-06-22T12:30:35+08:00",
+        "updated_at": "2026-06-22T17:51:42+08:00",
         "confidence": "high",
         "fallback_used": true,
         "data_gap": null
+      },
+      {
+        "field": "US.SYM.earnings.actuals_surprise",
+        "value": null,
+        "source": "Alpha Vantage",
+        "source_type": "vendor_fallback",
+        "source_url": "https://www.alphavantage.co/query?function=EARNINGS&apikey=REDACTED&symbol=SYM",
+        "updated_at": "2026-06-22T17:51:45+08:00",
+        "confidence": "low",
+        "fallback_used": true,
+        "data_gap": "Thank you for using Alpha Vantage! Please consider spreading out your free API requests more sparingly (1 request per second). You may subscribe to any of the premium plans at https://www.alphavantage.co/premium/ to lift the free key rate limit (25 requests per day), raise the per-second burst limit, and instantly unlock all premium endpoints"
+      },
+      {
+        "field": "US.SYM.earnings.estimates",
+        "value": null,
+        "source": "Alpha Vantage",
+        "source_type": "vendor_fallback",
+        "source_url": "https://www.alphavantage.co/query?function=EARNINGS_ESTIMATES&apikey=REDACTED&symbol=SYM",
+        "updated_at": "2026-06-22T17:51:45+08:00",
+        "confidence": "low",
+        "fallback_used": true,
+        "data_gap": "Thank you for using Alpha Vantage! Please consider spreading out your free API requests more sparingly (1 request per second). You may subscribe to any of the premium plans at https://www.alphavantage.co/premium/ to lift the free key rate limit (25 requests per day), raise the per-second burst limit, and instantly unlock all premium endpoints"
       }
     ]
   },
@@ -2456,55 +4535,123 @@
       "status": "normal",
       "message": "SEC ticker mapping available.",
       "impact": "Impacts US official filing/companyfacts fallback.",
-      "updated_at": "2026-06-22T12:30:33+08:00"
+      "updated_at": "2026-06-22T17:51:40+08:00"
     },
     {
       "source": "SEC EDGAR company data",
       "status": "normal",
       "message": "SEC fallback returned data for 8/8 checked US symbols.",
       "impact": "Impacts official US filing and financial statement evidence.",
-      "updated_at": "2026-06-22T12:30:36+08:00"
+      "updated_at": "2026-06-22T17:51:43+08:00"
     },
     {
       "source": "FRED",
       "status": "normal",
       "message": "FRED returned 8/8 configured macro/liquidity series.",
       "impact": "Impacts macro regime, rates, inflation, labor and credit spread evidence.",
-      "updated_at": "2026-06-22T12:30:36+08:00"
+      "updated_at": "2026-06-22T17:51:43+08:00"
     },
     {
       "source": "Alpha Vantage",
-      "status": "unknown",
-      "message": "ALPHA_VANTAGE_API_KEY is not configured.",
-      "impact": "Earnings estimates, surprise, calendar and transcript fallback disabled.",
-      "updated_at": "2026-06-22T12:30:39+08:00"
+      "status": "limited",
+      "message": "Alpha Vantage fallback completed with 1 successful response blocks; limited/empty responses are kept as data gaps.",
+      "impact": "Impacts earnings estimates, surprise, calendar and transcript fallback confidence.",
+      "updated_at": "2026-06-22T17:51:45+08:00"
     },
     {
       "source": "OpenFIGI",
       "status": "unknown",
       "message": "OPENFIGI_API_KEY is not configured.",
       "impact": "Security identifier mapping fallback is limited to SEC ticker files.",
-      "updated_at": "2026-06-22T12:30:39+08:00"
+      "updated_at": "2026-06-22T17:51:46+08:00"
     },
     {
       "source": "CNINFO",
       "status": "unknown",
       "message": "CNINFO connector is not configured; no official A-share announcement pull was attempted.",
       "impact": "Impacts A-share announcement/financial statement confidence.",
-      "updated_at": "2026-06-22T12:30:39+08:00"
+      "updated_at": "2026-06-22T17:51:46+08:00"
     },
     {
       "source": "HKEXnews",
       "status": "unknown",
       "message": "HKEXnews connector is not configured; no official HK announcement pull was attempted.",
       "impact": "Impacts HK announcement/financial statement confidence.",
-      "updated_at": "2026-06-22T12:30:39+08:00"
+      "updated_at": "2026-06-22T17:51:46+08:00"
     }
   ],
   "data_gaps": [
     {
+      "symbol": "US.NVDA",
       "source": "Alpha Vantage",
-      "data_gap": "ALPHA_VANTAGE_API_KEY is not configured"
+      "field": "EARNINGS",
+      "data_gap": "Thank you for using Alpha Vantage! Please consider spreading out your free API requests more sparingly (1 request per second). You may subscribe to any of the premium plans at https://www.alphavantage.co/premium/ to lift the free key rate limit (25 requests per day), raise the per-second burst limit, and instantly unlock all premium endpoints"
+    },
+    {
+      "symbol": "US.NVDA",
+      "source": "Alpha Vantage",
+      "field": "EARNINGS_ESTIMATES",
+      "data_gap": "Thank you for using Alpha Vantage! Please consider spreading out your free API requests more sparingly (1 request per second). You may subscribe to any of the premium plans at https://www.alphavantage.co/premium/ to lift the free key rate limit (25 requests per day), raise the per-second burst limit, and instantly unlock all premium endpoints"
+    },
+    {
+      "symbol": "US.AVGO",
+      "source": "Alpha Vantage",
+      "field": "EARNINGS",
+      "data_gap": "Thank you for using Alpha Vantage! Please consider spreading out your free API requests more sparingly (1 request per second). You may subscribe to any of the premium plans at https://www.alphavantage.co/premium/ to lift the free key rate limit (25 requests per day), raise the per-second burst limit, and instantly unlock all premium endpoints"
+    },
+    {
+      "symbol": "US.AVGO",
+      "source": "Alpha Vantage",
+      "field": "EARNINGS_ESTIMATES",
+      "data_gap": "Thank you for using Alpha Vantage! Please consider spreading out your free API requests more sparingly (1 request per second). You may subscribe to any of the premium plans at https://www.alphavantage.co/premium/ to lift the free key rate limit (25 requests per day), raise the per-second burst limit, and instantly unlock all premium endpoints"
+    },
+    {
+      "symbol": "US.ISRG",
+      "source": "Alpha Vantage",
+      "field": "EARNINGS",
+      "data_gap": "Thank you for using Alpha Vantage! Please consider spreading out your free API requests more sparingly (1 request per second). You may subscribe to any of the premium plans at https://www.alphavantage.co/premium/ to lift the free key rate limit (25 requests per day), raise the per-second burst limit, and instantly unlock all premium endpoints"
+    },
+    {
+      "symbol": "US.ISRG",
+      "source": "Alpha Vantage",
+      "field": "EARNINGS_ESTIMATES",
+      "data_gap": "Thank you for using Alpha Vantage! Please consider spreading out your free API requests more sparingly (1 request per second). You may subscribe to any of the premium plans at https://www.alphavantage.co/premium/ to lift the free key rate limit (25 requests per day), raise the per-second burst limit, and instantly unlock all premium endpoints"
+    },
+    {
+      "symbol": "US.ANET",
+      "source": "Alpha Vantage",
+      "field": "EARNINGS",
+      "data_gap": "Thank you for using Alpha Vantage! Please consider spreading out your free API requests more sparingly (1 request per second). You may subscribe to any of the premium plans at https://www.alphavantage.co/premium/ to lift the free key rate limit (25 requests per day), raise the per-second burst limit, and instantly unlock all premium endpoints"
+    },
+    {
+      "symbol": "US.ANET",
+      "source": "Alpha Vantage",
+      "field": "EARNINGS_ESTIMATES",
+      "data_gap": "Thank you for using Alpha Vantage! Please consider spreading out your free API requests more sparingly (1 request per second). You may subscribe to any of the premium plans at https://www.alphavantage.co/premium/ to lift the free key rate limit (25 requests per day), raise the per-second burst limit, and instantly unlock all premium endpoints"
+    },
+    {
+      "symbol": "US.SYM",
+      "source": "Alpha Vantage",
+      "field": "EARNINGS",
+      "data_gap": "Thank you for using Alpha Vantage! Please consider spreading out your free API requests more sparingly (1 request per second). You may subscribe to any of the premium plans at https://www.alphavantage.co/premium/ to lift the free key rate limit (25 requests per day), raise the per-second burst limit, and instantly unlock all premium endpoints"
+    },
+    {
+      "symbol": "US.SYM",
+      "source": "Alpha Vantage",
+      "field": "EARNINGS_ESTIMATES",
+      "data_gap": "Thank you for using Alpha Vantage! Please consider spreading out your free API requests more sparingly (1 request per second). You may subscribe to any of the premium plans at https://www.alphavantage.co/premium/ to lift the free key rate limit (25 requests per day), raise the per-second burst limit, and instantly unlock all premium endpoints"
+    },
+    {
+      "symbol": "US.KLAC",
+      "source": "Alpha Vantage",
+      "field": "EARNINGS",
+      "data_gap": "Thank you for using Alpha Vantage! Please consider spreading out your free API requests more sparingly (1 request per second). You may subscribe to any of the premium plans at https://www.alphavantage.co/premium/ to lift the free key rate limit (25 requests per day), raise the per-second burst limit, and instantly unlock all premium endpoints"
+    },
+    {
+      "symbol": "US.KLAC",
+      "source": "Alpha Vantage",
+      "field": "EARNINGS_ESTIMATES",
+      "data_gap": "Thank you for using Alpha Vantage! Please consider spreading out your free API requests more sparingly (1 request per second). You may subscribe to any of the premium plans at https://www.alphavantage.co/premium/ to lift the free key rate limit (25 requests per day), raise the per-second burst limit, and instantly unlock all premium endpoints"
     },
     {
       "source": "OpenFIGI",
@@ -2521,7 +4668,7 @@
       "data_gap": "CNINFO official disclosure connector is not configured"
     },
     {
-      "symbol": "SH.600183",
+      "symbol": "SZ.300394",
       "source": "CNINFO",
       "data_gap": "CNINFO official disclosure connector is not configured"
     },
@@ -2536,7 +4683,12 @@
       "data_gap": "CNINFO official disclosure connector is not configured"
     },
     {
-      "symbol": "SZ.300394",
+      "symbol": "SH.600183",
+      "source": "CNINFO",
+      "data_gap": "CNINFO official disclosure connector is not configured"
+    },
+    {
+      "symbol": "SH.603256",
       "source": "CNINFO",
       "data_gap": "CNINFO official disclosure connector is not configured"
     },
@@ -2547,11 +4699,6 @@
     },
     {
       "symbol": "SZ.300476",
-      "source": "CNINFO",
-      "data_gap": "CNINFO official disclosure connector is not configured"
-    },
-    {
-      "symbol": "SH.603256",
       "source": "CNINFO",
       "data_gap": "CNINFO official disclosure connector is not configured"
     },
@@ -2576,12 +4723,12 @@
       "data_gap": "HKEXnews official disclosure connector is not configured"
     },
     {
-      "symbol": "HK.00981",
+      "symbol": "HK.00148",
       "source": "HKEXnews",
       "data_gap": "HKEXnews official disclosure connector is not configured"
     },
     {
-      "symbol": "HK.00148",
+      "symbol": "HK.00981",
       "source": "HKEXnews",
       "data_gap": "HKEXnews official disclosure connector is not configured"
     }

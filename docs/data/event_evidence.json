@@ -1,21 +1,21 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-06-22T12:30:30+08:00",
-  "generated_label": "2026-06-22 12:30",
+  "generated_at": "2026-06-22T17:51:36+08:00",
+  "generated_label": "2026-06-22 17:51",
   "data_boundary": {
     "role": "event, filing, earnings and evidence extraction; not trading instruction",
     "private_portfolio": "disabled",
     "news_transcripts": "Only marked as available when an upstream endpoint returns content; otherwise treated as evidence gap."
   },
   "summary": {
-    "symbol_count": 28,
+    "symbol_count": 27,
     "high_quality_evidence_count": 1,
     "usable_evidence_count": 6,
     "gap_count": 73,
     "data_gap_count": 42,
     "entry_path_missing_count": 9,
-    "rr_discipline_count": 17,
-    "permission_gap_count": 8,
+    "rr_discipline_count": 16,
+    "permission_gap_count": 9,
     "sec_fallback_used_count": 8
   },
   "cards": [
@@ -27,7 +27,7 @@
         "GPU / ASIC / HBM / 先进封装"
       ],
       "evidence_status": "证据较完整",
-      "evidence_score": 88.0,
+      "evidence_score": 82.0,
       "filing": {
         "available": true,
         "form": "8-K",
@@ -57,9 +57,9 @@
         "available": true,
         "coverage_status": "ok",
         "expectation_score": 84.0,
-        "price_target_upside_pct": 50.36,
-        "eps_revision_pct": null,
-        "revenue_revision_pct": null,
+        "price_target_upside_pct": 51.35,
+        "eps_revision_pct": 0.0,
+        "revenue_revision_pct": 0.0,
         "eps_surprise_pct": 6.25,
         "rating": "A-",
         "annual_eps_estimate": 14.69466,
@@ -69,20 +69,20 @@
       },
       "price": {
         "available": true,
-        "price": 210.69,
-        "quote_time": "Jun 18, 2026",
-        "reward_risk": 0.82,
+        "price": 209.31,
+        "quote_time": "Jun 22, 2026 5:51 AM ET",
+        "reward_risk": 0.84,
         "entry_path_complete": true,
         "entry_path_fallback": null,
-        "trend_score": 76.0,
+        "trend_score": 50.0,
         "source": "market_pack",
         "strict_entry": 177.41,
         "invalidation": 164.27,
-        "mechanical_target": 248.61,
+        "mechanical_target": 246.99,
         "ma50": 209.3114,
         "ma200": 189.9022,
         "high252": 236.54,
-        "score": 65.0
+        "score": 35.0
       },
       "sec_fallback_used": false,
       "gaps": [
@@ -145,8 +145,8 @@
       },
       "price": {
         "available": true,
-        "price": 310.58,
-        "quote_time": "Jun 18, 2026",
+        "price": 314.88,
+        "quote_time": "Jun 22, 2026 5:50 AM ET",
         "reward_risk": 0.25,
         "entry_path_complete": true,
         "entry_path_fallback": null,
@@ -154,7 +154,7 @@
         "source": "market_pack",
         "strict_entry": 93.54,
         "invalidation": 86.61,
-        "mechanical_target": 366.48,
+        "mechanical_target": 371.56,
         "ma50": 197.942,
         "ma200": 113.0628,
         "high252": 329.88,
@@ -223,8 +223,8 @@
       },
       "price": {
         "available": true,
-        "price": 169.67,
-        "quote_time": "Jun 18, 2026",
+        "price": 170.0,
+        "quote_time": "Jun 22, 2026 5:41 AM ET",
         "reward_risk": 0.56,
         "entry_path_complete": true,
         "entry_path_fallback": null,
@@ -232,7 +232,7 @@
         "source": "market_pack",
         "strict_entry": 124.65,
         "invalidation": 115.42,
-        "mechanical_target": 200.21,
+        "mechanical_target": 200.6,
         "ma50": 158.535,
         "ma200": 142.1681,
         "high252": 179.8,
@@ -290,16 +290,16 @@
       },
       "price": {
         "available": true,
-        "price": 1133.99,
-        "quote_time": "Jun 18, 2026",
-        "reward_risk": 0.17,
+        "price": 1170.5,
+        "quote_time": "Jun 22, 2026 5:51 AM ET",
+        "reward_risk": 0.16,
         "entry_path_complete": true,
         "entry_path_fallback": null,
         "trend_score": 88.0,
         "source": "market_pack",
         "strict_entry": 336.41,
         "invalidation": 311.49,
-        "mechanical_target": 1270.07,
+        "mechanical_target": 1310.96,
         "ma50": 732.7992,
         "ma200": 400.7525,
         "high252": 1149.43,
@@ -355,8 +355,8 @@
       },
       "price": {
         "available": true,
-        "price": 537.37,
-        "quote_time": "Jun 18, 2026",
+        "price": 539.35,
+        "quote_time": "Jun 22, 2026 5:50 AM ET",
         "reward_risk": 0.28,
         "entry_path_complete": true,
         "entry_path_fallback": null,
@@ -364,7 +364,7 @@
         "source": "market_pack",
         "strict_entry": 208.29,
         "invalidation": 192.87,
-        "mechanical_target": 634.1,
+        "mechanical_target": 636.43,
         "ma50": 411.0471,
         "ma200": 261.1502,
         "high252": 558.37,
@@ -431,16 +431,16 @@
       },
       "price": {
         "available": true,
-        "price": 411.35,
-        "quote_time": "Jun 18, 2026",
-        "reward_risk": 0.61,
+        "price": 405.04,
+        "quote_time": "Jun 22, 2026 5:50 AM ET",
+        "reward_risk": 0.63,
         "entry_path_complete": true,
         "entry_path_fallback": null,
         "trend_score": 50.0,
         "source": "market_pack",
         "strict_entry": 313.16,
         "invalidation": 289.96,
-        "mechanical_target": 485.39,
+        "mechanical_target": 477.95,
         "ma50": 411.674,
         "ma200": 359.9534,
         "high252": 495.0,
@@ -498,16 +498,16 @@
       },
       "price": {
         "available": true,
-        "price": 333.05,
-        "quote_time": "Jun 18, 2026",
-        "reward_risk": 0.47,
+        "price": 339.934,
+        "quote_time": "Jun 22, 2026 5:51 AM ET",
+        "reward_risk": 0.46,
         "entry_path_complete": true,
         "entry_path_fallback": null,
         "trend_score": 76.0,
         "source": "market_pack",
         "strict_entry": 250.24,
         "invalidation": 206.03,
-        "mechanical_target": 393.0,
+        "mechanical_target": 401.12,
         "ma50": 321.5358,
         "ma200": 223.9415,
         "high252": 379.935,
@@ -516,6 +516,84 @@
       "sec_fallback_used": true,
       "gaps": [
         "缺少 FMP 预期/财报快照",
+        "R/R 未达 2:1，不能进入普通买入"
+      ],
+      "action": "证据只支持观察/二次研究；R/R 未达标，不允许普通买入。"
+    },
+    {
+      "code": "US.HON",
+      "symbol": "HON",
+      "name": "Honeywell International Inc. Common Stock",
+      "themes": [
+        "Physical AI / 机器人 / 自动化"
+      ],
+      "evidence_status": "证据不足",
+      "evidence_score": 55.8,
+      "filing": {
+        "available": true,
+        "form": "8-K",
+        "filed": "2026-06-15",
+        "age_days": 7,
+        "accession": "0000773840-26-000080",
+        "recent_forms": [
+          "8-K",
+          "8-K",
+          "8-K",
+          "8-K",
+          "8-K"
+        ],
+        "score": 90
+      },
+      "financials": {
+        "available": true,
+        "revenue_growth_yoy": -0.0274,
+        "net_margin": 0.1263,
+        "liabilities_to_assets": null,
+        "latest_annual_revenue": 37442000000,
+        "latest_annual_revenue_filed": "2026-02-17",
+        "latest_annual_fcf": 5422000000.0,
+        "score": 49.4
+      },
+      "fmp": {
+        "available": false,
+        "coverage_status": "restricted",
+        "expectation_score": null,
+        "price_target_upside_pct": null,
+        "eps_revision_pct": null,
+        "revenue_revision_pct": null,
+        "eps_surprise_pct": null,
+        "rating": null,
+        "annual_eps_estimate": null,
+        "annual_revenue_estimate": null,
+        "score": 35.0,
+        "gaps": [
+          "缺少年/季度分析师预期",
+          "缺少最近财报 surprise",
+          "FMP 部分端点受限：/analyst-estimates、/earnings、/price-target-consensus"
+        ]
+      },
+      "price": {
+        "available": true,
+        "price": 228.204,
+        "quote_time": "Jun 22, 2026 5:48 AM ET",
+        "reward_risk": 1.3,
+        "entry_path_complete": true,
+        "entry_path_fallback": null,
+        "trend_score": 80.0,
+        "source": "market_pack",
+        "strict_entry": 215.8,
+        "invalidation": 196.55,
+        "mechanical_target": 269.28,
+        "ma50": 221.9502,
+        "ma200": 213.6421,
+        "high252": 248.18,
+        "score": 65.0
+      },
+      "sec_fallback_used": true,
+      "gaps": [
+        "缺少年/季度分析师预期",
+        "缺少最近财报 surprise",
+        "FMP 部分端点受限：/analyst-estimates、/earnings、/price-target-consensus",
         "R/R 未达 2:1，不能进入普通买入"
       ],
       "action": "证据只支持观察/二次研究；R/R 未达标，不允许普通买入。"
@@ -574,16 +652,16 @@
       },
       "price": {
         "available": true,
-        "price": 406.78,
-        "quote_time": "Jun 18, 2026",
-        "reward_risk": 7.25,
+        "price": 404.8,
+        "quote_time": "Jun 22, 2026 5:50 AM ET",
+        "reward_risk": 8.97,
         "entry_path_complete": true,
         "entry_path_fallback": null,
         "trend_score": 14.0,
         "source": "market_pack",
-        "strict_entry": 399.91,
+        "strict_entry": 397.96,
         "invalidation": 396.68,
-        "mechanical_target": 480.0,
+        "mechanical_target": 477.66,
         "ma50": 439.7316,
         "ma200": 490.6895,
         "high252": 603.88,
@@ -640,16 +718,16 @@
       },
       "price": {
         "available": true,
-        "price": 421.77,
-        "quote_time": "Jun 18, 2026",
-        "reward_risk": 0.92,
+        "price": 423.99,
+        "quote_time": "Jun 22, 2026 5:46 AM ET",
+        "reward_risk": 0.9,
         "entry_path_complete": true,
         "entry_path_fallback": null,
         "trend_score": 88.0,
         "source": "market_pack",
         "strict_entry": 369.36,
         "invalidation": 339.31,
-        "mechanical_target": 497.69,
+        "mechanical_target": 500.31,
         "ma50": 405.1024,
         "ma200": 368.8098,
         "high252": 435.43,
@@ -705,8 +783,8 @@
       },
       "price": {
         "available": true,
-        "price": 216.44,
-        "quote_time": "Jun 18, 2026",
+        "price": 218.0,
+        "quote_time": "Jun 22, 2026 5:49 AM ET",
         "reward_risk": 0.3,
         "entry_path_complete": true,
         "entry_path_fallback": null,
@@ -714,78 +792,13 @@
         "source": "market_pack",
         "strict_entry": 93.69,
         "invalidation": 86.75,
-        "mechanical_target": 255.4,
+        "mechanical_target": 257.24,
         "ma50": 161.6952,
         "ma200": 97.9282,
         "high252": 217.94,
         "score": 77.0
       },
       "sec_fallback_used": false,
-      "gaps": [
-        "缺少 FMP 预期/财报快照",
-        "R/R 未达 2:1，不能进入普通买入"
-      ],
-      "action": "证据只支持观察/二次研究；R/R 未达标，不允许普通买入。"
-    },
-    {
-      "code": "US.HON",
-      "symbol": "HON",
-      "name": "Honeywell International Inc. Common Stock",
-      "themes": [
-        "Physical AI / 机器人 / 自动化"
-      ],
-      "evidence_status": "证据不足",
-      "evidence_score": 52.6,
-      "filing": {
-        "available": true,
-        "form": "8-K",
-        "filed": "2026-06-15",
-        "age_days": 7,
-        "accession": "0000773840-26-000080",
-        "recent_forms": [
-          "8-K",
-          "8-K",
-          "8-K",
-          "8-K",
-          "8-K"
-        ],
-        "score": 90
-      },
-      "financials": {
-        "available": true,
-        "revenue_growth_yoy": -0.0274,
-        "net_margin": 0.1263,
-        "liabilities_to_assets": null,
-        "latest_annual_revenue": 37442000000,
-        "latest_annual_revenue_filed": "2026-02-17",
-        "latest_annual_fcf": 5422000000.0,
-        "score": 49.4
-      },
-      "fmp": {
-        "available": false,
-        "score": 0,
-        "gaps": [
-          "缺少 FMP 预期/财报快照"
-        ]
-      },
-      "price": {
-        "available": true,
-        "price": 229.01,
-        "quote_time": "Jun 18, 2026",
-        "reward_risk": 1.27,
-        "entry_path_complete": true,
-        "entry_path_fallback": null,
-        "trend_score": 92.0,
-        "source": "market_pack",
-        "strict_entry": 215.8,
-        "invalidation": 196.55,
-        "mechanical_target": 270.23,
-        "ma50": 221.9502,
-        "ma200": 213.6421,
-        "high252": 248.18,
-        "score": 77.0
-      },
-      "sec_fallback_used": true,
       "gaps": [
         "缺少 FMP 预期/财报快照",
         "R/R 未达 2:1，不能进入普通买入"
@@ -846,16 +859,16 @@
       },
       "price": {
         "available": true,
-        "price": 41.68,
-        "quote_time": "Jun 18, 2026",
-        "reward_risk": 3.49,
+        "price": 41.7032,
+        "quote_time": "Jun 22, 2026 5:51 AM ET",
+        "reward_risk": 3.45,
         "entry_path_complete": true,
         "entry_path_fallback": null,
         "trend_score": 14.0,
         "source": "market_pack",
-        "strict_entry": 29.67,
+        "strict_entry": 29.68,
         "invalidation": 39.53,
-        "mechanical_target": 49.18,
+        "mechanical_target": 49.21,
         "ma50": 52.0959,
         "ma200": 58.0569,
         "high252": 87.88,
@@ -912,8 +925,8 @@
       },
       "price": {
         "available": true,
-        "price": 147.61,
-        "quote_time": "Jun 18, 2026",
+        "price": 150.5,
+        "quote_time": "Jun 22, 2026 5:49 AM ET",
         "reward_risk": 0.3,
         "entry_path_complete": true,
         "entry_path_fallback": null,
@@ -921,7 +934,7 @@
         "source": "market_pack",
         "strict_entry": 65.11,
         "invalidation": 60.28,
-        "mechanical_target": 174.18,
+        "mechanical_target": 177.59,
         "ma50": 121.7102,
         "ma200": 77.1429,
         "high252": 166.86,
@@ -977,16 +990,16 @@
       },
       "price": {
         "available": true,
-        "price": 953.27,
-        "quote_time": "Jun 18, 2026",
-        "reward_risk": 1.17,
+        "price": 957.74,
+        "quote_time": "Jun 22, 2026 5:13 AM ET",
+        "reward_risk": 1.14,
         "entry_path_complete": true,
         "entry_path_fallback": null,
         "trend_score": 88.0,
         "source": "market_pack",
         "strict_entry": 855.76,
         "invalidation": 806.17,
-        "mechanical_target": 1124.86,
+        "mechanical_target": 1130.13,
         "ma50": 908.0976,
         "ma200": 876.2685,
         "high252": 1034.96,
@@ -1000,23 +1013,23 @@
       "action": "证据只支持观察/二次研究；R/R 未达标，不允许普通买入。"
     },
     {
-      "code": "US.COHR",
-      "symbol": "COHR",
-      "name": "Coherent Corp. Common Stock",
+      "code": "US.EMR",
+      "symbol": "EMR",
+      "name": "Emerson Electric Company Common Stock",
       "themes": [
-        "AI 光模块 / CPO / 数据中心网络"
+        "AI 数据中心电力 / 液冷 / 配电"
       ],
       "evidence_status": "证据不足",
       "evidence_score": 50.5,
       "filing": {
         "available": true,
-        "form": "8-K",
-        "filed": "2026-05-06",
-        "age_days": 47,
-        "accession": "0001193125-26-208972",
+        "form": "10-Q",
+        "filed": "2026-05-05",
+        "age_days": 48,
+        "accession": "0000032604-26-000035",
         "recent_forms": [
-          "8-K",
           "10-Q",
+          "8-K",
           "8-K",
           "8-K",
           "10-Q"
@@ -1025,13 +1038,13 @@
       },
       "financials": {
         "available": true,
-        "revenue_growth_yoy": 0.2342,
-        "net_margin": 0.0085,
-        "liabilities_to_assets": 0.3628,
-        "latest_annual_revenue": 5810115000,
-        "latest_annual_revenue_filed": "2025-08-15",
-        "latest_annual_fcf": 192764000.0,
-        "score": 61.8
+        "revenue_growth_yoy": 0.03,
+        "net_margin": 0.1273,
+        "liabilities_to_assets": null,
+        "latest_annual_revenue": 18016000000,
+        "latest_annual_revenue_filed": "2025-11-10",
+        "latest_annual_fcf": 2667000000.0,
+        "score": 53.5
       },
       "fmp": {
         "available": false,
@@ -1042,22 +1055,22 @@
       },
       "price": {
         "available": true,
-        "price": 389.57,
-        "quote_time": "Jun 18, 2026",
-        "reward_risk": 0.38,
+        "price": 153.7,
+        "quote_time": "Jun 22, 2026 5:17 AM ET",
+        "reward_risk": 0.89,
         "entry_path_complete": true,
         "entry_path_fallback": null,
-        "trend_score": 76.0,
+        "trend_score": 88.0,
         "source": "market_pack",
-        "strict_entry": 207.24,
-        "invalidation": 205.99,
-        "mechanical_target": 459.69,
-        "ma50": 357.2374,
-        "ma200": 223.9017,
-        "high252": 440.0,
-        "score": 65.0
+        "strict_entry": 132.45,
+        "invalidation": 122.64,
+        "mechanical_target": 181.37,
+        "ma50": 140.871,
+        "ma200": 138.1037,
+        "high252": 165.15,
+        "score": 77.0
       },
-      "sec_fallback_used": false,
+      "sec_fallback_used": true,
       "gaps": [
         "缺少 FMP 预期/财报快照",
         "R/R 未达 2:1，不能进入普通买入"
@@ -1107,8 +1120,8 @@
       },
       "price": {
         "available": true,
-        "price": 371.88,
-        "quote_time": "Jun 18, 2026",
+        "price": 371.56,
+        "quote_time": "Jun 22, 2026 5:42 AM ET",
         "reward_risk": 0.51,
         "entry_path_complete": true,
         "entry_path_fallback": null,
@@ -1116,7 +1129,7 @@
         "source": "market_pack",
         "strict_entry": 264.81,
         "invalidation": 239.87,
-        "mechanical_target": 438.82,
+        "mechanical_target": 438.44,
         "ma50": 348.6472,
         "ma200": 260.7234,
         "high252": 428.9322,
@@ -1172,85 +1185,20 @@
       },
       "price": {
         "available": true,
-        "price": 473.79,
-        "quote_time": "Jun 18, 2026",
-        "reward_risk": 0.68,
+        "price": 469.6967,
+        "quote_time": "Jun 22, 2026 5:14 AM ET",
+        "reward_risk": 0.69,
         "entry_path_complete": true,
         "entry_path_fallback": null,
         "trend_score": 92.0,
         "source": "market_pack",
         "strict_entry": 375.33,
         "invalidation": 347.53,
-        "mechanical_target": 559.07,
+        "mechanical_target": 554.24,
         "ma50": 435.6696,
         "ma200": 393.2668,
         "high252": 475.9199,
         "score": 77.0
-      },
-      "sec_fallback_used": true,
-      "gaps": [
-        "缺少 FMP 预期/财报快照",
-        "R/R 未达 2:1，不能进入普通买入"
-      ],
-      "action": "证据只支持观察/二次研究；R/R 未达标，不允许普通买入。"
-    },
-    {
-      "code": "US.EMR",
-      "symbol": "EMR",
-      "name": "Emerson Electric Company Common Stock",
-      "themes": [
-        "AI 数据中心电力 / 液冷 / 配电"
-      ],
-      "evidence_status": "证据不足",
-      "evidence_score": 48.1,
-      "filing": {
-        "available": true,
-        "form": "10-Q",
-        "filed": "2026-05-05",
-        "age_days": 48,
-        "accession": "0000032604-26-000035",
-        "recent_forms": [
-          "10-Q",
-          "8-K",
-          "8-K",
-          "8-K",
-          "10-Q"
-        ],
-        "score": 72
-      },
-      "financials": {
-        "available": true,
-        "revenue_growth_yoy": 0.03,
-        "net_margin": 0.1273,
-        "liabilities_to_assets": null,
-        "latest_annual_revenue": 18016000000,
-        "latest_annual_revenue_filed": "2025-11-10",
-        "latest_annual_fcf": 2667000000.0,
-        "score": 53.5
-      },
-      "fmp": {
-        "available": false,
-        "score": 0,
-        "gaps": [
-          "缺少 FMP 预期/财报快照"
-        ]
-      },
-      "price": {
-        "available": true,
-        "price": 150.66,
-        "quote_time": "Jun 18, 2026",
-        "reward_risk": 0.97,
-        "entry_path_complete": true,
-        "entry_path_fallback": null,
-        "trend_score": 76.0,
-        "source": "market_pack",
-        "strict_entry": 132.45,
-        "invalidation": 122.64,
-        "mechanical_target": 177.78,
-        "ma50": 140.871,
-        "ma200": 138.1037,
-        "high252": 165.15,
-        "score": 65.0
       },
       "sec_fallback_used": true,
       "gaps": [
@@ -1302,16 +1250,16 @@
       },
       "price": {
         "available": true,
-        "price": 462.12,
-        "quote_time": "Jun 18, 2026",
-        "reward_risk": 0.54,
+        "price": 470.53,
+        "quote_time": "Jun 22, 2026 5:51 AM ET",
+        "reward_risk": 0.52,
         "entry_path_complete": true,
         "entry_path_fallback": null,
         "trend_score": 88.0,
         "source": "market_pack",
         "strict_entry": 338.9,
         "invalidation": 308.34,
-        "mechanical_target": 545.3,
+        "mechanical_target": 555.23,
         "ma50": 405.6116,
         "ma200": 335.1479,
         "high252": 465.22,
@@ -1362,7 +1310,7 @@
       },
       "price": {
         "available": true,
-        "price": 165.6,
+        "price": 164.6,
         "quote_time": null,
         "reward_risk": null,
         "entry_path_complete": false,
@@ -1422,7 +1370,7 @@
       },
       "price": {
         "available": true,
-        "price": 78.7,
+        "price": 78.9,
         "quote_time": null,
         "reward_risk": null,
         "entry_path_complete": false,
@@ -1482,7 +1430,7 @@
       },
       "price": {
         "available": true,
-        "price": 1358.24,
+        "price": 1382.33,
         "quote_time": null,
         "reward_risk": null,
         "entry_path_complete": false,
@@ -1542,7 +1490,7 @@
       },
       "price": {
         "available": true,
-        "price": 567.32,
+        "price": 579.97,
         "quote_time": null,
         "reward_risk": null,
         "entry_path_complete": false,
@@ -1602,72 +1550,12 @@
       },
       "price": {
         "available": true,
-        "price": 318.95,
+        "price": 326.12,
         "quote_time": null,
         "reward_risk": null,
         "entry_path_complete": false,
         "entry_path_fallback": null,
         "trend_score": 76.0,
-        "source": "cross_market_intelligence",
-        "strict_entry": null,
-        "invalidation": null,
-        "mechanical_target": null,
-        "ma50": null,
-        "ma200": null,
-        "high252": null,
-        "score": 55.0
-      },
-      "sec_fallback_used": false,
-      "gaps": [
-        "非美股标的缺少统一财务与公告正文数据源",
-        "缺少 FMP 预期/财报快照",
-        "缺少完整 R/R 或机械入场路径"
-      ],
-      "action": "保留观察，等待财务、价格或事件证据补强。"
-    },
-    {
-      "code": "SH.600183",
-      "symbol": null,
-      "name": "生益科技",
-      "themes": [
-        "高速 PCB / 覆铜板 / 电子布 / 铜箔"
-      ],
-      "evidence_status": "证据不足",
-      "evidence_score": 16.8,
-      "filing": {
-        "available": false,
-        "form": null,
-        "filed": null,
-        "age_days": null,
-        "accession": null,
-        "recent_forms": [],
-        "score": 0
-      },
-      "financials": {
-        "available": false,
-        "revenue_growth_yoy": null,
-        "net_margin": null,
-        "liabilities_to_assets": null,
-        "latest_annual_revenue": null,
-        "latest_annual_revenue_filed": null,
-        "latest_annual_fcf": null,
-        "score": 0
-      },
-      "fmp": {
-        "available": false,
-        "score": 0,
-        "gaps": [
-          "缺少 FMP 预期/财报快照"
-        ]
-      },
-      "price": {
-        "available": true,
-        "price": 182.59,
-        "quote_time": null,
-        "reward_risk": null,
-        "entry_path_complete": false,
-        "entry_path_fallback": null,
-        "trend_score": 88.0,
         "source": "cross_market_intelligence",
         "strict_entry": null,
         "invalidation": null,
@@ -1722,12 +1610,72 @@
       },
       "price": {
         "available": true,
-        "price": 91.5,
+        "price": 91.95,
         "quote_time": null,
         "reward_risk": null,
         "entry_path_complete": false,
         "entry_path_fallback": null,
-        "trend_score": 76.0,
+        "trend_score": 88.0,
+        "source": "cross_market_intelligence",
+        "strict_entry": null,
+        "invalidation": null,
+        "mechanical_target": null,
+        "ma50": null,
+        "ma200": null,
+        "high252": null,
+        "score": 55.0
+      },
+      "sec_fallback_used": false,
+      "gaps": [
+        "非美股标的缺少统一财务与公告正文数据源",
+        "缺少 FMP 预期/财报快照",
+        "缺少完整 R/R 或机械入场路径"
+      ],
+      "action": "保留观察，等待财务、价格或事件证据补强。"
+    },
+    {
+      "code": "HK.00148",
+      "symbol": null,
+      "name": "建滔集团",
+      "themes": [
+        "高速 PCB / 覆铜板 / 电子布 / 铜箔"
+      ],
+      "evidence_status": "证据不足",
+      "evidence_score": 16.8,
+      "filing": {
+        "available": false,
+        "form": null,
+        "filed": null,
+        "age_days": null,
+        "accession": null,
+        "recent_forms": [],
+        "score": 0
+      },
+      "financials": {
+        "available": false,
+        "revenue_growth_yoy": null,
+        "net_margin": null,
+        "liabilities_to_assets": null,
+        "latest_annual_revenue": null,
+        "latest_annual_revenue_filed": null,
+        "latest_annual_fcf": null,
+        "score": 0
+      },
+      "fmp": {
+        "available": false,
+        "score": 0,
+        "gaps": [
+          "缺少 FMP 预期/财报快照"
+        ]
+      },
+      "price": {
+        "available": true,
+        "price": 141.1,
+        "quote_time": null,
+        "reward_risk": null,
+        "entry_path_complete": false,
+        "entry_path_fallback": null,
+        "trend_score": 88.0,
         "source": "cross_market_intelligence",
         "strict_entry": null,
         "invalidation": null,
@@ -1782,7 +1730,7 @@
       },
       "price": {
         "available": true,
-        "price": 37.72,
+        "price": 38.73,
         "quote_time": null,
         "reward_risk": null,
         "entry_path_complete": false,
@@ -1870,7 +1818,7 @@
     {
       "theme": "GPU / ASIC / HBM / 先进封装",
       "symbol_count": 8,
-      "avg_evidence_score": 50.7,
+      "avg_evidence_score": 50.0,
       "median_evidence_score": 59.1,
       "gap_count": 22,
       "top_symbols": [
@@ -1885,7 +1833,7 @@
     {
       "theme": "AI 数据中心电力 / 液冷 / 配电",
       "symbol_count": 5,
-      "avg_evidence_score": 45.1,
+      "avg_evidence_score": 45.5,
       "median_evidence_score": 50.6,
       "gap_count": 11,
       "top_symbols": [
@@ -1899,12 +1847,12 @@
     {
       "theme": "Physical AI / 机器人 / 自动化",
       "symbol_count": 5,
-      "avg_evidence_score": 43.2,
+      "avg_evidence_score": 43.8,
       "median_evidence_score": 52.1,
-      "gap_count": 13,
+      "gap_count": 15,
       "top_symbols": [
-        "US.ISRG",
         "US.HON",
+        "US.ISRG",
         "US.SYM",
         "US.ROK",
         "SZ.002747"
@@ -1912,14 +1860,13 @@
     },
     {
       "theme": "AI 光模块 / CPO / 数据中心网络",
-      "symbol_count": 6,
-      "avg_evidence_score": 39.7,
-      "median_evidence_score": 33.6,
-      "gap_count": 19,
+      "symbol_count": 5,
+      "avg_evidence_score": 37.6,
+      "median_evidence_score": 16.8,
+      "gap_count": 17,
       "top_symbols": [
         "US.MRVL",
         "US.ANET",
-        "US.COHR",
         "SZ.300308",
         "SZ.300502",
         "SZ.300394"
@@ -1935,8 +1882,8 @@
         "US.TTMI",
         "US.FLEX",
         "US.JBL",
-        "SH.600183",
-        "HK.01888"
+        "HK.01888",
+        "HK.00148"
       ]
     }
   ],
@@ -1963,9 +1910,9 @@
   "evidence_gap_breakdown": {
     "original_total": 76,
     "data_gap": 42,
-    "permission_limited": 8,
+    "permission_limited": 9,
     "entry_path_missing": 9,
-    "rr_discipline": 17,
+    "rr_discipline": 16,
     "other": 0,
     "categories": [
       {
@@ -1973,28 +1920,26 @@
         "label": "缺少 FMP 预期/财报快照",
         "group": "data",
         "group_label": "数据缺口",
-        "count": 22,
+        "count": 20,
         "affected_symbols": [
           "US.MU",
           "US.AMD",
           "US.VRT",
           "US.ETN",
           "US.TTMI",
-          "US.HON",
           "US.FLEX",
           "US.PH",
-          "US.COHR",
+          "US.EMR",
           "US.JBL",
           "US.ROK",
-          "US.EMR",
           "US.TSM",
           "HK.01347",
           "HK.00981",
           "SZ.300308",
           "SZ.300502",
           "SZ.300394",
-          "SH.600183",
           "HK.01888",
+          "HK.00148",
           "SZ.300499",
           "SZ.002747"
         ],
@@ -2012,8 +1957,8 @@
           "SZ.300308",
           "SZ.300502",
           "SZ.300394",
-          "SH.600183",
           "HK.01888",
+          "HK.00148",
           "SZ.300499",
           "SZ.002747"
         ],
@@ -2024,11 +1969,12 @@
         "label": "缺少年/季度分析师预期",
         "group": "data",
         "group_label": "数据缺口",
-        "count": 5,
+        "count": 6,
         "affected_symbols": [
           "US.MRVL",
           "US.ANET",
           "US.AVGO",
+          "US.HON",
           "US.ISRG",
           "US.SYM"
         ],
@@ -2039,11 +1985,12 @@
         "label": "缺少最近财报 surprise",
         "group": "data",
         "group_label": "数据缺口",
-        "count": 5,
+        "count": 6,
         "affected_symbols": [
           "US.MRVL",
           "US.ANET",
           "US.AVGO",
+          "US.HON",
           "US.ISRG",
           "US.SYM"
         ],
@@ -2065,11 +2012,12 @@
         "label": "FMP 个股端点受限",
         "group": "permission",
         "group_label": "权限受限",
-        "count": 5,
+        "count": 6,
         "affected_symbols": [
           "US.MRVL",
           "US.ANET",
           "US.AVGO",
+          "US.HON",
           "US.ISRG",
           "US.SYM"
         ],
@@ -2100,8 +2048,8 @@
           "SZ.300308",
           "SZ.300502",
           "SZ.300394",
-          "SH.600183",
           "HK.01888",
+          "HK.00148",
           "SZ.300499",
           "SZ.002747"
         ],
@@ -2112,7 +2060,7 @@
         "label": "R/R 未达 2:1",
         "group": "discipline",
         "group_label": "交易纪律不通过",
-        "count": 17,
+        "count": 16,
         "affected_symbols": [
           "US.NVDA",
           "US.MRVL",
@@ -2121,15 +2069,14 @@
           "US.AMD",
           "US.AVGO",
           "US.VRT",
+          "US.HON",
           "US.ETN",
           "US.TTMI",
-          "US.HON",
           "US.FLEX",
           "US.PH",
-          "US.COHR",
+          "US.EMR",
           "US.JBL",
           "US.ROK",
-          "US.EMR",
           "US.TSM"
         ],
         "fallback": "等待回调、上修目标价或提高止损逻辑质量。"
