@@ -35,6 +35,7 @@ DEFAULT_OUTPUT = DATA_DIR / "latest_fmp_research.json"
 DEFAULT_DOCS_OUTPUT = DOCS_DATA_DIR / "fmp_research.json"
 DEFAULT_REPORT = REPORTS_DIR / "latest-fmp-research.md"
 FMP_BASE = "https://financialmodelingprep.com/stable"
+FMP_LAST_REQUEST_AT = 0.0
 LOCAL_ENV_PATHS = (
     ROOT / ".env",
     Path("D:/codex-AI-agent/US-RMB-Agent/.env"),
@@ -123,6 +124,7 @@ def parse_date(value: Any) -> datetime | None:
 
 
 def fmp_get(api_key: str, endpoint: str, params: dict[str, Any]) -> tuple[Any, dict[str, Any] | None]:
+    global FMP_LAST_REQUEST_AT
     query = {
         key: value
         for key, value in params.items()
@@ -134,9 +136,15 @@ def fmp_get(api_key: str, endpoint: str, params: dict[str, Any]) -> tuple[Any, d
     last_error: dict[str, Any] | None = None
     for attempt in range(2):
         try:
+            delay = max(0.0, number(os.getenv("FMP_REQUEST_DELAY_SECONDS", "0.35")) or 0.0)
+            elapsed = time.monotonic() - FMP_LAST_REQUEST_AT
+            if delay and elapsed < delay:
+                time.sleep(delay - elapsed)
             with urllib.request.urlopen(request, timeout=45) as response:
+                FMP_LAST_REQUEST_AT = time.monotonic()
                 return json.loads(response.read().decode("utf-8")), None
         except urllib.error.HTTPError as exc:
+            FMP_LAST_REQUEST_AT = time.monotonic()
             body = exc.read().decode("utf-8", errors="replace")
             if api_key:
                 body = body.replace(api_key, "[REDACTED]")
@@ -148,6 +156,7 @@ def fmp_get(api_key: str, endpoint: str, params: dict[str, Any]) -> tuple[Any, d
                 kind = "http_error"
             return None, {"endpoint": endpoint, "status": exc.code, "kind": kind, "message": body[:240]}
         except (urllib.error.URLError, TimeoutError, json.JSONDecodeError, OSError) as exc:
+            FMP_LAST_REQUEST_AT = time.monotonic()
             last_error = {"endpoint": endpoint, "status": "error", "kind": "runtime_error", "message": str(exc)[:240]}
             if attempt == 0:
                 time.sleep(1.0)

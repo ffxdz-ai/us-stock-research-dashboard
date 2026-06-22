@@ -639,7 +639,42 @@ def latest_quarter_from_earnings(data: Any) -> str | None:
     return None
 
 
-def collect_alpha_layer(fetcher: Fetcher, symbols: list[str], max_symbols: int) -> tuple[list[dict[str, Any]], list[dict[str, Any]], list[dict[str, Any]]]:
+def prioritized_alpha_symbols(symbols: list[str], fmp_research: dict[str, Any], max_symbols: int) -> list[str]:
+    if max_symbols <= 0:
+        return []
+    fmp_rows = {}
+    for row in fmp_research.get("symbols", []) if isinstance(fmp_research.get("symbols"), list) else []:
+        if isinstance(row, dict) and row.get("symbol"):
+            fmp_rows[f"US.{str(row.get('symbol')).upper()}"] = row
+
+    prioritized: list[str] = []
+
+    def add(symbol: str) -> None:
+        if symbol.startswith("US.") and symbol not in prioritized:
+            prioritized.append(symbol)
+
+    for symbol, row in fmp_rows.items():
+        annual = row.get("annual_estimate") if isinstance(row.get("annual_estimate"), dict) else {}
+        surprise = row.get("latest_earnings_surprise") if isinstance(row.get("latest_earnings_surprise"), dict) else {}
+        if row.get("coverage_status") in {"restricted", "rate_limited", "unavailable", "empty"} or not annual or not surprise:
+            add(symbol)
+
+    for symbol in symbols:
+        if symbol.startswith("US.") and symbol not in fmp_rows:
+            add(symbol)
+
+    for symbol in symbols:
+        add(symbol)
+
+    return prioritized[:max_symbols]
+
+
+def collect_alpha_layer(
+    fetcher: Fetcher,
+    symbols: list[str],
+    max_symbols: int,
+    fmp_research: dict[str, Any],
+) -> tuple[list[dict[str, Any]], list[dict[str, Any]], list[dict[str, Any]]]:
     api_key = env_key("ALPHA_VANTAGE_API_KEY", "ALPHAVANTAGE_API_KEY", "AV_API_KEY")
     updated = iso(now_local())
     if not api_key:
@@ -653,7 +688,7 @@ def collect_alpha_layer(fetcher: Fetcher, symbols: list[str], max_symbols: int) 
             )
         ], [{"source": "Alpha Vantage", "data_gap": "ALPHA_VANTAGE_API_KEY is not configured"}]
 
-    us_symbols = [symbol for symbol in symbols if symbol.startswith("US.")][:max_symbols]
+    us_symbols = prioritized_alpha_symbols(symbols, fmp_research, max_symbols)
     records: list[dict[str, Any]] = []
     gaps: list[dict[str, Any]] = []
     limited = False
@@ -722,7 +757,7 @@ def collect_alpha_layer(fetcher: Fetcher, symbols: list[str], max_symbols: int) 
             limited = True
             gaps.append({"symbol": symbol, "source": "Alpha Vantage", "field": "EARNINGS_ESTIMATES", "data_gap": est_error or "empty estimates"})
 
-        if quarter:
+        if quarter and os.getenv("ALPHA_FETCH_TRANSCRIPTS", "").strip().lower() in {"1", "true", "yes"}:
             transcript, tr_error, tr_status, tr_url = alpha_request(
                 fetcher,
                 api_key,
@@ -820,6 +855,122 @@ def clean_openfigi_error(result: Any) -> str:
     return "OpenFIGI mapping empty"
 
 
+def yahoo_symbol(symbol: str) -> str | None:
+    market, ticker = symbol_to_parts(symbol)
+    if market == "US":
+        return ticker
+    if market == "HK":
+        return f"{ticker.zfill(4)}.HK"
+    if market == "SH":
+        return f"{ticker}.SS"
+    if market == "SZ":
+        return f"{ticker}.SZ"
+    return None
+
+
+def avg(values: list[float]) -> float | None:
+    return round(sum(values) / len(values), 4) if values else None
+
+
+def yahoo_chart_value(data: Any) -> dict[str, Any] | None:
+    if not isinstance(data, dict):
+        return None
+    chart = data.get("chart") if isinstance(data.get("chart"), dict) else {}
+    results = chart.get("result") if isinstance(chart.get("result"), list) else []
+    if not results or not isinstance(results[0], dict):
+        return None
+    result = results[0]
+    meta = result.get("meta") if isinstance(result.get("meta"), dict) else {}
+    indicators = result.get("indicators") if isinstance(result.get("indicators"), dict) else {}
+    quotes = indicators.get("quote") if isinstance(indicators.get("quote"), list) else []
+    quote = quotes[0] if quotes and isinstance(quotes[0], dict) else {}
+    closes = [parsed for value in quote.get("close", []) if (parsed := number(value)) is not None]
+    lows = [parsed for value in quote.get("low", []) if (parsed := number(value)) is not None]
+    highs = [parsed for value in quote.get("high", []) if (parsed := number(value)) is not None]
+    price = number(meta.get("regularMarketPrice")) or (closes[-1] if closes else None)
+    if price is None:
+        return None
+    timestamps = result.get("timestamp") if isinstance(result.get("timestamp"), list) else []
+    quote_time = None
+    if timestamps:
+        try:
+            quote_time = datetime.fromtimestamp(int(timestamps[-1]), tz=timezone.utc).astimezone(beijing_timezone()).isoformat(timespec="seconds")
+        except (ValueError, OSError, OverflowError):
+            quote_time = None
+    low20 = min(lows[-20:]) if len(lows) >= 5 else None
+    low60 = min(lows[-60:]) if len(lows) >= 20 else low20
+    low252 = min(lows[-252:]) if lows else None
+    high252 = max(highs[-252:]) if highs else None
+    invalidation_candidates = [value for value in (low60, low20, low252) if value is not None and value < price]
+    invalidation = min(invalidation_candidates) if invalidation_candidates else None
+    mechanical_target = high252 if high252 is not None and high252 > price else None
+    reward_risk = None
+    if invalidation is not None and mechanical_target is not None:
+        risk = price - invalidation
+        reward = mechanical_target - price
+        if risk > 0 and reward > 0:
+            reward_risk = round(reward / risk, 2)
+    return {
+        "price": round(price, 4),
+        "currency": meta.get("currency"),
+        "quote_time": quote_time,
+        "exchange": meta.get("exchangeName") or meta.get("fullExchangeName"),
+        "ma50": avg(closes[-50:]) if len(closes) >= 20 else None,
+        "ma200": avg(closes[-200:]) if len(closes) >= 80 else None,
+        "low20": round(low20, 4) if low20 is not None else None,
+        "low60": round(low60, 4) if low60 is not None else None,
+        "low252": round(low252, 4) if low252 is not None else None,
+        "high252": round(high252, 4) if high252 is not None else None,
+        "invalidation": round(invalidation, 4) if invalidation is not None else None,
+        "mechanical_target": round(mechanical_target, 4) if mechanical_target is not None else None,
+        "reward_risk": reward_risk,
+        "bar_count": len(closes),
+    }
+
+
+def collect_yahoo_quote_layer(fetcher: Fetcher, symbols: list[str], max_symbols: int) -> tuple[list[dict[str, Any]], list[dict[str, Any]], list[dict[str, Any]]]:
+    updated = iso(now_local())
+    candidates = [symbol for symbol in symbols if symbol.startswith(("HK.", "SH.", "SZ.", "CN."))][:max(0, max_symbols)]
+    records: list[dict[str, Any]] = []
+    gaps: list[dict[str, Any]] = []
+    success = 0
+    for symbol in candidates:
+        mapped = yahoo_symbol(symbol)
+        if not mapped:
+            gaps.append({"symbol": symbol, "source": "Yahoo Finance", "data_gap": "No Yahoo symbol mapping"})
+            continue
+        safe = urllib.parse.quote(mapped, safe="")
+        url = f"https://query1.finance.yahoo.com/v8/finance/chart/{safe}?range=1y&interval=1d&includePrePost=false"
+        data, error, status = fetcher.http_json(url, timeout=15)
+        value = yahoo_chart_value(data)
+        records.append(
+            field_record(
+                field=f"{symbol}.quote.yahoo_chart",
+                value=value,
+                source="Yahoo Finance",
+                source_type=SOURCE_TYPE_OPEN,
+                source_url=f"https://finance.yahoo.com/quote/{safe}",
+                updated_at=updated,
+                confidence="medium" if value else "low",
+                fallback_used=True,
+                data_gap=None if value else error or f"HTTP {status}" if status else "Yahoo chart unavailable",
+            )
+        )
+        if value:
+            success += 1
+        else:
+            gaps.append({"symbol": symbol, "source": "Yahoo Finance", "field": "quote.yahoo_chart", "data_gap": error or f"HTTP {status}" if status else "Yahoo chart unavailable"})
+    return records, [
+        health_record(
+            "Yahoo Finance",
+            "normal" if success == len(candidates) else ("limited" if success else "unknown" if not candidates else "error"),
+            f"Yahoo public chart fallback returned {success}/{len(candidates)} HK/A quote blocks.",
+            "Impacts HK/A price, technical levels and mechanical R/R fallback; not official filings.",
+            updated,
+        )
+    ], gaps
+
+
 def collect_cn_hk_official_placeholders(symbols: list[str]) -> tuple[list[dict[str, Any]], list[dict[str, Any]], list[dict[str, Any]]]:
     updated = iso(now_local())
     records: list[dict[str, Any]] = []
@@ -912,8 +1063,9 @@ def build_payload(args: argparse.Namespace) -> dict[str, Any]:
     for layer_records, layer_health, layer_gaps in (
         collect_sec_layer(fetcher, symbols, max_symbols=max(0, int(args.max_sec_symbols))),
         collect_fred_layer(fetcher),
-        collect_alpha_layer(fetcher, symbols, max_symbols=max(0, int(args.max_alpha_symbols))),
+        collect_alpha_layer(fetcher, symbols, max_symbols=max(0, int(args.max_alpha_symbols)), fmp_research=fmp_research),
         collect_openfigi_layer(fetcher, symbols, max_symbols=max(0, int(args.max_openfigi_symbols))),
+        collect_yahoo_quote_layer(fetcher, symbols, max_symbols=max(0, int(args.max_yahoo_symbols))),
         collect_cn_hk_official_placeholders(symbols),
     ):
         records.extend(layer_records)
@@ -937,6 +1089,7 @@ def build_payload(args: argparse.Namespace) -> dict[str, Any]:
             "transcripts": ["Company IR or SEC 8-K attachment", "Alpha Vantage transcript fallback"],
             "a_share_disclosures": ["CNINFO official", "AkShare/Tushare open-source fallback"],
             "hk_disclosures": ["HKEXnews official", "Futu/AkShare/Yahoo fallback"],
+            "hk_a_quotes_technicals": ["Yahoo public chart open-source fallback"],
             "symbol_mapping": ["SEC ticker files", "OpenFIGI"],
         },
         "symbols": symbols,
@@ -1009,9 +1162,10 @@ def main() -> int:
     parser.add_argument("--docs-out", type=Path, default=DEFAULT_DOCS_OUTPUT)
     parser.add_argument("--report", type=Path, default=DEFAULT_REPORT)
     parser.add_argument("--symbol-limit", type=int, default=60)
-    parser.add_argument("--max-sec-symbols", type=int, default=8)
-    parser.add_argument("--max-alpha-symbols", type=int, default=6)
+    parser.add_argument("--max-sec-symbols", type=int, default=16)
+    parser.add_argument("--max-alpha-symbols", type=int, default=10)
     parser.add_argument("--max-openfigi-symbols", type=int, default=12)
+    parser.add_argument("--max-yahoo-symbols", type=int, default=24)
     parser.add_argument("--no-archive-copy", action="store_true")
     args = parser.parse_args()
 

@@ -603,15 +603,15 @@ function renderGapBreakdown() {
   const breakdown = deriveEvidenceGapBreakdown();
   if (els.gapBreakdownUpdated) els.gapBreakdownUpdated.textContent = breakdown.updatedAt ? `更新 ${breakdown.updatedAt}` : "等待结构化数据";
   if (els.gapBreakdownSummary) {
-    els.gapBreakdownSummary.textContent = `原始合计 ${gapCountLabel(breakdown.originalTotal)} = 真实数据缺口 ${gapCountLabel(breakdown.dataGap)} + 权限受限 ${gapCountLabel(breakdown.permission)} + 入场路径缺失 ${gapCountLabel(breakdown.entryPath)} + R/R 纪律不通过 ${gapCountLabel(breakdown.rrDiscipline)}。`;
+    els.gapBreakdownSummary.textContent = `当前需要处理：真实数据缺口 ${gapCountLabel(breakdown.dataGap)}，权限/限流 ${gapCountLabel(breakdown.permission)}，待建交易计划 ${gapCountLabel(breakdown.entryPath)}；另有 R/R 纪律拦截 ${gapCountLabel(breakdown.rrDiscipline)}，这部分不是数据抓取失败。`;
   }
   els.gapBreakdownGrid.replaceChildren();
 
   const aggregateCards = [
     { label: "真实数据缺口", count: breakdown.dataGap, group: "data", detail: "财务、预期、SEC、港/A统一数据等缺失" },
     { label: "权限受限", count: breakdown.permission, group: "permission", detail: "接口 429、套餐限制或端点不可用" },
-    { label: "入场路径缺失", count: breakdown.entryPath, group: "entry", detail: "缺少完整买点、止损、目标价、R/R" },
-    { label: "R/R 纪律不通过", count: breakdown.rrDiscipline, group: "discipline", detail: "交易条件不达标，不算数据抓取失败" },
+    { label: "待建交易计划", count: breakdown.entryPath, group: "entry", detail: "缺少完整买点、止损、目标价、R/R" },
+    { label: "交易纪律拦截", count: breakdown.rrDiscipline, group: "discipline", detail: "R/R 不达标，不算数据抓取失败" },
   ];
 
   aggregateCards.forEach((item) => {

@@ -38,9 +38,21 @@ DEFAULT_MARKET_PACK = DATA_DIR / "latest_market_pack.json"
 DEFAULT_OPPORTUNITY_RADAR = DATA_DIR / "latest_opportunity_radar.json"
 DEFAULT_CROSS_MARKET = DATA_DIR / "latest_cross_market_intelligence.json"
 DEFAULT_FMP_RESEARCH = DATA_DIR / "latest_fmp_research.json"
+DEFAULT_FREE_DATA_FALLBACK = DATA_DIR / "latest_free_data_fallback.json"
 DEFAULT_OUTPUT = DATA_DIR / "latest_event_evidence.json"
 DEFAULT_DOCS_OUTPUT = DOCS_DATA_DIR / "event_evidence.json"
 DEFAULT_REPORT = REPORTS_DIR / "latest-event-evidence.md"
+
+FOREIGN_ADR_TICKERS = {
+    "ASML",
+    "BABA",
+    "BIDU",
+    "NIO",
+    "PDD",
+    "SONY",
+    "TSM",
+    "UMC",
+}
 
 
 def beijing_timezone() -> timezone:
@@ -160,6 +172,92 @@ def fmp_index(fmp_research: dict[str, Any]) -> dict[str, dict[str, Any]]:
         if isinstance(item, dict) and item.get("symbol"):
             output[str(item["symbol"]).upper()] = item
     return output
+
+
+def free_fallback_index(free_fallback: dict[str, Any]) -> dict[str, list[dict[str, Any]]]:
+    by_symbol = free_fallback.get("by_symbol") if isinstance(free_fallback.get("by_symbol"), dict) else {}
+    output: dict[str, list[dict[str, Any]]] = {}
+    for symbol, records in by_symbol.items():
+        normalized = normalize_code(symbol)
+        if normalized and isinstance(records, list):
+            output[normalized] = [record for record in records if isinstance(record, dict)]
+            us = us_symbol(normalized)
+            if us:
+                output[us] = output[normalized]
+    return output
+
+
+def fallback_records_for(code: str, free_by_symbol: dict[str, list[dict[str, Any]]]) -> list[dict[str, Any]]:
+    normalized = normalize_code(code)
+    records = list(free_by_symbol.get(normalized, []))
+    us = us_symbol(normalized)
+    if us and not records:
+        records = list(free_by_symbol.get(us, []))
+    return records
+
+
+def useful_fallback_records(records: list[dict[str, Any]], suffix: str) -> list[dict[str, Any]]:
+    output: list[dict[str, Any]] = []
+    for record in records:
+        field = str(record.get("field") or "")
+        if not field.endswith(suffix):
+            continue
+        if record.get("data_gap"):
+            continue
+        value = record.get("value")
+        if value in (None, "", [], {}):
+            continue
+        output.append(record)
+    return output
+
+
+def first_fallback_value(records: list[dict[str, Any]], suffix: str) -> Any:
+    matches = useful_fallback_records(records, suffix)
+    return matches[0].get("value") if matches else None
+
+
+def free_sec_summary(records: list[dict[str, Any]]) -> dict[str, Any]:
+    submissions = first_fallback_value(records, ".sec.submissions")
+    facts = first_fallback_value(records, ".sec.companyfacts")
+    sec: dict[str, Any] = {}
+    if isinstance(submissions, dict):
+        sec["recent_filings"] = submissions.get("recent_filings") if isinstance(submissions.get("recent_filings"), list) else []
+        sec["company"] = submissions.get("company")
+        sec["cik"] = submissions.get("cik")
+        sec["sec_coverage"] = bool(sec["recent_filings"])
+        sec["fallback_source"] = "free_data_fallback.SEC"
+    if isinstance(facts, dict):
+        sec["latest_annual_revenue"] = facts.get("latest_annual_revenue") if isinstance(facts.get("latest_annual_revenue"), dict) else {}
+        sec["latest_annual_net_income"] = facts.get("latest_annual_net_income") if isinstance(facts.get("latest_annual_net_income"), dict) else {}
+        sec["latest_annual_fcf"] = facts.get("latest_annual_fcf") if isinstance(facts.get("latest_annual_fcf"), dict) else {}
+        sec["net_margin"] = facts.get("net_margin")
+        sec["liabilities_to_assets"] = facts.get("liabilities_to_assets")
+        sec["fallback_source"] = "free_data_fallback.SEC"
+        sec["sec_coverage"] = True
+    return sec
+
+
+def free_quote_summary(records: list[dict[str, Any]]) -> dict[str, Any]:
+    value = first_fallback_value(records, ".quote.yahoo_chart")
+    return value if isinstance(value, dict) else {}
+
+
+def has_alpha_estimates(records: list[dict[str, Any]]) -> bool:
+    return bool(useful_fallback_records(records, ".earnings.estimates"))
+
+
+def has_alpha_surprise(records: list[dict[str, Any]]) -> bool:
+    return bool(useful_fallback_records(records, ".earnings.actuals_surprise"))
+
+
+def is_foreign_adr(code: str, market_row: dict[str, Any]) -> bool:
+    symbol = us_symbol(code)
+    if not symbol:
+        return False
+    if symbol.upper() in FOREIGN_ADR_TICKERS:
+        return True
+    name = str(market_row.get("name") or "").lower()
+    return "adr" in name or "depositary" in name
 
 
 def cross_market_index(cross_market: dict[str, Any]) -> dict[str, dict[str, Any]]:
@@ -310,9 +408,33 @@ def sec_financial_evidence(market_row: dict[str, Any]) -> dict[str, Any]:
     }
 
 
-def fmp_evidence(row: dict[str, Any]) -> dict[str, Any]:
+def fmp_evidence(row: dict[str, Any], fallback_records: list[dict[str, Any]] | None = None) -> dict[str, Any]:
+    fallback_records = fallback_records or []
+    alpha_estimates = has_alpha_estimates(fallback_records)
+    alpha_surprise = has_alpha_surprise(fallback_records)
     if not row:
-        return {"available": False, "score": 0, "gaps": ["缺少 FMP 预期/财报快照"]}
+        gaps: list[str] = []
+        if not (alpha_estimates or alpha_surprise):
+            gaps.append("缺少 FMP 预期/财报快照")
+        if (alpha_estimates or alpha_surprise) and not alpha_estimates:
+            gaps.append("缺少年/季度分析师预期")
+        if (alpha_estimates or alpha_surprise) and not alpha_surprise:
+            gaps.append("缺少最近财报 surprise")
+        return {
+            "available": bool(alpha_estimates or alpha_surprise),
+            "coverage_status": "alpha_vantage_fallback" if alpha_estimates or alpha_surprise else None,
+            "expectation_score": None,
+            "price_target_upside_pct": None,
+            "eps_revision_pct": None,
+            "revenue_revision_pct": None,
+            "eps_surprise_pct": None,
+            "rating": None,
+            "annual_eps_estimate": None,
+            "annual_revenue_estimate": None,
+            "score": 42 if alpha_estimates or alpha_surprise else 0,
+            "gaps": gaps,
+            "fallback_used": "Alpha Vantage" if alpha_estimates or alpha_surprise else None,
+        }
     annual = row.get("annual_estimate") if isinstance(row.get("annual_estimate"), dict) else {}
     revision = row.get("estimate_revision") if isinstance(row.get("estimate_revision"), dict) else {}
     surprise = row.get("latest_earnings_surprise") if isinstance(row.get("latest_earnings_surprise"), dict) else {}
@@ -334,15 +456,15 @@ def fmp_evidence(row: dict[str, Any]) -> dict[str, Any]:
     if eps_surprise is not None and eps_surprise >= 5:
         score += 6
     gaps: list[str] = []
-    if not annual:
+    if not annual and not alpha_estimates:
         gaps.append("缺少年/季度分析师预期")
-    if not surprise:
+    if not surprise and not alpha_surprise:
         gaps.append("缺少最近财报 surprise")
     restricted = row.get("restricted_endpoints") if isinstance(row.get("restricted_endpoints"), list) else []
-    if restricted:
+    if restricted and not (alpha_estimates or alpha_surprise):
         gaps.append("FMP 部分端点受限：" + "、".join(str(item) for item in restricted[:3]))
     return {
-        "available": row.get("coverage_status") not in {"restricted", "rate_limited", "unavailable", "empty"},
+        "available": row.get("coverage_status") not in {"restricted", "rate_limited", "unavailable", "empty"} or bool(alpha_estimates or alpha_surprise),
         "coverage_status": row.get("coverage_status"),
         "expectation_score": expectation_score,
         "price_target_upside_pct": upside,
@@ -354,27 +476,33 @@ def fmp_evidence(row: dict[str, Any]) -> dict[str, Any]:
         "annual_revenue_estimate": annual.get("revenueAvg"),
         "score": round(clamp(score), 1),
         "gaps": gaps,
+        "fallback_used": "Alpha Vantage" if alpha_estimates or alpha_surprise else None,
     }
 
 
-def price_evidence(market_row: dict[str, Any], fallback_row: dict[str, Any]) -> dict[str, Any]:
+def price_evidence(
+    market_row: dict[str, Any],
+    fallback_row: dict[str, Any],
+    fallback_records: list[dict[str, Any]] | None = None,
+) -> dict[str, Any]:
+    free_quote = free_quote_summary(fallback_records or [])
     chart = market_row.get("chart") if isinstance(market_row.get("chart"), dict) else {}
-    price = number(market_row.get("price")) or number(fallback_row.get("price"))
-    ma50 = number(chart.get("ma50"))
-    ma200 = number(chart.get("ma200"))
-    high252 = number(chart.get("high252"))
-    low20 = number(chart.get("low20"))
-    low60 = number(chart.get("low60"))
-    low252 = number(chart.get("low252"))
+    price = number(market_row.get("price")) or number(fallback_row.get("price")) or number(free_quote.get("price"))
+    ma50 = number(chart.get("ma50")) or number(free_quote.get("ma50"))
+    ma200 = number(chart.get("ma200")) or number(free_quote.get("ma200"))
+    high252 = number(chart.get("high252")) or number(free_quote.get("high252"))
+    low20 = number(chart.get("low20")) or number(free_quote.get("low20"))
+    low60 = number(chart.get("low60")) or number(free_quote.get("low60"))
+    low252 = number(chart.get("low252")) or number(free_quote.get("low252"))
     target = (
         number(market_row.get("mechanical_target"))
         or number(fallback_row.get("mechanical_target"))
         or number(fallback_row.get("target_price"))
         or number(fallback_row.get("target"))
     )
-    invalidation = number(market_row.get("invalidation")) or number(fallback_row.get("invalidation"))
-    strict_entry = number(market_row.get("strict_entry")) or number(fallback_row.get("strict_entry"))
-    rr = number(market_row.get("reward_risk")) or number(fallback_row.get("reward_risk")) or number(fallback_row.get("rr_ratio"))
+    invalidation = number(market_row.get("invalidation")) or number(fallback_row.get("invalidation")) or number(free_quote.get("invalidation"))
+    strict_entry = number(market_row.get("strict_entry")) or number(fallback_row.get("strict_entry")) or number(free_quote.get("strict_entry"))
+    rr = number(market_row.get("reward_risk")) or number(fallback_row.get("reward_risk")) or number(fallback_row.get("rr_ratio")) or number(free_quote.get("reward_risk"))
     fallback_reason = None
     if rr is None and price is not None:
         if invalidation is None:
@@ -406,12 +534,13 @@ def price_evidence(market_row: dict[str, Any], fallback_row: dict[str, Any]) -> 
     return {
         "available": price is not None,
         "price": price,
-        "quote_time": market_row.get("quote_time"),
+        "quote_time": market_row.get("quote_time") or free_quote.get("quote_time"),
+        "currency": free_quote.get("currency"),
         "reward_risk": rr,
         "entry_path_complete": price is not None and target is not None and invalidation is not None and rr is not None,
         "entry_path_fallback": fallback_reason,
         "trend_score": trend,
-        "source": "market_pack" if market_row.get("price") else "cross_market_intelligence" if price is not None else None,
+        "source": "market_pack" if market_row.get("price") else "cross_market_intelligence" if fallback_row.get("price") else "Yahoo chart fallback" if free_quote.get("price") else None,
         "strict_entry": strict_entry,
         "invalidation": invalidation,
         "mechanical_target": target,
@@ -429,6 +558,7 @@ def evidence_card(
     market_index: dict[str, dict[str, Any]],
     cross_by_code: dict[str, dict[str, Any]],
     fmp_by_symbol: dict[str, dict[str, Any]],
+    free_by_symbol: dict[str, list[dict[str, Any]]],
     sec_mapping: dict[str, dict[str, Any]],
     sec_errors: dict[str, str],
     now: datetime,
@@ -436,9 +566,15 @@ def evidence_card(
     symbol = us_symbol(code)
     market_row = market_index.get(code) or (market_index.get(symbol) if symbol else {}) or {}
     fallback_row = cross_by_code.get(code) or (cross_by_code.get(symbol) if symbol else {}) or {}
+    free_records = fallback_records_for(code, free_by_symbol)
     fmp_row = fmp_by_symbol.get(symbol or "")
     if symbol:
         current_sec = market_row.get("sec") if isinstance(market_row.get("sec"), dict) else {}
+        free_sec = free_sec_summary(free_records)
+        if free_sec and sec_needs_fallback(current_sec):
+            market_row = dict(market_row)
+            market_row["sec"] = merge_sec_summary(current_sec, free_sec)
+            current_sec = market_row.get("sec") if isinstance(market_row.get("sec"), dict) else {}
         if sec_needs_fallback(current_sec):
             fallback_sec = sec_fallback_summary(symbol, sec_mapping, sec_errors)
             if fallback_sec:
@@ -446,8 +582,9 @@ def evidence_card(
                 market_row["sec"] = merge_sec_summary(current_sec, fallback_sec)
     filing = latest_filing_evidence(market_row, now)
     financials = sec_financial_evidence(market_row)
-    fmp = fmp_evidence(fmp_row or {})
-    price = price_evidence(market_row, fallback_row)
+    fmp = fmp_evidence(fmp_row or {}, free_records)
+    price = price_evidence(market_row, fallback_row, free_records)
+    foreign_adr = is_foreign_adr(code, market_row)
 
     related_theme_names: list[str] = []
     for source in (opportunity_radar, cross_market):
@@ -467,10 +604,14 @@ def evidence_card(
         gaps.append("缺少市场行情/财务基础包")
     if not filing.get("available") and symbol:
         gaps.append("缺少 SEC 最近申报记录")
-    if not financials.get("available") and symbol:
+    if not financials.get("available") and symbol and not foreign_adr:
         gaps.append("缺少 SEC 财务事实")
+    elif not financials.get("available") and foreign_adr:
+        financials["coverage_note"] = "ADR/foreign issuer; SEC companyfacts is optional and should be checked against company IR/FMP."
     if not symbol:
-        gaps.append("非美股标的缺少统一财务与公告正文数据源")
+        has_official_disclosure = bool(useful_fallback_records(free_records, ".official_disclosure"))
+        if not has_official_disclosure:
+            gaps.append("非美股标的缺少统一财务与公告正文数据源")
     gaps.extend(fmp.get("gaps", []))
     if not price.get("entry_path_complete"):
         gaps.append("缺少完整 R/R 或机械入场路径")
@@ -668,6 +809,7 @@ def build_payload(
     opportunity_radar: dict[str, Any],
     cross_market: dict[str, Any],
     fmp_research: dict[str, Any],
+    free_fallback: dict[str, Any],
     *,
     limit: int,
 ) -> dict[str, Any]:
@@ -675,6 +817,7 @@ def build_payload(
     market_index = market_pack_index(market_pack)
     cross_by_code = cross_market_index(cross_market)
     fmp_by_symbol = fmp_index(fmp_research)
+    free_by_symbol = free_fallback_index(free_fallback)
     codes = candidate_codes(opportunity_radar, cross_market, limit)
     sec_mapping: dict[str, dict[str, Any]] = {}
     sec_errors: dict[str, str] = {}
@@ -684,7 +827,7 @@ def build_payload(
         except Exception as exc:  # noqa: BLE001
             sec_errors["mapping"] = str(exc)
     cards = [
-        evidence_card(code, opportunity_radar, cross_market, market_index, cross_by_code, fmp_by_symbol, sec_mapping, sec_errors, now)
+        evidence_card(code, opportunity_radar, cross_market, market_index, cross_by_code, fmp_by_symbol, free_by_symbol, sec_mapping, sec_errors, now)
         for code in codes
     ]
     cards.sort(key=lambda item: item.get("evidence_score") or 0, reverse=True)
@@ -803,6 +946,7 @@ def main() -> int:
     parser.add_argument("--opportunity-radar", type=Path, default=DEFAULT_OPPORTUNITY_RADAR)
     parser.add_argument("--cross-market-intelligence", type=Path, default=DEFAULT_CROSS_MARKET)
     parser.add_argument("--fmp-research", type=Path, default=DEFAULT_FMP_RESEARCH)
+    parser.add_argument("--free-data-fallback", type=Path, default=DEFAULT_FREE_DATA_FALLBACK)
     parser.add_argument("--out", type=Path, default=DEFAULT_OUTPUT)
     parser.add_argument("--docs-out", type=Path, default=DEFAULT_DOCS_OUTPUT)
     parser.add_argument("--report", type=Path, default=DEFAULT_REPORT)
@@ -814,6 +958,7 @@ def main() -> int:
         load_json(args.opportunity_radar, {}),
         load_json(args.cross_market_intelligence, {}),
         load_json(args.fmp_research, {}),
+        load_json(args.free_data_fallback, {}),
         limit=max(1, args.limit),
     )
     write_json(args.out, payload)
