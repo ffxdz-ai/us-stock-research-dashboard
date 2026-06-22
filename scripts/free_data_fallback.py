@@ -63,6 +63,7 @@ SOURCE_TYPE_OFFICIAL = "official"
 SOURCE_TYPE_COMPANY_IR = "company_ir"
 SOURCE_TYPE_VENDOR = "vendor_fallback"
 SOURCE_TYPE_OPEN = "open_source_fallback"
+ALPHA_LAST_REQUEST_AT = 0.0
 
 
 def beijing_timezone() -> timezone:
@@ -595,12 +596,18 @@ def collect_fred_layer(fetcher: Fetcher) -> tuple[list[dict[str, Any]], list[dic
 
 
 def alpha_request(fetcher: Fetcher, api_key: str, function: str, **params: Any) -> tuple[Any | None, str | None, int | None, str]:
+    global ALPHA_LAST_REQUEST_AT
     query = {"function": function, "apikey": api_key, **{k: v for k, v in params.items() if v not in (None, "")}}
     safe_query = dict(query)
     safe_query["apikey"] = "REDACTED"
     url = f"https://www.alphavantage.co/query?{urllib.parse.urlencode(query)}"
     safe_url = f"https://www.alphavantage.co/query?{urllib.parse.urlencode(safe_query)}"
+    delay = max(0.0, number(os.getenv("ALPHA_REQUEST_DELAY_SECONDS", "1.25")) or 0.0)
+    elapsed = time.monotonic() - ALPHA_LAST_REQUEST_AT
+    if delay and elapsed < delay:
+        time.sleep(delay - elapsed)
     text, error, status = fetcher.http_text(url, timeout=18)
+    ALPHA_LAST_REQUEST_AT = time.monotonic()
     if text is None:
         return None, error, status, safe_url
     stripped = text.strip()
@@ -860,7 +867,8 @@ def yahoo_symbol(symbol: str) -> str | None:
     if market == "US":
         return ticker
     if market == "HK":
-        return f"{ticker.zfill(4)}.HK"
+        hk_code = ticker.lstrip("0") or ticker
+        return f"{hk_code.zfill(4)}.HK"
     if market == "SH":
         return f"{ticker}.SS"
     if market == "SZ":
