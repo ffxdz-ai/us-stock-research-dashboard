@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-06-22T18:17:00+08:00",
-  "generated_label": "2026-06-22 18:17",
+  "generated_at": "2026-06-22T18:22:28+08:00",
+  "generated_label": "2026-06-22 18:22",
   "data_boundary": {
     "role": "opportunity discovery feedback loop; not trading instruction",
     "hit_rate_rule": "Hit-rate is calculated only from mature themes or completed reviews; immature themes are not counted as wins."
@@ -15,7 +15,7 @@
     "completed_review_count": 0,
     "due_checkpoint_count": 0,
     "pending_checkpoint_count": 15,
-    "avg_live_return_pct": 0.97,
+    "avg_live_return_pct": 0.94,
     "best_theme": "AI 数据中心电力 / 液冷 / 配电"
   },
   "themes": [
@@ -29,13 +29,13 @@
       "score_delta": -5.1,
       "tracked_security_count": 7,
       "priced_security_count": 5,
-      "avg_return_pct": 1.49,
+      "avg_return_pct": 1.55,
       "median_return_pct": 1.82,
       "best_security": {
         "code": "US.VRT",
         "initial_price": 333.05,
-        "current_price": 341.1,
-        "return_pct": 2.42
+        "current_price": 341.2,
+        "return_pct": 2.45
       },
       "worst_security": {
         "code": "US.PH",
@@ -53,8 +53,8 @@
         {
           "code": "US.VRT",
           "initial_price": 333.05,
-          "current_price": 341.1,
-          "return_pct": 2.42
+          "current_price": 341.2,
+          "return_pct": 2.45
         },
         {
           "code": "US.EMR",
@@ -71,8 +71,8 @@
         {
           "code": "US.ETN",
           "initial_price": 421.77,
-          "current_price": 424.74,
-          "return_pct": 0.7
+          "current_price": 425.9158,
+          "return_pct": 0.98
         },
         {
           "code": "US.PH",
@@ -92,19 +92,19 @@
       "score_delta": 0.3,
       "tracked_security_count": 8,
       "priced_security_count": 6,
-      "avg_return_pct": 1.1,
-      "median_return_pct": 1.09,
+      "avg_return_pct": 1.03,
+      "median_return_pct": 1.03,
       "best_security": {
         "code": "US.MU",
         "initial_price": 1133.99,
-        "current_price": 1176.28,
-        "return_pct": 3.73
+        "current_price": 1174.9,
+        "return_pct": 3.61
       },
       "worst_security": {
         "code": "US.AVGO",
         "initial_price": 411.35,
-        "current_price": 406.4661,
-        "return_pct": -1.19
+        "current_price": 406.15,
+        "return_pct": -1.26
       },
       "completed_checkpoint_count": 0,
       "due_checkpoint_count": 0,
@@ -116,38 +116,101 @@
         {
           "code": "US.MU",
           "initial_price": 1133.99,
-          "current_price": 1176.28,
-          "return_pct": 3.73
+          "current_price": 1174.9,
+          "return_pct": 3.61
         },
         {
           "code": "US.TSM",
           "initial_price": 462.12,
-          "current_price": 473.1723,
-          "return_pct": 2.39
+          "current_price": 472.298,
+          "return_pct": 2.2
         },
         {
           "code": "US.MRVL",
           "initial_price": 310.58,
-          "current_price": 316.0,
-          "return_pct": 1.75
+          "current_price": 315.65,
+          "return_pct": 1.63
         },
         {
           "code": "US.AMD",
           "initial_price": 537.37,
-          "current_price": 539.69,
-          "return_pct": 0.43
+          "current_price": 539.75,
+          "return_pct": 0.44
         },
         {
           "code": "US.NVDA",
           "initial_price": 210.69,
-          "current_price": 209.6,
-          "return_pct": -0.52
+          "current_price": 209.7,
+          "return_pct": -0.47
         },
         {
           "code": "US.AVGO",
           "initial_price": 411.35,
-          "current_price": 406.4661,
-          "return_pct": -1.19
+          "current_price": 406.15,
+          "return_pct": -1.26
+        }
+      ]
+    },
+    {
+      "theme_id": "ai_optical_cpo_networking",
+      "theme_name": "AI 光模块 / CPO / 数据中心网络",
+      "first_seen_at": "2026-06-21T04:10:31+08:00",
+      "age_days": 1,
+      "initial_score": 67.2,
+      "current_score": 67.0,
+      "score_delta": -0.2,
+      "tracked_security_count": 8,
+      "priced_security_count": 5,
+      "avg_return_pct": 0.79,
+      "median_return_pct": 0.48,
+      "best_security": {
+        "code": "US.COHR",
+        "initial_price": 389.57,
+        "current_price": 396.11,
+        "return_pct": 1.68
+      },
+      "worst_security": {
+        "code": "US.LITE",
+        "initial_price": 850.0,
+        "current_price": 847.99,
+        "return_pct": -0.24
+      },
+      "completed_checkpoint_count": 0,
+      "due_checkpoint_count": 0,
+      "pending_checkpoint_count": 3,
+      "mature": false,
+      "hit": null,
+      "status": "未成熟观察",
+      "returns": [
+        {
+          "code": "US.COHR",
+          "initial_price": 389.57,
+          "current_price": 396.11,
+          "return_pct": 1.68
+        },
+        {
+          "code": "US.MRVL",
+          "initial_price": 310.58,
+          "current_price": 315.65,
+          "return_pct": 1.63
+        },
+        {
+          "code": "US.ANET",
+          "initial_price": 169.67,
+          "current_price": 170.48,
+          "return_pct": 0.48
+        },
+        {
+          "code": "US.CIEN",
+          "initial_price": 428.22,
+          "current_price": 429.95,
+          "return_pct": 0.4
+        },
+        {
+          "code": "US.LITE",
+          "initial_price": 850.0,
+          "current_price": 847.99,
+          "return_pct": -0.24
         }
       ]
     },
@@ -161,8 +224,8 @@
       "score_delta": 0.7,
       "tracked_security_count": 9,
       "priced_security_count": 3,
-      "avg_return_pct": 0.9,
-      "median_return_pct": 1.18,
+      "avg_return_pct": 0.75,
+      "median_return_pct": 0.72,
       "best_security": {
         "code": "US.FLEX",
         "initial_price": 147.61,
@@ -191,77 +254,14 @@
         {
           "code": "US.TTMI",
           "initial_price": 216.44,
-          "current_price": 219.0,
-          "return_pct": 1.18
+          "current_price": 218.0,
+          "return_pct": 0.72
         },
         {
           "code": "US.JBL",
           "initial_price": 371.88,
           "current_price": 371.56,
           "return_pct": -0.09
-        }
-      ]
-    },
-    {
-      "theme_id": "ai_optical_cpo_networking",
-      "theme_name": "AI 光模块 / CPO / 数据中心网络",
-      "first_seen_at": "2026-06-21T04:10:31+08:00",
-      "age_days": 1,
-      "initial_score": 67.2,
-      "current_score": 67.0,
-      "score_delta": -0.2,
-      "tracked_security_count": 8,
-      "priced_security_count": 5,
-      "avg_return_pct": 0.74,
-      "median_return_pct": 0.48,
-      "best_security": {
-        "code": "US.MRVL",
-        "initial_price": 310.58,
-        "current_price": 316.0,
-        "return_pct": 1.75
-      },
-      "worst_security": {
-        "code": "US.LITE",
-        "initial_price": 850.0,
-        "current_price": 848.0,
-        "return_pct": -0.24
-      },
-      "completed_checkpoint_count": 0,
-      "due_checkpoint_count": 0,
-      "pending_checkpoint_count": 3,
-      "mature": false,
-      "hit": null,
-      "status": "未成熟观察",
-      "returns": [
-        {
-          "code": "US.MRVL",
-          "initial_price": 310.58,
-          "current_price": 316.0,
-          "return_pct": 1.75
-        },
-        {
-          "code": "US.COHR",
-          "initial_price": 389.57,
-          "current_price": 396.0,
-          "return_pct": 1.65
-        },
-        {
-          "code": "US.ANET",
-          "initial_price": 169.67,
-          "current_price": 170.48,
-          "return_pct": 0.48
-        },
-        {
-          "code": "US.CIEN",
-          "initial_price": 428.22,
-          "current_price": 428.41,
-          "return_pct": 0.04
-        },
-        {
-          "code": "US.LITE",
-          "initial_price": 850.0,
-          "current_price": 848.0,
-          "return_pct": -0.24
         }
       ]
     },
@@ -275,7 +275,7 @@
       "score_delta": -3.5,
       "tracked_security_count": 5,
       "priced_security_count": 5,
-      "avg_return_pct": 0.6,
+      "avg_return_pct": 0.57,
       "median_return_pct": -0.35,
       "best_security": {
         "code": "US.ROK",
@@ -286,8 +286,8 @@
       "worst_security": {
         "code": "US.TSLA",
         "initial_price": 400.49,
-        "current_price": 394.76,
-        "return_pct": -1.43
+        "current_price": 394.29,
+        "return_pct": -1.55
       },
       "completed_checkpoint_count": 0,
       "due_checkpoint_count": 0,
@@ -323,8 +323,8 @@
         {
           "code": "US.TSLA",
           "initial_price": 400.49,
-          "current_price": 394.76,
-          "return_pct": -1.43
+          "current_price": 394.29,
+          "return_pct": -1.55
         }
       ]
     }

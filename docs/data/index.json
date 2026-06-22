@@ -1,10 +1,10 @@
 {
-  "generated_at": "2026-06-22T10:18:10+00:00",
-  "generated_label": "2026-06-22 10:18",
+  "generated_at": "2026-06-22T10:23:43+00:00",
+  "generated_label": "2026-06-22 10:23",
   "privacy": "public-sanitized",
   "report_count": 80,
   "review_stats": {
-    "updated_at": "2026-06-22 18:17",
+    "updated_at": "2026-06-22 18:22",
     "tracked_count": 23,
     "completed_count": 0,
     "pending_count": 15,
@@ -191,54 +191,6 @@
         "lesson": null
       },
       {
-        "symbol": "US.FLEX",
-        "name": "",
-        "first_seen": "2026-06-21",
-        "first_price": 147.61,
-        "currency": "USD",
-        "status": "pending",
-        "return_7d": null,
-        "return_30d": null,
-        "return_60d": null,
-        "return_90d": null,
-        "max_drawdown": null,
-        "max_gain": null,
-        "error_type": null,
-        "lesson": null
-      },
-      {
-        "symbol": "US.TTMI",
-        "name": "",
-        "first_seen": "2026-06-21",
-        "first_price": 216.44,
-        "currency": "USD",
-        "status": "pending",
-        "return_7d": null,
-        "return_30d": null,
-        "return_60d": null,
-        "return_90d": null,
-        "max_drawdown": null,
-        "max_gain": null,
-        "error_type": null,
-        "lesson": null
-      },
-      {
-        "symbol": "US.JBL",
-        "name": "",
-        "first_seen": "2026-06-21",
-        "first_price": 371.88,
-        "currency": "USD",
-        "status": "pending",
-        "return_7d": null,
-        "return_30d": null,
-        "return_60d": null,
-        "return_90d": null,
-        "max_drawdown": null,
-        "max_gain": null,
-        "error_type": null,
-        "lesson": null
-      },
-      {
         "symbol": "US.COHR",
         "name": "",
         "first_seen": "2026-06-21",
@@ -291,6 +243,54 @@
         "name": "",
         "first_seen": "2026-06-21",
         "first_price": 850.0,
+        "currency": "USD",
+        "status": "pending",
+        "return_7d": null,
+        "return_30d": null,
+        "return_60d": null,
+        "return_90d": null,
+        "max_drawdown": null,
+        "max_gain": null,
+        "error_type": null,
+        "lesson": null
+      },
+      {
+        "symbol": "US.FLEX",
+        "name": "",
+        "first_seen": "2026-06-21",
+        "first_price": 147.61,
+        "currency": "USD",
+        "status": "pending",
+        "return_7d": null,
+        "return_30d": null,
+        "return_60d": null,
+        "return_90d": null,
+        "max_drawdown": null,
+        "max_gain": null,
+        "error_type": null,
+        "lesson": null
+      },
+      {
+        "symbol": "US.TTMI",
+        "name": "",
+        "first_seen": "2026-06-21",
+        "first_price": 216.44,
+        "currency": "USD",
+        "status": "pending",
+        "return_7d": null,
+        "return_30d": null,
+        "return_60d": null,
+        "return_90d": null,
+        "max_drawdown": null,
+        "max_gain": null,
+        "error_type": null,
+        "lesson": null
+      },
+      {
+        "symbol": "US.JBL",
+        "name": "",
+        "first_seen": "2026-06-21",
+        "first_price": 371.88,
         "currency": "USD",
         "status": "pending",
         "return_7d": null,
@@ -385,12 +385,12 @@
     ]
   },
   "evidence_gap_breakdown": {
-    "updated_at": "2026-06-22 18:16",
+    "updated_at": "2026-06-22 18:22",
     "original_total": 57,
     "data_gap": 29,
     "permission_limited": 3,
-    "entry_path_missing": 9,
-    "rr_discipline": 16,
+    "entry_path_missing": 0,
+    "rr_discipline": 25,
     "other": 0,
     "categories": [
       {
@@ -456,30 +456,11 @@
         "fallback": "升级套餐、降低频率或使用 SEC/公司 IR 替代证据。"
       },
       {
-        "key": "entry_path_missing",
-        "label": "缺少完整 R/R 或机械入场路径",
-        "group": "entry",
-        "group_label": "入场路径缺失",
-        "count": 9,
-        "affected_symbols": [
-          "HK.01347",
-          "SZ.300308",
-          "SZ.300502",
-          "HK.01888",
-          "HK.00148",
-          "SZ.002747",
-          "HK.00981",
-          "SZ.300394",
-          "SZ.300499"
-        ],
-        "fallback": "补齐当前价、支撑/止损、目标价和 R/R。"
-      },
-      {
         "key": "rr_discipline",
         "label": "R/R 未达 2:1",
         "group": "discipline",
         "group_label": "交易纪律不通过",
-        "count": 16,
+        "count": 25,
         "affected_symbols": [
           "US.NVDA",
           "US.MRVL",
@@ -496,7 +477,16 @@
           "US.EMR",
           "US.JBL",
           "US.ROK",
-          "US.TSM"
+          "US.TSM",
+          "HK.01347",
+          "SZ.300308",
+          "SZ.300502",
+          "HK.01888",
+          "HK.00148",
+          "SZ.002747",
+          "HK.00981",
+          "SZ.300394",
+          "SZ.300499"
         ],
         "fallback": "等待回调、上修目标价或提高止损逻辑质量。"
       }
@@ -514,7 +504,7 @@
       "action": "跨市场强候选；进入二次分析候选池，需 Futu/财报/流动性复核",
       "price": 145.59,
       "currency": "CNY",
-      "price_time": "2026-06-22T18:17:00+08:00",
+      "price_time": "2026-06-22T18:22:28+08:00",
       "price_source": "公开日线行情已接入；需 Futu/券商复核",
       "opportunity_score": 81.0,
       "trend_score": 76.0,
@@ -542,7 +532,7 @@
         "跌破后续 Buy-Side 分析定义的失效位"
       ],
       "source": "secondary_analysis_queue",
-      "updated_at": "2026-06-22 18:17"
+      "updated_at": "2026-06-22 18:22"
     },
     {
       "symbol": "US.ASML",
@@ -553,9 +543,9 @@
       "status": "secondary_analysis",
       "status_label": "二次分析",
       "action": "进入二次分析候选池；等待 Buy-Side 复核",
-      "price": 1938.0,
+      "price": 1937.75,
       "currency": "USD",
-      "price_time": "2026-06-22T18:17:00+08:00",
+      "price_time": "2026-06-22T18:22:28+08:00",
       "price_source": "行情已接入",
       "opportunity_score": 81.0,
       "trend_score": 88.0,
@@ -583,7 +573,7 @@
         "跌破后续 Buy-Side 分析定义的失效位"
       ],
       "source": "secondary_analysis_queue",
-      "updated_at": "2026-06-22 18:17"
+      "updated_at": "2026-06-22 18:22"
     },
     {
       "symbol": "SZ.000988",
@@ -596,7 +586,7 @@
       "action": "跨市场强候选；进入二次分析候选池，需 Futu/财报/流动性复核",
       "price": 174.67,
       "currency": "CNY",
-      "price_time": "2026-06-22T18:17:00+08:00",
+      "price_time": "2026-06-22T18:22:28+08:00",
       "price_source": "公开日线行情已接入；需 Futu/券商复核",
       "opportunity_score": 78.2,
       "trend_score": 88.0,
@@ -624,7 +614,7 @@
         "跌破后续 Buy-Side 分析定义的失效位"
       ],
       "source": "secondary_analysis_queue",
-      "updated_at": "2026-06-22 18:17"
+      "updated_at": "2026-06-22 18:22"
     },
     {
       "symbol": "SZ.002916",
@@ -637,7 +627,7 @@
       "action": "跨市场强候选；进入二次分析候选池，需 Futu/财报/流动性复核",
       "price": 457.34,
       "currency": "CNY",
-      "price_time": "2026-06-22T18:17:00+08:00",
+      "price_time": "2026-06-22T18:22:28+08:00",
       "price_source": "公开日线行情已接入；需 Futu/券商复核",
       "opportunity_score": 77.6,
       "trend_score": 88.0,
@@ -665,7 +655,7 @@
         "跌破后续 Buy-Side 分析定义的失效位"
       ],
       "source": "secondary_analysis_queue",
-      "updated_at": "2026-06-22 18:17"
+      "updated_at": "2026-06-22 18:22"
     },
     {
       "symbol": "SZ.002938",
@@ -678,7 +668,7 @@
       "action": "跨市场强候选；进入二次分析候选池，需 Futu/财报/流动性复核",
       "price": 112.99,
       "currency": "CNY",
-      "price_time": "2026-06-22T18:17:00+08:00",
+      "price_time": "2026-06-22T18:22:28+08:00",
       "price_source": "公开日线行情已接入；需 Futu/券商复核",
       "opportunity_score": 77.6,
       "trend_score": 76.0,
@@ -706,7 +696,7 @@
         "跌破后续 Buy-Side 分析定义的失效位"
       ],
       "source": "secondary_analysis_queue",
-      "updated_at": "2026-06-22 18:17"
+      "updated_at": "2026-06-22 18:22"
     },
     {
       "symbol": "SZ.300274",
@@ -719,7 +709,7 @@
       "action": "跨市场强候选；进入二次分析候选池，需 Futu/财报/流动性复核",
       "price": 163.46,
       "currency": "CNY",
-      "price_time": "2026-06-22T18:17:00+08:00",
+      "price_time": "2026-06-22T18:22:28+08:00",
       "price_source": "公开日线行情已接入；需 Futu/券商复核",
       "opportunity_score": 76.5,
       "trend_score": 76.0,
@@ -747,7 +737,7 @@
         "跌破后续 Buy-Side 分析定义的失效位"
       ],
       "source": "secondary_analysis_queue",
-      "updated_at": "2026-06-22 18:17"
+      "updated_at": "2026-06-22 18:22"
     },
     {
       "symbol": "US.GE",
@@ -760,7 +750,7 @@
       "action": "进入二次分析候选池；等待 Buy-Side 复核",
       "price": 356.2954,
       "currency": "USD",
-      "price_time": "2026-06-22T18:17:00+08:00",
+      "price_time": "2026-06-22T18:22:28+08:00",
       "price_source": "行情已接入",
       "opportunity_score": 76.5,
       "trend_score": 88.0,
@@ -788,7 +778,7 @@
         "跌破后续 Buy-Side 分析定义的失效位"
       ],
       "source": "secondary_analysis_queue",
-      "updated_at": "2026-06-22 18:17"
+      "updated_at": "2026-06-22 18:22"
     },
     {
       "symbol": "US.TTMI",
@@ -799,9 +789,9 @@
       "status": "secondary_analysis",
       "status_label": "二次分析",
       "action": "证据只支持观察/二次研究；R/R 未达标，不允许普通买入。",
-      "price": 219.0,
+      "price": 218.0,
       "currency": "USD",
-      "price_time": "2026-06-22 18:16",
+      "price_time": "2026-06-22 18:21",
       "price_source": "行情已接入",
       "opportunity_score": 60.7,
       "trend_score": 88.0,
@@ -832,7 +822,7 @@
         "跌破后续 Buy-Side 分析定义的失效位"
       ],
       "source": "opportunity_radar",
-      "updated_at": "2026-06-22 18:16"
+      "updated_at": "2026-06-22 18:21"
     },
     {
       "symbol": "HK.00148",
@@ -845,7 +835,7 @@
       "action": "证据只支持观察/二次研究；R/R 未达标，不允许普通买入。",
       "price": 141.1,
       "currency": "HKD",
-      "price_time": "2026-06-22 18:16",
+      "price_time": "2026-06-22 18:21",
       "price_source": "公开日线行情已接入；需 Futu/券商复核",
       "opportunity_score": 60.0,
       "trend_score": 88.0,
@@ -859,7 +849,7 @@
         "证据不足",
         "非美股标的缺少统一财务与公告正文数据源",
         "缺少 FMP 预期/财报快照",
-        "缺少完整 R/R 或机械入场路径"
+        "R/R 未达 2:1，不能进入普通买入"
       ],
       "buy_conditions": [
         "R/R 回到 2:1 以上",
@@ -877,7 +867,7 @@
         "跌破后续 Buy-Side 分析定义的失效位"
       ],
       "source": "opportunity_radar",
-      "updated_at": "2026-06-22 18:16"
+      "updated_at": "2026-06-22 18:21"
     },
     {
       "symbol": "HK.01347",
@@ -890,7 +880,7 @@
       "action": "证据只支持观察/二次研究；R/R 未达标，不允许普通买入。",
       "price": 164.6,
       "currency": "HKD",
-      "price_time": "2026-06-22 18:16",
+      "price_time": "2026-06-22 18:21",
       "price_source": "跨市场情报行情快照",
       "opportunity_score": 60.0,
       "trend_score": 88.0,
@@ -904,7 +894,7 @@
         "证据不足",
         "非美股标的缺少统一财务与公告正文数据源",
         "缺少 FMP 预期/财报快照",
-        "缺少完整 R/R 或机械入场路径"
+        "R/R 未达 2:1，不能进入普通买入"
       ],
       "buy_conditions": [
         "R/R 回到 2:1 以上",
@@ -922,7 +912,7 @@
         "跌破后续 Buy-Side 分析定义的失效位"
       ],
       "source": "opportunity_radar",
-      "updated_at": "2026-06-22 18:16"
+      "updated_at": "2026-06-22 18:21"
     },
     {
       "symbol": "HK.01888",
@@ -935,7 +925,7 @@
       "action": "证据只支持观察/二次研究；R/R 未达标，不允许普通买入。",
       "price": 91.95,
       "currency": "HKD",
-      "price_time": "2026-06-22 18:16",
+      "price_time": "2026-06-22 18:21",
       "price_source": "公开日线行情已接入；需 Futu/券商复核",
       "opportunity_score": 60.0,
       "trend_score": 88.0,
@@ -949,7 +939,7 @@
         "证据不足",
         "非美股标的缺少统一财务与公告正文数据源",
         "缺少 FMP 预期/财报快照",
-        "缺少完整 R/R 或机械入场路径"
+        "R/R 未达 2:1，不能进入普通买入"
       ],
       "buy_conditions": [
         "R/R 回到 2:1 以上",
@@ -967,7 +957,7 @@
         "跌破后续 Buy-Side 分析定义的失效位"
       ],
       "source": "opportunity_radar",
-      "updated_at": "2026-06-22 18:16"
+      "updated_at": "2026-06-22 18:21"
     },
     {
       "symbol": "SH.600183",
@@ -980,7 +970,7 @@
       "action": "跨市场强候选；进入二次分析候选池，需 Futu/财报/流动性复核",
       "price": 184.5,
       "currency": "CNY",
-      "price_time": "2026-06-22 18:16",
+      "price_time": "2026-06-22 18:21",
       "price_source": "公开日线行情已接入；需 Futu/券商复核",
       "opportunity_score": 60.0,
       "trend_score": 88.0,
@@ -1008,7 +998,7 @@
         "跌破后续 Buy-Side 分析定义的失效位"
       ],
       "source": "cross_market_intelligence",
-      "updated_at": "2026-06-22 18:16"
+      "updated_at": "2026-06-22 18:21"
     },
     {
       "symbol": "SH.603256",
@@ -1021,7 +1011,7 @@
       "action": "跨市场强候选；进入二次分析候选池，需 Futu/财报/流动性复核",
       "price": 263.01,
       "currency": "CNY",
-      "price_time": "2026-06-22 18:16",
+      "price_time": "2026-06-22 18:21",
       "price_source": "公开日线行情已接入；需 Futu/券商复核",
       "opportunity_score": 60.0,
       "trend_score": 88.0,
@@ -1049,7 +1039,7 @@
         "跌破后续 Buy-Side 分析定义的失效位"
       ],
       "source": "cross_market_intelligence",
-      "updated_at": "2026-06-22 18:16"
+      "updated_at": "2026-06-22 18:21"
     },
     {
       "symbol": "SZ.300308",
@@ -1062,7 +1052,7 @@
       "action": "证据只支持观察/二次研究；R/R 未达标，不允许普通买入。",
       "price": 1382.33,
       "currency": "CNY",
-      "price_time": "2026-06-22 18:16",
+      "price_time": "2026-06-22 18:21",
       "price_source": "公开日线行情已接入；需 Futu/券商复核",
       "opportunity_score": 60.0,
       "trend_score": 88.0,
@@ -1076,7 +1066,7 @@
         "证据不足",
         "非美股标的缺少统一财务与公告正文数据源",
         "缺少 FMP 预期/财报快照",
-        "缺少完整 R/R 或机械入场路径"
+        "R/R 未达 2:1，不能进入普通买入"
       ],
       "buy_conditions": [
         "R/R 回到 2:1 以上",
@@ -1094,7 +1084,7 @@
         "跌破后续 Buy-Side 分析定义的失效位"
       ],
       "source": "opportunity_radar",
-      "updated_at": "2026-06-22 18:16"
+      "updated_at": "2026-06-22 18:21"
     },
     {
       "symbol": "SZ.300502",
@@ -1107,7 +1097,7 @@
       "action": "证据只支持观察/二次研究；R/R 未达标，不允许普通买入。",
       "price": 579.97,
       "currency": "CNY",
-      "price_time": "2026-06-22 18:16",
+      "price_time": "2026-06-22 18:21",
       "price_source": "公开日线行情已接入；需 Futu/券商复核",
       "opportunity_score": 60.0,
       "trend_score": 88.0,
@@ -1121,7 +1111,7 @@
         "证据不足",
         "非美股标的缺少统一财务与公告正文数据源",
         "缺少 FMP 预期/财报快照",
-        "缺少完整 R/R 或机械入场路径"
+        "R/R 未达 2:1，不能进入普通买入"
       ],
       "buy_conditions": [
         "R/R 回到 2:1 以上",
@@ -1139,7 +1129,7 @@
         "跌破后续 Buy-Side 分析定义的失效位"
       ],
       "source": "opportunity_radar",
-      "updated_at": "2026-06-22 18:16"
+      "updated_at": "2026-06-22 18:21"
     },
     {
       "symbol": "HK.00981",
@@ -1152,7 +1142,7 @@
       "action": "证据只支持观察/二次研究；R/R 未达标，不允许普通买入。",
       "price": 78.9,
       "currency": "HKD",
-      "price_time": "2026-06-22 18:16",
+      "price_time": "2026-06-22 18:21",
       "price_source": "跨市场情报行情快照",
       "opportunity_score": 57.7,
       "trend_score": 76.0,
@@ -1166,7 +1156,7 @@
         "证据不足",
         "非美股标的缺少统一财务与公告正文数据源",
         "缺少 FMP 预期/财报快照",
-        "缺少完整 R/R 或机械入场路径"
+        "R/R 未达 2:1，不能进入普通买入"
       ],
       "buy_conditions": [
         "R/R 回到 2:1 以上",
@@ -1184,7 +1174,7 @@
         "跌破后续 Buy-Side 分析定义的失效位"
       ],
       "source": "cross_market_intelligence",
-      "updated_at": "2026-06-22 18:16"
+      "updated_at": "2026-06-22 18:21"
     },
     {
       "symbol": "SH.688183",
@@ -1197,7 +1187,7 @@
       "action": "跨市场强候选；进入二次分析候选池，需 Futu/财报/流动性复核",
       "price": 134.4,
       "currency": "CNY",
-      "price_time": "2026-06-22 18:16",
+      "price_time": "2026-06-22 18:21",
       "price_source": "公开日线行情已接入；需 Futu/券商复核",
       "opportunity_score": 57.7,
       "trend_score": 76.0,
@@ -1225,7 +1215,7 @@
         "跌破后续 Buy-Side 分析定义的失效位"
       ],
       "source": "cross_market_intelligence",
-      "updated_at": "2026-06-22 18:16"
+      "updated_at": "2026-06-22 18:21"
     },
     {
       "symbol": "SZ.300394",
@@ -1238,7 +1228,7 @@
       "action": "证据只支持观察/二次研究；R/R 未达标，不允许普通买入。",
       "price": 326.12,
       "currency": "CNY",
-      "price_time": "2026-06-22 18:16",
+      "price_time": "2026-06-22 18:21",
       "price_source": "公开日线行情已接入；需 Futu/券商复核",
       "opportunity_score": 57.7,
       "trend_score": 76.0,
@@ -1252,7 +1242,7 @@
         "证据不足",
         "非美股标的缺少统一财务与公告正文数据源",
         "缺少 FMP 预期/财报快照",
-        "缺少完整 R/R 或机械入场路径"
+        "R/R 未达 2:1，不能进入普通买入"
       ],
       "buy_conditions": [
         "R/R 回到 2:1 以上",
@@ -1270,7 +1260,7 @@
         "跌破后续 Buy-Side 分析定义的失效位"
       ],
       "source": "opportunity_radar",
-      "updated_at": "2026-06-22 18:16"
+      "updated_at": "2026-06-22 18:21"
     },
     {
       "symbol": "SZ.300476",
@@ -1283,7 +1273,7 @@
       "action": "跨市场强候选；进入二次分析候选池，需 Futu/财报/流动性复核",
       "price": 365.4,
       "currency": "CNY",
-      "price_time": "2026-06-22 18:16",
+      "price_time": "2026-06-22 18:21",
       "price_source": "公开日线行情已接入；需 Futu/券商复核",
       "opportunity_score": 57.7,
       "trend_score": 76.0,
@@ -1311,7 +1301,7 @@
         "跌破后续 Buy-Side 分析定义的失效位"
       ],
       "source": "cross_market_intelligence",
-      "updated_at": "2026-06-22 18:16"
+      "updated_at": "2026-06-22 18:21"
     },
     {
       "symbol": "US.COHR",
@@ -1322,13 +1312,13 @@
       "status": "secondary_analysis",
       "status_label": "二次分析",
       "action": "进入二次分析候选池；等待 Buy-Side 复核",
-      "price": 396.0,
+      "price": 396.11,
       "currency": "USD",
-      "price_time": "2026-06-22 18:16",
+      "price_time": "2026-06-22 18:21",
       "price_source": "行情已接入",
       "opportunity_score": 57.3,
       "trend_score": 76.0,
-      "crowding_score": 81.0,
+      "crowding_score": 81.1,
       "rr_ratio": 0.38,
       "rr_required": 2,
       "score_delta": null,
@@ -1352,7 +1342,7 @@
         "跌破后续 Buy-Side 分析定义的失效位"
       ],
       "source": "cross_market_intelligence",
-      "updated_at": "2026-06-22 18:16"
+      "updated_at": "2026-06-22 18:21"
     },
     {
       "symbol": "US.PWR",
@@ -1365,7 +1355,7 @@
       "action": "进入二次分析候选池；等待 Buy-Side 复核",
       "price": 715.0,
       "currency": "USD",
-      "price_time": "2026-06-22 18:16",
+      "price_time": "2026-06-22 18:21",
       "price_source": "行情已接入",
       "opportunity_score": 51.6,
       "trend_score": 76.0,
@@ -1393,7 +1383,7 @@
         "跌破后续 Buy-Side 分析定义的失效位"
       ],
       "source": "cross_market_intelligence",
-      "updated_at": "2026-06-22 18:16"
+      "updated_at": "2026-06-22 18:21"
     },
     {
       "symbol": "US.ISRG",
@@ -1406,7 +1396,7 @@
       "action": "保留观察，等待财务、价格或事件证据补强。",
       "price": 404.91,
       "currency": "USD",
-      "price_time": "2026-06-22 18:16",
+      "price_time": "2026-06-22 18:21",
       "price_source": "跨市场情报行情快照",
       "opportunity_score": 62.8,
       "trend_score": 14.0,
@@ -1433,7 +1423,7 @@
         "跌破后续 Buy-Side 分析定义的失效位"
       ],
       "source": "opportunity_radar",
-      "updated_at": "2026-06-22 18:16"
+      "updated_at": "2026-06-22 18:21"
     },
     {
       "symbol": "US.SYM",
@@ -1446,7 +1436,7 @@
       "action": "保留观察，等待财务、价格或事件证据补强。",
       "price": 41.8917,
       "currency": "USD",
-      "price_time": "2026-06-22 18:16",
+      "price_time": "2026-06-22 18:21",
       "price_source": "跨市场情报行情快照",
       "opportunity_score": 55.4,
       "trend_score": 14.0,
@@ -1473,7 +1463,7 @@
         "跌破后续 Buy-Side 分析定义的失效位"
       ],
       "source": "opportunity_radar",
-      "updated_at": "2026-06-22 18:16"
+      "updated_at": "2026-06-22 18:21"
     },
     {
       "symbol": "US.NVDA",
@@ -1484,9 +1474,9 @@
       "status": "avoid_chasing",
       "status_label": "禁止追高",
       "action": "证据只支持观察/二次研究；R/R 未达标，不允许普通买入。",
-      "price": 209.6,
+      "price": 209.7,
       "currency": "USD",
-      "price_time": "2026-06-22 18:16",
+      "price_time": "2026-06-22 18:21",
       "price_source": "跨市场情报行情快照",
       "opportunity_score": 83.7,
       "trend_score": 76.0,
@@ -1516,7 +1506,7 @@
         "跌破后续 Buy-Side 分析定义的失效位"
       ],
       "source": "opportunity_radar",
-      "updated_at": "2026-06-22 18:16"
+      "updated_at": "2026-06-22 18:21"
     },
     {
       "symbol": "US.ANET",
@@ -1529,7 +1519,7 @@
       "action": "证据只支持观察/二次研究；R/R 未达标，不允许普通买入。",
       "price": 170.48,
       "currency": "USD",
-      "price_time": "2026-06-22 18:16",
+      "price_time": "2026-06-22 18:21",
       "price_source": "跨市场情报行情快照",
       "opportunity_score": 75.1,
       "trend_score": 88.0,
@@ -1559,7 +1549,7 @@
         "跌破后续 Buy-Side 分析定义的失效位"
       ],
       "source": "opportunity_radar",
-      "updated_at": "2026-06-22 18:16"
+      "updated_at": "2026-06-22 18:21"
     },
     {
       "symbol": "US.AVGO",
@@ -1570,9 +1560,9 @@
       "status": "avoid_chasing",
       "status_label": "禁止追高",
       "action": "证据只支持观察/二次研究；R/R 未达标，不允许普通买入。",
-      "price": 406.4661,
+      "price": 406.15,
       "currency": "USD",
-      "price_time": "2026-06-22 18:16",
+      "price_time": "2026-06-22 18:21",
       "price_source": "行情已接入",
       "opportunity_score": 70.8,
       "trend_score": 50.0,
@@ -1600,7 +1590,7 @@
         "跌破后续 Buy-Side 分析定义的失效位"
       ],
       "source": "opportunity_radar",
-      "updated_at": "2026-06-22 18:16"
+      "updated_at": "2026-06-22 18:21"
     },
     {
       "symbol": "US.MRVL",
@@ -1611,9 +1601,9 @@
       "status": "avoid_chasing",
       "status_label": "禁止追高",
       "action": "证据只支持观察/二次研究；R/R 未达标，不允许普通买入。",
-      "price": 316.0,
+      "price": 315.65,
       "currency": "USD",
-      "price_time": "2026-06-22 18:16",
+      "price_time": "2026-06-22 18:21",
       "price_source": "跨市场情报行情快照",
       "opportunity_score": 69.4,
       "trend_score": 88.0,
@@ -1643,7 +1633,7 @@
         "跌破后续 Buy-Side 分析定义的失效位"
       ],
       "source": "opportunity_radar",
-      "updated_at": "2026-06-22 18:16"
+      "updated_at": "2026-06-22 18:21"
     },
     {
       "symbol": "US.JBL",
@@ -1656,7 +1646,7 @@
       "action": "证据只支持观察/二次研究；R/R 未达标，不允许普通买入。",
       "price": 371.56,
       "currency": "USD",
-      "price_time": "2026-06-22 18:16",
+      "price_time": "2026-06-22 18:21",
       "price_source": "行情已接入",
       "opportunity_score": 65.0,
       "trend_score": 76.0,
@@ -1687,7 +1677,7 @@
         "跌破后续 Buy-Side 分析定义的失效位"
       ],
       "source": "opportunity_radar",
-      "updated_at": "2026-06-22 18:16"
+      "updated_at": "2026-06-22 18:21"
     },
     {
       "symbol": "US.PH",
@@ -1700,7 +1690,7 @@
       "action": "证据只支持观察/二次研究；R/R 未达标，不允许普通买入。",
       "price": 957.74,
       "currency": "USD",
-      "price_time": "2026-06-22 18:16",
+      "price_time": "2026-06-22 18:21",
       "price_source": "行情已接入",
       "opportunity_score": 62.5,
       "trend_score": 88.0,
@@ -1731,7 +1721,7 @@
         "跌破后续 Buy-Side 分析定义的失效位"
       ],
       "source": "opportunity_radar",
-      "updated_at": "2026-06-22 18:16"
+      "updated_at": "2026-06-22 18:21"
     },
     {
       "symbol": "US.FLEX",
@@ -1744,7 +1734,7 @@
       "action": "证据只支持观察/二次研究；R/R 未达标，不允许普通买入。",
       "price": 150.0,
       "currency": "USD",
-      "price_time": "2026-06-22 18:16",
+      "price_time": "2026-06-22 18:21",
       "price_source": "行情已接入",
       "opportunity_score": 61.8,
       "trend_score": 76.0,
@@ -1775,7 +1765,7 @@
         "跌破后续 Buy-Side 分析定义的失效位"
       ],
       "source": "opportunity_radar",
-      "updated_at": "2026-06-22 18:16"
+      "updated_at": "2026-06-22 18:21"
     },
     {
       "symbol": "US.EMR",
@@ -1788,7 +1778,7 @@
       "action": "证据只支持观察/二次研究；R/R 未达标，不允许普通买入。",
       "price": 153.7,
       "currency": "USD",
-      "price_time": "2026-06-22 18:16",
+      "price_time": "2026-06-22 18:21",
       "price_source": "行情已接入",
       "opportunity_score": 61.6,
       "trend_score": 88.0,
@@ -1819,7 +1809,7 @@
         "跌破后续 Buy-Side 分析定义的失效位"
       ],
       "source": "opportunity_radar",
-      "updated_at": "2026-06-22 18:16"
+      "updated_at": "2026-06-22 18:21"
     },
     {
       "symbol": "US.HON",
@@ -1832,7 +1822,7 @@
       "action": "证据只支持观察/二次研究；R/R 未达标，不允许普通买入。",
       "price": 228.2,
       "currency": "USD",
-      "price_time": "2026-06-22 18:16",
+      "price_time": "2026-06-22 18:21",
       "price_source": "跨市场情报行情快照",
       "opportunity_score": 61.4,
       "trend_score": 80.0,
@@ -1860,7 +1850,7 @@
         "跌破后续 Buy-Side 分析定义的失效位"
       ],
       "source": "opportunity_radar",
-      "updated_at": "2026-06-22 18:16"
+      "updated_at": "2026-06-22 18:21"
     },
     {
       "symbol": "US.AMD",
@@ -1871,9 +1861,9 @@
       "status": "avoid_chasing",
       "status_label": "禁止追高",
       "action": "证据只支持观察/二次研究；R/R 未达标，不允许普通买入。",
-      "price": 539.69,
+      "price": 539.75,
       "currency": "USD",
-      "price_time": "2026-06-22 18:16",
+      "price_time": "2026-06-22 18:21",
       "price_source": "跨市场情报行情快照",
       "opportunity_score": 60.8,
       "trend_score": 88.0,
@@ -1904,7 +1894,7 @@
         "跌破后续 Buy-Side 分析定义的失效位"
       ],
       "source": "opportunity_radar",
-      "updated_at": "2026-06-22 18:16"
+      "updated_at": "2026-06-22 18:21"
     },
     {
       "symbol": "US.ETN",
@@ -1915,9 +1905,9 @@
       "status": "avoid_chasing",
       "status_label": "禁止追高",
       "action": "证据只支持观察/二次研究；R/R 未达标，不允许普通买入。",
-      "price": 424.74,
+      "price": 425.9158,
       "currency": "USD",
-      "price_time": "2026-06-22 18:16",
+      "price_time": "2026-06-22 18:21",
       "price_source": "行情已接入",
       "opportunity_score": 59.3,
       "trend_score": 88.0,
@@ -1948,7 +1938,7 @@
         "跌破后续 Buy-Side 分析定义的失效位"
       ],
       "source": "opportunity_radar",
-      "updated_at": "2026-06-22 18:16"
+      "updated_at": "2026-06-22 18:21"
     },
     {
       "symbol": "US.TSM",
@@ -1959,13 +1949,13 @@
       "status": "avoid_chasing",
       "status_label": "禁止追高",
       "action": "证据只支持观察/二次研究；R/R 未达标，不允许普通买入。",
-      "price": 473.1723,
+      "price": 472.298,
       "currency": "USD",
-      "price_time": "2026-06-22 18:16",
+      "price_time": "2026-06-22 18:21",
       "price_source": "跨市场情报行情快照",
       "opportunity_score": 58.9,
       "trend_score": 88.0,
-      "crowding_score": 82.6,
+      "crowding_score": 82.2,
       "rr_ratio": 0.52,
       "rr_required": 2,
       "score_delta": null,
@@ -1992,7 +1982,7 @@
         "跌破后续 Buy-Side 分析定义的失效位"
       ],
       "source": "cross_market_intelligence",
-      "updated_at": "2026-06-22 18:16"
+      "updated_at": "2026-06-22 18:21"
     },
     {
       "symbol": "US.ROK",
@@ -2005,7 +1995,7 @@
       "action": "证据只支持观察/二次研究；R/R 未达标，不允许普通买入。",
       "price": 496.1732,
       "currency": "USD",
-      "price_time": "2026-06-22 18:16",
+      "price_time": "2026-06-22 18:21",
       "price_source": "跨市场情报行情快照",
       "opportunity_score": 56.9,
       "trend_score": 92.0,
@@ -2034,7 +2024,7 @@
         "跌破后续 Buy-Side 分析定义的失效位"
       ],
       "source": "opportunity_radar",
-      "updated_at": "2026-06-22 18:16"
+      "updated_at": "2026-06-22 18:21"
     },
     {
       "symbol": "US.LITE",
@@ -2045,9 +2035,9 @@
       "status": "avoid_chasing",
       "status_label": "禁止追高",
       "action": "产业强但价格未确认",
-      "price": 848.0,
+      "price": 847.99,
       "currency": "USD",
-      "price_time": "2026-06-22 18:16",
+      "price_time": "2026-06-22 18:21",
       "price_source": "行情已接入",
       "opportunity_score": 56.8,
       "trend_score": 50.0,
@@ -2072,7 +2062,7 @@
         "跌破后续 Buy-Side 分析定义的失效位"
       ],
       "source": "cross_market_intelligence",
-      "updated_at": "2026-06-22 18:16"
+      "updated_at": "2026-06-22 18:21"
     },
     {
       "symbol": "US.CIEN",
@@ -2083,14 +2073,14 @@
       "status": "avoid_chasing",
       "status_label": "禁止追高",
       "action": "产业强但价格未确认",
-      "price": 428.41,
+      "price": 429.95,
       "currency": "USD",
-      "price_time": "2026-06-22 18:16",
+      "price_time": "2026-06-22 18:21",
       "price_source": "行情已接入",
       "opportunity_score": 54.8,
       "trend_score": 42.0,
-      "crowding_score": 51.0,
-      "rr_ratio": 0.54,
+      "crowding_score": 51.3,
+      "rr_ratio": 0.53,
       "rr_required": 2,
       "score_delta": null,
       "why_changed": [],
@@ -2110,7 +2100,7 @@
         "跌破后续 Buy-Side 分析定义的失效位"
       ],
       "source": "cross_market_intelligence",
-      "updated_at": "2026-06-22 18:16"
+      "updated_at": "2026-06-22 18:21"
     },
     {
       "symbol": "US.MU",
@@ -2121,9 +2111,9 @@
       "status": "avoid_chasing",
       "status_label": "禁止追高",
       "action": "证据只支持观察/二次研究；R/R 未达标，不允许普通买入。",
-      "price": 1176.28,
+      "price": 1174.9,
       "currency": "USD",
-      "price_time": "2026-06-22 18:16",
+      "price_time": "2026-06-22 18:21",
       "price_source": "跨市场情报行情快照",
       "opportunity_score": 54.7,
       "trend_score": 88.0,
@@ -2154,7 +2144,7 @@
         "跌破后续 Buy-Side 分析定义的失效位"
       ],
       "source": "cross_market_intelligence",
-      "updated_at": "2026-06-22 18:16"
+      "updated_at": "2026-06-22 18:21"
     },
     {
       "symbol": "SZ.300499",
@@ -2167,7 +2157,7 @@
       "action": "证据只支持观察/二次研究；R/R 未达标，不允许普通买入。",
       "price": 38.73,
       "currency": "CNY",
-      "price_time": "2026-06-22 18:16",
+      "price_time": "2026-06-22 18:21",
       "price_source": "公开日线行情已接入；需 Futu/券商复核",
       "opportunity_score": 52.5,
       "trend_score": 50.0,
@@ -2179,7 +2169,7 @@
         "证据不足",
         "非美股标的缺少统一财务与公告正文数据源",
         "缺少 FMP 预期/财报快照",
-        "缺少完整 R/R 或机械入场路径"
+        "R/R 未达 2:1，不能进入普通买入"
       ],
       "buy_conditions": [
         "R/R 回到 2:1 以上",
@@ -2197,7 +2187,7 @@
         "跌破后续 Buy-Side 分析定义的失效位"
       ],
       "source": "opportunity_radar",
-      "updated_at": "2026-06-22 18:16"
+      "updated_at": "2026-06-22 18:21"
     },
     {
       "symbol": "US.VRT",
@@ -2208,9 +2198,9 @@
       "status": "avoid_chasing",
       "status_label": "禁止追高",
       "action": "证据只支持观察/二次研究；R/R 未达标，不允许普通买入。",
-      "price": 341.1,
+      "price": 341.2,
       "currency": "USD",
-      "price_time": "2026-06-22 18:16",
+      "price_time": "2026-06-22 18:21",
       "price_source": "行情已接入",
       "opportunity_score": 51.9,
       "trend_score": 76.0,
@@ -2241,7 +2231,7 @@
         "跌破后续 Buy-Side 分析定义的失效位"
       ],
       "source": "opportunity_radar",
-      "updated_at": "2026-06-22 18:16"
+      "updated_at": "2026-06-22 18:21"
     },
     {
       "symbol": "SZ.002747",
@@ -2254,7 +2244,7 @@
       "action": "证据只支持观察/二次研究；R/R 未达标，不允许普通买入。",
       "price": 37.19,
       "currency": "CNY",
-      "price_time": "2026-06-22 18:16",
+      "price_time": "2026-06-22 18:21",
       "price_source": "跨市场情报行情快照",
       "opportunity_score": 50.5,
       "trend_score": 55.0,
@@ -2266,7 +2256,7 @@
         "证据不足",
         "非美股标的缺少统一财务与公告正文数据源",
         "缺少 FMP 预期/财报快照",
-        "缺少完整 R/R 或机械入场路径"
+        "R/R 未达 2:1，不能进入普通买入"
       ],
       "buy_conditions": [
         "R/R 回到 2:1 以上",
@@ -2284,7 +2274,7 @@
         "跌破后续 Buy-Side 分析定义的失效位"
       ],
       "source": "opportunity_radar",
-      "updated_at": "2026-06-22 18:16"
+      "updated_at": "2026-06-22 18:21"
     },
     {
       "symbol": "US.TSLA",
@@ -2295,9 +2285,9 @@
       "status": "avoid_chasing",
       "status_label": "禁止追高",
       "action": "观察",
-      "price": 394.76,
+      "price": 394.29,
       "currency": "USD",
-      "price_time": "2026-06-22 18:16",
+      "price_time": "2026-06-22 18:21",
       "price_source": "跨市场情报行情快照",
       "opportunity_score": 34.7,
       "trend_score": 22.0,
@@ -2322,7 +2312,7 @@
         "跌破后续 Buy-Side 分析定义的失效位"
       ],
       "source": "cross_market_intelligence",
-      "updated_at": "2026-06-22 18:16"
+      "updated_at": "2026-06-22 18:21"
     },
     {
       "symbol": "SH.688322",
@@ -2335,7 +2325,7 @@
       "action": "观察",
       "price": null,
       "currency": "CNY",
-      "price_time": "2026-06-22 18:16",
+      "price_time": "2026-06-22 18:21",
       "price_source": "跨市场情报行情快照",
       "opportunity_score": 50.5,
       "trend_score": 55.0,
@@ -2360,7 +2350,7 @@
         "跌破后续 Buy-Side 分析定义的失效位"
       ],
       "source": "cross_market_intelligence",
-      "updated_at": "2026-06-22 18:16"
+      "updated_at": "2026-06-22 18:21"
     },
     {
       "symbol": "SZ.002335",
@@ -2373,7 +2363,7 @@
       "action": "观察",
       "price": 40.07,
       "currency": "CNY",
-      "price_time": "2026-06-22 18:16",
+      "price_time": "2026-06-22 18:21",
       "price_source": "公开日线行情已接入；需 Futu/券商复核",
       "opportunity_score": 46.5,
       "trend_score": 20.0,
@@ -2398,7 +2388,7 @@
         "跌破后续 Buy-Side 分析定义的失效位"
       ],
       "source": "cross_market_intelligence",
-      "updated_at": "2026-06-22 18:16"
+      "updated_at": "2026-06-22 18:21"
     }
   ],
   "data_health": [
@@ -2408,7 +2398,7 @@
       "status": "normal",
       "message": "SEC ticker mapping available.",
       "impact": "Impacts US official filing/companyfacts fallback.",
-      "updated_at": "2026-06-22T18:16:22+08:00"
+      "updated_at": "2026-06-22T18:21:41+08:00"
     },
     {
       "name": "SEC EDGAR company data",
@@ -2416,7 +2406,7 @@
       "status": "normal",
       "message": "SEC fallback returned data for 16/16 checked US symbols.",
       "impact": "Impacts official US filing and financial statement evidence.",
-      "updated_at": "2026-06-22T18:16:28+08:00"
+      "updated_at": "2026-06-22T18:21:50+08:00"
     },
     {
       "name": "FRED",
@@ -2424,7 +2414,7 @@
       "status": "normal",
       "message": "FRED returned 8/8 configured macro/liquidity series.",
       "impact": "Impacts macro regime, rates, inflation, labor and credit spread evidence.",
-      "updated_at": "2026-06-22T18:16:28+08:00"
+      "updated_at": "2026-06-22T18:21:50+08:00"
     },
     {
       "name": "Alpha Vantage",
@@ -2432,7 +2422,7 @@
       "status": "normal",
       "message": "Alpha Vantage fallback completed with 21 successful response blocks; limited/empty responses are kept as data gaps.",
       "impact": "Impacts earnings estimates, surprise, calendar and transcript fallback confidence.",
-      "updated_at": "2026-06-22T18:16:30+08:00"
+      "updated_at": "2026-06-22T18:21:52+08:00"
     },
     {
       "name": "OpenFIGI",
@@ -2440,7 +2430,7 @@
       "status": "unknown",
       "message": "OPENFIGI_API_KEY is not configured.",
       "impact": "Security identifier mapping fallback is limited to SEC ticker files.",
-      "updated_at": "2026-06-22T18:16:56+08:00"
+      "updated_at": "2026-06-22T18:22:20+08:00"
     },
     {
       "name": "Yahoo Finance",
@@ -2448,7 +2438,7 @@
       "status": "normal",
       "message": "Yahoo public chart fallback returned 15/15 HK/A quote blocks.",
       "impact": "Impacts HK/A price, technical levels and mechanical R/R fallback; not official filings.",
-      "updated_at": "2026-06-22T18:16:56+08:00"
+      "updated_at": "2026-06-22T18:22:20+08:00"
     },
     {
       "name": "CNINFO",
@@ -2456,7 +2446,7 @@
       "status": "unknown",
       "message": "CNINFO connector is not configured; no official A-share announcement pull was attempted.",
       "impact": "Impacts A-share announcement/financial statement confidence.",
-      "updated_at": "2026-06-22T18:16:57+08:00"
+      "updated_at": "2026-06-22T18:22:23+08:00"
     },
     {
       "name": "HKEXnews",
@@ -2464,12 +2454,12 @@
       "status": "unknown",
       "message": "HKEXnews connector is not configured; no official HK announcement pull was attempted.",
       "impact": "Impacts HK announcement/financial statement confidence.",
-      "updated_at": "2026-06-22T18:16:57+08:00"
+      "updated_at": "2026-06-22T18:22:23+08:00"
     }
   ],
   "free_data_fallback": {
-    "generated_at": "2026-06-22T18:16:22+08:00",
-    "generated_label": "2026-06-22 18:16",
+    "generated_at": "2026-06-22T18:21:40+08:00",
+    "generated_label": "2026-06-22 18:21",
     "summary": {
       "symbol_count": 42,
       "field_count": 93,
@@ -2514,14 +2504,14 @@
   "schema_version": 2,
   "reports": [
     {
-      "id": "20260622-1818-latest-deepseek-cloud-report",
-      "filename": "latest-deepseek-cloud-report.md",
+      "id": "20260622-1823-deepseek-cloud-20260622-1823",
+      "filename": "deepseek-cloud-20260622-1823.md",
       "title": "DeepSeek 云端美股投研报告 - 2026-06-22",
       "kind": "deepseek-cloud",
       "kind_label": "DeepSeek云端",
-      "published_at": "2026-06-22T18:18+00:00",
-      "published_label": "2026-06-22 18:18",
-      "is_latest": true,
+      "published_at": "2026-06-22T18:23+00:00",
+      "published_label": "2026-06-22 18:23",
+      "is_latest": false,
       "summary": "DeepSeek 云端美股投研报告 - 2026-06-22",
       "symbols": [
         "US.NVDA",
@@ -2547,13 +2537,13 @@
       ]
     },
     {
-      "id": "20260622-1817-latest-secondary-analysis-queue",
+      "id": "20260622-1822-latest-secondary-analysis-queue",
       "filename": "latest-secondary-analysis-queue.md",
       "title": "二次分析队列",
       "kind": "secondary-queue",
       "kind_label": "二次分析队列",
-      "published_at": "2026-06-22T18:17+00:00",
-      "published_label": "2026-06-22 18:17",
+      "published_at": "2026-06-22T18:22+00:00",
+      "published_label": "2026-06-22 18:22",
       "is_latest": true,
       "summary": "二次分析队列",
       "symbols": [
@@ -2598,50 +2588,13 @@
       ]
     },
     {
-      "id": "20260622-1817-latest-opportunity-review-metrics",
-      "filename": "latest-opportunity-review-metrics.md",
-      "title": "机会雷达复盘统计",
-      "kind": "opportunity-review-metrics",
-      "kind_label": "机会复盘",
-      "published_at": "2026-06-22T18:17+00:00",
-      "published_label": "2026-06-22 18:17",
-      "is_latest": true,
-      "summary": "机会雷达复盘统计",
-      "symbols": [
-        "US.VRT",
-        "US.PH",
-        "US.MU",
-        "US.AVGO",
-        "US.FLEX",
-        "US.JBL",
-        "US.MRVL",
-        "US.LITE",
-        "US.ROK",
-        "US.TSLA"
-      ],
-      "themes": [
-        "GPU",
-        "ASIC",
-        "HBM",
-        "先进封装",
-        "光模块",
-        "CPO",
-        "PCB",
-        "覆铜板",
-        "电子布",
-        "铜箔",
-        "液冷",
-        "电力"
-      ]
-    },
-    {
-      "id": "20260622-1816-free-data-fallback-20260622-1816",
-      "filename": "free-data-fallback-20260622-1816.md",
+      "id": "20260622-1822-free-data-fallback-20260622-1822",
+      "filename": "free-data-fallback-20260622-1822.md",
       "title": "免费数据源 fallback 雷达",
       "kind": "free-data-fallback",
       "kind_label": "免费数据源",
-      "published_at": "2026-06-22T18:16+00:00",
-      "published_label": "2026-06-22 18:16",
+      "published_at": "2026-06-22T18:22+00:00",
+      "published_label": "2026-06-22 18:22",
       "is_latest": false,
       "summary": "免费数据源 fallback 雷达",
       "symbols": [
@@ -2664,77 +2617,13 @@
       "themes": []
     },
     {
-      "id": "20260622-1816-opportunity-radar-20260622-1816",
-      "filename": "opportunity-radar-20260622-1816.md",
-      "title": "机会发现雷达",
-      "kind": "opportunity-radar",
-      "kind_label": "机会雷达",
-      "published_at": "2026-06-22T18:16+00:00",
-      "published_label": "2026-06-22 18:16",
-      "is_latest": false,
-      "summary": "机会发现雷达",
-      "symbols": [
-        "US.NVDA",
-        "US.AVGO",
-        "US.MRVL",
-        "US.ANET",
-        "SZ.300308",
-        "US.JBL",
-        "US.FLEX",
-        "US.TTMI",
-        "US.PH",
-        "US.EMR",
-        "US.ETN",
-        "US.ISRG",
-        "US.HON",
-        "US.ROK",
-        "US.AMD",
-        "HK.01347",
-        "US.TSM",
-        "HK.00981",
-        "US.MU",
-        "SZ.300502",
-        "SZ.300394",
-        "US.COHR",
-        "US.LITE",
-        "US.CIEN"
-      ],
-      "themes": [
-        "GPU",
-        "ASIC",
-        "HBM",
-        "先进封装",
-        "光模块",
-        "CPO",
-        "PCB",
-        "覆铜板",
-        "电子布",
-        "铜箔",
-        "液冷",
-        "电力"
-      ]
-    },
-    {
-      "id": "20260622-1816-fmp-research-20260622-1816",
-      "filename": "fmp-research-20260622-1816.md",
-      "title": "FMP 预期与财报雷达",
-      "kind": "fmp-research",
-      "kind_label": "FMP预期",
-      "published_at": "2026-06-22T18:16+00:00",
-      "published_label": "2026-06-22 18:16",
-      "is_latest": false,
-      "summary": "FMP 预期与财报雷达",
-      "symbols": [],
-      "themes": []
-    },
-    {
-      "id": "20260622-1816-latest-event-evidence",
+      "id": "20260622-1822-latest-event-evidence",
       "filename": "latest-event-evidence.md",
       "title": "事件证据提取雷达",
       "kind": "event-evidence",
       "kind_label": "事件证据",
-      "published_at": "2026-06-22T18:16+00:00",
-      "published_label": "2026-06-22 18:16",
+      "published_at": "2026-06-22T18:22+00:00",
+      "published_label": "2026-06-22 18:22",
       "is_latest": true,
       "summary": "事件证据提取雷达",
       "symbols": [
@@ -2779,13 +2668,101 @@
       ]
     },
     {
-      "id": "20260622-1816-latest-cross-market-intelligence",
+      "id": "20260622-1822-latest-opportunity-review-metrics",
+      "filename": "latest-opportunity-review-metrics.md",
+      "title": "机会雷达复盘统计",
+      "kind": "opportunity-review-metrics",
+      "kind_label": "机会复盘",
+      "published_at": "2026-06-22T18:22+00:00",
+      "published_label": "2026-06-22 18:22",
+      "is_latest": true,
+      "summary": "机会雷达复盘统计",
+      "symbols": [
+        "US.VRT",
+        "US.PH",
+        "US.MU",
+        "US.AVGO",
+        "US.COHR",
+        "US.LITE",
+        "US.FLEX",
+        "US.JBL",
+        "US.ROK",
+        "US.TSLA"
+      ],
+      "themes": [
+        "GPU",
+        "ASIC",
+        "HBM",
+        "先进封装",
+        "光模块",
+        "CPO",
+        "PCB",
+        "覆铜板",
+        "电子布",
+        "铜箔",
+        "液冷",
+        "电力"
+      ]
+    },
+    {
+      "id": "20260622-1821-latest-opportunity-radar",
+      "filename": "latest-opportunity-radar.md",
+      "title": "机会发现雷达",
+      "kind": "opportunity-radar",
+      "kind_label": "机会雷达",
+      "published_at": "2026-06-22T18:21+00:00",
+      "published_label": "2026-06-22 18:21",
+      "is_latest": true,
+      "summary": "机会发现雷达",
+      "symbols": [
+        "US.NVDA",
+        "US.AVGO",
+        "US.MRVL",
+        "US.ANET",
+        "SZ.300308",
+        "US.JBL",
+        "US.FLEX",
+        "US.TTMI",
+        "US.PH",
+        "US.EMR",
+        "US.ETN",
+        "US.ISRG",
+        "US.HON",
+        "US.ROK",
+        "US.AMD",
+        "HK.01347",
+        "US.TSM",
+        "HK.00981",
+        "US.MU",
+        "SZ.300502",
+        "SZ.300394",
+        "US.COHR",
+        "US.LITE",
+        "US.CIEN"
+      ],
+      "themes": [
+        "GPU",
+        "ASIC",
+        "HBM",
+        "先进封装",
+        "光模块",
+        "CPO",
+        "PCB",
+        "覆铜板",
+        "电子布",
+        "铜箔",
+        "液冷",
+        "电力"
+      ]
+    },
+    {
+      "id": "20260622-1821-latest-cross-market-intelligence",
       "filename": "latest-cross-market-intelligence.md",
       "title": "跨市场产业链情报雷达",
       "kind": "cross-market-intelligence",
       "kind_label": "跨市场情报",
-      "published_at": "2026-06-22T18:16+00:00",
-      "published_label": "2026-06-22 18:16",
+      "published_at": "2026-06-22T18:21+00:00",
+      "published_label": "2026-06-22 18:21",
       "is_latest": true,
       "summary": "跨市场产业链情报雷达",
       "symbols": [
@@ -2830,17 +2807,63 @@
       ]
     },
     {
-      "id": "20260622-1815-macro-regime-20260622-1815",
-      "filename": "macro-regime-20260622-1815.md",
+      "id": "20260622-1821-fmp-research-20260622-1821",
+      "filename": "fmp-research-20260622-1821.md",
+      "title": "FMP 预期与财报雷达",
+      "kind": "fmp-research",
+      "kind_label": "FMP预期",
+      "published_at": "2026-06-22T18:21+00:00",
+      "published_label": "2026-06-22 18:21",
+      "is_latest": false,
+      "summary": "FMP 预期与财报雷达",
+      "symbols": [],
+      "themes": []
+    },
+    {
+      "id": "20260622-1820-macro-regime-20260622-1820",
+      "filename": "macro-regime-20260622-1820.md",
       "title": "FRED 宏观环境雷达",
       "kind": "macro-regime",
       "kind_label": "宏观雷达",
-      "published_at": "2026-06-22T18:15+00:00",
-      "published_label": "2026-06-22 18:15",
+      "published_at": "2026-06-22T18:20+00:00",
+      "published_label": "2026-06-22 18:20",
       "is_latest": false,
       "summary": "FRED 宏观环境雷达",
       "symbols": [],
       "themes": []
+    },
+    {
+      "id": "20260622-1818-latest-deepseek-cloud-report",
+      "filename": "latest-deepseek-cloud-report.md",
+      "title": "DeepSeek 云端美股投研报告 - 2026-06-22",
+      "kind": "deepseek-cloud",
+      "kind_label": "DeepSeek云端",
+      "published_at": "2026-06-22T18:18+00:00",
+      "published_label": "2026-06-22 18:18",
+      "is_latest": true,
+      "summary": "DeepSeek 云端美股投研报告 - 2026-06-22",
+      "symbols": [
+        "US.NVDA",
+        "US.MRVL",
+        "US.ANET",
+        "US.AVGO",
+        "US.MU",
+        "US.AMD"
+      ],
+      "themes": [
+        "GPU",
+        "ASIC",
+        "HBM",
+        "先进封装",
+        "光模块",
+        "CPO",
+        "PCB",
+        "覆铜板",
+        "电子布",
+        "铜箔",
+        "液冷",
+        "电力"
+      ]
     },
     {
       "id": "20260622-1812-deepseek-cloud-20260622-1812",
@@ -2909,13 +2932,13 @@
       ]
     },
     {
-      "id": "20260622-1016-latest-supply-chain-radar",
+      "id": "20260622-1021-latest-supply-chain-radar",
       "filename": "latest-supply-chain-radar.md",
       "title": "产业链需求雷达",
       "kind": "supply-chain",
       "kind_label": "产业链雷达",
-      "published_at": "2026-06-22T10:16+00:00",
-      "published_label": "2026-06-22 10:16",
+      "published_at": "2026-06-22T10:21+00:00",
+      "published_label": "2026-06-22 10:21",
       "is_latest": true,
       "summary": "产业链需求雷达",
       "symbols": [
@@ -2958,6 +2981,19 @@
         "液冷",
         "电力"
       ]
+    },
+    {
+      "id": "20260622-1020-latest-market-brief",
+      "filename": "latest-market-brief.md",
+      "title": "美股市场机械预筛报告",
+      "kind": "daily",
+      "kind_label": "每日分析",
+      "published_at": "2026-06-22T10:20+00:00",
+      "published_label": "2026-06-22 10:20",
+      "is_latest": true,
+      "summary": "美股市场机械预筛报告",
+      "symbols": [],
+      "themes": []
     },
     {
       "id": "20260622-1015-latest-market-brief",
@@ -4111,32 +4147,6 @@
       "kind_label": "快速更新",
       "published_at": "2026-06-18T16:52+08:00",
       "published_label": "2026-06-18 16:52",
-      "is_latest": false,
-      "summary": "美股市场机械预筛报告",
-      "symbols": [],
-      "themes": []
-    },
-    {
-      "id": "20260618-1604-20260618-1604-market-brief",
-      "filename": "20260618-1604-market-brief.md",
-      "title": "美股市场机械预筛报告",
-      "kind": "daily",
-      "kind_label": "每日分析",
-      "published_at": "2026-06-18T16:04+08:00",
-      "published_label": "2026-06-18 16:04",
-      "is_latest": false,
-      "summary": "美股市场机械预筛报告",
-      "symbols": [],
-      "themes": []
-    },
-    {
-      "id": "20260617-1332-20260617-1332-market-brief",
-      "filename": "20260617-1332-market-brief.md",
-      "title": "美股市场机械预筛报告",
-      "kind": "daily",
-      "kind_label": "每日分析",
-      "published_at": "2026-06-17T13:32+08:00",
-      "published_label": "2026-06-17 13:32",
       "is_latest": false,
       "summary": "美股市场机械预筛报告",
       "symbols": [],
