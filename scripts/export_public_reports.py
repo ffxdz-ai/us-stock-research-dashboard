@@ -402,6 +402,29 @@ def number(value: Any) -> float | None:
     return None
 
 
+def fmt_price(value: Any, currency: str = "") -> str:
+    parsed = number(value)
+    if parsed is None:
+        return "待确认"
+    text = f"{parsed:,.2f}".rstrip("0").rstrip(".")
+    return f"{text} {currency}".strip()
+
+
+def fmt_ratio(value: Any) -> str:
+    parsed = number(value)
+    return "待确认" if parsed is None else f"{parsed:.2f}:1"
+
+
+def fmt_distance(current: float | None, trigger: float | None) -> str:
+    if current is None or trigger is None or current <= 0:
+        return ""
+    distance = (trigger / current - 1) * 100
+    if abs(distance) < 0.05:
+        return "，已接近触发价"
+    direction = "还需回落" if distance < 0 else "仍有上行空间"
+    return f"，{direction} {abs(distance):.1f}%"
+
+
 def clean_text(value: Any) -> str:
     return re.sub(r"\s+", " ", str(value or "")).strip()
 
@@ -521,22 +544,85 @@ def build_metric_change_index(opportunity_radar: dict[str, Any]) -> dict[str, di
     return index
 
 
+def rr_trigger_price(target: float | None, stop_loss: float | None, rr_required: float) -> float | None:
+    if target is None or stop_loss is None or target <= stop_loss or rr_required <= 0:
+        return None
+    return round((target + rr_required * stop_loss) / (rr_required + 1), 2)
+
+
 def derive_opportunity_conditions(item: dict[str, Any]) -> tuple[list[str], list[str], list[str]]:
     rr = number(item.get("rr_ratio"))
-    buy = [
-        "R/R 回到 2:1 以上" if rr is None or rr < 2 else "R/R 已达到 2:1 以上，仍需人工复核",
-        "价格接近支撑、严格触发或突破确认位",
-        "估值、趋势、催化至少一项继续改善",
-    ]
+    rr_required = number(item.get("rr_required")) or 2.0
+    price = number(item.get("price"))
+    strict_entry = number(item.get("entry_price") or item.get("strict_entry"))
+    stop_loss = number(item.get("stop_loss") or item.get("invalidation"))
+    target = number(item.get("target_price") or item.get("mechanical_target"))
+    trend = number(item.get("trend_score"))
+    crowding = number(item.get("crowding_score"))
+    status = clean_text(item.get("status"))
+    currency = currency_for_symbol(str(item.get("symbol") or ""))
+    rr_entry = rr_trigger_price(target, stop_loss, rr_required)
+    valid_strict_entry = (
+        strict_entry
+        if strict_entry is not None
+        and stop_loss is not None
+        and target is not None
+        and stop_loss < strict_entry < target
+        else None
+    )
+    entry = valid_strict_entry or rr_entry
+    if entry is not None:
+        item["entry_price"] = round(entry, 2)
+    if stop_loss is not None:
+        item["stop_loss"] = stop_loss
+    if target is not None:
+        item["target_price"] = target
+
+    if price is None or stop_loss is None or target is None or entry is None:
+        buy = [
+            "暂不买：缺少完整的入场价、止损价或目标价，等待系统补齐后再决策",
+            f"必须先补齐：当前价 {fmt_price(price, currency)} / 止损 {fmt_price(stop_loss, currency)} / 目标 {fmt_price(target, currency)}",
+            "补齐后再检查 R/R 是否 ≥ 2:1，未达标不升级为买入",
+            "需要财务、趋势或事件证据至少一项继续改善",
+        ]
+    else:
+        actionable = status == "executable" and rr is not None and rr >= rr_required
+        if actionable:
+            headline = "可试仓观察：价格、止损、目标和 R/R 已达最低纪律，仍需盘中确认"
+        elif rr is not None and rr < rr_required:
+            headline = f"暂不买：当前 R/R {fmt_ratio(rr)} 低于 {rr_required:.0f}:1，等价格回到买点再看"
+        else:
+            headline = "暂不买：仍需二次分析或人工复核，满足以下条件才升级"
+        if rr is not None and rr >= rr_required:
+            price_line = (
+                f"价格纪律：现价 {fmt_price(price, currency)} 已满足 R/R ≥ {rr_required:.0f}:1；"
+                f"保守回踩买点 ≤ {fmt_price(valid_strict_entry, currency)}{fmt_distance(price, valid_strict_entry)}"
+                if valid_strict_entry is not None and price is not None and price > valid_strict_entry
+                else f"价格纪律：现价 {fmt_price(price, currency)} 已满足 R/R ≥ {rr_required:.0f}:1；盘中不跌破止损前才可继续观察"
+            )
+        else:
+            price_line = f"价格触发：现价 ≤ {fmt_price(entry, currency)} 再考虑{fmt_distance(price, entry)}；若突破追入，必须重新计算 R/R ≥ {rr_required:.0f}:1"
+        buy = [
+            headline,
+            price_line,
+            f"风控框架：止损 {fmt_price(stop_loss, currency)}；目标 {fmt_price(target, currency)}；当前 R/R {fmt_ratio(rr)}",
+            (
+                f"确认信号：趋势确认从 {trend:.1f} 提升到 ≥50，且财务/事件证据补强"
+                if trend is not None and trend < 50
+                else "确认信号：趋势不恶化，财务/事件证据至少一项继续改善"
+            ),
+        ]
+        if crowding is not None and crowding >= 80:
+            buy.append(f"拥挤度 {crowding:.1f} 偏高：只能等回踩，不做高开追涨")
     avoid = [
-        "R/R 低于 2:1 不追高",
+        f"R/R 低于 {rr_required:.0f}:1 不追高；价格高于 {fmt_price(entry, currency)} 且未重新计算 R/R 时不买" if entry else f"R/R 低于 {rr_required:.0f}:1 不追高",
         "数据缺口未修复前不升级为买入",
         "高开大幅追涨或财报前波动率过高",
     ]
     invalid = [
+        f"收盘跌破止损位 {fmt_price(stop_loss, currency)}" if stop_loss is not None else "跌破后续 Buy-Side 分析定义的失效位",
         "产业链需求、订单或价格弱于预期",
         "财报/指引/申报显示核心假设恶化",
-        "跌破后续 Buy-Side 分析定义的失效位",
     ]
     return buy, avoid, invalid
 
@@ -581,6 +667,9 @@ def finalize_opportunities(items: dict[str, dict[str, Any]], limit: int = 80) ->
                 "crowding_score": item.get("crowding_score"),
                 "rr_ratio": item.get("rr_ratio"),
                 "rr_required": item.get("rr_required") or 2,
+                "entry_price": item.get("entry_price") or item.get("strict_entry"),
+                "stop_loss": item.get("stop_loss") or item.get("invalidation"),
+                "target_price": item.get("target_price") or item.get("mechanical_target"),
                 "score_delta": item.get("score_delta") if item.get("score_delta") else None,
                 "why_changed": item.get("why_changed") or [],
                 "buy_conditions": item.get("buy_conditions") or [],
@@ -769,6 +858,9 @@ def derive_opportunities() -> list[dict[str, Any]]:
                 "trend_score": number(price.get("trend_score")),
                 "rr_ratio": number(price.get("reward_risk")),
                 "rr_required": 2,
+                "entry_price": number(price.get("strict_entry")),
+                "stop_loss": number(price.get("invalidation")),
+                "target_price": number(price.get("mechanical_target")),
                 "evidence_status": clean_text(card.get("evidence_status")),
                 "updated_at": event_evidence.get("generated_label") or generated_at,
                 "why_changed": [

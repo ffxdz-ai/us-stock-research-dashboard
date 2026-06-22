@@ -957,6 +957,9 @@ function normalizeStructuredOpportunity(item) {
     crowding_score: parseLooseNumber(item.crowding_score),
     rr_ratio: parseLooseNumber(item.rr_ratio),
     rr_required: parseLooseNumber(item.rr_required),
+    entry_price: parseLooseNumber(item.entry_price),
+    stop_loss: parseLooseNumber(item.stop_loss),
+    target_price: parseLooseNumber(item.target_price),
     score_delta: scoreDelta,
     why_changed: normalizeList(item.why_changed),
     buy_conditions: normalizeList(item.buy_conditions),
@@ -982,7 +985,7 @@ function mergeOpportunity(existing, incoming) {
   ["name", "market", "theme", "segment", "price_time", "price_source", "currency", "source_label"].forEach((key) => {
     if (!merged[key] && incoming[key]) merged[key] = incoming[key];
   });
-  ["opportunity_score", "trend_score", "crowding_score", "rr_ratio", "rr_required", "price"].forEach((key) => {
+  ["opportunity_score", "trend_score", "crowding_score", "rr_ratio", "rr_required", "price", "entry_price", "stop_loss", "target_price"].forEach((key) => {
     if ((merged[key] === null || merged[key] === undefined) && incoming[key] !== null && incoming[key] !== undefined) merged[key] = incoming[key];
   });
   if (incomingHigherPriority) {
@@ -1242,7 +1245,7 @@ function renderOpportunityCards() {
 
     const conditions = document.createElement("div");
     conditions.className = "opportunity-conditions";
-    appendListBlock(conditions, "买入条件", opportunity.buy_conditions, "待补充");
+    appendListBlock(conditions, "什么时候买", opportunity.buy_conditions, "待补充");
     appendListBlock(conditions, "回避条件", opportunity.avoid_conditions, "待补充");
     appendListBlock(conditions, "失效条件", opportunity.invalid_conditions, "待补充");
 
