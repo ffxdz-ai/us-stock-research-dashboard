@@ -499,6 +499,7 @@ def price_evidence(
         or number(fallback_row.get("mechanical_target"))
         or number(fallback_row.get("target_price"))
         or number(fallback_row.get("target"))
+        or number(free_quote.get("mechanical_target"))
     )
     invalidation = number(market_row.get("invalidation")) or number(fallback_row.get("invalidation")) or number(free_quote.get("invalidation"))
     strict_entry = number(market_row.get("strict_entry")) or number(fallback_row.get("strict_entry")) or number(free_quote.get("strict_entry"))
