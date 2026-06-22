@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-06-22T17:51:36+08:00",
-  "generated_label": "2026-06-22 17:51",
+  "generated_at": "2026-06-22T18:10:47+08:00",
+  "generated_label": "2026-06-22 18:10",
   "data_boundary": {
     "role": "event, filing, earnings and evidence extraction; not trading instruction",
     "private_portfolio": "disabled",
@@ -11,8 +11,8 @@
     "symbol_count": 27,
     "high_quality_evidence_count": 1,
     "usable_evidence_count": 6,
-    "gap_count": 73,
-    "data_gap_count": 42,
+    "gap_count": 72,
+    "data_gap_count": 41,
     "entry_path_missing_count": 9,
     "rr_discipline_count": 16,
     "permission_gap_count": 9,
@@ -27,7 +27,7 @@
         "GPU / ASIC / HBM / 先进封装"
       ],
       "evidence_status": "证据较完整",
-      "evidence_score": 82.0,
+      "evidence_score": 88.0,
       "filing": {
         "available": true,
         "form": "8-K",
@@ -57,7 +57,7 @@
         "available": true,
         "coverage_status": "ok",
         "expectation_score": 84.0,
-        "price_target_upside_pct": 51.35,
+        "price_target_upside_pct": 51.09,
         "eps_revision_pct": 0.0,
         "revenue_revision_pct": 0.0,
         "eps_surprise_pct": 6.25,
@@ -65,24 +65,26 @@
         "annual_eps_estimate": 14.69466,
         "annual_revenue_estimate": 672894855762,
         "score": 96.0,
-        "gaps": []
+        "gaps": [],
+        "fallback_used": null
       },
       "price": {
         "available": true,
-        "price": 209.31,
-        "quote_time": "Jun 22, 2026 5:51 AM ET",
-        "reward_risk": 0.84,
+        "price": 209.6705,
+        "quote_time": "Jun 22, 2026 6:09 AM ET",
+        "currency": null,
+        "reward_risk": 0.83,
         "entry_path_complete": true,
         "entry_path_fallback": null,
-        "trend_score": 50.0,
+        "trend_score": 76.0,
         "source": "market_pack",
         "strict_entry": 177.41,
         "invalidation": 164.27,
-        "mechanical_target": 246.99,
+        "mechanical_target": 247.41,
         "ma50": 209.3114,
         "ma200": 189.9022,
         "high252": 236.54,
-        "score": 35.0
+        "score": 65.0
       },
       "sec_fallback_used": false,
       "gaps": [
@@ -141,12 +143,14 @@
           "缺少年/季度分析师预期",
           "缺少最近财报 surprise",
           "FMP 部分端点受限：/analyst-estimates、/earnings、/price-target-consensus"
-        ]
+        ],
+        "fallback_used": null
       },
       "price": {
         "available": true,
-        "price": 314.88,
-        "quote_time": "Jun 22, 2026 5:50 AM ET",
+        "price": 316.32,
+        "quote_time": "Jun 22, 2026 6:09 AM ET",
+        "currency": null,
         "reward_risk": 0.25,
         "entry_path_complete": true,
         "entry_path_fallback": null,
@@ -154,7 +158,7 @@
         "source": "market_pack",
         "strict_entry": 93.54,
         "invalidation": 86.61,
-        "mechanical_target": 371.56,
+        "mechanical_target": 373.26,
         "ma50": 197.942,
         "ma200": 113.0628,
         "high252": 329.88,
@@ -219,12 +223,14 @@
           "缺少年/季度分析师预期",
           "缺少最近财报 surprise",
           "FMP 部分端点受限：/analyst-estimates、/earnings、/price-target-consensus"
-        ]
+        ],
+        "fallback_used": null
       },
       "price": {
         "available": true,
-        "price": 170.0,
-        "quote_time": "Jun 22, 2026 5:41 AM ET",
+        "price": 170.44,
+        "quote_time": "Jun 22, 2026 6:09 AM ET",
+        "currency": null,
         "reward_risk": 0.56,
         "entry_path_complete": true,
         "entry_path_fallback": null,
@@ -232,7 +238,7 @@
         "source": "market_pack",
         "strict_entry": 124.65,
         "invalidation": 115.42,
-        "mechanical_target": 200.6,
+        "mechanical_target": 201.12,
         "ma50": 158.535,
         "ma200": 142.1681,
         "high252": 179.8,
@@ -283,15 +289,26 @@
       },
       "fmp": {
         "available": false,
+        "coverage_status": null,
+        "expectation_score": null,
+        "price_target_upside_pct": null,
+        "eps_revision_pct": null,
+        "revenue_revision_pct": null,
+        "eps_surprise_pct": null,
+        "rating": null,
+        "annual_eps_estimate": null,
+        "annual_revenue_estimate": null,
         "score": 0,
         "gaps": [
           "缺少 FMP 预期/财报快照"
-        ]
+        ],
+        "fallback_used": null
       },
       "price": {
         "available": true,
-        "price": 1170.5,
-        "quote_time": "Jun 22, 2026 5:51 AM ET",
+        "price": 1174.9702,
+        "quote_time": "Jun 22, 2026 6:09 AM ET",
+        "currency": null,
         "reward_risk": 0.16,
         "entry_path_complete": true,
         "entry_path_fallback": null,
@@ -299,7 +316,7 @@
         "source": "market_pack",
         "strict_entry": 336.41,
         "invalidation": 311.49,
-        "mechanical_target": 1310.96,
+        "mechanical_target": 1315.97,
         "ma50": 732.7992,
         "ma200": 400.7525,
         "high252": 1149.43,
@@ -348,15 +365,26 @@
       },
       "fmp": {
         "available": false,
+        "coverage_status": null,
+        "expectation_score": null,
+        "price_target_upside_pct": null,
+        "eps_revision_pct": null,
+        "revenue_revision_pct": null,
+        "eps_surprise_pct": null,
+        "rating": null,
+        "annual_eps_estimate": null,
+        "annual_revenue_estimate": null,
         "score": 0,
         "gaps": [
           "缺少 FMP 预期/财报快照"
-        ]
+        ],
+        "fallback_used": null
       },
       "price": {
         "available": true,
-        "price": 539.35,
-        "quote_time": "Jun 22, 2026 5:50 AM ET",
+        "price": 539.48,
+        "quote_time": "Jun 22, 2026 6:09 AM ET",
+        "currency": null,
         "reward_risk": 0.28,
         "entry_path_complete": true,
         "entry_path_fallback": null,
@@ -364,7 +392,7 @@
         "source": "market_pack",
         "strict_entry": 208.29,
         "invalidation": 192.87,
-        "mechanical_target": 636.43,
+        "mechanical_target": 636.59,
         "ma50": 411.0471,
         "ma200": 261.1502,
         "high252": 558.37,
@@ -427,12 +455,14 @@
           "缺少年/季度分析师预期",
           "缺少最近财报 surprise",
           "FMP 部分端点受限：/analyst-estimates、/earnings、/price-target-consensus"
-        ]
+        ],
+        "fallback_used": null
       },
       "price": {
         "available": true,
-        "price": 405.04,
-        "quote_time": "Jun 22, 2026 5:50 AM ET",
+        "price": 406.2,
+        "quote_time": "Jun 22, 2026 6:09 AM ET",
+        "currency": null,
         "reward_risk": 0.63,
         "entry_path_complete": true,
         "entry_path_fallback": null,
@@ -440,7 +470,7 @@
         "source": "market_pack",
         "strict_entry": 313.16,
         "invalidation": 289.96,
-        "mechanical_target": 477.95,
+        "mechanical_target": 479.32,
         "ma50": 411.674,
         "ma200": 359.9534,
         "high252": 495.0,
@@ -491,72 +521,7 @@
       },
       "fmp": {
         "available": false,
-        "score": 0,
-        "gaps": [
-          "缺少 FMP 预期/财报快照"
-        ]
-      },
-      "price": {
-        "available": true,
-        "price": 339.934,
-        "quote_time": "Jun 22, 2026 5:51 AM ET",
-        "reward_risk": 0.46,
-        "entry_path_complete": true,
-        "entry_path_fallback": null,
-        "trend_score": 76.0,
-        "source": "market_pack",
-        "strict_entry": 250.24,
-        "invalidation": 206.03,
-        "mechanical_target": 401.12,
-        "ma50": 321.5358,
-        "ma200": 223.9415,
-        "high252": 379.935,
-        "score": 65.0
-      },
-      "sec_fallback_used": true,
-      "gaps": [
-        "缺少 FMP 预期/财报快照",
-        "R/R 未达 2:1，不能进入普通买入"
-      ],
-      "action": "证据只支持观察/二次研究；R/R 未达标，不允许普通买入。"
-    },
-    {
-      "code": "US.HON",
-      "symbol": "HON",
-      "name": "Honeywell International Inc. Common Stock",
-      "themes": [
-        "Physical AI / 机器人 / 自动化"
-      ],
-      "evidence_status": "证据不足",
-      "evidence_score": 55.8,
-      "filing": {
-        "available": true,
-        "form": "8-K",
-        "filed": "2026-06-15",
-        "age_days": 7,
-        "accession": "0000773840-26-000080",
-        "recent_forms": [
-          "8-K",
-          "8-K",
-          "8-K",
-          "8-K",
-          "8-K"
-        ],
-        "score": 90
-      },
-      "financials": {
-        "available": true,
-        "revenue_growth_yoy": -0.0274,
-        "net_margin": 0.1263,
-        "liabilities_to_assets": null,
-        "latest_annual_revenue": 37442000000,
-        "latest_annual_revenue_filed": "2026-02-17",
-        "latest_annual_fcf": 5422000000.0,
-        "score": 49.4
-      },
-      "fmp": {
-        "available": false,
-        "coverage_status": "restricted",
+        "coverage_status": null,
         "expectation_score": null,
         "price_target_upside_pct": null,
         "eps_revision_pct": null,
@@ -565,35 +530,33 @@
         "rating": null,
         "annual_eps_estimate": null,
         "annual_revenue_estimate": null,
-        "score": 35.0,
+        "score": 0,
         "gaps": [
-          "缺少年/季度分析师预期",
-          "缺少最近财报 surprise",
-          "FMP 部分端点受限：/analyst-estimates、/earnings、/price-target-consensus"
-        ]
+          "缺少 FMP 预期/财报快照"
+        ],
+        "fallback_used": null
       },
       "price": {
         "available": true,
-        "price": 228.204,
-        "quote_time": "Jun 22, 2026 5:48 AM ET",
-        "reward_risk": 1.3,
+        "price": 341.49,
+        "quote_time": "Jun 22, 2026 6:09 AM ET",
+        "currency": null,
+        "reward_risk": 0.45,
         "entry_path_complete": true,
         "entry_path_fallback": null,
-        "trend_score": 80.0,
+        "trend_score": 76.0,
         "source": "market_pack",
-        "strict_entry": 215.8,
-        "invalidation": 196.55,
-        "mechanical_target": 269.28,
-        "ma50": 221.9502,
-        "ma200": 213.6421,
-        "high252": 248.18,
+        "strict_entry": 250.24,
+        "invalidation": 206.03,
+        "mechanical_target": 402.96,
+        "ma50": 321.5358,
+        "ma200": 223.9415,
+        "high252": 379.935,
         "score": 65.0
       },
       "sec_fallback_used": true,
       "gaps": [
-        "缺少年/季度分析师预期",
-        "缺少最近财报 surprise",
-        "FMP 部分端点受限：/analyst-estimates、/earnings、/price-target-consensus",
+        "缺少 FMP 预期/财报快照",
         "R/R 未达 2:1，不能进入普通买入"
       ],
       "action": "证据只支持观察/二次研究；R/R 未达标，不允许普通买入。"
@@ -648,20 +611,22 @@
           "缺少年/季度分析师预期",
           "缺少最近财报 surprise",
           "FMP 部分端点受限：/analyst-estimates、/earnings、/price-target-consensus"
-        ]
+        ],
+        "fallback_used": null
       },
       "price": {
         "available": true,
-        "price": 404.8,
-        "quote_time": "Jun 22, 2026 5:50 AM ET",
-        "reward_risk": 8.97,
+        "price": 405.544,
+        "quote_time": "Jun 22, 2026 6:04 AM ET",
+        "currency": null,
+        "reward_risk": 8.24,
         "entry_path_complete": true,
         "entry_path_fallback": null,
         "trend_score": 14.0,
         "source": "market_pack",
-        "strict_entry": 397.96,
+        "strict_entry": 398.69,
         "invalidation": 396.68,
-        "mechanical_target": 477.66,
+        "mechanical_target": 478.54,
         "ma50": 439.7316,
         "ma200": 490.6895,
         "high252": 603.88,
@@ -711,23 +676,34 @@
       },
       "fmp": {
         "available": false,
+        "coverage_status": null,
+        "expectation_score": null,
+        "price_target_upside_pct": null,
+        "eps_revision_pct": null,
+        "revenue_revision_pct": null,
+        "eps_surprise_pct": null,
+        "rating": null,
+        "annual_eps_estimate": null,
+        "annual_revenue_estimate": null,
         "score": 0,
         "gaps": [
           "缺少 FMP 预期/财报快照"
-        ]
+        ],
+        "fallback_used": null
       },
       "price": {
         "available": true,
-        "price": 423.99,
-        "quote_time": "Jun 22, 2026 5:46 AM ET",
-        "reward_risk": 0.9,
+        "price": 424.81,
+        "quote_time": "Jun 22, 2026 6:07 AM ET",
+        "currency": null,
+        "reward_risk": 0.89,
         "entry_path_complete": true,
         "entry_path_fallback": null,
         "trend_score": 88.0,
         "source": "market_pack",
         "strict_entry": 369.36,
         "invalidation": 339.31,
-        "mechanical_target": 500.31,
+        "mechanical_target": 501.28,
         "ma50": 405.1024,
         "ma200": 368.8098,
         "high252": 435.43,
@@ -736,6 +712,86 @@
       "sec_fallback_used": true,
       "gaps": [
         "缺少 FMP 预期/财报快照",
+        "R/R 未达 2:1，不能进入普通买入"
+      ],
+      "action": "证据只支持观察/二次研究；R/R 未达标，不允许普通买入。"
+    },
+    {
+      "code": "US.HON",
+      "symbol": "HON",
+      "name": "Honeywell International Inc. Common Stock",
+      "themes": [
+        "Physical AI / 机器人 / 自动化"
+      ],
+      "evidence_status": "证据不足",
+      "evidence_score": 53.6,
+      "filing": {
+        "available": true,
+        "form": "8-K",
+        "filed": "2026-06-15",
+        "age_days": 7,
+        "accession": "0000773840-26-000080",
+        "recent_forms": [
+          "8-K",
+          "8-K",
+          "8-K",
+          "8-K",
+          "8-K"
+        ],
+        "score": 90
+      },
+      "financials": {
+        "available": true,
+        "revenue_growth_yoy": null,
+        "net_margin": 0.1263,
+        "liabilities_to_assets": null,
+        "latest_annual_revenue": 37442000000,
+        "latest_annual_revenue_filed": "2026-02-17",
+        "latest_annual_fcf": null,
+        "score": 41.3
+      },
+      "fmp": {
+        "available": false,
+        "coverage_status": "restricted",
+        "expectation_score": null,
+        "price_target_upside_pct": null,
+        "eps_revision_pct": null,
+        "revenue_revision_pct": null,
+        "eps_surprise_pct": null,
+        "rating": null,
+        "annual_eps_estimate": null,
+        "annual_revenue_estimate": null,
+        "score": 35.0,
+        "gaps": [
+          "缺少年/季度分析师预期",
+          "缺少最近财报 surprise",
+          "FMP 部分端点受限：/analyst-estimates、/earnings、/price-target-consensus"
+        ],
+        "fallback_used": null
+      },
+      "price": {
+        "available": true,
+        "price": 228.2,
+        "quote_time": "Jun 22, 2026 6:02 AM ET",
+        "currency": null,
+        "reward_risk": 1.3,
+        "entry_path_complete": true,
+        "entry_path_fallback": null,
+        "trend_score": 80.0,
+        "source": "market_pack",
+        "strict_entry": 215.8,
+        "invalidation": 196.55,
+        "mechanical_target": 269.28,
+        "ma50": 221.9502,
+        "ma200": 213.6421,
+        "high252": 248.18,
+        "score": 65.0
+      },
+      "sec_fallback_used": true,
+      "gaps": [
+        "缺少年/季度分析师预期",
+        "缺少最近财报 surprise",
+        "FMP 部分端点受限：/analyst-estimates、/earnings、/price-target-consensus",
         "R/R 未达 2:1，不能进入普通买入"
       ],
       "action": "证据只支持观察/二次研究；R/R 未达标，不允许普通买入。"
@@ -776,15 +832,26 @@
       },
       "fmp": {
         "available": false,
+        "coverage_status": null,
+        "expectation_score": null,
+        "price_target_upside_pct": null,
+        "eps_revision_pct": null,
+        "revenue_revision_pct": null,
+        "eps_surprise_pct": null,
+        "rating": null,
+        "annual_eps_estimate": null,
+        "annual_revenue_estimate": null,
         "score": 0,
         "gaps": [
           "缺少 FMP 预期/财报快照"
-        ]
+        ],
+        "fallback_used": null
       },
       "price": {
         "available": true,
-        "price": 218.0,
-        "quote_time": "Jun 22, 2026 5:49 AM ET",
+        "price": 218.07,
+        "quote_time": "Jun 22, 2026 6:08 AM ET",
+        "currency": null,
         "reward_risk": 0.3,
         "entry_path_complete": true,
         "entry_path_fallback": null,
@@ -792,7 +859,7 @@
         "source": "market_pack",
         "strict_entry": 93.69,
         "invalidation": 86.75,
-        "mechanical_target": 257.24,
+        "mechanical_target": 257.32,
         "ma50": 161.6952,
         "ma200": 97.9282,
         "high252": 217.94,
@@ -855,20 +922,22 @@
           "缺少年/季度分析师预期",
           "缺少最近财报 surprise",
           "FMP 部分端点受限：/analyst-estimates、/earnings、/price-target-consensus"
-        ]
+        ],
+        "fallback_used": null
       },
       "price": {
         "available": true,
-        "price": 41.7032,
-        "quote_time": "Jun 22, 2026 5:51 AM ET",
-        "reward_risk": 3.45,
+        "price": 42.72,
+        "quote_time": "Jun 22, 2026 6:09 AM ET",
+        "currency": null,
+        "reward_risk": 2.41,
         "entry_path_complete": true,
         "entry_path_fallback": null,
         "trend_score": 14.0,
         "source": "market_pack",
-        "strict_entry": 29.68,
+        "strict_entry": 30.41,
         "invalidation": 39.53,
-        "mechanical_target": 49.21,
+        "mechanical_target": 50.41,
         "ma50": 52.0959,
         "ma200": 58.0569,
         "high252": 87.88,
@@ -918,15 +987,26 @@
       },
       "fmp": {
         "available": false,
+        "coverage_status": null,
+        "expectation_score": null,
+        "price_target_upside_pct": null,
+        "eps_revision_pct": null,
+        "revenue_revision_pct": null,
+        "eps_surprise_pct": null,
+        "rating": null,
+        "annual_eps_estimate": null,
+        "annual_revenue_estimate": null,
         "score": 0,
         "gaps": [
           "缺少 FMP 预期/财报快照"
-        ]
+        ],
+        "fallback_used": null
       },
       "price": {
         "available": true,
-        "price": 150.5,
-        "quote_time": "Jun 22, 2026 5:49 AM ET",
+        "price": 150.0,
+        "quote_time": "Jun 22, 2026 6:06 AM ET",
+        "currency": null,
         "reward_risk": 0.3,
         "entry_path_complete": true,
         "entry_path_fallback": null,
@@ -934,7 +1014,7 @@
         "source": "market_pack",
         "strict_entry": 65.11,
         "invalidation": 60.28,
-        "mechanical_target": 177.59,
+        "mechanical_target": 177.0,
         "ma50": 121.7102,
         "ma200": 77.1429,
         "high252": 166.86,
@@ -983,15 +1063,26 @@
       },
       "fmp": {
         "available": false,
+        "coverage_status": null,
+        "expectation_score": null,
+        "price_target_upside_pct": null,
+        "eps_revision_pct": null,
+        "revenue_revision_pct": null,
+        "eps_surprise_pct": null,
+        "rating": null,
+        "annual_eps_estimate": null,
+        "annual_revenue_estimate": null,
         "score": 0,
         "gaps": [
           "缺少 FMP 预期/财报快照"
-        ]
+        ],
+        "fallback_used": null
       },
       "price": {
         "available": true,
         "price": 957.74,
         "quote_time": "Jun 22, 2026 5:13 AM ET",
+        "currency": null,
         "reward_risk": 1.14,
         "entry_path_complete": true,
         "entry_path_fallback": null,
@@ -1048,15 +1139,26 @@
       },
       "fmp": {
         "available": false,
+        "coverage_status": null,
+        "expectation_score": null,
+        "price_target_upside_pct": null,
+        "eps_revision_pct": null,
+        "revenue_revision_pct": null,
+        "eps_surprise_pct": null,
+        "rating": null,
+        "annual_eps_estimate": null,
+        "annual_revenue_estimate": null,
         "score": 0,
         "gaps": [
           "缺少 FMP 预期/财报快照"
-        ]
+        ],
+        "fallback_used": null
       },
       "price": {
         "available": true,
         "price": 153.7,
         "quote_time": "Jun 22, 2026 5:17 AM ET",
+        "currency": null,
         "reward_risk": 0.89,
         "entry_path_complete": true,
         "entry_path_fallback": null,
@@ -1113,15 +1215,26 @@
       },
       "fmp": {
         "available": false,
+        "coverage_status": null,
+        "expectation_score": null,
+        "price_target_upside_pct": null,
+        "eps_revision_pct": null,
+        "revenue_revision_pct": null,
+        "eps_surprise_pct": null,
+        "rating": null,
+        "annual_eps_estimate": null,
+        "annual_revenue_estimate": null,
         "score": 0,
         "gaps": [
           "缺少 FMP 预期/财报快照"
-        ]
+        ],
+        "fallback_used": null
       },
       "price": {
         "available": true,
         "price": 371.56,
-        "quote_time": "Jun 22, 2026 5:42 AM ET",
+        "quote_time": "Jun 22, 2026 6:01 AM ET",
+        "currency": null,
         "reward_risk": 0.51,
         "entry_path_complete": true,
         "entry_path_fallback": null,
@@ -1178,23 +1291,34 @@
       },
       "fmp": {
         "available": false,
+        "coverage_status": null,
+        "expectation_score": null,
+        "price_target_upside_pct": null,
+        "eps_revision_pct": null,
+        "revenue_revision_pct": null,
+        "eps_surprise_pct": null,
+        "rating": null,
+        "annual_eps_estimate": null,
+        "annual_revenue_estimate": null,
         "score": 0,
         "gaps": [
           "缺少 FMP 预期/财报快照"
-        ]
+        ],
+        "fallback_used": null
       },
       "price": {
         "available": true,
-        "price": 469.6967,
-        "quote_time": "Jun 22, 2026 5:14 AM ET",
-        "reward_risk": 0.69,
+        "price": 496.1732,
+        "quote_time": "Jun 22, 2026 6:04 AM ET",
+        "currency": null,
+        "reward_risk": 0.6,
         "entry_path_complete": true,
         "entry_path_fallback": null,
         "trend_score": 92.0,
         "source": "market_pack",
         "strict_entry": 375.33,
         "invalidation": 347.53,
-        "mechanical_target": 554.24,
+        "mechanical_target": 585.48,
         "ma50": 435.6696,
         "ma200": 393.2668,
         "high252": 475.9199,
@@ -1215,7 +1339,7 @@
         "GPU / ASIC / HBM / 先进封装"
       ],
       "evidence_status": "证据不足",
-      "evidence_score": 34.2,
+      "evidence_score": 35.6,
       "filing": {
         "available": true,
         "form": "20-F",
@@ -1239,19 +1363,31 @@
         "latest_annual_revenue": null,
         "latest_annual_revenue_filed": null,
         "latest_annual_fcf": null,
-        "score": 0
+        "score": 0,
+        "coverage_note": "ADR/foreign issuer; SEC companyfacts is optional and should be checked against company IR/FMP."
       },
       "fmp": {
         "available": false,
+        "coverage_status": null,
+        "expectation_score": null,
+        "price_target_upside_pct": null,
+        "eps_revision_pct": null,
+        "revenue_revision_pct": null,
+        "eps_surprise_pct": null,
+        "rating": null,
+        "annual_eps_estimate": null,
+        "annual_revenue_estimate": null,
         "score": 0,
         "gaps": [
           "缺少 FMP 预期/财报快照"
-        ]
+        ],
+        "fallback_used": null
       },
       "price": {
         "available": true,
-        "price": 470.53,
-        "quote_time": "Jun 22, 2026 5:51 AM ET",
+        "price": 473.36,
+        "quote_time": "Jun 22, 2026 6:09 AM ET",
+        "currency": null,
         "reward_risk": 0.52,
         "entry_path_complete": true,
         "entry_path_fallback": null,
@@ -1259,7 +1395,7 @@
         "source": "market_pack",
         "strict_entry": 338.9,
         "invalidation": 308.34,
-        "mechanical_target": 555.23,
+        "mechanical_target": 558.56,
         "ma50": 405.6116,
         "ma200": 335.1479,
         "high252": 465.22,
@@ -1267,9 +1403,292 @@
       },
       "sec_fallback_used": true,
       "gaps": [
-        "缺少 SEC 财务事实",
         "缺少 FMP 预期/财报快照",
         "R/R 未达 2:1，不能进入普通买入"
+      ],
+      "action": "证据只支持观察/二次研究；R/R 未达标，不允许普通买入。"
+    },
+    {
+      "code": "SZ.300308",
+      "symbol": null,
+      "name": "中际旭创",
+      "themes": [
+        "AI 光模块 / CPO / 数据中心网络"
+      ],
+      "evidence_status": "证据不足",
+      "evidence_score": 21.2,
+      "filing": {
+        "available": false,
+        "form": null,
+        "filed": null,
+        "age_days": null,
+        "accession": null,
+        "recent_forms": [],
+        "score": 0
+      },
+      "financials": {
+        "available": false,
+        "revenue_growth_yoy": null,
+        "net_margin": null,
+        "liabilities_to_assets": null,
+        "latest_annual_revenue": null,
+        "latest_annual_revenue_filed": null,
+        "latest_annual_fcf": null,
+        "score": 0
+      },
+      "fmp": {
+        "available": false,
+        "coverage_status": null,
+        "expectation_score": null,
+        "price_target_upside_pct": null,
+        "eps_revision_pct": null,
+        "revenue_revision_pct": null,
+        "eps_surprise_pct": null,
+        "rating": null,
+        "annual_eps_estimate": null,
+        "annual_revenue_estimate": null,
+        "score": 0,
+        "gaps": [
+          "缺少 FMP 预期/财报快照"
+        ],
+        "fallback_used": null
+      },
+      "price": {
+        "available": true,
+        "price": 1382.33,
+        "quote_time": "2026-06-22T09:30:00+08:00",
+        "currency": "CNY",
+        "reward_risk": 0.03,
+        "entry_path_complete": false,
+        "entry_path_fallback": null,
+        "trend_score": 88.0,
+        "source": "cross_market_intelligence",
+        "strict_entry": null,
+        "invalidation": 122.68,
+        "mechanical_target": null,
+        "ma50": 1014.682,
+        "ma200": 638.1784,
+        "high252": 1416.88,
+        "score": 77.0
+      },
+      "sec_fallback_used": false,
+      "gaps": [
+        "非美股标的缺少统一财务与公告正文数据源",
+        "缺少 FMP 预期/财报快照",
+        "缺少完整 R/R 或机械入场路径"
+      ],
+      "action": "证据只支持观察/二次研究；R/R 未达标，不允许普通买入。"
+    },
+    {
+      "code": "SZ.300502",
+      "symbol": null,
+      "name": "新易盛",
+      "themes": [
+        "AI 光模块 / CPO / 数据中心网络"
+      ],
+      "evidence_status": "证据不足",
+      "evidence_score": 21.2,
+      "filing": {
+        "available": false,
+        "form": null,
+        "filed": null,
+        "age_days": null,
+        "accession": null,
+        "recent_forms": [],
+        "score": 0
+      },
+      "financials": {
+        "available": false,
+        "revenue_growth_yoy": null,
+        "net_margin": null,
+        "liabilities_to_assets": null,
+        "latest_annual_revenue": null,
+        "latest_annual_revenue_filed": null,
+        "latest_annual_fcf": null,
+        "score": 0
+      },
+      "fmp": {
+        "available": false,
+        "coverage_status": null,
+        "expectation_score": null,
+        "price_target_upside_pct": null,
+        "eps_revision_pct": null,
+        "revenue_revision_pct": null,
+        "eps_surprise_pct": null,
+        "rating": null,
+        "annual_eps_estimate": null,
+        "annual_revenue_estimate": null,
+        "score": 0,
+        "gaps": [
+          "缺少 FMP 预期/财报快照"
+        ],
+        "fallback_used": null
+      },
+      "price": {
+        "available": true,
+        "price": 579.97,
+        "quote_time": "2026-06-22T09:30:00+08:00",
+        "currency": "CNY",
+        "reward_risk": 0.02,
+        "entry_path_complete": false,
+        "entry_path_fallback": null,
+        "trend_score": 88.0,
+        "source": "cross_market_intelligence",
+        "strict_entry": null,
+        "invalidation": 74.8,
+        "mechanical_target": null,
+        "ma50": 452.7573,
+        "ma200": 316.4428,
+        "high252": 591.0,
+        "score": 77.0
+      },
+      "sec_fallback_used": false,
+      "gaps": [
+        "非美股标的缺少统一财务与公告正文数据源",
+        "缺少 FMP 预期/财报快照",
+        "缺少完整 R/R 或机械入场路径"
+      ],
+      "action": "证据只支持观察/二次研究；R/R 未达标，不允许普通买入。"
+    },
+    {
+      "code": "SZ.002747",
+      "symbol": null,
+      "name": "埃斯顿",
+      "themes": [
+        "Physical AI / 机器人 / 自动化"
+      ],
+      "evidence_status": "证据不足",
+      "evidence_score": 19.2,
+      "filing": {
+        "available": false,
+        "form": null,
+        "filed": null,
+        "age_days": null,
+        "accession": null,
+        "recent_forms": [],
+        "score": 0
+      },
+      "financials": {
+        "available": false,
+        "revenue_growth_yoy": null,
+        "net_margin": null,
+        "liabilities_to_assets": null,
+        "latest_annual_revenue": null,
+        "latest_annual_revenue_filed": null,
+        "latest_annual_fcf": null,
+        "score": 0
+      },
+      "fmp": {
+        "available": false,
+        "coverage_status": null,
+        "expectation_score": null,
+        "price_target_upside_pct": null,
+        "eps_revision_pct": null,
+        "revenue_revision_pct": null,
+        "eps_surprise_pct": null,
+        "rating": null,
+        "annual_eps_estimate": null,
+        "annual_revenue_estimate": null,
+        "score": 0,
+        "gaps": [
+          "缺少 FMP 预期/财报快照"
+        ],
+        "fallback_used": null
+      },
+      "price": {
+        "available": true,
+        "price": 37.19,
+        "quote_time": "2026-06-22T09:30:00+08:00",
+        "currency": "CNY",
+        "reward_risk": 0.14,
+        "entry_path_complete": false,
+        "entry_path_fallback": null,
+        "trend_score": 55.0,
+        "source": "Yahoo chart fallback",
+        "strict_entry": null,
+        "invalidation": 18.35,
+        "mechanical_target": null,
+        "ma50": 26.3528,
+        "ma200": 24.0607,
+        "high252": 39.9,
+        "score": 67.0
+      },
+      "sec_fallback_used": false,
+      "gaps": [
+        "非美股标的缺少统一财务与公告正文数据源",
+        "缺少 FMP 预期/财报快照",
+        "缺少完整 R/R 或机械入场路径"
+      ],
+      "action": "证据只支持观察/二次研究；R/R 未达标，不允许普通买入。"
+    },
+    {
+      "code": "SZ.300394",
+      "symbol": null,
+      "name": "天孚通信",
+      "themes": [
+        "AI 光模块 / CPO / 数据中心网络"
+      ],
+      "evidence_status": "证据不足",
+      "evidence_score": 18.8,
+      "filing": {
+        "available": false,
+        "form": null,
+        "filed": null,
+        "age_days": null,
+        "accession": null,
+        "recent_forms": [],
+        "score": 0
+      },
+      "financials": {
+        "available": false,
+        "revenue_growth_yoy": null,
+        "net_margin": null,
+        "liabilities_to_assets": null,
+        "latest_annual_revenue": null,
+        "latest_annual_revenue_filed": null,
+        "latest_annual_fcf": null,
+        "score": 0
+      },
+      "fmp": {
+        "available": false,
+        "coverage_status": null,
+        "expectation_score": null,
+        "price_target_upside_pct": null,
+        "eps_revision_pct": null,
+        "revenue_revision_pct": null,
+        "eps_surprise_pct": null,
+        "rating": null,
+        "annual_eps_estimate": null,
+        "annual_revenue_estimate": null,
+        "score": 0,
+        "gaps": [
+          "缺少 FMP 预期/财报快照"
+        ],
+        "fallback_used": null
+      },
+      "price": {
+        "available": true,
+        "price": 326.12,
+        "quote_time": "2026-06-22T09:30:00+08:00",
+        "currency": "CNY",
+        "reward_risk": 0.18,
+        "entry_path_complete": false,
+        "entry_path_fallback": null,
+        "trend_score": 76.0,
+        "source": "cross_market_intelligence",
+        "strict_entry": null,
+        "invalidation": 49.8571,
+        "mechanical_target": null,
+        "ma50": 275.3759,
+        "ma200": 185.178,
+        "high252": 375.0,
+        "score": 65.0
+      },
+      "sec_fallback_used": false,
+      "gaps": [
+        "非美股标的缺少统一财务与公告正文数据源",
+        "缺少 FMP 预期/财报快照",
+        "缺少完整 R/R 或机械入场路径"
       ],
       "action": "证据只支持观察/二次研究；R/R 未达标，不允许普通买入。"
     },
@@ -1303,15 +1722,26 @@
       },
       "fmp": {
         "available": false,
+        "coverage_status": null,
+        "expectation_score": null,
+        "price_target_upside_pct": null,
+        "eps_revision_pct": null,
+        "revenue_revision_pct": null,
+        "eps_surprise_pct": null,
+        "rating": null,
+        "annual_eps_estimate": null,
+        "annual_revenue_estimate": null,
         "score": 0,
         "gaps": [
           "缺少 FMP 预期/财报快照"
-        ]
+        ],
+        "fallback_used": null
       },
       "price": {
         "available": true,
         "price": 164.6,
         "quote_time": null,
+        "currency": null,
         "reward_risk": null,
         "entry_path_complete": false,
         "entry_path_fallback": null,
@@ -1363,195 +1793,26 @@
       },
       "fmp": {
         "available": false,
+        "coverage_status": null,
+        "expectation_score": null,
+        "price_target_upside_pct": null,
+        "eps_revision_pct": null,
+        "revenue_revision_pct": null,
+        "eps_surprise_pct": null,
+        "rating": null,
+        "annual_eps_estimate": null,
+        "annual_revenue_estimate": null,
         "score": 0,
         "gaps": [
           "缺少 FMP 预期/财报快照"
-        ]
+        ],
+        "fallback_used": null
       },
       "price": {
         "available": true,
         "price": 78.9,
         "quote_time": null,
-        "reward_risk": null,
-        "entry_path_complete": false,
-        "entry_path_fallback": null,
-        "trend_score": 76.0,
-        "source": "cross_market_intelligence",
-        "strict_entry": null,
-        "invalidation": null,
-        "mechanical_target": null,
-        "ma50": null,
-        "ma200": null,
-        "high252": null,
-        "score": 55.0
-      },
-      "sec_fallback_used": false,
-      "gaps": [
-        "非美股标的缺少统一财务与公告正文数据源",
-        "缺少 FMP 预期/财报快照",
-        "缺少完整 R/R 或机械入场路径"
-      ],
-      "action": "保留观察，等待财务、价格或事件证据补强。"
-    },
-    {
-      "code": "SZ.300308",
-      "symbol": null,
-      "name": "中际旭创",
-      "themes": [
-        "AI 光模块 / CPO / 数据中心网络"
-      ],
-      "evidence_status": "证据不足",
-      "evidence_score": 16.8,
-      "filing": {
-        "available": false,
-        "form": null,
-        "filed": null,
-        "age_days": null,
-        "accession": null,
-        "recent_forms": [],
-        "score": 0
-      },
-      "financials": {
-        "available": false,
-        "revenue_growth_yoy": null,
-        "net_margin": null,
-        "liabilities_to_assets": null,
-        "latest_annual_revenue": null,
-        "latest_annual_revenue_filed": null,
-        "latest_annual_fcf": null,
-        "score": 0
-      },
-      "fmp": {
-        "available": false,
-        "score": 0,
-        "gaps": [
-          "缺少 FMP 预期/财报快照"
-        ]
-      },
-      "price": {
-        "available": true,
-        "price": 1382.33,
-        "quote_time": null,
-        "reward_risk": null,
-        "entry_path_complete": false,
-        "entry_path_fallback": null,
-        "trend_score": 88.0,
-        "source": "cross_market_intelligence",
-        "strict_entry": null,
-        "invalidation": null,
-        "mechanical_target": null,
-        "ma50": null,
-        "ma200": null,
-        "high252": null,
-        "score": 55.0
-      },
-      "sec_fallback_used": false,
-      "gaps": [
-        "非美股标的缺少统一财务与公告正文数据源",
-        "缺少 FMP 预期/财报快照",
-        "缺少完整 R/R 或机械入场路径"
-      ],
-      "action": "保留观察，等待财务、价格或事件证据补强。"
-    },
-    {
-      "code": "SZ.300502",
-      "symbol": null,
-      "name": "新易盛",
-      "themes": [
-        "AI 光模块 / CPO / 数据中心网络"
-      ],
-      "evidence_status": "证据不足",
-      "evidence_score": 16.8,
-      "filing": {
-        "available": false,
-        "form": null,
-        "filed": null,
-        "age_days": null,
-        "accession": null,
-        "recent_forms": [],
-        "score": 0
-      },
-      "financials": {
-        "available": false,
-        "revenue_growth_yoy": null,
-        "net_margin": null,
-        "liabilities_to_assets": null,
-        "latest_annual_revenue": null,
-        "latest_annual_revenue_filed": null,
-        "latest_annual_fcf": null,
-        "score": 0
-      },
-      "fmp": {
-        "available": false,
-        "score": 0,
-        "gaps": [
-          "缺少 FMP 预期/财报快照"
-        ]
-      },
-      "price": {
-        "available": true,
-        "price": 579.97,
-        "quote_time": null,
-        "reward_risk": null,
-        "entry_path_complete": false,
-        "entry_path_fallback": null,
-        "trend_score": 88.0,
-        "source": "cross_market_intelligence",
-        "strict_entry": null,
-        "invalidation": null,
-        "mechanical_target": null,
-        "ma50": null,
-        "ma200": null,
-        "high252": null,
-        "score": 55.0
-      },
-      "sec_fallback_used": false,
-      "gaps": [
-        "非美股标的缺少统一财务与公告正文数据源",
-        "缺少 FMP 预期/财报快照",
-        "缺少完整 R/R 或机械入场路径"
-      ],
-      "action": "保留观察，等待财务、价格或事件证据补强。"
-    },
-    {
-      "code": "SZ.300394",
-      "symbol": null,
-      "name": "天孚通信",
-      "themes": [
-        "AI 光模块 / CPO / 数据中心网络"
-      ],
-      "evidence_status": "证据不足",
-      "evidence_score": 16.8,
-      "filing": {
-        "available": false,
-        "form": null,
-        "filed": null,
-        "age_days": null,
-        "accession": null,
-        "recent_forms": [],
-        "score": 0
-      },
-      "financials": {
-        "available": false,
-        "revenue_growth_yoy": null,
-        "net_margin": null,
-        "liabilities_to_assets": null,
-        "latest_annual_revenue": null,
-        "latest_annual_revenue_filed": null,
-        "latest_annual_fcf": null,
-        "score": 0
-      },
-      "fmp": {
-        "available": false,
-        "score": 0,
-        "gaps": [
-          "缺少 FMP 预期/财报快照"
-        ]
-      },
-      "price": {
-        "available": true,
-        "price": 326.12,
-        "quote_time": null,
+        "currency": null,
         "reward_risk": null,
         "entry_path_complete": false,
         "entry_path_fallback": null,
@@ -1603,15 +1864,26 @@
       },
       "fmp": {
         "available": false,
+        "coverage_status": null,
+        "expectation_score": null,
+        "price_target_upside_pct": null,
+        "eps_revision_pct": null,
+        "revenue_revision_pct": null,
+        "eps_surprise_pct": null,
+        "rating": null,
+        "annual_eps_estimate": null,
+        "annual_revenue_estimate": null,
         "score": 0,
         "gaps": [
           "缺少 FMP 预期/财报快照"
-        ]
+        ],
+        "fallback_used": null
       },
       "price": {
         "available": true,
         "price": 91.95,
         "quote_time": null,
+        "currency": null,
         "reward_risk": null,
         "entry_path_complete": false,
         "entry_path_fallback": null,
@@ -1663,15 +1935,26 @@
       },
       "fmp": {
         "available": false,
+        "coverage_status": null,
+        "expectation_score": null,
+        "price_target_upside_pct": null,
+        "eps_revision_pct": null,
+        "revenue_revision_pct": null,
+        "eps_surprise_pct": null,
+        "rating": null,
+        "annual_eps_estimate": null,
+        "annual_revenue_estimate": null,
         "score": 0,
         "gaps": [
           "缺少 FMP 预期/财报快照"
-        ]
+        ],
+        "fallback_used": null
       },
       "price": {
         "available": true,
         "price": 141.1,
         "quote_time": null,
+        "currency": null,
         "reward_risk": null,
         "entry_path_complete": false,
         "entry_path_fallback": null,
@@ -1701,7 +1984,7 @@
         "AI 数据中心电力 / 液冷 / 配电"
       ],
       "evidence_status": "证据不足",
-      "evidence_score": 14.8,
+      "evidence_score": 12.8,
       "filing": {
         "available": false,
         "form": null,
@@ -1723,27 +2006,38 @@
       },
       "fmp": {
         "available": false,
+        "coverage_status": null,
+        "expectation_score": null,
+        "price_target_upside_pct": null,
+        "eps_revision_pct": null,
+        "revenue_revision_pct": null,
+        "eps_surprise_pct": null,
+        "rating": null,
+        "annual_eps_estimate": null,
+        "annual_revenue_estimate": null,
         "score": 0,
         "gaps": [
           "缺少 FMP 预期/财报快照"
-        ]
+        ],
+        "fallback_used": null
       },
       "price": {
         "available": true,
         "price": 38.73,
-        "quote_time": null,
-        "reward_risk": null,
+        "quote_time": "2026-06-22T09:30:00+08:00",
+        "currency": "CNY",
+        "reward_risk": 0.41,
         "entry_path_complete": false,
         "entry_path_fallback": null,
         "trend_score": 50.0,
         "source": "cross_market_intelligence",
         "strict_entry": null,
-        "invalidation": null,
+        "invalidation": 16.19,
         "mechanical_target": null,
-        "ma50": null,
-        "ma200": null,
-        "high252": null,
-        "score": 45.0
+        "ma50": 40.6426,
+        "ma200": 33.4968,
+        "high252": 48.04,
+        "score": 35.0
       },
       "sec_fallback_used": false,
       "gaps": [
@@ -1751,76 +2045,16 @@
         "缺少 FMP 预期/财报快照",
         "缺少完整 R/R 或机械入场路径"
       ],
-      "action": "保留观察，等待财务、价格或事件证据补强。"
-    },
-    {
-      "code": "SZ.002747",
-      "symbol": null,
-      "name": "埃斯顿",
-      "themes": [
-        "Physical AI / 机器人 / 自动化"
-      ],
-      "evidence_status": "证据不足",
-      "evidence_score": 5.8,
-      "filing": {
-        "available": false,
-        "form": null,
-        "filed": null,
-        "age_days": null,
-        "accession": null,
-        "recent_forms": [],
-        "score": 0
-      },
-      "financials": {
-        "available": false,
-        "revenue_growth_yoy": null,
-        "net_margin": null,
-        "liabilities_to_assets": null,
-        "latest_annual_revenue": null,
-        "latest_annual_revenue_filed": null,
-        "latest_annual_fcf": null,
-        "score": 0
-      },
-      "fmp": {
-        "available": false,
-        "score": 0,
-        "gaps": [
-          "缺少 FMP 预期/财报快照"
-        ]
-      },
-      "price": {
-        "available": false,
-        "price": null,
-        "quote_time": null,
-        "reward_risk": null,
-        "entry_path_complete": false,
-        "entry_path_fallback": null,
-        "trend_score": 55.0,
-        "source": null,
-        "strict_entry": null,
-        "invalidation": null,
-        "mechanical_target": null,
-        "ma50": null,
-        "ma200": null,
-        "high252": null,
-        "score": 0
-      },
-      "sec_fallback_used": false,
-      "gaps": [
-        "非美股标的缺少统一财务与公告正文数据源",
-        "缺少 FMP 预期/财报快照",
-        "缺少完整 R/R 或机械入场路径"
-      ],
-      "action": "保留观察，等待财务、价格或事件证据补强。"
+      "action": "证据只支持观察/二次研究；R/R 未达标，不允许普通买入。"
     }
   ],
   "theme_evidence": [
     {
       "theme": "GPU / ASIC / HBM / 先进封装",
       "symbol_count": 8,
-      "avg_evidence_score": 50.0,
+      "avg_evidence_score": 50.9,
       "median_evidence_score": 59.1,
-      "gap_count": 22,
+      "gap_count": 21,
       "top_symbols": [
         "US.NVDA",
         "US.MRVL",
@@ -1831,9 +2065,23 @@
       ]
     },
     {
+      "theme": "Physical AI / 机器人 / 自动化",
+      "symbol_count": 5,
+      "avg_evidence_score": 46.1,
+      "median_evidence_score": 52.1,
+      "gap_count": 15,
+      "top_symbols": [
+        "US.ISRG",
+        "US.HON",
+        "US.SYM",
+        "US.ROK",
+        "SZ.002747"
+      ]
+    },
+    {
       "theme": "AI 数据中心电力 / 液冷 / 配电",
       "symbol_count": 5,
-      "avg_evidence_score": 45.5,
+      "avg_evidence_score": 45.1,
       "median_evidence_score": 50.6,
       "gap_count": 11,
       "top_symbols": [
@@ -1845,24 +2093,10 @@
       ]
     },
     {
-      "theme": "Physical AI / 机器人 / 自动化",
-      "symbol_count": 5,
-      "avg_evidence_score": 43.8,
-      "median_evidence_score": 52.1,
-      "gap_count": 15,
-      "top_symbols": [
-        "US.HON",
-        "US.ISRG",
-        "US.SYM",
-        "US.ROK",
-        "SZ.002747"
-      ]
-    },
-    {
       "theme": "AI 光模块 / CPO / 数据中心网络",
       "symbol_count": 5,
-      "avg_evidence_score": 37.6,
-      "median_evidence_score": 16.8,
+      "avg_evidence_score": 39.7,
+      "median_evidence_score": 21.2,
       "gap_count": 17,
       "top_symbols": [
         "US.MRVL",
@@ -1908,8 +2142,8 @@
     }
   ],
   "evidence_gap_breakdown": {
-    "original_total": 76,
-    "data_gap": 42,
+    "original_total": 75,
+    "data_gap": 41,
     "permission_limited": 9,
     "entry_path_missing": 9,
     "rr_discipline": 16,
@@ -1933,15 +2167,15 @@
           "US.JBL",
           "US.ROK",
           "US.TSM",
-          "HK.01347",
-          "HK.00981",
           "SZ.300308",
           "SZ.300502",
+          "SZ.002747",
           "SZ.300394",
+          "HK.01347",
+          "HK.00981",
           "HK.01888",
           "HK.00148",
-          "SZ.300499",
-          "SZ.002747"
+          "SZ.300499"
         ],
         "fallback": "优先 FMP；失败时使用 Finnhub/SEC/Nasdaq earnings fallback。"
       },
@@ -1952,15 +2186,15 @@
         "group_label": "数据缺口",
         "count": 9,
         "affected_symbols": [
-          "HK.01347",
-          "HK.00981",
           "SZ.300308",
           "SZ.300502",
+          "SZ.002747",
           "SZ.300394",
+          "HK.01347",
+          "HK.00981",
           "HK.01888",
           "HK.00148",
-          "SZ.300499",
-          "SZ.002747"
+          "SZ.300499"
         ],
         "fallback": "需要 AkShare/Tushare/Futu/HKEX 补港股/A股财务与公告。"
       },
@@ -1974,8 +2208,8 @@
           "US.MRVL",
           "US.ANET",
           "US.AVGO",
-          "US.HON",
           "US.ISRG",
+          "US.HON",
           "US.SYM"
         ],
         "fallback": "优先 FMP analyst-estimates；失败时使用 Finnhub estimates。"
@@ -1990,22 +2224,11 @@
           "US.MRVL",
           "US.ANET",
           "US.AVGO",
-          "US.HON",
           "US.ISRG",
+          "US.HON",
           "US.SYM"
         ],
         "fallback": "优先 FMP earnings；失败时使用 Nasdaq earnings calendar。"
-      },
-      {
-        "key": "sec_financial_facts",
-        "label": "缺少 SEC 财务事实",
-        "group": "data",
-        "group_label": "数据缺口",
-        "count": 1,
-        "affected_symbols": [
-          "US.TSM"
-        ],
-        "fallback": "使用 SEC companyfacts 兜底。"
       },
       {
         "key": "fmp_symbol_permission_limited",
@@ -2017,8 +2240,8 @@
           "US.MRVL",
           "US.ANET",
           "US.AVGO",
-          "US.HON",
           "US.ISRG",
+          "US.HON",
           "US.SYM"
         ],
         "fallback": "降低 FMP 预期层置信度；等待额度恢复或升级套餐。"
@@ -2043,15 +2266,15 @@
         "group_label": "入场路径缺失",
         "count": 9,
         "affected_symbols": [
-          "HK.01347",
-          "HK.00981",
           "SZ.300308",
           "SZ.300502",
+          "SZ.002747",
           "SZ.300394",
+          "HK.01347",
+          "HK.00981",
           "HK.01888",
           "HK.00148",
-          "SZ.300499",
-          "SZ.002747"
+          "SZ.300499"
         ],
         "fallback": "补齐当前价、支撑/止损、目标价和 R/R。"
       },
@@ -2069,8 +2292,8 @@
           "US.AMD",
           "US.AVGO",
           "US.VRT",
-          "US.HON",
           "US.ETN",
+          "US.HON",
           "US.TTMI",
           "US.FLEX",
           "US.PH",
