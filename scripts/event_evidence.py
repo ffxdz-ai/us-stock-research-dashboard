@@ -250,6 +250,10 @@ def has_alpha_surprise(records: list[dict[str, Any]]) -> bool:
     return bool(useful_fallback_records(records, ".earnings.actuals_surprise"))
 
 
+def official_disclosure_records(records: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    return useful_fallback_records(records, ".official_disclosure")
+
+
 def is_foreign_adr(code: str, market_row: dict[str, Any]) -> bool:
     symbol = us_symbol(code)
     if not symbol:
@@ -412,17 +416,23 @@ def fmp_evidence(row: dict[str, Any], fallback_records: list[dict[str, Any]] | N
     fallback_records = fallback_records or []
     alpha_estimates = has_alpha_estimates(fallback_records)
     alpha_surprise = has_alpha_surprise(fallback_records)
+    official_disclosures = official_disclosure_records(fallback_records)
     if not row:
         gaps: list[str] = []
-        if not (alpha_estimates or alpha_surprise):
+        if not (alpha_estimates or alpha_surprise or official_disclosures):
             gaps.append("缺少 FMP 预期/财报快照")
         if (alpha_estimates or alpha_surprise) and not alpha_estimates:
             gaps.append("缺少年/季度分析师预期")
         if (alpha_estimates or alpha_surprise) and not alpha_surprise:
             gaps.append("缺少最近财报 surprise")
+        fallback_used = None
+        if alpha_estimates or alpha_surprise:
+            fallback_used = "Alpha Vantage"
+        elif official_disclosures:
+            fallback_used = "CNINFO/HKEXnews official disclosure"
         return {
-            "available": bool(alpha_estimates or alpha_surprise),
-            "coverage_status": "alpha_vantage_fallback" if alpha_estimates or alpha_surprise else None,
+            "available": bool(alpha_estimates or alpha_surprise or official_disclosures),
+            "coverage_status": "alpha_vantage_fallback" if alpha_estimates or alpha_surprise else "official_disclosure_fallback" if official_disclosures else None,
             "expectation_score": None,
             "price_target_upside_pct": None,
             "eps_revision_pct": None,
@@ -431,9 +441,9 @@ def fmp_evidence(row: dict[str, Any], fallback_records: list[dict[str, Any]] | N
             "rating": None,
             "annual_eps_estimate": None,
             "annual_revenue_estimate": None,
-            "score": 42 if alpha_estimates or alpha_surprise else 0,
+            "score": 42 if alpha_estimates or alpha_surprise else 35 if official_disclosures else 0,
             "gaps": gaps,
-            "fallback_used": "Alpha Vantage" if alpha_estimates or alpha_surprise else None,
+            "fallback_used": fallback_used,
         }
     annual = row.get("annual_estimate") if isinstance(row.get("annual_estimate"), dict) else {}
     revision = row.get("estimate_revision") if isinstance(row.get("estimate_revision"), dict) else {}

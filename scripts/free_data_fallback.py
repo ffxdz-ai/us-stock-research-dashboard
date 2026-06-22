@@ -13,6 +13,7 @@ from __future__ import annotations
 
 import argparse
 import csv
+import html
 import io
 import json
 import os
@@ -64,6 +65,25 @@ SOURCE_TYPE_COMPANY_IR = "company_ir"
 SOURCE_TYPE_VENDOR = "vendor_fallback"
 SOURCE_TYPE_OPEN = "open_source_fallback"
 ALPHA_LAST_REQUEST_AT = 0.0
+CNINFO_FINANCIAL_KEYWORDS = (
+    "年度报告",
+    "半年度报告",
+    "季度报告",
+    "业绩预告",
+    "业绩快报",
+    "财务报表",
+    "审计报告",
+)
+HKEX_FINANCIAL_KEYWORDS = (
+    "annual results",
+    "annual report",
+    "interim results",
+    "interim report",
+    "quarterly results",
+    "quarterly report",
+    "financial statements",
+    "results announcement",
+)
 
 
 def beijing_timezone() -> timezone:
@@ -279,6 +299,41 @@ def normalize_symbol(value: Any) -> str:
     if re.match(r"^[A-Z][A-Z0-9.\-]{0,8}$", text):
         return f"US.{text}"
     return text
+
+
+def clean_text(value: Any) -> str:
+    text = html.unescape(str(value or ""))
+    text = re.sub(r"<[^>]+>", " ", text)
+    return re.sub(r"\s+", " ", text).strip()
+
+
+def parse_jsonp(text: str | None) -> Any:
+    if not text:
+        return None
+    match = re.match(r"^[^(]*\((.*)\)\s*;?\s*$", text.strip(), flags=re.S)
+    raw = match.group(1) if match else text
+    try:
+        return json.loads(raw)
+    except json.JSONDecodeError:
+        return None
+
+
+def date_label_from_epoch_ms(value: Any) -> str | None:
+    parsed = number(value)
+    if parsed is None:
+        return None
+    try:
+        return datetime.fromtimestamp(parsed / 1000, tz=beijing_timezone()).strftime("%Y-%m-%d %H:%M")
+    except (OSError, OverflowError, ValueError):
+        return None
+
+
+def symbol_code(symbol: str) -> str:
+    market, code = symbol_to_parts(symbol)
+    if market == "HK":
+        digits = re.sub(r"\D", "", code)
+        return digits.zfill(5) if digits else code
+    return re.sub(r"\D", "", code) or code
 
 
 def collect_symbols(*payloads: dict[str, Any], limit: int = 60) -> list[str]:
@@ -979,6 +1034,269 @@ def collect_yahoo_quote_layer(fetcher: Fetcher, symbols: list[str], max_symbols:
     ], gaps
 
 
+def cninfo_stock_map(fetcher: Fetcher) -> tuple[dict[str, dict[str, Any]], str | None, int | None]:
+    url = "http://www.cninfo.com.cn/new/data/szse_stock.json"
+    data, error, status, _cached = fetcher.cached_json(CACHE_DIR / "cninfo_szse_stock.json", url, max_age_hours=24 * 7)
+    mapping: dict[str, dict[str, Any]] = {}
+    rows = data.get("stockList") if isinstance(data, dict) and isinstance(data.get("stockList"), list) else []
+    for row in rows:
+        if not isinstance(row, dict):
+            continue
+        code = str(row.get("code") or "").strip()
+        org_id = str(row.get("orgId") or "").strip()
+        if code and org_id:
+            mapping[code] = row
+    return mapping, error, status
+
+
+def cninfo_announcements(fetcher: Fetcher, symbol: str, mapping: dict[str, dict[str, Any]], now: datetime) -> tuple[dict[str, Any] | None, str | None, str]:
+    code = symbol_code(symbol)
+    item = mapping.get(code)
+    if not item:
+        return None, "CNINFO stock mapping not found", "http://www.cninfo.com.cn/"
+    org_id = str(item.get("orgId") or "").strip()
+    column = "sse" if symbol.startswith("SH.") or code.startswith("6") else "szse"
+    start = (now - timedelta(days=370)).strftime("%Y-%m-%d")
+    end = now.strftime("%Y-%m-%d")
+    url = "http://www.cninfo.com.cn/new/hisAnnouncement/query"
+    body = urllib.parse.urlencode(
+        {
+            "stock": f"{code},{org_id}",
+            "tabName": "fulltext",
+            "pageSize": "10",
+            "pageNum": "1",
+            "column": column,
+            "category": "category_ndbg_szsh;category_bndbg_szsh;category_yjdbg_szsh;category_sjdbg_szsh;category_yjygjxz_szsh;category_yjkb_szsh",
+            "seDate": f"{start}~{end}",
+            "isHLtitle": "true",
+        }
+    ).encode("utf-8")
+    headers = {
+        "Origin": "http://www.cninfo.com.cn",
+        "Referer": "http://www.cninfo.com.cn/new/commonUrl/pageOfSearch?url=disclosure/list/search",
+        "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
+        "X-Requested-With": "XMLHttpRequest",
+    }
+    data, error, status = fetcher.http_json(url, headers=headers, method="POST", body=body, timeout=15)
+    if not isinstance(data, dict):
+        return None, error or (f"HTTP {status}" if status else "CNINFO unavailable"), url
+    rows = data.get("announcements") if isinstance(data.get("announcements"), list) else []
+    announcements: list[dict[str, Any]] = []
+    for row in rows[:10]:
+        if not isinstance(row, dict):
+            continue
+        title = clean_text(row.get("announcementTitle"))
+        adjunct_url = str(row.get("adjunctUrl") or "").lstrip("/")
+        file_url = f"http://static.cninfo.com.cn/{adjunct_url}" if adjunct_url else None
+        announcements.append(
+            {
+                "title": title,
+                "date": date_label_from_epoch_ms(row.get("announcementTime")),
+                "url": file_url,
+                "category": clean_text(row.get("announcementTypeName")),
+                "source_id": row.get("announcementId"),
+                "financial_related": any(keyword in title for keyword in CNINFO_FINANCIAL_KEYWORDS),
+            }
+        )
+    if not announcements:
+        return None, "CNINFO returned no recent financial/announcement records", url
+    value = {
+        "symbol": symbol,
+        "code": code,
+        "company": item.get("zwjc"),
+        "org_id": org_id,
+        "total": data.get("totalAnnouncement") or len(announcements),
+        "financial_hits": sum(1 for row in announcements if row.get("financial_related")),
+        "announcements": announcements,
+    }
+    source_url = f"http://www.cninfo.com.cn/new/disclosure/stock?stockCode={code}&orgId={org_id}"
+    return value, None, source_url
+
+
+def collect_cninfo_layer(fetcher: Fetcher, symbols: list[str], max_symbols: int) -> tuple[list[dict[str, Any]], list[dict[str, Any]], list[dict[str, Any]]]:
+    updated = iso(now_local())
+    now = now_local()
+    candidates = [symbol for symbol in symbols if symbol.startswith(("SH.", "SZ.", "CN."))][:max(0, max_symbols)]
+    mapping, map_error, map_status = cninfo_stock_map(fetcher)
+    records: list[dict[str, Any]] = []
+    gaps: list[dict[str, Any]] = []
+    success = 0
+    for symbol in candidates:
+        value, error, source_url = cninfo_announcements(fetcher, symbol, mapping, now)
+        records.append(
+            field_record(
+                field=f"{symbol}.official_disclosure",
+                value=value,
+                source="CNINFO",
+                source_type=SOURCE_TYPE_OFFICIAL,
+                source_url=source_url,
+                updated_at=updated,
+                confidence="high" if value else "low",
+                fallback_used=True,
+                data_gap=None if value else error,
+            )
+        )
+        if value:
+            success += 1
+        else:
+            gaps.append({"symbol": symbol, "source": "CNINFO", "data_gap": error or map_error or (f"HTTP {map_status}" if map_status else "CNINFO official disclosure unavailable")})
+        time.sleep(0.15)
+    status = "normal" if success == len(candidates) else ("limited" if success else "unknown" if not candidates else "error")
+    return records, [
+        health_record(
+            "CNINFO",
+            status,
+            f"CNINFO official disclosure fallback returned {success}/{len(candidates)} A-share records.",
+            "Impacts A-share announcement/financial statement confidence; official CNINFO metadata is used when available.",
+            updated,
+        )
+    ], gaps
+
+
+def hkex_lookup_stock(fetcher: Fetcher, code: str) -> tuple[dict[str, Any] | None, str | None]:
+    query = urllib.parse.urlencode(
+        {
+            "lang": "EN",
+            "type": "A",
+            "name": code,
+            "market": "SEHK",
+            "callback": "callback",
+        }
+    )
+    url = f"https://www1.hkexnews.hk/search/prefix.do?{query}"
+    text, error, status = fetcher.http_text(
+        url,
+        headers={"Referer": "https://www1.hkexnews.hk/search/titlesearch.xhtml?lang=en"},
+        timeout=15,
+    )
+    data = parse_jsonp(text)
+    rows = data.get("stockInfo") if isinstance(data, dict) and isinstance(data.get("stockInfo"), list) else []
+    for row in rows:
+        if isinstance(row, dict) and str(row.get("code") or "").zfill(5) == code:
+            return row, None
+    return None, error or (f"HTTP {status}" if status else "HKEXnews stock mapping not found")
+
+
+def hkex_announcements(fetcher: Fetcher, symbol: str, now: datetime) -> tuple[dict[str, Any] | None, str | None, str]:
+    code = symbol_code(symbol)
+    stock, lookup_error = hkex_lookup_stock(fetcher, code)
+    if not stock:
+        return None, lookup_error or "HKEXnews stock mapping not found", "https://www.hkexnews.hk/"
+    stock_id = str(stock.get("stockId") or "")
+    start = (now - timedelta(days=370)).strftime("%Y%m%d")
+    end = now.strftime("%Y%m%d")
+    params = {
+        "sortDir": "0",
+        "sortByOptions": "DateTime",
+        "category": "0",
+        "market": "SEHK",
+        "stockId": stock_id,
+        "documentType": "-1",
+        "fromDate": start,
+        "toDate": end,
+        "title": "",
+        "searchType": "0",
+        "t1code": "-2",
+        "t2Gcode": "-2",
+        "t2code": "-2",
+        "rowRange": "20",
+        "lang": "E",
+    }
+    url = f"https://www1.hkexnews.hk/search/titleSearchServlet.do?{urllib.parse.urlencode(params)}"
+    data, error, status = fetcher.http_json(
+        url,
+        headers={
+            "Referer": "https://www1.hkexnews.hk/search/titlesearch.xhtml?lang=en",
+            "X-Requested-With": "XMLHttpRequest",
+        },
+        timeout=20,
+    )
+    if not isinstance(data, dict):
+        return None, error or (f"HTTP {status}" if status else "HKEXnews unavailable"), url
+    raw_result = data.get("result")
+    if isinstance(raw_result, str):
+        if raw_result.strip().lower() == "null":
+            rows = []
+        else:
+            try:
+                rows = json.loads(raw_result)
+            except json.JSONDecodeError:
+                rows = []
+    else:
+        rows = raw_result if isinstance(raw_result, list) else []
+    announcements: list[dict[str, Any]] = []
+    for row in rows[:12]:
+        if not isinstance(row, dict):
+            continue
+        title = clean_text(row.get("TITLE"))
+        long_text = clean_text(row.get("LONG_TEXT") or row.get("SHORT_TEXT"))
+        link = str(row.get("FILE_LINK") or "")
+        file_url = f"https://www1.hkexnews.hk{link}" if link.startswith("/") else link or None
+        lower_text = f"{title} {long_text}".lower()
+        announcements.append(
+            {
+                "title": title,
+                "date": row.get("DATE_TIME"),
+                "url": file_url,
+                "category": long_text,
+                "file_type": row.get("FILE_TYPE"),
+                "source_id": row.get("NEWS_ID"),
+                "financial_related": any(keyword in lower_text for keyword in HKEX_FINANCIAL_KEYWORDS),
+            }
+        )
+    if not announcements:
+        return None, "HKEXnews returned no recent disclosure records", url
+    value = {
+        "symbol": symbol,
+        "code": code,
+        "company": stock.get("name"),
+        "stock_id": stock_id,
+        "total": data.get("recordCnt") or len(announcements),
+        "financial_hits": sum(1 for row in announcements if row.get("financial_related")),
+        "announcements": announcements,
+    }
+    return value, None, url
+
+
+def collect_hkex_layer(fetcher: Fetcher, symbols: list[str], max_symbols: int) -> tuple[list[dict[str, Any]], list[dict[str, Any]], list[dict[str, Any]]]:
+    updated = iso(now_local())
+    now = now_local()
+    candidates = [symbol for symbol in symbols if symbol.startswith("HK.")][:max(0, max_symbols)]
+    records: list[dict[str, Any]] = []
+    gaps: list[dict[str, Any]] = []
+    success = 0
+    for symbol in candidates:
+        value, error, source_url = hkex_announcements(fetcher, symbol, now)
+        records.append(
+            field_record(
+                field=f"{symbol}.official_disclosure",
+                value=value,
+                source="HKEXnews",
+                source_type=SOURCE_TYPE_OFFICIAL,
+                source_url=source_url,
+                updated_at=updated,
+                confidence="high" if value else "low",
+                fallback_used=True,
+                data_gap=None if value else error,
+            )
+        )
+        if value:
+            success += 1
+        else:
+            gaps.append({"symbol": symbol, "source": "HKEXnews", "data_gap": error or "HKEXnews official disclosure unavailable"})
+        time.sleep(0.2)
+    status = "normal" if success == len(candidates) else ("limited" if success else "unknown" if not candidates else "error")
+    return records, [
+        health_record(
+            "HKEXnews",
+            status,
+            f"HKEXnews official disclosure fallback returned {success}/{len(candidates)} HK records.",
+            "Impacts HK announcement/financial statement confidence; official HKEXnews metadata is used when available.",
+            updated,
+        )
+    ], gaps
+
+
 def collect_cn_hk_official_placeholders(symbols: list[str]) -> tuple[list[dict[str, Any]], list[dict[str, Any]], list[dict[str, Any]]]:
     updated = iso(now_local())
     records: list[dict[str, Any]] = []
@@ -1074,7 +1392,8 @@ def build_payload(args: argparse.Namespace) -> dict[str, Any]:
         collect_alpha_layer(fetcher, symbols, max_symbols=max(0, int(args.max_alpha_symbols)), fmp_research=fmp_research),
         collect_openfigi_layer(fetcher, symbols, max_symbols=max(0, int(args.max_openfigi_symbols))),
         collect_yahoo_quote_layer(fetcher, symbols, max_symbols=max(0, int(args.max_yahoo_symbols))),
-        collect_cn_hk_official_placeholders(symbols),
+        collect_cninfo_layer(fetcher, symbols, max_symbols=max(0, int(args.max_cninfo_symbols))),
+        collect_hkex_layer(fetcher, symbols, max_symbols=max(0, int(args.max_hkex_symbols))),
     ):
         records.extend(layer_records)
         health.extend(layer_health)
@@ -1174,6 +1493,8 @@ def main() -> int:
     parser.add_argument("--max-alpha-symbols", type=int, default=10)
     parser.add_argument("--max-openfigi-symbols", type=int, default=12)
     parser.add_argument("--max-yahoo-symbols", type=int, default=24)
+    parser.add_argument("--max-cninfo-symbols", type=int, default=24)
+    parser.add_argument("--max-hkex-symbols", type=int, default=24)
     parser.add_argument("--no-archive-copy", action="store_true")
     args = parser.parse_args()
 
