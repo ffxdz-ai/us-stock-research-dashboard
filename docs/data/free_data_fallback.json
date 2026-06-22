@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-06-22T04:30:04+08:00",
-  "generated_label": "2026-06-22 04:30",
+  "generated_at": "2026-06-22T12:30:33+08:00",
+  "generated_label": "2026-06-22 12:30",
   "privacy": "public-sanitized",
   "data_boundary": {
     "role": "free fallback evidence layer; source tracing only; not trading instruction",
@@ -38,53 +38,51 @@
   },
   "symbols": [
     "US.NVDA",
-    "US.PLTR",
     "US.AVGO",
     "US.ISRG",
-    "US.META",
-    "US.MSFT",
     "US.ANET",
-    "US.SNPS",
     "US.SYM",
-    "US.GOOGL",
-    "US.PATH",
-    "US.GE",
-    "US.MU",
+    "US.KLAC",
     "US.MRVL",
-    "US.TSM",
+    "US.ASML",
+    "US.CIEN",
+    "US.LRCX",
+    "US.DE",
+    "US.TER",
+    "US.AMD",
+    "HK.01347",
     "SZ.300308",
     "SZ.300502",
-    "SZ.300394",
+    "US.COHR",
+    "US.JBL",
+    "US.FLEX",
+    "US.TTMI",
+    "SH.600183",
+    "HK.01888",
     "US.PH",
-    "US.ETN",
     "US.EMR",
+    "US.ETN",
     "SZ.300499",
     "US.VRT",
     "US.HON",
     "US.ROK",
     "SZ.002747",
-    "HK.01888",
-    "HK.00148",
-    "SH.600183",
-    "SH.603256",
-    "SH.688183",
-    "US.AMD",
-    "HK.01347",
+    "US.TSM",
     "HK.00981",
-    "US.COHR",
+    "US.MU",
+    "SZ.300394",
     "US.LITE",
-    "US.CIEN",
+    "HK.00148",
+    "SH.688183",
+    "SZ.300476",
+    "SH.603256",
     "US.PWR",
     "SZ.002335",
     "SH.688322",
-    "US.TSLA",
-    "SZ.300476",
-    "US.JBL",
-    "US.TTMI",
-    "US.FLEX"
+    "US.TSLA"
   ],
   "summary": {
-    "symbol_count": 45,
+    "symbol_count": 43,
     "field_count": 41,
     "data_gap_count": 17,
     "health_normal_count": 3,
@@ -96,13 +94,13 @@
     {
       "field": "symbol_mapping.sec_company_tickers",
       "value": {
-        "mapped_symbols": 10444,
-        "cached": true
+        "mapped_symbols": 10433,
+        "cached": false
       },
       "source": "SEC",
       "source_type": "official",
       "source_url": "https://www.sec.gov/files/company_tickers.json",
-      "updated_at": "2026-06-22T04:30:04+08:00",
+      "updated_at": "2026-06-22T12:30:33+08:00",
       "confidence": "high",
       "fallback_used": true,
       "data_gap": null
@@ -111,12 +109,12 @@
       "field": "symbol_mapping.sec_company_tickers_exchange",
       "value": {
         "available": true,
-        "cached": true
+        "cached": false
       },
       "source": "SEC",
       "source_type": "official",
       "source_url": "https://www.sec.gov/files/company_tickers_exchange.json",
-      "updated_at": "2026-06-22T04:30:04+08:00",
+      "updated_at": "2026-06-22T12:30:33+08:00",
       "confidence": "high",
       "fallback_used": true,
       "data_gap": null
@@ -180,7 +178,7 @@
       "source": "SEC",
       "source_type": "official",
       "source_url": "https://data.sec.gov/submissions/CIK0001045810.json",
-      "updated_at": "2026-06-22T04:30:13+08:00",
+      "updated_at": "2026-06-22T12:30:34+08:00",
       "confidence": "high",
       "fallback_used": true,
       "data_gap": null
@@ -230,121 +228,7 @@
       "source": "SEC",
       "source_type": "official",
       "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001045810.json",
-      "updated_at": "2026-06-22T04:30:13+08:00",
-      "confidence": "high",
-      "fallback_used": true,
-      "data_gap": null
-    },
-    {
-      "field": "US.PLTR.sec.submissions",
-      "value": {
-        "cik": "0001321655",
-        "company": "Palantir Technologies Inc.",
-        "recent_filings": [
-          {
-            "form": "8-K",
-            "filed": "2026-06-09",
-            "accession": "0001321655-26-000033",
-            "primary_document": "pltr-20260603.htm"
-          },
-          {
-            "form": "10-Q",
-            "filed": "2026-05-05",
-            "accession": "0001321655-26-000028",
-            "primary_document": "pltr-20260331.htm"
-          },
-          {
-            "form": "8-K",
-            "filed": "2026-05-04",
-            "accession": "0001321655-26-000026",
-            "primary_document": "pltr-20260504.htm"
-          },
-          {
-            "form": "10-K",
-            "filed": "2026-02-17",
-            "accession": "0001321655-26-000011",
-            "primary_document": "pltr-20251231.htm"
-          },
-          {
-            "form": "8-K",
-            "filed": "2026-02-02",
-            "accession": "0001321655-26-000004",
-            "primary_document": "pltr-20260202.htm"
-          },
-          {
-            "form": "10-Q",
-            "filed": "2025-11-04",
-            "accession": "0001321655-25-000131",
-            "primary_document": "pltr-20250930.htm"
-          },
-          {
-            "form": "8-K",
-            "filed": "2025-11-03",
-            "accession": "0001321655-25-000130",
-            "primary_document": "pltr-20251103.htm"
-          },
-          {
-            "form": "10-Q",
-            "filed": "2025-08-05",
-            "accession": "0001321655-25-000106",
-            "primary_document": "pltr-20250630.htm"
-          }
-        ]
-      },
-      "source": "SEC",
-      "source_type": "official",
-      "source_url": "https://data.sec.gov/submissions/CIK0001321655.json",
-      "updated_at": "2026-06-22T04:30:17+08:00",
-      "confidence": "high",
-      "fallback_used": true,
-      "data_gap": null
-    },
-    {
-      "field": "US.PLTR.sec.companyfacts",
-      "value": {
-        "latest_annual_revenue": {
-          "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
-          "val": 4475446000,
-          "fy": 2025,
-          "fp": "FY",
-          "form": "10-K",
-          "filed": "2026-02-17",
-          "end": "2025-12-31"
-        },
-        "latest_annual_net_income": {
-          "tag": "NetIncomeLoss",
-          "val": 1625033000,
-          "fy": 2025,
-          "fp": "FY",
-          "form": "10-K",
-          "filed": "2026-02-17",
-          "end": "2025-12-31"
-        },
-        "latest_assets": {
-          "tag": "Assets",
-          "val": 10199183000,
-          "fy": 2026,
-          "fp": "Q1",
-          "form": "10-Q",
-          "filed": "2026-05-05",
-          "end": "2026-03-31"
-        },
-        "latest_liabilities": {
-          "tag": "Liabilities",
-          "val": 1642902000,
-          "fy": 2026,
-          "fp": "Q1",
-          "form": "10-Q",
-          "filed": "2026-05-05",
-          "end": "2026-03-31"
-        },
-        "net_margin": 0.3631,
-        "liabilities_to_assets": 0.1611
-      },
-      "source": "SEC",
-      "source_type": "official",
-      "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001321655.json",
-      "updated_at": "2026-06-22T04:30:17+08:00",
+      "updated_at": "2026-06-22T12:30:34+08:00",
       "confidence": "high",
       "fallback_used": true,
       "data_gap": null
@@ -408,7 +292,7 @@
       "source": "SEC",
       "source_type": "official",
       "source_url": "https://data.sec.gov/submissions/CIK0001730168.json",
-      "updated_at": "2026-06-22T04:30:23+08:00",
+      "updated_at": "2026-06-22T12:30:34+08:00",
       "confidence": "high",
       "fallback_used": true,
       "data_gap": null
@@ -458,7 +342,7 @@
       "source": "SEC",
       "source_type": "official",
       "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001730168.json",
-      "updated_at": "2026-06-22T04:30:23+08:00",
+      "updated_at": "2026-06-22T12:30:34+08:00",
       "confidence": "high",
       "fallback_used": true,
       "data_gap": null
@@ -522,7 +406,7 @@
       "source": "SEC",
       "source_type": "official",
       "source_url": "https://data.sec.gov/submissions/CIK0001035267.json",
-      "updated_at": "2026-06-22T04:30:31+08:00",
+      "updated_at": "2026-06-22T12:30:35+08:00",
       "confidence": "high",
       "fallback_used": true,
       "data_gap": null
@@ -572,235 +456,7 @@
       "source": "SEC",
       "source_type": "official",
       "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001035267.json",
-      "updated_at": "2026-06-22T04:30:31+08:00",
-      "confidence": "high",
-      "fallback_used": true,
-      "data_gap": null
-    },
-    {
-      "field": "US.META.sec.submissions",
-      "value": {
-        "cik": "0001326801",
-        "company": "Meta Platforms, Inc.",
-        "recent_filings": [
-          {
-            "form": "8-K",
-            "filed": "2026-05-29",
-            "accession": "0001628280-26-039193",
-            "primary_document": "meta-20260527.htm"
-          },
-          {
-            "form": "8-K",
-            "filed": "2026-05-04",
-            "accession": "0001193125-26-204128",
-            "primary_document": "d134616d8k.htm"
-          },
-          {
-            "form": "10-Q",
-            "filed": "2026-04-30",
-            "accession": "0001628280-26-028526",
-            "primary_document": "meta-20260331.htm"
-          },
-          {
-            "form": "8-K",
-            "filed": "2026-04-29",
-            "accession": "0001628280-26-028364",
-            "primary_document": "meta-20260429.htm"
-          },
-          {
-            "form": "8-K",
-            "filed": "2026-04-14",
-            "accession": "0001628280-26-025108",
-            "primary_document": "meta-20260408.htm"
-          },
-          {
-            "form": "10-K",
-            "filed": "2026-01-29",
-            "accession": "0001628280-26-003942",
-            "primary_document": "meta-20251231.htm"
-          },
-          {
-            "form": "8-K",
-            "filed": "2026-01-28",
-            "accession": "0001628280-26-003832",
-            "primary_document": "meta-20260128.htm"
-          },
-          {
-            "form": "8-K",
-            "filed": "2026-01-16",
-            "accession": "0001628280-26-002429",
-            "primary_document": "meta-20260112.htm"
-          }
-        ]
-      },
-      "source": "SEC",
-      "source_type": "official",
-      "source_url": "https://data.sec.gov/submissions/CIK0001326801.json",
-      "updated_at": "2026-06-22T04:30:37+08:00",
-      "confidence": "high",
-      "fallback_used": true,
-      "data_gap": null
-    },
-    {
-      "field": "US.META.sec.companyfacts",
-      "value": {
-        "latest_annual_revenue": {
-          "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
-          "val": 200966000000,
-          "fy": 2025,
-          "fp": "FY",
-          "form": "10-K",
-          "filed": "2026-01-29",
-          "end": "2025-12-31"
-        },
-        "latest_annual_net_income": {
-          "tag": "NetIncomeLoss",
-          "val": 60458000000,
-          "fy": 2025,
-          "fp": "FY",
-          "form": "10-K",
-          "filed": "2026-01-29",
-          "end": "2025-12-31"
-        },
-        "latest_assets": {
-          "tag": "Assets",
-          "val": 395250000000,
-          "fy": 2026,
-          "fp": "Q1",
-          "form": "10-Q",
-          "filed": "2026-04-30",
-          "end": "2026-03-31"
-        },
-        "latest_liabilities": {
-          "tag": "Liabilities",
-          "val": 151569000000,
-          "fy": 2026,
-          "fp": "Q1",
-          "form": "10-Q",
-          "filed": "2026-04-30",
-          "end": "2026-03-31"
-        },
-        "net_margin": 0.3008,
-        "liabilities_to_assets": 0.3835
-      },
-      "source": "SEC",
-      "source_type": "official",
-      "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001326801.json",
-      "updated_at": "2026-06-22T04:30:37+08:00",
-      "confidence": "high",
-      "fallback_used": true,
-      "data_gap": null
-    },
-    {
-      "field": "US.MSFT.sec.submissions",
-      "value": {
-        "cik": "0000789019",
-        "company": "MICROSOFT CORP",
-        "recent_filings": [
-          {
-            "form": "8-K",
-            "filed": "2026-06-05",
-            "accession": "0001193125-26-258667",
-            "primary_document": "d26760d8k.htm"
-          },
-          {
-            "form": "8-K",
-            "filed": "2026-05-14",
-            "accession": "0001193125-26-224155",
-            "primary_document": "d125909d8k.htm"
-          },
-          {
-            "form": "10-Q",
-            "filed": "2026-04-29",
-            "accession": "0001193125-26-191507",
-            "primary_document": "msft-20260331.htm"
-          },
-          {
-            "form": "8-K",
-            "filed": "2026-04-29",
-            "accession": "0001193125-26-191457",
-            "primary_document": "msft-20260429.htm"
-          },
-          {
-            "form": "10-Q",
-            "filed": "2026-01-28",
-            "accession": "0001193125-26-027207",
-            "primary_document": "msft-20251231.htm"
-          },
-          {
-            "form": "8-K",
-            "filed": "2026-01-28",
-            "accession": "0001193125-26-027198",
-            "primary_document": "msft-20260128.htm"
-          },
-          {
-            "form": "8-K",
-            "filed": "2025-12-08",
-            "accession": "0001193125-25-311196",
-            "primary_document": "d34077d8k.htm"
-          },
-          {
-            "form": "10-Q",
-            "filed": "2025-10-29",
-            "accession": "0001193125-25-256321",
-            "primary_document": "msft-20250930.htm"
-          }
-        ]
-      },
-      "source": "SEC",
-      "source_type": "official",
-      "source_url": "https://data.sec.gov/submissions/CIK0000789019.json",
-      "updated_at": "2026-06-22T04:30:47+08:00",
-      "confidence": "high",
-      "fallback_used": true,
-      "data_gap": null
-    },
-    {
-      "field": "US.MSFT.sec.companyfacts",
-      "value": {
-        "latest_annual_revenue": {
-          "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
-          "val": 281724000000,
-          "fy": 2025,
-          "fp": "FY",
-          "form": "10-K",
-          "filed": "2025-07-30",
-          "end": "2025-06-30"
-        },
-        "latest_annual_net_income": {
-          "tag": "NetIncomeLoss",
-          "val": 101832000000,
-          "fy": 2025,
-          "fp": "FY",
-          "form": "10-K",
-          "filed": "2025-07-30",
-          "end": "2025-06-30"
-        },
-        "latest_assets": {
-          "tag": "Assets",
-          "val": 694228000000,
-          "fy": 2026,
-          "fp": "Q3",
-          "form": "10-Q",
-          "filed": "2026-04-29",
-          "end": "2026-03-31"
-        },
-        "latest_liabilities": {
-          "tag": "Liabilities",
-          "val": 279861000000,
-          "fy": 2026,
-          "fp": "Q3",
-          "form": "10-Q",
-          "filed": "2026-04-29",
-          "end": "2026-03-31"
-        },
-        "net_margin": 0.3615,
-        "liabilities_to_assets": 0.4031
-      },
-      "source": "SEC",
-      "source_type": "official",
-      "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000789019.json",
-      "updated_at": "2026-06-22T04:30:47+08:00",
+      "updated_at": "2026-06-22T12:30:35+08:00",
       "confidence": "high",
       "fallback_used": true,
       "data_gap": null
@@ -864,7 +520,7 @@
       "source": "SEC",
       "source_type": "official",
       "source_url": "https://data.sec.gov/submissions/CIK0001596532.json",
-      "updated_at": "2026-06-22T04:30:56+08:00",
+      "updated_at": "2026-06-22T12:30:35+08:00",
       "confidence": "high",
       "fallback_used": true,
       "data_gap": null
@@ -914,121 +570,463 @@
       "source": "SEC",
       "source_type": "official",
       "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001596532.json",
-      "updated_at": "2026-06-22T04:30:56+08:00",
+      "updated_at": "2026-06-22T12:30:35+08:00",
       "confidence": "high",
       "fallback_used": true,
       "data_gap": null
     },
     {
-      "field": "US.SNPS.sec.submissions",
+      "field": "US.SYM.sec.submissions",
       "value": {
-        "cik": "0000883241",
-        "company": "SYNOPSYS INC",
+        "cik": "0001837240",
+        "company": "Symbotic Inc.",
         "recent_filings": [
           {
             "form": "10-Q",
-            "filed": "2026-05-27",
-            "accession": "0000883241-26-000018",
-            "primary_document": "snps-20260430.htm"
+            "filed": "2026-05-06",
+            "accession": "0001837240-26-000024",
+            "primary_document": "sym-20260328.htm"
           },
           {
             "form": "8-K",
-            "filed": "2026-05-27",
-            "accession": "0001193125-26-241920",
-            "primary_document": "d96543d8k.htm"
+            "filed": "2026-05-06",
+            "accession": "0001837240-26-000023",
+            "primary_document": "sym-20260506.htm"
           },
           {
             "form": "8-K",
-            "filed": "2026-05-27",
-            "accession": "0001193125-26-241911",
-            "primary_document": "d126227d8k.htm"
-          },
-          {
-            "form": "8-K",
-            "filed": "2026-04-20",
-            "accession": "0001193125-26-164085",
-            "primary_document": "d467081d8k.htm"
-          },
-          {
-            "form": "8-K",
-            "filed": "2026-03-02",
-            "accession": "0001193125-26-084396",
-            "primary_document": "d113900d8k.htm"
+            "filed": "2026-03-09",
+            "accession": "0001837240-26-000015",
+            "primary_document": "sym-20260305.htm"
           },
           {
             "form": "10-Q",
-            "filed": "2026-02-25",
-            "accession": "0000883241-26-000014",
-            "primary_document": "snps-20260131.htm"
+            "filed": "2026-02-04",
+            "accession": "0001837240-26-000009",
+            "primary_document": "sym-20251227.htm"
           },
           {
             "form": "8-K",
-            "filed": "2026-02-25",
-            "accession": "0001193125-26-071601",
-            "primary_document": "d921168d8k.htm"
+            "filed": "2026-02-04",
+            "accession": "0001837240-26-000008",
+            "primary_document": "sym-20260204.htm"
           },
           {
             "form": "8-K",
-            "filed": "2026-02-19",
-            "accession": "0001193125-26-059438",
-            "primary_document": "d78071d8k.htm"
+            "filed": "2026-01-16",
+            "accession": "0001193125-26-015367",
+            "primary_document": "sym-20260116.htm"
+          },
+          {
+            "form": "8-K",
+            "filed": "2025-12-08",
+            "accession": "0001193125-25-311363",
+            "primary_document": "d69186d8k.htm"
+          },
+          {
+            "form": "10-K",
+            "filed": "2025-11-24",
+            "accession": "0001837240-25-000278",
+            "primary_document": "sym-20250927.htm"
           }
         ]
       },
       "source": "SEC",
       "source_type": "official",
-      "source_url": "https://data.sec.gov/submissions/CIK0000883241.json",
-      "updated_at": "2026-06-22T04:31:05+08:00",
+      "source_url": "https://data.sec.gov/submissions/CIK0001837240.json",
+      "updated_at": "2026-06-22T12:30:35+08:00",
       "confidence": "high",
       "fallback_used": true,
       "data_gap": null
     },
     {
-      "field": "US.SNPS.sec.companyfacts",
+      "field": "US.SYM.sec.companyfacts",
       "value": {
         "latest_annual_revenue": {
           "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
-          "val": 7054178000,
+          "val": 2246922000,
           "fy": 2025,
           "fp": "FY",
           "form": "10-K",
-          "filed": "2025-12-22",
-          "end": "2025-10-31"
+          "filed": "2025-11-24",
+          "end": "2025-09-27"
         },
         "latest_annual_net_income": {
           "tag": "NetIncomeLoss",
-          "val": 1332220000,
+          "val": -16937000,
           "fy": 2025,
           "fp": "FY",
           "form": "10-K",
-          "filed": "2025-12-22",
-          "end": "2025-10-31"
+          "filed": "2025-11-24",
+          "end": "2025-09-27"
         },
         "latest_assets": {
           "tag": "Assets",
-          "val": 46889027000,
+          "val": 3495455000,
           "fy": 2026,
           "fp": "Q2",
           "form": "10-Q",
-          "filed": "2026-05-27",
-          "end": "2026-04-30"
+          "filed": "2026-05-06",
+          "end": "2026-03-28"
         },
         "latest_liabilities": {
           "tag": "Liabilities",
-          "val": 16411962000,
+          "val": 2467790000,
           "fy": 2026,
           "fp": "Q2",
           "form": "10-Q",
-          "filed": "2026-05-27",
-          "end": "2026-04-30"
+          "filed": "2026-05-06",
+          "end": "2026-03-28"
         },
-        "net_margin": 0.1889,
-        "liabilities_to_assets": 0.35
+        "net_margin": -0.0075,
+        "liabilities_to_assets": 0.706
       },
       "source": "SEC",
       "source_type": "official",
-      "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000883241.json",
-      "updated_at": "2026-06-22T04:31:05+08:00",
+      "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001837240.json",
+      "updated_at": "2026-06-22T12:30:35+08:00",
+      "confidence": "high",
+      "fallback_used": true,
+      "data_gap": null
+    },
+    {
+      "field": "US.KLAC.sec.submissions",
+      "value": {
+        "cik": "0000319201",
+        "company": "KLA CORP",
+        "recent_filings": [
+          {
+            "form": "8-K",
+            "filed": "2026-06-12",
+            "accession": "0001193125-26-269375",
+            "primary_document": "d144278d8k.htm"
+          },
+          {
+            "form": "8-K",
+            "filed": "2026-05-07",
+            "accession": "0001193125-26-212093",
+            "primary_document": "d116682d8k.htm"
+          },
+          {
+            "form": "10-Q",
+            "filed": "2026-04-30",
+            "accession": "0000319201-26-000016",
+            "primary_document": "klac-20260331.htm"
+          },
+          {
+            "form": "8-K",
+            "filed": "2026-04-29",
+            "accession": "0000319201-26-000014",
+            "primary_document": "klac-20260429.htm"
+          },
+          {
+            "form": "8-K",
+            "filed": "2026-03-12",
+            "accession": "0001193125-26-102999",
+            "primary_document": "d105235d8k.htm"
+          },
+          {
+            "form": "8-K",
+            "filed": "2026-02-05",
+            "accession": "0001193125-26-039637",
+            "primary_document": "d80148d8k.htm"
+          },
+          {
+            "form": "10-Q",
+            "filed": "2026-01-30",
+            "accession": "0000319201-26-000008",
+            "primary_document": "klac-20251231.htm"
+          },
+          {
+            "form": "8-K",
+            "filed": "2026-01-29",
+            "accession": "0000319201-26-000006",
+            "primary_document": "klac-20260129.htm"
+          }
+        ]
+      },
+      "source": "SEC",
+      "source_type": "official",
+      "source_url": "https://data.sec.gov/submissions/CIK0000319201.json",
+      "updated_at": "2026-06-22T12:30:35+08:00",
+      "confidence": "high",
+      "fallback_used": true,
+      "data_gap": null
+    },
+    {
+      "field": "US.KLAC.sec.companyfacts",
+      "value": {
+        "latest_annual_revenue": {
+          "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+          "val": 12156162000,
+          "fy": 2025,
+          "fp": "FY",
+          "form": "10-K",
+          "filed": "2025-08-08",
+          "end": "2025-06-30"
+        },
+        "latest_annual_net_income": {
+          "tag": "NetIncomeLoss",
+          "val": 4061643000,
+          "fy": 2025,
+          "fp": "FY",
+          "form": "10-K",
+          "filed": "2025-08-08",
+          "end": "2025-06-30"
+        },
+        "latest_assets": {
+          "tag": "Assets",
+          "val": 16873515000,
+          "fy": 2026,
+          "fp": "Q3",
+          "form": "10-Q",
+          "filed": "2026-04-30",
+          "end": "2026-03-31"
+        },
+        "latest_liabilities": {
+          "tag": "Liabilities",
+          "val": 11043020000,
+          "fy": 2026,
+          "fp": "Q3",
+          "form": "10-Q",
+          "filed": "2026-04-30",
+          "end": "2026-03-31"
+        },
+        "net_margin": 0.3341,
+        "liabilities_to_assets": 0.6545
+      },
+      "source": "SEC",
+      "source_type": "official",
+      "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000319201.json",
+      "updated_at": "2026-06-22T12:30:35+08:00",
+      "confidence": "high",
+      "fallback_used": true,
+      "data_gap": null
+    },
+    {
+      "field": "US.MRVL.sec.submissions",
+      "value": {
+        "cik": "0001835632",
+        "company": "Marvell Technology, Inc.",
+        "recent_filings": [
+          {
+            "form": "8-K",
+            "filed": "2026-06-11",
+            "accession": "0001193125-26-267688",
+            "primary_document": "d151562d8k.htm"
+          },
+          {
+            "form": "10-Q",
+            "filed": "2026-05-28",
+            "accession": "0001835632-26-000019",
+            "primary_document": "mrvl-20260502.htm"
+          },
+          {
+            "form": "8-K",
+            "filed": "2026-05-27",
+            "accession": "0001835632-26-000014",
+            "primary_document": "mrvl-20260527.htm"
+          },
+          {
+            "form": "8-K",
+            "filed": "2026-04-15",
+            "accession": "0001193125-26-157134",
+            "primary_document": "d123910d8k.htm"
+          },
+          {
+            "form": "8-K",
+            "filed": "2026-03-31",
+            "accession": "0001193125-26-134462",
+            "primary_document": "d113606d8k.htm"
+          },
+          {
+            "form": "8-K",
+            "filed": "2026-03-19",
+            "accession": "0001628280-26-019851",
+            "primary_document": "mrvl-20260319.htm"
+          },
+          {
+            "form": "8-K",
+            "filed": "2026-03-19",
+            "accession": "0001193125-26-115987",
+            "primary_document": "d55652d8k.htm"
+          },
+          {
+            "form": "10-K",
+            "filed": "2026-03-11",
+            "accession": "0001835632-26-000011",
+            "primary_document": "mrvl-20260131.htm"
+          }
+        ]
+      },
+      "source": "SEC",
+      "source_type": "official",
+      "source_url": "https://data.sec.gov/submissions/CIK0001835632.json",
+      "updated_at": "2026-06-22T12:30:36+08:00",
+      "confidence": "high",
+      "fallback_used": true,
+      "data_gap": null
+    },
+    {
+      "field": "US.MRVL.sec.companyfacts",
+      "value": {
+        "latest_annual_revenue": {
+          "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+          "val": 8194600000,
+          "fy": 2026,
+          "fp": "FY",
+          "form": "10-K",
+          "filed": "2026-03-11",
+          "end": "2026-01-31"
+        },
+        "latest_annual_net_income": {
+          "tag": "NetIncomeLoss",
+          "val": 2670100000,
+          "fy": 2026,
+          "fp": "FY",
+          "form": "10-K",
+          "filed": "2026-03-11",
+          "end": "2026-01-31"
+        },
+        "latest_assets": {
+          "tag": "Assets",
+          "val": 26944500000,
+          "fy": 2027,
+          "fp": "Q1",
+          "form": "10-Q",
+          "filed": "2026-05-28",
+          "end": "2026-05-02"
+        },
+        "latest_liabilities": {
+          "tag": "Liabilities",
+          "val": 8728700000,
+          "fy": 2027,
+          "fp": "Q1",
+          "form": "10-Q",
+          "filed": "2026-05-28",
+          "end": "2026-05-02"
+        },
+        "net_margin": 0.3258,
+        "liabilities_to_assets": 0.324
+      },
+      "source": "SEC",
+      "source_type": "official",
+      "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001835632.json",
+      "updated_at": "2026-06-22T12:30:36+08:00",
+      "confidence": "high",
+      "fallback_used": true,
+      "data_gap": null
+    },
+    {
+      "field": "US.ASML.sec.submissions",
+      "value": {
+        "cik": "0000937966",
+        "company": "ASML HOLDING NV",
+        "recent_filings": [
+          {
+            "form": "20-F",
+            "filed": "2026-02-25",
+            "accession": "0001628280-26-011378",
+            "primary_document": "asml-20251231.htm"
+          },
+          {
+            "form": "20-F",
+            "filed": "2025-03-05",
+            "accession": "0000937966-25-000009",
+            "primary_document": "asml-20241231.htm"
+          },
+          {
+            "form": "20-F",
+            "filed": "2024-02-14",
+            "accession": "0000937966-24-000008",
+            "primary_document": "asml-20231231.htm"
+          },
+          {
+            "form": "20-F",
+            "filed": "2023-02-15",
+            "accession": "0000937966-23-000014",
+            "primary_document": "asml-20221231.htm"
+          },
+          {
+            "form": "20-F",
+            "filed": "2022-02-09",
+            "accession": "0000937966-22-000013",
+            "primary_document": "asml-20211231.htm"
+          },
+          {
+            "form": "20-F",
+            "filed": "2021-02-10",
+            "accession": "0000937966-21-000007",
+            "primary_document": "asml-20201231.htm"
+          },
+          {
+            "form": "20-F",
+            "filed": "2020-02-12",
+            "accession": "0000937966-20-000011",
+            "primary_document": "a2019integratedreportb.htm"
+          },
+          {
+            "form": "20-F",
+            "filed": "2019-02-06",
+            "accession": "0000937966-19-000007",
+            "primary_document": "a2018integratedreportbased.htm"
+          }
+        ]
+      },
+      "source": "SEC",
+      "source_type": "official",
+      "source_url": "https://data.sec.gov/submissions/CIK0000937966.json",
+      "updated_at": "2026-06-22T12:30:36+08:00",
+      "confidence": "high",
+      "fallback_used": true,
+      "data_gap": null
+    },
+    {
+      "field": "US.ASML.sec.companyfacts",
+      "value": {
+        "latest_annual_revenue": {
+          "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+          "val": 32667300000,
+          "fy": 2025,
+          "fp": "FY",
+          "form": "20-F",
+          "filed": "2026-02-25",
+          "end": "2025-12-31"
+        },
+        "latest_annual_net_income": {
+          "tag": "NetIncomeLoss",
+          "val": 9609400000,
+          "fy": 2025,
+          "fp": "FY",
+          "form": "20-F",
+          "filed": "2026-02-25",
+          "end": "2025-12-31"
+        },
+        "latest_assets": {
+          "tag": "Assets",
+          "val": 50566600000,
+          "fy": 2025,
+          "fp": "FY",
+          "form": "20-F",
+          "filed": "2026-02-25",
+          "end": "2025-12-31"
+        },
+        "latest_liabilities": {
+          "tag": "Liabilities",
+          "val": 30954400000,
+          "fy": 2025,
+          "fp": "FY",
+          "form": "20-F",
+          "filed": "2026-02-25",
+          "end": "2025-12-31"
+        },
+        "net_margin": 0.2942,
+        "liabilities_to_assets": 0.6122
+      },
+      "source": "SEC",
+      "source_type": "official",
+      "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000937966.json",
+      "updated_at": "2026-06-22T12:30:36+08:00",
       "confidence": "high",
       "fallback_used": true,
       "data_gap": null
@@ -1044,7 +1042,7 @@
       "source": "FRED",
       "source_type": "official",
       "source_url": "https://api.stlouisfed.org/fred/series/observations?series_id=DGS10&file_type=json",
-      "updated_at": "2026-06-22T04:31:05+08:00",
+      "updated_at": "2026-06-22T12:30:36+08:00",
       "confidence": "high",
       "fallback_used": true,
       "data_gap": null
@@ -1060,7 +1058,7 @@
       "source": "FRED",
       "source_type": "official",
       "source_url": "https://api.stlouisfed.org/fred/series/observations?series_id=DGS2&file_type=json",
-      "updated_at": "2026-06-22T04:31:05+08:00",
+      "updated_at": "2026-06-22T12:30:36+08:00",
       "confidence": "high",
       "fallback_used": true,
       "data_gap": null
@@ -1076,7 +1074,7 @@
       "source": "FRED",
       "source_type": "official",
       "source_url": "https://api.stlouisfed.org/fred/series/observations?series_id=FEDFUNDS&file_type=json",
-      "updated_at": "2026-06-22T04:31:05+08:00",
+      "updated_at": "2026-06-22T12:30:36+08:00",
       "confidence": "high",
       "fallback_used": true,
       "data_gap": null
@@ -1092,7 +1090,7 @@
       "source": "FRED",
       "source_type": "official",
       "source_url": "https://api.stlouisfed.org/fred/series/observations?series_id=CPIAUCSL&file_type=json",
-      "updated_at": "2026-06-22T04:31:05+08:00",
+      "updated_at": "2026-06-22T12:30:36+08:00",
       "confidence": "high",
       "fallback_used": true,
       "data_gap": null
@@ -1108,7 +1106,7 @@
       "source": "FRED",
       "source_type": "official",
       "source_url": "https://api.stlouisfed.org/fred/series/observations?series_id=PCEPI&file_type=json",
-      "updated_at": "2026-06-22T04:31:05+08:00",
+      "updated_at": "2026-06-22T12:30:36+08:00",
       "confidence": "high",
       "fallback_used": true,
       "data_gap": null
@@ -1124,7 +1122,7 @@
       "source": "FRED",
       "source_type": "official",
       "source_url": "https://api.stlouisfed.org/fred/series/observations?series_id=UNRATE&file_type=json",
-      "updated_at": "2026-06-22T04:31:05+08:00",
+      "updated_at": "2026-06-22T12:30:36+08:00",
       "confidence": "high",
       "fallback_used": true,
       "data_gap": null
@@ -1140,7 +1138,7 @@
       "source": "FRED",
       "source_type": "official",
       "source_url": "https://api.stlouisfed.org/fred/series/observations?series_id=PAYEMS&file_type=json",
-      "updated_at": "2026-06-22T04:31:05+08:00",
+      "updated_at": "2026-06-22T12:30:36+08:00",
       "confidence": "high",
       "fallback_used": true,
       "data_gap": null
@@ -1156,7 +1154,7 @@
       "source": "FRED",
       "source_type": "official",
       "source_url": "https://api.stlouisfed.org/fred/series/observations?series_id=BAMLH0A0HYM2&file_type=json",
-      "updated_at": "2026-06-22T04:31:05+08:00",
+      "updated_at": "2026-06-22T12:30:36+08:00",
       "confidence": "high",
       "fallback_used": true,
       "data_gap": null
@@ -1167,7 +1165,7 @@
       "source": "CNINFO",
       "source_type": "official",
       "source_url": "http://www.cninfo.com.cn/",
-      "updated_at": "2026-06-22T04:31:12+08:00",
+      "updated_at": "2026-06-22T12:30:39+08:00",
       "confidence": "low",
       "fallback_used": true,
       "data_gap": "CNINFO official disclosure connector is not configured; use AkShare/Tushare fallback only with downgraded confidence."
@@ -1178,40 +1176,7 @@
       "source": "CNINFO",
       "source_type": "official",
       "source_url": "http://www.cninfo.com.cn/",
-      "updated_at": "2026-06-22T04:31:12+08:00",
-      "confidence": "low",
-      "fallback_used": true,
-      "data_gap": "CNINFO official disclosure connector is not configured; use AkShare/Tushare fallback only with downgraded confidence."
-    },
-    {
-      "field": "SZ.300394.official_disclosure",
-      "value": null,
-      "source": "CNINFO",
-      "source_type": "official",
-      "source_url": "http://www.cninfo.com.cn/",
-      "updated_at": "2026-06-22T04:31:12+08:00",
-      "confidence": "low",
-      "fallback_used": true,
-      "data_gap": "CNINFO official disclosure connector is not configured; use AkShare/Tushare fallback only with downgraded confidence."
-    },
-    {
-      "field": "SZ.300499.official_disclosure",
-      "value": null,
-      "source": "CNINFO",
-      "source_type": "official",
-      "source_url": "http://www.cninfo.com.cn/",
-      "updated_at": "2026-06-22T04:31:12+08:00",
-      "confidence": "low",
-      "fallback_used": true,
-      "data_gap": "CNINFO official disclosure connector is not configured; use AkShare/Tushare fallback only with downgraded confidence."
-    },
-    {
-      "field": "SZ.002747.official_disclosure",
-      "value": null,
-      "source": "CNINFO",
-      "source_type": "official",
-      "source_url": "http://www.cninfo.com.cn/",
-      "updated_at": "2026-06-22T04:31:12+08:00",
+      "updated_at": "2026-06-22T12:30:39+08:00",
       "confidence": "low",
       "fallback_used": true,
       "data_gap": "CNINFO official disclosure connector is not configured; use AkShare/Tushare fallback only with downgraded confidence."
@@ -1222,18 +1187,40 @@
       "source": "CNINFO",
       "source_type": "official",
       "source_url": "http://www.cninfo.com.cn/",
-      "updated_at": "2026-06-22T04:31:12+08:00",
+      "updated_at": "2026-06-22T12:30:39+08:00",
       "confidence": "low",
       "fallback_used": true,
       "data_gap": "CNINFO official disclosure connector is not configured; use AkShare/Tushare fallback only with downgraded confidence."
     },
     {
-      "field": "SH.603256.official_disclosure",
+      "field": "SZ.300499.official_disclosure",
       "value": null,
       "source": "CNINFO",
       "source_type": "official",
       "source_url": "http://www.cninfo.com.cn/",
-      "updated_at": "2026-06-22T04:31:12+08:00",
+      "updated_at": "2026-06-22T12:30:39+08:00",
+      "confidence": "low",
+      "fallback_used": true,
+      "data_gap": "CNINFO official disclosure connector is not configured; use AkShare/Tushare fallback only with downgraded confidence."
+    },
+    {
+      "field": "SZ.002747.official_disclosure",
+      "value": null,
+      "source": "CNINFO",
+      "source_type": "official",
+      "source_url": "http://www.cninfo.com.cn/",
+      "updated_at": "2026-06-22T12:30:39+08:00",
+      "confidence": "low",
+      "fallback_used": true,
+      "data_gap": "CNINFO official disclosure connector is not configured; use AkShare/Tushare fallback only with downgraded confidence."
+    },
+    {
+      "field": "SZ.300394.official_disclosure",
+      "value": null,
+      "source": "CNINFO",
+      "source_type": "official",
+      "source_url": "http://www.cninfo.com.cn/",
+      "updated_at": "2026-06-22T12:30:39+08:00",
       "confidence": "low",
       "fallback_used": true,
       "data_gap": "CNINFO official disclosure connector is not configured; use AkShare/Tushare fallback only with downgraded confidence."
@@ -1244,29 +1231,7 @@
       "source": "CNINFO",
       "source_type": "official",
       "source_url": "http://www.cninfo.com.cn/",
-      "updated_at": "2026-06-22T04:31:12+08:00",
-      "confidence": "low",
-      "fallback_used": true,
-      "data_gap": "CNINFO official disclosure connector is not configured; use AkShare/Tushare fallback only with downgraded confidence."
-    },
-    {
-      "field": "SZ.002335.official_disclosure",
-      "value": null,
-      "source": "CNINFO",
-      "source_type": "official",
-      "source_url": "http://www.cninfo.com.cn/",
-      "updated_at": "2026-06-22T04:31:12+08:00",
-      "confidence": "low",
-      "fallback_used": true,
-      "data_gap": "CNINFO official disclosure connector is not configured; use AkShare/Tushare fallback only with downgraded confidence."
-    },
-    {
-      "field": "SH.688322.official_disclosure",
-      "value": null,
-      "source": "CNINFO",
-      "source_type": "official",
-      "source_url": "http://www.cninfo.com.cn/",
-      "updated_at": "2026-06-22T04:31:12+08:00",
+      "updated_at": "2026-06-22T12:30:39+08:00",
       "confidence": "low",
       "fallback_used": true,
       "data_gap": "CNINFO official disclosure connector is not configured; use AkShare/Tushare fallback only with downgraded confidence."
@@ -1277,32 +1242,43 @@
       "source": "CNINFO",
       "source_type": "official",
       "source_url": "http://www.cninfo.com.cn/",
-      "updated_at": "2026-06-22T04:31:12+08:00",
+      "updated_at": "2026-06-22T12:30:39+08:00",
       "confidence": "low",
       "fallback_used": true,
       "data_gap": "CNINFO official disclosure connector is not configured; use AkShare/Tushare fallback only with downgraded confidence."
     },
     {
-      "field": "HK.01888.official_disclosure",
+      "field": "SH.603256.official_disclosure",
       "value": null,
-      "source": "HKEXnews",
+      "source": "CNINFO",
       "source_type": "official",
-      "source_url": "https://www.hkexnews.hk/",
-      "updated_at": "2026-06-22T04:31:12+08:00",
+      "source_url": "http://www.cninfo.com.cn/",
+      "updated_at": "2026-06-22T12:30:39+08:00",
       "confidence": "low",
       "fallback_used": true,
-      "data_gap": "HKEXnews official disclosure connector is not configured; use Futu/AkShare/Yahoo fallback only with downgraded confidence."
+      "data_gap": "CNINFO official disclosure connector is not configured; use AkShare/Tushare fallback only with downgraded confidence."
     },
     {
-      "field": "HK.00148.official_disclosure",
+      "field": "SZ.002335.official_disclosure",
       "value": null,
-      "source": "HKEXnews",
+      "source": "CNINFO",
       "source_type": "official",
-      "source_url": "https://www.hkexnews.hk/",
-      "updated_at": "2026-06-22T04:31:12+08:00",
+      "source_url": "http://www.cninfo.com.cn/",
+      "updated_at": "2026-06-22T12:30:39+08:00",
       "confidence": "low",
       "fallback_used": true,
-      "data_gap": "HKEXnews official disclosure connector is not configured; use Futu/AkShare/Yahoo fallback only with downgraded confidence."
+      "data_gap": "CNINFO official disclosure connector is not configured; use AkShare/Tushare fallback only with downgraded confidence."
+    },
+    {
+      "field": "SH.688322.official_disclosure",
+      "value": null,
+      "source": "CNINFO",
+      "source_type": "official",
+      "source_url": "http://www.cninfo.com.cn/",
+      "updated_at": "2026-06-22T12:30:39+08:00",
+      "confidence": "low",
+      "fallback_used": true,
+      "data_gap": "CNINFO official disclosure connector is not configured; use AkShare/Tushare fallback only with downgraded confidence."
     },
     {
       "field": "HK.01347.official_disclosure",
@@ -1310,7 +1286,18 @@
       "source": "HKEXnews",
       "source_type": "official",
       "source_url": "https://www.hkexnews.hk/",
-      "updated_at": "2026-06-22T04:31:12+08:00",
+      "updated_at": "2026-06-22T12:30:39+08:00",
+      "confidence": "low",
+      "fallback_used": true,
+      "data_gap": "HKEXnews official disclosure connector is not configured; use Futu/AkShare/Yahoo fallback only with downgraded confidence."
+    },
+    {
+      "field": "HK.01888.official_disclosure",
+      "value": null,
+      "source": "HKEXnews",
+      "source_type": "official",
+      "source_url": "https://www.hkexnews.hk/",
+      "updated_at": "2026-06-22T12:30:39+08:00",
       "confidence": "low",
       "fallback_used": true,
       "data_gap": "HKEXnews official disclosure connector is not configured; use Futu/AkShare/Yahoo fallback only with downgraded confidence."
@@ -1321,7 +1308,18 @@
       "source": "HKEXnews",
       "source_type": "official",
       "source_url": "https://www.hkexnews.hk/",
-      "updated_at": "2026-06-22T04:31:12+08:00",
+      "updated_at": "2026-06-22T12:30:39+08:00",
+      "confidence": "low",
+      "fallback_used": true,
+      "data_gap": "HKEXnews official disclosure connector is not configured; use Futu/AkShare/Yahoo fallback only with downgraded confidence."
+    },
+    {
+      "field": "HK.00148.official_disclosure",
+      "value": null,
+      "source": "HKEXnews",
+      "source_type": "official",
+      "source_url": "https://www.hkexnews.hk/",
+      "updated_at": "2026-06-22T12:30:39+08:00",
       "confidence": "low",
       "fallback_used": true,
       "data_gap": "HKEXnews official disclosure connector is not configured; use Futu/AkShare/Yahoo fallback only with downgraded confidence."
@@ -1335,7 +1333,7 @@
         "source": "HKEXnews",
         "source_type": "official",
         "source_url": "https://www.hkexnews.hk/",
-        "updated_at": "2026-06-22T04:31:12+08:00",
+        "updated_at": "2026-06-22T12:30:39+08:00",
         "confidence": "low",
         "fallback_used": true,
         "data_gap": "HKEXnews official disclosure connector is not configured; use Futu/AkShare/Yahoo fallback only with downgraded confidence."
@@ -1348,7 +1346,7 @@
         "source": "HKEXnews",
         "source_type": "official",
         "source_url": "https://www.hkexnews.hk/",
-        "updated_at": "2026-06-22T04:31:12+08:00",
+        "updated_at": "2026-06-22T12:30:39+08:00",
         "confidence": "low",
         "fallback_used": true,
         "data_gap": "HKEXnews official disclosure connector is not configured; use Futu/AkShare/Yahoo fallback only with downgraded confidence."
@@ -1361,7 +1359,7 @@
         "source": "HKEXnews",
         "source_type": "official",
         "source_url": "https://www.hkexnews.hk/",
-        "updated_at": "2026-06-22T04:31:12+08:00",
+        "updated_at": "2026-06-22T12:30:39+08:00",
         "confidence": "low",
         "fallback_used": true,
         "data_gap": "HKEXnews official disclosure connector is not configured; use Futu/AkShare/Yahoo fallback only with downgraded confidence."
@@ -1374,7 +1372,7 @@
         "source": "HKEXnews",
         "source_type": "official",
         "source_url": "https://www.hkexnews.hk/",
-        "updated_at": "2026-06-22T04:31:12+08:00",
+        "updated_at": "2026-06-22T12:30:39+08:00",
         "confidence": "low",
         "fallback_used": true,
         "data_gap": "HKEXnews official disclosure connector is not configured; use Futu/AkShare/Yahoo fallback only with downgraded confidence."
@@ -1387,7 +1385,7 @@
         "source": "CNINFO",
         "source_type": "official",
         "source_url": "http://www.cninfo.com.cn/",
-        "updated_at": "2026-06-22T04:31:12+08:00",
+        "updated_at": "2026-06-22T12:30:39+08:00",
         "confidence": "low",
         "fallback_used": true,
         "data_gap": "CNINFO official disclosure connector is not configured; use AkShare/Tushare fallback only with downgraded confidence."
@@ -1400,7 +1398,7 @@
         "source": "CNINFO",
         "source_type": "official",
         "source_url": "http://www.cninfo.com.cn/",
-        "updated_at": "2026-06-22T04:31:12+08:00",
+        "updated_at": "2026-06-22T12:30:39+08:00",
         "confidence": "low",
         "fallback_used": true,
         "data_gap": "CNINFO official disclosure connector is not configured; use AkShare/Tushare fallback only with downgraded confidence."
@@ -1413,7 +1411,7 @@
         "source": "CNINFO",
         "source_type": "official",
         "source_url": "http://www.cninfo.com.cn/",
-        "updated_at": "2026-06-22T04:31:12+08:00",
+        "updated_at": "2026-06-22T12:30:39+08:00",
         "confidence": "low",
         "fallback_used": true,
         "data_gap": "CNINFO official disclosure connector is not configured; use AkShare/Tushare fallback only with downgraded confidence."
@@ -1426,7 +1424,7 @@
         "source": "CNINFO",
         "source_type": "official",
         "source_url": "http://www.cninfo.com.cn/",
-        "updated_at": "2026-06-22T04:31:12+08:00",
+        "updated_at": "2026-06-22T12:30:39+08:00",
         "confidence": "low",
         "fallback_used": true,
         "data_gap": "CNINFO official disclosure connector is not configured; use AkShare/Tushare fallback only with downgraded confidence."
@@ -1439,7 +1437,7 @@
         "source": "CNINFO",
         "source_type": "official",
         "source_url": "http://www.cninfo.com.cn/",
-        "updated_at": "2026-06-22T04:31:12+08:00",
+        "updated_at": "2026-06-22T12:30:39+08:00",
         "confidence": "low",
         "fallback_used": true,
         "data_gap": "CNINFO official disclosure connector is not configured; use AkShare/Tushare fallback only with downgraded confidence."
@@ -1452,7 +1450,7 @@
         "source": "CNINFO",
         "source_type": "official",
         "source_url": "http://www.cninfo.com.cn/",
-        "updated_at": "2026-06-22T04:31:12+08:00",
+        "updated_at": "2026-06-22T12:30:39+08:00",
         "confidence": "low",
         "fallback_used": true,
         "data_gap": "CNINFO official disclosure connector is not configured; use AkShare/Tushare fallback only with downgraded confidence."
@@ -1465,7 +1463,7 @@
         "source": "CNINFO",
         "source_type": "official",
         "source_url": "http://www.cninfo.com.cn/",
-        "updated_at": "2026-06-22T04:31:12+08:00",
+        "updated_at": "2026-06-22T12:30:39+08:00",
         "confidence": "low",
         "fallback_used": true,
         "data_gap": "CNINFO official disclosure connector is not configured; use AkShare/Tushare fallback only with downgraded confidence."
@@ -1478,7 +1476,7 @@
         "source": "CNINFO",
         "source_type": "official",
         "source_url": "http://www.cninfo.com.cn/",
-        "updated_at": "2026-06-22T04:31:12+08:00",
+        "updated_at": "2026-06-22T12:30:39+08:00",
         "confidence": "low",
         "fallback_used": true,
         "data_gap": "CNINFO official disclosure connector is not configured; use AkShare/Tushare fallback only with downgraded confidence."
@@ -1491,7 +1489,7 @@
         "source": "CNINFO",
         "source_type": "official",
         "source_url": "http://www.cninfo.com.cn/",
-        "updated_at": "2026-06-22T04:31:12+08:00",
+        "updated_at": "2026-06-22T12:30:39+08:00",
         "confidence": "low",
         "fallback_used": true,
         "data_gap": "CNINFO official disclosure connector is not configured; use AkShare/Tushare fallback only with downgraded confidence."
@@ -1504,7 +1502,7 @@
         "source": "CNINFO",
         "source_type": "official",
         "source_url": "http://www.cninfo.com.cn/",
-        "updated_at": "2026-06-22T04:31:12+08:00",
+        "updated_at": "2026-06-22T12:30:39+08:00",
         "confidence": "low",
         "fallback_used": true,
         "data_gap": "CNINFO official disclosure connector is not configured; use AkShare/Tushare fallback only with downgraded confidence."
@@ -1517,7 +1515,7 @@
         "source": "CNINFO",
         "source_type": "official",
         "source_url": "http://www.cninfo.com.cn/",
-        "updated_at": "2026-06-22T04:31:12+08:00",
+        "updated_at": "2026-06-22T12:30:39+08:00",
         "confidence": "low",
         "fallback_used": true,
         "data_gap": "CNINFO official disclosure connector is not configured; use AkShare/Tushare fallback only with downgraded confidence."
@@ -1583,7 +1581,7 @@
         "source": "SEC",
         "source_type": "official",
         "source_url": "https://data.sec.gov/submissions/CIK0001596532.json",
-        "updated_at": "2026-06-22T04:30:56+08:00",
+        "updated_at": "2026-06-22T12:30:35+08:00",
         "confidence": "high",
         "fallback_used": true,
         "data_gap": null
@@ -1633,7 +1631,123 @@
         "source": "SEC",
         "source_type": "official",
         "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001596532.json",
-        "updated_at": "2026-06-22T04:30:56+08:00",
+        "updated_at": "2026-06-22T12:30:35+08:00",
+        "confidence": "high",
+        "fallback_used": true,
+        "data_gap": null
+      }
+    ],
+    "US.ASML": [
+      {
+        "field": "US.ASML.sec.submissions",
+        "value": {
+          "cik": "0000937966",
+          "company": "ASML HOLDING NV",
+          "recent_filings": [
+            {
+              "form": "20-F",
+              "filed": "2026-02-25",
+              "accession": "0001628280-26-011378",
+              "primary_document": "asml-20251231.htm"
+            },
+            {
+              "form": "20-F",
+              "filed": "2025-03-05",
+              "accession": "0000937966-25-000009",
+              "primary_document": "asml-20241231.htm"
+            },
+            {
+              "form": "20-F",
+              "filed": "2024-02-14",
+              "accession": "0000937966-24-000008",
+              "primary_document": "asml-20231231.htm"
+            },
+            {
+              "form": "20-F",
+              "filed": "2023-02-15",
+              "accession": "0000937966-23-000014",
+              "primary_document": "asml-20221231.htm"
+            },
+            {
+              "form": "20-F",
+              "filed": "2022-02-09",
+              "accession": "0000937966-22-000013",
+              "primary_document": "asml-20211231.htm"
+            },
+            {
+              "form": "20-F",
+              "filed": "2021-02-10",
+              "accession": "0000937966-21-000007",
+              "primary_document": "asml-20201231.htm"
+            },
+            {
+              "form": "20-F",
+              "filed": "2020-02-12",
+              "accession": "0000937966-20-000011",
+              "primary_document": "a2019integratedreportb.htm"
+            },
+            {
+              "form": "20-F",
+              "filed": "2019-02-06",
+              "accession": "0000937966-19-000007",
+              "primary_document": "a2018integratedreportbased.htm"
+            }
+          ]
+        },
+        "source": "SEC",
+        "source_type": "official",
+        "source_url": "https://data.sec.gov/submissions/CIK0000937966.json",
+        "updated_at": "2026-06-22T12:30:36+08:00",
+        "confidence": "high",
+        "fallback_used": true,
+        "data_gap": null
+      },
+      {
+        "field": "US.ASML.sec.companyfacts",
+        "value": {
+          "latest_annual_revenue": {
+            "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+            "val": 32667300000,
+            "fy": 2025,
+            "fp": "FY",
+            "form": "20-F",
+            "filed": "2026-02-25",
+            "end": "2025-12-31"
+          },
+          "latest_annual_net_income": {
+            "tag": "NetIncomeLoss",
+            "val": 9609400000,
+            "fy": 2025,
+            "fp": "FY",
+            "form": "20-F",
+            "filed": "2026-02-25",
+            "end": "2025-12-31"
+          },
+          "latest_assets": {
+            "tag": "Assets",
+            "val": 50566600000,
+            "fy": 2025,
+            "fp": "FY",
+            "form": "20-F",
+            "filed": "2026-02-25",
+            "end": "2025-12-31"
+          },
+          "latest_liabilities": {
+            "tag": "Liabilities",
+            "val": 30954400000,
+            "fy": 2025,
+            "fp": "FY",
+            "form": "20-F",
+            "filed": "2026-02-25",
+            "end": "2025-12-31"
+          },
+          "net_margin": 0.2942,
+          "liabilities_to_assets": 0.6122
+        },
+        "source": "SEC",
+        "source_type": "official",
+        "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000937966.json",
+        "updated_at": "2026-06-22T12:30:36+08:00",
         "confidence": "high",
         "fallback_used": true,
         "data_gap": null
@@ -1699,7 +1813,7 @@
         "source": "SEC",
         "source_type": "official",
         "source_url": "https://data.sec.gov/submissions/CIK0001730168.json",
-        "updated_at": "2026-06-22T04:30:23+08:00",
+        "updated_at": "2026-06-22T12:30:34+08:00",
         "confidence": "high",
         "fallback_used": true,
         "data_gap": null
@@ -1749,7 +1863,7 @@
         "source": "SEC",
         "source_type": "official",
         "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001730168.json",
-        "updated_at": "2026-06-22T04:30:23+08:00",
+        "updated_at": "2026-06-22T12:30:34+08:00",
         "confidence": "high",
         "fallback_used": true,
         "data_gap": null
@@ -1815,7 +1929,7 @@
         "source": "SEC",
         "source_type": "official",
         "source_url": "https://data.sec.gov/submissions/CIK0001035267.json",
-        "updated_at": "2026-06-22T04:30:31+08:00",
+        "updated_at": "2026-06-22T12:30:35+08:00",
         "confidence": "high",
         "fallback_used": true,
         "data_gap": null
@@ -1865,239 +1979,239 @@
         "source": "SEC",
         "source_type": "official",
         "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001035267.json",
-        "updated_at": "2026-06-22T04:30:31+08:00",
+        "updated_at": "2026-06-22T12:30:35+08:00",
         "confidence": "high",
         "fallback_used": true,
         "data_gap": null
       }
     ],
-    "US.META": [
+    "US.KLAC": [
       {
-        "field": "US.META.sec.submissions",
+        "field": "US.KLAC.sec.submissions",
         "value": {
-          "cik": "0001326801",
-          "company": "Meta Platforms, Inc.",
+          "cik": "0000319201",
+          "company": "KLA CORP",
           "recent_filings": [
             {
               "form": "8-K",
-              "filed": "2026-05-29",
-              "accession": "0001628280-26-039193",
-              "primary_document": "meta-20260527.htm"
+              "filed": "2026-06-12",
+              "accession": "0001193125-26-269375",
+              "primary_document": "d144278d8k.htm"
             },
             {
               "form": "8-K",
-              "filed": "2026-05-04",
-              "accession": "0001193125-26-204128",
-              "primary_document": "d134616d8k.htm"
+              "filed": "2026-05-07",
+              "accession": "0001193125-26-212093",
+              "primary_document": "d116682d8k.htm"
             },
             {
               "form": "10-Q",
               "filed": "2026-04-30",
-              "accession": "0001628280-26-028526",
-              "primary_document": "meta-20260331.htm"
+              "accession": "0000319201-26-000016",
+              "primary_document": "klac-20260331.htm"
             },
             {
               "form": "8-K",
               "filed": "2026-04-29",
-              "accession": "0001628280-26-028364",
-              "primary_document": "meta-20260429.htm"
+              "accession": "0000319201-26-000014",
+              "primary_document": "klac-20260429.htm"
             },
             {
               "form": "8-K",
-              "filed": "2026-04-14",
-              "accession": "0001628280-26-025108",
-              "primary_document": "meta-20260408.htm"
+              "filed": "2026-03-12",
+              "accession": "0001193125-26-102999",
+              "primary_document": "d105235d8k.htm"
             },
             {
-              "form": "10-K",
+              "form": "8-K",
+              "filed": "2026-02-05",
+              "accession": "0001193125-26-039637",
+              "primary_document": "d80148d8k.htm"
+            },
+            {
+              "form": "10-Q",
+              "filed": "2026-01-30",
+              "accession": "0000319201-26-000008",
+              "primary_document": "klac-20251231.htm"
+            },
+            {
+              "form": "8-K",
               "filed": "2026-01-29",
-              "accession": "0001628280-26-003942",
-              "primary_document": "meta-20251231.htm"
-            },
-            {
-              "form": "8-K",
-              "filed": "2026-01-28",
-              "accession": "0001628280-26-003832",
-              "primary_document": "meta-20260128.htm"
-            },
-            {
-              "form": "8-K",
-              "filed": "2026-01-16",
-              "accession": "0001628280-26-002429",
-              "primary_document": "meta-20260112.htm"
+              "accession": "0000319201-26-000006",
+              "primary_document": "klac-20260129.htm"
             }
           ]
         },
         "source": "SEC",
         "source_type": "official",
-        "source_url": "https://data.sec.gov/submissions/CIK0001326801.json",
-        "updated_at": "2026-06-22T04:30:37+08:00",
+        "source_url": "https://data.sec.gov/submissions/CIK0000319201.json",
+        "updated_at": "2026-06-22T12:30:35+08:00",
         "confidence": "high",
         "fallback_used": true,
         "data_gap": null
       },
       {
-        "field": "US.META.sec.companyfacts",
+        "field": "US.KLAC.sec.companyfacts",
         "value": {
           "latest_annual_revenue": {
             "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
-            "val": 200966000000,
+            "val": 12156162000,
             "fy": 2025,
             "fp": "FY",
             "form": "10-K",
-            "filed": "2026-01-29",
-            "end": "2025-12-31"
+            "filed": "2025-08-08",
+            "end": "2025-06-30"
           },
           "latest_annual_net_income": {
             "tag": "NetIncomeLoss",
-            "val": 60458000000,
+            "val": 4061643000,
             "fy": 2025,
             "fp": "FY",
             "form": "10-K",
-            "filed": "2026-01-29",
-            "end": "2025-12-31"
+            "filed": "2025-08-08",
+            "end": "2025-06-30"
           },
           "latest_assets": {
             "tag": "Assets",
-            "val": 395250000000,
+            "val": 16873515000,
             "fy": 2026,
-            "fp": "Q1",
+            "fp": "Q3",
             "form": "10-Q",
             "filed": "2026-04-30",
             "end": "2026-03-31"
           },
           "latest_liabilities": {
             "tag": "Liabilities",
-            "val": 151569000000,
+            "val": 11043020000,
             "fy": 2026,
-            "fp": "Q1",
+            "fp": "Q3",
             "form": "10-Q",
             "filed": "2026-04-30",
             "end": "2026-03-31"
           },
-          "net_margin": 0.3008,
-          "liabilities_to_assets": 0.3835
+          "net_margin": 0.3341,
+          "liabilities_to_assets": 0.6545
         },
         "source": "SEC",
         "source_type": "official",
-        "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001326801.json",
-        "updated_at": "2026-06-22T04:30:37+08:00",
+        "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000319201.json",
+        "updated_at": "2026-06-22T12:30:35+08:00",
         "confidence": "high",
         "fallback_used": true,
         "data_gap": null
       }
     ],
-    "US.MSFT": [
+    "US.MRVL": [
       {
-        "field": "US.MSFT.sec.submissions",
+        "field": "US.MRVL.sec.submissions",
         "value": {
-          "cik": "0000789019",
-          "company": "MICROSOFT CORP",
+          "cik": "0001835632",
+          "company": "Marvell Technology, Inc.",
           "recent_filings": [
             {
               "form": "8-K",
-              "filed": "2026-06-05",
-              "accession": "0001193125-26-258667",
-              "primary_document": "d26760d8k.htm"
-            },
-            {
-              "form": "8-K",
-              "filed": "2026-05-14",
-              "accession": "0001193125-26-224155",
-              "primary_document": "d125909d8k.htm"
+              "filed": "2026-06-11",
+              "accession": "0001193125-26-267688",
+              "primary_document": "d151562d8k.htm"
             },
             {
               "form": "10-Q",
-              "filed": "2026-04-29",
-              "accession": "0001193125-26-191507",
-              "primary_document": "msft-20260331.htm"
+              "filed": "2026-05-28",
+              "accession": "0001835632-26-000019",
+              "primary_document": "mrvl-20260502.htm"
             },
             {
               "form": "8-K",
-              "filed": "2026-04-29",
-              "accession": "0001193125-26-191457",
-              "primary_document": "msft-20260429.htm"
-            },
-            {
-              "form": "10-Q",
-              "filed": "2026-01-28",
-              "accession": "0001193125-26-027207",
-              "primary_document": "msft-20251231.htm"
+              "filed": "2026-05-27",
+              "accession": "0001835632-26-000014",
+              "primary_document": "mrvl-20260527.htm"
             },
             {
               "form": "8-K",
-              "filed": "2026-01-28",
-              "accession": "0001193125-26-027198",
-              "primary_document": "msft-20260128.htm"
+              "filed": "2026-04-15",
+              "accession": "0001193125-26-157134",
+              "primary_document": "d123910d8k.htm"
             },
             {
               "form": "8-K",
-              "filed": "2025-12-08",
-              "accession": "0001193125-25-311196",
-              "primary_document": "d34077d8k.htm"
+              "filed": "2026-03-31",
+              "accession": "0001193125-26-134462",
+              "primary_document": "d113606d8k.htm"
             },
             {
-              "form": "10-Q",
-              "filed": "2025-10-29",
-              "accession": "0001193125-25-256321",
-              "primary_document": "msft-20250930.htm"
+              "form": "8-K",
+              "filed": "2026-03-19",
+              "accession": "0001628280-26-019851",
+              "primary_document": "mrvl-20260319.htm"
+            },
+            {
+              "form": "8-K",
+              "filed": "2026-03-19",
+              "accession": "0001193125-26-115987",
+              "primary_document": "d55652d8k.htm"
+            },
+            {
+              "form": "10-K",
+              "filed": "2026-03-11",
+              "accession": "0001835632-26-000011",
+              "primary_document": "mrvl-20260131.htm"
             }
           ]
         },
         "source": "SEC",
         "source_type": "official",
-        "source_url": "https://data.sec.gov/submissions/CIK0000789019.json",
-        "updated_at": "2026-06-22T04:30:47+08:00",
+        "source_url": "https://data.sec.gov/submissions/CIK0001835632.json",
+        "updated_at": "2026-06-22T12:30:36+08:00",
         "confidence": "high",
         "fallback_used": true,
         "data_gap": null
       },
       {
-        "field": "US.MSFT.sec.companyfacts",
+        "field": "US.MRVL.sec.companyfacts",
         "value": {
           "latest_annual_revenue": {
             "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
-            "val": 281724000000,
-            "fy": 2025,
+            "val": 8194600000,
+            "fy": 2026,
             "fp": "FY",
             "form": "10-K",
-            "filed": "2025-07-30",
-            "end": "2025-06-30"
+            "filed": "2026-03-11",
+            "end": "2026-01-31"
           },
           "latest_annual_net_income": {
             "tag": "NetIncomeLoss",
-            "val": 101832000000,
-            "fy": 2025,
+            "val": 2670100000,
+            "fy": 2026,
             "fp": "FY",
             "form": "10-K",
-            "filed": "2025-07-30",
-            "end": "2025-06-30"
+            "filed": "2026-03-11",
+            "end": "2026-01-31"
           },
           "latest_assets": {
             "tag": "Assets",
-            "val": 694228000000,
-            "fy": 2026,
-            "fp": "Q3",
+            "val": 26944500000,
+            "fy": 2027,
+            "fp": "Q1",
             "form": "10-Q",
-            "filed": "2026-04-29",
-            "end": "2026-03-31"
+            "filed": "2026-05-28",
+            "end": "2026-05-02"
           },
           "latest_liabilities": {
             "tag": "Liabilities",
-            "val": 279861000000,
-            "fy": 2026,
-            "fp": "Q3",
+            "val": 8728700000,
+            "fy": 2027,
+            "fp": "Q1",
             "form": "10-Q",
-            "filed": "2026-04-29",
-            "end": "2026-03-31"
+            "filed": "2026-05-28",
+            "end": "2026-05-02"
           },
-          "net_margin": 0.3615,
-          "liabilities_to_assets": 0.4031
+          "net_margin": 0.3258,
+          "liabilities_to_assets": 0.324
         },
         "source": "SEC",
         "source_type": "official",
-        "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000789019.json",
-        "updated_at": "2026-06-22T04:30:47+08:00",
+        "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001835632.json",
+        "updated_at": "2026-06-22T12:30:36+08:00",
         "confidence": "high",
         "fallback_used": true,
         "data_gap": null
@@ -2163,7 +2277,7 @@
         "source": "SEC",
         "source_type": "official",
         "source_url": "https://data.sec.gov/submissions/CIK0001045810.json",
-        "updated_at": "2026-06-22T04:30:13+08:00",
+        "updated_at": "2026-06-22T12:30:34+08:00",
         "confidence": "high",
         "fallback_used": true,
         "data_gap": null
@@ -2213,239 +2327,123 @@
         "source": "SEC",
         "source_type": "official",
         "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001045810.json",
-        "updated_at": "2026-06-22T04:30:13+08:00",
+        "updated_at": "2026-06-22T12:30:34+08:00",
         "confidence": "high",
         "fallback_used": true,
         "data_gap": null
       }
     ],
-    "US.PLTR": [
+    "US.SYM": [
       {
-        "field": "US.PLTR.sec.submissions",
+        "field": "US.SYM.sec.submissions",
         "value": {
-          "cik": "0001321655",
-          "company": "Palantir Technologies Inc.",
+          "cik": "0001837240",
+          "company": "Symbotic Inc.",
           "recent_filings": [
             {
+              "form": "10-Q",
+              "filed": "2026-05-06",
+              "accession": "0001837240-26-000024",
+              "primary_document": "sym-20260328.htm"
+            },
+            {
               "form": "8-K",
-              "filed": "2026-06-09",
-              "accession": "0001321655-26-000033",
-              "primary_document": "pltr-20260603.htm"
+              "filed": "2026-05-06",
+              "accession": "0001837240-26-000023",
+              "primary_document": "sym-20260506.htm"
+            },
+            {
+              "form": "8-K",
+              "filed": "2026-03-09",
+              "accession": "0001837240-26-000015",
+              "primary_document": "sym-20260305.htm"
             },
             {
               "form": "10-Q",
-              "filed": "2026-05-05",
-              "accession": "0001321655-26-000028",
-              "primary_document": "pltr-20260331.htm"
+              "filed": "2026-02-04",
+              "accession": "0001837240-26-000009",
+              "primary_document": "sym-20251227.htm"
             },
             {
               "form": "8-K",
-              "filed": "2026-05-04",
-              "accession": "0001321655-26-000026",
-              "primary_document": "pltr-20260504.htm"
+              "filed": "2026-02-04",
+              "accession": "0001837240-26-000008",
+              "primary_document": "sym-20260204.htm"
+            },
+            {
+              "form": "8-K",
+              "filed": "2026-01-16",
+              "accession": "0001193125-26-015367",
+              "primary_document": "sym-20260116.htm"
+            },
+            {
+              "form": "8-K",
+              "filed": "2025-12-08",
+              "accession": "0001193125-25-311363",
+              "primary_document": "d69186d8k.htm"
             },
             {
               "form": "10-K",
-              "filed": "2026-02-17",
-              "accession": "0001321655-26-000011",
-              "primary_document": "pltr-20251231.htm"
-            },
-            {
-              "form": "8-K",
-              "filed": "2026-02-02",
-              "accession": "0001321655-26-000004",
-              "primary_document": "pltr-20260202.htm"
-            },
-            {
-              "form": "10-Q",
-              "filed": "2025-11-04",
-              "accession": "0001321655-25-000131",
-              "primary_document": "pltr-20250930.htm"
-            },
-            {
-              "form": "8-K",
-              "filed": "2025-11-03",
-              "accession": "0001321655-25-000130",
-              "primary_document": "pltr-20251103.htm"
-            },
-            {
-              "form": "10-Q",
-              "filed": "2025-08-05",
-              "accession": "0001321655-25-000106",
-              "primary_document": "pltr-20250630.htm"
+              "filed": "2025-11-24",
+              "accession": "0001837240-25-000278",
+              "primary_document": "sym-20250927.htm"
             }
           ]
         },
         "source": "SEC",
         "source_type": "official",
-        "source_url": "https://data.sec.gov/submissions/CIK0001321655.json",
-        "updated_at": "2026-06-22T04:30:17+08:00",
+        "source_url": "https://data.sec.gov/submissions/CIK0001837240.json",
+        "updated_at": "2026-06-22T12:30:35+08:00",
         "confidence": "high",
         "fallback_used": true,
         "data_gap": null
       },
       {
-        "field": "US.PLTR.sec.companyfacts",
+        "field": "US.SYM.sec.companyfacts",
         "value": {
           "latest_annual_revenue": {
             "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
-            "val": 4475446000,
+            "val": 2246922000,
             "fy": 2025,
             "fp": "FY",
             "form": "10-K",
-            "filed": "2026-02-17",
-            "end": "2025-12-31"
+            "filed": "2025-11-24",
+            "end": "2025-09-27"
           },
           "latest_annual_net_income": {
             "tag": "NetIncomeLoss",
-            "val": 1625033000,
+            "val": -16937000,
             "fy": 2025,
             "fp": "FY",
             "form": "10-K",
-            "filed": "2026-02-17",
-            "end": "2025-12-31"
+            "filed": "2025-11-24",
+            "end": "2025-09-27"
           },
           "latest_assets": {
             "tag": "Assets",
-            "val": 10199183000,
-            "fy": 2026,
-            "fp": "Q1",
-            "form": "10-Q",
-            "filed": "2026-05-05",
-            "end": "2026-03-31"
-          },
-          "latest_liabilities": {
-            "tag": "Liabilities",
-            "val": 1642902000,
-            "fy": 2026,
-            "fp": "Q1",
-            "form": "10-Q",
-            "filed": "2026-05-05",
-            "end": "2026-03-31"
-          },
-          "net_margin": 0.3631,
-          "liabilities_to_assets": 0.1611
-        },
-        "source": "SEC",
-        "source_type": "official",
-        "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001321655.json",
-        "updated_at": "2026-06-22T04:30:17+08:00",
-        "confidence": "high",
-        "fallback_used": true,
-        "data_gap": null
-      }
-    ],
-    "US.SNPS": [
-      {
-        "field": "US.SNPS.sec.submissions",
-        "value": {
-          "cik": "0000883241",
-          "company": "SYNOPSYS INC",
-          "recent_filings": [
-            {
-              "form": "10-Q",
-              "filed": "2026-05-27",
-              "accession": "0000883241-26-000018",
-              "primary_document": "snps-20260430.htm"
-            },
-            {
-              "form": "8-K",
-              "filed": "2026-05-27",
-              "accession": "0001193125-26-241920",
-              "primary_document": "d96543d8k.htm"
-            },
-            {
-              "form": "8-K",
-              "filed": "2026-05-27",
-              "accession": "0001193125-26-241911",
-              "primary_document": "d126227d8k.htm"
-            },
-            {
-              "form": "8-K",
-              "filed": "2026-04-20",
-              "accession": "0001193125-26-164085",
-              "primary_document": "d467081d8k.htm"
-            },
-            {
-              "form": "8-K",
-              "filed": "2026-03-02",
-              "accession": "0001193125-26-084396",
-              "primary_document": "d113900d8k.htm"
-            },
-            {
-              "form": "10-Q",
-              "filed": "2026-02-25",
-              "accession": "0000883241-26-000014",
-              "primary_document": "snps-20260131.htm"
-            },
-            {
-              "form": "8-K",
-              "filed": "2026-02-25",
-              "accession": "0001193125-26-071601",
-              "primary_document": "d921168d8k.htm"
-            },
-            {
-              "form": "8-K",
-              "filed": "2026-02-19",
-              "accession": "0001193125-26-059438",
-              "primary_document": "d78071d8k.htm"
-            }
-          ]
-        },
-        "source": "SEC",
-        "source_type": "official",
-        "source_url": "https://data.sec.gov/submissions/CIK0000883241.json",
-        "updated_at": "2026-06-22T04:31:05+08:00",
-        "confidence": "high",
-        "fallback_used": true,
-        "data_gap": null
-      },
-      {
-        "field": "US.SNPS.sec.companyfacts",
-        "value": {
-          "latest_annual_revenue": {
-            "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
-            "val": 7054178000,
-            "fy": 2025,
-            "fp": "FY",
-            "form": "10-K",
-            "filed": "2025-12-22",
-            "end": "2025-10-31"
-          },
-          "latest_annual_net_income": {
-            "tag": "NetIncomeLoss",
-            "val": 1332220000,
-            "fy": 2025,
-            "fp": "FY",
-            "form": "10-K",
-            "filed": "2025-12-22",
-            "end": "2025-10-31"
-          },
-          "latest_assets": {
-            "tag": "Assets",
-            "val": 46889027000,
+            "val": 3495455000,
             "fy": 2026,
             "fp": "Q2",
             "form": "10-Q",
-            "filed": "2026-05-27",
-            "end": "2026-04-30"
+            "filed": "2026-05-06",
+            "end": "2026-03-28"
           },
           "latest_liabilities": {
             "tag": "Liabilities",
-            "val": 16411962000,
+            "val": 2467790000,
             "fy": 2026,
             "fp": "Q2",
             "form": "10-Q",
-            "filed": "2026-05-27",
-            "end": "2026-04-30"
+            "filed": "2026-05-06",
+            "end": "2026-03-28"
           },
-          "net_margin": 0.1889,
-          "liabilities_to_assets": 0.35
+          "net_margin": -0.0075,
+          "liabilities_to_assets": 0.706
         },
         "source": "SEC",
         "source_type": "official",
-        "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000883241.json",
-        "updated_at": "2026-06-22T04:31:05+08:00",
+        "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001837240.json",
+        "updated_at": "2026-06-22T12:30:35+08:00",
         "confidence": "high",
         "fallback_used": true,
         "data_gap": null
@@ -2458,49 +2456,49 @@
       "status": "normal",
       "message": "SEC ticker mapping available.",
       "impact": "Impacts US official filing/companyfacts fallback.",
-      "updated_at": "2026-06-22T04:30:04+08:00"
+      "updated_at": "2026-06-22T12:30:33+08:00"
     },
     {
       "source": "SEC EDGAR company data",
       "status": "normal",
       "message": "SEC fallback returned data for 8/8 checked US symbols.",
       "impact": "Impacts official US filing and financial statement evidence.",
-      "updated_at": "2026-06-22T04:31:05+08:00"
+      "updated_at": "2026-06-22T12:30:36+08:00"
     },
     {
       "source": "FRED",
       "status": "normal",
       "message": "FRED returned 8/8 configured macro/liquidity series.",
       "impact": "Impacts macro regime, rates, inflation, labor and credit spread evidence.",
-      "updated_at": "2026-06-22T04:31:05+08:00"
+      "updated_at": "2026-06-22T12:30:36+08:00"
     },
     {
       "source": "Alpha Vantage",
       "status": "unknown",
       "message": "ALPHA_VANTAGE_API_KEY is not configured.",
       "impact": "Earnings estimates, surprise, calendar and transcript fallback disabled.",
-      "updated_at": "2026-06-22T04:31:12+08:00"
+      "updated_at": "2026-06-22T12:30:39+08:00"
     },
     {
       "source": "OpenFIGI",
       "status": "unknown",
       "message": "OPENFIGI_API_KEY is not configured.",
       "impact": "Security identifier mapping fallback is limited to SEC ticker files.",
-      "updated_at": "2026-06-22T04:31:12+08:00"
+      "updated_at": "2026-06-22T12:30:39+08:00"
     },
     {
       "source": "CNINFO",
       "status": "unknown",
       "message": "CNINFO connector is not configured; no official A-share announcement pull was attempted.",
       "impact": "Impacts A-share announcement/financial statement confidence.",
-      "updated_at": "2026-06-22T04:31:12+08:00"
+      "updated_at": "2026-06-22T12:30:39+08:00"
     },
     {
       "source": "HKEXnews",
       "status": "unknown",
       "message": "HKEXnews connector is not configured; no official HK announcement pull was attempted.",
       "impact": "Impacts HK announcement/financial statement confidence.",
-      "updated_at": "2026-06-22T04:31:12+08:00"
+      "updated_at": "2026-06-22T12:30:39+08:00"
     }
   ],
   "data_gaps": [
@@ -2523,7 +2521,7 @@
       "data_gap": "CNINFO official disclosure connector is not configured"
     },
     {
-      "symbol": "SZ.300394",
+      "symbol": "SH.600183",
       "source": "CNINFO",
       "data_gap": "CNINFO official disclosure connector is not configured"
     },
@@ -2538,17 +2536,22 @@
       "data_gap": "CNINFO official disclosure connector is not configured"
     },
     {
-      "symbol": "SH.600183",
-      "source": "CNINFO",
-      "data_gap": "CNINFO official disclosure connector is not configured"
-    },
-    {
-      "symbol": "SH.603256",
+      "symbol": "SZ.300394",
       "source": "CNINFO",
       "data_gap": "CNINFO official disclosure connector is not configured"
     },
     {
       "symbol": "SH.688183",
+      "source": "CNINFO",
+      "data_gap": "CNINFO official disclosure connector is not configured"
+    },
+    {
+      "symbol": "SZ.300476",
+      "source": "CNINFO",
+      "data_gap": "CNINFO official disclosure connector is not configured"
+    },
+    {
+      "symbol": "SH.603256",
       "source": "CNINFO",
       "data_gap": "CNINFO official disclosure connector is not configured"
     },
@@ -2563,9 +2566,9 @@
       "data_gap": "CNINFO official disclosure connector is not configured"
     },
     {
-      "symbol": "SZ.300476",
-      "source": "CNINFO",
-      "data_gap": "CNINFO official disclosure connector is not configured"
+      "symbol": "HK.01347",
+      "source": "HKEXnews",
+      "data_gap": "HKEXnews official disclosure connector is not configured"
     },
     {
       "symbol": "HK.01888",
@@ -2573,17 +2576,12 @@
       "data_gap": "HKEXnews official disclosure connector is not configured"
     },
     {
-      "symbol": "HK.00148",
-      "source": "HKEXnews",
-      "data_gap": "HKEXnews official disclosure connector is not configured"
-    },
-    {
-      "symbol": "HK.01347",
-      "source": "HKEXnews",
-      "data_gap": "HKEXnews official disclosure connector is not configured"
-    },
-    {
       "symbol": "HK.00981",
+      "source": "HKEXnews",
+      "data_gap": "HKEXnews official disclosure connector is not configured"
+    },
+    {
+      "symbol": "HK.00148",
       "source": "HKEXnews",
       "data_gap": "HKEXnews official disclosure connector is not configured"
     }
