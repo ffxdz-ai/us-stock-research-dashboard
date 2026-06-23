@@ -578,6 +578,28 @@ def derive_opportunity_conditions(item: dict[str, Any]) -> tuple[list[str], list
     if target is not None:
         item["target_price"] = target
 
+    if price is not None and stop_loss is not None and price <= stop_loss:
+        item["status"] = "invalidated"
+        item["status_label"] = status_label("invalidated")
+        item["rr_ratio"] = None
+        buy = [
+            f"暂不买：现价 {fmt_price(price, currency)} 已低于或等于原止损位 {fmt_price(stop_loss, currency)}，原入场路径失效",
+            f"不要套用“现价 ≤ {fmt_price(entry, currency)}”触发条件；价格跌破止损后不是更便宜，而是需要重算风控",
+            "重新观察条件：重新站回原止损/关键支撑上方并收盘确认，或生成新的 Buy-Side 三路径",
+            f"重新计算前必须同时补齐：新入场价 / 新止损价 / 新目标价 / 新 R/R ≥ {rr_required:.0f}:1",
+        ]
+        avoid = [
+            "跌破原止损后不抄底，不把失效路径降格成便宜买点",
+            "未重新计算新止损和新目标前，不升级为买入",
+            "如果反弹只是回抽原止损位且无法站稳，仍按失效处理",
+        ]
+        invalid = [
+            f"现价低于或等于原止损位 {fmt_price(stop_loss, currency)}",
+            "原目标价和原入场价已经不能直接用于当前交易计划",
+            "需要等待新的 Buy-Side 复核重新定义失效位",
+        ]
+        return buy, avoid, invalid
+
     if price is None or stop_loss is None or target is None or entry is None:
         buy = [
             "暂不买：缺少完整的入场价、止损价或目标价，等待系统补齐后再决策",
