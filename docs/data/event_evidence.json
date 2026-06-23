@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-06-23T13:45:41+08:00",
-  "generated_label": "2026-06-23 13:45",
+  "generated_at": "2026-06-23T15:57:07+08:00",
+  "generated_label": "2026-06-23 15:57",
   "data_boundary": {
     "role": "event, filing, earnings and evidence extraction; not trading instruction",
     "private_portfolio": "disabled",
@@ -59,7 +59,7 @@
         "expectation_score": 84.0,
         "price_target_upside_pct": 51.83,
         "eps_revision_pct": 0.0,
-        "revenue_revision_pct": 0.7017,
+        "revenue_revision_pct": 0.0,
         "eps_surprise_pct": 6.25,
         "rating": "A-",
         "annual_eps_estimate": 14.69466,
@@ -1365,6 +1365,73 @@
       "action": "证据只支持观察/二次研究；R/R 未达标，不允许普通买入。"
     },
     {
+      "code": "HK.01347",
+      "symbol": null,
+      "name": "华虹半导体",
+      "themes": [
+        "GPU / ASIC / HBM / 先进封装"
+      ],
+      "evidence_status": "证据不足",
+      "evidence_score": 32.4,
+      "filing": {
+        "available": false,
+        "form": null,
+        "filed": null,
+        "age_days": null,
+        "accession": null,
+        "recent_forms": [],
+        "score": 0
+      },
+      "financials": {
+        "available": false,
+        "revenue_growth_yoy": null,
+        "net_margin": null,
+        "liabilities_to_assets": null,
+        "latest_annual_revenue": null,
+        "latest_annual_revenue_filed": null,
+        "latest_annual_fcf": null,
+        "score": 0
+      },
+      "fmp": {
+        "available": true,
+        "coverage_status": "official_disclosure_fallback",
+        "expectation_score": null,
+        "price_target_upside_pct": null,
+        "eps_revision_pct": null,
+        "revenue_revision_pct": null,
+        "eps_surprise_pct": null,
+        "rating": null,
+        "annual_eps_estimate": null,
+        "annual_revenue_estimate": null,
+        "score": 35,
+        "gaps": [],
+        "fallback_used": "CNINFO/HKEXnews official disclosure"
+      },
+      "price": {
+        "available": true,
+        "price": 166.7,
+        "quote_time": "2026-06-23T09:30:00+08:00",
+        "currency": "HKD",
+        "reward_risk": 0.08,
+        "entry_path_complete": true,
+        "entry_path_fallback": null,
+        "trend_score": 88.0,
+        "source": "cross_market_intelligence",
+        "strict_entry": null,
+        "invalidation": 32.8,
+        "mechanical_target": 177.7,
+        "ma50": 128.395,
+        "ma200": 93.0479,
+        "high252": 177.7,
+        "score": 77.0
+      },
+      "sec_fallback_used": false,
+      "gaps": [
+        "R/R 未达 2:1，不能进入普通买入"
+      ],
+      "action": "证据只支持观察/二次研究；R/R 未达标，不允许普通买入。"
+    },
+    {
       "code": "SZ.300308",
       "symbol": null,
       "name": "中际旭创",
@@ -1409,7 +1476,7 @@
       },
       "price": {
         "available": true,
-        "price": 1312.27,
+        "price": 1310.01,
         "quote_time": "2026-06-23T09:30:00+08:00",
         "currency": "CNY",
         "reward_risk": 0.09,
@@ -1420,8 +1487,8 @@
         "strict_entry": null,
         "invalidation": 122.68,
         "mechanical_target": 1416.88,
-        "ma50": 1027.125,
-        "ma200": 643.3909,
+        "ma50": 1027.1194,
+        "ma200": 643.3895,
         "high252": 1416.88,
         "score": 77.0
       },
@@ -1476,7 +1543,7 @@
       },
       "price": {
         "available": true,
-        "price": 553.52,
+        "price": 552.0,
         "quote_time": "2026-06-23T09:30:00+08:00",
         "currency": "CNY",
         "reward_risk": 0.08,
@@ -1487,8 +1554,8 @@
         "strict_entry": null,
         "invalidation": 74.8,
         "mechanical_target": 591.0,
-        "ma50": 456.665,
-        "ma200": 318.2996,
+        "ma50": 456.633,
+        "ma200": 318.2916,
         "high252": 591.0,
         "score": 77.0
       },
@@ -1543,7 +1610,7 @@
       },
       "price": {
         "available": true,
-        "price": 38.28,
+        "price": 38.25,
         "quote_time": "2026-06-23T09:30:00+08:00",
         "currency": "CNY",
         "reward_risk": 0.08,
@@ -1554,77 +1621,10 @@
         "strict_entry": null,
         "invalidation": 18.35,
         "mechanical_target": 39.9,
-        "ma50": 26.7084,
-        "ma200": 24.1304,
+        "ma50": 26.7078,
+        "ma200": 24.1303,
         "high252": 39.9,
         "score": 67.0
-      },
-      "sec_fallback_used": false,
-      "gaps": [
-        "R/R 未达 2:1，不能进入普通买入"
-      ],
-      "action": "证据只支持观察/二次研究；R/R 未达标，不允许普通买入。"
-    },
-    {
-      "code": "HK.01347",
-      "symbol": null,
-      "name": "华虹半导体",
-      "themes": [
-        "GPU / ASIC / HBM / 先进封装"
-      ],
-      "evidence_status": "证据不足",
-      "evidence_score": 30.0,
-      "filing": {
-        "available": false,
-        "form": null,
-        "filed": null,
-        "age_days": null,
-        "accession": null,
-        "recent_forms": [],
-        "score": 0
-      },
-      "financials": {
-        "available": false,
-        "revenue_growth_yoy": null,
-        "net_margin": null,
-        "liabilities_to_assets": null,
-        "latest_annual_revenue": null,
-        "latest_annual_revenue_filed": null,
-        "latest_annual_fcf": null,
-        "score": 0
-      },
-      "fmp": {
-        "available": true,
-        "coverage_status": "official_disclosure_fallback",
-        "expectation_score": null,
-        "price_target_upside_pct": null,
-        "eps_revision_pct": null,
-        "revenue_revision_pct": null,
-        "eps_surprise_pct": null,
-        "rating": null,
-        "annual_eps_estimate": null,
-        "annual_revenue_estimate": null,
-        "score": 35,
-        "gaps": [],
-        "fallback_used": "CNINFO/HKEXnews official disclosure"
-      },
-      "price": {
-        "available": true,
-        "price": 163.3,
-        "quote_time": "2026-06-23T09:30:00+08:00",
-        "currency": "HKD",
-        "reward_risk": 0.11,
-        "entry_path_complete": true,
-        "entry_path_fallback": null,
-        "trend_score": 76.0,
-        "source": "cross_market_intelligence",
-        "strict_entry": null,
-        "invalidation": 32.8,
-        "mechanical_target": 177.7,
-        "ma50": 128.321,
-        "ma200": 93.0294,
-        "high252": 177.7,
-        "score": 65.0
       },
       "sec_fallback_used": false,
       "gaps": [
@@ -1677,10 +1677,10 @@
       },
       "price": {
         "available": true,
-        "price": 79.35,
+        "price": 77.5,
         "quote_time": "2026-06-23T09:30:00+08:00",
         "currency": "HKD",
-        "reward_risk": 0.36,
+        "reward_risk": 0.42,
         "entry_path_complete": true,
         "entry_path_fallback": null,
         "trend_score": 76.0,
@@ -1688,8 +1688,8 @@
         "strict_entry": null,
         "invalidation": 39.35,
         "mechanical_target": 93.5,
-        "ma50": 71.92,
-        "ma200": 70.0227,
+        "ma50": 71.886,
+        "ma200": 70.0142,
         "high252": 93.5,
         "score": 65.0
       },
@@ -1744,7 +1744,7 @@
       },
       "price": {
         "available": true,
-        "price": 313.06,
+        "price": 311.06,
         "quote_time": "2026-06-23T09:30:00+08:00",
         "currency": "CNY",
         "reward_risk": 0.24,
@@ -1755,8 +1755,8 @@
         "strict_entry": null,
         "invalidation": 49.8571,
         "mechanical_target": 375.0,
-        "ma50": 276.8224,
-        "ma200": 186.2952,
+        "ma50": 276.7828,
+        "ma200": 186.2853,
         "high252": 375.0,
         "score": 65.0
       },
@@ -1811,7 +1811,7 @@
       },
       "price": {
         "available": true,
-        "price": 89.1,
+        "price": 87.25,
         "quote_time": "2026-06-23T09:30:00+08:00",
         "currency": "HKD",
         "reward_risk": 0.15,
@@ -1822,8 +1822,8 @@
         "strict_entry": null,
         "invalidation": 8.8,
         "mechanical_target": 99.65,
-        "ma50": 48.239,
-        "ma200": 23.1094,
+        "ma50": 48.238,
+        "ma200": 23.1092,
         "high252": 99.65,
         "score": 65.0
       },
@@ -1878,10 +1878,10 @@
       },
       "price": {
         "available": true,
-        "price": 132.0,
+        "price": 129.3,
         "quote_time": "2026-06-23T09:30:00+08:00",
         "currency": "HKD",
-        "reward_risk": 0.2,
+        "reward_risk": 0.21,
         "entry_path_complete": true,
         "entry_path_fallback": null,
         "trend_score": 76.0,
@@ -1889,8 +1889,8 @@
         "strict_entry": null,
         "invalidation": 23.1,
         "mechanical_target": 151.8,
-        "ma50": 63.0774,
-        "ma200": 38.3166,
+        "ma50": 63.0534,
+        "ma200": 38.3106,
         "high252": 151.8,
         "score": 65.0
       },
@@ -1945,10 +1945,10 @@
       },
       "price": {
         "available": true,
-        "price": 41.67,
+        "price": 40.94,
         "quote_time": "2026-06-23T09:30:00+08:00",
         "currency": "CNY",
-        "reward_risk": 0.25,
+        "reward_risk": 0.29,
         "entry_path_complete": true,
         "entry_path_fallback": null,
         "trend_score": 76.0,
@@ -1956,8 +1956,8 @@
         "strict_entry": null,
         "invalidation": 16.19,
         "mechanical_target": 48.04,
-        "ma50": 40.728,
-        "ma200": 33.5428,
+        "ma50": 40.7134,
+        "ma200": 33.5392,
         "high252": 48.04,
         "score": 65.0
       },
@@ -1972,7 +1972,7 @@
     {
       "theme": "GPU / ASIC / HBM / 先进封装",
       "symbol_count": 8,
-      "avg_evidence_score": 54.5,
+      "avg_evidence_score": 54.8,
       "median_evidence_score": 61.1,
       "gap_count": 11,
       "top_symbols": [
@@ -2126,10 +2126,10 @@
           "US.ROK",
           "US.EMR",
           "US.TSM",
+          "HK.01347",
           "SZ.300308",
           "SZ.300502",
           "SZ.002747",
-          "HK.01347",
           "HK.00981",
           "SZ.300394",
           "HK.01888",
