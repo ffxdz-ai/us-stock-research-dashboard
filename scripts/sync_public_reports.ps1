@@ -30,11 +30,18 @@ $Forbidden = @(
     'estimated_total_assets',
     '\|\s*Ticker\s*\|\s*shares\s*\|'
 )
-$PayloadPath = Join-Path $Root "docs\data\reports.json"
-$Payload = Get-Content -Raw -Encoding UTF8 $PayloadPath
-foreach ($Pattern in $Forbidden) {
-    if ($Payload -match $Pattern) {
-        throw "Privacy check failed for pattern: $Pattern"
+$PublicDataRoot = Join-Path $Root "docs\data"
+$PublicDataFiles = @(Get-ChildItem -Path $PublicDataRoot -Recurse -File -Filter "*.json")
+if ($PublicDataFiles.Count -eq 0) {
+    throw "No public data JSON files were generated."
+}
+
+foreach ($File in $PublicDataFiles) {
+    $Payload = Get-Content -Raw -Encoding UTF8 $File.FullName
+    foreach ($Pattern in $Forbidden) {
+        if ($Payload -match $Pattern) {
+            throw "Privacy check failed for $($File.FullName) pattern: $Pattern"
+        }
     }
 }
 
@@ -48,41 +55,54 @@ if ($LASTEXITCODE -ne 0) {
     throw "GitHub CLI is not authenticated."
 }
 
-$ApiPath = "repos/$Repository/contents/docs/data/reports.json"
-$Remote = $null
-try {
-    $RemoteJson = & $GitHubCli api "$ApiPath`?ref=$Branch" 2>$null
-    if ($LASTEXITCODE -eq 0 -and $RemoteJson) {
-        $Remote = $RemoteJson | ConvertFrom-Json
-    }
-} catch {
-    $Remote = $null
+& $GitHubCli auth setup-git | Out-Null
+if ($LASTEXITCODE -ne 0) {
+    throw "Unable to configure git authentication through GitHub CLI."
 }
 
-$LocalBytes = [System.IO.File]::ReadAllBytes($PayloadPath)
-$LocalBase64 = [Convert]::ToBase64String($LocalBytes)
-if ($Remote -and $Remote.content) {
-    $RemoteBase64 = [string]$Remote.content -replace '\s', ''
-    if ($RemoteBase64 -eq $LocalBase64) {
-        Write-Output "Public report archive is already up to date."
-        exit 0
-    }
+$Git = "git"
+& $Git rev-parse --is-inside-work-tree | Out-Null
+if ($LASTEXITCODE -ne 0) {
+    throw "This script must be run inside the git repository."
+}
+
+& $Git add -- "docs/data/reports.json" "docs/data/index.json" "docs/data/reports"
+if ($LASTEXITCODE -ne 0) {
+    throw "Unable to stage the public report archive."
+}
+
+& $Git diff --cached --quiet --exit-code
+if ($LASTEXITCODE -eq 0) {
+    Write-Output "Public report archive is already up to date."
+    exit 0
+}
+if ($LASTEXITCODE -ne 1) {
+    throw "Unable to inspect staged public archive changes."
 }
 
 $Stamp = Get-Date -Format "yyyy-MM-dd HH:mm"
-$Request = @{
-    message = "Update public reports $Stamp"
-    content = $LocalBase64
-    branch = $Branch
-}
-if ($Remote -and $Remote.sha) {
-    $Request.sha = [string]$Remote.sha
+& $Git commit -m "Update public reports $Stamp"
+if ($LASTEXITCODE -ne 0) {
+    throw "Unable to commit the public report archive."
 }
 
-$RequestJson = $Request | ConvertTo-Json -Compress
-$RequestJson | & $GitHubCli api --method PUT $ApiPath --input - | Out-Null
+& $Git push origin "HEAD:$Branch"
 if ($LASTEXITCODE -ne 0) {
-    throw "Unable to publish the public report archive through GitHub API."
+    Write-Output "Initial push was rejected; rebasing onto origin/$Branch and retrying."
+    & $Git fetch origin $Branch
+    if ($LASTEXITCODE -ne 0) {
+        throw "Unable to fetch origin/$Branch."
+    }
+
+    & $Git rebase --autostash "origin/$Branch"
+    if ($LASTEXITCODE -ne 0) {
+        throw "Unable to rebase public report archive onto origin/$Branch."
+    }
+
+    & $Git push origin "HEAD:$Branch"
+    if ($LASTEXITCODE -ne 0) {
+        throw "Unable to publish the public report archive through git push."
+    }
 }
 
 Write-Output "Public report archive synchronized to $Repository ($Branch)."
