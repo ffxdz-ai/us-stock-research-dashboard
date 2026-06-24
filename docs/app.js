@@ -256,6 +256,22 @@ function dashboardCount(keys, reports, patterns, keywordFallback) {
   return keywordFallback || null;
 }
 
+function structuredOpportunityCount(status) {
+  const archive = archiveObject();
+  if (!Array.isArray(archive.opportunities) || !archive.opportunities.length) return null;
+  return state.opportunities.filter((item) => item.status === status).length;
+}
+
+function dashboardOpportunityCount(keys, reports, patterns, status, keywordFallback) {
+  const direct = directNumber(keys);
+  if (direct !== null) return direct;
+  const structured = structuredOpportunityCount(status);
+  if (structured !== null) return structured;
+  const parsed = numberFromReports(reports, patterns);
+  if (parsed !== null) return parsed;
+  return keywordFallback || null;
+}
+
 function countLabel(value) {
   return value === null || value === undefined ? "待确认" : String(value);
 }
@@ -527,22 +543,25 @@ function buildDashboardMetrics() {
   }, {});
 
   const executableZero = [deepseek, latest].filter(Boolean).some((report) => /今日没有普通买入标的|没有普通买入优先级|没有.*可执行/.test(reportText(report)));
-  const executable = executableZero ? 0 : dashboardCount(
+  const executable = executableZero ? 0 : dashboardOpportunityCount(
     ["executable_opportunity_count", "executable_count", "buyable_count", "actionable_count"],
     [deepseek, secondary, opportunity, latest],
     [/今日可执行机会(?:数量)?[：:]\s*(\d+)/, /可执行机会[：:]\s*(\d+)/, /普通买入标的[：:]\s*(\d+)/, /机械可买候选[：:]\s*(\d+)/],
+    "executable",
     opportunityStatusCounts.executable || null
   );
-  const waiting = dashboardCount(
+  const waiting = dashboardOpportunityCount(
     ["waiting_entry_count", "wait_entry_count", "waiting_buy_point_count", "pullback_wait_count"],
     [deepseek, secondary, opportunity, latest],
     [/等待买点(?:数量)?[：:]\s*(\d+)/, /等待回调[：:]\s*(\d+)/, /等回调[：:]\s*(\d+)/, /理想回调[：:]\s*(\d+)/],
+    "waiting_entry",
     opportunityStatusCounts.waiting_entry || countKeywordLines([deepseek, secondary, opportunity], ["等待买点", "等待回调", "等回调", "理想回调"])
   );
-  const noChase = dashboardCount(
+  const noChase = dashboardOpportunityCount(
     ["no_chase_count", "chase_ban_count", "forbid_chase_count", "overheat_count"],
     [deepseek, secondary, opportunity, latest],
     [/禁止追高(?:数量)?[：:]\s*(\d+)/, /严禁追高[：:]\s*(\d+)/, /不追高[：:]\s*(\d+)/],
+    "avoid_chasing",
     opportunityStatusCounts.avoid_chasing || countKeywordLines([deepseek, secondary, opportunity], ["禁止追高", "严禁追高", "不追高", "不能普通买入", "不允许普通买入", "R/R 未达标"])
   );
   const dataGap = directNumber(["true_data_gap_count", "data_source_gap_count"]) ?? gapBreakdown.dataGap ?? dashboardCount(
