@@ -2,8 +2,10 @@ name: DeepSeek cloud daily report
 
 on:
   schedule:
-    # 12:00 Asia/Shanghai every day.
-    - cron: "0 4 * * *"
+    # 12:17 Asia/Shanghai every day. Avoid top-of-hour schedule drops.
+    - cron: "17 4 * * *"
+    # 15:17 Asia/Shanghai watchdog. It skips if today's report already exists.
+    - cron: "17 7 * * *"
   workflow_dispatch:
     inputs:
       mode:
@@ -25,7 +27,68 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  freshness-check:
+    runs-on: ubuntu-latest
+    outputs:
+      should_run: ${{ steps.check.outputs.should_run }}
+      reason: ${{ steps.check.outputs.reason }}
+    steps:
+      - name: Checkout archive metadata
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 1
+
+      - name: Check whether today's report already exists
+        id: check
+        shell: bash
+        run: |
+          python - <<'PY' >> "$GITHUB_OUTPUT"
+          import json
+          import os
+          from datetime import datetime
+          from pathlib import Path
+          from zoneinfo import ZoneInfo
+
+          event_name = os.environ.get("GITHUB_EVENT_NAME", "")
+          today = datetime.now(ZoneInfo("Asia/Shanghai")).strftime("%Y-%m-%d")
+          should_run = True
+          reason = "manual dispatch: force report generation"
+
+          if event_name == "schedule":
+              reason = f"scheduled run: no {today} report found"
+              index_path = Path("docs/data/index.json")
+              try:
+                  data = json.loads(index_path.read_text(encoding="utf-8"))
+                  reports = data.get("reports") or []
+                  latest = reports[0] if reports else {}
+                  searchable = " ".join(
+                      str(value)
+                      for value in [
+                          latest.get("id", ""),
+                          latest.get("title", ""),
+                          latest.get("published_at", ""),
+                          latest.get("published_label", ""),
+                          data.get("generated_at", ""),
+                          data.get("generated_label", ""),
+                      ]
+                  )
+                  if today in searchable:
+                      should_run = False
+                      reason = f"scheduled skip: {today} report already exists"
+              except Exception as exc:
+                  reason = f"scheduled run: freshness check unavailable: {exc}"
+
+          print(f"should_run={'true' if should_run else 'false'}")
+          print(f"reason={reason}")
+          PY
+
+      - name: Show freshness decision
+        run: echo "${{ steps.check.outputs.reason }}"
+
   generate-and-deploy:
+    needs: freshness-check
+    if: needs.freshness-check.outputs.should_run == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 25
     environment:
