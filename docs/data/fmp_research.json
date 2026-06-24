@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-06-23T22:57:04+08:00",
-  "generated_label": "2026-06-23 22:57",
+  "generated_at": "2026-06-24T14:56:40+08:00",
+  "generated_label": "2026-06-24 14:56",
   "fmp_enabled": true,
   "data_boundary": {
     "role": "FMP analyst expectations and earnings layer; not a trading instruction",
@@ -17,20 +17,20 @@
   ],
   "summary": {
     "symbol_count": 12,
-    "actionable_count": 0,
+    "actionable_count": 1,
     "restricted_endpoint_count": 3,
-    "restricted_result_count": 0,
-    "rate_limited_result_count": 60,
+    "restricted_result_count": 55,
+    "rate_limited_result_count": 0,
     "error_count": 0
   },
   "symbols": [
     {
       "symbol": "NVDA",
       "name": "NVIDIA Corporation Common Stock",
-      "coverage_status": "stale",
+      "coverage_status": "ok",
       "restricted_endpoints": [],
-      "price": 202.275,
-      "quote_time": "Jun 23, 2026 10:56 AM ET",
+      "price": 200.04,
+      "quote_time": "Jun 23, 2026",
       "annual_estimate": {
         "date": "2029-01-25",
         "revenueAvg": 677616516306,
@@ -45,10 +45,27 @@
       },
       "quarterly_estimate": null,
       "estimate_revision": {
-        "status": "stale_fallback",
-        "status_label": "沿用上次快照"
+        "status": "compared",
+        "epsAvg_change": 0.0,
+        "epsAvg_change_pct": 0.0,
+        "revenueAvg_change": 0.0,
+        "revenueAvg_change_pct": 0.0,
+        "ebitdaAvg_change": 0.0,
+        "ebitdaAvg_change_pct": 0.0,
+        "status_label": "无明显修正"
       },
-      "price_target_summary": {},
+      "price_target_summary": {
+        "symbol": "NVDA",
+        "lastMonthCount": 1,
+        "lastMonthAvgPriceTarget": 425,
+        "lastQuarterCount": 26,
+        "lastQuarterAvgPriceTarget": 317.5,
+        "lastYearCount": 86,
+        "lastYearAvgPriceTarget": 276.29,
+        "allTimeCount": 317,
+        "allTimeAvgPriceTarget": 138.19,
+        "publishers": "[\"TheFly\",\"StreetInsider\",\"Benzinga\",\"Pulse 2.0\",\"TipRanks Contributor\",\"MarketWatch\",\"Barrons\"]"
+      },
       "price_target_consensus": {
         "symbol": "NVDA",
         "targetHigh": 500,
@@ -56,24 +73,89 @@
         "targetConsensus": 316.79,
         "targetMedian": 300
       },
-      "price_target_upside_pct": 56.61,
-      "latest_earnings_surprise": null,
-      "earnings_history": [],
-      "rating_snapshot": {},
-      "expectation_score": 57.0,
-      "score_notes": [
-        "沿用上次 FMP 快照，需下次刷新确认",
-        "一致目标价上行空间 56.6%"
+      "price_target_upside_pct": 58.36,
+      "latest_earnings_surprise": {
+        "date": "2026-05-20",
+        "eps_actual": 1.87,
+        "eps_estimated": 1.76,
+        "eps_surprise": 0.11,
+        "eps_surprise_pct": 6.25,
+        "revenue_actual": 81615000000.0,
+        "revenue_estimated": 78423370000.0,
+        "revenue_surprise_pct": 4.07,
+        "last_updated": "2026-06-24"
+      },
+      "earnings_history": [
+        {
+          "symbol": "NVDA",
+          "date": "2026-08-26",
+          "epsActual": null,
+          "epsEstimated": 2.08,
+          "revenueActual": null,
+          "revenueEstimated": 91710240000,
+          "lastUpdated": "2026-06-24"
+        },
+        {
+          "symbol": "NVDA",
+          "date": "2026-05-20",
+          "epsActual": 1.87,
+          "epsEstimated": 1.76,
+          "revenueActual": 81615000000,
+          "revenueEstimated": 78423370000,
+          "lastUpdated": "2026-06-24"
+        },
+        {
+          "symbol": "NVDA",
+          "date": "2026-02-25",
+          "epsActual": 1.62,
+          "epsEstimated": 1.54,
+          "revenueActual": 68127000000,
+          "revenueEstimated": 66126470000,
+          "lastUpdated": "2026-05-25"
+        },
+        {
+          "symbol": "NVDA",
+          "date": "2025-11-19",
+          "epsActual": 1.3,
+          "epsEstimated": 1.26,
+          "revenueActual": 57006000000,
+          "revenueEstimated": 54961119678,
+          "lastUpdated": "2026-03-25"
+        }
       ],
-      "action": "普通观察"
+      "rating_snapshot": {
+        "symbol": "NVDA",
+        "rating": "A-",
+        "overallScore": 4,
+        "discountedCashFlowScore": 4,
+        "returnOnEquityScore": 5,
+        "returnOnAssetsScore": 5,
+        "debtToEquityScore": 3,
+        "priceToEarningsScore": 2,
+        "priceToBookScore": 1
+      },
+      "expectation_score": 84.0,
+      "score_notes": [
+        "一致目标价上行空间 58.4%",
+        "最近 EPS 超预期 6.2%",
+        "收入超预期 4.1%",
+        "FMP rating score 4.0"
+      ],
+      "action": "预期差增强，进入 Buy-Side 复核"
     },
     {
       "symbol": "ANET",
       "name": "Arista Networks, Inc. Common Stock",
-      "coverage_status": "rate_limited",
-      "restricted_endpoints": [],
-      "price": 161.405,
-      "quote_time": "Jun 23, 2026 10:56 AM ET",
+      "coverage_status": "restricted",
+      "restricted_endpoints": [
+        "/analyst-estimates",
+        "/earnings",
+        "/price-target-consensus",
+        "/price-target-summary",
+        "/ratings-snapshot"
+      ],
+      "price": 162.2,
+      "quote_time": "Jun 23, 2026",
       "annual_estimate": null,
       "quarterly_estimate": null,
       "estimate_revision": {
@@ -88,17 +170,23 @@
       "rating_snapshot": {},
       "expectation_score": null,
       "score_notes": [
-        "FMP 今日额度/频率限制，等待下次刷新"
+        "FMP 套餐或 symbol 权限受限，不能评价预期差"
       ],
-      "action": "FMP 限流，等待下次刷新"
+      "action": "FMP 权限受限，暂不评价"
     },
     {
       "symbol": "AVGO",
       "name": "Broadcom Inc. Common Stock",
-      "coverage_status": "rate_limited",
-      "restricted_endpoints": [],
-      "price": 382.87,
-      "quote_time": "Jun 23, 2026 10:56 AM ET",
+      "coverage_status": "restricted",
+      "restricted_endpoints": [
+        "/analyst-estimates",
+        "/earnings",
+        "/price-target-consensus",
+        "/price-target-summary",
+        "/ratings-snapshot"
+      ],
+      "price": 380.15,
+      "quote_time": "Jun 23, 2026",
       "annual_estimate": null,
       "quarterly_estimate": null,
       "estimate_revision": {
@@ -113,17 +201,23 @@
       "rating_snapshot": {},
       "expectation_score": null,
       "score_notes": [
-        "FMP 今日额度/频率限制，等待下次刷新"
+        "FMP 套餐或 symbol 权限受限，不能评价预期差"
       ],
-      "action": "FMP 限流，等待下次刷新"
+      "action": "FMP 权限受限，暂不评价"
     },
     {
       "symbol": "ISRG",
       "name": "Intuitive Surgical, Inc. Common Stock",
-      "coverage_status": "rate_limited",
-      "restricted_endpoints": [],
-      "price": 402.76,
-      "quote_time": "Jun 23, 2026 10:56 AM ET",
+      "coverage_status": "restricted",
+      "restricted_endpoints": [
+        "/analyst-estimates",
+        "/earnings",
+        "/price-target-consensus",
+        "/price-target-summary",
+        "/ratings-snapshot"
+      ],
+      "price": 403.18,
+      "quote_time": "Jun 23, 2026",
       "annual_estimate": null,
       "quarterly_estimate": null,
       "estimate_revision": {
@@ -138,17 +232,23 @@
       "rating_snapshot": {},
       "expectation_score": null,
       "score_notes": [
-        "FMP 今日额度/频率限制，等待下次刷新"
+        "FMP 套餐或 symbol 权限受限，不能评价预期差"
       ],
-      "action": "FMP 限流，等待下次刷新"
+      "action": "FMP 权限受限，暂不评价"
     },
     {
       "symbol": "SYM",
       "name": "Symbotic Inc. Class A Common Stock",
-      "coverage_status": "rate_limited",
-      "restricted_endpoints": [],
-      "price": 38.56,
-      "quote_time": "Jun 23, 2026 10:56 AM ET",
+      "coverage_status": "restricted",
+      "restricted_endpoints": [
+        "/analyst-estimates",
+        "/earnings",
+        "/price-target-consensus",
+        "/price-target-summary",
+        "/ratings-snapshot"
+      ],
+      "price": 38.57,
+      "quote_time": "Jun 23, 2026",
       "annual_estimate": null,
       "quarterly_estimate": null,
       "estimate_revision": {
@@ -163,17 +263,23 @@
       "rating_snapshot": {},
       "expectation_score": null,
       "score_notes": [
-        "FMP 今日额度/频率限制，等待下次刷新"
+        "FMP 套餐或 symbol 权限受限，不能评价预期差"
       ],
-      "action": "FMP 限流，等待下次刷新"
+      "action": "FMP 权限受限，暂不评价"
     },
     {
       "symbol": "KLAC",
       "name": "KLA Corporation Common Stock",
-      "coverage_status": "rate_limited",
-      "restricted_endpoints": [],
-      "price": 243.3,
-      "quote_time": "Jun 23, 2026 10:56 AM ET",
+      "coverage_status": "restricted",
+      "restricted_endpoints": [
+        "/analyst-estimates",
+        "/earnings",
+        "/price-target-consensus",
+        "/price-target-summary",
+        "/ratings-snapshot"
+      ],
+      "price": 244.49,
+      "quote_time": "Jun 23, 2026",
       "annual_estimate": null,
       "quarterly_estimate": null,
       "estimate_revision": {
@@ -188,17 +294,23 @@
       "rating_snapshot": {},
       "expectation_score": null,
       "score_notes": [
-        "FMP 今日额度/频率限制，等待下次刷新"
+        "FMP 套餐或 symbol 权限受限，不能评价预期差"
       ],
-      "action": "FMP 限流，等待下次刷新"
+      "action": "FMP 权限受限，暂不评价"
     },
     {
       "symbol": "MRVL",
       "name": "Marvell Technology, Inc. Common Stock",
-      "coverage_status": "rate_limited",
-      "restricted_endpoints": [],
-      "price": 282.535,
-      "quote_time": "Jun 23, 2026 10:56 AM ET",
+      "coverage_status": "restricted",
+      "restricted_endpoints": [
+        "/analyst-estimates",
+        "/earnings",
+        "/price-target-consensus",
+        "/price-target-summary",
+        "/ratings-snapshot"
+      ],
+      "price": 279.04,
+      "quote_time": "Jun 23, 2026",
       "annual_estimate": null,
       "quarterly_estimate": null,
       "estimate_revision": {
@@ -213,17 +325,23 @@
       "rating_snapshot": {},
       "expectation_score": null,
       "score_notes": [
-        "FMP 今日额度/频率限制，等待下次刷新"
+        "FMP 套餐或 symbol 权限受限，不能评价预期差"
       ],
-      "action": "FMP 限流，等待下次刷新"
+      "action": "FMP 权限受限，暂不评价"
     },
     {
       "symbol": "ASML",
       "name": "ASML Holding N.V. New York Registry Shares",
-      "coverage_status": "rate_limited",
-      "restricted_endpoints": [],
-      "price": 1786.325,
-      "quote_time": "Jun 23, 2026 10:56 AM ET",
+      "coverage_status": "restricted",
+      "restricted_endpoints": [
+        "/analyst-estimates",
+        "/earnings",
+        "/price-target-consensus",
+        "/price-target-summary",
+        "/ratings-snapshot"
+      ],
+      "price": 1778.46,
+      "quote_time": "Jun 23, 2026",
       "annual_estimate": null,
       "quarterly_estimate": null,
       "estimate_revision": {
@@ -238,17 +356,23 @@
       "rating_snapshot": {},
       "expectation_score": null,
       "score_notes": [
-        "FMP 今日额度/频率限制，等待下次刷新"
+        "FMP 套餐或 symbol 权限受限，不能评价预期差"
       ],
-      "action": "FMP 限流，等待下次刷新"
+      "action": "FMP 权限受限，暂不评价"
     },
     {
       "symbol": "LRCX",
       "name": "Lam Research Corporation Common Stock",
-      "coverage_status": "rate_limited",
-      "restricted_endpoints": [],
-      "price": 369.53,
-      "quote_time": "Jun 23, 2026 10:56 AM ET",
+      "coverage_status": "restricted",
+      "restricted_endpoints": [
+        "/analyst-estimates",
+        "/earnings",
+        "/price-target-consensus",
+        "/price-target-summary",
+        "/ratings-snapshot"
+      ],
+      "price": 371.33,
+      "quote_time": "Jun 23, 2026",
       "annual_estimate": null,
       "quarterly_estimate": null,
       "estimate_revision": {
@@ -263,17 +387,23 @@
       "rating_snapshot": {},
       "expectation_score": null,
       "score_notes": [
-        "FMP 今日额度/频率限制，等待下次刷新"
+        "FMP 套餐或 symbol 权限受限，不能评价预期差"
       ],
-      "action": "FMP 限流，等待下次刷新"
+      "action": "FMP 权限受限，暂不评价"
     },
     {
       "symbol": "TER",
       "name": "Teradyne, Inc. Common Stock",
-      "coverage_status": "rate_limited",
-      "restricted_endpoints": [],
-      "price": 415.005,
-      "quote_time": "Jun 23, 2026 10:56 AM ET",
+      "coverage_status": "restricted",
+      "restricted_endpoints": [
+        "/analyst-estimates",
+        "/earnings",
+        "/price-target-consensus",
+        "/price-target-summary",
+        "/ratings-snapshot"
+      ],
+      "price": 420.12,
+      "quote_time": "Jun 23, 2026",
       "annual_estimate": null,
       "quarterly_estimate": null,
       "estimate_revision": {
@@ -288,17 +418,23 @@
       "rating_snapshot": {},
       "expectation_score": null,
       "score_notes": [
-        "FMP 今日额度/频率限制，等待下次刷新"
+        "FMP 套餐或 symbol 权限受限，不能评价预期差"
       ],
-      "action": "FMP 限流，等待下次刷新"
+      "action": "FMP 权限受限，暂不评价"
     },
     {
       "symbol": "AMAT",
       "name": "Applied Materials, Inc. Common Stock",
-      "coverage_status": "rate_limited",
-      "restricted_endpoints": [],
-      "price": 583.44,
-      "quote_time": "Jun 23, 2026 10:56 AM ET",
+      "coverage_status": "restricted",
+      "restricted_endpoints": [
+        "/analyst-estimates",
+        "/earnings",
+        "/price-target-consensus",
+        "/price-target-summary",
+        "/ratings-snapshot"
+      ],
+      "price": 585.88,
+      "quote_time": "Jun 23, 2026",
       "annual_estimate": null,
       "quarterly_estimate": null,
       "estimate_revision": {
@@ -313,17 +449,23 @@
       "rating_snapshot": {},
       "expectation_score": null,
       "score_notes": [
-        "FMP 今日额度/频率限制，等待下次刷新"
+        "FMP 套餐或 symbol 权限受限，不能评价预期差"
       ],
-      "action": "FMP 限流，等待下次刷新"
+      "action": "FMP 权限受限，暂不评价"
     },
     {
       "symbol": "EMR",
       "name": "Emerson Electric Company Common Stock",
-      "coverage_status": "rate_limited",
-      "restricted_endpoints": [],
-      "price": 144.8787,
-      "quote_time": "Jun 23, 2026 10:56 AM ET",
+      "coverage_status": "restricted",
+      "restricted_endpoints": [
+        "/analyst-estimates",
+        "/earnings",
+        "/price-target-consensus",
+        "/price-target-summary",
+        "/ratings-snapshot"
+      ],
+      "price": 143.14,
+      "quote_time": "Jun 23, 2026",
       "annual_estimate": null,
       "quarterly_estimate": null,
       "estimate_revision": {
@@ -338,455 +480,540 @@
       "rating_snapshot": {},
       "expectation_score": null,
       "score_notes": [
-        "FMP 今日额度/频率限制，等待下次刷新"
+        "FMP 套餐或 symbol 权限受限，不能评价预期差"
       ],
-      "action": "FMP 限流，等待下次刷新"
+      "action": "FMP 权限受限，暂不评价"
     }
   ],
-  "actionable": [],
+  "actionable": [
+    {
+      "symbol": "NVDA",
+      "name": "NVIDIA Corporation Common Stock",
+      "coverage_status": "ok",
+      "restricted_endpoints": [],
+      "price": 200.04,
+      "quote_time": "Jun 23, 2026",
+      "annual_estimate": {
+        "date": "2029-01-25",
+        "revenueAvg": 677616516306,
+        "revenueLow": 674360841508,
+        "revenueHigh": 680872191104,
+        "epsAvg": 14.69466,
+        "epsLow": 11.30443,
+        "epsHigh": 17.80566,
+        "ebitdaAvg": 346563723501,
+        "numAnalystsRevenue": 26,
+        "numAnalystsEps": 15
+      },
+      "quarterly_estimate": null,
+      "estimate_revision": {
+        "status": "compared",
+        "epsAvg_change": 0.0,
+        "epsAvg_change_pct": 0.0,
+        "revenueAvg_change": 0.0,
+        "revenueAvg_change_pct": 0.0,
+        "ebitdaAvg_change": 0.0,
+        "ebitdaAvg_change_pct": 0.0,
+        "status_label": "无明显修正"
+      },
+      "price_target_summary": {
+        "symbol": "NVDA",
+        "lastMonthCount": 1,
+        "lastMonthAvgPriceTarget": 425,
+        "lastQuarterCount": 26,
+        "lastQuarterAvgPriceTarget": 317.5,
+        "lastYearCount": 86,
+        "lastYearAvgPriceTarget": 276.29,
+        "allTimeCount": 317,
+        "allTimeAvgPriceTarget": 138.19,
+        "publishers": "[\"TheFly\",\"StreetInsider\",\"Benzinga\",\"Pulse 2.0\",\"TipRanks Contributor\",\"MarketWatch\",\"Barrons\"]"
+      },
+      "price_target_consensus": {
+        "symbol": "NVDA",
+        "targetHigh": 500,
+        "targetLow": 218,
+        "targetConsensus": 316.79,
+        "targetMedian": 300
+      },
+      "price_target_upside_pct": 58.36,
+      "latest_earnings_surprise": {
+        "date": "2026-05-20",
+        "eps_actual": 1.87,
+        "eps_estimated": 1.76,
+        "eps_surprise": 0.11,
+        "eps_surprise_pct": 6.25,
+        "revenue_actual": 81615000000.0,
+        "revenue_estimated": 78423370000.0,
+        "revenue_surprise_pct": 4.07,
+        "last_updated": "2026-06-24"
+      },
+      "earnings_history": [
+        {
+          "symbol": "NVDA",
+          "date": "2026-08-26",
+          "epsActual": null,
+          "epsEstimated": 2.08,
+          "revenueActual": null,
+          "revenueEstimated": 91710240000,
+          "lastUpdated": "2026-06-24"
+        },
+        {
+          "symbol": "NVDA",
+          "date": "2026-05-20",
+          "epsActual": 1.87,
+          "epsEstimated": 1.76,
+          "revenueActual": 81615000000,
+          "revenueEstimated": 78423370000,
+          "lastUpdated": "2026-06-24"
+        },
+        {
+          "symbol": "NVDA",
+          "date": "2026-02-25",
+          "epsActual": 1.62,
+          "epsEstimated": 1.54,
+          "revenueActual": 68127000000,
+          "revenueEstimated": 66126470000,
+          "lastUpdated": "2026-05-25"
+        },
+        {
+          "symbol": "NVDA",
+          "date": "2025-11-19",
+          "epsActual": 1.3,
+          "epsEstimated": 1.26,
+          "revenueActual": 57006000000,
+          "revenueEstimated": 54961119678,
+          "lastUpdated": "2026-03-25"
+        }
+      ],
+      "rating_snapshot": {
+        "symbol": "NVDA",
+        "rating": "A-",
+        "overallScore": 4,
+        "discountedCashFlowScore": 4,
+        "returnOnEquityScore": 5,
+        "returnOnAssetsScore": 5,
+        "debtToEquityScore": 3,
+        "priceToEarningsScore": 2,
+        "priceToBookScore": 1
+      },
+      "expectation_score": 84.0,
+      "score_notes": [
+        "一致目标价上行空间 58.4%",
+        "最近 EPS 超预期 6.2%",
+        "收入超预期 4.1%",
+        "FMP rating score 4.0"
+      ],
+      "action": "预期差增强，进入 Buy-Side 复核"
+    }
+  ],
   "data_availability": [
     {
       "endpoint": "/earning-call-transcript-dates",
       "available": false,
-      "status": 429,
-      "message": "{\n  \"Error Message\": \"Limit Reach . Please upgrade your plan or visit our documentation for more details at https://site.financialmodelingprep.com/\"\n}"
+      "status": 402,
+      "message": "Restricted Endpoint: This endpoint is not available under your current subscription please visit our subscription page to upgrade your plan at https://financialmodelingprep.com/"
     },
     {
       "endpoint": "/news/press-releases",
       "available": false,
-      "status": 429,
-      "message": "{\n  \"Error Message\": \"Limit Reach . Please upgrade your plan or visit our documentation for more details at https://site.financialmodelingprep.com/\"\n}"
+      "status": 402,
+      "message": "Restricted Endpoint: This endpoint is not available under your current subscription please visit our subscription page to upgrade your plan at https://financialmodelingprep.com/"
     },
     {
       "endpoint": "/news/stock",
       "available": false,
-      "status": 429,
-      "message": "{\n  \"Error Message\": \"Limit Reach . Please upgrade your plan or visit our documentation for more details at https://site.financialmodelingprep.com/\"\n}"
+      "status": 402,
+      "message": "Restricted Endpoint: This endpoint is not available under your current subscription please visit our subscription page to upgrade your plan at https://financialmodelingprep.com/"
     }
   ],
-  "restricted_results": [],
-  "rate_limited_results": [
-    {
-      "symbol": "NVDA",
-      "endpoint": "/analyst-estimates",
-      "status": 429,
-      "kind": "rate_limited",
-      "message": "{\n  \"Error Message\": \"Limit Reach . Please upgrade your plan or visit our documentation for more details at https://site.financialmodelingprep.com/\"\n}"
-    },
-    {
-      "symbol": "NVDA",
-      "endpoint": "/price-target-summary",
-      "status": 429,
-      "kind": "rate_limited",
-      "message": "{\n  \"Error Message\": \"Limit Reach . Please upgrade your plan or visit our documentation for more details at https://site.financialmodelingprep.com/\"\n}"
-    },
-    {
-      "symbol": "NVDA",
-      "endpoint": "/price-target-consensus",
-      "status": 429,
-      "kind": "rate_limited",
-      "message": "{\n  \"Error Message\": \"Limit Reach . Please upgrade your plan or visit our documentation for more details at https://site.financialmodelingprep.com/\"\n}"
-    },
-    {
-      "symbol": "NVDA",
-      "endpoint": "/earnings",
-      "status": 429,
-      "kind": "rate_limited",
-      "message": "{\n  \"Error Message\": \"Limit Reach . Please upgrade your plan or visit our documentation for more details at https://site.financialmodelingprep.com/\"\n}"
-    },
-    {
-      "symbol": "NVDA",
-      "endpoint": "/ratings-snapshot",
-      "status": 429,
-      "kind": "rate_limited",
-      "message": "{\n  \"Error Message\": \"Limit Reach . Please upgrade your plan or visit our documentation for more details at https://site.financialmodelingprep.com/\"\n}"
-    },
+  "restricted_results": [
     {
       "symbol": "ANET",
       "endpoint": "/analyst-estimates",
-      "status": 429,
-      "kind": "rate_limited",
-      "message": "{\n  \"Error Message\": \"Limit Reach . Please upgrade your plan or visit our documentation for more details at https://site.financialmodelingprep.com/\"\n}"
+      "status": 402,
+      "kind": "restricted",
+      "message": "Premium Query Parameter: 'Special Endpoint : This value set for 'symbol' is not available under your current subscription please visit our subscription page to upgrade your plan at https://financialmodelingprep.com/"
     },
     {
       "symbol": "ANET",
       "endpoint": "/price-target-summary",
-      "status": 429,
-      "kind": "rate_limited",
-      "message": "{\n  \"Error Message\": \"Limit Reach . Please upgrade your plan or visit our documentation for more details at https://site.financialmodelingprep.com/\"\n}"
+      "status": 402,
+      "kind": "restricted",
+      "message": "Premium Query Parameter: 'Special Endpoint : This value set for 'symbol' is not available under your current subscription please visit our subscription page to upgrade your plan at https://financialmodelingprep.com/"
     },
     {
       "symbol": "ANET",
       "endpoint": "/price-target-consensus",
-      "status": 429,
-      "kind": "rate_limited",
-      "message": "{\n  \"Error Message\": \"Limit Reach . Please upgrade your plan or visit our documentation for more details at https://site.financialmodelingprep.com/\"\n}"
+      "status": 402,
+      "kind": "restricted",
+      "message": "Premium Query Parameter: 'Special Endpoint : This value set for 'symbol' is not available under your current subscription please visit our subscription page to upgrade your plan at https://financialmodelingprep.com/"
     },
     {
       "symbol": "ANET",
       "endpoint": "/earnings",
-      "status": 429,
-      "kind": "rate_limited",
-      "message": "{\n  \"Error Message\": \"Limit Reach . Please upgrade your plan or visit our documentation for more details at https://site.financialmodelingprep.com/\"\n}"
+      "status": 402,
+      "kind": "restricted",
+      "message": "Premium Query Parameter: 'Special Endpoint : This value set for 'symbol' is not available under your current subscription please visit our subscription page to upgrade your plan at https://financialmodelingprep.com/"
     },
     {
       "symbol": "ANET",
       "endpoint": "/ratings-snapshot",
-      "status": 429,
-      "kind": "rate_limited",
-      "message": "{\n  \"Error Message\": \"Limit Reach . Please upgrade your plan or visit our documentation for more details at https://site.financialmodelingprep.com/\"\n}"
+      "status": 402,
+      "kind": "restricted",
+      "message": "Premium Query Parameter: 'Special Endpoint : This value set for 'symbol' is not available under your current subscription please visit our subscription page to upgrade your plan at https://financialmodelingprep.com/"
     },
     {
       "symbol": "AVGO",
       "endpoint": "/analyst-estimates",
-      "status": 429,
-      "kind": "rate_limited",
-      "message": "{\n  \"Error Message\": \"Limit Reach . Please upgrade your plan or visit our documentation for more details at https://site.financialmodelingprep.com/\"\n}"
+      "status": 402,
+      "kind": "restricted",
+      "message": "Premium Query Parameter: 'Special Endpoint : This value set for 'symbol' is not available under your current subscription please visit our subscription page to upgrade your plan at https://financialmodelingprep.com/"
     },
     {
       "symbol": "AVGO",
       "endpoint": "/price-target-summary",
-      "status": 429,
-      "kind": "rate_limited",
-      "message": "{\n  \"Error Message\": \"Limit Reach . Please upgrade your plan or visit our documentation for more details at https://site.financialmodelingprep.com/\"\n}"
+      "status": 402,
+      "kind": "restricted",
+      "message": "Premium Query Parameter: 'Special Endpoint : This value set for 'symbol' is not available under your current subscription please visit our subscription page to upgrade your plan at https://financialmodelingprep.com/"
     },
     {
       "symbol": "AVGO",
       "endpoint": "/price-target-consensus",
-      "status": 429,
-      "kind": "rate_limited",
-      "message": "{\n  \"Error Message\": \"Limit Reach . Please upgrade your plan or visit our documentation for more details at https://site.financialmodelingprep.com/\"\n}"
+      "status": 402,
+      "kind": "restricted",
+      "message": "Premium Query Parameter: 'Special Endpoint : This value set for 'symbol' is not available under your current subscription please visit our subscription page to upgrade your plan at https://financialmodelingprep.com/"
     },
     {
       "symbol": "AVGO",
       "endpoint": "/earnings",
-      "status": 429,
-      "kind": "rate_limited",
-      "message": "{\n  \"Error Message\": \"Limit Reach . Please upgrade your plan or visit our documentation for more details at https://site.financialmodelingprep.com/\"\n}"
+      "status": 402,
+      "kind": "restricted",
+      "message": "Premium Query Parameter: 'Special Endpoint : This value set for 'symbol' is not available under your current subscription please visit our subscription page to upgrade your plan at https://financialmodelingprep.com/"
     },
     {
       "symbol": "AVGO",
       "endpoint": "/ratings-snapshot",
-      "status": 429,
-      "kind": "rate_limited",
-      "message": "{\n  \"Error Message\": \"Limit Reach . Please upgrade your plan or visit our documentation for more details at https://site.financialmodelingprep.com/\"\n}"
+      "status": 402,
+      "kind": "restricted",
+      "message": "Premium Query Parameter: 'Special Endpoint : This value set for 'symbol' is not available under your current subscription please visit our subscription page to upgrade your plan at https://financialmodelingprep.com/"
     },
     {
       "symbol": "ISRG",
       "endpoint": "/analyst-estimates",
-      "status": 429,
-      "kind": "rate_limited",
-      "message": "{\n  \"Error Message\": \"Limit Reach . Please upgrade your plan or visit our documentation for more details at https://site.financialmodelingprep.com/\"\n}"
+      "status": 402,
+      "kind": "restricted",
+      "message": "Premium Query Parameter: 'Special Endpoint : This value set for 'symbol' is not available under your current subscription please visit our subscription page to upgrade your plan at https://financialmodelingprep.com/"
     },
     {
       "symbol": "ISRG",
       "endpoint": "/price-target-summary",
-      "status": 429,
-      "kind": "rate_limited",
-      "message": "{\n  \"Error Message\": \"Limit Reach . Please upgrade your plan or visit our documentation for more details at https://site.financialmodelingprep.com/\"\n}"
+      "status": 402,
+      "kind": "restricted",
+      "message": "Premium Query Parameter: 'Special Endpoint : This value set for 'symbol' is not available under your current subscription please visit our subscription page to upgrade your plan at https://financialmodelingprep.com/"
     },
     {
       "symbol": "ISRG",
       "endpoint": "/price-target-consensus",
-      "status": 429,
-      "kind": "rate_limited",
-      "message": "{\n  \"Error Message\": \"Limit Reach . Please upgrade your plan or visit our documentation for more details at https://site.financialmodelingprep.com/\"\n}"
+      "status": 402,
+      "kind": "restricted",
+      "message": "Premium Query Parameter: 'Special Endpoint : This value set for 'symbol' is not available under your current subscription please visit our subscription page to upgrade your plan at https://financialmodelingprep.com/"
     },
     {
       "symbol": "ISRG",
       "endpoint": "/earnings",
-      "status": 429,
-      "kind": "rate_limited",
-      "message": "{\n  \"Error Message\": \"Limit Reach . Please upgrade your plan or visit our documentation for more details at https://site.financialmodelingprep.com/\"\n}"
+      "status": 402,
+      "kind": "restricted",
+      "message": "Premium Query Parameter: 'Special Endpoint : This value set for 'symbol' is not available under your current subscription please visit our subscription page to upgrade your plan at https://financialmodelingprep.com/"
     },
     {
       "symbol": "ISRG",
       "endpoint": "/ratings-snapshot",
-      "status": 429,
-      "kind": "rate_limited",
-      "message": "{\n  \"Error Message\": \"Limit Reach . Please upgrade your plan or visit our documentation for more details at https://site.financialmodelingprep.com/\"\n}"
+      "status": 402,
+      "kind": "restricted",
+      "message": "Premium Query Parameter: 'Special Endpoint : This value set for 'symbol' is not available under your current subscription please visit our subscription page to upgrade your plan at https://financialmodelingprep.com/"
     },
     {
       "symbol": "SYM",
       "endpoint": "/analyst-estimates",
-      "status": 429,
-      "kind": "rate_limited",
-      "message": "{\n  \"Error Message\": \"Limit Reach . Please upgrade your plan or visit our documentation for more details at https://site.financialmodelingprep.com/\"\n}"
+      "status": 402,
+      "kind": "restricted",
+      "message": "Premium Query Parameter: 'Special Endpoint : This value set for 'symbol' is not available under your current subscription please visit our subscription page to upgrade your plan at https://financialmodelingprep.com/"
     },
     {
       "symbol": "SYM",
       "endpoint": "/price-target-summary",
-      "status": 429,
-      "kind": "rate_limited",
-      "message": "{\n  \"Error Message\": \"Limit Reach . Please upgrade your plan or visit our documentation for more details at https://site.financialmodelingprep.com/\"\n}"
+      "status": 402,
+      "kind": "restricted",
+      "message": "Premium Query Parameter: 'Special Endpoint : This value set for 'symbol' is not available under your current subscription please visit our subscription page to upgrade your plan at https://financialmodelingprep.com/"
     },
     {
       "symbol": "SYM",
       "endpoint": "/price-target-consensus",
-      "status": 429,
-      "kind": "rate_limited",
-      "message": "{\n  \"Error Message\": \"Limit Reach . Please upgrade your plan or visit our documentation for more details at https://site.financialmodelingprep.com/\"\n}"
+      "status": 402,
+      "kind": "restricted",
+      "message": "Premium Query Parameter: 'Special Endpoint : This value set for 'symbol' is not available under your current subscription please visit our subscription page to upgrade your plan at https://financialmodelingprep.com/"
     },
     {
       "symbol": "SYM",
       "endpoint": "/earnings",
-      "status": 429,
-      "kind": "rate_limited",
-      "message": "{\n  \"Error Message\": \"Limit Reach . Please upgrade your plan or visit our documentation for more details at https://site.financialmodelingprep.com/\"\n}"
+      "status": 402,
+      "kind": "restricted",
+      "message": "Premium Query Parameter: 'Special Endpoint : This value set for 'symbol' is not available under your current subscription please visit our subscription page to upgrade your plan at https://financialmodelingprep.com/"
     },
     {
       "symbol": "SYM",
       "endpoint": "/ratings-snapshot",
-      "status": 429,
-      "kind": "rate_limited",
-      "message": "{\n  \"Error Message\": \"Limit Reach . Please upgrade your plan or visit our documentation for more details at https://site.financialmodelingprep.com/\"\n}"
+      "status": 402,
+      "kind": "restricted",
+      "message": "Premium Query Parameter: 'Special Endpoint : This value set for 'symbol' is not available under your current subscription please visit our subscription page to upgrade your plan at https://financialmodelingprep.com/"
     },
     {
       "symbol": "KLAC",
       "endpoint": "/analyst-estimates",
-      "status": 429,
-      "kind": "rate_limited",
-      "message": "{\n  \"Error Message\": \"Limit Reach . Please upgrade your plan or visit our documentation for more details at https://site.financialmodelingprep.com/\"\n}"
+      "status": 402,
+      "kind": "restricted",
+      "message": "Premium Query Parameter: 'Special Endpoint : This value set for 'symbol' is not available under your current subscription please visit our subscription page to upgrade your plan at https://financialmodelingprep.com/"
     },
     {
       "symbol": "KLAC",
       "endpoint": "/price-target-summary",
-      "status": 429,
-      "kind": "rate_limited",
-      "message": "{\n  \"Error Message\": \"Limit Reach . Please upgrade your plan or visit our documentation for more details at https://site.financialmodelingprep.com/\"\n}"
+      "status": 402,
+      "kind": "restricted",
+      "message": "Premium Query Parameter: 'Special Endpoint : This value set for 'symbol' is not available under your current subscription please visit our subscription page to upgrade your plan at https://financialmodelingprep.com/"
     },
     {
       "symbol": "KLAC",
       "endpoint": "/price-target-consensus",
-      "status": 429,
-      "kind": "rate_limited",
-      "message": "{\n  \"Error Message\": \"Limit Reach . Please upgrade your plan or visit our documentation for more details at https://site.financialmodelingprep.com/\"\n}"
+      "status": 402,
+      "kind": "restricted",
+      "message": "Premium Query Parameter: 'Special Endpoint : This value set for 'symbol' is not available under your current subscription please visit our subscription page to upgrade your plan at https://financialmodelingprep.com/"
     },
     {
       "symbol": "KLAC",
       "endpoint": "/earnings",
-      "status": 429,
-      "kind": "rate_limited",
-      "message": "{\n  \"Error Message\": \"Limit Reach . Please upgrade your plan or visit our documentation for more details at https://site.financialmodelingprep.com/\"\n}"
+      "status": 402,
+      "kind": "restricted",
+      "message": "Premium Query Parameter: 'Special Endpoint : This value set for 'symbol' is not available under your current subscription please visit our subscription page to upgrade your plan at https://financialmodelingprep.com/"
     },
     {
       "symbol": "KLAC",
       "endpoint": "/ratings-snapshot",
-      "status": 429,
-      "kind": "rate_limited",
-      "message": "{\n  \"Error Message\": \"Limit Reach . Please upgrade your plan or visit our documentation for more details at https://site.financialmodelingprep.com/\"\n}"
+      "status": 402,
+      "kind": "restricted",
+      "message": "Premium Query Parameter: 'Special Endpoint : This value set for 'symbol' is not available under your current subscription please visit our subscription page to upgrade your plan at https://financialmodelingprep.com/"
     },
     {
       "symbol": "MRVL",
       "endpoint": "/analyst-estimates",
-      "status": 429,
-      "kind": "rate_limited",
-      "message": "{\n  \"Error Message\": \"Limit Reach . Please upgrade your plan or visit our documentation for more details at https://site.financialmodelingprep.com/\"\n}"
+      "status": 402,
+      "kind": "restricted",
+      "message": "Premium Query Parameter: 'Special Endpoint : This value set for 'symbol' is not available under your current subscription please visit our subscription page to upgrade your plan at https://financialmodelingprep.com/"
     },
     {
       "symbol": "MRVL",
       "endpoint": "/price-target-summary",
-      "status": 429,
-      "kind": "rate_limited",
-      "message": "{\n  \"Error Message\": \"Limit Reach . Please upgrade your plan or visit our documentation for more details at https://site.financialmodelingprep.com/\"\n}"
+      "status": 402,
+      "kind": "restricted",
+      "message": "Premium Query Parameter: 'Special Endpoint : This value set for 'symbol' is not available under your current subscription please visit our subscription page to upgrade your plan at https://financialmodelingprep.com/"
     },
     {
       "symbol": "MRVL",
       "endpoint": "/price-target-consensus",
-      "status": 429,
-      "kind": "rate_limited",
-      "message": "{\n  \"Error Message\": \"Limit Reach . Please upgrade your plan or visit our documentation for more details at https://site.financialmodelingprep.com/\"\n}"
+      "status": 402,
+      "kind": "restricted",
+      "message": "Premium Query Parameter: 'Special Endpoint : This value set for 'symbol' is not available under your current subscription please visit our subscription page to upgrade your plan at https://financialmodelingprep.com/"
     },
     {
       "symbol": "MRVL",
       "endpoint": "/earnings",
-      "status": 429,
-      "kind": "rate_limited",
-      "message": "{\n  \"Error Message\": \"Limit Reach . Please upgrade your plan or visit our documentation for more details at https://site.financialmodelingprep.com/\"\n}"
+      "status": 402,
+      "kind": "restricted",
+      "message": "Premium Query Parameter: 'Special Endpoint : This value set for 'symbol' is not available under your current subscription please visit our subscription page to upgrade your plan at https://financialmodelingprep.com/"
     },
     {
       "symbol": "MRVL",
       "endpoint": "/ratings-snapshot",
-      "status": 429,
-      "kind": "rate_limited",
-      "message": "{\n  \"Error Message\": \"Limit Reach . Please upgrade your plan or visit our documentation for more details at https://site.financialmodelingprep.com/\"\n}"
+      "status": 402,
+      "kind": "restricted",
+      "message": "Premium Query Parameter: 'Special Endpoint : This value set for 'symbol' is not available under your current subscription please visit our subscription page to upgrade your plan at https://financialmodelingprep.com/"
     },
     {
       "symbol": "ASML",
       "endpoint": "/analyst-estimates",
-      "status": 429,
-      "kind": "rate_limited",
-      "message": "{\n  \"Error Message\": \"Limit Reach . Please upgrade your plan or visit our documentation for more details at https://site.financialmodelingprep.com/\"\n}"
+      "status": 402,
+      "kind": "restricted",
+      "message": "Premium Query Parameter: 'Special Endpoint : This value set for 'symbol' is not available under your current subscription please visit our subscription page to upgrade your plan at https://financialmodelingprep.com/"
     },
     {
       "symbol": "ASML",
       "endpoint": "/price-target-summary",
-      "status": 429,
-      "kind": "rate_limited",
-      "message": "{\n  \"Error Message\": \"Limit Reach . Please upgrade your plan or visit our documentation for more details at https://site.financialmodelingprep.com/\"\n}"
+      "status": 402,
+      "kind": "restricted",
+      "message": "Premium Query Parameter: 'Special Endpoint : This value set for 'symbol' is not available under your current subscription please visit our subscription page to upgrade your plan at https://financialmodelingprep.com/"
     },
     {
       "symbol": "ASML",
       "endpoint": "/price-target-consensus",
-      "status": 429,
-      "kind": "rate_limited",
-      "message": "{\n  \"Error Message\": \"Limit Reach . Please upgrade your plan or visit our documentation for more details at https://site.financialmodelingprep.com/\"\n}"
+      "status": 402,
+      "kind": "restricted",
+      "message": "Premium Query Parameter: 'Special Endpoint : This value set for 'symbol' is not available under your current subscription please visit our subscription page to upgrade your plan at https://financialmodelingprep.com/"
     },
     {
       "symbol": "ASML",
       "endpoint": "/earnings",
-      "status": 429,
-      "kind": "rate_limited",
-      "message": "{\n  \"Error Message\": \"Limit Reach . Please upgrade your plan or visit our documentation for more details at https://site.financialmodelingprep.com/\"\n}"
+      "status": 402,
+      "kind": "restricted",
+      "message": "Premium Query Parameter: 'Special Endpoint : This value set for 'symbol' is not available under your current subscription please visit our subscription page to upgrade your plan at https://financialmodelingprep.com/"
     },
     {
       "symbol": "ASML",
       "endpoint": "/ratings-snapshot",
-      "status": 429,
-      "kind": "rate_limited",
-      "message": "{\n  \"Error Message\": \"Limit Reach . Please upgrade your plan or visit our documentation for more details at https://site.financialmodelingprep.com/\"\n}"
+      "status": 402,
+      "kind": "restricted",
+      "message": "Premium Query Parameter: 'Special Endpoint : This value set for 'symbol' is not available under your current subscription please visit our subscription page to upgrade your plan at https://financialmodelingprep.com/"
     },
     {
       "symbol": "LRCX",
       "endpoint": "/analyst-estimates",
-      "status": 429,
-      "kind": "rate_limited",
-      "message": "{\n  \"Error Message\": \"Limit Reach . Please upgrade your plan or visit our documentation for more details at https://site.financialmodelingprep.com/\"\n}"
+      "status": 402,
+      "kind": "restricted",
+      "message": "Premium Query Parameter: 'Special Endpoint : This value set for 'symbol' is not available under your current subscription please visit our subscription page to upgrade your plan at https://financialmodelingprep.com/"
     },
     {
       "symbol": "LRCX",
       "endpoint": "/price-target-summary",
-      "status": 429,
-      "kind": "rate_limited",
-      "message": "{\n  \"Error Message\": \"Limit Reach . Please upgrade your plan or visit our documentation for more details at https://site.financialmodelingprep.com/\"\n}"
+      "status": 402,
+      "kind": "restricted",
+      "message": "Premium Query Parameter: 'Special Endpoint : This value set for 'symbol' is not available under your current subscription please visit our subscription page to upgrade your plan at https://financialmodelingprep.com/"
     },
     {
       "symbol": "LRCX",
       "endpoint": "/price-target-consensus",
-      "status": 429,
-      "kind": "rate_limited",
-      "message": "{\n  \"Error Message\": \"Limit Reach . Please upgrade your plan or visit our documentation for more details at https://site.financialmodelingprep.com/\"\n}"
+      "status": 402,
+      "kind": "restricted",
+      "message": "Premium Query Parameter: 'Special Endpoint : This value set for 'symbol' is not available under your current subscription please visit our subscription page to upgrade your plan at https://financialmodelingprep.com/"
     },
     {
       "symbol": "LRCX",
       "endpoint": "/earnings",
-      "status": 429,
-      "kind": "rate_limited",
-      "message": "{\n  \"Error Message\": \"Limit Reach . Please upgrade your plan or visit our documentation for more details at https://site.financialmodelingprep.com/\"\n}"
+      "status": 402,
+      "kind": "restricted",
+      "message": "Premium Query Parameter: 'Special Endpoint : This value set for 'symbol' is not available under your current subscription please visit our subscription page to upgrade your plan at https://financialmodelingprep.com/"
     },
     {
       "symbol": "LRCX",
       "endpoint": "/ratings-snapshot",
-      "status": 429,
-      "kind": "rate_limited",
-      "message": "{\n  \"Error Message\": \"Limit Reach . Please upgrade your plan or visit our documentation for more details at https://site.financialmodelingprep.com/\"\n}"
+      "status": 402,
+      "kind": "restricted",
+      "message": "Premium Query Parameter: 'Special Endpoint : This value set for 'symbol' is not available under your current subscription please visit our subscription page to upgrade your plan at https://financialmodelingprep.com/"
     },
     {
       "symbol": "TER",
       "endpoint": "/analyst-estimates",
-      "status": 429,
-      "kind": "rate_limited",
-      "message": "{\n  \"Error Message\": \"Limit Reach . Please upgrade your plan or visit our documentation for more details at https://site.financialmodelingprep.com/\"\n}"
+      "status": 402,
+      "kind": "restricted",
+      "message": "Premium Query Parameter: 'Special Endpoint : This value set for 'symbol' is not available under your current subscription please visit our subscription page to upgrade your plan at https://financialmodelingprep.com/"
     },
     {
       "symbol": "TER",
       "endpoint": "/price-target-summary",
-      "status": 429,
-      "kind": "rate_limited",
-      "message": "{\n  \"Error Message\": \"Limit Reach . Please upgrade your plan or visit our documentation for more details at https://site.financialmodelingprep.com/\"\n}"
+      "status": 402,
+      "kind": "restricted",
+      "message": "Premium Query Parameter: 'Special Endpoint : This value set for 'symbol' is not available under your current subscription please visit our subscription page to upgrade your plan at https://financialmodelingprep.com/"
     },
     {
       "symbol": "TER",
       "endpoint": "/price-target-consensus",
-      "status": 429,
-      "kind": "rate_limited",
-      "message": "{\n  \"Error Message\": \"Limit Reach . Please upgrade your plan or visit our documentation for more details at https://site.financialmodelingprep.com/\"\n}"
+      "status": 402,
+      "kind": "restricted",
+      "message": "Premium Query Parameter: 'Special Endpoint : This value set for 'symbol' is not available under your current subscription please visit our subscription page to upgrade your plan at https://financialmodelingprep.com/"
     },
     {
       "symbol": "TER",
       "endpoint": "/earnings",
-      "status": 429,
-      "kind": "rate_limited",
-      "message": "{\n  \"Error Message\": \"Limit Reach . Please upgrade your plan or visit our documentation for more details at https://site.financialmodelingprep.com/\"\n}"
+      "status": 402,
+      "kind": "restricted",
+      "message": "Premium Query Parameter: 'Special Endpoint : This value set for 'symbol' is not available under your current subscription please visit our subscription page to upgrade your plan at https://financialmodelingprep.com/"
     },
     {
       "symbol": "TER",
       "endpoint": "/ratings-snapshot",
-      "status": 429,
-      "kind": "rate_limited",
-      "message": "{\n  \"Error Message\": \"Limit Reach . Please upgrade your plan or visit our documentation for more details at https://site.financialmodelingprep.com/\"\n}"
+      "status": 402,
+      "kind": "restricted",
+      "message": "Premium Query Parameter: 'Special Endpoint : This value set for 'symbol' is not available under your current subscription please visit our subscription page to upgrade your plan at https://financialmodelingprep.com/"
     },
     {
       "symbol": "AMAT",
       "endpoint": "/analyst-estimates",
-      "status": 429,
-      "kind": "rate_limited",
-      "message": "{\n  \"Error Message\": \"Limit Reach . Please upgrade your plan or visit our documentation for more details at https://site.financialmodelingprep.com/\"\n}"
+      "status": 402,
+      "kind": "restricted",
+      "message": "Premium Query Parameter: 'Special Endpoint : This value set for 'symbol' is not available under your current subscription please visit our subscription page to upgrade your plan at https://financialmodelingprep.com/"
     },
     {
       "symbol": "AMAT",
       "endpoint": "/price-target-summary",
-      "status": 429,
-      "kind": "rate_limited",
-      "message": "{\n  \"Error Message\": \"Limit Reach . Please upgrade your plan or visit our documentation for more details at https://site.financialmodelingprep.com/\"\n}"
+      "status": 402,
+      "kind": "restricted",
+      "message": "Premium Query Parameter: 'Special Endpoint : This value set for 'symbol' is not available under your current subscription please visit our subscription page to upgrade your plan at https://financialmodelingprep.com/"
     },
     {
       "symbol": "AMAT",
       "endpoint": "/price-target-consensus",
-      "status": 429,
-      "kind": "rate_limited",
-      "message": "{\n  \"Error Message\": \"Limit Reach . Please upgrade your plan or visit our documentation for more details at https://site.financialmodelingprep.com/\"\n}"
+      "status": 402,
+      "kind": "restricted",
+      "message": "Premium Query Parameter: 'Special Endpoint : This value set for 'symbol' is not available under your current subscription please visit our subscription page to upgrade your plan at https://financialmodelingprep.com/"
     },
     {
       "symbol": "AMAT",
       "endpoint": "/earnings",
-      "status": 429,
-      "kind": "rate_limited",
-      "message": "{\n  \"Error Message\": \"Limit Reach . Please upgrade your plan or visit our documentation for more details at https://site.financialmodelingprep.com/\"\n}"
+      "status": 402,
+      "kind": "restricted",
+      "message": "Premium Query Parameter: 'Special Endpoint : This value set for 'symbol' is not available under your current subscription please visit our subscription page to upgrade your plan at https://financialmodelingprep.com/"
     },
     {
       "symbol": "AMAT",
       "endpoint": "/ratings-snapshot",
-      "status": 429,
-      "kind": "rate_limited",
-      "message": "{\n  \"Error Message\": \"Limit Reach . Please upgrade your plan or visit our documentation for more details at https://site.financialmodelingprep.com/\"\n}"
+      "status": 402,
+      "kind": "restricted",
+      "message": "Premium Query Parameter: 'Special Endpoint : This value set for 'symbol' is not available under your current subscription please visit our subscription page to upgrade your plan at https://financialmodelingprep.com/"
     },
     {
       "symbol": "EMR",
       "endpoint": "/analyst-estimates",
-      "status": 429,
-      "kind": "rate_limited",
-      "message": "{\n  \"Error Message\": \"Limit Reach . Please upgrade your plan or visit our documentation for more details at https://site.financialmodelingprep.com/\"\n}"
+      "status": 402,
+      "kind": "restricted",
+      "message": "Premium Query Parameter: 'Special Endpoint : This value set for 'symbol' is not available under your current subscription please visit our subscription page to upgrade your plan at https://financialmodelingprep.com/"
     },
     {
       "symbol": "EMR",
       "endpoint": "/price-target-summary",
-      "status": 429,
-      "kind": "rate_limited",
-      "message": "{\n  \"Error Message\": \"Limit Reach . Please upgrade your plan or visit our documentation for more details at https://site.financialmodelingprep.com/\"\n}"
+      "status": 402,
+      "kind": "restricted",
+      "message": "Premium Query Parameter: 'Special Endpoint : This value set for 'symbol' is not available under your current subscription please visit our subscription page to upgrade your plan at https://financialmodelingprep.com/"
     },
     {
       "symbol": "EMR",
       "endpoint": "/price-target-consensus",
-      "status": 429,
-      "kind": "rate_limited",
-      "message": "{\n  \"Error Message\": \"Limit Reach . Please upgrade your plan or visit our documentation for more details at https://site.financialmodelingprep.com/\"\n}"
+      "status": 402,
+      "kind": "restricted",
+      "message": "Premium Query Parameter: 'Special Endpoint : This value set for 'symbol' is not available under your current subscription please visit our subscription page to upgrade your plan at https://financialmodelingprep.com/"
     },
     {
       "symbol": "EMR",
       "endpoint": "/earnings",
-      "status": 429,
-      "kind": "rate_limited",
-      "message": "{\n  \"Error Message\": \"Limit Reach . Please upgrade your plan or visit our documentation for more details at https://site.financialmodelingprep.com/\"\n}"
+      "status": 402,
+      "kind": "restricted",
+      "message": "Premium Query Parameter: 'Special Endpoint : This value set for 'symbol' is not available under your current subscription please visit our subscription page to upgrade your plan at https://financialmodelingprep.com/"
     },
     {
       "symbol": "EMR",
       "endpoint": "/ratings-snapshot",
-      "status": 429,
-      "kind": "rate_limited",
-      "message": "{\n  \"Error Message\": \"Limit Reach . Please upgrade your plan or visit our documentation for more details at https://site.financialmodelingprep.com/\"\n}"
+      "status": 402,
+      "kind": "restricted",
+      "message": "Premium Query Parameter: 'Special Endpoint : This value set for 'symbol' is not available under your current subscription please visit our subscription page to upgrade your plan at https://financialmodelingprep.com/"
     }
   ],
+  "rate_limited_results": [],
   "errors": [],
   "discipline": [
     "FMP 目标价不是目标价结论，只是卖方预期输入。",
