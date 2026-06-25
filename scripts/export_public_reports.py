@@ -24,6 +24,7 @@ DEFAULT_OPPORTUNITY_RADAR_PATH = ROOT / "docs" / "data" / "opportunity_radar.jso
 DEFAULT_CROSS_MARKET_PATH = ROOT / "docs" / "data" / "cross_market_intelligence.json"
 DEFAULT_SECONDARY_QUEUE_PATH = ROOT / "docs" / "data" / "secondary_analysis_queue.json"
 DEFAULT_FREE_DATA_FALLBACK_PATH = ROOT / "docs" / "data" / "free_data_fallback.json"
+DEFAULT_MARKET_SENTIMENT_PATH = ROOT / "docs" / "data" / "market_sentiment.json"
 
 PRIVATE_SECTION_MARKERS = (
     "持仓输入",
@@ -77,6 +78,7 @@ KIND_LABELS = {
     "opportunity-review-metrics": "机会复盘",
     "free-data-fallback": "免费数据源",
     "macro-regime": "宏观雷达",
+    "market-sentiment": "市场情绪",
     "fmp-research": "FMP预期",
     "secondary-queue": "二次分析队列",
     "daily": "每日分析",
@@ -90,6 +92,7 @@ ONE_REPORT_PER_DAY_KINDS = {
     "opportunity-review-metrics",
     "free-data-fallback",
     "macro-regime",
+    "market-sentiment",
     "fmp-research",
     "secondary-queue",
 }
@@ -135,6 +138,8 @@ def report_kind(name: str) -> str:
         return "free-data-fallback"
     if "macro-regime" in lowered or "macro_regime" in lowered:
         return "macro-regime"
+    if "market-sentiment" in lowered or "market_sentiment" in lowered:
+        return "market-sentiment"
     if "fmp-research" in lowered or "fmp_research" in lowered:
         return "fmp-research"
     if "secondary-analysis" in lowered or "secondary_analysis" in lowered:
@@ -1016,6 +1021,47 @@ def derive_free_data_fallback_summary() -> dict[str, Any] | None:
     }
 
 
+def derive_market_sentiment_summary() -> dict[str, Any] | None:
+    payload = load_json_file(DEFAULT_MARKET_SENTIMENT_PATH)
+    if not payload:
+        return None
+    components = payload.get("components") if isinstance(payload.get("components"), list) else []
+    data_gaps = payload.get("data_gaps") if isinstance(payload.get("data_gaps"), list) else []
+    return {
+        "schema_version": payload.get("schema_version"),
+        "generated_at": payload.get("generated_at"),
+        "generated_label": payload.get("generated_label"),
+        "score": payload.get("score"),
+        "status": payload.get("status"),
+        "status_label": payload.get("status_label"),
+        "stance": payload.get("stance"),
+        "summary": payload.get("summary"),
+        "components": [
+            {
+                "key": item.get("key"),
+                "name": item.get("name"),
+                "score": item.get("score"),
+                "status": item.get("status"),
+                "message": item.get("message"),
+                "source": item.get("source"),
+                "updated_at": item.get("updated_at"),
+                "confidence": item.get("confidence"),
+            }
+            for item in components
+            if isinstance(item, dict)
+        ][:8],
+        "data_gaps": [
+            {
+                "field": item.get("field"),
+                "message": item.get("message"),
+                "impact": item.get("impact"),
+            }
+            for item in data_gaps
+            if isinstance(item, dict)
+        ][:20],
+    }
+
+
 def build_split_index(payload: dict[str, Any]) -> dict[str, Any]:
     index_payload = {
         key: value
@@ -1102,6 +1148,9 @@ def build_archive(output: Path, limit: int = 80, merge_existing: bool = True) ->
     free_data_fallback = derive_free_data_fallback_summary()
     if free_data_fallback:
         payload["free_data_fallback"] = free_data_fallback
+    market_sentiment = derive_market_sentiment_summary()
+    if market_sentiment:
+        payload["market_sentiment"] = market_sentiment
     return payload
 
 

@@ -161,7 +161,7 @@ h1 {
 
 .dashboard-grid {
   display: grid;
-  grid-template-columns: repeat(6, minmax(0, 1fr));
+  grid-template-columns: repeat(7, minmax(0, 1fr));
   gap: 10px;
 }
 
@@ -200,7 +200,8 @@ h1 {
   line-height: 1.45;
 }
 
-.market-status {
+.market-status,
+.sentiment-status {
   width: fit-content;
   border-radius: 999px;
   padding: 5px 9px;
@@ -211,10 +212,16 @@ h1 {
 .market-status.risk-off { background: #ffe9e3; color: #a2432b; }
 .market-status.neutral { background: #edf3f6; color: #405762; }
 .market-status.unknown { background: #f3f6f7; color: #6f8189; }
+.sentiment-status.risk-on { background: #e2f7ef; color: #08734f; }
+.sentiment-status.risk-off,
+.sentiment-status.panic { background: #ffe9e3; color: #a2432b; }
+.sentiment-status.neutral { background: #e5f2ff; color: #23649b; }
+.sentiment-status.euphoria { background: #f1e9ff; color: #6742a8; }
+.sentiment-status.unknown { background: #f3f6f7; color: #6f8189; }
 
 .dashboard-report-strip {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 10px;
   margin-top: 12px;
 }
@@ -906,6 +913,7 @@ h1 {
 }
 
 .metric-executable::before { background: var(--green); }
+.metric-sentiment::before { background: #22d3ee; }
 .metric-waiting::before { background: var(--blue); }
 .metric-avoid::before { background: var(--orange); }
 .metric-gap::before { background: var(--yellow); }
@@ -933,12 +941,14 @@ h1 {
 }
 
 .metric-executable strong { color: #86efac; }
+.metric-sentiment strong { color: #67e8f9; }
 .metric-waiting strong { color: #7dd3fc; }
 .metric-avoid strong { color: #fdba74; }
 .metric-gap strong { color: #fde68a; }
 .metric-review strong { color: #c4b5fd; }
 
-.market-status {
+.market-status,
+.sentiment-status {
   border: 1px solid rgba(255,255,255,0.08);
   box-shadow: 0 0 18px rgba(34, 211, 238, 0.08);
 }
@@ -947,6 +957,12 @@ h1 {
 .market-status.risk-off { background: rgba(239, 68, 68, 0.14); color: #fca5a5; }
 .market-status.neutral { background: rgba(56, 189, 248, 0.13); color: #93c5fd; }
 .market-status.unknown { background: rgba(148, 163, 184, 0.12); color: #cbd5e1; }
+.sentiment-status.risk-on { background: rgba(34, 197, 94, 0.15); color: #86efac; }
+.sentiment-status.risk-off,
+.sentiment-status.panic { background: rgba(239, 68, 68, 0.14); color: #fca5a5; }
+.sentiment-status.neutral { background: rgba(56, 189, 248, 0.13); color: #93c5fd; }
+.sentiment-status.euphoria { background: rgba(167, 139, 250, 0.16); color: #c4b5fd; }
+.sentiment-status.unknown { background: rgba(148, 163, 184, 0.12); color: #cbd5e1; }
 
 .dashboard-report-card:not(.disabled):hover,
 .report-item:hover {

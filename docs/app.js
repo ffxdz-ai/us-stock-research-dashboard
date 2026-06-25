@@ -23,6 +23,8 @@ const els = {
   dashboardUpdated: document.querySelector("#dashboardUpdated"),
   marketStatus: document.querySelector("#marketStatus"),
   marketStatusNote: document.querySelector("#marketStatusNote"),
+  sentimentScore: document.querySelector("#sentimentScore"),
+  sentimentNote: document.querySelector("#sentimentNote"),
   executableCount: document.querySelector("#executableCount"),
   waitEntryCount: document.querySelector("#waitEntryCount"),
   noChaseCount: document.querySelector("#noChaseCount"),
@@ -45,6 +47,7 @@ const els = {
 };
 
 const DASHBOARD_REPORT_TARGETS = [
+  { kind: "market-sentiment", label: "最近一篇市场情绪报告" },
   { kind: "cross-market-intelligence", label: "最近一篇跨市场情报报告" },
   { kind: "secondary-queue", label: "最近一篇二次分析队列报告" },
   { kind: "opportunity-radar", label: "最近一篇机会雷达报告" },
@@ -189,7 +192,7 @@ async function loadReportContent(report) {
 }
 
 async function preloadFallbackReportContent() {
-  const preloadKinds = [...OPPORTUNITY_REPORT_KINDS, "opportunity-review-metrics", "fmp-research", "macro-regime"];
+  const preloadKinds = [...OPPORTUNITY_REPORT_KINDS, "opportunity-review-metrics", "fmp-research", "macro-regime", "market-sentiment"];
   const reports = [latestReport(), ...preloadKinds.map((kind) => latestReportByKind(kind))]
     .filter(Boolean)
     .filter((report, index, list) => list.findIndex((item) => item.id === report.id) === index);
@@ -522,6 +525,67 @@ function normalizeMarketStatus(value) {
   return { label: "待确认", className: "unknown", note: raw };
 }
 
+function numberOrNull(value) {
+  if (value === null || value === undefined || value === "") return null;
+  const parsed = Number(String(value).replace(/,/g, "").replace(/%/g, "").trim());
+  return Number.isFinite(parsed) ? parsed : null;
+}
+
+function marketSentimentData() {
+  const archive = archiveObject();
+  const data = archive.market_sentiment || archive.marketSentiment || archive.sentiment;
+  return data && typeof data === "object" && !Array.isArray(data) ? data : {};
+}
+
+function normalizeSentimentStatus(value) {
+  const raw = String(value || "").trim();
+  const lower = raw.toLowerCase();
+  if (!raw) return { label: "待确认", className: "unknown" };
+  if (/euphoria|拥挤|过热/.test(lower)) return { label: "Risk-on / 拥挤", className: "euphoria" };
+  if (/risk[_\-\s]?on|进攻|偏强/.test(lower)) return { label: "Risk-on", className: "risk-on" };
+  if (/risk[_\-\s]?off|panic|恐慌|防守|避险|偏弱/.test(lower)) return { label: /panic|恐慌/.test(lower) ? "Risk-off / 恐慌" : "Risk-off", className: /panic|恐慌/.test(lower) ? "panic" : "risk-off" };
+  if (/neutral|中性|平衡|震荡/.test(lower)) return { label: "Neutral", className: "neutral" };
+  return { label: raw, className: "unknown" };
+}
+
+function deriveMarketSentiment() {
+  const data = marketSentimentData();
+  const directScore = numberOrNull(data.score);
+  if (Object.keys(data).length) {
+    const status = normalizeSentimentStatus(data.status_label || data.status);
+    return {
+      score: directScore,
+      label: status.label,
+      className: status.className,
+      note: data.summary || data.stance || "市场情绪雷达已生成",
+      updatedAt: data.generated_label || data.updated_at || data.generated_at || "",
+    };
+  }
+
+  const report = latestReportByKind("market-sentiment");
+  const text = reportText(report);
+  if (text) {
+    const score = firstRegexNumber(text, [/综合情绪分\s*[：:|]?\s*([0-9]+(?:\.[0-9]+)?)/, /情绪分\s*([0-9]+(?:\.[0-9]+)?)/]);
+    const statusMatch = text.match(/情绪状态\s*[|：:]\s*([^|\n]+)/) || text.match(/状态\s*(Risk[-\s]?(?:on|off)|Neutral|中性|防守|进攻)/i);
+    const status = normalizeSentimentStatus(statusMatch ? statusMatch[1] : "");
+    return {
+      score,
+      label: status.label,
+      className: status.className,
+      note: report.summary || "来自市场情绪报告保守解析",
+      updatedAt: report.published_label || "",
+    };
+  }
+
+  return {
+    score: null,
+    label: "待确认",
+    className: "unknown",
+    note: "等待市场情绪雷达",
+    updatedAt: "",
+  };
+}
+
 function latestReportTimeLabel() {
   const archive = archiveObject();
   return archive.generated_label || archive.generated_at || (latestReport() && latestReport().published_label) || "待确认";
@@ -535,6 +599,7 @@ function buildDashboardMetrics() {
   const evidence = latestReportByKind("event-evidence");
   const fmp = latestReportByKind("fmp-research");
   const market = normalizeMarketStatus(extractMarketStatusText());
+  const sentiment = deriveMarketSentiment();
   const reviewStats = deriveReviewStats();
   const gapBreakdown = deriveEvidenceGapBreakdown();
   const opportunityStatusCounts = state.opportunities.reduce((acc, item) => {
@@ -573,7 +638,7 @@ function buildDashboardMetrics() {
 
   const pendingReview = directNumber(["pending_review_count", "pending_count", "review_pending_count"]) ?? reviewStats?.pending_count ?? null;
 
-  return { market, executable, waiting, noChase, dataGap, pendingReview, latestTime: latestReportTimeLabel(), gapBreakdown };
+  return { market, sentiment, executable, waiting, noChase, dataGap, pendingReview, latestTime: latestReportTimeLabel(), gapBreakdown };
 }
 
 function renderDashboardReports() {
@@ -604,6 +669,14 @@ function renderDecisionDashboard() {
     els.marketStatus.className = `market-status ${metrics.market.className}`;
   }
   if (els.marketStatusNote) els.marketStatusNote.textContent = metrics.market.note;
+  if (els.sentimentScore) {
+    els.sentimentScore.textContent = metrics.sentiment.score === null || metrics.sentiment.score === undefined ? metrics.sentiment.label : `${Number(metrics.sentiment.score).toFixed(1)}`;
+    els.sentimentScore.className = `sentiment-status ${metrics.sentiment.className}`;
+  }
+  if (els.sentimentNote) {
+    const scoreLabel = metrics.sentiment.score === null || metrics.sentiment.score === undefined ? "" : `${metrics.sentiment.label} · `;
+    els.sentimentNote.textContent = `${scoreLabel}${metrics.sentiment.note || "等待市场情绪雷达"}`;
+  }
   if (els.executableCount) els.executableCount.textContent = countLabel(metrics.executable);
   if (els.waitEntryCount) els.waitEntryCount.textContent = countLabel(metrics.waiting);
   if (els.noChaseCount) els.noChaseCount.textContent = countLabel(metrics.noChase);

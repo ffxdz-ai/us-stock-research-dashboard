@@ -30,6 +30,7 @@ DEFAULT_OPPORTUNITY_REVIEW_METRICS = DATA_DIR / "latest_opportunity_review_metri
 DEFAULT_FREE_DATA_FALLBACK = DATA_DIR / "latest_free_data_fallback.json"
 DEFAULT_MACRO_REGIME = DATA_DIR / "latest_macro_regime.json"
 DEFAULT_FMP_RESEARCH = DATA_DIR / "latest_fmp_research.json"
+DEFAULT_MARKET_SENTIMENT = DATA_DIR / "latest_market_sentiment.json"
 DEFAULT_API_URL = "https://api.deepseek.com/chat/completions"
 DEFAULT_MODEL = "deepseek-v4-pro"
 
@@ -571,6 +572,45 @@ def compact_fmp_research(fmp_research: dict[str, Any]) -> dict[str, Any]:
     }
 
 
+def compact_market_sentiment(market_sentiment: dict[str, Any]) -> dict[str, Any]:
+    if not market_sentiment:
+        return {}
+    components = market_sentiment.get("components") if isinstance(market_sentiment.get("components"), list) else []
+    data_gaps = market_sentiment.get("data_gaps") if isinstance(market_sentiment.get("data_gaps"), list) else []
+    return {
+        "generated_label": market_sentiment.get("generated_label"),
+        "score": market_sentiment.get("score"),
+        "status": market_sentiment.get("status"),
+        "status_label": market_sentiment.get("status_label"),
+        "stance": market_sentiment.get("stance"),
+        "summary": market_sentiment.get("summary"),
+        "components": [
+            {
+                "key": item.get("key"),
+                "name": item.get("name"),
+                "score": item.get("score"),
+                "status": item.get("status"),
+                "message": item.get("message"),
+                "source": item.get("source"),
+                "updated_at": item.get("updated_at"),
+                "confidence": item.get("confidence"),
+            }
+            for item in components
+            if isinstance(item, dict)
+        ][:8],
+        "data_gaps": [
+            {
+                "field": item.get("field"),
+                "message": item.get("message"),
+                "impact": item.get("impact"),
+            }
+            for item in data_gaps
+            if isinstance(item, dict)
+        ][:12],
+        "rule": "市场情绪只决定进攻/平衡/防守倾向；不能替代单股 Buy-Side 入场、止损、目标价和 R/R 纪律。",
+    }
+
+
 def prepare_public_context(
     compact: dict[str, Any],
     pack: dict[str, Any],
@@ -582,6 +622,7 @@ def prepare_public_context(
     free_data_fallback: dict[str, Any],
     macro_regime: dict[str, Any],
     fmp_research: dict[str, Any],
+    market_sentiment: dict[str, Any],
 ) -> dict[str, Any]:
     """Drop private portfolio fields before sending context to DeepSeek."""
     market = compact.get("market") if isinstance(compact.get("market"), dict) else pack.get("market", {})
@@ -611,6 +652,7 @@ def prepare_public_context(
         },
         "market": market,
         "macro_regime": compact_macro_regime(macro_regime),
+        "market_sentiment": compact_market_sentiment(market_sentiment),
         "fmp_research": compact_fmp_research(fmp_research),
         "prescreen": compact.get("prescreen", {}),
         "candidate_limit_note": "候选池为机械预筛和公开数据压缩输入；模型必须重新审查，不得把机械分数当作最终结论。",
@@ -691,6 +733,7 @@ def build_focus_brief(context: dict[str, Any]) -> str:
     event = context.get("event_evidence") if isinstance(context.get("event_evidence"), dict) else {}
     review = context.get("opportunity_review_metrics") if isinstance(context.get("opportunity_review_metrics"), dict) else {}
     fmp = context.get("fmp_research") if isinstance(context.get("fmp_research"), dict) else {}
+    sentiment = context.get("market_sentiment") if isinstance(context.get("market_sentiment"), dict) else {}
 
     buyable_count = len(context.get("mechanical_buyable_now") or [])
     deepseek_priority = queue.get("deepseek_priority") if isinstance(queue.get("deepseek_priority"), list) else []
@@ -719,6 +762,9 @@ def build_focus_brief(context: dict[str, Any]) -> str:
     event_summary = event.get("summary") if isinstance(event.get("summary"), dict) else {}
     review_summary = review.get("summary") if isinstance(review.get("summary"), dict) else {}
     fmp_summary = fmp.get("summary") if isinstance(fmp.get("summary"), dict) else {}
+    sentiment_label = sentiment.get("status_label") or "待确认"
+    sentiment_score = fmt_brief_number(sentiment.get("score"))
+    sentiment_stance = sentiment.get("stance") or "情绪数据不足，按中性处理"
 
     lines = [
         "## 重点先看",
@@ -726,6 +772,7 @@ def build_focus_brief(context: dict[str, Any]) -> str:
         "| 模块 | 今天最重要的结论 |",
         "|---|---|",
         f"| 总判断 | {macro_label}；{action_line} |",
+        f"| 市场情绪 | {sentiment_label}；情绪分 {sentiment_score}/100；{sentiment_stance} |",
         f"| 市场快照 | {index_line} |",
         f"| 交易纪律 | 二次分析活跃 {active_count} 个；本轮退回观察 {retreated} 个；R/R 不达 2:1 的标的不能普通买入。 |",
         f"| 机会发现 | 需求加速主题 {cross_summary.get('accelerating_theme_count', 0)} 个；跨市场信号 {cross_summary.get('cross_market_signal_count', 0)} 个；二次研究候选 {cross_summary.get('secondary_research_candidate_count', 0)} 个。 |",
@@ -789,6 +836,7 @@ def build_user_prompt(context: dict[str, Any], mode: str) -> str:
 - 不要输出真实持仓、现金、成本、股数、本地路径、API Key。
 - 必须先阅读 macro_regime：按经济周期、政策利率、通胀、流动性、风险偏好判断今天是进攻、平衡还是防守。
 - 如果 macro_regime.fred_enabled 为 true，宏观部分必须引用 FRED 指标的数据日期；如果缺失，则明确“宏观 FRED 数据不足”。
+- 必须阅读 market_sentiment：引用情绪分、Risk-on/Risk-off/Neutral 状态和主要拖累/支撑；但必须声明情绪只决定进攻/防守倾向，不能替代单股 R/R。
 - 必须阅读 fmp_research：把分析师预期、目标价共识、财报 surprise 和评级快照作为“市场预期”输入，但不得把 FMP 目标价当作你的最终目标价。
 - 如果 fmp_research.data_availability 显示 transcript/news 端点受限，必须写明电话会/新闻正文未接入，不得编造管理层表述。
 - 对 secondary_analysis_queue.deepseek_priority 中的股票全部覆盖；如果数量较多，先用表格逐只给结论，再挑最重要标的展开。
@@ -918,6 +966,7 @@ def main() -> int:
     parser.add_argument("--free-data-fallback", type=Path, default=DEFAULT_FREE_DATA_FALLBACK)
     parser.add_argument("--macro-regime", type=Path, default=DEFAULT_MACRO_REGIME)
     parser.add_argument("--fmp-research", type=Path, default=DEFAULT_FMP_RESEARCH)
+    parser.add_argument("--market-sentiment", type=Path, default=DEFAULT_MARKET_SENTIMENT)
     parser.add_argument("--out-dir", type=Path, default=REPORTS_DIR)
     parser.add_argument("--dry-run", action="store_true", help="Write the sanitized prompt context without calling DeepSeek.")
     args = parser.parse_args()
@@ -933,6 +982,7 @@ def main() -> int:
     free_data_fallback = load_json(args.free_data_fallback, {})
     macro_regime = load_json(args.macro_regime, {})
     fmp_research = load_json(args.fmp_research, {})
+    market_sentiment = load_json(args.market_sentiment, {})
     context = prepare_public_context(
         compact,
         pack,
@@ -944,6 +994,7 @@ def main() -> int:
         free_data_fallback,
         macro_regime,
         fmp_research,
+        market_sentiment,
     )
     context_text = json.dumps(context, ensure_ascii=False, indent=2)
     validate_public_text(context_text)

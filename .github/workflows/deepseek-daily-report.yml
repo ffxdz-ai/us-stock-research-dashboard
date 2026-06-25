@@ -2,10 +2,11 @@ name: DeepSeek cloud daily report
 
 on:
   schedule:
-    # 12:17 Asia/Shanghai every day. Avoid top-of-hour schedule drops.
-    - cron: "17 4 * * *"
-    # 15:17 Asia/Shanghai watchdog. It skips if today's report already exists.
-    - cron: "17 7 * * *"
+    # 12:17-18:47 Asia/Shanghai watchdog window.
+    # GitHub scheduled workflows can be delayed or dropped; repeated freshness
+    # checks are cheap and the generate job only runs when today's DeepSeek
+    # report is still missing.
+    - cron: "17,47 4-10 * * *"
   workflow_dispatch:
     inputs:
       mode:
@@ -56,26 +57,33 @@ jobs:
           reason = "manual dispatch: force report generation"
 
           if event_name == "schedule":
-              reason = f"scheduled run: no {today} report found"
+              reason = f"scheduled run: no {today} DeepSeek report found"
               index_path = Path("docs/data/index.json")
               try:
                   data = json.loads(index_path.read_text(encoding="utf-8"))
                   reports = data.get("reports") or []
-                  latest = reports[0] if reports else {}
-                  searchable = " ".join(
-                      str(value)
-                      for value in [
-                          latest.get("id", ""),
-                          latest.get("title", ""),
-                          latest.get("published_at", ""),
-                          latest.get("published_label", ""),
-                          data.get("generated_at", ""),
-                          data.get("generated_label", ""),
-                      ]
-                  )
-                  if today in searchable:
+                  todays_deepseek_reports = []
+                  for report in reports:
+                      if not isinstance(report, dict):
+                          continue
+                      if report.get("kind") != "deepseek-cloud":
+                          continue
+                      searchable = " ".join(
+                          str(value)
+                          for value in [
+                              report.get("id", ""),
+                              report.get("filename", ""),
+                              report.get("title", ""),
+                              report.get("published_at", ""),
+                              report.get("published_label", ""),
+                          ]
+                      )
+                      if today in searchable:
+                          todays_deepseek_reports.append(report)
+                  if todays_deepseek_reports:
                       should_run = False
-                      reason = f"scheduled skip: {today} report already exists"
+                      latest = todays_deepseek_reports[0]
+                      reason = f"scheduled skip: {today} DeepSeek report already exists ({latest.get('published_label') or latest.get('id')})"
               except Exception as exc:
                   reason = f"scheduled run: freshness check unavailable: {exc}"
 
@@ -129,6 +137,16 @@ jobs:
 
       - name: Generate FRED macro regime
         run: python scripts/macro_regime.py
+
+      - name: Generate market sentiment radar
+        shell: bash
+        run: |
+          if [ "$REPORT_MODE" = "weekly" ]; then
+            MARKET_PACK="data/latest_weekly_market_pack.json"
+          else
+            MARKET_PACK="data/latest_market_pack.json"
+          fi
+          python scripts/market_sentiment_radar.py --market-pack "$MARKET_PACK" --macro-regime data/latest_macro_regime.json
 
       - name: Generate FMP expectations radar
         shell: bash
@@ -220,7 +238,7 @@ jobs:
             MARKET_PACK="data/latest_market_pack.json"
             AGENT_INPUT="data/latest_agent_input.json"
           fi
-          python scripts/run_deepseek_cloud_report.py --mode "$REPORT_MODE" --input "$AGENT_INPUT" --market-pack "$MARKET_PACK" --opportunity-radar data/latest_opportunity_radar.json --cross-market-intelligence data/latest_cross_market_intelligence.json --event-evidence data/latest_event_evidence.json --opportunity-review-metrics data/latest_opportunity_review_metrics.json --free-data-fallback data/latest_free_data_fallback.json --macro-regime data/latest_macro_regime.json --fmp-research data/latest_fmp_research.json
+          python scripts/run_deepseek_cloud_report.py --mode "$REPORT_MODE" --input "$AGENT_INPUT" --market-pack "$MARKET_PACK" --opportunity-radar data/latest_opportunity_radar.json --cross-market-intelligence data/latest_cross_market_intelligence.json --event-evidence data/latest_event_evidence.json --opportunity-review-metrics data/latest_opportunity_review_metrics.json --free-data-fallback data/latest_free_data_fallback.json --macro-regime data/latest_macro_regime.json --fmp-research data/latest_fmp_research.json --market-sentiment data/latest_market_sentiment.json
 
       - name: Export public archive
         run: python scripts/export_public_reports.py --limit 80
@@ -233,7 +251,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add docs/data/reports.json docs/data/index.json docs/data/reports docs/data/secondary_analysis_queue.json docs/data/opportunity_radar.json docs/data/opportunity_journal.json docs/data/cross_market_intelligence.json docs/data/event_evidence.json docs/data/opportunity_review_metrics.json docs/data/free_data_fallback.json docs/data/macro_regime.json docs/data/fmp_research.json docs/data/fmp_research_state.json
+          git add docs/data/reports.json docs/data/index.json docs/data/reports docs/data/secondary_analysis_queue.json docs/data/opportunity_radar.json docs/data/opportunity_journal.json docs/data/cross_market_intelligence.json docs/data/event_evidence.json docs/data/opportunity_review_metrics.json docs/data/free_data_fallback.json docs/data/macro_regime.json docs/data/market_sentiment.json docs/data/fmp_research.json docs/data/fmp_research_state.json
           if git diff --cached --quiet; then
             echo "No public archive changes to commit."
           else
