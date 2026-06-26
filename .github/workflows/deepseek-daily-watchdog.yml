@@ -1,0 +1,108 @@
+name: DeepSeek daily report watchdog
+
+on:
+  schedule:
+    # 12:07-21:52 Asia/Shanghai. This is a lightweight watchdog that only
+    # dispatches the heavy daily report workflow when today's DeepSeek report
+    # is still missing. GitHub scheduled workflows are best-effort, so this
+    # independent workflow reduces missed-report risk.
+    - cron: "7,22,37,52 4-13 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: write
+
+concurrency:
+  group: deepseek-daily-report-watchdog
+  cancel-in-progress: true
+
+jobs:
+  dispatch-if-missing:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout archive metadata
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 1
+
+      - name: Check whether today's DeepSeek report exists
+        id: freshness
+        shell: bash
+        run: |
+          python - <<'PY' >> "$GITHUB_OUTPUT"
+          import json
+          from datetime import datetime
+          from pathlib import Path
+          from zoneinfo import ZoneInfo
+
+          today = datetime.now(ZoneInfo("Asia/Shanghai")).strftime("%Y-%m-%d")
+          index_path = Path("docs/data/index.json")
+          found = False
+          reason = f"{today} DeepSeek report missing"
+
+          try:
+              data = json.loads(index_path.read_text(encoding="utf-8"))
+              reports = data.get("reports") or []
+              for report in reports:
+                  if not isinstance(report, dict):
+                      continue
+                  if report.get("kind") != "deepseek-cloud":
+                      continue
+                  searchable = " ".join(
+                      str(value)
+                      for value in [
+                          report.get("id", ""),
+                          report.get("filename", ""),
+                          report.get("title", ""),
+                          report.get("published_at", ""),
+                          report.get("published_label", ""),
+                      ]
+                  )
+                  if today in searchable:
+                      found = True
+                      reason = f"{today} DeepSeek report exists: {report.get('published_label') or report.get('id')}"
+                      break
+          except Exception as exc:
+              reason = f"freshness check failed, dispatching daily report: {exc}"
+
+          print(f"today={today}")
+          print(f"missing={'false' if found else 'true'}")
+          print(f"reason={reason}")
+          PY
+
+      - name: Show freshness decision
+        run: echo "${{ steps.freshness.outputs.reason }}"
+
+      - name: Check active daily report runs
+        id: active
+        if: steps.freshness.outputs.missing == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          active_count="$(
+            gh run list \
+              --repo "$GITHUB_REPOSITORY" \
+              --workflow deepseek-daily-report.yml \
+              --json databaseId,status,event,createdAt \
+              --limit 20 \
+              --jq '[.[] | select(.status == "queued" or .status == "in_progress" or .status == "waiting" or .status == "requested")] | length'
+          )"
+          echo "active_count=${active_count:-0}" >> "$GITHUB_OUTPUT"
+          echo "active daily report runs: ${active_count:-0}"
+
+      - name: Dispatch daily report workflow
+        if: steps.freshness.outputs.missing == 'true' && steps.active.outputs.active_count == '0'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh workflow run deepseek-daily-report.yml \
+            --repo "$GITHUB_REPOSITORY" \
+            -f mode=full
+          echo "dispatched deepseek-daily-report.yml for ${{ steps.freshness.outputs.today }}"
+
+      - name: Skip dispatch because active run exists
+        if: steps.freshness.outputs.missing == 'true' && steps.active.outputs.active_count != '0'
+        run: echo "Daily report is already queued or running."
