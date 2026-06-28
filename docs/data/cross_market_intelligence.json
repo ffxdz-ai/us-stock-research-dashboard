@@ -1,13 +1,13 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-06-27T15:26:59+08:00",
-  "generated_label": "2026-06-27 15:26",
+  "generated_at": "2026-06-28T15:57:08+08:00",
+  "generated_label": "2026-06-28 15:57",
   "summary": {
     "theme_count": 5,
     "accelerating_theme_count": 1,
     "cross_market_signal_count": 1,
     "secondary_research_candidate_count": 7,
-    "event_backlog_count": 6,
+    "event_backlog_count": 5,
     "tracked_security_count": 38
   },
   "themes": [
@@ -521,7 +521,7 @@
       "status": "观察跟踪",
       "horizon": "3-12个月",
       "thesis": "AI 集群从单卡算力扩展到网络互连瓶颈，800G、1.6T、硅光、CPO 和交换机升级会把需求向光器件、DSP、交换机和上游材料扩散。",
-      "demand_acceleration_score": 70.6,
+      "demand_acceleration_score": 70.3,
       "theme_score": 66.7,
       "score_components": {
         "demand_shift": 90.0,
@@ -531,7 +531,7 @@
         "market_underpricing": 50.8,
         "trend_avg": 67.8,
         "market_breadth": 71,
-        "change_signal": 4,
+        "change_signal": 0,
         "crowding_penalty": 45.6
       },
       "market_breadth": {
@@ -1489,7 +1489,7 @@
       "status": "观察跟踪",
       "horizon": "6-18个月",
       "thesis": "AI 数据中心功耗密度抬升后，瓶颈从芯片扩散到电力接入、UPS、配电、液冷和工程建设；这些环节通常滞后兑现，但持续性可能更强。",
-      "demand_acceleration_score": 68.4,
+      "demand_acceleration_score": 67.5,
       "theme_score": 62.6,
       "score_components": {
         "demand_shift": 86.0,
@@ -1499,7 +1499,7 @@
         "market_underpricing": 64.3,
         "trend_avg": 64.6,
         "market_breadth": 71,
-        "change_signal": 12,
+        "change_signal": 0,
         "crowding_penalty": 22.0
       },
       "market_breadth": {
@@ -1703,7 +1703,7 @@
               "crowding_score": 22.0,
               "score_delta": null,
               "first_seen_at": "2026-06-21T04:10:31+08:00",
-              "secondary_status": "active",
+              "secondary_status": "retreated",
               "data_status": "公开日线行情已接入；需 Futu/券商复核",
               "action": "已在二次分析生命周期中；观察"
             }
@@ -1875,7 +1875,7 @@
           "crowding_score": 22.0,
           "score_delta": null,
           "first_seen_at": "2026-06-21T04:10:31+08:00",
-          "secondary_status": "active",
+          "secondary_status": "retreated",
           "data_status": "公开日线行情已接入；需 Futu/券商复核",
           "action": "已在二次分析生命周期中；观察"
         },
@@ -2468,11 +2468,6 @@
     }
   ],
   "event_extraction_backlog": [
-    {
-      "type": "metric",
-      "priority": "medium",
-      "item": "本轮新增 4 条指标变化，需要判断是逻辑增强还是价格波动。"
-    },
     {
       "type": "permission",
       "priority": "high",
