@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-06-28T15:58:27+08:00",
-  "generated_label": "2026-06-28 15:58",
+  "generated_at": "2026-06-29T17:07:39+08:00",
+  "generated_label": "2026-06-29 17:07",
   "rules": {
     "review_interval_days": 2,
     "max_active": null,
@@ -18,14 +18,14 @@
     "min_data_confidence_for_buy": 0.68
   },
   "summary": {
-    "eligible_candidates": 27,
+    "eligible_candidates": 26,
     "opportunity_candidates": 0,
     "cross_market_candidates": 7,
     "new_entries": 0,
-    "reentries": 1,
-    "reviewed": 2,
-    "passed": 1,
-    "retreated": 1,
+    "reentries": 3,
+    "reviewed": 17,
+    "passed": 14,
+    "retreated": 3,
     "active_count": 15,
     "retreated_count": 20,
     "due_remaining": 0,
@@ -37,9 +37,9 @@
     "HK.00148": {
       "status": "active",
       "entered_at": "2026-06-21T02:01:41+08:00",
-      "next_analysis_due_at": "2026-06-29T12:00:00+08:00",
-      "review_count": 4,
-      "pass_count": 4,
+      "next_analysis_due_at": "2026-07-01T12:00:00+08:00",
+      "review_count": 5,
+      "pass_count": 5,
       "fail_count": 0,
       "history": [
         {
@@ -73,6 +73,14 @@
           "layer_score": 77.1,
           "trend_score": 76.0,
           "price": 126.4
+        },
+        {
+          "reviewed_at": "2026-06-29T12:00:00+08:00",
+          "result": "通过复核",
+          "reason": "跨市场强候选仍满足产业链和趋势门槛；继续二次分析，但最终仍需 Futu/财报/流动性复核。",
+          "layer_score": 76.9,
+          "trend_score": 76.0,
+          "price": 120.0
         }
       ],
       "last_result": "通过复核",
@@ -83,21 +91,21 @@
       "layer_name": "高速 PCB / 覆铜板 / 电子布 / 铜箔",
       "chain_name": "AI 算力供应链",
       "role": "覆铜板/材料",
-      "price": 126.4,
-      "layer_score": 77.1,
+      "price": 120.0,
+      "layer_score": 76.9,
       "trend_score": 76.0,
       "data_status": "公开日线行情已接入；需 Futu/券商复核",
       "radar_action": "跨市场强候选；进入二次分析候选池，需 Futu/财报/流动性复核",
-      "last_seen_at": "2026-06-28T15:58:27+08:00",
-      "priority": 168.52,
-      "last_analysis_at": "2026-06-27T12:00:00+08:00"
+      "last_seen_at": "2026-06-29T17:07:39+08:00",
+      "priority": 168.28,
+      "last_analysis_at": "2026-06-29T12:00:00+08:00"
     },
     "HK.00981": {
       "status": "active",
       "entered_at": "2026-06-21T04:13:19+08:00",
-      "next_analysis_due_at": "2026-06-29T12:00:00+08:00",
-      "review_count": 4,
-      "pass_count": 4,
+      "next_analysis_due_at": "2026-07-01T12:00:00+08:00",
+      "review_count": 5,
+      "pass_count": 5,
       "fail_count": 0,
       "history": [
         {
@@ -131,6 +139,14 @@
           "layer_score": 80.3,
           "trend_score": 76.0,
           "price": 80.0
+        },
+        {
+          "reviewed_at": "2026-06-29T12:00:00+08:00",
+          "result": "通过复核",
+          "reason": "跨市场强候选仍满足产业链和趋势门槛；继续二次分析，但最终仍需 Futu/财报/流动性复核。",
+          "layer_score": 80.6,
+          "trend_score": 76.0,
+          "price": 84.8
         }
       ],
       "last_result": "通过复核",
@@ -141,21 +157,21 @@
       "layer_name": "GPU / ASIC / HBM / 先进封装",
       "chain_name": "AI 算力供应链",
       "role": "中国晶圆代工映射",
-      "price": 80.0,
-      "layer_score": 80.3,
+      "price": 84.8,
+      "layer_score": 80.6,
       "trend_score": 76.0,
       "data_status": "公开日线行情已接入；需 Futu/券商复核",
       "radar_action": "跨市场强候选；进入二次分析候选池，需 Futu/财报/流动性复核",
-      "last_seen_at": "2026-06-28T15:58:27+08:00",
-      "priority": 172.36,
-      "last_analysis_at": "2026-06-27T12:00:00+08:00"
+      "last_seen_at": "2026-06-29T17:07:39+08:00",
+      "priority": 172.72,
+      "last_analysis_at": "2026-06-29T12:00:00+08:00"
     },
     "HK.01347": {
       "status": "active",
       "entered_at": "2026-06-21T02:01:41+08:00",
-      "next_analysis_due_at": "2026-06-29T12:00:00+08:00",
-      "review_count": 4,
-      "pass_count": 4,
+      "next_analysis_due_at": "2026-07-01T12:00:00+08:00",
+      "review_count": 5,
+      "pass_count": 5,
       "fail_count": 0,
       "history": [
         {
@@ -189,6 +205,14 @@
           "layer_score": 80.3,
           "trend_score": 88.0,
           "price": 189.5
+        },
+        {
+          "reviewed_at": "2026-06-29T12:00:00+08:00",
+          "result": "通过复核",
+          "reason": "跨市场强候选仍满足产业链和趋势门槛；继续二次分析，但最终仍需 Futu/财报/流动性复核。",
+          "layer_score": 80.6,
+          "trend_score": 88.0,
+          "price": 204.2
         }
       ],
       "last_result": "通过复核",
@@ -199,21 +223,21 @@
       "layer_name": "GPU / ASIC / HBM / 先进封装",
       "chain_name": "AI 算力供应链",
       "role": "特色工艺/功率半导体映射",
-      "price": 189.5,
-      "layer_score": 80.3,
+      "price": 204.2,
+      "layer_score": 80.6,
       "trend_score": 88.0,
       "data_status": "公开日线行情已接入；需 Futu/券商复核",
       "radar_action": "跨市场强候选；进入二次分析候选池，需 Futu/财报/流动性复核",
-      "last_seen_at": "2026-06-28T15:58:27+08:00",
-      "priority": 184.36,
-      "last_analysis_at": "2026-06-27T12:00:00+08:00"
+      "last_seen_at": "2026-06-29T17:07:39+08:00",
+      "priority": 184.72,
+      "last_analysis_at": "2026-06-29T12:00:00+08:00"
     },
     "HK.01888": {
       "status": "active",
       "entered_at": "2026-06-21T02:01:41+08:00",
-      "next_analysis_due_at": "2026-06-29T12:00:00+08:00",
-      "review_count": 4,
-      "pass_count": 4,
+      "next_analysis_due_at": "2026-07-01T12:00:00+08:00",
+      "review_count": 5,
+      "pass_count": 5,
       "fail_count": 0,
       "history": [
         {
@@ -247,6 +271,14 @@
           "layer_score": 77.1,
           "trend_score": 76.0,
           "price": 98.55
+        },
+        {
+          "reviewed_at": "2026-06-29T12:00:00+08:00",
+          "result": "通过复核",
+          "reason": "跨市场强候选仍满足产业链和趋势门槛；继续二次分析，但最终仍需 Futu/财报/流动性复核。",
+          "layer_score": 76.9,
+          "trend_score": 76.0,
+          "price": 96.3
         }
       ],
       "last_result": "通过复核",
@@ -257,21 +289,21 @@
       "layer_name": "高速 PCB / 覆铜板 / 电子布 / 铜箔",
       "chain_name": "AI 算力供应链",
       "role": "覆铜板",
-      "price": 98.55,
-      "layer_score": 77.1,
+      "price": 96.3,
+      "layer_score": 76.9,
       "trend_score": 76.0,
       "data_status": "公开日线行情已接入；需 Futu/券商复核",
       "radar_action": "跨市场强候选；进入二次分析候选池，需 Futu/财报/流动性复核",
-      "last_seen_at": "2026-06-28T15:58:27+08:00",
-      "priority": 168.52,
-      "last_analysis_at": "2026-06-27T12:00:00+08:00"
+      "last_seen_at": "2026-06-29T17:07:39+08:00",
+      "priority": 168.28,
+      "last_analysis_at": "2026-06-29T12:00:00+08:00"
     },
     "SH.600183": {
       "status": "active",
       "entered_at": "2026-06-21T02:01:41+08:00",
-      "next_analysis_due_at": "2026-06-29T12:00:00+08:00",
-      "review_count": 4,
-      "pass_count": 4,
+      "next_analysis_due_at": "2026-07-01T12:00:00+08:00",
+      "review_count": 5,
+      "pass_count": 5,
       "fail_count": 0,
       "history": [
         {
@@ -305,6 +337,14 @@
           "layer_score": 77.1,
           "trend_score": 88.0,
           "price": 178.5
+        },
+        {
+          "reviewed_at": "2026-06-29T12:00:00+08:00",
+          "result": "通过复核",
+          "reason": "跨市场强候选仍满足产业链和趋势门槛；继续二次分析，但最终仍需 Futu/财报/流动性复核。",
+          "layer_score": 76.9,
+          "trend_score": 76.0,
+          "price": 171.16
         }
       ],
       "last_result": "通过复核",
@@ -315,21 +355,21 @@
       "layer_name": "高速 PCB / 覆铜板 / 电子布 / 铜箔",
       "chain_name": "AI 算力供应链",
       "role": "覆铜板",
-      "price": 178.5,
-      "layer_score": 77.1,
-      "trend_score": 88.0,
+      "price": 171.16,
+      "layer_score": 76.9,
+      "trend_score": 76.0,
       "data_status": "公开日线行情已接入；需 Futu/券商复核",
       "radar_action": "跨市场强候选；进入二次分析候选池，需 Futu/财报/流动性复核",
-      "last_seen_at": "2026-06-28T15:58:27+08:00",
-      "priority": 180.52,
-      "last_analysis_at": "2026-06-27T12:00:00+08:00"
+      "last_seen_at": "2026-06-29T17:07:39+08:00",
+      "priority": 168.28,
+      "last_analysis_at": "2026-06-29T12:00:00+08:00"
     },
     "SH.603256": {
       "status": "active",
       "entered_at": "2026-06-21T02:01:41+08:00",
-      "next_analysis_due_at": "2026-06-29T12:00:00+08:00",
-      "review_count": 4,
-      "pass_count": 4,
+      "next_analysis_due_at": "2026-07-01T12:00:00+08:00",
+      "review_count": 5,
+      "pass_count": 5,
       "fail_count": 0,
       "history": [
         {
@@ -363,6 +403,14 @@
           "layer_score": 77.1,
           "trend_score": 88.0,
           "price": 297.0
+        },
+        {
+          "reviewed_at": "2026-06-29T12:00:00+08:00",
+          "result": "通过复核",
+          "reason": "跨市场强候选仍满足产业链和趋势门槛；继续二次分析，但最终仍需 Futu/财报/流动性复核。",
+          "layer_score": 76.9,
+          "trend_score": 76.0,
+          "price": 267.3
         }
       ],
       "last_result": "通过复核",
@@ -373,21 +421,21 @@
       "layer_name": "高速 PCB / 覆铜板 / 电子布 / 铜箔",
       "chain_name": "AI 算力供应链",
       "role": "电子布",
-      "price": 297.0,
-      "layer_score": 77.1,
-      "trend_score": 88.0,
+      "price": 267.3,
+      "layer_score": 76.9,
+      "trend_score": 76.0,
       "data_status": "公开日线行情已接入；需 Futu/券商复核",
       "radar_action": "跨市场强候选；进入二次分析候选池，需 Futu/财报/流动性复核",
-      "last_seen_at": "2026-06-28T15:58:27+08:00",
-      "priority": 180.52,
-      "last_analysis_at": "2026-06-27T12:00:00+08:00"
+      "last_seen_at": "2026-06-29T17:07:39+08:00",
+      "priority": 168.28,
+      "last_analysis_at": "2026-06-29T12:00:00+08:00"
     },
     "SH.688183": {
       "status": "active",
       "entered_at": "2026-06-21T04:13:19+08:00",
-      "next_analysis_due_at": "2026-06-29T12:00:00+08:00",
-      "review_count": 4,
-      "pass_count": 4,
+      "next_analysis_due_at": "2026-07-01T12:00:00+08:00",
+      "review_count": 5,
+      "pass_count": 5,
       "fail_count": 0,
       "history": [
         {
@@ -421,6 +469,14 @@
           "layer_score": 77.1,
           "trend_score": 76.0,
           "price": 131.9
+        },
+        {
+          "reviewed_at": "2026-06-29T12:00:00+08:00",
+          "result": "通过复核",
+          "reason": "跨市场强候选仍满足产业链和趋势门槛；继续二次分析，但最终仍需 Futu/财报/流动性复核。",
+          "layer_score": 76.9,
+          "trend_score": 76.0,
+          "price": 124.22
         }
       ],
       "last_result": "通过复核",
@@ -431,21 +487,21 @@
       "layer_name": "高速 PCB / 覆铜板 / 电子布 / 铜箔",
       "chain_name": "AI 算力供应链",
       "role": "PCB",
-      "price": 131.9,
-      "layer_score": 77.1,
+      "price": 124.22,
+      "layer_score": 76.9,
       "trend_score": 76.0,
       "data_status": "公开日线行情已接入；需 Futu/券商复核",
       "radar_action": "跨市场强候选；进入二次分析候选池，需 Futu/财报/流动性复核",
-      "last_seen_at": "2026-06-28T15:58:27+08:00",
-      "priority": 168.52,
-      "last_analysis_at": "2026-06-27T12:00:00+08:00"
+      "last_seen_at": "2026-06-29T17:07:39+08:00",
+      "priority": 168.28,
+      "last_analysis_at": "2026-06-29T12:00:00+08:00"
     },
     "SH.688981": {
       "status": "active",
       "entered_at": "2026-06-21T04:13:19+08:00",
-      "next_analysis_due_at": "2026-06-29T12:00:00+08:00",
-      "review_count": 4,
-      "pass_count": 4,
+      "next_analysis_due_at": "2026-07-01T12:00:00+08:00",
+      "review_count": 5,
+      "pass_count": 5,
       "fail_count": 0,
       "history": [
         {
@@ -479,6 +535,14 @@
           "layer_score": 80.3,
           "trend_score": 88.0,
           "price": 148.76
+        },
+        {
+          "reviewed_at": "2026-06-29T12:00:00+08:00",
+          "result": "通过复核",
+          "reason": "跨市场强候选仍满足产业链和趋势门槛；继续二次分析，但最终仍需 Futu/财报/流动性复核。",
+          "layer_score": 80.6,
+          "trend_score": 88.0,
+          "price": 151.0
         }
       ],
       "last_result": "通过复核",
@@ -489,21 +553,21 @@
       "layer_name": "GPU / ASIC / HBM / 先进封装",
       "chain_name": "AI 算力供应链",
       "role": "A股晶圆代工映射",
-      "price": 148.76,
-      "layer_score": 80.3,
+      "price": 151.0,
+      "layer_score": 80.6,
       "trend_score": 88.0,
       "data_status": "公开日线行情已接入；需 Futu/券商复核",
       "radar_action": "跨市场强候选；进入二次分析候选池，需 Futu/财报/流动性复核",
-      "last_seen_at": "2026-06-28T15:58:27+08:00",
-      "priority": 184.36,
-      "last_analysis_at": "2026-06-27T12:00:00+08:00"
+      "last_seen_at": "2026-06-29T17:07:39+08:00",
+      "priority": 184.72,
+      "last_analysis_at": "2026-06-29T12:00:00+08:00"
     },
     "SZ.000988": {
       "status": "active",
       "entered_at": "2026-06-21T02:01:41+08:00",
-      "next_analysis_due_at": "2026-06-29T12:00:00+08:00",
-      "review_count": 4,
-      "pass_count": 4,
+      "next_analysis_due_at": "2026-07-01T12:00:00+08:00",
+      "review_count": 5,
+      "pass_count": 5,
       "fail_count": 0,
       "history": [
         {
@@ -537,6 +601,14 @@
           "layer_score": 77.2,
           "trend_score": 76.0,
           "price": 160.94
+        },
+        {
+          "reviewed_at": "2026-06-29T12:00:00+08:00",
+          "result": "通过复核",
+          "reason": "跨市场强候选仍满足产业链和趋势门槛；继续二次分析，但最终仍需 Futu/财报/流动性复核。",
+          "layer_score": 77.2,
+          "trend_score": 88.0,
+          "price": 177.03
         }
       ],
       "last_result": "通过复核",
@@ -547,14 +619,14 @@
       "layer_name": "光模块 / CPO / AI 网络",
       "chain_name": "AI 算力供应链",
       "role": "光模块/激光设备",
-      "price": 160.94,
+      "price": 177.03,
       "layer_score": 77.2,
-      "trend_score": 76.0,
+      "trend_score": 88.0,
       "data_status": "公开日线行情已接入；需 Futu/券商复核",
       "radar_action": "跨市场强候选；进入二次分析候选池，需 Futu/财报/流动性复核",
-      "last_seen_at": "2026-06-28T15:58:27+08:00",
-      "priority": 168.64,
-      "last_analysis_at": "2026-06-27T12:00:00+08:00"
+      "last_seen_at": "2026-06-29T17:07:39+08:00",
+      "priority": 180.64,
+      "last_analysis_at": "2026-06-29T12:00:00+08:00"
     },
     "SZ.002335": {
       "status": "active",
@@ -601,9 +673,9 @@
     "SZ.002916": {
       "status": "active",
       "entered_at": "2026-06-21T02:01:41+08:00",
-      "next_analysis_due_at": "2026-06-29T12:00:00+08:00",
-      "review_count": 4,
-      "pass_count": 4,
+      "next_analysis_due_at": "2026-07-01T12:00:00+08:00",
+      "review_count": 5,
+      "pass_count": 5,
       "fail_count": 0,
       "history": [
         {
@@ -637,6 +709,14 @@
           "layer_score": 77.1,
           "trend_score": 88.0,
           "price": 433.5
+        },
+        {
+          "reviewed_at": "2026-06-29T12:00:00+08:00",
+          "result": "通过复核",
+          "reason": "跨市场强候选仍满足产业链和趋势门槛；继续二次分析，但最终仍需 Futu/财报/流动性复核。",
+          "layer_score": 76.9,
+          "trend_score": 88.0,
+          "price": 434.16
         }
       ],
       "last_result": "通过复核",
@@ -647,21 +727,21 @@
       "layer_name": "高速 PCB / 覆铜板 / 电子布 / 铜箔",
       "chain_name": "AI 算力供应链",
       "role": "PCB/封装基板",
-      "price": 433.5,
-      "layer_score": 77.1,
+      "price": 434.16,
+      "layer_score": 76.9,
       "trend_score": 88.0,
       "data_status": "公开日线行情已接入；需 Futu/券商复核",
       "radar_action": "跨市场强候选；进入二次分析候选池，需 Futu/财报/流动性复核",
-      "last_seen_at": "2026-06-28T15:58:27+08:00",
-      "priority": 180.52,
-      "last_analysis_at": "2026-06-27T12:00:00+08:00"
+      "last_seen_at": "2026-06-29T17:07:39+08:00",
+      "priority": 180.28,
+      "last_analysis_at": "2026-06-29T12:00:00+08:00"
     },
     "SZ.002938": {
       "status": "active",
       "entered_at": "2026-06-21T02:01:41+08:00",
-      "next_analysis_due_at": "2026-06-29T12:00:00+08:00",
-      "review_count": 4,
-      "pass_count": 4,
+      "next_analysis_due_at": "2026-07-01T12:00:00+08:00",
+      "review_count": 5,
+      "pass_count": 5,
       "fail_count": 0,
       "history": [
         {
@@ -695,6 +775,14 @@
           "layer_score": 77.1,
           "trend_score": 76.0,
           "price": 110.98
+        },
+        {
+          "reviewed_at": "2026-06-29T12:00:00+08:00",
+          "result": "通过复核",
+          "reason": "跨市场强候选仍满足产业链和趋势门槛；继续二次分析，但最终仍需 Futu/财报/流动性复核。",
+          "layer_score": 76.9,
+          "trend_score": 76.0,
+          "price": 101.0
         }
       ],
       "last_result": "通过复核",
@@ -705,14 +793,14 @@
       "layer_name": "高速 PCB / 覆铜板 / 电子布 / 铜箔",
       "chain_name": "AI 算力供应链",
       "role": "PCB",
-      "price": 110.98,
-      "layer_score": 77.1,
+      "price": 101.0,
+      "layer_score": 76.9,
       "trend_score": 76.0,
       "data_status": "公开日线行情已接入；需 Futu/券商复核",
       "radar_action": "跨市场强候选；进入二次分析候选池，需 Futu/财报/流动性复核",
-      "last_seen_at": "2026-06-28T15:58:27+08:00",
-      "priority": 168.52,
-      "last_analysis_at": "2026-06-27T12:00:00+08:00"
+      "last_seen_at": "2026-06-29T17:07:39+08:00",
+      "priority": 168.28,
+      "last_analysis_at": "2026-06-29T12:00:00+08:00"
     },
     "SZ.300274": {
       "status": "retreated",
@@ -760,9 +848,9 @@
     "SZ.300308": {
       "status": "active",
       "entered_at": "2026-06-21T02:01:41+08:00",
-      "next_analysis_due_at": "2026-06-29T12:00:00+08:00",
-      "review_count": 4,
-      "pass_count": 4,
+      "next_analysis_due_at": "2026-07-01T12:00:00+08:00",
+      "review_count": 5,
+      "pass_count": 5,
       "fail_count": 0,
       "history": [
         {
@@ -796,6 +884,14 @@
           "layer_score": 77.2,
           "trend_score": 76.0,
           "price": 1253.89
+        },
+        {
+          "reviewed_at": "2026-06-29T12:00:00+08:00",
+          "result": "通过复核",
+          "reason": "跨市场强候选仍满足产业链和趋势门槛；继续二次分析，但最终仍需 Futu/财报/流动性复核。",
+          "layer_score": 77.2,
+          "trend_score": 76.0,
+          "price": 1220.0
         }
       ],
       "last_result": "通过复核",
@@ -806,21 +902,21 @@
       "layer_name": "光模块 / CPO / AI 网络",
       "chain_name": "AI 算力供应链",
       "role": "高速光模块",
-      "price": 1253.89,
+      "price": 1220.0,
       "layer_score": 77.2,
       "trend_score": 76.0,
       "data_status": "公开日线行情已接入；需 Futu/券商复核",
       "radar_action": "跨市场强候选；进入二次分析候选池，需 Futu/财报/流动性复核",
-      "last_seen_at": "2026-06-28T15:58:27+08:00",
+      "last_seen_at": "2026-06-29T17:07:39+08:00",
       "priority": 168.64,
-      "last_analysis_at": "2026-06-27T12:00:00+08:00"
+      "last_analysis_at": "2026-06-29T12:00:00+08:00"
     },
     "SZ.300394": {
       "status": "active",
       "entered_at": "2026-06-21T04:13:19+08:00",
-      "next_analysis_due_at": "2026-06-29T12:00:00+08:00",
-      "review_count": 4,
-      "pass_count": 4,
+      "next_analysis_due_at": "2026-07-01T12:00:00+08:00",
+      "review_count": 5,
+      "pass_count": 5,
       "fail_count": 0,
       "history": [
         {
@@ -854,6 +950,14 @@
           "layer_score": 77.2,
           "trend_score": 76.0,
           "price": 318.0
+        },
+        {
+          "reviewed_at": "2026-06-29T12:00:00+08:00",
+          "result": "通过复核",
+          "reason": "跨市场强候选仍满足产业链和趋势门槛；继续二次分析，但最终仍需 Futu/财报/流动性复核。",
+          "layer_score": 77.2,
+          "trend_score": 76.0,
+          "price": 295.15
         }
       ],
       "last_result": "通过复核",
@@ -864,14 +968,14 @@
       "layer_name": "光模块 / CPO / AI 网络",
       "chain_name": "AI 算力供应链",
       "role": "光器件",
-      "price": 318.0,
+      "price": 295.15,
       "layer_score": 77.2,
       "trend_score": 76.0,
       "data_status": "公开日线行情已接入；需 Futu/券商复核",
       "radar_action": "跨市场强候选；进入二次分析候选池，需 Futu/财报/流动性复核",
-      "last_seen_at": "2026-06-28T15:58:27+08:00",
+      "last_seen_at": "2026-06-29T17:07:39+08:00",
       "priority": 168.64,
-      "last_analysis_at": "2026-06-27T12:00:00+08:00"
+      "last_analysis_at": "2026-06-29T12:00:00+08:00"
     },
     "SZ.300476": {
       "status": "retreated",
@@ -970,9 +1074,9 @@
     "SZ.300502": {
       "status": "active",
       "entered_at": "2026-06-21T02:01:41+08:00",
-      "next_analysis_due_at": "2026-06-29T12:00:00+08:00",
-      "review_count": 4,
-      "pass_count": 4,
+      "next_analysis_due_at": "2026-07-01T12:00:00+08:00",
+      "review_count": 5,
+      "pass_count": 5,
       "fail_count": 0,
       "history": [
         {
@@ -1006,6 +1110,14 @@
           "layer_score": 77.2,
           "trend_score": 88.0,
           "price": 566.0
+        },
+        {
+          "reviewed_at": "2026-06-29T12:00:00+08:00",
+          "result": "通过复核",
+          "reason": "跨市场强候选仍满足产业链和趋势门槛；继续二次分析，但最终仍需 Futu/财报/流动性复核。",
+          "layer_score": 77.2,
+          "trend_score": 76.0,
+          "price": 556.96
         }
       ],
       "last_result": "通过复核",
@@ -1016,31 +1128,23 @@
       "layer_name": "光模块 / CPO / AI 网络",
       "chain_name": "AI 算力供应链",
       "role": "高速光模块",
-      "price": 566.0,
+      "price": 556.96,
       "layer_score": 77.2,
-      "trend_score": 88.0,
+      "trend_score": 76.0,
       "data_status": "公开日线行情已接入；需 Futu/券商复核",
       "radar_action": "跨市场强候选；进入二次分析候选池，需 Futu/财报/流动性复核",
-      "last_seen_at": "2026-06-28T15:58:27+08:00",
-      "priority": 180.64,
-      "last_analysis_at": "2026-06-27T12:00:00+08:00"
+      "last_seen_at": "2026-06-29T17:07:39+08:00",
+      "priority": 168.64,
+      "last_analysis_at": "2026-06-29T12:00:00+08:00"
     },
     "US.AMD": {
       "status": "retreated",
       "entered_at": "2026-06-21T02:01:41+08:00",
       "next_analysis_due_at": null,
-      "review_count": 21,
+      "review_count": 22,
       "pass_count": 0,
-      "fail_count": 21,
+      "fail_count": 22,
       "history": [
-        {
-          "reviewed_at": "2026-06-21T12:00:00+08:00",
-          "result": "退回观察",
-          "reason": "美股候选 R/R 0.28:1 低于 2.0:1，退回观察。",
-          "layer_score": 81.0,
-          "trend_score": 88.0,
-          "price": 537.37
-        },
         {
           "reviewed_at": "2026-06-21T12:00:00+08:00",
           "result": "退回观察",
@@ -1192,6 +1296,14 @@
           "layer_score": 80.3,
           "trend_score": 88.0,
           "price": 521.58
+        },
+        {
+          "reviewed_at": "2026-06-29T12:00:00+08:00",
+          "result": "退回观察",
+          "reason": "美股候选 R/R 0.29:1 低于 2.0:1，退回观察。",
+          "layer_score": 80.6,
+          "trend_score": 88.0,
+          "price": 530.25
         }
       ],
       "last_result": "退回观察",
@@ -1202,16 +1314,16 @@
       "layer_name": "GPU / ASIC / HBM / 先进封装",
       "chain_name": "AI 算力供应链",
       "role": "GPU/CPU/AI 加速器",
-      "price": 521.58,
-      "layer_score": 80.3,
+      "price": 530.25,
+      "layer_score": 80.6,
       "trend_score": 88.0,
       "data_status": "行情已接入",
       "radar_action": "进入二次分析候选池；等待 Buy-Side 复核",
-      "last_seen_at": "2026-06-28T15:58:27+08:00",
-      "priority": 184.36,
-      "last_analysis_at": "2026-06-28T12:00:00+08:00",
+      "last_seen_at": "2026-06-29T17:07:39+08:00",
+      "priority": 184.72,
+      "last_analysis_at": "2026-06-29T12:00:00+08:00",
       "cooldown_until": null,
-      "reentered_at": "2026-06-28T15:58:27+08:00"
+      "reentered_at": "2026-06-29T17:07:39+08:00"
     },
     "US.ANET": {
       "status": "retreated",
@@ -1365,9 +1477,9 @@
       "status": "retreated",
       "entered_at": "2026-06-21T02:01:41+08:00",
       "next_analysis_due_at": null,
-      "review_count": 16,
+      "review_count": 17,
       "pass_count": 0,
-      "fail_count": 16,
+      "fail_count": 17,
       "history": [
         {
           "reviewed_at": "2026-06-21T12:00:00+08:00",
@@ -1496,26 +1608,34 @@
           "layer_score": 80.6,
           "trend_score": 88.0,
           "price": 1841.18
+        },
+        {
+          "reviewed_at": "2026-06-29T12:00:00+08:00",
+          "result": "退回观察",
+          "reason": "美股候选 R/R 0.53:1 低于 2.0:1，退回观察。",
+          "layer_score": 80.6,
+          "trend_score": 88.0,
+          "price": 1809.0
         }
       ],
-      "last_result": "退回观察，等待重新触发",
-      "last_reason": "美股候选 R/R 0.51:1 低于 2.0:1，退回观察。",
+      "last_result": "退回观察",
+      "last_reason": "美股候选 R/R 0.53:1 低于 2.0:1，退回观察。",
       "code": "US.ASML",
       "name": "ASML ADR",
       "market": "US",
       "layer_name": "GPU / ASIC / HBM / 先进封装",
       "chain_name": "AI 算力供应链",
       "role": "先进制程设备瓶颈",
-      "price": 1794.62,
-      "layer_score": 80.3,
-      "trend_score": 76.0,
+      "price": 1809.0,
+      "layer_score": 80.6,
+      "trend_score": 88.0,
       "data_status": "行情已接入",
       "radar_action": "进入二次分析候选池；等待 Buy-Side 复核",
-      "last_seen_at": "2026-06-28T15:58:27+08:00",
-      "priority": 172.36,
-      "last_analysis_at": "2026-06-26T12:00:00+08:00",
+      "last_seen_at": "2026-06-29T17:07:39+08:00",
+      "priority": 184.72,
+      "last_analysis_at": "2026-06-29T12:00:00+08:00",
       "cooldown_until": null,
-      "reentered_at": "2026-06-26T14:14:30+08:00"
+      "reentered_at": "2026-06-29T17:07:39+08:00"
     },
     "US.COHR": {
       "status": "retreated",
@@ -1558,12 +1678,12 @@
       "layer_name": "光模块 / CPO / AI 网络",
       "chain_name": "AI 算力供应链",
       "role": "光器件/材料",
-      "price": 380.56,
+      "price": 382.85,
       "layer_score": 77.2,
       "trend_score": 76.0,
       "data_status": "行情已接入",
       "radar_action": "进入二次分析候选池；等待 Buy-Side 复核",
-      "last_seen_at": "2026-06-28T15:58:27+08:00",
+      "last_seen_at": "2026-06-29T17:07:39+08:00",
       "priority": 168.64,
       "last_analysis_at": "2026-06-23T12:00:00+08:00",
       "cooldown_until": null,
@@ -1629,13 +1749,13 @@
       "layer_name": "数据中心电力 / 液冷 / 配电",
       "chain_name": "AI 算力供应链",
       "role": "电气设备",
-      "price": 419.87,
-      "layer_score": 76.7,
+      "price": 408.51,
+      "layer_score": 75.5,
       "trend_score": 88.0,
       "data_status": "行情已接入",
       "radar_action": "进入二次分析候选池；等待 Buy-Side 复核",
-      "last_seen_at": "2026-06-26T14:14:30+08:00",
-      "priority": 180.04,
+      "last_seen_at": "2026-06-29T17:07:39+08:00",
+      "priority": 178.6,
       "last_analysis_at": "2026-06-21T12:00:00+08:00",
       "cooldown_until": null
     },
@@ -1664,13 +1784,13 @@
       "layer_name": "高速 PCB / 覆铜板 / 电子布 / 铜箔",
       "chain_name": "AI 算力供应链",
       "role": "数据中心硬件制造代理",
-      "price": 146.7,
-      "layer_score": 77.1,
+      "price": 149.0,
+      "layer_score": 76.9,
       "trend_score": 76.0,
       "data_status": "行情已接入",
       "radar_action": "进入二次分析候选池；等待 Buy-Side 复核",
-      "last_seen_at": "2026-06-28T15:58:27+08:00",
-      "priority": 168.52,
+      "last_seen_at": "2026-06-29T17:07:39+08:00",
+      "priority": 168.28,
       "last_analysis_at": "2026-06-21T12:00:00+08:00",
       "cooldown_until": null
     },
@@ -1699,13 +1819,13 @@
       "layer_name": "数据中心电力 / 液冷 / 配电",
       "chain_name": "AI 算力供应链",
       "role": "工业强势股/电力链参考",
-      "price": 369.0,
-      "layer_score": 75.8,
+      "price": 370.075,
+      "layer_score": 75.5,
       "trend_score": 88.0,
       "data_status": "行情已接入",
       "radar_action": "进入二次分析候选池；等待 Buy-Side 复核",
-      "last_seen_at": "2026-06-28T15:58:27+08:00",
-      "priority": 178.96,
+      "last_seen_at": "2026-06-29T17:07:39+08:00",
+      "priority": 178.6,
       "last_analysis_at": "2026-06-21T12:00:00+08:00",
       "cooldown_until": null
     },
@@ -1734,13 +1854,13 @@
       "layer_name": "高速 PCB / 覆铜板 / 电子布 / 铜箔",
       "chain_name": "AI 算力供应链",
       "role": "AI 服务器/电子制造代理",
-      "price": 358.6,
-      "layer_score": 77.1,
+      "price": 365.44,
+      "layer_score": 76.9,
       "trend_score": 76.0,
       "data_status": "行情已接入",
       "radar_action": "进入二次分析候选池；等待 Buy-Side 复核",
-      "last_seen_at": "2026-06-28T15:58:27+08:00",
-      "priority": 168.52,
+      "last_seen_at": "2026-06-29T17:07:39+08:00",
+      "priority": 168.28,
       "last_analysis_at": "2026-06-21T12:00:00+08:00",
       "cooldown_until": null
     },
@@ -1881,13 +2001,13 @@
       "layer_name": "GPU / ASIC / HBM / 先进封装",
       "chain_name": "AI 算力供应链",
       "role": "定制芯片与 AI 网络",
-      "price": 266.77,
-      "layer_score": 80.3,
+      "price": 271.41,
+      "layer_score": 80.6,
       "trend_score": 76.0,
       "data_status": "行情已接入",
       "radar_action": "进入二次分析候选池；等待 Buy-Side 复核",
-      "last_seen_at": "2026-06-28T15:58:27+08:00",
-      "priority": 172.36,
+      "last_seen_at": "2026-06-29T17:07:39+08:00",
+      "priority": 172.72,
       "last_analysis_at": "2026-06-23T12:00:00+08:00",
       "cooldown_until": null,
       "reentered_at": "2026-06-23T16:31:39+08:00"
@@ -2037,13 +2157,13 @@
       "layer_name": "GPU / ASIC / HBM / 先进封装",
       "chain_name": "AI 算力供应链",
       "role": "HBM/存储周期",
-      "price": 1132.33,
-      "layer_score": 80.3,
+      "price": 1145.7507,
+      "layer_score": 80.6,
       "trend_score": 76.0,
       "data_status": "行情已接入",
       "radar_action": "进入二次分析候选池；等待 Buy-Side 复核",
-      "last_seen_at": "2026-06-28T15:58:27+08:00",
-      "priority": 172.36,
+      "last_seen_at": "2026-06-29T17:07:39+08:00",
+      "priority": 172.72,
       "last_analysis_at": "2026-06-26T12:00:00+08:00",
       "cooldown_until": null,
       "reentered_at": "2026-06-26T14:14:30+08:00"
@@ -2108,13 +2228,13 @@
       "layer_name": "数据中心电力 / 液冷 / 配电",
       "chain_name": "AI 算力供应链",
       "role": "工业流体与热管理",
-      "price": 968.92,
-      "layer_score": 75.8,
+      "price": 981.0,
+      "layer_score": 75.5,
       "trend_score": 88.0,
       "data_status": "行情已接入",
       "radar_action": "进入二次分析候选池；等待 Buy-Side 复核",
-      "last_seen_at": "2026-06-28T15:58:27+08:00",
-      "priority": 178.96,
+      "last_seen_at": "2026-06-29T17:07:39+08:00",
+      "priority": 178.6,
       "last_analysis_at": "2026-06-21T12:00:00+08:00",
       "cooldown_until": null
     },
@@ -2157,9 +2277,9 @@
       "status": "retreated",
       "entered_at": "2026-06-21T02:01:41+08:00",
       "next_analysis_due_at": null,
-      "review_count": 19,
+      "review_count": 20,
       "pass_count": 0,
-      "fail_count": 19,
+      "fail_count": 20,
       "history": [
         {
           "reviewed_at": "2026-06-21T12:00:00+08:00",
@@ -2312,26 +2432,34 @@
           "layer_score": 80.5,
           "trend_score": 88.0,
           "price": 440.83
+        },
+        {
+          "reviewed_at": "2026-06-29T12:00:00+08:00",
+          "result": "退回观察",
+          "reason": "美股候选 R/R 0.62:1 低于 2.0:1，退回观察。",
+          "layer_score": 80.6,
+          "trend_score": 88.0,
+          "price": 439.763
         }
       ],
-      "last_result": "退回观察，等待重新触发",
-      "last_reason": "美股候选 R/R 0.61:1 低于 2.0:1，退回观察。",
+      "last_result": "退回观察",
+      "last_reason": "美股候选 R/R 0.62:1 低于 2.0:1，退回观察。",
       "code": "US.TSM",
       "name": "TSMC ADR",
       "market": "US",
       "layer_name": "GPU / ASIC / HBM / 先进封装",
       "chain_name": "AI 算力供应链",
       "role": "先进制程与封装",
-      "price": 432.35,
-      "layer_score": 80.3,
-      "trend_score": 76.0,
+      "price": 439.763,
+      "layer_score": 80.6,
+      "trend_score": 88.0,
       "data_status": "行情已接入",
       "radar_action": "进入二次分析候选池；等待 Buy-Side 复核",
-      "last_seen_at": "2026-06-28T15:58:27+08:00",
-      "priority": 172.36,
-      "last_analysis_at": "2026-06-25T12:00:00+08:00",
+      "last_seen_at": "2026-06-29T17:07:39+08:00",
+      "priority": 184.72,
+      "last_analysis_at": "2026-06-29T12:00:00+08:00",
       "cooldown_until": null,
-      "reentered_at": "2026-06-25T12:40:37+08:00"
+      "reentered_at": "2026-06-29T17:07:39+08:00"
     },
     "US.TTMI": {
       "status": "retreated",
@@ -2366,13 +2494,13 @@
       "layer_name": "高速 PCB / 覆铜板 / 电子布 / 铜箔",
       "chain_name": "AI 算力供应链",
       "role": "高端 PCB 美股代理",
-      "price": 191.49,
-      "layer_score": 77.1,
+      "price": 194.5,
+      "layer_score": 76.9,
       "trend_score": 76.0,
       "data_status": "行情已接入",
       "radar_action": "进入二次分析候选池；等待 Buy-Side 复核",
-      "last_seen_at": "2026-06-28T15:58:27+08:00",
-      "priority": 168.52,
+      "last_seen_at": "2026-06-29T17:07:39+08:00",
+      "priority": 168.28,
       "last_analysis_at": "2026-06-23T12:00:00+08:00",
       "cooldown_until": null
     },
