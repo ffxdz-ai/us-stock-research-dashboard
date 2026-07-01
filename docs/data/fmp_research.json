@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-06-30T00:44:23+08:00",
-  "generated_label": "2026-06-30 00:44",
+  "generated_at": "2026-07-01T14:04:36+08:00",
+  "generated_label": "2026-07-01 14:04",
   "fmp_enabled": true,
   "data_boundary": {
     "role": "FMP analyst expectations and earnings layer; not a trading instruction",
@@ -19,7 +19,7 @@
     "symbol_count": 12,
     "actionable_count": 1,
     "restricted_endpoint_count": 3,
-    "restricted_result_count": 50,
+    "restricted_result_count": 55,
     "rate_limited_result_count": 0,
     "error_count": 0
   },
@@ -29,8 +29,8 @@
       "name": "NVIDIA Corporation Common Stock",
       "coverage_status": "ok",
       "restricted_endpoints": [],
-      "price": 193.0509,
-      "quote_time": "Jun 29, 2026 12:44 PM ET",
+      "price": 200.09,
+      "quote_time": "Jun 30, 2026",
       "annual_estimate": {
         "date": "2029-01-25",
         "revenueAvg": 677616309409,
@@ -73,7 +73,7 @@
         "targetConsensus": 316.79,
         "targetMedian": 300
       },
-      "price_target_upside_pct": 64.1,
+      "price_target_upside_pct": 58.32,
       "latest_earnings_surprise": {
         "date": "2026-05-20",
         "eps_actual": 1.87,
@@ -83,7 +83,7 @@
         "revenue_actual": 81615000000.0,
         "revenue_estimated": 78423370000.0,
         "revenue_surprise_pct": 4.07,
-        "last_updated": "2026-06-29"
+        "last_updated": "2026-07-01"
       },
       "earnings_history": [
         {
@@ -93,7 +93,7 @@
           "epsEstimated": 2.08,
           "revenueActual": null,
           "revenueEstimated": 91710240000,
-          "lastUpdated": "2026-06-29"
+          "lastUpdated": "2026-07-01"
         },
         {
           "symbol": "NVDA",
@@ -102,7 +102,7 @@
           "epsEstimated": 1.76,
           "revenueActual": 81615000000,
           "revenueEstimated": 78423370000,
-          "lastUpdated": "2026-06-29"
+          "lastUpdated": "2026-07-01"
         },
         {
           "symbol": "NVDA",
@@ -136,130 +136,12 @@
       },
       "expectation_score": 84.0,
       "score_notes": [
-        "一致目标价上行空间 64.1%",
+        "一致目标价上行空间 58.3%",
         "最近 EPS 超预期 6.2%",
         "收入超预期 4.1%",
         "FMP rating score 4.0"
       ],
       "action": "预期差增强，进入 Buy-Side 复核"
-    },
-    {
-      "symbol": "AMD",
-      "name": "Advanced Micro Devices, Inc. Common Stock",
-      "coverage_status": "ok",
-      "restricted_endpoints": [],
-      "price": 531.81,
-      "quote_time": "Jun 29, 2026 12:44 PM ET",
-      "annual_estimate": {
-        "date": "2028-12-27",
-        "revenueAvg": 101590437411,
-        "revenueLow": 101052870666,
-        "revenueHigh": 102128004155,
-        "epsAvg": 18.00362,
-        "epsLow": 12.607,
-        "epsHigh": 31.02721,
-        "ebitdaAvg": 22042226169,
-        "numAnalystsRevenue": 32,
-        "numAnalystsEps": 15
-      },
-      "quarterly_estimate": null,
-      "estimate_revision": {
-        "status": "compared",
-        "epsAvg_change": 0.0,
-        "epsAvg_change_pct": 0.0,
-        "revenueAvg_change": 0.0,
-        "revenueAvg_change_pct": 0.0,
-        "ebitdaAvg_change": 0.0,
-        "ebitdaAvg_change_pct": 0.0,
-        "status_label": "无明显修正"
-      },
-      "price_target_summary": {
-        "symbol": "AMD",
-        "lastMonthCount": 6,
-        "lastMonthAvgPriceTarget": 616.67,
-        "lastQuarterCount": 28,
-        "lastQuarterAvgPriceTarget": 477.04,
-        "lastYearCount": 83,
-        "lastYearAvgPriceTarget": 345.27,
-        "allTimeCount": 241,
-        "allTimeAvgPriceTarget": 210.79,
-        "publishers": "[\"StreetInsider\",\"TheFly\",\"Benzinga\",\"TipRanks Contributor\",\"MarketWatch\",\"Pulse 2.0\",\"Investing\",\"Barrons\",\"TipRanks\"]"
-      },
-      "price_target_consensus": {
-        "symbol": "AMD",
-        "targetHigh": 700,
-        "targetLow": 260,
-        "targetConsensus": 477.26,
-        "targetMedian": 450
-      },
-      "price_target_upside_pct": -10.26,
-      "latest_earnings_surprise": {
-        "date": "2026-05-05",
-        "eps_actual": 1.37,
-        "eps_estimated": 1.29,
-        "eps_surprise": 0.08,
-        "eps_surprise_pct": 6.2,
-        "revenue_actual": 10253000000.0,
-        "revenue_estimated": 9900008000.0,
-        "revenue_surprise_pct": 3.57,
-        "last_updated": "2026-06-29"
-      },
-      "earnings_history": [
-        {
-          "symbol": "AMD",
-          "date": "2026-08-04",
-          "epsActual": null,
-          "epsEstimated": 1.6,
-          "revenueActual": null,
-          "revenueEstimated": 11246170000,
-          "lastUpdated": "2026-06-29"
-        },
-        {
-          "symbol": "AMD",
-          "date": "2026-05-05",
-          "epsActual": 1.37,
-          "epsEstimated": 1.29,
-          "revenueActual": 10253000000,
-          "revenueEstimated": 9900008000,
-          "lastUpdated": "2026-06-29"
-        },
-        {
-          "symbol": "AMD",
-          "date": "2026-02-03",
-          "epsActual": 1.53,
-          "epsEstimated": 1.32,
-          "revenueActual": 10270000000,
-          "revenueEstimated": 9668357000,
-          "lastUpdated": "2026-05-03"
-        },
-        {
-          "symbol": "AMD",
-          "date": "2025-11-04",
-          "epsActual": 1.2,
-          "epsEstimated": 1.17,
-          "revenueActual": 9246000000,
-          "revenueEstimated": 8756463065,
-          "lastUpdated": "2026-02-04"
-        }
-      ],
-      "rating_snapshot": {
-        "symbol": "AMD",
-        "rating": "B",
-        "overallScore": 3,
-        "discountedCashFlowScore": 3,
-        "returnOnEquityScore": 3,
-        "returnOnAssetsScore": 4,
-        "debtToEquityScore": 4,
-        "priceToEarningsScore": 1,
-        "priceToBookScore": 2
-      },
-      "expectation_score": 44.0,
-      "score_notes": [
-        "目标价低于现价 10.3%",
-        "最近 EPS 超预期 6.2%",
-        "收入超预期 3.6%"
-      ],
-      "action": "普通观察"
     },
     {
       "symbol": "AVGO",
@@ -272,8 +154,8 @@
         "/price-target-summary",
         "/ratings-snapshot"
       ],
-      "price": 370.44,
-      "quote_time": "Jun 29, 2026 12:44 PM ET",
+      "price": 377.75,
+      "quote_time": "Jun 30, 2026",
       "annual_estimate": null,
       "quarterly_estimate": null,
       "estimate_revision": {
@@ -303,8 +185,8 @@
         "/price-target-summary",
         "/ratings-snapshot"
       ],
-      "price": 407.7,
-      "quote_time": "Jun 29, 2026 12:44 PM ET",
+      "price": 397.68,
+      "quote_time": "Jun 30, 2026",
       "annual_estimate": null,
       "quarterly_estimate": null,
       "estimate_revision": {
@@ -334,8 +216,8 @@
         "/price-target-summary",
         "/ratings-snapshot"
       ],
-      "price": 164.11,
-      "quote_time": "Jun 29, 2026 12:44 PM ET",
+      "price": 169.88,
+      "quote_time": "Jun 30, 2026",
       "annual_estimate": null,
       "quarterly_estimate": null,
       "estimate_revision": {
@@ -365,8 +247,8 @@
         "/price-target-summary",
         "/ratings-snapshot"
       ],
-      "price": 40.92,
-      "quote_time": "Jun 29, 2026 12:44 PM ET",
+      "price": 44.95,
+      "quote_time": "Jun 30, 2026",
       "annual_estimate": null,
       "quarterly_estimate": null,
       "estimate_revision": {
@@ -396,8 +278,8 @@
         "/price-target-summary",
         "/ratings-snapshot"
       ],
-      "price": 272.29,
-      "quote_time": "Jun 29, 2026 12:44 PM ET",
+      "price": 297.89,
+      "quote_time": "Jun 30, 2026",
       "annual_estimate": null,
       "quarterly_estimate": null,
       "estimate_revision": {
@@ -427,8 +309,8 @@
         "/price-target-summary",
         "/ratings-snapshot"
       ],
-      "price": 1871.26,
-      "quote_time": "Jun 29, 2026 12:44 PM ET",
+      "price": 1989.44,
+      "quote_time": "Jun 30, 2026",
       "annual_estimate": null,
       "quarterly_estimate": null,
       "estimate_revision": {
@@ -458,8 +340,39 @@
         "/price-target-summary",
         "/ratings-snapshot"
       ],
-      "price": 273.86,
-      "quote_time": "Jun 29, 2026 12:44 PM ET",
+      "price": 301.71,
+      "quote_time": "Jun 30, 2026",
+      "annual_estimate": null,
+      "quarterly_estimate": null,
+      "estimate_revision": {
+        "status": "missing",
+        "status_label": "缺少分析师预期"
+      },
+      "price_target_summary": {},
+      "price_target_consensus": {},
+      "price_target_upside_pct": null,
+      "latest_earnings_surprise": null,
+      "earnings_history": [],
+      "rating_snapshot": {},
+      "expectation_score": null,
+      "score_notes": [
+        "FMP 套餐或 symbol 权限受限，不能评价预期差"
+      ],
+      "action": "FMP 权限受限，暂不评价"
+    },
+    {
+      "symbol": "HON",
+      "name": "Honeywell International Inc. Common Stock",
+      "coverage_status": "restricted",
+      "restricted_endpoints": [
+        "/analyst-estimates",
+        "/earnings",
+        "/price-target-consensus",
+        "/price-target-summary",
+        "/ratings-snapshot"
+      ],
+      "price": 223.9,
+      "quote_time": "Jun 30, 2026",
       "annual_estimate": null,
       "quarterly_estimate": null,
       "estimate_revision": {
@@ -489,8 +402,8 @@
         "/price-target-summary",
         "/ratings-snapshot"
       ],
-      "price": 142.55,
-      "quote_time": "Jun 29, 2026 12:44 PM ET",
+      "price": 143.15,
+      "quote_time": "Jun 30, 2026",
       "annual_estimate": null,
       "quarterly_estimate": null,
       "estimate_revision": {
@@ -520,8 +433,8 @@
         "/price-target-summary",
         "/ratings-snapshot"
       ],
-      "price": 837.745,
-      "quote_time": "Jun 29, 2026 12:44 PM ET",
+      "price": 858.06,
+      "quote_time": "Jun 30, 2026",
       "annual_estimate": null,
       "quarterly_estimate": null,
       "estimate_revision": {
@@ -541,8 +454,8 @@
       "action": "FMP 权限受限，暂不评价"
     },
     {
-      "symbol": "CIEN",
-      "name": "Ciena Corporation Common Stock",
+      "symbol": "LRCX",
+      "name": "Lam Research Corporation Common Stock",
       "coverage_status": "restricted",
       "restricted_endpoints": [
         "/analyst-estimates",
@@ -551,8 +464,8 @@
         "/price-target-summary",
         "/ratings-snapshot"
       ],
-      "price": 480.6,
-      "quote_time": "Jun 29, 2026 12:44 PM ET",
+      "price": 433.33,
+      "quote_time": "Jun 30, 2026",
       "annual_estimate": null,
       "quarterly_estimate": null,
       "estimate_revision": {
@@ -578,8 +491,8 @@
       "name": "NVIDIA Corporation Common Stock",
       "coverage_status": "ok",
       "restricted_endpoints": [],
-      "price": 193.0509,
-      "quote_time": "Jun 29, 2026 12:44 PM ET",
+      "price": 200.09,
+      "quote_time": "Jun 30, 2026",
       "annual_estimate": {
         "date": "2029-01-25",
         "revenueAvg": 677616309409,
@@ -622,7 +535,7 @@
         "targetConsensus": 316.79,
         "targetMedian": 300
       },
-      "price_target_upside_pct": 64.1,
+      "price_target_upside_pct": 58.32,
       "latest_earnings_surprise": {
         "date": "2026-05-20",
         "eps_actual": 1.87,
@@ -632,7 +545,7 @@
         "revenue_actual": 81615000000.0,
         "revenue_estimated": 78423370000.0,
         "revenue_surprise_pct": 4.07,
-        "last_updated": "2026-06-29"
+        "last_updated": "2026-07-01"
       },
       "earnings_history": [
         {
@@ -642,7 +555,7 @@
           "epsEstimated": 2.08,
           "revenueActual": null,
           "revenueEstimated": 91710240000,
-          "lastUpdated": "2026-06-29"
+          "lastUpdated": "2026-07-01"
         },
         {
           "symbol": "NVDA",
@@ -651,7 +564,7 @@
           "epsEstimated": 1.76,
           "revenueActual": 81615000000,
           "revenueEstimated": 78423370000,
-          "lastUpdated": "2026-06-29"
+          "lastUpdated": "2026-07-01"
         },
         {
           "symbol": "NVDA",
@@ -685,7 +598,7 @@
       },
       "expectation_score": 84.0,
       "score_notes": [
-        "一致目标价上行空间 64.1%",
+        "一致目标价上行空间 58.3%",
         "最近 EPS 超预期 6.2%",
         "收入超预期 4.1%",
         "FMP rating score 4.0"
@@ -960,6 +873,41 @@
       "message": "Premium Query Parameter: 'Special Endpoint : This value set for 'symbol' is not available under your current subscription please visit our subscription page to upgrade your plan at https://financialmodelingprep.com/"
     },
     {
+      "symbol": "HON",
+      "endpoint": "/analyst-estimates",
+      "status": 402,
+      "kind": "restricted",
+      "message": "Premium Query Parameter: 'Special Endpoint : This value set for 'symbol' is not available under your current subscription please visit our subscription page to upgrade your plan at https://financialmodelingprep.com/"
+    },
+    {
+      "symbol": "HON",
+      "endpoint": "/price-target-summary",
+      "status": 402,
+      "kind": "restricted",
+      "message": "Premium Query Parameter: 'Special Endpoint : This value set for 'symbol' is not available under your current subscription please visit our subscription page to upgrade your plan at https://financialmodelingprep.com/"
+    },
+    {
+      "symbol": "HON",
+      "endpoint": "/price-target-consensus",
+      "status": 402,
+      "kind": "restricted",
+      "message": "Premium Query Parameter: 'Special Endpoint : This value set for 'symbol' is not available under your current subscription please visit our subscription page to upgrade your plan at https://financialmodelingprep.com/"
+    },
+    {
+      "symbol": "HON",
+      "endpoint": "/earnings",
+      "status": 402,
+      "kind": "restricted",
+      "message": "Premium Query Parameter: 'Special Endpoint : This value set for 'symbol' is not available under your current subscription please visit our subscription page to upgrade your plan at https://financialmodelingprep.com/"
+    },
+    {
+      "symbol": "HON",
+      "endpoint": "/ratings-snapshot",
+      "status": 402,
+      "kind": "restricted",
+      "message": "Premium Query Parameter: 'Special Endpoint : This value set for 'symbol' is not available under your current subscription please visit our subscription page to upgrade your plan at https://financialmodelingprep.com/"
+    },
+    {
       "symbol": "EMR",
       "endpoint": "/analyst-estimates",
       "status": 402,
@@ -1030,35 +978,35 @@
       "message": "Premium Query Parameter: 'Special Endpoint : This value set for 'symbol' is not available under your current subscription please visit our subscription page to upgrade your plan at https://financialmodelingprep.com/"
     },
     {
-      "symbol": "CIEN",
+      "symbol": "LRCX",
       "endpoint": "/analyst-estimates",
       "status": 402,
       "kind": "restricted",
       "message": "Premium Query Parameter: 'Special Endpoint : This value set for 'symbol' is not available under your current subscription please visit our subscription page to upgrade your plan at https://financialmodelingprep.com/"
     },
     {
-      "symbol": "CIEN",
+      "symbol": "LRCX",
       "endpoint": "/price-target-summary",
       "status": 402,
       "kind": "restricted",
       "message": "Premium Query Parameter: 'Special Endpoint : This value set for 'symbol' is not available under your current subscription please visit our subscription page to upgrade your plan at https://financialmodelingprep.com/"
     },
     {
-      "symbol": "CIEN",
+      "symbol": "LRCX",
       "endpoint": "/price-target-consensus",
       "status": 402,
       "kind": "restricted",
       "message": "Premium Query Parameter: 'Special Endpoint : This value set for 'symbol' is not available under your current subscription please visit our subscription page to upgrade your plan at https://financialmodelingprep.com/"
     },
     {
-      "symbol": "CIEN",
+      "symbol": "LRCX",
       "endpoint": "/earnings",
       "status": 402,
       "kind": "restricted",
       "message": "Premium Query Parameter: 'Special Endpoint : This value set for 'symbol' is not available under your current subscription please visit our subscription page to upgrade your plan at https://financialmodelingprep.com/"
     },
     {
-      "symbol": "CIEN",
+      "symbol": "LRCX",
       "endpoint": "/ratings-snapshot",
       "status": 402,
       "kind": "restricted",
