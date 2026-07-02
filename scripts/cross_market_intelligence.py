@@ -198,6 +198,14 @@ def security_signal(
     crowding = number(security.get("crowding_score"))
     valuation = number(security.get("valuation_pe")) or number(market_row.get("valuation_pe"))
     rr = number(security.get("reward_risk")) or number(market_row.get("reward_risk"))
+    starter_entry = number(security.get("starter_entry")) or number(market_row.get("starter_entry"))
+    starter_stop = number(security.get("starter_stop")) or number(market_row.get("starter_stop"))
+    starter_target = number(security.get("starter_target")) or number(market_row.get("starter_target"))
+    starter_reward_risk = number(security.get("starter_reward_risk")) or number(market_row.get("starter_reward_risk"))
+    breakout_trigger = number(security.get("breakout_trigger")) or number(market_row.get("breakout_trigger"))
+    breakout_stop = number(security.get("breakout_stop")) or number(market_row.get("breakout_stop"))
+    breakout_target = number(security.get("breakout_target")) or number(market_row.get("breakout_target"))
+    breakout_reward_risk = number(security.get("breakout_reward_risk")) or number(market_row.get("breakout_reward_risk"))
 
     historical_first = journal.get("first_seen_at") or journal.get("first_seen")
     previous_score = number(journal.get("last_opportunity_score"))
@@ -224,6 +232,14 @@ def security_signal(
         "price": price,
         "valuation_pe": valuation,
         "reward_risk": rr,
+        "starter_entry": starter_entry,
+        "starter_stop": starter_stop,
+        "starter_target": starter_target,
+        "starter_reward_risk": starter_reward_risk,
+        "breakout_trigger": breakout_trigger,
+        "breakout_stop": breakout_stop,
+        "breakout_target": breakout_target,
+        "breakout_reward_risk": breakout_reward_risk,
         "opportunity_score": opportunity,
         "supply_layer_score": supply_layer,
         "trend_score": trend,

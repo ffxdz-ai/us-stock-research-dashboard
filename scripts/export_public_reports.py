@@ -407,6 +407,35 @@ def number(value: Any) -> float | None:
     return None
 
 
+def matured_return(row: dict[str, Any], theme: dict[str, Any], days: int) -> float | None:
+    """Return a conservative checkpoint return once a theme is old enough.
+
+    The review-metrics generator currently records live per-symbol returns as
+    ``return_pct``. Until it stores exact historical checkpoint closes, publish
+    that value only after the requested age threshold has passed. This avoids
+    showing a 7D value before the idea is seven calendar days old, while also
+    avoiding stale "样本不足" after the checkpoint becomes due.
+    """
+
+    for key in (f"return_{days}d", f"return_{days}D"):
+        explicit = number(row.get(key))
+        if explicit is not None:
+            return explicit
+    age_days = number(theme.get("age_days"))
+    live_return = number(row.get("return_pct"))
+    if age_days is not None and age_days >= days and live_return is not None:
+        return live_return
+    return None
+
+
+def first_metric(row: dict[str, Any], *keys: str) -> float | None:
+    for key in keys:
+        parsed = number(row.get(key))
+        if parsed is not None:
+            return parsed
+    return None
+
+
 def fmt_price(value: Any, currency: str = "") -> str:
     parsed = number(value)
     if parsed is None:
@@ -555,6 +584,72 @@ def rr_trigger_price(target: float | None, stop_loss: float | None, rr_required:
     return round((target + rr_required * stop_loss) / (rr_required + 1), 2)
 
 
+def valid_path(entry: float | None, stop_loss: float | None, target: float | None) -> bool:
+    return entry is not None and stop_loss is not None and target is not None and stop_loss < entry < target
+
+
+def executable_starter_path(item: dict[str, Any]) -> dict[str, Any] | None:
+    price = number(item.get("price"))
+    entry = number(item.get("starter_entry"))
+    stop_loss = number(item.get("starter_stop"))
+    target = number(item.get("starter_target"))
+    rr = number(item.get("starter_reward_risk"))
+    mechanical_rr = number(item.get("rr_ratio"))
+    opportunity = number(item.get("opportunity_score"))
+    trend = number(item.get("trend_score"))
+    crowding = number(item.get("crowding_score"))
+    if not valid_path(entry, stop_loss, target) or rr is None or price is None:
+        return None
+    if price > entry * 1.01:
+        return None
+    if rr < 1.5:
+        return None
+    if opportunity is not None and opportunity < 65:
+        return None
+    if trend is not None and trend < 60 and not (mechanical_rr is not None and mechanical_rr >= 2 and opportunity is not None and opportunity >= 70):
+        return None
+    if crowding is not None and crowding >= 80:
+        return None
+    return {"signal_type": "starter", "entry": entry, "stop_loss": stop_loss, "target": target, "rr": rr}
+
+
+def executable_breakout_path(item: dict[str, Any]) -> dict[str, Any] | None:
+    price = number(item.get("price"))
+    trigger = number(item.get("breakout_trigger"))
+    stop_loss = number(item.get("breakout_stop"))
+    target = number(item.get("breakout_target"))
+    rr = number(item.get("breakout_reward_risk"))
+    trend = number(item.get("trend_score"))
+    if not valid_path(trigger, stop_loss, target) or rr is None or price is None:
+        return None
+    if price < trigger or price > trigger * 1.03:
+        return None
+    if rr < 2:
+        return None
+    if trend is not None and trend < 55:
+        return None
+    return {"signal_type": "breakout", "entry": trigger, "stop_loss": stop_loss, "target": target, "rr": rr}
+
+
+def apply_executable_path(item: dict[str, Any], path: dict[str, Any]) -> None:
+    original_rr = number(item.get("rr_ratio"))
+    if original_rr is not None:
+        item["mechanical_rr_ratio"] = original_rr
+    item["signal_type"] = path["signal_type"]
+    item["entry_price"] = round(float(path["entry"]), 2)
+    item["stop_loss"] = round(float(path["stop_loss"]), 2)
+    item["target_price"] = round(float(path["target"]), 2)
+    item["rr_ratio"] = round(float(path["rr"]), 2)
+    item["status"] = "executable"
+    item["status_label"] = "可试仓观察" if path["signal_type"] == "starter" else "突破确认"
+    if path["signal_type"] == "starter":
+        item["action"] = "可试仓观察：不是重仓普通买入，按明确止损和目标小仓验证。"
+        item["why_changed"] = unique_list([*(item.get("why_changed") or []), "新增试仓路径：严格回踩未到，但当前价位已有入场/止损/目标/R/R。"], limit=8)
+    else:
+        item["action"] = "突破确认：只有突破有效且不高开追涨时才执行。"
+        item["why_changed"] = unique_list([*(item.get("why_changed") or []), "新增突破路径：用突破触发价、止损和目标重新计算 R/R。"], limit=8)
+
+
 def derive_opportunity_conditions(item: dict[str, Any]) -> tuple[list[str], list[str], list[str]]:
     rr = number(item.get("rr_ratio"))
     rr_required = number(item.get("rr_required")) or 2.0
@@ -602,6 +697,33 @@ def derive_opportunity_conditions(item: dict[str, Any]) -> tuple[list[str], list
             f"现价低于或等于原止损位 {fmt_price(stop_loss, currency)}",
             "原目标价和原入场价已经不能直接用于当前交易计划",
             "需要等待新的 Buy-Side 复核重新定义失效位",
+        ]
+        return buy, avoid, invalid
+
+    signal_type = clean_text(item.get("signal_type"))
+    if signal_type in {"starter", "breakout"} and price is not None and stop_loss is not None and target is not None and entry is not None:
+        if signal_type == "starter":
+            headline = "什么时候买：现价不高于试仓触发价，允许小仓/1股试仓；这不是重仓买入信号"
+            trigger_line = f"价格触发：现价 ≤ {fmt_price(entry, currency)} 才考虑；高于触发价不追"
+        else:
+            headline = "什么时候买：只在突破触发价已经确认、且没有高开过度追涨时执行"
+            trigger_line = f"突破触发：价格站上 {fmt_price(entry, currency)} 且不超过触发价约 3% 才考虑"
+        buy = [
+            headline,
+            trigger_line,
+            f"风控框架：止损 {fmt_price(stop_loss, currency)}；目标 {fmt_price(target, currency)}；当前 R/R {fmt_ratio(rr)}",
+            "执行纪律：只能按整股/小仓验证；跌破止损不补仓；目标或逻辑变化后重新计算",
+            "确认信号：趋势不恶化，且财务/事件/产业链证据至少一项继续改善",
+        ]
+        avoid = [
+            "高于触发价明显追涨不买，等待下一次回踩或重新计算",
+            "R/R 回落到 1.5:1 以下不做试仓；普通买入仍要求 2:1 以上",
+            "数据缺口未修复时只允许试仓观察，不升级为重仓买入",
+        ]
+        invalid = [
+            f"跌破止损 {fmt_price(stop_loss, currency)} 后路径失效",
+            "财报/指引/订单/价格证据弱于预期",
+            "产业链需求或核心假设被证伪",
         ]
         return buy, avoid, invalid
 
@@ -666,6 +788,16 @@ def finalize_opportunities(items: dict[str, dict[str, Any]], limit: int = 80) ->
         )
         item["status"] = status
         item["status_label"] = status_label(status)
+        starter_path = executable_starter_path(item)
+        breakout_path = executable_breakout_path(item)
+        if status not in {"invalidated", "review"} and starter_path:
+            apply_executable_path(item, starter_path)
+        elif status not in {"invalidated", "review"} and breakout_path:
+            apply_executable_path(item, breakout_path)
+        elif item.get("status") == "executable" and (number(item.get("trend_score")) is not None and (number(item.get("trend_score")) or 0) < 45):
+            item["status"] = "waiting_entry"
+            item["status_label"] = status_label("waiting_entry")
+            item["why_changed"] = unique_list([*(item.get("why_changed") or []), "R/R 达标但趋势确认不足，降级为等待买点。"], limit=8)
         if not item.get("price_source") and item.get("price") is not None:
             item["price_source"] = "公开行情快照"
         if not item.get("price_time"):
@@ -697,6 +829,16 @@ def finalize_opportunities(items: dict[str, dict[str, Any]], limit: int = 80) ->
                 "entry_price": item.get("entry_price") or item.get("strict_entry"),
                 "stop_loss": item.get("stop_loss") or item.get("invalidation"),
                 "target_price": item.get("target_price") or item.get("mechanical_target"),
+                "signal_type": item.get("signal_type"),
+                "mechanical_rr_ratio": item.get("mechanical_rr_ratio"),
+                "starter_entry": item.get("starter_entry"),
+                "starter_stop": item.get("starter_stop"),
+                "starter_target": item.get("starter_target"),
+                "starter_reward_risk": item.get("starter_reward_risk"),
+                "breakout_trigger": item.get("breakout_trigger"),
+                "breakout_stop": item.get("breakout_stop"),
+                "breakout_target": item.get("breakout_target"),
+                "breakout_reward_risk": item.get("breakout_reward_risk"),
                 "score_delta": item.get("score_delta") if item.get("score_delta") else None,
                 "why_changed": item.get("why_changed") or [],
                 "buy_conditions": item.get("buy_conditions") or [],
@@ -752,7 +894,19 @@ def derive_opportunities() -> list[dict[str, Any]]:
                     "theme": theme_name,
                     "segment": clean_text(candidate.get("layer")),
                     "action": clean_text(candidate.get("action")),
+                    "price": number(candidate.get("price")),
                     "opportunity_score": number(candidate.get("score")),
+                    "trend_score": number(candidate.get("trend_score")),
+                    "crowding_score": number(candidate.get("crowding_score")),
+                    "rr_ratio": number(candidate.get("reward_risk")),
+                    "starter_entry": number(candidate.get("starter_entry")),
+                    "starter_stop": number(candidate.get("starter_stop")),
+                    "starter_target": number(candidate.get("starter_target")),
+                    "starter_reward_risk": number(candidate.get("starter_reward_risk")),
+                    "breakout_trigger": number(candidate.get("breakout_trigger")),
+                    "breakout_stop": number(candidate.get("breakout_stop")),
+                    "breakout_target": number(candidate.get("breakout_target")),
+                    "breakout_reward_risk": number(candidate.get("breakout_reward_risk")),
                     "currency": currency_for_symbol(symbol),
                     "updated_at": opportunity_radar.get("generated_label") or generated_at,
                     "score_delta": change.get("score_delta"),
@@ -784,6 +938,14 @@ def derive_opportunities() -> list[dict[str, Any]]:
                 "crowding_score": number(candidate.get("crowding_score")),
                 "rr_ratio": number(candidate.get("reward_risk")),
                 "rr_required": 2,
+                "starter_entry": number(candidate.get("starter_entry")),
+                "starter_stop": number(candidate.get("starter_stop")),
+                "starter_target": number(candidate.get("starter_target")),
+                "starter_reward_risk": number(candidate.get("starter_reward_risk")),
+                "breakout_trigger": number(candidate.get("breakout_trigger")),
+                "breakout_stop": number(candidate.get("breakout_stop")),
+                "breakout_target": number(candidate.get("breakout_target")),
+                "breakout_reward_risk": number(candidate.get("breakout_reward_risk")),
                 "updated_at": cross_market.get("generated_label") or generated_at,
                 "score_delta": change.get("score_delta"),
                 "why_changed": change.get("why_changed", []),
@@ -824,6 +986,14 @@ def derive_opportunities() -> list[dict[str, Any]]:
                     "crowding_score": number(security.get("crowding_score")),
                     "rr_ratio": number(security.get("reward_risk")),
                     "rr_required": 2,
+                    "starter_entry": number(security.get("starter_entry")),
+                    "starter_stop": number(security.get("starter_stop")),
+                    "starter_target": number(security.get("starter_target")),
+                    "starter_reward_risk": number(security.get("starter_reward_risk")),
+                    "breakout_trigger": number(security.get("breakout_trigger")),
+                    "breakout_stop": number(security.get("breakout_stop")),
+                    "breakout_target": number(security.get("breakout_target")),
+                    "breakout_reward_risk": number(security.get("breakout_reward_risk")),
                     "updated_at": cross_market.get("generated_label") or generated_at,
                     "score_delta": change.get("score_delta") or security.get("score_delta"),
                     "why_changed": change.get("why_changed", []),
@@ -888,6 +1058,14 @@ def derive_opportunities() -> list[dict[str, Any]]:
                 "entry_price": number(price.get("strict_entry")),
                 "stop_loss": number(price.get("invalidation")),
                 "target_price": number(price.get("mechanical_target")),
+                "starter_entry": number(price.get("starter_entry")),
+                "starter_stop": number(price.get("starter_stop")),
+                "starter_target": number(price.get("starter_target")),
+                "starter_reward_risk": number(price.get("starter_reward_risk")),
+                "breakout_trigger": number(price.get("breakout_trigger")),
+                "breakout_stop": number(price.get("breakout_stop")),
+                "breakout_target": number(price.get("breakout_target")),
+                "breakout_reward_risk": number(price.get("breakout_reward_risk")),
                 "evidence_status": clean_text(card.get("evidence_status")),
                 "updated_at": event_evidence.get("generated_label") or generated_at,
                 "why_changed": [
@@ -919,6 +1097,17 @@ def derive_review_stats(metrics_path: Path = DEFAULT_REVIEW_METRICS_PATH) -> dic
             symbol = str(row.get("code") or "").strip()
             if not symbol or symbol in items_by_symbol:
                 continue
+            return_7d = matured_return(row, theme, 7)
+            return_30d = matured_return(row, theme, 30)
+            return_60d = matured_return(row, theme, 60)
+            return_90d = matured_return(row, theme, 90)
+            max_drawdown = first_metric(row, "max_drawdown", "max_drawdown_pct", "drawdown_pct")
+            max_gain = first_metric(row, "max_gain", "max_gain_pct", "peak_gain_pct")
+            lesson = row.get("lesson") or row.get("error_type")
+            if return_7d is not None and return_7d >= 10:
+                lesson = "错过机会复盘：7D涨幅超过10%，需要检查当时买入门槛是否过严。"
+            elif not lesson and return_7d is not None and return_30d is None:
+                lesson = "7D已可复盘；30D仍待到期。"
             items_by_symbol[symbol] = {
                 "symbol": symbol,
                 "name": "",
@@ -926,14 +1115,14 @@ def derive_review_stats(metrics_path: Path = DEFAULT_REVIEW_METRICS_PATH) -> dic
                 "first_price": row.get("initial_price"),
                 "currency": currency_for_symbol(symbol),
                 "status": "pending" if "未成熟" in status or "观察" in status else status,
-                "return_7d": None,
-                "return_30d": None,
-                "return_60d": None,
-                "return_90d": None,
-                "max_drawdown": None,
-                "max_gain": None,
-                "error_type": None,
-                "lesson": None,
+                "return_7d": return_7d,
+                "return_30d": return_30d,
+                "return_60d": return_60d,
+                "return_90d": return_90d,
+                "max_drawdown": max_drawdown,
+                "max_gain": max_gain,
+                "error_type": row.get("error_type"),
+                "lesson": lesson,
             }
 
     completed_count = summary.get("completed_review_count")

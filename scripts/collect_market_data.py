@@ -374,6 +374,9 @@ def yahoo_chart(symbol: str) -> dict[str, Any]:
     def low(values: list[float], n: int) -> float | None:
         return round(min(values[-n:]), 4) if len(values) >= n else None
 
+    def high(values: list[float], n: int) -> float | None:
+        return round(max(values[-n:]), 4) if len(values) >= n else None
+
     returns = []
     for prev, current in zip(closes[-21:-1], closes[-20:]):
         if prev > 0 and current > 0:
@@ -390,6 +393,8 @@ def yahoo_chart(symbol: str) -> dict[str, Any]:
         "ma200": avg(closes, 200),
         "low20": low(lows or closes, 20),
         "low60": low(lows or closes, 60),
+        "high20": high(highs or closes, 20),
+        "high60": high(highs or closes, 60),
         "high252": round(max(highs or closes), 4),
         "prior_high252": round(max((highs or closes)[:-1]), 4) if len(highs or closes) > 1 else None,
         "low252": round(min(lows or closes), 4),
@@ -444,6 +449,9 @@ def nasdaq_chart(symbol: str) -> dict[str, Any]:
     def low(values: list[float], n: int) -> float | None:
         return round(min(values[-n:]), 4) if len(values) >= n else None
 
+    def high(values: list[float], n: int) -> float | None:
+        return round(max(values[-n:]), 4) if len(values) >= n else None
+
     returns = []
     for prev, current in zip(closes[-21:-1], closes[-20:]):
         if prev > 0 and current > 0:
@@ -457,6 +465,8 @@ def nasdaq_chart(symbol: str) -> dict[str, Any]:
         "ma200": avg(closes, 200),
         "low20": low(lows or closes, 20),
         "low60": low(lows or closes, 60),
+        "high20": high(highs or closes, 20),
+        "high60": high(highs or closes, 60),
         "high252": round(max(highs or closes), 4),
         "prior_high252": round(max((highs or closes)[:-1]), 4) if len(highs or closes) > 1 else None,
         "low252": round(min(lows or closes), 4),
@@ -530,6 +540,9 @@ def futu_chart(symbol: str) -> dict[str, Any]:
     def low(values: list[float], n: int) -> float | None:
         return round(min(values[-n:]), 4) if len(values) >= n else None
 
+    def high(values: list[float], n: int) -> float | None:
+        return round(max(values[-n:]), 4) if len(values) >= n else None
+
     returns = []
     for prev, current in zip(closes[-21:-1], closes[-20:]):
         if prev > 0 and current > 0:
@@ -543,6 +556,8 @@ def futu_chart(symbol: str) -> dict[str, Any]:
         "ma200": avg(closes, 200),
         "low20": low(lows or closes, 20),
         "low60": low(lows or closes, 60),
+        "high20": high(highs or closes, 20),
+        "high60": high(highs or closes, 60),
         "high252": round(max(highs or closes), 4),
         "prior_high252": round(max((highs or closes)[:-1]), 4) if len(highs or closes) > 1 else None,
         "low252": round(min(lows or closes), 4),
@@ -900,6 +915,24 @@ def number(value: Any) -> float | None:
     return float(value) if isinstance(value, (int, float)) else None
 
 
+def finite_round(value: float | None, digits: int = 2) -> float | None:
+    if value is None or not math.isfinite(float(value)):
+        return None
+    return round(float(value), digits)
+
+
+def rr_ratio(entry: float | None, stop: float | None, target: float | None) -> float | None:
+    if entry is None or stop is None or target is None:
+        return None
+    if not (stop < entry < target):
+        return None
+    risk = entry - stop
+    reward = target - entry
+    if risk <= 0 or reward <= 0:
+        return None
+    return round(reward / risk, 2)
+
+
 def first_number(mapping: dict[str, Any], keys: list[str]) -> tuple[float | None, str | None]:
     for key in keys:
         value = number(mapping.get(key))
@@ -1031,10 +1064,13 @@ def evaluate_candidate(
     estimated_pe_from_sec = None
     if market_cap and latest_net_income_value and latest_net_income_value > 0:
         estimated_pe_from_sec = round(market_cap / latest_net_income_value, 2)
+    ma20 = number(chart.get("ma20"))
     ma50 = number(chart.get("ma50"))
     ma200 = number(chart.get("ma200"))
     low20 = number(chart.get("low20"))
     low60 = number(chart.get("low60"))
+    high20 = number(chart.get("high20"))
+    high60 = number(chart.get("high60"))
     high252 = number(chart.get("high252") or quote.get("fiftyTwoWeekHigh"))
     physical = ticker in set(config.get("physical_ai_focus", []))
     rules = config.get("entry_rules", {})
@@ -1122,9 +1158,80 @@ def evaluate_candidate(
         and reward_risk is not None
         and reward_risk >= config.get("min_reward_risk_for_buy", 2.0)
     )
+
+    starter_stop_candidates = [
+        value
+        for value in [
+            low20 * 0.985 if low20 else None,
+            ma20 * 0.97 if ma20 else None,
+            ma50 * 0.94 if ma50 else None,
+            price * (0.90 if physical else 0.92) if price else None,
+        ]
+        if value is not None and price and value < price
+    ]
+    starter_stop = max(starter_stop_candidates) if starter_stop_candidates else None
+    starter_target_candidates = [
+        mechanical_target,
+        high252 * 1.03 if high252 and price and high252 > price else None,
+        price * (1.20 if physical else 1.14) if price else None,
+    ]
+    starter_target = max([value for value in starter_target_candidates if value is not None], default=None)
+    starter_entry = price * 1.005 if price and starter_stop and starter_target else None
+    starter_reward_risk = rr_ratio(starter_entry, starter_stop, starter_target)
+    premium50_for_starter = (price / ma50 - 1) if price and ma50 else None
+    starter_buyable = bool(
+        price
+        and starter_entry
+        and starter_stop
+        and starter_target
+        and starter_reward_risk is not None
+        and starter_reward_risk >= float(config.get("min_starter_reward_risk", 1.5))
+        and data_confidence >= float(config.get("min_starter_data_confidence", 0.5))
+        and technical_score >= float(config.get("min_starter_technical_score", -0.35))
+        and (premium50_for_starter is None or premium50_for_starter <= float(config.get("max_starter_premium_to_50dma_pct", 22)) / 100)
+    )
+
+    breakout_trigger = high20 * 1.005 if high20 else None
+    breakout_stop_candidates = [
+        value
+        for value in [
+            low20 * 0.985 if low20 else None,
+            ma20 * 0.97 if ma20 else None,
+            price * (0.91 if physical else 0.93) if price else None,
+        ]
+        if value is not None and breakout_trigger and value < breakout_trigger
+    ]
+    breakout_stop = max(breakout_stop_candidates) if breakout_stop_candidates else None
+    breakout_target_candidates = [
+        high252 * 1.05 if high252 and breakout_trigger and high252 >= breakout_trigger else None,
+        breakout_trigger * (1.18 if physical else 1.12) if breakout_trigger else None,
+    ]
+    breakout_target = max([value for value in breakout_target_candidates if value is not None], default=None)
+    breakout_reward_risk = rr_ratio(breakout_trigger, breakout_stop, breakout_target)
+    breakout_buyable = bool(
+        price
+        and breakout_trigger
+        and price >= breakout_trigger
+        and price <= breakout_trigger * 1.03
+        and breakout_reward_risk is not None
+        and breakout_reward_risk >= float(config.get("min_reward_risk_for_buy", 2.0))
+        and data_confidence >= float(config.get("min_starter_data_confidence", 0.5))
+    )
+
+    entry_path_type = "wait"
+    if buyable:
+        entry_path_type = "strict"
+    elif starter_buyable:
+        entry_path_type = "starter"
+    elif breakout_buyable:
+        entry_path_type = "breakout"
+
+    effective_buyable = bool(buyable or starter_buyable or breakout_buyable)
     overall = quality_score + valuation_score + technical_score + (0.4 if physical else 0.0)
     if buyable:
         overall += 0.8
+    elif starter_buyable or breakout_buyable:
+        overall += 0.35
 
     return {
         "ticker": ticker,
@@ -1166,7 +1273,19 @@ def evaluate_candidate(
         "invalidation": round(invalidation, 2) if invalidation else None,
         "mechanical_target": round(mechanical_target, 2) if mechanical_target else None,
         "reward_risk": reward_risk,
-        "buyable_now": buyable,
+        "strict_buyable_now": buyable,
+        "buyable_now": effective_buyable,
+        "entry_path_type": entry_path_type,
+        "starter_entry": finite_round(starter_entry),
+        "starter_stop": finite_round(starter_stop),
+        "starter_target": finite_round(starter_target),
+        "starter_reward_risk": starter_reward_risk,
+        "starter_buyable": starter_buyable,
+        "breakout_trigger": finite_round(breakout_trigger),
+        "breakout_stop": finite_round(breakout_stop),
+        "breakout_target": finite_round(breakout_target),
+        "breakout_reward_risk": breakout_reward_risk,
+        "breakout_buyable": breakout_buyable,
         "chart": chart,
         "sec": sec,
         "quote_error": quote.get("error"),
@@ -1379,7 +1498,19 @@ def compact_candidate(
             "invalidation": item.get("invalidation"),
             "mechanical_target": item.get("mechanical_target"),
             "reward_risk": item.get("reward_risk"),
+            "strict_buyable_now": item.get("strict_buyable_now"),
             "buyable_now": item.get("buyable_now"),
+            "entry_path_type": item.get("entry_path_type"),
+            "starter_entry": item.get("starter_entry"),
+            "starter_stop": item.get("starter_stop"),
+            "starter_target": item.get("starter_target"),
+            "starter_reward_risk": item.get("starter_reward_risk"),
+            "starter_buyable": item.get("starter_buyable"),
+            "breakout_trigger": item.get("breakout_trigger"),
+            "breakout_stop": item.get("breakout_stop"),
+            "breakout_target": item.get("breakout_target"),
+            "breakout_reward_risk": item.get("breakout_reward_risk"),
+            "breakout_buyable": item.get("breakout_buyable"),
         },
         "technicals": {
             key: chart.get(key)
@@ -1390,6 +1521,8 @@ def compact_candidate(
                 "ma200",
                 "low20",
                 "low60",
+                "high20",
+                "high60",
                 "high252",
                 "prior_high252",
                 "low252",
@@ -1462,6 +1595,10 @@ def candidate_gate(item: dict[str, Any], config: dict[str, Any]) -> tuple[bool, 
     confidence = number(item.get("data_confidence")) or 0.0
     reward_risk = number(item.get("reward_risk"))
     technical = number(item.get("technical_score"))
+    if item.get("starter_buyable") or item.get("breakout_buyable"):
+        if technical is not None and technical < float(config.get("min_starter_technical_score", -0.35)):
+            reasons.append("starter/breakout technical gate failed")
+        return not reasons, reasons
     if confidence < float(config.get("min_data_confidence_for_buy", 0.68)):
         reasons.append("数据覆盖不足")
     if price is None or entry is None or price > entry * 1.05:

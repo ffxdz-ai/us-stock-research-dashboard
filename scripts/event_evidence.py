@@ -498,8 +498,11 @@ def price_evidence(
     free_quote = free_quote_summary(fallback_records or [])
     chart = market_row.get("chart") if isinstance(market_row.get("chart"), dict) else {}
     price = number(market_row.get("price")) or number(fallback_row.get("price")) or number(free_quote.get("price"))
+    ma20 = number(chart.get("ma20")) or number(free_quote.get("ma20"))
     ma50 = number(chart.get("ma50")) or number(free_quote.get("ma50"))
     ma200 = number(chart.get("ma200")) or number(free_quote.get("ma200"))
+    high20 = number(chart.get("high20")) or number(free_quote.get("high20"))
+    high60 = number(chart.get("high60")) or number(free_quote.get("high60"))
     high252 = number(chart.get("high252")) or number(free_quote.get("high252"))
     low20 = number(chart.get("low20")) or number(free_quote.get("low20"))
     low60 = number(chart.get("low60")) or number(free_quote.get("low60"))
@@ -514,6 +517,14 @@ def price_evidence(
     invalidation = number(market_row.get("invalidation")) or number(fallback_row.get("invalidation")) or number(free_quote.get("invalidation"))
     strict_entry = number(market_row.get("strict_entry")) or number(fallback_row.get("strict_entry")) or number(free_quote.get("strict_entry"))
     rr = number(market_row.get("reward_risk")) or number(fallback_row.get("reward_risk")) or number(fallback_row.get("rr_ratio")) or number(free_quote.get("reward_risk"))
+    starter_entry = number(market_row.get("starter_entry")) or number(fallback_row.get("starter_entry")) or number(free_quote.get("starter_entry"))
+    starter_stop = number(market_row.get("starter_stop")) or number(fallback_row.get("starter_stop")) or number(free_quote.get("starter_stop"))
+    starter_target = number(market_row.get("starter_target")) or number(fallback_row.get("starter_target")) or number(free_quote.get("starter_target"))
+    starter_reward_risk = number(market_row.get("starter_reward_risk")) or number(fallback_row.get("starter_reward_risk")) or number(free_quote.get("starter_reward_risk"))
+    breakout_trigger = number(market_row.get("breakout_trigger")) or number(fallback_row.get("breakout_trigger")) or number(free_quote.get("breakout_trigger"))
+    breakout_stop = number(market_row.get("breakout_stop")) or number(fallback_row.get("breakout_stop")) or number(free_quote.get("breakout_stop"))
+    breakout_target = number(market_row.get("breakout_target")) or number(fallback_row.get("breakout_target")) or number(free_quote.get("breakout_target"))
+    breakout_reward_risk = number(market_row.get("breakout_reward_risk")) or number(fallback_row.get("breakout_reward_risk")) or number(free_quote.get("breakout_reward_risk"))
     fallback_reason = None
     if rr is None and price is not None:
         if invalidation is None:
@@ -542,21 +553,52 @@ def price_evidence(
         score += 10 if trend >= 70 else -4 if trend < 45 else 0
     if rr is not None:
         score += 18 if rr >= 2 else -12
+    if starter_reward_risk is not None and starter_reward_risk >= 1.5:
+        score += 8
+    strict_complete = price is not None and target is not None and invalidation is not None and rr is not None
+    starter_complete = (
+        price is not None
+        and starter_entry is not None
+        and starter_stop is not None
+        and starter_target is not None
+        and starter_reward_risk is not None
+    )
+    breakout_complete = (
+        price is not None
+        and breakout_trigger is not None
+        and breakout_stop is not None
+        and breakout_target is not None
+        and breakout_reward_risk is not None
+    )
     return {
         "available": price is not None,
         "price": price,
         "quote_time": market_row.get("quote_time") or free_quote.get("quote_time"),
         "currency": free_quote.get("currency"),
         "reward_risk": rr,
-        "entry_path_complete": price is not None and target is not None and invalidation is not None and rr is not None,
+        "entry_path_complete": strict_complete or starter_complete or breakout_complete,
         "entry_path_fallback": fallback_reason,
         "trend_score": trend,
         "source": "market_pack" if market_row.get("price") else "cross_market_intelligence" if fallback_row.get("price") else "Yahoo chart fallback" if free_quote.get("price") else None,
         "strict_entry": strict_entry,
         "invalidation": invalidation,
         "mechanical_target": target,
+        "starter_entry": starter_entry,
+        "starter_stop": starter_stop,
+        "starter_target": starter_target,
+        "starter_reward_risk": starter_reward_risk,
+        "starter_buyable": bool(market_row.get("starter_buyable") or fallback_row.get("starter_buyable") or free_quote.get("starter_buyable")),
+        "breakout_trigger": breakout_trigger,
+        "breakout_stop": breakout_stop,
+        "breakout_target": breakout_target,
+        "breakout_reward_risk": breakout_reward_risk,
+        "breakout_buyable": bool(market_row.get("breakout_buyable") or fallback_row.get("breakout_buyable") or free_quote.get("breakout_buyable")),
+        "entry_path_type": market_row.get("entry_path_type") or fallback_row.get("entry_path_type") or free_quote.get("entry_path_type"),
+        "ma20": ma20,
         "ma50": ma50,
         "ma200": ma200,
+        "high20": high20,
+        "high60": high60,
         "high252": high252,
         "score": round(clamp(score), 1) if price is not None else 0,
     }
@@ -624,9 +666,15 @@ def evidence_card(
         if not has_official_disclosure:
             gaps.append("非美股标的缺少统一财务与公告正文数据源")
     gaps.extend(fmp.get("gaps", []))
+    starter_rr = number(price.get("starter_reward_risk"))
+    breakout_rr = number(price.get("breakout_reward_risk"))
+    has_tactical_path = bool(
+        (starter_rr is not None and starter_rr >= 1.5)
+        or (breakout_rr is not None and breakout_rr >= 2)
+    )
     if not price.get("entry_path_complete"):
         gaps.append("缺少完整 R/R 或机械入场路径")
-    elif number(price.get("reward_risk")) is not None and float(price["reward_risk"]) < 2:
+    elif number(price.get("reward_risk")) is not None and float(price["reward_risk"]) < 2 and not has_tactical_path:
         gaps.append("R/R 未达 2:1，不能进入普通买入")
 
     score = (
@@ -662,6 +710,12 @@ def evidence_card(
 
 def evidence_action(status: str, gaps: list[str], price: dict[str, Any]) -> str:
     rr = number(price.get("reward_risk"))
+    starter_rr = number(price.get("starter_reward_risk"))
+    breakout_rr = number(price.get("breakout_reward_risk"))
+    if starter_rr is not None and starter_rr >= 1.5 and price.get("starter_buyable"):
+        return "可进入试仓观察：已有入场/止损/目标/R/R，需小仓位并盘中确认。"
+    if breakout_rr is not None and breakout_rr >= 2 and price.get("breakout_buyable"):
+        return "可进入突破确认观察：已有触发价/止损/目标/R/R，需确认突破有效。"
     if rr is not None and rr < 2:
         return "证据只支持观察/二次研究；R/R 未达标，不允许普通买入。"
     if status == "证据较完整":
