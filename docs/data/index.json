@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-07-02T18:14:29+00:00",
-  "generated_label": "2026-07-02 18:14",
+  "generated_at": "2026-07-03T05:15:03+00:00",
+  "generated_label": "2026-07-03 13:15",
   "privacy": "public-sanitized",
   "report_count": 80,
   "review_stats": {
@@ -385,12 +385,12 @@
     ]
   },
   "evidence_gap_breakdown": {
-    "updated_at": "2026-07-03 02:13",
-    "original_total": 24,
-    "data_gap": 11,
+    "updated_at": "2026-07-03 01:48",
+    "original_total": 56,
+    "data_gap": 43,
     "permission_limited": 3,
-    "entry_path_missing": 0,
-    "rr_discipline": 10,
+    "entry_path_missing": 10,
+    "rr_discipline": 0,
     "other": 0,
     "categories": [
       {
@@ -398,21 +398,83 @@
         "label": "缺少 FMP 预期/财报快照",
         "group": "data",
         "group_label": "数据缺口",
-        "count": 11,
+        "count": 23,
         "affected_symbols": [
+          "US.MRVL",
           "US.MU",
           "US.AMD",
-          "US.FLEX",
+          "US.VRT",
           "US.PH",
           "US.ROK",
           "US.PWR",
           "US.ETN",
-          "US.HON",
+          "US.COHR",
           "US.JBL",
           "US.EMR",
-          "US.TSM"
+          "US.HON",
+          "US.TSM",
+          "HK.01347",
+          "HK.00981",
+          "SZ.300308",
+          "SZ.300502",
+          "SZ.300394",
+          "HK.01888",
+          "HK.00148",
+          "SH.600183",
+          "SH.603256",
+          "SZ.002747"
         ],
         "fallback": "优先 FMP；失败时使用 Finnhub/SEC/Nasdaq earnings fallback。"
+      },
+      {
+        "key": "non_us_data_source",
+        "label": "非美股统一财务/公告数据不足",
+        "group": "data",
+        "group_label": "数据缺口",
+        "count": 10,
+        "affected_symbols": [
+          "HK.01347",
+          "HK.00981",
+          "SZ.300308",
+          "SZ.300502",
+          "SZ.300394",
+          "HK.01888",
+          "HK.00148",
+          "SH.600183",
+          "SH.603256",
+          "SZ.002747"
+        ],
+        "fallback": "需要 AkShare/Tushare/Futu/HKEX 补港股/A股财务与公告。"
+      },
+      {
+        "key": "analyst_estimate",
+        "label": "缺少年/季度分析师预期",
+        "group": "data",
+        "group_label": "数据缺口",
+        "count": 5,
+        "affected_symbols": [
+          "US.NVDA",
+          "US.ANET",
+          "US.AVGO",
+          "US.ISRG",
+          "US.SYM"
+        ],
+        "fallback": "优先 FMP analyst-estimates；失败时使用 Finnhub estimates。"
+      },
+      {
+        "key": "earnings_surprise",
+        "label": "缺少最近财报 surprise",
+        "group": "data",
+        "group_label": "数据缺口",
+        "count": 5,
+        "affected_symbols": [
+          "US.NVDA",
+          "US.ANET",
+          "US.AVGO",
+          "US.ISRG",
+          "US.SYM"
+        ],
+        "fallback": "优先 FMP earnings；失败时使用 Nasdaq earnings calendar。"
       },
       {
         "key": "permission_limited",
@@ -428,24 +490,24 @@
         "fallback": "升级套餐、降低频率或使用 SEC/公司 IR 替代证据。"
       },
       {
-        "key": "rr_discipline",
-        "label": "R/R 未达 2:1",
-        "group": "discipline",
-        "group_label": "交易纪律不通过",
+        "key": "entry_path_missing",
+        "label": "缺少完整 R/R 或机械入场路径",
+        "group": "entry",
+        "group_label": "入场路径缺失",
         "count": 10,
         "affected_symbols": [
           "HK.01347",
           "HK.00981",
-          "SZ.300502",
-          "HK.01888",
-          "SZ.002747",
           "SZ.300308",
+          "SZ.300502",
           "SZ.300394",
+          "HK.01888",
           "HK.00148",
           "SH.600183",
-          "SZ.300499"
+          "SH.603256",
+          "SZ.002747"
         ],
-        "fallback": "等待回调、上修目标价或提高止损逻辑质量。"
+        "fallback": "补齐当前价、支撑/止损、目标价和 R/R。"
       }
     ]
   },
@@ -486,6 +548,8 @@
         "退回观察，等待重新触发",
         "美股候选 R/R 0.58:1 低于 2.0:1，退回观察。",
         "证据可用但需补强",
+        "缺少年/季度分析师预期",
+        "缺少最近财报 surprise",
         "新增试仓路径：严格回踩未到，但当前价位已有入场/止损/目标/R/R。"
       ],
       "buy_conditions": [
@@ -544,6 +608,7 @@
         "退回观察，等待重新触发",
         "美股候选 R/R 0.25:1 低于 2.0:1，退回观察。",
         "证据可用但需补强",
+        "缺少 FMP 预期/财报快照",
         "新增试仓路径：严格回踩未到，但当前价位已有入场/止损/目标/R/R。"
       ],
       "buy_conditions": [
@@ -601,8 +666,6 @@
       "why_changed": [
         "退回观察，等待重新触发",
         "美股候选 R/R 0.30:1 低于 2.0:1，退回观察。",
-        "证据不足",
-        "缺少 FMP 预期/财报快照",
         "新增试仓路径：严格回踩未到，但当前价位已有入场/止损/目标/R/R。"
       ],
       "buy_conditions": [
@@ -1077,7 +1140,7 @@
       "segment": "晶圆代工",
       "status": "secondary_analysis",
       "status_label": "二次分析",
-      "action": "证据只支持观察/二次研究；R/R 未达标，不允许普通买入。",
+      "action": "保留观察，等待财务、价格或事件证据补强。",
       "price": 89.4,
       "currency": "HKD",
       "price_time": "2026-07-03 02:11",
@@ -1085,11 +1148,11 @@
       "opportunity_score": 60.0,
       "trend_score": 88.0,
       "crowding_score": 22.0,
-      "rr_ratio": 0.34,
+      "rr_ratio": null,
       "rr_required": 2,
-      "entry_price": 58.83,
-      "stop_loss": 41.5,
-      "target_price": 93.5,
+      "entry_price": null,
+      "stop_loss": null,
+      "target_price": null,
       "signal_type": null,
       "mechanical_rr_ratio": null,
       "starter_entry": null,
@@ -1106,21 +1169,22 @@
         "通过复核",
         "跨市场强候选仍满足产业链和趋势门槛；继续二次分析，但最终仍需 Futu/财报/流动性复核。",
         "证据不足",
-        "R/R 未达 2:1，不能进入普通买入"
+        "非美股标的缺少统一财务与公告正文数据源",
+        "缺少 FMP 预期/财报快照"
       ],
       "buy_conditions": [
-        "暂不买：当前 R/R 0.34:1 低于 2:1，等价格回到买点再看",
-        "价格触发：现价 ≤ 58.83 HKD 再考虑，还需回落 34.2%；若突破追入，必须重新计算 R/R ≥ 2:1",
-        "风控框架：止损 41.5 HKD；目标 93.5 HKD；当前 R/R 0.34:1",
-        "确认信号：趋势不恶化，财务/事件证据至少一项继续改善"
+        "暂不买：缺少完整的入场价、止损价或目标价，等待系统补齐后再决策",
+        "必须先补齐：当前价 89.4 HKD / 止损 待确认 / 目标 待确认",
+        "补齐后再检查 R/R 是否 ≥ 2:1，未达标不升级为买入",
+        "需要财务、趋势或事件证据至少一项继续改善"
       ],
       "avoid_conditions": [
-        "R/R 低于 2:1 不追高；价格高于 58.83 HKD 且未重新计算 R/R 时不买",
+        "R/R 低于 2:1 不追高",
         "数据缺口未修复前不升级为买入",
         "高开大幅追涨或财报前波动率过高"
       ],
       "invalid_conditions": [
-        "收盘跌破止损位 41.5 HKD",
+        "跌破后续 Buy-Side 分析定义的失效位",
         "产业链需求、订单或价格弱于预期",
         "财报/指引/申报显示核心假设恶化"
       ],
@@ -1135,7 +1199,7 @@
       "segment": "特色工艺",
       "status": "secondary_analysis",
       "status_label": "二次分析",
-      "action": "证据只支持观察/二次研究；R/R 未达标，不允许普通买入。",
+      "action": "保留观察，等待财务、价格或事件证据补强。",
       "price": 215.2,
       "currency": "HKD",
       "price_time": "2026-07-03 02:11",
@@ -1143,11 +1207,11 @@
       "opportunity_score": 60.0,
       "trend_score": 88.0,
       "crowding_score": 22.0,
-      "rr_ratio": 0.22,
+      "rr_ratio": null,
       "rr_required": 2,
-      "entry_price": 95.2,
-      "stop_loss": 33.0,
-      "target_price": 219.6,
+      "entry_price": null,
+      "stop_loss": null,
+      "target_price": null,
       "signal_type": null,
       "mechanical_rr_ratio": null,
       "starter_entry": null,
@@ -1164,21 +1228,22 @@
         "通过复核",
         "跨市场强候选仍满足产业链和趋势门槛；继续二次分析，但最终仍需 Futu/财报/流动性复核。",
         "证据不足",
-        "R/R 未达 2:1，不能进入普通买入"
+        "非美股标的缺少统一财务与公告正文数据源",
+        "缺少 FMP 预期/财报快照"
       ],
       "buy_conditions": [
-        "暂不买：当前 R/R 0.22:1 低于 2:1，等价格回到买点再看",
-        "价格触发：现价 ≤ 95.2 HKD 再考虑，还需回落 55.8%；若突破追入，必须重新计算 R/R ≥ 2:1",
-        "风控框架：止损 33 HKD；目标 219.6 HKD；当前 R/R 0.22:1",
-        "确认信号：趋势不恶化，财务/事件证据至少一项继续改善"
+        "暂不买：缺少完整的入场价、止损价或目标价，等待系统补齐后再决策",
+        "必须先补齐：当前价 215.2 HKD / 止损 待确认 / 目标 待确认",
+        "补齐后再检查 R/R 是否 ≥ 2:1，未达标不升级为买入",
+        "需要财务、趋势或事件证据至少一项继续改善"
       ],
       "avoid_conditions": [
-        "R/R 低于 2:1 不追高；价格高于 95.2 HKD 且未重新计算 R/R 时不买",
+        "R/R 低于 2:1 不追高",
         "数据缺口未修复前不升级为买入",
         "高开大幅追涨或财报前波动率过高"
       ],
       "invalid_conditions": [
-        "收盘跌破止损位 33 HKD",
+        "跌破后续 Buy-Side 分析定义的失效位",
         "产业链需求、订单或价格弱于预期",
         "财报/指引/申报显示核心假设恶化"
       ],
@@ -1193,7 +1258,7 @@
       "segment": "覆铜板",
       "status": "secondary_analysis",
       "status_label": "二次分析",
-      "action": "证据只支持观察/二次研究；R/R 未达标，不允许普通买入。",
+      "action": "保留观察，等待财务、价格或事件证据补强。",
       "price": 99.15,
       "currency": "HKD",
       "price_time": "2026-07-03 02:11",
@@ -1201,11 +1266,11 @@
       "opportunity_score": 60.0,
       "trend_score": 88.0,
       "crowding_score": 22.0,
-      "rr_ratio": 0.31,
+      "rr_ratio": null,
       "rr_required": 2,
-      "entry_price": 41.94,
-      "stop_loss": 9.31,
-      "target_price": 107.2,
+      "entry_price": null,
+      "stop_loss": null,
+      "target_price": null,
       "signal_type": null,
       "mechanical_rr_ratio": null,
       "starter_entry": null,
@@ -1222,21 +1287,22 @@
         "通过复核",
         "跨市场强候选仍满足产业链和趋势门槛；继续二次分析，但最终仍需 Futu/财报/流动性复核。",
         "证据不足",
-        "R/R 未达 2:1，不能进入普通买入"
+        "非美股标的缺少统一财务与公告正文数据源",
+        "缺少 FMP 预期/财报快照"
       ],
       "buy_conditions": [
-        "暂不买：当前 R/R 0.31:1 低于 2:1，等价格回到买点再看",
-        "价格触发：现价 ≤ 41.94 HKD 再考虑，还需回落 57.7%；若突破追入，必须重新计算 R/R ≥ 2:1",
-        "风控框架：止损 9.31 HKD；目标 107.2 HKD；当前 R/R 0.31:1",
-        "确认信号：趋势不恶化，财务/事件证据至少一项继续改善"
+        "暂不买：缺少完整的入场价、止损价或目标价，等待系统补齐后再决策",
+        "必须先补齐：当前价 99.15 HKD / 止损 待确认 / 目标 待确认",
+        "补齐后再检查 R/R 是否 ≥ 2:1，未达标不升级为买入",
+        "需要财务、趋势或事件证据至少一项继续改善"
       ],
       "avoid_conditions": [
-        "R/R 低于 2:1 不追高；价格高于 41.94 HKD 且未重新计算 R/R 时不买",
+        "R/R 低于 2:1 不追高",
         "数据缺口未修复前不升级为买入",
         "高开大幅追涨或财报前波动率过高"
       ],
       "invalid_conditions": [
-        "收盘跌破止损位 9.31 HKD",
+        "跌破后续 Buy-Side 分析定义的失效位",
         "产业链需求、订单或价格弱于预期",
         "财报/指引/申报显示核心假设恶化"
       ],
@@ -1251,7 +1317,7 @@
       "segment": "光模块",
       "status": "secondary_analysis",
       "status_label": "二次分析",
-      "action": "证据只支持观察/二次研究；R/R 未达标，不允许普通买入。",
+      "action": "保留观察，等待财务、价格或事件证据补强。",
       "price": 575.56,
       "currency": "CNY",
       "price_time": "2026-07-03 02:11",
@@ -1259,11 +1325,11 @@
       "opportunity_score": 60.0,
       "trend_score": 88.0,
       "crowding_score": 22.0,
-      "rr_ratio": 0.26,
+      "rr_ratio": null,
       "rr_required": 2,
-      "entry_price": 264.05,
-      "stop_loss": 86.6429,
-      "target_price": 618.87,
+      "entry_price": null,
+      "stop_loss": null,
+      "target_price": null,
       "signal_type": null,
       "mechanical_rr_ratio": null,
       "starter_entry": null,
@@ -1280,21 +1346,22 @@
         "通过复核",
         "跨市场强候选仍满足产业链和趋势门槛；继续二次分析，但最终仍需 Futu/财报/流动性复核。",
         "证据不足",
-        "R/R 未达 2:1，不能进入普通买入"
+        "非美股标的缺少统一财务与公告正文数据源",
+        "缺少 FMP 预期/财报快照"
       ],
       "buy_conditions": [
-        "暂不买：当前 R/R 0.26:1 低于 2:1，等价格回到买点再看",
-        "价格触发：现价 ≤ 264.05 CNY 再考虑，还需回落 54.1%；若突破追入，必须重新计算 R/R ≥ 2:1",
-        "风控框架：止损 86.64 CNY；目标 618.87 CNY；当前 R/R 0.26:1",
-        "确认信号：趋势不恶化，财务/事件证据至少一项继续改善"
+        "暂不买：缺少完整的入场价、止损价或目标价，等待系统补齐后再决策",
+        "必须先补齐：当前价 575.56 CNY / 止损 待确认 / 目标 待确认",
+        "补齐后再检查 R/R 是否 ≥ 2:1，未达标不升级为买入",
+        "需要财务、趋势或事件证据至少一项继续改善"
       ],
       "avoid_conditions": [
-        "R/R 低于 2:1 不追高；价格高于 264.05 CNY 且未重新计算 R/R 时不买",
+        "R/R 低于 2:1 不追高",
         "数据缺口未修复前不升级为买入",
         "高开大幅追涨或财报前波动率过高"
       ],
       "invalid_conditions": [
-        "收盘跌破止损位 86.64 CNY",
+        "跌破后续 Buy-Side 分析定义的失效位",
         "产业链需求、订单或价格弱于预期",
         "财报/指引/申报显示核心假设恶化"
       ],
@@ -1309,7 +1376,7 @@
       "segment": "覆铜板/材料",
       "status": "secondary_analysis",
       "status_label": "二次分析",
-      "action": "证据只支持观察/二次研究；R/R 未达标，不允许普通买入。",
+      "action": "保留观察，等待财务、价格或事件证据补强。",
       "price": 117.9,
       "currency": "HKD",
       "price_time": "2026-07-03 02:11",
@@ -1317,11 +1384,11 @@
       "opportunity_score": 57.7,
       "trend_score": 76.0,
       "crowding_score": 22.0,
-      "rr_ratio": 0.63,
+      "rr_ratio": null,
       "rr_required": 2,
-      "entry_price": 66.47,
-      "stop_loss": 23.8,
-      "target_price": 151.8,
+      "entry_price": null,
+      "stop_loss": null,
+      "target_price": null,
       "signal_type": null,
       "mechanical_rr_ratio": null,
       "starter_entry": null,
@@ -1338,21 +1405,22 @@
         "通过复核",
         "跨市场强候选仍满足产业链和趋势门槛；继续二次分析，但最终仍需 Futu/财报/流动性复核。",
         "证据不足",
-        "R/R 未达 2:1，不能进入普通买入"
+        "非美股标的缺少统一财务与公告正文数据源",
+        "缺少 FMP 预期/财报快照"
       ],
       "buy_conditions": [
-        "暂不买：当前 R/R 0.63:1 低于 2:1，等价格回到买点再看",
-        "价格触发：现价 ≤ 66.47 HKD 再考虑，还需回落 43.6%；若突破追入，必须重新计算 R/R ≥ 2:1",
-        "风控框架：止损 23.8 HKD；目标 151.8 HKD；当前 R/R 0.63:1",
-        "确认信号：趋势不恶化，财务/事件证据至少一项继续改善"
+        "暂不买：缺少完整的入场价、止损价或目标价，等待系统补齐后再决策",
+        "必须先补齐：当前价 117.9 HKD / 止损 待确认 / 目标 待确认",
+        "补齐后再检查 R/R 是否 ≥ 2:1，未达标不升级为买入",
+        "需要财务、趋势或事件证据至少一项继续改善"
       ],
       "avoid_conditions": [
-        "R/R 低于 2:1 不追高；价格高于 66.47 HKD 且未重新计算 R/R 时不买",
+        "R/R 低于 2:1 不追高",
         "数据缺口未修复前不升级为买入",
         "高开大幅追涨或财报前波动率过高"
       ],
       "invalid_conditions": [
-        "收盘跌破止损位 23.8 HKD",
+        "跌破后续 Buy-Side 分析定义的失效位",
         "产业链需求、订单或价格弱于预期",
         "财报/指引/申报显示核心假设恶化"
       ],
@@ -1367,7 +1435,7 @@
       "segment": "覆铜板",
       "status": "secondary_analysis",
       "status_label": "二次分析",
-      "action": "证据只支持观察/二次研究；R/R 未达标，不允许普通买入。",
+      "action": "保留观察，等待财务、价格或事件证据补强。",
       "price": 164.8,
       "currency": "CNY",
       "price_time": "2026-07-03 02:11",
@@ -1375,11 +1443,11 @@
       "opportunity_score": 57.7,
       "trend_score": 76.0,
       "crowding_score": 22.0,
-      "rr_ratio": 0.32,
+      "rr_ratio": null,
       "rr_required": 2,
-      "entry_price": 82.86,
-      "stop_loss": 28.35,
-      "target_price": 191.88,
+      "entry_price": null,
+      "stop_loss": null,
+      "target_price": null,
       "signal_type": null,
       "mechanical_rr_ratio": null,
       "starter_entry": null,
@@ -1395,21 +1463,23 @@
         "通过复核",
         "跨市场强候选仍满足产业链和趋势门槛；继续二次分析，但最终仍需 Futu/财报/流动性复核。",
         "证据不足",
-        "R/R 未达 2:1，不能进入普通买入"
+        "非美股标的缺少统一财务与公告正文数据源",
+        "缺少 FMP 预期/财报快照",
+        "缺少完整 R/R 或机械入场路径"
       ],
       "buy_conditions": [
-        "暂不买：当前 R/R 0.32:1 低于 2:1，等价格回到买点再看",
-        "价格触发：现价 ≤ 82.86 CNY 再考虑，还需回落 49.7%；若突破追入，必须重新计算 R/R ≥ 2:1",
-        "风控框架：止损 28.35 CNY；目标 191.88 CNY；当前 R/R 0.32:1",
-        "确认信号：趋势不恶化，财务/事件证据至少一项继续改善"
+        "暂不买：缺少完整的入场价、止损价或目标价，等待系统补齐后再决策",
+        "必须先补齐：当前价 164.8 CNY / 止损 待确认 / 目标 待确认",
+        "补齐后再检查 R/R 是否 ≥ 2:1，未达标不升级为买入",
+        "需要财务、趋势或事件证据至少一项继续改善"
       ],
       "avoid_conditions": [
-        "R/R 低于 2:1 不追高；价格高于 82.86 CNY 且未重新计算 R/R 时不买",
+        "R/R 低于 2:1 不追高",
         "数据缺口未修复前不升级为买入",
         "高开大幅追涨或财报前波动率过高"
       ],
       "invalid_conditions": [
-        "收盘跌破止损位 28.35 CNY",
+        "跌破后续 Buy-Side 分析定义的失效位",
         "产业链需求、订单或价格弱于预期",
         "财报/指引/申报显示核心假设恶化"
       ],
@@ -1424,7 +1494,7 @@
       "segment": "电子布",
       "status": "secondary_analysis",
       "status_label": "二次分析",
-      "action": "跨市场强候选；进入二次分析候选池，需 Futu/财报/流动性复核",
+      "action": "保留观察，等待财务、价格或事件证据补强。",
       "price": 255.97,
       "currency": "CNY",
       "price_time": "2026-07-03 02:11",
@@ -1450,7 +1520,11 @@
       "score_delta": null,
       "why_changed": [
         "通过复核",
-        "跨市场强候选仍满足产业链和趋势门槛；继续二次分析，但最终仍需 Futu/财报/流动性复核。"
+        "跨市场强候选仍满足产业链和趋势门槛；继续二次分析，但最终仍需 Futu/财报/流动性复核。",
+        "证据不足",
+        "非美股标的缺少统一财务与公告正文数据源",
+        "缺少 FMP 预期/财报快照",
+        "缺少完整 R/R 或机械入场路径"
       ],
       "buy_conditions": [
         "暂不买：缺少完整的入场价、止损价或目标价，等待系统补齐后再决策",
@@ -1537,7 +1611,7 @@
       "segment": "光模块",
       "status": "secondary_analysis",
       "status_label": "二次分析",
-      "action": "证据只支持观察/二次研究；R/R 未达标，不允许普通买入。",
+      "action": "保留观察，等待财务、价格或事件证据补强。",
       "price": 1223.17,
       "currency": "CNY",
       "price_time": "2026-07-03 02:11",
@@ -1545,11 +1619,11 @@
       "opportunity_score": 57.7,
       "trend_score": 76.0,
       "crowding_score": 22.0,
-      "rr_ratio": 0.27,
+      "rr_ratio": null,
       "rr_required": 2,
-      "entry_price": 559.1,
-      "stop_loss": 130.21,
-      "target_price": 1416.88,
+      "entry_price": null,
+      "stop_loss": null,
+      "target_price": null,
       "signal_type": null,
       "mechanical_rr_ratio": null,
       "starter_entry": null,
@@ -1565,21 +1639,23 @@
         "通过复核",
         "跨市场强候选仍满足产业链和趋势门槛；继续二次分析，但最终仍需 Futu/财报/流动性复核。",
         "证据不足",
-        "R/R 未达 2:1，不能进入普通买入"
+        "非美股标的缺少统一财务与公告正文数据源",
+        "缺少 FMP 预期/财报快照",
+        "缺少完整 R/R 或机械入场路径"
       ],
       "buy_conditions": [
-        "暂不买：当前 R/R 0.27:1 低于 2:1，等价格回到买点再看",
-        "价格触发：现价 ≤ 559.1 CNY 再考虑，还需回落 54.3%；若突破追入，必须重新计算 R/R ≥ 2:1",
-        "风控框架：止损 130.21 CNY；目标 1,416.88 CNY；当前 R/R 0.27:1",
-        "确认信号：趋势不恶化，财务/事件证据至少一项继续改善"
+        "暂不买：缺少完整的入场价、止损价或目标价，等待系统补齐后再决策",
+        "必须先补齐：当前价 1,223.17 CNY / 止损 待确认 / 目标 待确认",
+        "补齐后再检查 R/R 是否 ≥ 2:1，未达标不升级为买入",
+        "需要财务、趋势或事件证据至少一项继续改善"
       ],
       "avoid_conditions": [
-        "R/R 低于 2:1 不追高；价格高于 559.1 CNY 且未重新计算 R/R 时不买",
+        "R/R 低于 2:1 不追高",
         "数据缺口未修复前不升级为买入",
         "高开大幅追涨或财报前波动率过高"
       ],
       "invalid_conditions": [
-        "收盘跌破止损位 130.21 CNY",
+        "跌破后续 Buy-Side 分析定义的失效位",
         "产业链需求、订单或价格弱于预期",
         "财报/指引/申报显示核心假设恶化"
       ],
@@ -1629,61 +1705,6 @@
       "buy_conditions": [
         "暂不买：缺少完整的入场价、止损价或目标价，等待系统补齐后再决策",
         "必须先补齐：当前价 154.12 USD / 止损 待确认 / 目标 待确认",
-        "补齐后再检查 R/R 是否 ≥ 2:1，未达标不升级为买入",
-        "需要财务、趋势或事件证据至少一项继续改善"
-      ],
-      "avoid_conditions": [
-        "R/R 低于 2:1 不追高",
-        "数据缺口未修复前不升级为买入",
-        "高开大幅追涨或财报前波动率过高"
-      ],
-      "invalid_conditions": [
-        "跌破后续 Buy-Side 分析定义的失效位",
-        "产业链需求、订单或价格弱于预期",
-        "财报/指引/申报显示核心假设恶化"
-      ],
-      "source": "cross_market_intelligence",
-      "updated_at": "2026-07-03 02:11"
-    },
-    {
-      "symbol": "US.COHR",
-      "name": "Coherent",
-      "market": "US",
-      "theme": "AI 光模块 / CPO / 数据中心网络",
-      "segment": "光器件",
-      "status": "secondary_analysis",
-      "status_label": "二次分析",
-      "action": "进入二次分析候选池；等待 Buy-Side 复核",
-      "price": 330.03,
-      "currency": "USD",
-      "price_time": "2026-07-03 02:11",
-      "price_source": "行情已接入",
-      "opportunity_score": 56.2,
-      "trend_score": 50.0,
-      "crowding_score": 60.0,
-      "rr_ratio": 0.52,
-      "rr_required": 2,
-      "entry_price": null,
-      "stop_loss": null,
-      "target_price": null,
-      "signal_type": null,
-      "mechanical_rr_ratio": null,
-      "starter_entry": 331.68,
-      "starter_stop": 297.03,
-      "starter_target": 453.2,
-      "starter_reward_risk": 3.51,
-      "breakout_trigger": 442.2,
-      "breakout_stop": 377.52,
-      "breakout_target": 521.8,
-      "breakout_reward_risk": 1.23,
-      "score_delta": null,
-      "why_changed": [
-        "退回观察，等待重新触发",
-        "美股候选 R/R 0.35:1 低于 2.0:1，退回观察。"
-      ],
-      "buy_conditions": [
-        "暂不买：缺少完整的入场价、止损价或目标价，等待系统补齐后再决策",
-        "必须先补齐：当前价 330.03 USD / 止损 待确认 / 目标 待确认",
         "补齐后再检查 R/R 是否 ≥ 2:1，未达标不升级为买入",
         "需要财务、趋势或事件证据至少一项继续改善"
       ],
@@ -1756,44 +1777,44 @@
       "updated_at": "2026-07-03 02:11"
     },
     {
-      "symbol": "US.VRT",
-      "name": "Vertiv",
-      "market": "US",
+      "symbol": "SZ.300499",
+      "name": "高澜股份",
+      "market": "CN",
       "theme": "AI 数据中心电力 / 液冷 / 配电",
-      "segment": "电源/液冷",
+      "segment": "液冷",
       "status": "secondary_analysis",
       "status_label": "二次分析",
-      "action": "进入二次分析候选池；等待 Buy-Side 复核",
-      "price": 302.28,
-      "currency": "USD",
+      "action": "跨市场强候选；进入二次分析候选池，需 Futu/财报/流动性复核",
+      "price": 37.25,
+      "currency": "CNY",
       "price_time": "2026-07-03 02:11",
-      "price_source": "行情已接入",
-      "opportunity_score": 48.7,
+      "price_source": "公开日线行情已接入；需 Futu/券商复核",
+      "opportunity_score": 52.5,
       "trend_score": 50.0,
-      "crowding_score": 44.8,
-      "rr_ratio": 0.61,
+      "crowding_score": 22.0,
+      "rr_ratio": null,
       "rr_required": 2,
       "entry_price": null,
       "stop_loss": null,
       "target_price": null,
       "signal_type": null,
       "mechanical_rr_ratio": null,
-      "starter_entry": 303.79,
-      "starter_stop": 272.05,
-      "starter_target": 391.33,
-      "starter_reward_risk": 2.76,
-      "breakout_trigger": 360.33,
-      "breakout_stop": 303.87,
-      "breakout_target": 425.19,
-      "breakout_reward_risk": 1.15,
+      "starter_entry": null,
+      "starter_stop": null,
+      "starter_target": null,
+      "starter_reward_risk": null,
+      "breakout_trigger": null,
+      "breakout_stop": null,
+      "breakout_target": null,
+      "breakout_reward_risk": null,
       "score_delta": null,
       "why_changed": [
-        "退回观察，等待重新触发",
-        "美股候选 R/R 0.47:1 低于 2.0:1，退回观察。"
+        "退回观察",
+        "趋势确认低于保留门槛 55。"
       ],
       "buy_conditions": [
         "暂不买：缺少完整的入场价、止损价或目标价，等待系统补齐后再决策",
-        "必须先补齐：当前价 302.28 USD / 止损 待确认 / 目标 待确认",
+        "必须先补齐：当前价 37.25 CNY / 止损 待确认 / 目标 待确认",
         "补齐后再检查 R/R 是否 ≥ 2:1，未达标不升级为买入",
         "需要财务、趋势或事件证据至少一项继续改善"
       ],
@@ -1807,7 +1828,7 @@
         "产业链需求、订单或价格弱于预期",
         "财报/指引/申报显示核心假设恶化"
       ],
-      "source": "cross_market_intelligence",
+      "source": "opportunity_radar",
       "updated_at": "2026-07-03 02:11"
     },
     {
@@ -1885,7 +1906,7 @@
       "rr_required": 2,
       "entry_price": 417.4,
       "stop_loss": 396.68,
-      "target_price": 497.61,
+      "target_price": 497.42,
       "signal_type": null,
       "mechanical_rr_ratio": null,
       "starter_entry": 423.81,
@@ -1899,12 +1920,14 @@
       "score_delta": null,
       "why_changed": [
         "证据可用但需补强",
+        "缺少年/季度分析师预期",
+        "缺少最近财报 surprise",
         "R/R 达标但趋势确认不足，降级为等待买点。"
       ],
       "buy_conditions": [
         "暂不买：仍需二次分析或人工复核，满足以下条件才升级",
         "价格纪律：现价 421.7 USD 已满足 R/R ≥ 2:1；保守回踩买点 ≤ 417.4 USD，还需回落 1.0%",
-        "风控框架：止损 396.68 USD；目标 497.61 USD；当前 R/R 3.03:1",
+        "风控框架：止损 396.68 USD；目标 497.42 USD；当前 R/R 3.03:1",
         "确认信号：趋势确认从 14.0 提升到 ≥50，且财务/事件证据补强"
       ],
       "avoid_conditions": [
@@ -1914,6 +1937,124 @@
       ],
       "invalid_conditions": [
         "收盘跌破止损位 396.68 USD",
+        "产业链需求、订单或价格弱于预期",
+        "财报/指引/申报显示核心假设恶化"
+      ],
+      "source": "opportunity_radar",
+      "updated_at": "2026-07-03 02:11"
+    },
+    {
+      "symbol": "SZ.300394",
+      "name": "天孚通信",
+      "market": "CN",
+      "theme": "AI 光模块 / CPO / 数据中心网络",
+      "segment": "光器件",
+      "status": "waiting_entry",
+      "status_label": "等待买点",
+      "action": "保留观察，等待财务、价格或事件证据补强。",
+      "price": 285.0,
+      "currency": "CNY",
+      "price_time": "2026-07-03 02:11",
+      "price_source": "公开日线行情已接入；需 Futu/券商复核",
+      "opportunity_score": 57.7,
+      "trend_score": 76.0,
+      "crowding_score": 22.0,
+      "rr_ratio": null,
+      "rr_required": 2,
+      "entry_price": null,
+      "stop_loss": null,
+      "target_price": null,
+      "signal_type": null,
+      "mechanical_rr_ratio": null,
+      "starter_entry": null,
+      "starter_stop": null,
+      "starter_target": null,
+      "starter_reward_risk": null,
+      "breakout_trigger": null,
+      "breakout_stop": null,
+      "breakout_target": null,
+      "breakout_reward_risk": null,
+      "score_delta": {
+        "trend_score": 34.0
+      },
+      "why_changed": [
+        "趋势确认变化超过阈值，需确认是机会扩大、逻辑兑现还是风险暴露。",
+        "退回观察，等待重新触发",
+        "趋势确认低于保留门槛 55。",
+        "证据不足",
+        "非美股标的缺少统一财务与公告正文数据源",
+        "缺少 FMP 预期/财报快照"
+      ],
+      "buy_conditions": [
+        "暂不买：缺少完整的入场价、止损价或目标价，等待系统补齐后再决策",
+        "必须先补齐：当前价 285 CNY / 止损 待确认 / 目标 待确认",
+        "补齐后再检查 R/R 是否 ≥ 2:1，未达标不升级为买入",
+        "需要财务、趋势或事件证据至少一项继续改善"
+      ],
+      "avoid_conditions": [
+        "R/R 低于 2:1 不追高",
+        "数据缺口未修复前不升级为买入",
+        "高开大幅追涨或财报前波动率过高"
+      ],
+      "invalid_conditions": [
+        "跌破后续 Buy-Side 分析定义的失效位",
+        "产业链需求、订单或价格弱于预期",
+        "财报/指引/申报显示核心假设恶化"
+      ],
+      "source": "opportunity_radar",
+      "updated_at": "2026-07-03 02:11"
+    },
+    {
+      "symbol": "SZ.002747",
+      "name": "埃斯顿",
+      "market": "CN",
+      "theme": "Physical AI / 机器人 / 自动化",
+      "segment": "工业机器人",
+      "status": "waiting_entry",
+      "status_label": "等待买点",
+      "action": "保留观察，等待财务、价格或事件证据补强。",
+      "price": null,
+      "currency": "CNY",
+      "price_time": "2026-07-03 02:11",
+      "price_source": "跨市场情报行情快照",
+      "opportunity_score": 50.5,
+      "trend_score": 55.0,
+      "crowding_score": 22.0,
+      "rr_ratio": null,
+      "rr_required": 2,
+      "entry_price": null,
+      "stop_loss": null,
+      "target_price": null,
+      "signal_type": null,
+      "mechanical_rr_ratio": null,
+      "starter_entry": null,
+      "starter_stop": null,
+      "starter_target": null,
+      "starter_reward_risk": null,
+      "breakout_trigger": null,
+      "breakout_stop": null,
+      "breakout_target": null,
+      "breakout_reward_risk": null,
+      "score_delta": null,
+      "why_changed": [
+        "证据不足",
+        "非美股标的缺少统一财务与公告正文数据源",
+        "缺少 FMP 预期/财报快照",
+        "缺少完整 R/R 或机械入场路径"
+      ],
+      "buy_conditions": [
+        "暂不买：缺少完整的入场价、止损价或目标价，等待系统补齐后再决策",
+        "必须先补齐：当前价 待确认 / 止损 待确认 / 目标 待确认",
+        "补齐后再检查 R/R 是否 ≥ 2:1，未达标不升级为买入",
+        "需要财务、趋势或事件证据至少一项继续改善"
+      ],
+      "avoid_conditions": [
+        "R/R 低于 2:1 不追高",
+        "数据缺口未修复前不升级为买入",
+        "高开大幅追涨或财报前波动率过高"
+      ],
+      "invalid_conditions": [
+        "跌破后续 Buy-Side 分析定义的失效位",
         "产业链需求、订单或价格弱于预期",
         "财报/指引/申报显示核心假设恶化"
       ],
@@ -1939,8 +2080,8 @@
       "rr_ratio": 6.24,
       "rr_required": 2,
       "entry_price": 230.3,
-      "stop_loss": 219.33,
-      "target_price": 266.49,
+      "stop_loss": 213.36,
+      "target_price": 266.99,
       "signal_type": null,
       "mechanical_rr_ratio": null,
       "starter_entry": 226.97,
@@ -1960,7 +2101,7 @@
       "buy_conditions": [
         "暂不买：仍需二次分析或人工复核，满足以下条件才升级",
         "价格纪律：现价 225.84 USD 已满足 R/R ≥ 2:1；盘中不跌破止损前才可继续观察",
-        "风控框架：止损 219.33 USD；目标 266.49 USD；当前 R/R 6.24:1",
+        "风控框架：止损 213.36 USD；目标 266.99 USD；当前 R/R 6.24:1",
         "确认信号：趋势确认从 14.0 提升到 ≥50，且财务/事件证据补强"
       ],
       "avoid_conditions": [
@@ -1969,7 +2110,7 @@
         "高开大幅追涨或财报前波动率过高"
       ],
       "invalid_conditions": [
-        "收盘跌破止损位 219.33 USD",
+        "收盘跌破止损位 213.36 USD",
         "产业链需求、订单或价格弱于预期",
         "财报/指引/申报显示核心假设恶化"
       ],
@@ -1995,8 +2136,8 @@
       "rr_ratio": 2.4,
       "rr_required": 2,
       "entry_price": 138.38,
-      "stop_loss": 127.44,
-      "target_price": 162.57,
+      "stop_loss": 126.66,
+      "target_price": 162.1,
       "signal_type": null,
       "mechanical_rr_ratio": null,
       "starter_entry": 138.46,
@@ -2021,7 +2162,7 @@
       "buy_conditions": [
         "暂不买：仍需二次分析或人工复核，满足以下条件才升级",
         "价格纪律：现价 137.77 USD 已满足 R/R ≥ 2:1；盘中不跌破止损前才可继续观察",
-        "风控框架：止损 127.44 USD；目标 162.57 USD；当前 R/R 2.40:1",
+        "风控框架：止损 126.66 USD；目标 162.1 USD；当前 R/R 2.40:1",
         "确认信号：趋势确认从 20.0 提升到 ≥50，且财务/事件证据补强"
       ],
       "avoid_conditions": [
@@ -2030,7 +2171,7 @@
         "高开大幅追涨或财报前波动率过高"
       ],
       "invalid_conditions": [
-        "收盘跌破止损位 127.44 USD",
+        "收盘跌破止损位 126.66 USD",
         "产业链需求、订单或价格弱于预期",
         "财报/指引/申报显示核心假设恶化"
       ],
@@ -2055,9 +2196,9 @@
       "crowding_score": 12.0,
       "rr_ratio": 1.74,
       "rr_required": 2,
-      "entry_price": 187.55,
-      "stop_loss": 173.66,
-      "target_price": 228.51,
+      "entry_price": 194.5,
+      "stop_loss": 175.54,
+      "target_price": 227.41,
       "signal_type": null,
       "mechanical_rr_ratio": null,
       "starter_entry": 194.62,
@@ -2072,21 +2213,23 @@
       "why_changed": [
         "退回观察，等待重新触发",
         "美股候选 R/R 0.82:1 低于 2.0:1，退回观察。",
-        "证据较完整"
+        "证据可用但需补强",
+        "缺少年/季度分析师预期",
+        "缺少最近财报 surprise"
       ],
       "buy_conditions": [
         "暂不买：当前 R/R 1.74:1 低于 2:1，等价格回到买点再看",
-        "价格触发：现价 ≤ 187.55 USD 再考虑，还需回落 3.2%；若突破追入，必须重新计算 R/R ≥ 2:1",
-        "风控框架：止损 173.66 USD；目标 228.51 USD；当前 R/R 1.74:1",
+        "价格触发：现价 ≤ 194.5 USD 再考虑，仍有上行空间 0.4%；若突破追入，必须重新计算 R/R ≥ 2:1",
+        "风控框架：止损 175.54 USD；目标 227.41 USD；当前 R/R 1.74:1",
         "确认信号：趋势不恶化，财务/事件证据至少一项继续改善"
       ],
       "avoid_conditions": [
-        "R/R 低于 2:1 不追高；价格高于 187.55 USD 且未重新计算 R/R 时不买",
+        "R/R 低于 2:1 不追高；价格高于 194.5 USD 且未重新计算 R/R 时不买",
         "数据缺口未修复前不升级为买入",
         "高开大幅追涨或财报前波动率过高"
       ],
       "invalid_conditions": [
-        "收盘跌破止损位 173.66 USD",
+        "收盘跌破止损位 175.54 USD",
         "产业链需求、订单或价格弱于预期",
         "财报/指引/申报显示核心假设恶化"
       ],
@@ -2111,9 +2254,9 @@
       "crowding_score": 8.0,
       "rr_ratio": 1.64,
       "rr_required": 2,
-      "entry_price": 347.54,
-      "stop_loss": 321.8,
-      "target_price": 426.44,
+      "entry_price": 369.35,
+      "stop_loss": 331.37,
+      "target_price": 423.46,
       "signal_type": null,
       "mechanical_rr_ratio": null,
       "starter_entry": 363.19,
@@ -2129,21 +2272,23 @@
       },
       "why_changed": [
         "趋势确认变化超过阈值，需确认是机会扩大、逻辑兑现还是风险暴露。",
-        "证据可用但需补强"
+        "证据可用但需补强",
+        "缺少年/季度分析师预期",
+        "缺少最近财报 surprise"
       ],
       "buy_conditions": [
         "暂不买：当前 R/R 1.64:1 低于 2:1，等价格回到买点再看",
-        "价格触发：现价 ≤ 347.54 USD 再考虑，还需回落 3.8%；若突破追入，必须重新计算 R/R ≥ 2:1",
-        "风控框架：止损 321.8 USD；目标 426.44 USD；当前 R/R 1.64:1",
+        "价格触发：现价 ≤ 369.35 USD 再考虑，仍有上行空间 2.2%；若突破追入，必须重新计算 R/R ≥ 2:1",
+        "风控框架：止损 331.37 USD；目标 423.46 USD；当前 R/R 1.64:1",
         "确认信号：趋势确认从 20.0 提升到 ≥50，且财务/事件证据补强"
       ],
       "avoid_conditions": [
-        "R/R 低于 2:1 不追高；价格高于 347.54 USD 且未重新计算 R/R 时不买",
+        "R/R 低于 2:1 不追高；价格高于 369.35 USD 且未重新计算 R/R 时不买",
         "数据缺口未修复前不升级为买入",
         "高开大幅追涨或财报前波动率过高"
       ],
       "invalid_conditions": [
-        "收盘跌破止损位 321.8 USD",
+        "收盘跌破止损位 331.37 USD",
         "产业链需求、订单或价格弱于预期",
         "财报/指引/申报显示核心假设恶化"
       ],
@@ -2168,9 +2313,9 @@
       "crowding_score": 22.0,
       "rr_ratio": 0.64,
       "rr_required": 2,
-      "entry_price": 287.23,
-      "stop_loss": 245.87,
-      "target_price": 403.96,
+      "entry_price": 299.9,
+      "stop_loss": 246.35,
+      "target_price": 400.82,
       "signal_type": null,
       "mechanical_rr_ratio": null,
       "starter_entry": 344.05,
@@ -2193,17 +2338,17 @@
       ],
       "buy_conditions": [
         "暂不买：当前 R/R 0.64:1 低于 2:1，等价格回到买点再看",
-        "价格触发：现价 ≤ 287.23 USD 再考虑，还需回落 16.1%；若突破追入，必须重新计算 R/R ≥ 2:1",
-        "风控框架：止损 245.87 USD；目标 403.96 USD；当前 R/R 0.64:1",
+        "价格触发：现价 ≤ 299.9 USD 再考虑，还需回落 12.4%；若突破追入，必须重新计算 R/R ≥ 2:1",
+        "风控框架：止损 246.35 USD；目标 400.82 USD；当前 R/R 0.64:1",
         "确认信号：趋势不恶化，财务/事件证据至少一项继续改善"
       ],
       "avoid_conditions": [
-        "R/R 低于 2:1 不追高；价格高于 287.23 USD 且未重新计算 R/R 时不买",
+        "R/R 低于 2:1 不追高；价格高于 299.9 USD 且未重新计算 R/R 时不买",
         "数据缺口未修复前不升级为买入",
         "高开大幅追涨或财报前波动率过高"
       ],
       "invalid_conditions": [
-        "收盘跌破止损位 245.87 USD",
+        "收盘跌破止损位 246.35 USD",
         "产业链需求、订单或价格弱于预期",
         "财报/指引/申报显示核心假设恶化"
       ],
@@ -2218,7 +2363,7 @@
       "segment": "GPU/CPU",
       "status": "avoid_chasing",
       "status_label": "禁止追高",
-      "action": "证据只支持观察/二次研究；R/R 未达标，不允许普通买入。",
+      "action": "可进入试仓观察：已有入场/止损/目标/R/R，需小仓位并盘中确认。",
       "price": 515.23,
       "currency": "USD",
       "price_time": "2026-07-03 02:11",
@@ -2228,9 +2373,9 @@
       "crowding_score": 73.7,
       "rr_ratio": 0.31,
       "rr_required": 2,
-      "entry_price": 232.61,
-      "stop_loss": 215.38,
-      "target_price": 607.97,
+      "entry_price": 245.26,
+      "stop_loss": 227.09,
+      "target_price": 600.99,
       "signal_type": null,
       "mechanical_rr_ratio": null,
       "starter_entry": 517.81,
@@ -2250,17 +2395,17 @@
       ],
       "buy_conditions": [
         "暂不买：当前 R/R 0.31:1 低于 2:1，等价格回到买点再看",
-        "价格触发：现价 ≤ 232.61 USD 再考虑，还需回落 54.9%；若突破追入，必须重新计算 R/R ≥ 2:1",
-        "风控框架：止损 215.38 USD；目标 607.97 USD；当前 R/R 0.31:1",
+        "价格触发：现价 ≤ 245.26 USD 再考虑，还需回落 52.4%；若突破追入，必须重新计算 R/R ≥ 2:1",
+        "风控框架：止损 227.09 USD；目标 600.99 USD；当前 R/R 0.31:1",
         "确认信号：趋势不恶化，财务/事件证据至少一项继续改善"
       ],
       "avoid_conditions": [
-        "R/R 低于 2:1 不追高；价格高于 232.61 USD 且未重新计算 R/R 时不买",
+        "R/R 低于 2:1 不追高；价格高于 245.26 USD 且未重新计算 R/R 时不买",
         "数据缺口未修复前不升级为买入",
         "高开大幅追涨或财报前波动率过高"
       ],
       "invalid_conditions": [
-        "收盘跌破止损位 215.38 USD",
+        "收盘跌破止损位 227.09 USD",
         "产业链需求、订单或价格弱于预期",
         "财报/指引/申报显示核心假设恶化"
       ],
@@ -2285,9 +2430,9 @@
       "crowding_score": 22.0,
       "rr_ratio": 1.21,
       "rr_required": 2,
-      "entry_price": 875.79,
-      "stop_loss": 813.81,
-      "target_price": 1128.67,
+      "entry_price": 880.21,
+      "stop_loss": 812.23,
+      "target_price": 1124.89,
       "signal_type": null,
       "mechanical_rr_ratio": null,
       "starter_entry": 961.28,
@@ -2307,17 +2452,17 @@
       ],
       "buy_conditions": [
         "暂不买：当前 R/R 1.21:1 低于 2:1，等价格回到买点再看",
-        "价格触发：现价 ≤ 875.79 USD 再考虑，还需回落 8.4%；若突破追入，必须重新计算 R/R ≥ 2:1",
-        "风控框架：止损 813.81 USD；目标 1,128.67 USD；当前 R/R 1.21:1",
+        "价格触发：现价 ≤ 880.21 USD 再考虑，还需回落 8.0%；若突破追入，必须重新计算 R/R ≥ 2:1",
+        "风控框架：止损 812.23 USD；目标 1,124.89 USD；当前 R/R 1.21:1",
         "确认信号：趋势不恶化，财务/事件证据至少一项继续改善"
       ],
       "avoid_conditions": [
-        "R/R 低于 2:1 不追高；价格高于 875.79 USD 且未重新计算 R/R 时不买",
+        "R/R 低于 2:1 不追高；价格高于 880.21 USD 且未重新计算 R/R 时不买",
         "数据缺口未修复前不升级为买入",
         "高开大幅追涨或财报前波动率过高"
       ],
       "invalid_conditions": [
-        "收盘跌破止损位 813.81 USD",
+        "收盘跌破止损位 812.23 USD",
         "产业链需求、订单或价格弱于预期",
         "财报/指引/申报显示核心假设恶化"
       ],
@@ -2342,9 +2487,9 @@
       "crowding_score": 22.0,
       "rr_ratio": 0.82,
       "rr_required": 2,
-      "entry_price": 392.25,
-      "stop_loss": 363.19,
-      "target_price": 549.63,
+      "entry_price": 414.26,
+      "stop_loss": 365.41,
+      "target_price": 545.48,
       "signal_type": null,
       "mechanical_rr_ratio": null,
       "starter_entry": 468.12,
@@ -2362,77 +2507,17 @@
       ],
       "buy_conditions": [
         "暂不买：当前 R/R 0.82:1 低于 2:1，等价格回到买点再看",
-        "价格触发：现价 ≤ 392.25 USD 再考虑，还需回落 15.8%；若突破追入，必须重新计算 R/R ≥ 2:1",
-        "风控框架：止损 363.19 USD；目标 549.63 USD；当前 R/R 0.82:1",
+        "价格触发：现价 ≤ 414.26 USD 再考虑，还需回落 11.1%；若突破追入，必须重新计算 R/R ≥ 2:1",
+        "风控框架：止损 365.41 USD；目标 545.48 USD；当前 R/R 0.82:1",
         "确认信号：趋势不恶化，财务/事件证据至少一项继续改善"
       ],
       "avoid_conditions": [
-        "R/R 低于 2:1 不追高；价格高于 392.25 USD 且未重新计算 R/R 时不买",
+        "R/R 低于 2:1 不追高；价格高于 414.26 USD 且未重新计算 R/R 时不买",
         "数据缺口未修复前不升级为买入",
         "高开大幅追涨或财报前波动率过高"
       ],
       "invalid_conditions": [
-        "收盘跌破止损位 363.19 USD",
-        "产业链需求、订单或价格弱于预期",
-        "财报/指引/申报显示核心假设恶化"
-      ],
-      "source": "opportunity_radar",
-      "updated_at": "2026-07-03 02:11"
-    },
-    {
-      "symbol": "SZ.300394",
-      "name": "天孚通信",
-      "market": "CN",
-      "theme": "AI 光模块 / CPO / 数据中心网络",
-      "segment": "光器件",
-      "status": "avoid_chasing",
-      "status_label": "禁止追高",
-      "action": "证据只支持观察/二次研究；R/R 未达标，不允许普通买入。",
-      "price": 285.0,
-      "currency": "CNY",
-      "price_time": "2026-07-03 02:11",
-      "price_source": "公开日线行情已接入；需 Futu/券商复核",
-      "opportunity_score": 57.7,
-      "trend_score": 76.0,
-      "crowding_score": 22.0,
-      "rr_ratio": 0.62,
-      "rr_required": 2,
-      "entry_price": 159.05,
-      "stop_loss": 51.0714,
-      "target_price": 375.0,
-      "signal_type": null,
-      "mechanical_rr_ratio": null,
-      "starter_entry": null,
-      "starter_stop": null,
-      "starter_target": null,
-      "starter_reward_risk": null,
-      "breakout_trigger": null,
-      "breakout_stop": null,
-      "breakout_target": null,
-      "breakout_reward_risk": null,
-      "score_delta": {
-        "trend_score": 34.0
-      },
-      "why_changed": [
-        "趋势确认变化超过阈值，需确认是机会扩大、逻辑兑现还是风险暴露。",
-        "退回观察，等待重新触发",
-        "趋势确认低于保留门槛 55。",
-        "证据不足",
-        "R/R 未达 2:1，不能进入普通买入"
-      ],
-      "buy_conditions": [
-        "暂不买：当前 R/R 0.62:1 低于 2:1，等价格回到买点再看",
-        "价格触发：现价 ≤ 159.05 CNY 再考虑，还需回落 44.2%；若突破追入，必须重新计算 R/R ≥ 2:1",
-        "风控框架：止损 51.07 CNY；目标 375 CNY；当前 R/R 0.62:1",
-        "确认信号：趋势不恶化，财务/事件证据至少一项继续改善"
-      ],
-      "avoid_conditions": [
-        "R/R 低于 2:1 不追高；价格高于 159.05 CNY 且未重新计算 R/R 时不买",
-        "数据缺口未修复前不升级为买入",
-        "高开大幅追涨或财报前波动率过高"
-      ],
-      "invalid_conditions": [
-        "收盘跌破止损位 51.07 CNY",
+        "收盘跌破止损位 365.41 USD",
         "产业链需求、订单或价格弱于预期",
         "财报/指引/申报显示核心假设恶化"
       ],
@@ -2509,9 +2594,9 @@
       "crowding_score": 20.0,
       "rr_ratio": 1.75,
       "rr_required": 2,
-      "entry_price": 38.78,
+      "entry_price": 38.42,
       "stop_loss": 38.19,
-      "target_price": 50.22,
+      "target_price": 49.75,
       "signal_type": null,
       "mechanical_rr_ratio": null,
       "starter_entry": 42.77,
@@ -2524,16 +2609,18 @@
       "breakout_reward_risk": 4.89,
       "score_delta": null,
       "why_changed": [
-        "证据不足"
+        "证据不足",
+        "缺少年/季度分析师预期",
+        "缺少最近财报 surprise"
       ],
       "buy_conditions": [
         "暂不买：当前 R/R 1.75:1 低于 2:1，等价格回到买点再看",
-        "价格触发：现价 ≤ 38.78 USD 再考虑，还需回落 8.9%；若突破追入，必须重新计算 R/R ≥ 2:1",
-        "风控框架：止损 38.19 USD；目标 50.22 USD；当前 R/R 1.75:1",
+        "价格触发：现价 ≤ 38.42 USD 再考虑，还需回落 9.7%；若突破追入，必须重新计算 R/R ≥ 2:1",
+        "风控框架：止损 38.19 USD；目标 49.75 USD；当前 R/R 1.75:1",
         "确认信号：趋势确认从 14.0 提升到 ≥50，且财务/事件证据补强"
       ],
       "avoid_conditions": [
-        "R/R 低于 2:1 不追高；价格高于 38.78 USD 且未重新计算 R/R 时不买",
+        "R/R 低于 2:1 不追高；价格高于 38.42 USD 且未重新计算 R/R 时不买",
         "数据缺口未修复前不升级为买入",
         "高开大幅追涨或财报前波动率过高"
       ],
@@ -2543,6 +2630,63 @@
         "财报/指引/申报显示核心假设恶化"
       ],
       "source": "opportunity_radar",
+      "updated_at": "2026-07-03 02:11"
+    },
+    {
+      "symbol": "US.COHR",
+      "name": "Coherent",
+      "market": "US",
+      "theme": "AI 光模块 / CPO / 数据中心网络",
+      "segment": "光器件",
+      "status": "avoid_chasing",
+      "status_label": "禁止追高",
+      "action": "可进入试仓观察：已有入场/止损/目标/R/R，需小仓位并盘中确认。",
+      "price": 330.03,
+      "currency": "USD",
+      "price_time": "2026-07-03 02:11",
+      "price_source": "行情已接入",
+      "opportunity_score": 56.2,
+      "trend_score": 50.0,
+      "crowding_score": 60.0,
+      "rr_ratio": 0.52,
+      "rr_required": 2,
+      "entry_price": 273.94,
+      "stop_loss": 217.82,
+      "target_price": 386.17,
+      "signal_type": null,
+      "mechanical_rr_ratio": null,
+      "starter_entry": 331.68,
+      "starter_stop": 297.03,
+      "starter_target": 453.2,
+      "starter_reward_risk": 3.51,
+      "breakout_trigger": 442.2,
+      "breakout_stop": 377.52,
+      "breakout_target": 521.8,
+      "breakout_reward_risk": 1.23,
+      "score_delta": null,
+      "why_changed": [
+        "退回观察，等待重新触发",
+        "美股候选 R/R 0.35:1 低于 2.0:1，退回观察。",
+        "证据不足",
+        "缺少 FMP 预期/财报快照"
+      ],
+      "buy_conditions": [
+        "暂不买：当前 R/R 0.52:1 低于 2:1，等价格回到买点再看",
+        "价格触发：现价 ≤ 273.94 USD 再考虑，还需回落 17.0%；若突破追入，必须重新计算 R/R ≥ 2:1",
+        "风控框架：止损 217.82 USD；目标 386.17 USD；当前 R/R 0.52:1",
+        "确认信号：趋势不恶化，财务/事件证据至少一项继续改善"
+      ],
+      "avoid_conditions": [
+        "R/R 低于 2:1 不追高；价格高于 273.94 USD 且未重新计算 R/R 时不买",
+        "数据缺口未修复前不升级为买入",
+        "高开大幅追涨或财报前波动率过高"
+      ],
+      "invalid_conditions": [
+        "收盘跌破止损位 217.82 USD",
+        "产业链需求、订单或价格弱于预期",
+        "财报/指引/申报显示核心假设恶化"
+      ],
+      "source": "cross_market_intelligence",
       "updated_at": "2026-07-03 02:11"
     },
     {
@@ -2563,9 +2707,9 @@
       "crowding_score": 60.6,
       "rr_ratio": 0.19,
       "rr_required": 2,
-      "entry_price": 393.23,
-      "stop_loss": 364.1,
-      "target_price": 1088.4,
+      "entry_price": 430.32,
+      "stop_loss": 398.44,
+      "target_price": 1071.93,
       "signal_type": null,
       "mechanical_rr_ratio": null,
       "starter_entry": 976.64,
@@ -2585,17 +2729,17 @@
       ],
       "buy_conditions": [
         "暂不买：当前 R/R 0.19:1 低于 2:1，等价格回到买点再看",
-        "价格触发：现价 ≤ 393.23 USD 再考虑，还需回落 59.5%；若突破追入，必须重新计算 R/R ≥ 2:1",
-        "风控框架：止损 364.1 USD；目标 1,088.4 USD；当前 R/R 0.19:1",
+        "价格触发：现价 ≤ 430.32 USD 再考虑，还需回落 55.7%；若突破追入，必须重新计算 R/R ≥ 2:1",
+        "风控框架：止损 398.44 USD；目标 1,071.93 USD；当前 R/R 0.19:1",
         "确认信号：趋势不恶化，财务/事件证据至少一项继续改善"
       ],
       "avoid_conditions": [
-        "R/R 低于 2:1 不追高；价格高于 393.23 USD 且未重新计算 R/R 时不买",
+        "R/R 低于 2:1 不追高；价格高于 430.32 USD 且未重新计算 R/R 时不买",
         "数据缺口未修复前不升级为买入",
         "高开大幅追涨或财报前波动率过高"
       ],
       "invalid_conditions": [
-        "收盘跌破止损位 364.1 USD",
+        "收盘跌破止损位 398.44 USD",
         "产业链需求、订单或价格弱于预期",
         "财报/指引/申报显示核心假设恶化"
       ],
@@ -2672,9 +2816,9 @@
       "crowding_score": 22.0,
       "rr_ratio": 1.3,
       "rr_required": 2,
-      "entry_price": 388.49,
-      "stop_loss": 341.55,
-      "target_price": 468.08,
+      "entry_price": 393.79,
+      "stop_loss": 340.11,
+      "target_price": 463.55,
       "signal_type": null,
       "mechanical_rr_ratio": null,
       "starter_entry": 398.66,
@@ -2697,129 +2841,17 @@
       ],
       "buy_conditions": [
         "暂不买：当前 R/R 1.30:1 低于 2:1，等价格回到买点再看",
-        "价格触发：现价 ≤ 388.49 USD 再考虑，还需回落 2.1%；若突破追入，必须重新计算 R/R ≥ 2:1",
-        "风控框架：止损 341.55 USD；目标 468.08 USD；当前 R/R 1.30:1",
+        "价格触发：现价 ≤ 393.79 USD 再考虑，还需回落 0.7%；若突破追入，必须重新计算 R/R ≥ 2:1",
+        "风控框架：止损 340.11 USD；目标 463.55 USD；当前 R/R 1.30:1",
         "确认信号：趋势不恶化，财务/事件证据至少一项继续改善"
       ],
       "avoid_conditions": [
-        "R/R 低于 2:1 不追高；价格高于 388.49 USD 且未重新计算 R/R 时不买",
+        "R/R 低于 2:1 不追高；价格高于 393.79 USD 且未重新计算 R/R 时不买",
         "数据缺口未修复前不升级为买入",
         "高开大幅追涨或财报前波动率过高"
       ],
       "invalid_conditions": [
-        "收盘跌破止损位 341.55 USD",
-        "产业链需求、订单或价格弱于预期",
-        "财报/指引/申报显示核心假设恶化"
-      ],
-      "source": "opportunity_radar",
-      "updated_at": "2026-07-03 02:11"
-    },
-    {
-      "symbol": "SZ.300499",
-      "name": "高澜股份",
-      "market": "CN",
-      "theme": "AI 数据中心电力 / 液冷 / 配电",
-      "segment": "液冷",
-      "status": "avoid_chasing",
-      "status_label": "禁止追高",
-      "action": "证据只支持观察/二次研究；R/R 未达标，不允许普通买入。",
-      "price": 37.25,
-      "currency": "CNY",
-      "price_time": "2026-07-03 02:11",
-      "price_source": "公开日线行情已接入；需 Futu/券商复核",
-      "opportunity_score": 52.5,
-      "trend_score": 50.0,
-      "crowding_score": 22.0,
-      "rr_ratio": 0.62,
-      "rr_required": 2,
-      "entry_price": 27.33,
-      "stop_loss": 16.98,
-      "target_price": 48.04,
-      "signal_type": null,
-      "mechanical_rr_ratio": null,
-      "starter_entry": null,
-      "starter_stop": null,
-      "starter_target": null,
-      "starter_reward_risk": null,
-      "breakout_trigger": null,
-      "breakout_stop": null,
-      "breakout_target": null,
-      "breakout_reward_risk": null,
-      "score_delta": null,
-      "why_changed": [
-        "退回观察",
-        "趋势确认低于保留门槛 55。",
-        "证据不足",
-        "R/R 未达 2:1，不能进入普通买入"
-      ],
-      "buy_conditions": [
-        "暂不买：当前 R/R 0.62:1 低于 2:1，等价格回到买点再看",
-        "价格触发：现价 ≤ 27.33 CNY 再考虑，还需回落 26.6%；若突破追入，必须重新计算 R/R ≥ 2:1",
-        "风控框架：止损 16.98 CNY；目标 48.04 CNY；当前 R/R 0.62:1",
-        "确认信号：趋势不恶化，财务/事件证据至少一项继续改善"
-      ],
-      "avoid_conditions": [
-        "R/R 低于 2:1 不追高；价格高于 27.33 CNY 且未重新计算 R/R 时不买",
-        "数据缺口未修复前不升级为买入",
-        "高开大幅追涨或财报前波动率过高"
-      ],
-      "invalid_conditions": [
-        "收盘跌破止损位 16.98 CNY",
-        "产业链需求、订单或价格弱于预期",
-        "财报/指引/申报显示核心假设恶化"
-      ],
-      "source": "opportunity_radar",
-      "updated_at": "2026-07-03 02:11"
-    },
-    {
-      "symbol": "SZ.002747",
-      "name": "埃斯顿",
-      "market": "CN",
-      "theme": "Physical AI / 机器人 / 自动化",
-      "segment": "工业机器人",
-      "status": "avoid_chasing",
-      "status_label": "禁止追高",
-      "action": "证据只支持观察/二次研究；R/R 未达标，不允许普通买入。",
-      "price": 40.7,
-      "currency": "CNY",
-      "price_time": "2026-07-03 02:11",
-      "price_source": "跨市场情报行情快照",
-      "opportunity_score": 50.5,
-      "trend_score": 55.0,
-      "crowding_score": 22.0,
-      "rr_ratio": 0.1,
-      "rr_required": 2,
-      "entry_price": 27.08,
-      "stop_loss": 19.21,
-      "target_price": 42.81,
-      "signal_type": null,
-      "mechanical_rr_ratio": null,
-      "starter_entry": null,
-      "starter_stop": null,
-      "starter_target": null,
-      "starter_reward_risk": null,
-      "breakout_trigger": null,
-      "breakout_stop": null,
-      "breakout_target": null,
-      "breakout_reward_risk": null,
-      "score_delta": null,
-      "why_changed": [
-        "证据不足",
-        "R/R 未达 2:1，不能进入普通买入"
-      ],
-      "buy_conditions": [
-        "暂不买：当前 R/R 0.10:1 低于 2:1，等价格回到买点再看",
-        "价格触发：现价 ≤ 27.08 CNY 再考虑，还需回落 33.5%；若突破追入，必须重新计算 R/R ≥ 2:1",
-        "风控框架：止损 19.21 CNY；目标 42.81 CNY；当前 R/R 0.10:1",
-        "确认信号：趋势不恶化，财务/事件证据至少一项继续改善"
-      ],
-      "avoid_conditions": [
-        "R/R 低于 2:1 不追高；价格高于 27.08 CNY 且未重新计算 R/R 时不买",
-        "数据缺口未修复前不升级为买入",
-        "高开大幅追涨或财报前波动率过高"
-      ],
-      "invalid_conditions": [
-        "收盘跌破止损位 19.21 CNY",
+        "收盘跌破止损位 340.11 USD",
         "产业链需求、订单或价格弱于预期",
         "财报/指引/申报显示核心假设恶化"
       ],
@@ -2844,9 +2876,9 @@
       "crowding_score": 28.0,
       "rr_ratio": 0.72,
       "rr_required": 2,
-      "entry_price": 538.88,
-      "stop_loss": 493.77,
-      "target_price": 778.32,
+      "entry_price": 531.94,
+      "stop_loss": 494.82,
+      "target_price": 768.29,
       "signal_type": null,
       "mechanical_rr_ratio": null,
       "starter_entry": 662.89,
@@ -2866,21 +2898,78 @@
       ],
       "buy_conditions": [
         "暂不买：当前 R/R 0.72:1 低于 2:1，等价格回到买点再看",
-        "价格触发：现价 ≤ 538.88 USD 再考虑，还需回落 18.3%；若突破追入，必须重新计算 R/R ≥ 2:1",
-        "风控框架：止损 493.77 USD；目标 778.32 USD；当前 R/R 0.72:1",
+        "价格触发：现价 ≤ 531.94 USD 再考虑，还需回落 19.4%；若突破追入，必须重新计算 R/R ≥ 2:1",
+        "风控框架：止损 494.82 USD；目标 768.29 USD；当前 R/R 0.72:1",
         "确认信号：趋势不恶化，财务/事件证据至少一项继续改善"
       ],
       "avoid_conditions": [
-        "R/R 低于 2:1 不追高；价格高于 538.88 USD 且未重新计算 R/R 时不买",
+        "R/R 低于 2:1 不追高；价格高于 531.94 USD 且未重新计算 R/R 时不买",
         "数据缺口未修复前不升级为买入",
         "高开大幅追涨或财报前波动率过高"
       ],
       "invalid_conditions": [
-        "收盘跌破止损位 493.77 USD",
+        "收盘跌破止损位 494.82 USD",
         "产业链需求、订单或价格弱于预期",
         "财报/指引/申报显示核心假设恶化"
       ],
       "source": "opportunity_radar",
+      "updated_at": "2026-07-03 02:11"
+    },
+    {
+      "symbol": "US.VRT",
+      "name": "Vertiv",
+      "market": "US",
+      "theme": "AI 数据中心电力 / 液冷 / 配电",
+      "segment": "电源/液冷",
+      "status": "avoid_chasing",
+      "status_label": "禁止追高",
+      "action": "可进入试仓观察：已有入场/止损/目标/R/R，需小仓位并盘中确认。",
+      "price": 302.28,
+      "currency": "USD",
+      "price_time": "2026-07-03 02:11",
+      "price_source": "行情已接入",
+      "opportunity_score": 48.7,
+      "trend_score": 50.0,
+      "crowding_score": 44.8,
+      "rr_ratio": 0.61,
+      "rr_required": 2,
+      "entry_price": 260.26,
+      "stop_loss": 213.78,
+      "target_price": 350.1,
+      "signal_type": null,
+      "mechanical_rr_ratio": null,
+      "starter_entry": 303.79,
+      "starter_stop": 272.05,
+      "starter_target": 391.33,
+      "starter_reward_risk": 2.76,
+      "breakout_trigger": 360.33,
+      "breakout_stop": 303.87,
+      "breakout_target": 425.19,
+      "breakout_reward_risk": 1.15,
+      "score_delta": null,
+      "why_changed": [
+        "退回观察，等待重新触发",
+        "美股候选 R/R 0.47:1 低于 2.0:1，退回观察。",
+        "证据不足",
+        "缺少 FMP 预期/财报快照"
+      ],
+      "buy_conditions": [
+        "暂不买：当前 R/R 0.61:1 低于 2:1，等价格回到买点再看",
+        "价格触发：现价 ≤ 260.26 USD 再考虑，还需回落 13.9%；若突破追入，必须重新计算 R/R ≥ 2:1",
+        "风控框架：止损 213.78 USD；目标 350.1 USD；当前 R/R 0.61:1",
+        "确认信号：趋势不恶化，财务/事件证据至少一项继续改善"
+      ],
+      "avoid_conditions": [
+        "R/R 低于 2:1 不追高；价格高于 260.26 USD 且未重新计算 R/R 时不买",
+        "数据缺口未修复前不升级为买入",
+        "高开大幅追涨或财报前波动率过高"
+      ],
+      "invalid_conditions": [
+        "收盘跌破止损位 213.78 USD",
+        "产业链需求、订单或价格弱于预期",
+        "财报/指引/申报显示核心假设恶化"
+      ],
+      "source": "cross_market_intelligence",
       "updated_at": "2026-07-03 02:11"
     },
     {
@@ -3575,6 +3664,19 @@
       "themes": []
     },
     {
+      "id": "20260702-1748-latest-market-brief",
+      "filename": "latest-market-brief.md",
+      "title": "美股市场机械预筛报告",
+      "kind": "daily",
+      "kind_label": "每日分析",
+      "published_at": "2026-07-02T17:48+08:00",
+      "published_label": "2026-07-02 17:48",
+      "is_latest": true,
+      "summary": "美股市场机械预筛报告",
+      "symbols": [],
+      "themes": []
+    },
+    {
       "id": "20260702-1410-deepseek-cloud-20260702-1410",
       "filename": "deepseek-cloud-20260702-1410.md",
       "title": "DeepSeek 云端美股投研报告 - 2026-07-02",
@@ -3946,6 +4048,43 @@
       "themes": []
     },
     {
+      "id": "20260701-2154-latest-opportunity-review-metrics",
+      "filename": "latest-opportunity-review-metrics.md",
+      "title": "机会雷达复盘统计",
+      "kind": "opportunity-review-metrics",
+      "kind_label": "机会复盘",
+      "published_at": "2026-07-01T21:54+08:00",
+      "published_label": "2026-07-01 21:54",
+      "is_latest": true,
+      "summary": "机会雷达复盘统计",
+      "symbols": [
+        "US.SYM",
+        "US.HON",
+        "US.CIEN",
+        "US.MRVL",
+        "US.PH",
+        "US.EMR",
+        "US.FLEX",
+        "US.TTMI",
+        "US.AMD",
+        "US.AVGO"
+      ],
+      "themes": [
+        "GPU",
+        "ASIC",
+        "HBM",
+        "先进封装",
+        "光模块",
+        "CPO",
+        "PCB",
+        "覆铜板",
+        "电子布",
+        "铜箔",
+        "液冷",
+        "电力"
+      ]
+    },
+    {
       "id": "20260701-1408-deepseek-cloud-20260701-1408",
       "filename": "deepseek-cloud-20260701-1408.md",
       "title": "DeepSeek 云端美股投研报告 - 2026-07-01",
@@ -4077,43 +4216,6 @@
         "SZ.300499",
         "US.JBL",
         "HK.01888"
-      ],
-      "themes": [
-        "GPU",
-        "ASIC",
-        "HBM",
-        "先进封装",
-        "光模块",
-        "CPO",
-        "PCB",
-        "覆铜板",
-        "电子布",
-        "铜箔",
-        "液冷",
-        "电力"
-      ]
-    },
-    {
-      "id": "20260701-1406-latest-opportunity-review-metrics",
-      "filename": "latest-opportunity-review-metrics.md",
-      "title": "机会雷达复盘统计",
-      "kind": "opportunity-review-metrics",
-      "kind_label": "机会复盘",
-      "published_at": "2026-07-01T14:06+00:00",
-      "published_label": "2026-07-01 14:06",
-      "is_latest": true,
-      "summary": "机会雷达复盘统计",
-      "symbols": [
-        "US.SYM",
-        "US.ISRG",
-        "US.CIEN",
-        "US.MRVL",
-        "US.PH",
-        "US.EMR",
-        "US.FLEX",
-        "US.TTMI",
-        "US.AMD",
-        "US.AVGO"
       ],
       "themes": [
         "GPU",
@@ -5853,57 +5955,6 @@
         "SZ.300394",
         "US.LITE",
         "US.CIEN"
-      ],
-      "themes": [
-        "GPU",
-        "ASIC",
-        "HBM",
-        "先进封装",
-        "光模块",
-        "CPO",
-        "PCB",
-        "覆铜板",
-        "电子布",
-        "铜箔",
-        "液冷",
-        "电力"
-      ]
-    },
-    {
-      "id": "20260626-1413-latest-cross-market-intelligence",
-      "filename": "latest-cross-market-intelligence.md",
-      "title": "跨市场产业链情报雷达",
-      "kind": "cross-market-intelligence",
-      "kind_label": "跨市场情报",
-      "published_at": "2026-06-26T14:13+00:00",
-      "published_label": "2026-06-26 14:13",
-      "is_latest": true,
-      "summary": "跨市场产业链情报雷达",
-      "symbols": [
-        "US.AMD",
-        "HK.01347",
-        "US.TSM",
-        "US.MRVL",
-        "US.MU",
-        "US.ANET",
-        "US.COHR",
-        "SZ.300394",
-        "US.LITE",
-        "SZ.300502",
-        "SZ.300308",
-        "US.CIEN",
-        "SH.600183",
-        "HK.01888",
-        "US.TTMI",
-        "SH.603256",
-        "US.JBL",
-        "US.FLEX",
-        "HK.00148",
-        "US.PH",
-        "US.ETN",
-        "US.EMR",
-        "SZ.002335",
-        "US.VRT"
       ],
       "themes": [
         "GPU",
