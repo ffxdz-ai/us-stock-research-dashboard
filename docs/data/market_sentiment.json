@@ -1,93 +1,93 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-07-08T14:37:19+08:00",
-  "generated_label": "2026-07-08 14:37",
+  "generated_at": "2026-07-09T16:00:19+08:00",
+  "generated_label": "2026-07-09 16:00",
   "data_boundary": "公开脱敏市场情绪层；只用于判断风险环境，不生成交易指令，不替代个股 R/R 纪律。",
-  "score": 61.2,
+  "score": 63.8,
   "status": "neutral",
   "status_label": "Neutral",
   "stance": "情绪中性，等待方向确认",
-  "summary": "综合情绪分 61.2，状态 Neutral。最强支撑来自波动率压力（93.7）。主要拖累来自成长/小盘相对强弱（35.4）。该结论只决定仓位/进攻性倾向，不直接给个股买点。",
+  "summary": "综合情绪分 63.8，状态 Neutral。最强支撑来自波动率压力（91.5）。主要拖累来自股票指数短线表现（44.0）。该结论只决定仓位/进攻性倾向，不直接给个股买点。",
   "components": [
     {
       "key": "volatility",
       "name": "波动率压力",
-      "score": 93.7,
+      "score": 91.5,
       "weight": 0.25,
       "status": "risk_on",
-      "value": 15.57,
+      "value": 16.13,
       "message": "VIX 越低代表恐慌越少，但过低也可能意味着拥挤。",
       "source": "FRED",
       "source_type": "official",
-      "updated_at": "2026-07-06",
+      "updated_at": "2026-07-07",
       "confidence": "high"
     },
     {
       "key": "equity_tape",
       "name": "股票指数短线表现",
-      "score": 39.4,
+      "score": 44.0,
       "weight": 0.25,
       "status": "risk_off",
       "value": {
-        "SPY": -0.48,
-        "QQQ": -1.85,
-        "DIA": -0.31,
+        "SPY": -0.31,
+        "QQQ": 0.28,
+        "DIA": -1.07,
         "IWM": -0.91
       },
       "message": "用 SPY/QQQ/DIA/IWM 涨跌幅判断当天股票风险偏好。",
       "source": "public market quote",
       "source_type": "vendor_fallback",
-      "updated_at": "Jul 7, 2026",
+      "updated_at": "Jul 8, 2026",
       "confidence": "medium"
     },
     {
       "key": "growth_leadership",
       "name": "成长/小盘相对强弱",
-      "score": 35.4,
+      "score": 52.4,
       "weight": 0.15,
-      "status": "risk_off",
+      "status": "neutral",
       "value": {
-        "QQQ_minus_SPY": -1.37,
-        "IWM_minus_SPY": -0.43
+        "QQQ_minus_SPY": 0.59,
+        "IWM_minus_SPY": -0.6
       },
       "message": "成长股和小盘股相对大盘越强，风险偏好通常越高。",
       "source": "public market quote",
       "source_type": "vendor_fallback",
-      "updated_at": "Jul 7, 2026",
+      "updated_at": "Jul 8, 2026",
       "confidence": "medium"
     },
     {
       "key": "defensive_flow",
       "name": "避险资产相对表现",
-      "score": 56.5,
+      "score": 52.0,
       "weight": 0.1,
       "status": "neutral",
       "value": {
-        "SPY": -0.48,
-        "TLT": -1.05,
-        "GLD": -1.21
+        "SPY": -0.31,
+        "TLT": -0.22,
+        "GLD": -0.81
       },
       "message": "股票强于长债/黄金代表风险偏好改善；反之提示避险。",
       "source": "public market quote",
       "source_type": "vendor_fallback",
-      "updated_at": "Jul 7, 2026",
+      "updated_at": "Jul 8, 2026",
       "confidence": "medium"
     },
     {
       "key": "macro_liquidity_credit",
       "name": "宏观流动性/信用背景",
-      "score": 72.9,
+      "score": 72.6,
       "weight": 0.2,
       "status": "risk_on",
       "value": {
         "liquidity_score": 81.0,
         "risk_appetite_score": 62.0,
-        "BAA10Y": 1.54
+        "BAA10Y": 1.55
       },
       "message": "FRED 流动性、金融条件和信用利差用于判断风险资产背景。",
       "source": "FRED",
       "source_type": "official",
-      "updated_at": "2026-07-08 14:37",
+      "updated_at": "2026-07-09 15:59",
       "confidence": "high"
     },
     {
@@ -97,18 +97,17 @@
       "weight": 0.05,
       "status": "neutral",
       "value": {
-        "USO_change_pct": 4.38,
-        "WTI_3m_change_pct": -29.0243
+        "USO_change_pct": 3.02,
+        "WTI_3m_change_pct": -38.5322
       },
       "message": "油价快速上涨会压低情绪分，因为它可能强化通胀和利率压力。",
       "source": "public market quote/FRED",
       "source_type": "vendor_fallback",
-      "updated_at": "Jul 7, 2026",
+      "updated_at": "Jul 8, 2026",
       "confidence": "medium"
     }
   ],
   "rules_triggered": [
-    "主要股票指数同步走弱，降低进攻性。",
     "FRED 流动性/信用背景偏友好，支持结构性风险资产。"
   ],
   "data_gaps": [
