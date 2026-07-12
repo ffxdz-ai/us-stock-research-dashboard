@@ -1,13 +1,13 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-07-11T14:23:55+08:00",
-  "generated_label": "2026-07-11 14:23",
+  "generated_at": "2026-07-12T14:44:35+08:00",
+  "generated_label": "2026-07-12 14:44",
   "summary": {
     "theme_count": 5,
     "accelerating_theme_count": 1,
     "cross_market_signal_count": 1,
     "secondary_research_candidate_count": 7,
-    "event_backlog_count": 6,
+    "event_backlog_count": 5,
     "tracked_security_count": 38
   },
   "themes": [
@@ -18,7 +18,7 @@
       "status": "需求加速，等待更多市场确认",
       "horizon": "3-12个月",
       "thesis": "训练和推理需求首先兑现到 GPU、ASIC、HBM、先进制程和 CoWoS/先进封装；但龙头可能已被充分定价，系统重点识别估值、利润兑现和拥挤度的错配。",
-      "demand_acceleration_score": 75.1,
+      "demand_acceleration_score": 74.7,
       "theme_score": 73.1,
       "score_components": {
         "demand_shift": 92.0,
@@ -28,7 +28,7 @@
         "market_underpricing": 59.6,
         "trend_avg": 74.2,
         "market_breadth": 74,
-        "change_signal": 4,
+        "change_signal": 0,
         "crowding_penalty": 37.8
       },
       "market_breadth": {
@@ -1229,7 +1229,7 @@
       "status": "观察跟踪",
       "horizon": "3-12个月",
       "thesis": "AI 服务器和高速交换机需要高层数、低损耗 PCB 与高端 CCL，若电子布、铜箔、树脂和高端覆铜板涨价，利润弹性可能从设备和光模块向材料端扩散。",
-      "demand_acceleration_score": 65.4,
+      "demand_acceleration_score": 65.1,
       "theme_score": 63.8,
       "score_components": {
         "demand_shift": 84.0,
@@ -1239,7 +1239,7 @@
         "market_underpricing": 58.0,
         "trend_avg": 53.8,
         "market_breadth": 71,
-        "change_signal": 4,
+        "change_signal": 0,
         "crowding_penalty": 29.3
       },
       "market_breadth": {
@@ -1881,7 +1881,7 @@
       "status": "观察跟踪",
       "horizon": "6-18个月",
       "thesis": "AI 数据中心功耗密度抬升后，瓶颈从芯片扩散到电力接入、UPS、配电、液冷和工程建设；这些环节通常滞后兑现，但持续性可能更强。",
-      "demand_acceleration_score": 64.7,
+      "demand_acceleration_score": 64.4,
       "theme_score": 62.1,
       "score_components": {
         "demand_shift": 86.0,
@@ -1891,7 +1891,7 @@
         "market_underpricing": 62.7,
         "trend_avg": 55.4,
         "market_breadth": 53,
-        "change_signal": 4,
+        "change_signal": 0,
         "crowding_penalty": 23.2
       },
       "market_breadth": {
@@ -2996,7 +2996,7 @@
       "opportunity_score": 84.5,
       "trend_score": 76.0,
       "crowding_score": 18.0,
-      "demand_acceleration_score": 75.1,
+      "demand_acceleration_score": 74.7,
       "reason": "已在二次分析生命周期中；交给 Buy-Side 二次分析"
     },
     {
@@ -3009,7 +3009,7 @@
       "opportunity_score": 69.7,
       "trend_score": 76.0,
       "crowding_score": 50.0,
-      "demand_acceleration_score": 75.1,
+      "demand_acceleration_score": 74.7,
       "reason": "已在二次分析生命周期中；观察"
     },
     {
@@ -3022,7 +3022,7 @@
       "opportunity_score": 65.7,
       "trend_score": 76.0,
       "crowding_score": 22.0,
-      "demand_acceleration_score": 75.1,
+      "demand_acceleration_score": 74.7,
       "reason": "已在二次分析生命周期中；观察"
     },
     {
@@ -3035,7 +3035,7 @@
       "opportunity_score": 64.5,
       "trend_score": 88.0,
       "crowding_score": 76.9,
-      "demand_acceleration_score": 75.1,
+      "demand_acceleration_score": 74.7,
       "reason": "已在二次分析生命周期中；趋势强，等待基本面/估值确认"
     },
     {
@@ -3048,7 +3048,7 @@
       "opportunity_score": 57.7,
       "trend_score": 76.0,
       "crowding_score": 22.0,
-      "demand_acceleration_score": 75.1,
+      "demand_acceleration_score": 74.7,
       "reason": "已在二次分析生命周期中；观察"
     },
     {
@@ -3061,7 +3061,7 @@
       "opportunity_score": 57.7,
       "trend_score": 76.0,
       "crowding_score": 22.0,
-      "demand_acceleration_score": 75.1,
+      "demand_acceleration_score": 74.7,
       "reason": "已在二次分析生命周期中；观察"
     },
     {
@@ -3074,16 +3074,11 @@
       "opportunity_score": 57.2,
       "trend_score": 76.0,
       "crowding_score": 52.7,
-      "demand_acceleration_score": 75.1,
+      "demand_acceleration_score": 74.7,
       "reason": "已在二次分析生命周期中；观察"
     }
   ],
   "event_extraction_backlog": [
-    {
-      "type": "metric",
-      "priority": "medium",
-      "item": "本轮新增 3 条指标变化，需要判断是逻辑增强还是价格波动。"
-    },
     {
       "type": "permission",
       "priority": "high",

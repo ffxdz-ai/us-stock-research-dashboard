@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-07-11T14:23:55+08:00",
-  "generated_label": "2026-07-11 14:23",
+  "generated_at": "2026-07-12T14:44:35+08:00",
+  "generated_label": "2026-07-12 14:44",
   "data_boundary": {
     "role": "opportunity discovery, not trading instruction",
     "buy_side_gate": "任何股票买入必须回到 Buy-Side 分析、R/R >= 2:1、估值纪律和复星证券整股约束。",
@@ -18,7 +18,7 @@
     "expectation_gap_count": 0,
     "confirming_count": 1,
     "crowded_count": 0,
-    "security_change_count": 3,
+    "security_change_count": 0,
     "secondary_candidate_count": 1,
     "completed_review_count": 0,
     "next_review_count": 15
@@ -324,20 +324,7 @@
         "US.AVGO：机会分 71.6，保留观察，等待估值/趋势/催化进一步确认",
         "US.MRVL：机会分 69.7，保留观察，等待估值/趋势/催化进一步确认"
       ],
-      "changes": [
-        {
-          "type": "metric_change",
-          "code": "US.NVDA",
-          "name": "NVIDIA",
-          "detected_at": "2026-07-11T14:23:55+08:00",
-          "metric": "trend_score",
-          "label": "趋势确认",
-          "previous": 50.0,
-          "current": 76.0,
-          "change_pct": 52.0,
-          "note": "趋势确认变化超过阈值，需确认是机会扩大、逻辑兑现还是风险暴露。"
-        }
-      ],
+      "changes": [],
       "securities": [
         {
           "code": "US.NVDA",
@@ -994,20 +981,7 @@
         "US.FLEX：机会分 60.5，普通观察",
         "SH.600183：机会分 57.7，跨市场观察"
       ],
-      "changes": [
-        {
-          "type": "metric_change",
-          "code": "US.FLEX",
-          "name": "Flex",
-          "detected_at": "2026-07-11T14:23:55+08:00",
-          "metric": "trend_score",
-          "label": "趋势确认",
-          "previous": 76.0,
-          "current": 50.0,
-          "change_pct": -34.21,
-          "note": "趋势确认变化超过阈值，需确认是机会扩大、逻辑兑现还是风险暴露。"
-        }
-      ],
+      "changes": [],
       "securities": [
         {
           "code": "US.JBL",
@@ -1358,20 +1332,7 @@
         "US.ETN：机会分 62.0，普通观察",
         "US.EMR：机会分 55.6，普通观察"
       ],
-      "changes": [
-        {
-          "type": "metric_change",
-          "code": "US.EMR",
-          "name": "Emerson",
-          "detected_at": "2026-07-11T14:23:55+08:00",
-          "metric": "trend_score",
-          "label": "趋势确认",
-          "previous": 20.0,
-          "current": 50.0,
-          "change_pct": 150.0,
-          "note": "趋势确认变化超过阈值，需确认是机会扩大、逻辑兑现还是风险暴露。"
-        }
-      ],
+      "changes": [],
       "securities": [
         {
           "code": "US.PH",
@@ -1885,44 +1846,7 @@
     }
   ],
   "filing_changes": [],
-  "metric_changes": [
-    {
-      "type": "metric_change",
-      "code": "US.FLEX",
-      "name": "Flex",
-      "detected_at": "2026-07-11T14:23:55+08:00",
-      "metric": "trend_score",
-      "label": "趋势确认",
-      "previous": 76.0,
-      "current": 50.0,
-      "change_pct": -34.21,
-      "note": "趋势确认变化超过阈值，需确认是机会扩大、逻辑兑现还是风险暴露。"
-    },
-    {
-      "type": "metric_change",
-      "code": "US.NVDA",
-      "name": "NVIDIA",
-      "detected_at": "2026-07-11T14:23:55+08:00",
-      "metric": "trend_score",
-      "label": "趋势确认",
-      "previous": 50.0,
-      "current": 76.0,
-      "change_pct": 52.0,
-      "note": "趋势确认变化超过阈值，需确认是机会扩大、逻辑兑现还是风险暴露。"
-    },
-    {
-      "type": "metric_change",
-      "code": "US.EMR",
-      "name": "Emerson",
-      "detected_at": "2026-07-11T14:23:55+08:00",
-      "metric": "trend_score",
-      "label": "趋势确认",
-      "previous": 20.0,
-      "current": 50.0,
-      "change_pct": 150.0,
-      "note": "趋势确认变化超过阈值，需确认是机会扩大、逻辑兑现还是风险暴露。"
-    }
-  ],
+  "metric_changes": [],
   "review_due": [
     {
       "theme_id": "ai_advanced_packaging_hbm",
