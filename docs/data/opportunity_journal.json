@@ -1,16 +1,16 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-07-13T14:49:17+08:00",
-  "generated_label": "2026-07-13 14:49",
+  "generated_at": "2026-07-14T00:03:22+08:00",
+  "generated_label": "2026-07-14 00:03",
   "opportunities": {
     "ai_advanced_packaging_hbm": {
       "id": "ai_advanced_packaging_hbm",
       "name": "GPU / ASIC / HBM / 先进封装",
       "first_seen_at": "2026-06-21T04:10:31+08:00",
-      "last_seen_at": "2026-07-13T14:49:17+08:00",
+      "last_seen_at": "2026-07-14T00:03:22+08:00",
       "initial_score": 70.8,
       "previous_score": 73.1,
-      "last_score": 73.1,
+      "last_score": 72.8,
       "stage": "确认中",
       "initial_prices": {
         "US.NVDA": 210.69,
@@ -40,18 +40,6 @@
         }
       ],
       "history": [
-        {
-          "at": "2026-06-21T12:25:30+08:00",
-          "score": 71.1,
-          "stage": "确认中",
-          "top_candidates": [
-            "US.NVDA",
-            "US.AVGO",
-            "US.MRVL",
-            "US.AMD",
-            "HK.01347"
-          ]
-        },
         {
           "at": "2026-06-21T12:33:00+08:00",
           "score": 71.1,
@@ -519,6 +507,18 @@
             "US.TSM",
             "US.AMD"
           ]
+        },
+        {
+          "at": "2026-07-14T00:03:22+08:00",
+          "score": 72.8,
+          "stage": "确认中",
+          "top_candidates": [
+            "US.NVDA",
+            "US.AVGO",
+            "US.TSM",
+            "US.AMD",
+            "US.MRVL"
+          ]
         }
       ]
     },
@@ -526,10 +526,10 @@
       "id": "ai_datacenter_power_cooling",
       "name": "AI 数据中心电力 / 液冷 / 配电",
       "first_seen_at": "2026-06-21T04:10:31+08:00",
-      "last_seen_at": "2026-07-13T14:49:17+08:00",
+      "last_seen_at": "2026-07-14T00:03:22+08:00",
       "initial_score": 66.4,
       "previous_score": 62.1,
-      "last_score": 62.1,
+      "last_score": 61.6,
       "stage": "观察跟踪",
       "initial_prices": {
         "US.PH": 953.27,
@@ -558,18 +558,6 @@
         }
       ],
       "history": [
-        {
-          "at": "2026-06-21T12:25:30+08:00",
-          "score": 61.5,
-          "stage": "观察跟踪",
-          "top_candidates": [
-            "US.PH",
-            "US.EMR",
-            "US.ETN",
-            "SZ.300499",
-            "US.VRT"
-          ]
-        },
         {
           "at": "2026-06-21T12:33:00+08:00",
           "score": 61.5,
@@ -1037,6 +1025,18 @@
             "SZ.300499",
             "US.PWR"
           ]
+        },
+        {
+          "at": "2026-07-14T00:03:22+08:00",
+          "score": 61.6,
+          "stage": "观察跟踪",
+          "top_candidates": [
+            "US.PH",
+            "US.ETN",
+            "SZ.300499",
+            "US.PWR",
+            "US.EMR"
+          ]
         }
       ]
     },
@@ -1044,10 +1044,10 @@
       "id": "ai_optical_cpo_networking",
       "name": "AI 光模块 / CPO / 数据中心网络",
       "first_seen_at": "2026-06-21T04:10:31+08:00",
-      "last_seen_at": "2026-07-13T14:49:17+08:00",
+      "last_seen_at": "2026-07-14T00:03:22+08:00",
       "initial_score": 67.2,
       "previous_score": 67.8,
-      "last_score": 67.8,
+      "last_score": 67.7,
       "stage": "观察跟踪",
       "initial_prices": {
         "US.ANET": 169.67,
@@ -1077,18 +1077,6 @@
         }
       ],
       "history": [
-        {
-          "at": "2026-06-21T12:25:30+08:00",
-          "score": 67.0,
-          "stage": "观察跟踪",
-          "top_candidates": [
-            "US.ANET",
-            "US.MRVL",
-            "SZ.300308",
-            "SZ.300502",
-            "US.COHR"
-          ]
-        },
         {
           "at": "2026-06-21T12:33:00+08:00",
           "score": 67.0,
@@ -1556,6 +1544,18 @@
             "US.LITE",
             "SZ.300502"
           ]
+        },
+        {
+          "at": "2026-07-14T00:03:22+08:00",
+          "score": 67.7,
+          "stage": "观察跟踪",
+          "top_candidates": [
+            "US.ANET",
+            "US.MRVL",
+            "US.COHR",
+            "US.LITE",
+            "SZ.300502"
+          ]
         }
       ]
     },
@@ -1563,10 +1563,10 @@
       "id": "ai_pcb_ccl_materials",
       "name": "高速 PCB / 覆铜板 / 电子布 / 铜箔",
       "first_seen_at": "2026-06-21T04:10:31+08:00",
-      "last_seen_at": "2026-07-13T14:49:17+08:00",
+      "last_seen_at": "2026-07-14T00:03:22+08:00",
       "initial_score": 61.8,
-      "previous_score": 63.8,
-      "last_score": 63.5,
+      "previous_score": 63.5,
+      "last_score": 64.0,
       "stage": "观察跟踪",
       "initial_prices": {
         "US.TTMI": 216.44,
@@ -1597,18 +1597,6 @@
         }
       ],
       "history": [
-        {
-          "at": "2026-06-21T12:25:30+08:00",
-          "score": 62.5,
-          "stage": "观察跟踪",
-          "top_candidates": [
-            "US.JBL",
-            "US.FLEX",
-            "US.TTMI",
-            "HK.01888",
-            "HK.00148"
-          ]
-        },
         {
           "at": "2026-06-21T12:33:00+08:00",
           "score": 62.5,
@@ -2076,6 +2064,18 @@
             "SH.600183",
             "SH.688183"
           ]
+        },
+        {
+          "at": "2026-07-14T00:03:22+08:00",
+          "score": 64.0,
+          "stage": "观察跟踪",
+          "top_candidates": [
+            "US.JBL",
+            "US.FLEX",
+            "US.TTMI",
+            "SH.600183",
+            "SH.688183"
+          ]
         }
       ]
     },
@@ -2083,7 +2083,7 @@
       "id": "physical_ai_robotics",
       "name": "Physical AI / 机器人 / 自动化",
       "first_seen_at": "2026-06-21T04:10:31+08:00",
-      "last_seen_at": "2026-07-13T14:49:17+08:00",
+      "last_seen_at": "2026-07-14T00:03:22+08:00",
       "initial_score": 62.4,
       "previous_score": 59.6,
       "last_score": 59.6,
@@ -2113,18 +2113,6 @@
         }
       ],
       "history": [
-        {
-          "at": "2026-06-21T12:25:30+08:00",
-          "score": 59.2,
-          "stage": "观察跟踪",
-          "top_candidates": [
-            "US.HON",
-            "US.ISRG",
-            "US.ROK",
-            "US.SYM",
-            "SZ.002747"
-          ]
-        },
         {
           "at": "2026-06-21T12:33:00+08:00",
           "score": 59.2,
@@ -2592,6 +2580,18 @@
             "US.HON",
             "SZ.002747"
           ]
+        },
+        {
+          "at": "2026-07-14T00:03:22+08:00",
+          "score": 59.6,
+          "stage": "观察跟踪",
+          "top_candidates": [
+            "US.ISRG",
+            "US.ROK",
+            "US.SYM",
+            "US.HON",
+            "SZ.002747"
+          ]
         }
       ]
     }
@@ -2601,11 +2601,11 @@
       "code": "HK.00148",
       "name": "建滔集团",
       "first_seen_at": "2026-06-21T04:10:31+08:00",
-      "last_seen_at": "2026-07-13T14:49:17+08:00",
+      "last_seen_at": "2026-07-14T00:03:22+08:00",
       "latest_filing_accession": null,
       "latest_filing_form": null,
       "latest_filing_date": null,
-      "price": 57.85,
+      "price": 73.5,
       "valuation_pe": null,
       "opportunity_score": 50.8,
       "trend_score": 42.0
@@ -2614,24 +2614,24 @@
       "code": "HK.00981",
       "name": "中芯国际",
       "first_seen_at": "2026-06-21T04:10:31+08:00",
-      "last_seen_at": "2026-07-13T14:49:17+08:00",
+      "last_seen_at": "2026-07-14T00:03:22+08:00",
       "latest_filing_accession": null,
       "latest_filing_form": null,
       "latest_filing_date": null,
-      "price": 76.9,
+      "price": 79.65,
       "valuation_pe": null,
-      "opportunity_score": 52.5,
-      "trend_score": 50.0
+      "opportunity_score": 57.7,
+      "trend_score": 76.0
     },
     "HK.01347": {
       "code": "HK.01347",
       "name": "华虹半导体",
       "first_seen_at": "2026-06-21T04:10:31+08:00",
-      "last_seen_at": "2026-07-13T14:49:17+08:00",
+      "last_seen_at": "2026-07-14T00:03:22+08:00",
       "latest_filing_accession": null,
       "latest_filing_form": null,
       "latest_filing_date": null,
-      "price": 171.4,
+      "price": 185.5,
       "valuation_pe": null,
       "opportunity_score": 57.7,
       "trend_score": 76.0
@@ -2640,59 +2640,59 @@
       "code": "HK.01888",
       "name": "建滔积层板",
       "first_seen_at": "2026-06-21T04:10:31+08:00",
-      "last_seen_at": "2026-07-13T14:49:17+08:00",
+      "last_seen_at": "2026-07-14T00:03:22+08:00",
       "latest_filing_accession": null,
       "latest_filing_form": null,
       "latest_filing_date": null,
-      "price": 50.35,
+      "price": 62.8,
       "valuation_pe": null,
-      "opportunity_score": 50.8,
-      "trend_score": 42.0
+      "opportunity_score": 56.0,
+      "trend_score": 68.0
     },
     "SH.600183": {
       "code": "SH.600183",
       "name": "生益科技",
       "first_seen_at": "2026-06-21T04:10:31+08:00",
-      "last_seen_at": "2026-07-13T14:49:17+08:00",
+      "last_seen_at": "2026-07-14T00:03:22+08:00",
       "latest_filing_accession": null,
       "latest_filing_form": null,
       "latest_filing_date": null,
-      "price": 134.45,
+      "price": 149.39,
       "valuation_pe": null,
-      "opportunity_score": 52.5,
-      "trend_score": 50.0
+      "opportunity_score": 57.7,
+      "trend_score": 76.0
     },
     "SH.603256": {
       "code": "SH.603256",
       "name": "宏和科技",
       "first_seen_at": "2026-06-21T04:10:31+08:00",
-      "last_seen_at": "2026-07-13T14:49:17+08:00",
+      "last_seen_at": "2026-07-14T00:03:22+08:00",
       "latest_filing_accession": null,
       "latest_filing_form": null,
       "latest_filing_date": null,
-      "price": 187.28,
+      "price": 206.03,
       "valuation_pe": null,
-      "opportunity_score": 50.8,
-      "trend_score": 42.0
+      "opportunity_score": 56.0,
+      "trend_score": 68.0
     },
     "SH.688183": {
       "code": "SH.688183",
       "name": "生益电子",
       "first_seen_at": "2026-06-21T04:10:31+08:00",
-      "last_seen_at": "2026-07-13T14:49:17+08:00",
+      "last_seen_at": "2026-07-14T00:03:22+08:00",
       "latest_filing_accession": null,
       "latest_filing_form": null,
       "latest_filing_date": null,
-      "price": 111.41,
+      "price": 123.0,
       "valuation_pe": null,
-      "opportunity_score": 52.5,
-      "trend_score": 50.0
+      "opportunity_score": 57.7,
+      "trend_score": 76.0
     },
     "SH.688322": {
       "code": "SH.688322",
       "name": "奥比中光",
       "first_seen_at": "2026-06-21T04:10:31+08:00",
-      "last_seen_at": "2026-07-13T14:49:17+08:00",
+      "last_seen_at": "2026-07-14T00:03:22+08:00",
       "latest_filing_accession": null,
       "latest_filing_form": null,
       "latest_filing_date": null,
@@ -2705,11 +2705,11 @@
       "code": "SZ.002335",
       "name": "科华数据",
       "first_seen_at": "2026-06-21T04:10:31+08:00",
-      "last_seen_at": "2026-07-13T14:49:17+08:00",
+      "last_seen_at": "2026-07-14T00:03:22+08:00",
       "latest_filing_accession": null,
       "latest_filing_form": null,
       "latest_filing_date": null,
-      "price": 33.66,
+      "price": 36.1,
       "valuation_pe": null,
       "opportunity_score": 44.8,
       "trend_score": 12.0
@@ -2718,7 +2718,7 @@
       "code": "SZ.002747",
       "name": "埃斯顿",
       "first_seen_at": "2026-06-21T04:10:31+08:00",
-      "last_seen_at": "2026-07-13T14:49:17+08:00",
+      "last_seen_at": "2026-07-14T00:03:22+08:00",
       "latest_filing_accession": null,
       "latest_filing_form": null,
       "latest_filing_date": null,
@@ -2731,11 +2731,11 @@
       "code": "SZ.300308",
       "name": "中际旭创",
       "first_seen_at": "2026-06-21T04:10:31+08:00",
-      "last_seen_at": "2026-07-13T14:49:17+08:00",
+      "last_seen_at": "2026-07-14T00:03:22+08:00",
       "latest_filing_accession": null,
       "latest_filing_form": null,
       "latest_filing_date": null,
-      "price": 1076.95,
+      "price": 1093.98,
       "valuation_pe": null,
       "opportunity_score": 52.5,
       "trend_score": 50.0
@@ -2744,24 +2744,24 @@
       "code": "SZ.300394",
       "name": "天孚通信",
       "first_seen_at": "2026-06-21T04:10:31+08:00",
-      "last_seen_at": "2026-07-13T14:49:17+08:00",
+      "last_seen_at": "2026-07-14T00:03:22+08:00",
       "latest_filing_accession": null,
       "latest_filing_form": null,
       "latest_filing_date": null,
-      "price": 255.66,
+      "price": 271.12,
       "valuation_pe": null,
-      "opportunity_score": 50.8,
-      "trend_score": 42.0
+      "opportunity_score": 52.5,
+      "trend_score": 50.0
     },
     "SZ.300476": {
       "code": "SZ.300476",
       "name": "胜宏科技",
       "first_seen_at": "2026-06-21T04:10:31+08:00",
-      "last_seen_at": "2026-07-13T14:49:17+08:00",
+      "last_seen_at": "2026-07-14T00:03:22+08:00",
       "latest_filing_accession": null,
       "latest_filing_form": null,
       "latest_filing_date": null,
-      "price": 270.25,
+      "price": 272.0,
       "valuation_pe": null,
       "opportunity_score": 44.8,
       "trend_score": 12.0
@@ -2770,11 +2770,11 @@
       "code": "SZ.300499",
       "name": "高澜股份",
       "first_seen_at": "2026-06-21T04:10:31+08:00",
-      "last_seen_at": "2026-07-13T14:49:17+08:00",
+      "last_seen_at": "2026-07-14T00:03:22+08:00",
       "latest_filing_accession": null,
       "latest_filing_form": null,
       "latest_filing_date": null,
-      "price": 34.3,
+      "price": 38.6,
       "valuation_pe": null,
       "opportunity_score": 52.5,
       "trend_score": 50.0
@@ -2783,11 +2783,11 @@
       "code": "SZ.300502",
       "name": "新易盛",
       "first_seen_at": "2026-06-21T04:10:31+08:00",
-      "last_seen_at": "2026-07-13T14:49:17+08:00",
+      "last_seen_at": "2026-07-14T00:03:22+08:00",
       "latest_filing_accession": null,
       "latest_filing_form": null,
       "latest_filing_date": null,
-      "price": 504.06,
+      "price": 523.05,
       "valuation_pe": null,
       "opportunity_score": 57.7,
       "trend_score": 76.0
@@ -2796,37 +2796,37 @@
       "code": "US.AMD",
       "name": "AMD",
       "first_seen_at": "2026-06-21T04:10:31+08:00",
-      "last_seen_at": "2026-07-13T14:49:17+08:00",
+      "last_seen_at": "2026-07-14T00:03:22+08:00",
       "latest_filing_accession": "0000002488-26-000115",
       "latest_filing_form": "8-K",
       "latest_filing_date": "2026-07-01",
-      "price": 557.89,
+      "price": 542.4,
       "valuation_pe": 51.24291,
-      "opportunity_score": 64.5,
+      "opportunity_score": 65.1,
       "trend_score": 88.0
     },
     "US.ANET": {
       "code": "US.ANET",
       "name": "Arista Networks",
       "first_seen_at": "2026-06-21T04:10:31+08:00",
-      "last_seen_at": "2026-07-13T14:49:17+08:00",
+      "last_seen_at": "2026-07-14T00:03:22+08:00",
       "latest_filing_accession": "0001596532-26-000118",
       "latest_filing_form": "8-K",
       "latest_filing_date": "2026-06-02",
-      "price": 186.96,
-      "valuation_pe": 51.50742416595221,
-      "opportunity_score": 68.6,
+      "price": 185.55,
+      "valuation_pe": 51.067395904415235,
+      "opportunity_score": 68.8,
       "trend_score": 88.0
     },
     "US.AVGO": {
       "code": "US.AVGO",
       "name": "Broadcom",
       "first_seen_at": "2026-06-21T04:10:31+08:00",
-      "last_seen_at": "2026-07-13T14:49:17+08:00",
+      "last_seen_at": "2026-07-14T00:03:22+08:00",
       "latest_filing_accession": "0001193125-26-295589",
       "latest_filing_form": "8-K",
       "latest_filing_date": "2026-07-06",
-      "price": 399.97,
+      "price": 389.55,
       "valuation_pe": 23.2388,
       "opportunity_score": 71.6,
       "trend_score": 50.0
@@ -2835,76 +2835,76 @@
       "code": "US.CIEN",
       "name": "Ciena",
       "first_seen_at": "2026-06-21T04:10:31+08:00",
-      "last_seen_at": "2026-07-13T14:49:17+08:00",
+      "last_seen_at": "2026-07-14T00:03:22+08:00",
       "latest_filing_accession": "0001193125-26-267607",
       "latest_filing_form": "8-K",
       "latest_filing_date": "2026-06-11",
-      "price": 460.72,
-      "valuation_pe": 70.516579247965,
-      "opportunity_score": 55.6,
+      "price": 452.265,
+      "valuation_pe": 68.02021397722721,
+      "opportunity_score": 56.2,
       "trend_score": 50.0
     },
     "US.COHR": {
       "code": "US.COHR",
       "name": "Coherent",
       "first_seen_at": "2026-06-21T04:10:31+08:00",
-      "last_seen_at": "2026-07-13T14:49:17+08:00",
+      "last_seen_at": "2026-07-14T00:03:22+08:00",
       "latest_filing_accession": "0001193125-26-208972",
       "latest_filing_form": "8-K",
       "latest_filing_date": "2026-05-06",
-      "price": 324.5,
-      "valuation_pe": 59.49682008289951,
-      "opportunity_score": 60.4,
+      "price": 315.45,
+      "valuation_pe": 57.32030906959199,
+      "opportunity_score": 61.1,
       "trend_score": 50.0
     },
     "US.EMR": {
       "code": "US.EMR",
       "name": "Emerson",
       "first_seen_at": "2026-06-21T04:10:31+08:00",
-      "last_seen_at": "2026-07-13T14:49:17+08:00",
+      "last_seen_at": "2026-07-14T00:03:22+08:00",
       "latest_filing_accession": null,
       "latest_filing_form": null,
       "latest_filing_date": null,
-      "price": 138.88,
+      "price": 136.85,
       "valuation_pe": 20.44967,
-      "opportunity_score": 55.6,
-      "trend_score": 50.0
+      "opportunity_score": 49.6,
+      "trend_score": 20.0
     },
     "US.ETN": {
       "code": "US.ETN",
       "name": "Eaton",
       "first_seen_at": "2026-06-21T04:10:31+08:00",
-      "last_seen_at": "2026-07-13T14:49:17+08:00",
+      "last_seen_at": "2026-07-14T00:03:22+08:00",
       "latest_filing_accession": null,
       "latest_filing_form": null,
       "latest_filing_date": null,
-      "price": 407.28,
+      "price": 399.96,
       "valuation_pe": 28.24885,
-      "opportunity_score": 62.0,
-      "trend_score": 88.0
+      "opportunity_score": 54.4,
+      "trend_score": 50.0
     },
     "US.FLEX": {
       "code": "US.FLEX",
       "name": "Flex",
       "first_seen_at": "2026-06-21T04:10:31+08:00",
-      "last_seen_at": "2026-07-13T14:49:17+08:00",
+      "last_seen_at": "2026-07-14T00:03:22+08:00",
       "latest_filing_accession": "0000866374-26-000016",
       "latest_filing_form": "8-K",
       "latest_filing_date": "2026-06-12",
-      "price": 135.8,
+      "price": 130.68,
       "valuation_pe": 30.7746,
-      "opportunity_score": 60.5,
+      "opportunity_score": 61.4,
       "trend_score": 50.0
     },
     "US.HON": {
       "code": "US.HON",
       "name": "Honeywell",
       "first_seen_at": "2026-06-21T04:10:31+08:00",
-      "last_seen_at": "2026-07-13T14:49:17+08:00",
+      "last_seen_at": "2026-07-14T00:03:22+08:00",
       "latest_filing_accession": null,
       "latest_filing_form": null,
       "latest_filing_date": null,
-      "price": 226.42,
+      "price": 221.51,
       "valuation_pe": 20.33467,
       "opportunity_score": 50.5,
       "trend_score": 14.0
@@ -2913,11 +2913,11 @@
       "code": "US.ISRG",
       "name": "Intuitive Surgical",
       "first_seen_at": "2026-06-21T04:10:31+08:00",
-      "last_seen_at": "2026-07-13T14:49:17+08:00",
+      "last_seen_at": "2026-07-14T00:03:22+08:00",
       "latest_filing_accession": "0001035267-26-000042",
       "latest_filing_form": "8-K",
       "latest_filing_date": "2026-05-28",
-      "price": 406.78,
+      "price": 411.09,
       "valuation_pe": 36.52547,
       "opportunity_score": 62.3,
       "trend_score": 14.0
@@ -2926,11 +2926,11 @@
       "code": "US.JBL",
       "name": "Jabil",
       "first_seen_at": "2026-06-21T04:10:31+08:00",
-      "last_seen_at": "2026-07-13T14:49:17+08:00",
+      "last_seen_at": "2026-07-14T00:03:22+08:00",
       "latest_filing_accession": "0001628280-26-046138",
       "latest_filing_form": "10-Q",
       "latest_filing_date": "2026-06-30",
-      "price": 330.29,
+      "price": 325.83,
       "valuation_pe": 23.43979,
       "opportunity_score": 64.6,
       "trend_score": 50.0
@@ -2939,63 +2939,63 @@
       "code": "US.LITE",
       "name": "Lumentum",
       "first_seen_at": "2026-06-21T04:10:31+08:00",
-      "last_seen_at": "2026-07-13T14:49:17+08:00",
+      "last_seen_at": "2026-07-14T00:03:22+08:00",
       "latest_filing_accession": "0001193125-26-249535",
       "latest_filing_form": "8-K",
       "latest_filing_date": "2026-06-01",
-      "price": 802.01,
+      "price": 787.59,
       "valuation_pe": 46.98172,
-      "opportunity_score": 58.4,
+      "opportunity_score": 58.6,
       "trend_score": 50.0
     },
     "US.MRVL": {
       "code": "US.MRVL",
       "name": "Marvell",
       "first_seen_at": "2026-06-21T04:10:31+08:00",
-      "last_seen_at": "2026-07-13T14:49:17+08:00",
+      "last_seen_at": "2026-07-14T00:03:22+08:00",
       "latest_filing_accession": "0001193125-26-299843",
       "latest_filing_form": "8-K",
       "latest_filing_date": "2026-07-09",
-      "price": 235.81,
+      "price": 220.97,
       "valuation_pe": 57.51884,
-      "opportunity_score": 69.7,
-      "trend_score": 76.0
+      "opportunity_score": 62.9,
+      "trend_score": 42.0
     },
     "US.MU": {
       "code": "US.MU",
       "name": "Micron",
       "first_seen_at": "2026-06-21T04:10:31+08:00",
-      "last_seen_at": "2026-07-13T14:49:17+08:00",
+      "last_seen_at": "2026-07-14T00:03:22+08:00",
       "latest_filing_accession": null,
       "latest_filing_form": null,
       "latest_filing_date": null,
-      "price": 979.3,
+      "price": 930.74,
       "valuation_pe": 9.75105,
-      "opportunity_score": 57.2,
+      "opportunity_score": 60.0,
       "trend_score": 76.0
     },
     "US.NVDA": {
       "code": "US.NVDA",
       "name": "NVIDIA",
       "first_seen_at": "2026-06-21T04:10:31+08:00",
-      "last_seen_at": "2026-07-13T14:49:17+08:00",
+      "last_seen_at": "2026-07-14T00:03:22+08:00",
       "latest_filing_accession": "0001045810-26-000060",
       "latest_filing_form": "8-K",
       "latest_filing_date": "2026-07-02",
-      "price": 210.96,
+      "price": 206.51,
       "valuation_pe": 19.23306,
-      "opportunity_score": 84.5,
-      "trend_score": 76.0
+      "opportunity_score": 79.3,
+      "trend_score": 50.0
     },
     "US.PH": {
       "code": "US.PH",
       "name": "Parker-Hannifin",
       "first_seen_at": "2026-06-21T04:10:31+08:00",
-      "last_seen_at": "2026-07-13T14:49:17+08:00",
+      "last_seen_at": "2026-07-14T00:03:22+08:00",
       "latest_filing_accession": null,
       "latest_filing_form": null,
       "latest_filing_date": null,
-      "price": 961.27,
+      "price": 954.49,
       "valuation_pe": 27.89382,
       "opportunity_score": 62.1,
       "trend_score": 88.0
@@ -3004,11 +3004,11 @@
       "code": "US.PWR",
       "name": "Quanta Services",
       "first_seen_at": "2026-06-21T04:10:31+08:00",
-      "last_seen_at": "2026-07-13T14:49:17+08:00",
+      "last_seen_at": "2026-07-14T00:03:22+08:00",
       "latest_filing_accession": null,
       "latest_filing_form": null,
       "latest_filing_date": null,
-      "price": 658.56,
+      "price": 647.645,
       "valuation_pe": 46.51208,
       "opportunity_score": 50.5,
       "trend_score": 50.0
@@ -3017,11 +3017,11 @@
       "code": "US.ROK",
       "name": "Rockwell Automation",
       "first_seen_at": "2026-06-21T04:10:31+08:00",
-      "last_seen_at": "2026-07-13T14:49:17+08:00",
+      "last_seen_at": "2026-07-14T00:03:22+08:00",
       "latest_filing_accession": null,
       "latest_filing_form": null,
       "latest_filing_date": null,
-      "price": 472.12,
+      "price": 464.24,
       "valuation_pe": 32.37131,
       "opportunity_score": 62.1,
       "trend_score": 92.0
@@ -3030,11 +3030,11 @@
       "code": "US.SYM",
       "name": "Symbotic",
       "first_seen_at": "2026-06-21T04:10:31+08:00",
-      "last_seen_at": "2026-07-13T14:49:17+08:00",
+      "last_seen_at": "2026-07-14T00:03:22+08:00",
       "latest_filing_accession": "0001837240-26-000024",
       "latest_filing_form": "10-Q",
       "latest_filing_date": "2026-05-06",
-      "price": 43.64,
+      "price": 42.82,
       "valuation_pe": 41.70174,
       "opportunity_score": 57.3,
       "trend_score": 14.0
@@ -3043,11 +3043,11 @@
       "code": "US.TSLA",
       "name": "Tesla",
       "first_seen_at": "2026-06-21T04:10:31+08:00",
-      "last_seen_at": "2026-07-13T14:49:17+08:00",
+      "last_seen_at": "2026-07-14T00:03:22+08:00",
       "latest_filing_accession": null,
       "latest_filing_form": null,
       "latest_filing_date": null,
-      "price": 407.76,
+      "price": 395.24,
       "valuation_pe": 172.12004,
       "opportunity_score": 34.7,
       "trend_score": 22.0
@@ -3056,11 +3056,11 @@
       "code": "US.TSM",
       "name": "TSMC ADR",
       "first_seen_at": "2026-06-21T04:10:31+08:00",
-      "last_seen_at": "2026-07-13T14:49:17+08:00",
+      "last_seen_at": "2026-07-14T00:03:22+08:00",
       "latest_filing_accession": "0001628280-26-025362",
       "latest_filing_form": "20-F",
       "latest_filing_date": "2026-04-16",
-      "price": 434.11,
+      "price": 428.75,
       "valuation_pe": 21.36449,
       "opportunity_score": 65.7,
       "trend_score": 76.0
@@ -3069,112 +3069,196 @@
       "code": "US.TTMI",
       "name": "TTM Technologies",
       "first_seen_at": "2026-06-21T04:10:31+08:00",
-      "last_seen_at": "2026-07-13T14:49:17+08:00",
+      "last_seen_at": "2026-07-14T00:03:22+08:00",
       "latest_filing_accession": "0001193125-26-274429",
       "latest_filing_form": "8-K",
       "latest_filing_date": "2026-06-18",
-      "price": 146.44,
+      "price": 141.65,
       "valuation_pe": 45.99961,
-      "opportunity_score": 57.4,
+      "opportunity_score": 57.7,
       "trend_score": 42.0
     },
     "US.VRT": {
       "code": "US.VRT",
       "name": "Vertiv",
       "first_seen_at": "2026-06-21T04:10:31+08:00",
-      "last_seen_at": "2026-07-13T14:49:17+08:00",
+      "last_seen_at": "2026-07-14T00:03:22+08:00",
       "latest_filing_accession": null,
       "latest_filing_form": null,
       "latest_filing_date": null,
-      "price": 318.86,
+      "price": 308.185,
       "valuation_pe": 42.36668,
-      "opportunity_score": 47.5,
+      "opportunity_score": 47.8,
       "trend_score": 50.0
     }
   },
   "latest_changes": [
     {
       "type": "metric_change",
-      "code": "SH.600183",
-      "name": "生益科技",
-      "detected_at": "2026-07-13T14:49:17+08:00",
+      "code": "US.MRVL",
+      "name": "Marvell",
+      "detected_at": "2026-07-14T00:03:22+08:00",
       "metric": "trend_score",
       "label": "趋势确认",
       "previous": 76.0,
+      "current": 42.0,
+      "change_pct": -44.74,
+      "note": "趋势确认变化超过阈值，需确认是机会扩大、逻辑兑现还是风险暴露。"
+    },
+    {
+      "type": "metric_change",
+      "code": "SZ.300394",
+      "name": "天孚通信",
+      "detected_at": "2026-07-14T00:03:22+08:00",
+      "metric": "trend_score",
+      "label": "趋势确认",
+      "previous": 42.0,
       "current": 50.0,
-      "change_pct": -34.21,
+      "change_pct": 19.05,
+      "note": "趋势确认变化超过阈值，需确认是机会扩大、逻辑兑现还是风险暴露。"
+    },
+    {
+      "type": "metric_change",
+      "code": "SH.600183",
+      "name": "生益科技",
+      "detected_at": "2026-07-14T00:03:22+08:00",
+      "metric": "trend_score",
+      "label": "趋势确认",
+      "previous": 50.0,
+      "current": 76.0,
+      "change_pct": 52.0,
       "note": "趋势确认变化超过阈值，需确认是机会扩大、逻辑兑现还是风险暴露。"
     },
     {
       "type": "metric_change",
       "code": "SH.688183",
       "name": "生益电子",
-      "detected_at": "2026-07-13T14:49:17+08:00",
+      "detected_at": "2026-07-14T00:03:22+08:00",
       "metric": "trend_score",
       "label": "趋势确认",
-      "previous": 76.0,
-      "current": 50.0,
-      "change_pct": -34.21,
+      "previous": 50.0,
+      "current": 76.0,
+      "change_pct": 52.0,
       "note": "趋势确认变化超过阈值，需确认是机会扩大、逻辑兑现还是风险暴露。"
     },
     {
       "type": "metric_change",
       "code": "HK.01888",
       "name": "建滔积层板",
-      "detected_at": "2026-07-13T14:49:17+08:00",
+      "detected_at": "2026-07-14T00:03:22+08:00",
       "metric": "price",
       "label": "价格",
-      "previous": 62.8,
-      "current": 50.35,
-      "change_pct": -19.82,
+      "previous": 50.35,
+      "current": 62.8,
+      "change_pct": 24.73,
       "note": "价格变化超过阈值，需确认是机会扩大、逻辑兑现还是风险暴露。"
     },
     {
       "type": "metric_change",
       "code": "HK.01888",
       "name": "建滔积层板",
-      "detected_at": "2026-07-13T14:49:17+08:00",
+      "detected_at": "2026-07-14T00:03:22+08:00",
       "metric": "trend_score",
       "label": "趋势确认",
-      "previous": 68.0,
-      "current": 42.0,
-      "change_pct": -38.24,
+      "previous": 42.0,
+      "current": 68.0,
+      "change_pct": 61.9,
+      "note": "趋势确认变化超过阈值，需确认是机会扩大、逻辑兑现还是风险暴露。"
+    },
+    {
+      "type": "metric_change",
+      "code": "SH.603256",
+      "name": "宏和科技",
+      "detected_at": "2026-07-14T00:03:22+08:00",
+      "metric": "trend_score",
+      "label": "趋势确认",
+      "previous": 42.0,
+      "current": 68.0,
+      "change_pct": 61.9,
       "note": "趋势确认变化超过阈值，需确认是机会扩大、逻辑兑现还是风险暴露。"
     },
     {
       "type": "metric_change",
       "code": "HK.00148",
       "name": "建滔集团",
-      "detected_at": "2026-07-13T14:49:17+08:00",
+      "detected_at": "2026-07-14T00:03:22+08:00",
       "metric": "price",
       "label": "价格",
-      "previous": 73.5,
-      "current": 57.85,
-      "change_pct": -21.29,
+      "previous": 57.85,
+      "current": 73.5,
+      "change_pct": 27.05,
       "note": "价格变化超过阈值，需确认是机会扩大、逻辑兑现还是风险暴露。"
     },
     {
       "type": "metric_change",
-      "code": "SH.603256",
-      "name": "宏和科技",
-      "detected_at": "2026-07-13T14:49:17+08:00",
+      "code": "US.NVDA",
+      "name": "NVIDIA",
+      "detected_at": "2026-07-14T00:03:22+08:00",
       "metric": "trend_score",
       "label": "趋势确认",
-      "previous": 68.0,
+      "previous": 76.0,
+      "current": 50.0,
+      "change_pct": -34.21,
+      "note": "趋势确认变化超过阈值，需确认是机会扩大、逻辑兑现还是风险暴露。"
+    },
+    {
+      "type": "metric_change",
+      "code": "US.MRVL",
+      "name": "Marvell",
+      "detected_at": "2026-07-14T00:03:22+08:00",
+      "metric": "trend_score",
+      "label": "趋势确认",
+      "previous": 76.0,
       "current": 42.0,
-      "change_pct": -38.24,
+      "change_pct": -44.74,
       "note": "趋势确认变化超过阈值，需确认是机会扩大、逻辑兑现还是风险暴露。"
     },
     {
       "type": "metric_change",
       "code": "HK.00981",
       "name": "中芯国际",
-      "detected_at": "2026-07-13T14:49:17+08:00",
+      "detected_at": "2026-07-14T00:03:22+08:00",
       "metric": "trend_score",
       "label": "趋势确认",
-      "previous": 76.0,
+      "previous": 50.0,
+      "current": 76.0,
+      "change_pct": 52.0,
+      "note": "趋势确认变化超过阈值，需确认是机会扩大、逻辑兑现还是风险暴露。"
+    },
+    {
+      "type": "metric_change",
+      "code": "US.ETN",
+      "name": "Eaton",
+      "detected_at": "2026-07-14T00:03:22+08:00",
+      "metric": "trend_score",
+      "label": "趋势确认",
+      "previous": 88.0,
       "current": 50.0,
-      "change_pct": -34.21,
+      "change_pct": -43.18,
+      "note": "趋势确认变化超过阈值，需确认是机会扩大、逻辑兑现还是风险暴露。"
+    },
+    {
+      "type": "metric_change",
+      "code": "SZ.300499",
+      "name": "高澜股份",
+      "detected_at": "2026-07-14T00:03:22+08:00",
+      "metric": "price",
+      "label": "价格",
+      "previous": 34.3,
+      "current": 38.6,
+      "change_pct": 12.54,
+      "note": "价格变化超过阈值，需确认是机会扩大、逻辑兑现还是风险暴露。"
+    },
+    {
+      "type": "metric_change",
+      "code": "US.EMR",
+      "name": "Emerson",
+      "detected_at": "2026-07-14T00:03:22+08:00",
+      "metric": "trend_score",
+      "label": "趋势确认",
+      "previous": 50.0,
+      "current": 20.0,
+      "change_pct": -60.0,
       "note": "趋势确认变化超过阈值，需确认是机会扩大、逻辑兑现还是风险暴露。"
     }
   ],
