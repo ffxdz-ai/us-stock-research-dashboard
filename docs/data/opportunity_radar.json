@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-07-18T14:14:33+08:00",
-  "generated_label": "2026-07-18 14:14",
+  "generated_at": "2026-07-19T12:19:34+08:00",
+  "generated_label": "2026-07-19 12:19",
   "data_boundary": {
     "role": "opportunity discovery, not trading instruction",
     "buy_side_gate": "任何股票买入必须回到 Buy-Side 分析、R/R >= 2:1、估值纪律和复星证券整股约束。",
@@ -18,7 +18,7 @@
     "expectation_gap_count": 0,
     "confirming_count": 2,
     "crowded_count": 0,
-    "security_change_count": 2,
+    "security_change_count": 0,
     "secondary_candidate_count": 0,
     "completed_review_count": 0,
     "next_review_count": 15
@@ -324,20 +324,7 @@
         "US.AVGO：机会分 73.7，保留观察，等待估值/趋势/催化进一步确认",
         "US.MRVL：机会分 63.8，普通观察"
       ],
-      "changes": [
-        {
-          "type": "metric_change",
-          "code": "US.AMD",
-          "name": "AMD",
-          "detected_at": "2026-07-18T14:14:33+08:00",
-          "metric": "trend_score",
-          "label": "趋势确认",
-          "previous": 76.0,
-          "current": 50.0,
-          "change_pct": -34.21,
-          "note": "趋势确认变化超过阈值，需确认是机会扩大、逻辑兑现还是风险暴露。"
-        }
-      ],
+      "changes": [],
       "securities": [
         {
           "code": "US.NVDA",
@@ -1621,20 +1608,7 @@
         "US.ROK：机会分 62.1，普通观察",
         "US.SYM：机会分 57.3，普通观察"
       ],
-      "changes": [
-        {
-          "type": "metric_change",
-          "code": "US.ISRG",
-          "name": "Intuitive Surgical",
-          "detected_at": "2026-07-18T14:14:33+08:00",
-          "metric": "price",
-          "label": "价格",
-          "previous": 402.33,
-          "current": 345.42,
-          "change_pct": -14.15,
-          "note": "价格变化超过阈值，需确认是机会扩大、逻辑兑现还是风险暴露。"
-        }
-      ],
+      "changes": [],
       "securities": [
         {
           "code": "US.ISRG",
@@ -1872,32 +1846,7 @@
     }
   ],
   "filing_changes": [],
-  "metric_changes": [
-    {
-      "type": "metric_change",
-      "code": "US.AMD",
-      "name": "AMD",
-      "detected_at": "2026-07-18T14:14:33+08:00",
-      "metric": "trend_score",
-      "label": "趋势确认",
-      "previous": 76.0,
-      "current": 50.0,
-      "change_pct": -34.21,
-      "note": "趋势确认变化超过阈值，需确认是机会扩大、逻辑兑现还是风险暴露。"
-    },
-    {
-      "type": "metric_change",
-      "code": "US.ISRG",
-      "name": "Intuitive Surgical",
-      "detected_at": "2026-07-18T14:14:33+08:00",
-      "metric": "price",
-      "label": "价格",
-      "previous": 402.33,
-      "current": 345.42,
-      "change_pct": -14.15,
-      "note": "价格变化超过阈值，需确认是机会扩大、逻辑兑现还是风险暴露。"
-    }
-  ],
+  "metric_changes": [],
   "review_due": [
     {
       "theme_id": "ai_advanced_packaging_hbm",

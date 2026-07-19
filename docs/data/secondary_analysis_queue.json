@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-07-18T14:15:56+08:00",
-  "generated_label": "2026-07-18 14:15",
+  "generated_at": "2026-07-19T12:21:05+08:00",
+  "generated_label": "2026-07-19 12:21",
   "rules": {
     "review_interval_days": 2,
     "max_active": null,
@@ -23,8 +23,8 @@
     "cross_market_candidates": 1,
     "new_entries": 0,
     "reentries": 0,
-    "reviewed": 0,
-    "passed": 0,
+    "reviewed": 1,
+    "passed": 1,
     "retreated": 0,
     "active_count": 1,
     "retreated_count": 35,
@@ -906,9 +906,9 @@
     "SH.688981": {
       "status": "active",
       "entered_at": "2026-06-21T04:13:19+08:00",
-      "next_analysis_due_at": "2026-07-19T12:00:00+08:00",
-      "review_count": 13,
-      "pass_count": 13,
+      "next_analysis_due_at": "2026-07-21T12:00:00+08:00",
+      "review_count": 14,
+      "pass_count": 14,
       "fail_count": 0,
       "history": [
         {
@@ -1014,6 +1014,14 @@
           "layer_score": 78.1,
           "trend_score": 76.0,
           "price": 145.7
+        },
+        {
+          "reviewed_at": "2026-07-19T12:00:00+08:00",
+          "result": "通过复核",
+          "reason": "跨市场强候选仍满足产业链和趋势门槛；继续二次分析，但最终仍需 Futu/财报/流动性复核。",
+          "layer_score": 77.9,
+          "trend_score": 76.0,
+          "price": 139.88
         }
       ],
       "last_result": "通过复核",
@@ -1029,9 +1037,9 @@
       "trend_score": 76.0,
       "data_status": "公开日线行情已接入；需 Futu/券商复核",
       "radar_action": "跨市场强候选；进入二次分析候选池，需 Futu/财报/流动性复核",
-      "last_seen_at": "2026-07-18T14:15:56+08:00",
+      "last_seen_at": "2026-07-19T12:21:05+08:00",
       "priority": 169.48,
-      "last_analysis_at": "2026-07-17T12:00:00+08:00"
+      "last_analysis_at": "2026-07-19T12:00:00+08:00"
     },
     "SZ.000063": {
       "status": "retreated",
@@ -2212,7 +2220,7 @@
       "trend_score": 76.0,
       "data_status": "行情已接入",
       "radar_action": "进入二次分析候选池；等待 Buy-Side 复核",
-      "last_seen_at": "2026-07-18T14:15:56+08:00",
+      "last_seen_at": "2026-07-19T12:21:05+08:00",
       "priority": 166.48,
       "last_analysis_at": "2026-06-23T12:00:00+08:00",
       "cooldown_until": null,
@@ -2400,7 +2408,7 @@
       "trend_score": 76.0,
       "data_status": "行情已接入",
       "radar_action": "进入二次分析候选池；等待 Buy-Side 复核",
-      "last_seen_at": "2026-07-18T14:15:56+08:00",
+      "last_seen_at": "2026-07-19T12:21:05+08:00",
       "priority": 169.48,
       "last_analysis_at": "2026-07-08T12:00:00+08:00",
       "cooldown_until": null,
