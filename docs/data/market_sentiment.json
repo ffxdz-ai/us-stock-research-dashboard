@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-07-19T12:18:53+08:00",
-  "generated_label": "2026-07-19 12:18",
+  "generated_at": "2026-07-20T15:22:06+08:00",
+  "generated_label": "2026-07-20 15:22",
   "data_boundary": "公开脱敏市场情绪层；只用于判断风险环境，不生成交易指令，不替代个股 R/R 纪律。",
   "score": 57.3,
   "status": "neutral",
@@ -37,7 +37,7 @@
       "message": "用 SPY/QQQ/DIA/IWM 涨跌幅判断当天股票风险偏好。",
       "source": "public market quote",
       "source_type": "vendor_fallback",
-      "updated_at": "Jul 16, 2026",
+      "updated_at": "Jul 17, 2026",
       "confidence": "medium"
     },
     {
@@ -53,7 +53,7 @@
       "message": "成长股和小盘股相对大盘越强，风险偏好通常越高。",
       "source": "public market quote",
       "source_type": "vendor_fallback",
-      "updated_at": "Jul 16, 2026",
+      "updated_at": "Jul 17, 2026",
       "confidence": "medium"
     },
     {
@@ -70,7 +70,7 @@
       "message": "股票强于长债/黄金代表风险偏好改善；反之提示避险。",
       "source": "public market quote",
       "source_type": "vendor_fallback",
-      "updated_at": "Jul 16, 2026",
+      "updated_at": "Jul 17, 2026",
       "confidence": "medium"
     },
     {
@@ -87,7 +87,7 @@
       "message": "FRED 流动性、金融条件和信用利差用于判断风险资产背景。",
       "source": "FRED",
       "source_type": "official",
-      "updated_at": "2026-07-19 12:18",
+      "updated_at": "2026-07-20 15:22",
       "confidence": "high"
     },
     {
@@ -103,7 +103,7 @@
       "message": "油价快速上涨会压低情绪分，因为它可能强化通胀和利率压力。",
       "source": "public market quote/FRED",
       "source_type": "vendor_fallback",
-      "updated_at": "Jul 16, 2026",
+      "updated_at": "Jul 17, 2026",
       "confidence": "medium"
     }
   ],
