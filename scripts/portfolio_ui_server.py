@@ -30,6 +30,7 @@ PORTFOLIO_PATH = ROOT / "config" / "portfolio.json"
 REPORT_PATH = ROOT / "reports" / "latest-market-brief.md"
 REPORTS_DIR = ROOT / "reports"
 PUBLIC_REPORTS_PATH = ROOT / "docs" / "data" / "reports.json"
+HEALTH_STARTED_AT = datetime.now().astimezone().isoformat(timespec="seconds")
 try:
     NEW_YORK_TZ = ZoneInfo("America/New_York")
 except Exception:
@@ -215,13 +216,22 @@ def load_public_archive_reports() -> list[dict[str, object]]:
 
 
 def merge_public_archive_reports(public_reports: list[dict[str, object]], local_reports: list[dict[str, object]]) -> list[dict[str, object]]:
+    def report_time_key(item: dict[str, object]) -> str:
+        return str(item.get("updated_at") or item.get("updated_label") or "")
+
+    def keep_newer(merged: dict[str, dict[str, object]], item: dict[str, object]) -> None:
+        name = str(item["name"])
+        existing = merged.get(name)
+        if existing is None or report_time_key(item) >= report_time_key(existing):
+            merged[name] = item
+
     merged: dict[str, dict[str, object]] = {}
     for item in local_reports:
-        merged[str(item["name"])] = item
+        keep_newer(merged, item)
     for item in public_reports:
         # Public archive is what GitHub Pages serves. Prefer it for the same filename
         # so the local dashboard does not show stale markdown generated before a cloud run.
-        merged[str(item["name"])] = item
+        keep_newer(merged, item)
     output = list(merged.values())
     output.sort(key=lambda item: str(item.get("updated_at") or item.get("updated_label") or ""), reverse=True)
     return output
@@ -235,6 +245,11 @@ def load_public_report_content(name: str) -> dict[str, object] | None:
     archive_reports = payload.get("reports")
     if not isinstance(archive_reports, list):
         return None
+    archive_reports = sorted(
+        [item for item in archive_reports if isinstance(item, dict)],
+        key=lambda item: str(item.get("published_at") or item.get("updated_at") or item.get("published_label") or item.get("updated_label") or ""),
+        reverse=True,
+    )
     for raw in archive_reports:
         if not isinstance(raw, dict):
             continue
@@ -924,6 +939,17 @@ class PortfolioHandler(SimpleHTTPRequestHandler):
 
     def do_GET(self) -> None:
         parsed_path = urlparse(self.path)
+        if parsed_path.path == "/healthz":
+            self.send_json(
+                {
+                    "ok": True,
+                    "service": "portfolio-ui",
+                    "started_at": HEALTH_STARTED_AT,
+                    "portfolio_path": str(PORTFOLIO_PATH),
+                    "ui_root": str(UI_ROOT),
+                }
+            )
+            return
         if parsed_path.path == "/api/company-info":
             try:
                 query = parse_qs(parsed_path.query)
@@ -1101,6 +1127,10 @@ class PortfolioHandler(SimpleHTTPRequestHandler):
         self.send_error_json("Unknown endpoint.", HTTPStatus.NOT_FOUND)
 
 
+class ReusableThreadingHTTPServer(ThreadingHTTPServer):
+    allow_reuse_address = True
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--host", default="127.0.0.1")
@@ -1110,7 +1140,7 @@ def main() -> int:
     if not UI_ROOT.exists():
         print(f"Missing UI directory: {UI_ROOT}", file=sys.stderr)
         return 2
-    server = ThreadingHTTPServer((args.host, args.port), PortfolioHandler)
+    server = ReusableThreadingHTTPServer((args.host, args.port), PortfolioHandler)
     print(f"Portfolio UI: http://{args.host}:{args.port}/")
     try:
         server.serve_forever()
