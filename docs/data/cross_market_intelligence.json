@@ -1,13 +1,13 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-07-25T14:26:47+08:00",
-  "generated_label": "2026-07-25 14:26",
+  "generated_at": "2026-07-26T14:45:58+08:00",
+  "generated_label": "2026-07-26 14:45",
   "summary": {
     "theme_count": 5,
     "accelerating_theme_count": 0,
     "cross_market_signal_count": 1,
     "secondary_research_candidate_count": 1,
-    "event_backlog_count": 6,
+    "event_backlog_count": 5,
     "tracked_security_count": 38
   },
   "themes": [
@@ -18,7 +18,7 @@
       "status": "观察跟踪",
       "horizon": "3-12个月",
       "thesis": "训练和推理需求首先兑现到 GPU、ASIC、HBM、先进制程和 CoWoS/先进封装；但龙头可能已被充分定价，系统重点识别估值、利润兑现和拥挤度的错配。",
-      "demand_acceleration_score": 70.1,
+      "demand_acceleration_score": 69.5,
       "theme_score": 73.0,
       "score_components": {
         "demand_shift": 92.0,
@@ -28,7 +28,7 @@
         "market_underpricing": 57.2,
         "trend_avg": 47.5,
         "market_breadth": 56,
-        "change_signal": 8,
+        "change_signal": 0,
         "crowding_penalty": 32.8
       },
       "market_breadth": {
@@ -2405,7 +2405,7 @@
       "status": "证据不足",
       "horizon": "6-24个月",
       "thesis": "大模型从数字世界扩展到物理世界后，机器人、工业自动化、传感器、执行器和边缘 AI 可能形成新的需求曲线；当前仍处早期，必须用订单和应用落地验证。",
-      "demand_acceleration_score": 58.0,
+      "demand_acceleration_score": 57.7,
       "theme_score": 59.8,
       "score_components": {
         "demand_shift": 78.0,
@@ -2415,7 +2415,7 @@
         "market_underpricing": 58.8,
         "trend_avg": 36.9,
         "market_breadth": 53,
-        "change_signal": 4,
+        "change_signal": 0,
         "crowding_penalty": 16.0
       },
       "market_breadth": {
@@ -2972,16 +2972,11 @@
       "opportunity_score": 79.3,
       "trend_score": 50.0,
       "crowding_score": 18.0,
-      "demand_acceleration_score": 70.1,
+      "demand_acceleration_score": 69.5,
       "reason": "已在二次分析生命周期中；交给 Buy-Side 二次分析"
     }
   ],
   "event_extraction_backlog": [
-    {
-      "type": "metric",
-      "priority": "medium",
-      "item": "本轮新增 3 条指标变化，需要判断是逻辑增强还是价格波动。"
-    },
     {
       "type": "permission",
       "priority": "high",
