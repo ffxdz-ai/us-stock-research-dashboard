@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-07-27T15:43:47+08:00",
-  "generated_label": "2026-07-27 15:43",
+  "generated_at": "2026-07-28T00:07:18+08:00",
+  "generated_label": "2026-07-28 00:07",
   "fmp_enabled": true,
   "data_boundary": {
     "role": "FMP analyst expectations and earnings layer; not a trading instruction",
@@ -17,7 +17,7 @@
   ],
   "summary": {
     "symbol_count": 12,
-    "actionable_count": 1,
+    "actionable_count": 2,
     "restricted_endpoint_count": 3,
     "restricted_result_count": 50,
     "rate_limited_result_count": 0,
@@ -29,8 +29,8 @@
       "name": "NVIDIA Corporation Common Stock",
       "coverage_status": "ok",
       "restricted_endpoints": [],
-      "price": 206.84,
-      "quote_time": "Jul 24, 2026",
+      "price": 196.835,
+      "quote_time": "Jul 27, 2026 11:56 AM ET",
       "annual_estimate": {
         "date": "2029-01-25",
         "revenueAvg": 684573570460,
@@ -46,13 +46,13 @@
       "quarterly_estimate": null,
       "estimate_revision": {
         "status": "compared",
-        "epsAvg_change": -0.1081,
-        "epsAvg_change_pct": -0.705,
-        "revenueAvg_change": -2042290673.0,
-        "revenueAvg_change_pct": -0.2974,
-        "ebitdaAvg_change": -1044519788.0,
-        "ebitdaAvg_change_pct": -0.2974,
-        "status_label": "有明显修正"
+        "epsAvg_change": 0.0,
+        "epsAvg_change_pct": 0.0,
+        "revenueAvg_change": 0.0,
+        "revenueAvg_change_pct": 0.0,
+        "ebitdaAvg_change": 0.0,
+        "ebitdaAvg_change_pct": 0.0,
+        "status_label": "无明显修正"
       },
       "price_target_summary": {
         "symbol": "NVDA",
@@ -73,7 +73,7 @@
         "targetConsensus": 319.48,
         "targetMedian": 300
       },
-      "price_target_upside_pct": 54.46,
+      "price_target_upside_pct": 62.31,
       "latest_earnings_surprise": {
         "date": "2026-05-20",
         "eps_actual": 1.87,
@@ -136,20 +136,20 @@
       },
       "expectation_score": 84.0,
       "score_notes": [
-        "一致目标价上行空间 54.5%",
+        "一致目标价上行空间 62.3%",
         "最近 EPS 超预期 6.2%",
         "收入超预期 4.1%",
         "FMP rating score 4.0"
       ],
-      "action": "预期面改善，保留观察"
+      "action": "预期差增强，进入 Buy-Side 复核"
     },
     {
       "symbol": "AMD",
       "name": "Advanced Micro Devices, Inc. Common Stock",
       "coverage_status": "ok",
       "restricted_endpoints": [],
-      "price": 521.95,
-      "quote_time": "Jul 24, 2026",
+      "price": 484.15,
+      "quote_time": "Jul 27, 2026 12:04 PM ET",
       "annual_estimate": {
         "date": "2028-12-27",
         "revenueAvg": 106033831260,
@@ -165,34 +165,34 @@
       "quarterly_estimate": null,
       "estimate_revision": {
         "status": "compared",
-        "epsAvg_change": 0.5292,
-        "epsAvg_change_pct": 2.8629,
-        "revenueAvg_change": 1233018255.0,
-        "revenueAvg_change_pct": 1.1765,
-        "ebitdaAvg_change": 267529779.0,
-        "ebitdaAvg_change_pct": 1.1765,
-        "status_label": "有明显修正"
+        "epsAvg_change": 0.0,
+        "epsAvg_change_pct": 0.0,
+        "revenueAvg_change": 0.0,
+        "revenueAvg_change_pct": 0.0,
+        "ebitdaAvg_change": 0.0,
+        "ebitdaAvg_change_pct": 0.0,
+        "status_label": "无明显修正"
       },
       "price_target_summary": {
         "symbol": "AMD",
-        "lastMonthCount": 11,
-        "lastMonthAvgPriceTarget": 722.27,
+        "lastMonthCount": 12,
+        "lastMonthAvgPriceTarget": 714.17,
         "lastQuarterCount": 35,
-        "lastQuarterAvgPriceTarget": 561.2,
-        "lastYearCount": 89,
-        "lastYearAvgPriceTarget": 390.43,
-        "allTimeCount": 251,
-        "allTimeAvgPriceTarget": 231.26,
+        "lastQuarterAvgPriceTarget": 571.63,
+        "lastYearCount": 90,
+        "lastYearAvgPriceTarget": 393.03,
+        "allTimeCount": 252,
+        "allTimeAvgPriceTarget": 232.82,
         "publishers": "[\"TheFly\",\"StreetInsider\",\"Benzinga\",\"TipRanks Contributor\",\"MarketWatch\",\"Pulse 2.0\",\"Investing\",\"Barrons\",\"TipRanks\"]"
       },
       "price_target_consensus": {
         "symbol": "AMD",
         "targetHigh": 1250,
         "targetLow": 260,
-        "targetConsensus": 574.88,
+        "targetConsensus": 575.29,
         "targetMedian": 607.5
       },
-      "price_target_upside_pct": 10.14,
+      "price_target_upside_pct": 18.82,
       "latest_earnings_surprise": {
         "date": "2026-05-05",
         "eps_actual": 1.37,
@@ -253,12 +253,13 @@
         "priceToEarningsScore": 1,
         "priceToBookScore": 2
       },
-      "expectation_score": 58.0,
+      "expectation_score": 68.0,
       "score_notes": [
+        "目标价仍有上行空间 18.8%",
         "最近 EPS 超预期 6.2%",
         "收入超预期 3.6%"
       ],
-      "action": "普通观察"
+      "action": "预期面改善，保留观察"
     },
     {
       "symbol": "AVGO",
@@ -271,8 +272,8 @@
         "/price-target-summary",
         "/ratings-snapshot"
       ],
-      "price": 381.92,
-      "quote_time": "Jul 24, 2026",
+      "price": 378.37,
+      "quote_time": "Jul 27, 2026 11:54 AM ET",
       "annual_estimate": null,
       "quarterly_estimate": null,
       "estimate_revision": {
@@ -293,7 +294,7 @@
     },
     {
       "symbol": "ISRG",
-      "name": "Intuitive Surgical, Inc. Common Stock",
+      "name": "INTUITIVE SURGICAL INC",
       "coverage_status": "restricted",
       "restricted_endpoints": [
         "/analyst-estimates",
@@ -303,7 +304,7 @@
         "/ratings-snapshot"
       ],
       "price": 337.5,
-      "quote_time": "Jul 24, 2026",
+      "quote_time": null,
       "annual_estimate": null,
       "quarterly_estimate": null,
       "estimate_revision": {
@@ -333,8 +334,8 @@
         "/price-target-summary",
         "/ratings-snapshot"
       ],
-      "price": 194.23,
-      "quote_time": "Jul 24, 2026",
+      "price": 195.175,
+      "quote_time": "Jul 27, 2026 9:47 AM ET",
       "annual_estimate": null,
       "quarterly_estimate": null,
       "estimate_revision": {
@@ -355,7 +356,7 @@
     },
     {
       "symbol": "ANET",
-      "name": "Arista Networks, Inc. Common Stock",
+      "name": "Arista Networks, Inc.",
       "coverage_status": "restricted",
       "restricted_endpoints": [
         "/analyst-estimates",
@@ -365,7 +366,7 @@
         "/ratings-snapshot"
       ],
       "price": 173.99,
-      "quote_time": "Jul 24, 2026",
+      "quote_time": null,
       "annual_estimate": null,
       "quarterly_estimate": null,
       "estimate_revision": {
@@ -386,7 +387,7 @@
     },
     {
       "symbol": "KLAC",
-      "name": "KLA Corporation Common Stock",
+      "name": "KLA CORP",
       "coverage_status": "restricted",
       "restricted_endpoints": [
         "/analyst-estimates",
@@ -396,131 +397,7 @@
         "/ratings-snapshot"
       ],
       "price": 210.52,
-      "quote_time": "Jul 24, 2026",
-      "annual_estimate": null,
-      "quarterly_estimate": null,
-      "estimate_revision": {
-        "status": "missing",
-        "status_label": "缺少分析师预期"
-      },
-      "price_target_summary": {},
-      "price_target_consensus": {},
-      "price_target_upside_pct": null,
-      "latest_earnings_surprise": null,
-      "earnings_history": [],
-      "rating_snapshot": {},
-      "expectation_score": null,
-      "score_notes": [
-        "FMP 套餐或 symbol 权限受限，不能评价预期差"
-      ],
-      "action": "FMP 权限受限，暂不评价"
-    },
-    {
-      "symbol": "COHR",
-      "name": "Coherent Corp. Common Stock",
-      "coverage_status": "restricted",
-      "restricted_endpoints": [
-        "/analyst-estimates",
-        "/earnings",
-        "/price-target-consensus",
-        "/price-target-summary",
-        "/ratings-snapshot"
-      ],
-      "price": 282.39,
-      "quote_time": "Jul 24, 2026",
-      "annual_estimate": null,
-      "quarterly_estimate": null,
-      "estimate_revision": {
-        "status": "missing",
-        "status_label": "缺少分析师预期"
-      },
-      "price_target_summary": {},
-      "price_target_consensus": {},
-      "price_target_upside_pct": null,
-      "latest_earnings_surprise": null,
-      "earnings_history": [],
-      "rating_snapshot": {},
-      "expectation_score": null,
-      "score_notes": [
-        "FMP 套餐或 symbol 权限受限，不能评价预期差"
-      ],
-      "action": "FMP 权限受限，暂不评价"
-    },
-    {
-      "symbol": "SYM",
-      "name": "Symbotic Inc. Class A Common Stock",
-      "coverage_status": "restricted",
-      "restricted_endpoints": [
-        "/analyst-estimates",
-        "/earnings",
-        "/price-target-consensus",
-        "/price-target-summary",
-        "/ratings-snapshot"
-      ],
-      "price": 40.15,
-      "quote_time": "Jul 24, 2026",
-      "annual_estimate": null,
-      "quarterly_estimate": null,
-      "estimate_revision": {
-        "status": "missing",
-        "status_label": "缺少分析师预期"
-      },
-      "price_target_summary": {},
-      "price_target_consensus": {},
-      "price_target_upside_pct": null,
-      "latest_earnings_surprise": null,
-      "earnings_history": [],
-      "rating_snapshot": {},
-      "expectation_score": null,
-      "score_notes": [
-        "FMP 套餐或 symbol 权限受限，不能评价预期差"
-      ],
-      "action": "FMP 权限受限，暂不评价"
-    },
-    {
-      "symbol": "ASML",
-      "name": "ASML Holding N.V. New York Registry Shares",
-      "coverage_status": "restricted",
-      "restricted_endpoints": [
-        "/analyst-estimates",
-        "/earnings",
-        "/price-target-consensus",
-        "/price-target-summary",
-        "/ratings-snapshot"
-      ],
-      "price": 1757.09,
-      "quote_time": "Jul 24, 2026",
-      "annual_estimate": null,
-      "quarterly_estimate": null,
-      "estimate_revision": {
-        "status": "missing",
-        "status_label": "缺少分析师预期"
-      },
-      "price_target_summary": {},
-      "price_target_consensus": {},
-      "price_target_upside_pct": null,
-      "latest_earnings_surprise": null,
-      "earnings_history": [],
-      "rating_snapshot": {},
-      "expectation_score": null,
-      "score_notes": [
-        "FMP 套餐或 symbol 权限受限，不能评价预期差"
-      ],
-      "action": "FMP 权限受限，暂不评价"
-    },
-    {
-      "symbol": "LRCX",
-      "name": "Lam Research Corporation Common Stock",
-      "coverage_status": "restricted",
-      "restricted_endpoints": [
-        "/analyst-estimates",
-        "/earnings",
-        "/price-target-consensus",
-        "/price-target-summary",
-        "/ratings-snapshot"
-      ],
-      "price": 305.21,
-      "quote_time": "Jul 24, 2026",
+      "quote_time": null,
       "annual_estimate": null,
       "quarterly_estimate": null,
       "estimate_revision": {
@@ -550,8 +427,132 @@
         "/price-target-summary",
         "/ratings-snapshot"
       ],
-      "price": 349.92,
-      "quote_time": "Jul 24, 2026",
+      "price": 328.475,
+      "quote_time": "Jul 27, 2026 11:08 AM ET",
+      "annual_estimate": null,
+      "quarterly_estimate": null,
+      "estimate_revision": {
+        "status": "missing",
+        "status_label": "缺少分析师预期"
+      },
+      "price_target_summary": {},
+      "price_target_consensus": {},
+      "price_target_upside_pct": null,
+      "latest_earnings_surprise": null,
+      "earnings_history": [],
+      "rating_snapshot": {},
+      "expectation_score": null,
+      "score_notes": [
+        "FMP 套餐或 symbol 权限受限，不能评价预期差"
+      ],
+      "action": "FMP 权限受限，暂不评价"
+    },
+    {
+      "symbol": "COHR",
+      "name": "Coherent Corp. Common Stock",
+      "coverage_status": "restricted",
+      "restricted_endpoints": [
+        "/analyst-estimates",
+        "/earnings",
+        "/price-target-consensus",
+        "/price-target-summary",
+        "/ratings-snapshot"
+      ],
+      "price": 282.47,
+      "quote_time": "Jul 27, 2026 9:36 AM ET",
+      "annual_estimate": null,
+      "quarterly_estimate": null,
+      "estimate_revision": {
+        "status": "missing",
+        "status_label": "缺少分析师预期"
+      },
+      "price_target_summary": {},
+      "price_target_consensus": {},
+      "price_target_upside_pct": null,
+      "latest_earnings_surprise": null,
+      "earnings_history": [],
+      "rating_snapshot": {},
+      "expectation_score": null,
+      "score_notes": [
+        "FMP 套餐或 symbol 权限受限，不能评价预期差"
+      ],
+      "action": "FMP 权限受限，暂不评价"
+    },
+    {
+      "symbol": "SYM",
+      "name": "Symbotic Inc. Class A Common Stock",
+      "coverage_status": "restricted",
+      "restricted_endpoints": [
+        "/analyst-estimates",
+        "/earnings",
+        "/price-target-consensus",
+        "/price-target-summary",
+        "/ratings-snapshot"
+      ],
+      "price": 40.9024,
+      "quote_time": "Jul 27, 2026 9:16 AM ET",
+      "annual_estimate": null,
+      "quarterly_estimate": null,
+      "estimate_revision": {
+        "status": "missing",
+        "status_label": "缺少分析师预期"
+      },
+      "price_target_summary": {},
+      "price_target_consensus": {},
+      "price_target_upside_pct": null,
+      "latest_earnings_surprise": null,
+      "earnings_history": [],
+      "rating_snapshot": {},
+      "expectation_score": null,
+      "score_notes": [
+        "FMP 套餐或 symbol 权限受限，不能评价预期差"
+      ],
+      "action": "FMP 权限受限，暂不评价"
+    },
+    {
+      "symbol": "ASML",
+      "name": "ASML HOLDING NV",
+      "coverage_status": "restricted",
+      "restricted_endpoints": [
+        "/analyst-estimates",
+        "/earnings",
+        "/price-target-consensus",
+        "/price-target-summary",
+        "/ratings-snapshot"
+      ],
+      "price": 1757.09,
+      "quote_time": null,
+      "annual_estimate": null,
+      "quarterly_estimate": null,
+      "estimate_revision": {
+        "status": "missing",
+        "status_label": "缺少分析师预期"
+      },
+      "price_target_summary": {},
+      "price_target_consensus": {},
+      "price_target_upside_pct": null,
+      "latest_earnings_surprise": null,
+      "earnings_history": [],
+      "rating_snapshot": {},
+      "expectation_score": null,
+      "score_notes": [
+        "FMP 套餐或 symbol 权限受限，不能评价预期差"
+      ],
+      "action": "FMP 权限受限，暂不评价"
+    },
+    {
+      "symbol": "LRCX",
+      "name": "LAM RESEARCH CORP",
+      "coverage_status": "restricted",
+      "restricted_endpoints": [
+        "/analyst-estimates",
+        "/earnings",
+        "/price-target-consensus",
+        "/price-target-summary",
+        "/ratings-snapshot"
+      ],
+      "price": 305.21,
+      "quote_time": null,
       "annual_estimate": null,
       "quarterly_estimate": null,
       "estimate_revision": {
@@ -577,8 +578,8 @@
       "name": "NVIDIA Corporation Common Stock",
       "coverage_status": "ok",
       "restricted_endpoints": [],
-      "price": 206.84,
-      "quote_time": "Jul 24, 2026",
+      "price": 196.835,
+      "quote_time": "Jul 27, 2026 11:56 AM ET",
       "annual_estimate": {
         "date": "2029-01-25",
         "revenueAvg": 684573570460,
@@ -594,13 +595,13 @@
       "quarterly_estimate": null,
       "estimate_revision": {
         "status": "compared",
-        "epsAvg_change": -0.1081,
-        "epsAvg_change_pct": -0.705,
-        "revenueAvg_change": -2042290673.0,
-        "revenueAvg_change_pct": -0.2974,
-        "ebitdaAvg_change": -1044519788.0,
-        "ebitdaAvg_change_pct": -0.2974,
-        "status_label": "有明显修正"
+        "epsAvg_change": 0.0,
+        "epsAvg_change_pct": 0.0,
+        "revenueAvg_change": 0.0,
+        "revenueAvg_change_pct": 0.0,
+        "ebitdaAvg_change": 0.0,
+        "ebitdaAvg_change_pct": 0.0,
+        "status_label": "无明显修正"
       },
       "price_target_summary": {
         "symbol": "NVDA",
@@ -621,7 +622,7 @@
         "targetConsensus": 319.48,
         "targetMedian": 300
       },
-      "price_target_upside_pct": 54.46,
+      "price_target_upside_pct": 62.31,
       "latest_earnings_surprise": {
         "date": "2026-05-20",
         "eps_actual": 1.87,
@@ -684,10 +685,128 @@
       },
       "expectation_score": 84.0,
       "score_notes": [
-        "一致目标价上行空间 54.5%",
+        "一致目标价上行空间 62.3%",
         "最近 EPS 超预期 6.2%",
         "收入超预期 4.1%",
         "FMP rating score 4.0"
+      ],
+      "action": "预期差增强，进入 Buy-Side 复核"
+    },
+    {
+      "symbol": "AMD",
+      "name": "Advanced Micro Devices, Inc. Common Stock",
+      "coverage_status": "ok",
+      "restricted_endpoints": [],
+      "price": 484.15,
+      "quote_time": "Jul 27, 2026 12:04 PM ET",
+      "annual_estimate": {
+        "date": "2028-12-27",
+        "revenueAvg": 106033831260,
+        "revenueLow": 79922592577,
+        "revenueHigh": 162910204378,
+        "epsAvg": 19.0154,
+        "epsLow": 12.60896,
+        "epsHigh": 31.03202,
+        "ebitdaAvg": 23006315848,
+        "numAnalystsRevenue": 32,
+        "numAnalystsEps": 16
+      },
+      "quarterly_estimate": null,
+      "estimate_revision": {
+        "status": "compared",
+        "epsAvg_change": 0.0,
+        "epsAvg_change_pct": 0.0,
+        "revenueAvg_change": 0.0,
+        "revenueAvg_change_pct": 0.0,
+        "ebitdaAvg_change": 0.0,
+        "ebitdaAvg_change_pct": 0.0,
+        "status_label": "无明显修正"
+      },
+      "price_target_summary": {
+        "symbol": "AMD",
+        "lastMonthCount": 12,
+        "lastMonthAvgPriceTarget": 714.17,
+        "lastQuarterCount": 35,
+        "lastQuarterAvgPriceTarget": 571.63,
+        "lastYearCount": 90,
+        "lastYearAvgPriceTarget": 393.03,
+        "allTimeCount": 252,
+        "allTimeAvgPriceTarget": 232.82,
+        "publishers": "[\"TheFly\",\"StreetInsider\",\"Benzinga\",\"TipRanks Contributor\",\"MarketWatch\",\"Pulse 2.0\",\"Investing\",\"Barrons\",\"TipRanks\"]"
+      },
+      "price_target_consensus": {
+        "symbol": "AMD",
+        "targetHigh": 1250,
+        "targetLow": 260,
+        "targetConsensus": 575.29,
+        "targetMedian": 607.5
+      },
+      "price_target_upside_pct": 18.82,
+      "latest_earnings_surprise": {
+        "date": "2026-05-05",
+        "eps_actual": 1.37,
+        "eps_estimated": 1.29,
+        "eps_surprise": 0.08,
+        "eps_surprise_pct": 6.2,
+        "revenue_actual": 10253000000.0,
+        "revenue_estimated": 9900008000.0,
+        "revenue_surprise_pct": 3.57,
+        "last_updated": "2026-07-27"
+      },
+      "earnings_history": [
+        {
+          "symbol": "AMD",
+          "date": "2026-08-04",
+          "epsActual": null,
+          "epsEstimated": 1.61,
+          "revenueActual": null,
+          "revenueEstimated": 11301000000,
+          "lastUpdated": "2026-07-27"
+        },
+        {
+          "symbol": "AMD",
+          "date": "2026-05-05",
+          "epsActual": 1.37,
+          "epsEstimated": 1.29,
+          "revenueActual": 10253000000,
+          "revenueEstimated": 9900008000,
+          "lastUpdated": "2026-07-27"
+        },
+        {
+          "symbol": "AMD",
+          "date": "2026-02-03",
+          "epsActual": 1.53,
+          "epsEstimated": 1.32,
+          "revenueActual": 10270000000,
+          "revenueEstimated": 9668357000,
+          "lastUpdated": "2026-05-03"
+        },
+        {
+          "symbol": "AMD",
+          "date": "2025-11-04",
+          "epsActual": 1.2,
+          "epsEstimated": 1.17,
+          "revenueActual": 9246000000,
+          "revenueEstimated": 8756463065,
+          "lastUpdated": "2026-02-04"
+        }
+      ],
+      "rating_snapshot": {
+        "symbol": "AMD",
+        "rating": "B",
+        "overallScore": 3,
+        "discountedCashFlowScore": 2,
+        "returnOnEquityScore": 3,
+        "returnOnAssetsScore": 4,
+        "debtToEquityScore": 4,
+        "priceToEarningsScore": 1,
+        "priceToBookScore": 2
+      },
+      "expectation_score": 68.0,
+      "score_notes": [
+        "目标价仍有上行空间 18.8%",
+        "最近 EPS 超预期 6.2%",
+        "收入超预期 3.6%"
       ],
       "action": "预期面改善，保留观察"
     }
@@ -889,6 +1008,41 @@
       "message": "Premium Query Parameter: 'Special Endpoint : This value set for 'symbol' is not available under your current subscription please visit our subscription page to upgrade your plan at https://financialmodelingprep.com/"
     },
     {
+      "symbol": "TER",
+      "endpoint": "/analyst-estimates",
+      "status": 402,
+      "kind": "restricted",
+      "message": "Premium Query Parameter: 'Special Endpoint : This value set for 'symbol' is not available under your current subscription please visit our subscription page to upgrade your plan at https://financialmodelingprep.com/"
+    },
+    {
+      "symbol": "TER",
+      "endpoint": "/price-target-summary",
+      "status": 402,
+      "kind": "restricted",
+      "message": "Premium Query Parameter: 'Special Endpoint : This value set for 'symbol' is not available under your current subscription please visit our subscription page to upgrade your plan at https://financialmodelingprep.com/"
+    },
+    {
+      "symbol": "TER",
+      "endpoint": "/price-target-consensus",
+      "status": 402,
+      "kind": "restricted",
+      "message": "Premium Query Parameter: 'Special Endpoint : This value set for 'symbol' is not available under your current subscription please visit our subscription page to upgrade your plan at https://financialmodelingprep.com/"
+    },
+    {
+      "symbol": "TER",
+      "endpoint": "/earnings",
+      "status": 402,
+      "kind": "restricted",
+      "message": "Premium Query Parameter: 'Special Endpoint : This value set for 'symbol' is not available under your current subscription please visit our subscription page to upgrade your plan at https://financialmodelingprep.com/"
+    },
+    {
+      "symbol": "TER",
+      "endpoint": "/ratings-snapshot",
+      "status": 402,
+      "kind": "restricted",
+      "message": "Premium Query Parameter: 'Special Endpoint : This value set for 'symbol' is not available under your current subscription please visit our subscription page to upgrade your plan at https://financialmodelingprep.com/"
+    },
+    {
       "symbol": "COHR",
       "endpoint": "/analyst-estimates",
       "status": 402,
@@ -1023,41 +1177,6 @@
     },
     {
       "symbol": "LRCX",
-      "endpoint": "/ratings-snapshot",
-      "status": 402,
-      "kind": "restricted",
-      "message": "Premium Query Parameter: 'Special Endpoint : This value set for 'symbol' is not available under your current subscription please visit our subscription page to upgrade your plan at https://financialmodelingprep.com/"
-    },
-    {
-      "symbol": "TER",
-      "endpoint": "/analyst-estimates",
-      "status": 402,
-      "kind": "restricted",
-      "message": "Premium Query Parameter: 'Special Endpoint : This value set for 'symbol' is not available under your current subscription please visit our subscription page to upgrade your plan at https://financialmodelingprep.com/"
-    },
-    {
-      "symbol": "TER",
-      "endpoint": "/price-target-summary",
-      "status": 402,
-      "kind": "restricted",
-      "message": "Premium Query Parameter: 'Special Endpoint : This value set for 'symbol' is not available under your current subscription please visit our subscription page to upgrade your plan at https://financialmodelingprep.com/"
-    },
-    {
-      "symbol": "TER",
-      "endpoint": "/price-target-consensus",
-      "status": 402,
-      "kind": "restricted",
-      "message": "Premium Query Parameter: 'Special Endpoint : This value set for 'symbol' is not available under your current subscription please visit our subscription page to upgrade your plan at https://financialmodelingprep.com/"
-    },
-    {
-      "symbol": "TER",
-      "endpoint": "/earnings",
-      "status": 402,
-      "kind": "restricted",
-      "message": "Premium Query Parameter: 'Special Endpoint : This value set for 'symbol' is not available under your current subscription please visit our subscription page to upgrade your plan at https://financialmodelingprep.com/"
-    },
-    {
-      "symbol": "TER",
       "endpoint": "/ratings-snapshot",
       "status": 402,
       "kind": "restricted",
