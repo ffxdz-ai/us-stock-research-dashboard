@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-07-28T16:45:31+08:00",
-  "generated_label": "2026-07-28 16:45",
+  "generated_at": "2026-07-29T14:43:27+08:00",
+  "generated_label": "2026-07-29 14:43",
   "rules": {
     "review_interval_days": 2,
     "max_active": null,
@@ -23,11 +23,11 @@
     "cross_market_candidates": 1,
     "new_entries": 0,
     "reentries": 0,
-    "reviewed": 0,
+    "reviewed": 1,
     "passed": 0,
-    "retreated": 0,
-    "active_count": 1,
-    "retreated_count": 35,
+    "retreated": 1,
+    "active_count": 0,
+    "retreated_count": 36,
     "due_remaining": 0,
     "processing_limit": "none",
     "active_capacity": "unlimited",
@@ -904,12 +904,12 @@
       "cooldown_until": null
     },
     "SH.688981": {
-      "status": "active",
+      "status": "retreated",
       "entered_at": "2026-06-21T04:13:19+08:00",
-      "next_analysis_due_at": "2026-07-29T12:00:00+08:00",
-      "review_count": 18,
+      "next_analysis_due_at": null,
+      "review_count": 19,
       "pass_count": 18,
-      "fail_count": 0,
+      "fail_count": 1,
       "history": [
         {
           "reviewed_at": "2026-06-21T12:00:00+08:00",
@@ -1054,10 +1054,18 @@
           "layer_score": 78.5,
           "trend_score": 76.0,
           "price": 143.77
+        },
+        {
+          "reviewed_at": "2026-07-29T12:00:00+08:00",
+          "result": "退回观察",
+          "reason": "趋势确认低于保留门槛 55。",
+          "layer_score": 77.9,
+          "trend_score": 76.0,
+          "price": 143.73
         }
       ],
-      "last_result": "通过复核",
-      "last_reason": "跨市场强候选仍满足产业链和趋势门槛；继续二次分析，但最终仍需 Futu/财报/流动性复核。",
+      "last_result": "退回观察",
+      "last_reason": "趋势确认低于保留门槛 55。",
       "code": "SH.688981",
       "name": "中芯国际",
       "market": "CN",
@@ -1071,7 +1079,8 @@
       "radar_action": "跨市场强候选；进入二次分析候选池，需 Futu/财报/流动性复核",
       "last_seen_at": "2026-07-28T00:10:14+08:00",
       "priority": 169.48,
-      "last_analysis_at": "2026-07-27T12:00:00+08:00"
+      "last_analysis_at": "2026-07-29T12:00:00+08:00",
+      "cooldown_until": null
     },
     "SZ.000063": {
       "status": "retreated",
