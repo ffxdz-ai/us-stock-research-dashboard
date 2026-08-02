@@ -1,13 +1,13 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-01T14:39:15+08:00",
-  "generated_label": "2026-08-01 14:39",
+  "generated_at": "2026-08-02T14:42:46+08:00",
+  "generated_label": "2026-08-02 14:42",
   "summary": {
     "theme_count": 5,
     "accelerating_theme_count": 0,
     "cross_market_signal_count": 1,
     "secondary_research_candidate_count": 1,
-    "event_backlog_count": 7,
+    "event_backlog_count": 5,
     "tracked_security_count": 38
   },
   "themes": [
@@ -18,7 +18,7 @@
       "status": "观察跟踪",
       "horizon": "3-12个月",
       "thesis": "训练和推理需求首先兑现到 GPU、ASIC、HBM、先进制程和 CoWoS/先进封装；但龙头可能已被充分定价，系统重点识别估值、利润兑现和拥挤度的错配。",
-      "demand_acceleration_score": 69.8,
+      "demand_acceleration_score": 69.1,
       "theme_score": 73.7,
       "score_components": {
         "demand_shift": 92.0,
@@ -28,7 +28,7 @@
         "market_underpricing": 59.7,
         "trend_avg": 42.2,
         "market_breadth": 56,
-        "change_signal": 8,
+        "change_signal": 0,
         "crowding_penalty": 28.7
       },
       "market_breadth": {
@@ -636,7 +636,7 @@
       "status": "观察跟踪",
       "horizon": "3-12个月",
       "thesis": "AI 集群从单卡算力扩展到网络互连瓶颈，800G、1.6T、硅光、CPO 和交换机升级会把需求向光器件、DSP、交换机和上游材料扩散。",
-      "demand_acceleration_score": 68.1,
+      "demand_acceleration_score": 67.1,
       "theme_score": 71.5,
       "score_components": {
         "demand_shift": 90.0,
@@ -646,7 +646,7 @@
         "market_underpricing": 55.0,
         "trend_avg": 44.0,
         "market_breadth": 56,
-        "change_signal": 12,
+        "change_signal": 0,
         "crowding_penalty": 24.3
       },
       "market_breadth": {
@@ -1211,7 +1211,7 @@
       "status": "观察跟踪",
       "horizon": "6-18个月",
       "thesis": "AI 数据中心功耗密度抬升后，瓶颈从芯片扩散到电力接入、UPS、配电、液冷和工程建设；这些环节通常滞后兑现，但持续性可能更强。",
-      "demand_acceleration_score": 64.4,
+      "demand_acceleration_score": 63.7,
       "theme_score": 62.4,
       "score_components": {
         "demand_shift": 86.0,
@@ -1221,7 +1221,7 @@
         "market_underpricing": 64.3,
         "trend_avg": 48.3,
         "market_breadth": 53,
-        "change_signal": 8,
+        "change_signal": 0,
         "crowding_penalty": 21.6
       },
       "market_breadth": {
@@ -1761,7 +1761,7 @@
       "status": "证据不足",
       "horizon": "3-12个月",
       "thesis": "AI 服务器和高速交换机需要高层数、低损耗 PCB 与高端 CCL，若电子布、铜箔、树脂和高端覆铜板涨价，利润弹性可能从设备和光模块向材料端扩散。",
-      "demand_acceleration_score": 60.4,
+      "demand_acceleration_score": 59.1,
       "theme_score": 65.6,
       "score_components": {
         "demand_shift": 84.0,
@@ -1771,7 +1771,7 @@
         "market_underpricing": 62.5,
         "trend_avg": 29.6,
         "market_breadth": 35,
-        "change_signal": 16,
+        "change_signal": 0,
         "crowding_penalty": 12.8
       },
       "market_breadth": {
@@ -2403,7 +2403,7 @@
       "status": "证据不足",
       "horizon": "6-24个月",
       "thesis": "大模型从数字世界扩展到物理世界后，机器人、工业自动化、传感器、执行器和边缘 AI 可能形成新的需求曲线；当前仍处早期，必须用订单和应用落地验证。",
-      "demand_acceleration_score": 57.7,
+      "demand_acceleration_score": 57.4,
       "theme_score": 58.6,
       "score_components": {
         "demand_shift": 78.0,
@@ -2413,7 +2413,7 @@
         "market_underpricing": 56.6,
         "trend_avg": 36.9,
         "market_breadth": 53,
-        "change_signal": 4,
+        "change_signal": 0,
         "crowding_penalty": 23.6
       },
       "market_breadth": {
@@ -2970,21 +2970,11 @@
       "opportunity_score": 79.5,
       "trend_score": 50.0,
       "crowding_score": 18.0,
-      "demand_acceleration_score": 69.8,
+      "demand_acceleration_score": 69.1,
       "reason": "已在二次分析生命周期中；交给 Buy-Side 二次分析"
     }
   ],
   "event_extraction_backlog": [
-    {
-      "type": "filing",
-      "priority": "high",
-      "item": "本轮新增 1 条申报变化，需要抽取业务/订单/风险措辞。"
-    },
-    {
-      "type": "metric",
-      "priority": "medium",
-      "item": "本轮新增 12 条指标变化，需要判断是逻辑增强还是价格波动。"
-    },
     {
       "type": "permission",
       "priority": "high",
