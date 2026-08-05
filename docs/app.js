@@ -1231,12 +1231,31 @@ function formatPlanPrice(value, currency) {
 
 function formatEntryPlan(opportunity) {
   const lines = [];
-  if (opportunity.entry_tier === "formal") lines.push("级别：稳健买点（可按仓位计划执行）");
-  if (opportunity.entry_tier === "trial") lines.push("级别：仅 1 股试仓（不可按正式仓位加仓）");
-  if (opportunity.safe_entry_price !== null && opportunity.safe_entry_price !== undefined) {
-    lines.push(`稳健入场 ≤ ${formatPlanPrice(opportunity.safe_entry_price, opportunity.currency)}`);
-  } else if (opportunity.trial_entry_price !== null && opportunity.trial_entry_price !== undefined) {
-    lines.push(`试仓入场 ≤ ${formatPlanPrice(opportunity.trial_entry_price, opportunity.currency)}`);
+  const hasSafeEntry = opportunity.safe_entry_price !== null && opportunity.safe_entry_price !== undefined;
+  const hasTrialEntry = opportunity.trial_entry_price !== null && opportunity.trial_entry_price !== undefined;
+
+  if (opportunity.entry_tier === "formal") {
+    lines.push("级别：稳健买点（可按仓位计划执行）");
+    if (hasSafeEntry) {
+      lines.push(`安全买入价（正式建仓）≤ ${formatPlanPrice(opportunity.safe_entry_price, opportunity.currency)}`);
+    } else if (opportunity.entry_price !== null && opportunity.entry_price !== undefined) {
+      lines.push(`安全买入价（正式建仓）≤ ${formatPlanPrice(opportunity.entry_price, opportunity.currency)}`);
+    } else {
+      lines.push("安全买入价（正式建仓）：待确认，暂不执行");
+    }
+  } else if (opportunity.entry_tier === "trial") {
+    lines.push("级别：仅 1 股试仓（不可按正式仓位加仓）");
+    lines.push("安全买入价（正式建仓）：尚未达到条件");
+    if (hasTrialEntry) {
+      lines.push(`试仓买入价（仅 1 股）≤ ${formatPlanPrice(opportunity.trial_entry_price, opportunity.currency)}`);
+    } else {
+      lines.push("试仓买入价（仅 1 股）：待确认，暂不试仓");
+    }
+  } else if (hasSafeEntry) {
+    lines.push(`安全买入价（正式建仓）≤ ${formatPlanPrice(opportunity.safe_entry_price, opportunity.currency)}`);
+  } else if (hasTrialEntry) {
+    lines.push("安全买入价（正式建仓）：尚未达到条件");
+    lines.push(`试仓买入价（仅 1 股）≤ ${formatPlanPrice(opportunity.trial_entry_price, opportunity.currency)}`);
   } else if (opportunity.entry_price !== null && opportunity.entry_price !== undefined) {
     lines.push(`入场触发 ≤ ${formatPlanPrice(opportunity.entry_price, opportunity.currency)}`);
   }
