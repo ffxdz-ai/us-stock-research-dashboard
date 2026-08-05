@@ -69,9 +69,14 @@
             <small id="sentimentNote">等待市场情绪雷达</small>
           </article>
           <article class="metric-card metric-executable">
-            <span>今日可执行机会</span>
+            <span>今日稳健买点</span>
             <strong id="executableCount">待确认</strong>
-            <small>公开脱敏版只显示数量</small>
+            <small>R/R、趋势、机会分、拥挤度均通过</small>
+          </article>
+          <article class="metric-card metric-trial">
+            <span>可试仓观察</span>
+            <strong id="trialEntryCount">待确认</strong>
+            <small>仅限 1 股验证，不是正式建仓</small>
           </article>
           <article class="metric-card metric-waiting">
             <span>等待买点</span>
@@ -168,7 +173,8 @@
         <div class="opportunity-toolbar" aria-label="股票状态筛选">
           <div class="opportunity-status-filters" id="opportunityStatusFilters">
             <button class="status-filter active" data-status="all" type="button">全部</button>
-            <button class="status-filter" data-status="executable" type="button">可执行观察</button>
+            <button class="status-filter" data-status="executable" type="button">稳健买点</button>
+            <button class="status-filter" data-status="trial_entry" type="button">可试仓（1股）</button>
             <button class="status-filter" data-status="waiting_entry" type="button">等待买点</button>
             <button class="status-filter" data-status="avoid_chasing" type="button">禁止追高</button>
             <button class="status-filter" data-status="secondary_analysis" type="button">二次分析</button>

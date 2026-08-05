@@ -515,6 +515,7 @@ h1 {
 }
 
 .opportunity-card.executable { border-top-color: var(--accent); }
+.opportunity-card.trial-entry { border-top-color: #18a9c7; }
 .opportunity-card.waiting-entry { border-top-color: #2f7fbf; }
 .opportunity-card.avoid-chasing { border-top-color: #d88a1d; }
 .opportunity-card.secondary-analysis { border-top-color: #6d65c7; }
@@ -555,6 +556,7 @@ h1 {
 }
 
 .opportunity-card.executable .opportunity-status { background: var(--accent-soft); color: var(--accent-dark) !important; }
+.opportunity-card.trial-entry .opportunity-status { background: #dff7fb; color: #087c95 !important; }
 .opportunity-card.waiting-entry .opportunity-status { background: #e3f1ff; color: #226597 !important; }
 .opportunity-card.avoid-chasing .opportunity-status { background: #fff2d8; color: #8a5700 !important; }
 .opportunity-card.secondary-analysis .opportunity-status { background: #eceaff; color: #5148a4 !important; }
@@ -572,7 +574,8 @@ h1 {
 .opportunity-action { font-weight: 680; }
 
 .opportunity-price,
-.opportunity-scores {
+.opportunity-scores,
+.opportunity-plan {
   display: grid;
   gap: 5px;
   border-radius: 8px;
@@ -581,7 +584,8 @@ h1 {
 }
 
 .opportunity-price span,
-.opportunity-scores span {
+.opportunity-scores span,
+.opportunity-plan span {
   color: #304852;
   font-size: 12px;
   line-height: 1.35;
@@ -589,6 +593,19 @@ h1 {
 
 .opportunity-scores {
   grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.opportunity-plan {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 12px;
+  border-radius: 8px;
+  background: #f6fafb;
+  padding: 9px 10px;
+  color: #304852;
+  font-size: 11px;
+  font-weight: 720;
+  line-height: 1.45;
 }
 
 .opportunity-change,
@@ -913,6 +930,7 @@ h1 {
 }
 
 .metric-executable::before { background: var(--green); }
+.metric-trial::before { background: #22d3ee; }
 .metric-sentiment::before { background: #22d3ee; }
 .metric-waiting::before { background: var(--blue); }
 .metric-avoid::before { background: var(--orange); }
@@ -941,6 +959,7 @@ h1 {
 }
 
 .metric-executable strong { color: #86efac; }
+.metric-trial strong { color: #67e8f9; }
 .metric-sentiment strong { color: #67e8f9; }
 .metric-waiting strong { color: #7dd3fc; }
 .metric-avoid strong { color: #fdba74; }
@@ -1107,6 +1126,7 @@ h1 {
 }
 
 .opportunity-card.executable { border-top-color: var(--green); }
+.opportunity-card.trial-entry { border-top-color: #22d3ee; }
 .opportunity-card.waiting-entry { border-top-color: var(--blue); }
 .opportunity-card.avoid-chasing { border-top-color: var(--orange); }
 .opportunity-card.secondary-analysis { border-top-color: #a78bfa; }
@@ -1130,6 +1150,7 @@ h1 {
 }
 
 .opportunity-card.executable .opportunity-status { background: rgba(34, 197, 94, 0.14); color: #86efac !important; }
+.opportunity-card.trial-entry .opportunity-status { background: rgba(34, 211, 238, 0.14); color: #67e8f9 !important; }
 .opportunity-card.waiting-entry .opportunity-status { background: rgba(56, 189, 248, 0.14); color: #7dd3fc !important; }
 .opportunity-card.avoid-chasing .opportunity-status { background: rgba(245, 158, 11, 0.16); color: #fdba74 !important; }
 .opportunity-card.secondary-analysis .opportunity-status { background: rgba(167, 139, 250, 0.14); color: #c4b5fd !important; }
@@ -1137,6 +1158,7 @@ h1 {
 
 .opportunity-price,
 .opportunity-scores,
+.opportunity-plan,
 .opportunity-list-block {
   border: 1px solid rgba(135, 167, 178, 0.16);
   background: rgba(7, 16, 22, 0.72);
@@ -1144,6 +1166,8 @@ h1 {
 
 .opportunity-price span,
 .opportunity-scores span,
+.opportunity-plan,
+.opportunity-plan span,
 .opportunity-list-block li,
 .opportunity-list-block p {
   color: #c8dbe2;

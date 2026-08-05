@@ -1179,6 +1179,7 @@ def evaluate_candidate(
     starter_entry = price * 1.005 if price and starter_stop and starter_target else None
     starter_reward_risk = rr_ratio(starter_entry, starter_stop, starter_target)
     premium50_for_starter = (price / ma50 - 1) if price and ma50 else None
+    premium20_for_starter = (price / ma20 - 1) if price and ma20 else None
     starter_buyable = bool(
         price
         and starter_entry
@@ -1189,6 +1190,10 @@ def evaluate_candidate(
         and data_confidence >= float(config.get("min_starter_data_confidence", 0.5))
         and technical_score >= float(config.get("min_starter_technical_score", -0.35))
         and (premium50_for_starter is None or premium50_for_starter <= float(config.get("max_starter_premium_to_50dma_pct", 22)) / 100)
+        and (
+            premium20_for_starter is None
+            or premium20_for_starter <= float(rules.get("max_trial_premium_to_20dma_pct", 3)) / 100
+        )
     )
 
     breakout_trigger = high20 * 1.005 if high20 else None
@@ -1212,10 +1217,11 @@ def evaluate_candidate(
         price
         and breakout_trigger
         and price >= breakout_trigger
-        and price <= breakout_trigger * 1.03
+        and price <= breakout_trigger * 1.01
         and breakout_reward_risk is not None
         and breakout_reward_risk >= float(config.get("min_reward_risk_for_buy", 2.0))
-        and data_confidence >= float(config.get("min_starter_data_confidence", 0.5))
+        and data_confidence >= float(config.get("min_data_confidence_for_buy", 0.68))
+        and technical_score >= float(config.get("min_starter_technical_score", -0.35))
     )
 
     entry_path_type = "wait"
@@ -1281,6 +1287,7 @@ def evaluate_candidate(
         "starter_target": finite_round(starter_target),
         "starter_reward_risk": starter_reward_risk,
         "starter_buyable": starter_buyable,
+        "starter_premium_to_20dma_pct": finite_round(premium20_for_starter * 100 if premium20_for_starter is not None else None),
         "breakout_trigger": finite_round(breakout_trigger),
         "breakout_stop": finite_round(breakout_stop),
         "breakout_target": finite_round(breakout_target),

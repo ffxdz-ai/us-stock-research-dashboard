@@ -25,6 +25,7 @@ DEFAULT_CROSS_MARKET_PATH = ROOT / "docs" / "data" / "cross_market_intelligence.
 DEFAULT_SECONDARY_QUEUE_PATH = ROOT / "docs" / "data" / "secondary_analysis_queue.json"
 DEFAULT_FREE_DATA_FALLBACK_PATH = ROOT / "docs" / "data" / "free_data_fallback.json"
 DEFAULT_MARKET_SENTIMENT_PATH = ROOT / "docs" / "data" / "market_sentiment.json"
+DEFAULT_CONFIG_PATH = ROOT / "config" / "agent_config.json"
 
 PRIVATE_SECTION_MARKERS = (
     "持仓输入",
@@ -485,6 +486,56 @@ def load_first_json(*paths: Path) -> dict[str, Any]:
     return {}
 
 
+DEFAULT_ENTRY_GUARDRAILS = {
+    "formal_min_rr": 3.0,
+    "formal_min_opportunity_score": 75.0,
+    "formal_min_trend_score": 70.0,
+    "formal_max_crowding_score": 35.0,
+    "formal_max_entry_premium_pct": 0.5,
+    "trial_min_rr": 2.5,
+    "trial_min_opportunity_score": 65.0,
+    "trial_min_trend_score": 60.0,
+    "trial_max_crowding_score": 55.0,
+    "trial_max_entry_premium_pct": 1.0,
+}
+
+
+def entry_guardrails() -> dict[str, float]:
+    """Return public-card entry thresholds from config with safe defaults.
+
+    The archive layer repeats these checks so an upstream data source cannot turn
+    a provisional path into a public "formal entry" merely by supplying R/R.
+    """
+    config = load_json_file(DEFAULT_CONFIG_PATH)
+    rules = config.get("entry_rules") if isinstance(config.get("entry_rules"), dict) else {}
+    values = dict(DEFAULT_ENTRY_GUARDRAILS)
+    values["formal_min_rr"] = float(config.get("min_reward_risk_for_buy", values["formal_min_rr"]) or values["formal_min_rr"])
+    values["trial_min_rr"] = float(config.get("min_starter_reward_risk", values["trial_min_rr"]) or values["trial_min_rr"])
+    for key in (
+        "formal_min_opportunity_score",
+        "formal_min_trend_score",
+        "formal_max_crowding_score",
+        "formal_max_entry_premium_pct",
+        "trial_min_opportunity_score",
+        "trial_min_trend_score",
+        "trial_max_crowding_score",
+        "trial_max_entry_premium_pct",
+    ):
+        parsed = number(rules.get(key))
+        if parsed is not None:
+            values[key] = parsed
+    return values
+
+
+def market_entry_blocker(market_status: str) -> str | None:
+    normalized = clean_text(market_status).lower()
+    if normalized in {"risk_off", "panic"}:
+        return "市场情绪为 Risk-off，暂停新增买入路径，只保留观察。"
+    if normalized in {"euphoria", "overheated"}:
+        return "市场情绪偏热，暂停新增买入路径，避免把强势当成追高理由。"
+    return None
+
+
 def opportunity_status(action: str, rr_ratio: float | None, queue_status: str = "", evidence_status: str = "") -> str:
     text = f"{action} {queue_status} {evidence_status}"
     if re.search(r"失效|invalid", text, re.IGNORECASE):
@@ -501,14 +552,18 @@ def opportunity_status(action: str, rr_ratio: float | None, queue_status: str = 
         return "avoid_chasing"
     if re.search(r"等待|回踩|回调|买点|突破确认", text):
         return "waiting_entry"
-    if rr_ratio is not None and rr_ratio >= 2:
-        return "executable"
+    # A raw R/R figure alone is never a formal entry signal.  The final archive
+    # pass below must separately validate price, trend, opportunity score,
+    # crowding and the current market regime.
+    if rr_ratio is not None:
+        return "waiting_entry"
     return "watchlist"
 
 
 def status_label(status: str) -> str:
     return {
-        "executable": "可执行观察",
+        "executable": "稳健买点",
+        "trial_entry": "可试仓（1股）",
         "waiting_entry": "等待买点",
         "avoid_chasing": "禁止追高",
         "secondary_analysis": "二次分析",
@@ -588,45 +643,108 @@ def valid_path(entry: float | None, stop_loss: float | None, target: float | Non
     return entry is not None and stop_loss is not None and target is not None and stop_loss < entry < target
 
 
-def executable_starter_path(item: dict[str, Any]) -> dict[str, Any] | None:
+def path_rr_ratio(entry: float | None, stop_loss: float | None, target: float | None) -> float | None:
+    if not valid_path(entry, stop_loss, target):
+        return None
+    risk = entry - stop_loss
+    return round((target - entry) / risk, 2) if risk > 0 else None
+
+
+def formal_entry_path(
+    item: dict[str, Any],
+    guardrails: dict[str, float],
+    market_status: str,
+) -> dict[str, Any] | None:
+    """Return a formal entry only when every defensive gate has passed."""
+    price = number(item.get("price"))
+    entry = number(item.get("strict_entry") or item.get("entry_price"))
+    stop_loss = number(item.get("stop_loss") or item.get("invalidation"))
+    target = number(item.get("target_price") or item.get("mechanical_target"))
+    opportunity = number(item.get("opportunity_score"))
+    trend = number(item.get("trend_score"))
+    crowding = number(item.get("crowding_score"))
+    rr = path_rr_ratio(entry, stop_loss, target)
+    premium = ((price / entry) - 1) * 100 if price is not None and entry is not None and entry > 0 else None
+    if market_entry_blocker(market_status):
+        return None
+    if not valid_path(entry, stop_loss, target) or rr is None or price is None:
+        return None
+    if price > entry * (1 + guardrails["formal_max_entry_premium_pct"] / 100):
+        return None
+    if rr < guardrails["formal_min_rr"]:
+        return None
+    if opportunity is None or opportunity < guardrails["formal_min_opportunity_score"]:
+        return None
+    if trend is None or trend < guardrails["formal_min_trend_score"]:
+        return None
+    if crowding is None or crowding > guardrails["formal_max_crowding_score"]:
+        return None
+    return {
+        "signal_type": "formal",
+        "entry": entry,
+        "stop_loss": stop_loss,
+        "target": target,
+        "rr": rr,
+        "premium_pct": premium,
+    }
+
+
+def executable_starter_path(
+    item: dict[str, Any],
+    guardrails: dict[str, float],
+    market_status: str,
+) -> dict[str, Any] | None:
     price = number(item.get("price"))
     entry = number(item.get("starter_entry"))
     stop_loss = number(item.get("starter_stop"))
     target = number(item.get("starter_target"))
     rr = number(item.get("starter_reward_risk"))
-    mechanical_rr = number(item.get("rr_ratio"))
     opportunity = number(item.get("opportunity_score"))
     trend = number(item.get("trend_score"))
     crowding = number(item.get("crowding_score"))
     if not valid_path(entry, stop_loss, target) or rr is None or price is None:
         return None
-    if price > entry * 1.01:
+    if market_entry_blocker(market_status):
         return None
-    if rr < 1.5:
+    if price > entry * (1 + guardrails["trial_max_entry_premium_pct"] / 100):
         return None
-    if opportunity is not None and opportunity < 65:
+    if rr < guardrails["trial_min_rr"]:
         return None
-    if trend is not None and trend < 60 and not (mechanical_rr is not None and mechanical_rr >= 2 and opportunity is not None and opportunity >= 70):
+    if opportunity is None or opportunity < guardrails["trial_min_opportunity_score"]:
         return None
-    if crowding is not None and crowding >= 80:
+    if trend is None or trend < guardrails["trial_min_trend_score"]:
         return None
-    return {"signal_type": "starter", "entry": entry, "stop_loss": stop_loss, "target": target, "rr": rr}
+    if crowding is None or crowding > guardrails["trial_max_crowding_score"]:
+        return None
+    return {"signal_type": "trial", "entry": entry, "stop_loss": stop_loss, "target": target, "rr": rr}
 
 
-def executable_breakout_path(item: dict[str, Any]) -> dict[str, Any] | None:
+def executable_breakout_path(
+    item: dict[str, Any],
+    guardrails: dict[str, float],
+    market_status: str,
+) -> dict[str, Any] | None:
     price = number(item.get("price"))
     trigger = number(item.get("breakout_trigger"))
     stop_loss = number(item.get("breakout_stop"))
     target = number(item.get("breakout_target"))
     rr = number(item.get("breakout_reward_risk"))
+    opportunity = number(item.get("opportunity_score"))
     trend = number(item.get("trend_score"))
+    crowding = number(item.get("crowding_score"))
     if not valid_path(trigger, stop_loss, target) or rr is None or price is None:
         return None
-    if price < trigger or price > trigger * 1.03:
+    if market_entry_blocker(market_status):
         return None
-    if rr < 2:
+    if price < trigger or price > trigger * (1 + guardrails["formal_max_entry_premium_pct"] / 100):
         return None
-    if trend is not None and trend < 55:
+    if rr < guardrails["formal_min_rr"]:
+        return None
+    if opportunity is None or opportunity < guardrails["formal_min_opportunity_score"]:
+        return None
+    if trend is None or trend < guardrails["formal_min_trend_score"]:
+        return None
+    if crowding is None or crowding > guardrails["formal_max_crowding_score"]:
         return None
     return {"signal_type": "breakout", "entry": trigger, "stop_loss": stop_loss, "target": target, "rr": rr}
 
@@ -640,19 +758,63 @@ def apply_executable_path(item: dict[str, Any], path: dict[str, Any]) -> None:
     item["stop_loss"] = round(float(path["stop_loss"]), 2)
     item["target_price"] = round(float(path["target"]), 2)
     item["rr_ratio"] = round(float(path["rr"]), 2)
-    item["status"] = "executable"
-    item["status_label"] = "可试仓观察" if path["signal_type"] == "starter" else "突破确认"
-    if path["signal_type"] == "starter":
-        item["action"] = "可试仓观察：不是重仓普通买入，按明确止损和目标小仓验证。"
-        item["why_changed"] = unique_list([*(item.get("why_changed") or []), "新增试仓路径：严格回踩未到，但当前价位已有入场/止损/目标/R/R。"], limit=8)
+    item["one_share_risk"] = round(float(path["entry"]) - float(path["stop_loss"]), 2)
+    item["one_share_risk_pct"] = round((float(path["entry"]) - float(path["stop_loss"])) / float(path["entry"]) * 100, 2)
+    if path["signal_type"] == "trial":
+        item["status"] = "trial_entry"
+        item["status_label"] = status_label("trial_entry")
+        item["entry_tier"] = "trial"
+        item["trial_entry_price"] = item["entry_price"]
+        item["rr_required"] = entry_guardrails()["trial_min_rr"]
+        item["action"] = "可试仓（仅 1 股验证）：未达到稳健买点标准，不得按正式仓位买入。"
+        item["why_changed"] = unique_list([*(item.get("why_changed") or []), "试仓路径仅通过最低 R/R、趋势和拥挤度门槛；仍未达到稳健买点标准。"], limit=8)
     else:
-        item["action"] = "突破确认：只有突破有效且不高开追涨时才执行。"
-        item["why_changed"] = unique_list([*(item.get("why_changed") or []), "新增突破路径：用突破触发价、止损和目标重新计算 R/R。"], limit=8)
+        item["status"] = "executable"
+        item["status_label"] = "稳健突破确认" if path["signal_type"] == "breakout" else status_label("executable")
+        item["entry_tier"] = "formal"
+        item["safe_entry_price"] = item["entry_price"]
+        item["rr_required"] = entry_guardrails()["formal_min_rr"]
+        if path["signal_type"] == "breakout":
+            item["action"] = "稳健突破确认：仅在突破有效、未高开追涨且所有硬门槛通过时执行。"
+            item["why_changed"] = unique_list([*(item.get("why_changed") or []), "突破路径通过趋势、机会分、拥挤度和 R/R 的稳健买点门槛。"], limit=8)
+        else:
+            item["action"] = "稳健买点：回踩价格、R/R、趋势、机会分与拥挤度均通过硬门槛。"
+            item["why_changed"] = unique_list([*(item.get("why_changed") or []), "通过稳健买点硬门槛：不是因上涨而触发，须按止损执行。"], limit=8)
+
+
+def entry_gate_failures(item: dict[str, Any], guardrails: dict[str, float], market_status: str) -> list[str]:
+    """Explain why an item remains waiting without inventing a new buy level."""
+    failures: list[str] = []
+    market_block = market_entry_blocker(market_status)
+    if market_block:
+        failures.append(market_block)
+    price = number(item.get("price"))
+    entry = number(item.get("strict_entry") or item.get("entry_price"))
+    stop_loss = number(item.get("stop_loss") or item.get("invalidation"))
+    target = number(item.get("target_price") or item.get("mechanical_target"))
+    rr = path_rr_ratio(entry, stop_loss, target)
+    if rr is None:
+        failures.append("缺少完整的稳健入场价、止损价或目标价，不能生成正式买点。")
+    elif rr < guardrails["formal_min_rr"]:
+        failures.append(f"正式买点要求 R/R ≥ {guardrails['formal_min_rr']:.1f}:1（当前 {rr:.2f}:1）。")
+    if price is not None and entry is not None and price > entry * (1 + guardrails["formal_max_entry_premium_pct"] / 100):
+        failures.append(f"现价高于稳健入场触发价超过 {guardrails['formal_max_entry_premium_pct']:.1f}%，等待回踩。")
+    opportunity = number(item.get("opportunity_score"))
+    if opportunity is None or opportunity < guardrails["formal_min_opportunity_score"]:
+        failures.append(f"机会分未达到 {guardrails['formal_min_opportunity_score']:.0f} 分正式门槛。")
+    trend = number(item.get("trend_score"))
+    if trend is None or trend < guardrails["formal_min_trend_score"]:
+        failures.append(f"趋势确认未达到 {guardrails['formal_min_trend_score']:.0f} 分正式门槛。")
+    crowding = number(item.get("crowding_score"))
+    if crowding is None or crowding > guardrails["formal_max_crowding_score"]:
+        failures.append(f"拥挤度未通过正式门槛（需 ≤ {guardrails['formal_max_crowding_score']:.0f}）。")
+    return unique_list(failures, limit=4)
 
 
 def derive_opportunity_conditions(item: dict[str, Any]) -> tuple[list[str], list[str], list[str]]:
     rr = number(item.get("rr_ratio"))
-    rr_required = number(item.get("rr_required")) or 2.0
+    entry_tier = clean_text(item.get("entry_tier"))
+    rr_required = number(item.get("rr_required")) or (3.0 if entry_tier == "formal" else 2.5 if entry_tier == "trial" else 3.0)
     price = number(item.get("price"))
     strict_entry = number(item.get("entry_price") or item.get("strict_entry"))
     stop_loss = number(item.get("stop_loss") or item.get("invalidation"))
@@ -701,24 +863,31 @@ def derive_opportunity_conditions(item: dict[str, Any]) -> tuple[list[str], list
         return buy, avoid, invalid
 
     signal_type = clean_text(item.get("signal_type"))
-    if signal_type in {"starter", "breakout"} and price is not None and stop_loss is not None and target is not None and entry is not None:
-        if signal_type == "starter":
-            headline = "什么时候买：现价不高于试仓触发价，允许小仓/1股试仓；这不是重仓买入信号"
-            trigger_line = f"价格触发：现价 ≤ {fmt_price(entry, currency)} 才考虑；高于触发价不追"
+    if signal_type in {"trial", "formal", "breakout"} and price is not None and stop_loss is not None and target is not None and entry is not None:
+        if signal_type == "trial" or entry_tier == "trial":
+            headline = "什么时候买：仅当现价不高于试仓触发价时，可买 1 股验证；不是正式建仓信号"
+            trigger_line = f"试仓触发：现价 ≤ {fmt_price(entry, currency)}；高于该价不追，未通过稳健门槛不得加仓"
+            execution_line = "整股纪律：只允许 1 股验证；收盘跌破止损立即退出，不补仓、不摊低成本"
+        elif signal_type == "breakout":
+            headline = "什么时候买：突破触发价已确认、且未高开追涨时才可按稳健买点执行"
+            trigger_line = f"突破触发：价格站上 {fmt_price(entry, currency)} 且不超过触发价约 0.5% 才考虑"
+            execution_line = "执行纪律：先核对市场非 Risk-off、数据无重大缺口，再按既定止损执行"
         else:
-            headline = "什么时候买：只在突破触发价已经确认、且没有高开过度追涨时执行"
-            trigger_line = f"突破触发：价格站上 {fmt_price(entry, currency)} 且不超过触发价约 3% 才考虑"
+            headline = "什么时候买：仅当现价不高于稳健入场价、且所有硬门槛保持通过时执行"
+            trigger_line = f"稳健入场：现价 ≤ {fmt_price(entry, currency)}；高于触发价不追，等待下一次回踩"
+            execution_line = "执行纪律：按独立仓位计划执行；收盘跌破止损立即退出，不补仓、不摊低成本"
         buy = [
             headline,
             trigger_line,
             f"风控框架：止损 {fmt_price(stop_loss, currency)}；目标 {fmt_price(target, currency)}；当前 R/R {fmt_ratio(rr)}",
-            "执行纪律：只能按整股/小仓验证；跌破止损不补仓；目标或逻辑变化后重新计算",
+            f"单股风险：从触发价到止损最多 {fmt_price(item.get('one_share_risk'), currency)}（{number(item.get('one_share_risk_pct')) or 0:.1f}%），先确认自己能承受这笔单股亏损",
+            execution_line,
             "确认信号：趋势不恶化，且财务/事件/产业链证据至少一项继续改善",
         ]
         avoid = [
             "高于触发价明显追涨不买，等待下一次回踩或重新计算",
-            "R/R 回落到 1.5:1 以下不做试仓；普通买入仍要求 2:1 以上",
-            "数据缺口未修复时只允许试仓观察，不升级为重仓买入",
+            f"R/R 低于 {rr_required:.1f}:1 不执行；试仓也不能代替稳健买点",
+            "数据缺口未修复或市场转为 Risk-off 时，不新增仓位",
         ]
         invalid = [
             f"跌破止损 {fmt_price(stop_loss, currency)} 后路径失效",
@@ -737,7 +906,7 @@ def derive_opportunity_conditions(item: dict[str, Any]) -> tuple[list[str], list
     else:
         actionable = status == "executable" and rr is not None and rr >= rr_required
         if actionable:
-            headline = "可试仓观察：价格、止损、目标和 R/R 已达最低纪律，仍需盘中确认"
+            headline = "稳健买点：价格、止损、目标和 R/R 已通过正式纪律，仍需盘中确认"
         elif rr is not None and rr < rr_required:
             headline = f"暂不买：当前 R/R {fmt_ratio(rr)} 低于 {rr_required:.0f}:1，等价格回到买点再看"
         else:
@@ -776,8 +945,13 @@ def derive_opportunity_conditions(item: dict[str, Any]) -> tuple[list[str], list
     return buy, avoid, invalid
 
 
-def finalize_opportunities(items: dict[str, dict[str, Any]], limit: int = 80) -> list[dict[str, Any]]:
+def finalize_opportunities(
+    items: dict[str, dict[str, Any]],
+    limit: int = 80,
+    market_status: str = "",
+) -> list[dict[str, Any]]:
     finalized: list[dict[str, Any]] = []
+    guardrails = entry_guardrails()
     for item in items.values():
         rr = number(item.get("rr_ratio"))
         status = opportunity_status(
@@ -788,16 +962,27 @@ def finalize_opportunities(items: dict[str, dict[str, Any]], limit: int = 80) ->
         )
         item["status"] = status
         item["status_label"] = status_label(status)
-        starter_path = executable_starter_path(item)
-        breakout_path = executable_breakout_path(item)
-        if status not in {"invalidated", "review"} and starter_path:
-            apply_executable_path(item, starter_path)
-        elif status not in {"invalidated", "review"} and breakout_path:
+        formal_path = formal_entry_path(item, guardrails, market_status)
+        breakout_path = executable_breakout_path(item, guardrails, market_status)
+        starter_path = executable_starter_path(item, guardrails, market_status)
+        # A prior "avoid chasing" label may have been calculated from a broad
+        # mechanical stop.  A separate, fully specified 1-share trial path may
+        # still be shown if it passes the stricter trial gates below; invalid,
+        # review and Buy-Side queue items remain protected from auto-upgrades.
+        protected_statuses = {"invalidated", "review", "secondary_analysis"}
+        if status not in protected_statuses and formal_path:
+            apply_executable_path(item, formal_path)
+        elif status not in protected_statuses and breakout_path:
             apply_executable_path(item, breakout_path)
-        elif item.get("status") == "executable" and (number(item.get("trend_score")) is not None and (number(item.get("trend_score")) or 0) < 45):
+        elif status not in protected_statuses and starter_path:
+            apply_executable_path(item, starter_path)
+        elif item.get("status") == "executable":
             item["status"] = "waiting_entry"
             item["status_label"] = status_label("waiting_entry")
-            item["why_changed"] = unique_list([*(item.get("why_changed") or []), "R/R 达标但趋势确认不足，降级为等待买点。"], limit=8)
+            item["action"] = "等待稳健买点：未通过正式入场硬门槛。"
+            item["why_changed"] = unique_list([*(item.get("why_changed") or []), *entry_gate_failures(item, guardrails, market_status)], limit=8)
+        elif item.get("status") == "waiting_entry":
+            item["why_changed"] = unique_list([*(item.get("why_changed") or []), *entry_gate_failures(item, guardrails, market_status)], limit=8)
         if not item.get("price_source") and item.get("price") is not None:
             item["price_source"] = "公开行情快照"
         if not item.get("price_time"):
@@ -825,11 +1010,16 @@ def finalize_opportunities(items: dict[str, dict[str, Any]], limit: int = 80) ->
                 "trend_score": item.get("trend_score"),
                 "crowding_score": item.get("crowding_score"),
                 "rr_ratio": item.get("rr_ratio"),
-                "rr_required": item.get("rr_required") or 2,
+                "rr_required": item.get("rr_required") or guardrails["formal_min_rr"],
                 "entry_price": item.get("entry_price") or item.get("strict_entry"),
+                "safe_entry_price": item.get("safe_entry_price"),
+                "trial_entry_price": item.get("trial_entry_price"),
                 "stop_loss": item.get("stop_loss") or item.get("invalidation"),
                 "target_price": item.get("target_price") or item.get("mechanical_target"),
                 "signal_type": item.get("signal_type"),
+                "entry_tier": item.get("entry_tier"),
+                "one_share_risk": item.get("one_share_risk"),
+                "one_share_risk_pct": item.get("one_share_risk_pct"),
                 "mechanical_rr_ratio": item.get("mechanical_rr_ratio"),
                 "starter_entry": item.get("starter_entry"),
                 "starter_stop": item.get("starter_stop"),
@@ -851,7 +1041,7 @@ def finalize_opportunities(items: dict[str, dict[str, Any]], limit: int = 80) ->
     return sorted(
         finalized,
         key=lambda row: (
-            {"executable": 0, "secondary_analysis": 1, "waiting_entry": 2, "avoid_chasing": 3, "watchlist": 4}.get(str(row.get("status")), 9),
+            {"executable": 0, "trial_entry": 1, "secondary_analysis": 2, "waiting_entry": 3, "avoid_chasing": 4, "watchlist": 5}.get(str(row.get("status")), 9),
             -(number(row.get("opportunity_score")) or 0),
             str(row.get("symbol") or ""),
         ),
@@ -1076,7 +1266,9 @@ def derive_opportunities() -> list[dict[str, Any]]:
             },
         )
 
-    return finalize_opportunities(items)
+    market_sentiment = load_json_file(DEFAULT_MARKET_SENTIMENT_PATH)
+    market_status = clean_text(market_sentiment.get("status")) if market_sentiment else ""
+    return finalize_opportunities(items, market_status=market_status)
 
 
 def derive_review_stats(metrics_path: Path = DEFAULT_REVIEW_METRICS_PATH) -> dict[str, Any] | None:

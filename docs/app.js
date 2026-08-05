@@ -26,6 +26,7 @@ const els = {
   sentimentScore: document.querySelector("#sentimentScore"),
   sentimentNote: document.querySelector("#sentimentNote"),
   executableCount: document.querySelector("#executableCount"),
+  trialEntryCount: document.querySelector("#trialEntryCount"),
   waitEntryCount: document.querySelector("#waitEntryCount"),
   noChaseCount: document.querySelector("#noChaseCount"),
   dataGapCount: document.querySelector("#dataGapCount"),
@@ -56,7 +57,8 @@ const DASHBOARD_REPORT_TARGETS = [
 const DATA_HEALTH_KEYWORDS = ["不可用", "限流", "fallback", "数据不足", "需补充", "缺口", "unavailable"];
 
 const OPPORTUNITY_STATUS_META = {
-  executable: { label: "可执行观察", className: "executable" },
+  executable: { label: "稳健买点", className: "executable" },
+  trial_entry: { label: "可试仓（1股）", className: "trial-entry" },
   waiting_entry: { label: "等待买点", className: "waiting-entry" },
   avoid_chasing: { label: "禁止追高", className: "avoid-chasing" },
   secondary_analysis: { label: "二次分析", className: "secondary-analysis" },
@@ -615,6 +617,7 @@ function buildDashboardMetrics() {
     "executable",
     opportunityStatusCounts.executable || null
   );
+  const trialEntry = opportunityStatusCounts.trial_entry || null;
   const waiting = dashboardOpportunityCount(
     ["waiting_entry_count", "wait_entry_count", "waiting_buy_point_count", "pullback_wait_count"],
     [deepseek, secondary, opportunity, latest],
@@ -638,7 +641,7 @@ function buildDashboardMetrics() {
 
   const pendingReview = directNumber(["pending_review_count", "pending_count", "review_pending_count"]) ?? reviewStats?.pending_count ?? null;
 
-  return { market, sentiment, executable, waiting, noChase, dataGap, pendingReview, latestTime: latestReportTimeLabel(), gapBreakdown };
+  return { market, sentiment, executable, trialEntry, waiting, noChase, dataGap, pendingReview, latestTime: latestReportTimeLabel(), gapBreakdown };
 }
 
 function renderDashboardReports() {
@@ -678,6 +681,7 @@ function renderDecisionDashboard() {
     els.sentimentNote.textContent = `${scoreLabel}${metrics.sentiment.note || "等待市场情绪雷达"}`;
   }
   if (els.executableCount) els.executableCount.textContent = countLabel(metrics.executable);
+  if (els.trialEntryCount) els.trialEntryCount.textContent = countLabel(metrics.trialEntry);
   if (els.waitEntryCount) els.waitEntryCount.textContent = countLabel(metrics.waiting);
   if (els.noChaseCount) els.noChaseCount.textContent = countLabel(metrics.noChase);
   if (els.dataGapCount) els.dataGapCount.textContent = countLabel(metrics.dataGap);
@@ -1050,8 +1054,13 @@ function normalizeStructuredOpportunity(item) {
     rr_ratio: parseLooseNumber(item.rr_ratio),
     rr_required: parseLooseNumber(item.rr_required),
     entry_price: parseLooseNumber(item.entry_price),
+    safe_entry_price: parseLooseNumber(item.safe_entry_price),
+    trial_entry_price: parseLooseNumber(item.trial_entry_price),
     stop_loss: parseLooseNumber(item.stop_loss),
     target_price: parseLooseNumber(item.target_price),
+    entry_tier: cleanCellText(item.entry_tier || ""),
+    one_share_risk: parseLooseNumber(item.one_share_risk),
+    one_share_risk_pct: parseLooseNumber(item.one_share_risk_pct),
     score_delta: scoreDelta,
     why_changed: normalizeList(item.why_changed),
     buy_conditions: normalizeList(item.buy_conditions),
@@ -1077,7 +1086,7 @@ function mergeOpportunity(existing, incoming) {
   ["name", "market", "theme", "segment", "price_time", "price_source", "currency", "source_label"].forEach((key) => {
     if (!merged[key] && incoming[key]) merged[key] = incoming[key];
   });
-  ["opportunity_score", "trend_score", "crowding_score", "rr_ratio", "rr_required", "price", "entry_price", "stop_loss", "target_price"].forEach((key) => {
+  ["opportunity_score", "trend_score", "crowding_score", "rr_ratio", "rr_required", "price", "entry_price", "safe_entry_price", "trial_entry_price", "stop_loss", "target_price", "one_share_risk", "one_share_risk_pct"].forEach((key) => {
     if ((merged[key] === null || merged[key] === undefined) && incoming[key] !== null && incoming[key] !== undefined) merged[key] = incoming[key];
   });
   if (incomingHigherPriority) {
@@ -1086,6 +1095,7 @@ function mergeOpportunity(existing, incoming) {
     merged.action = incoming.action || merged.action;
     merged.source_rank = incoming.source_rank;
     merged.source_label = incoming.source_label || merged.source_label;
+    merged.entry_tier = incoming.entry_tier || merged.entry_tier;
   } else if (!merged.action && incoming.action) {
     merged.action = incoming.action;
   }
@@ -1212,6 +1222,33 @@ function formatPriceMeta(opportunity) {
   ];
 }
 
+function formatPlanPrice(value, currency) {
+  if (value === null || value === undefined || value === "") return "待确认";
+  const parsed = Number(value);
+  const text = Number.isFinite(parsed) ? parsed.toLocaleString(undefined, { maximumFractionDigits: 2 }) : String(value);
+  return `${text}${currency ? ` ${currency}` : ""}`;
+}
+
+function formatEntryPlan(opportunity) {
+  const lines = [];
+  if (opportunity.entry_tier === "formal") lines.push("级别：稳健买点（可按仓位计划执行）");
+  if (opportunity.entry_tier === "trial") lines.push("级别：仅 1 股试仓（不可按正式仓位加仓）");
+  if (opportunity.safe_entry_price !== null && opportunity.safe_entry_price !== undefined) {
+    lines.push(`稳健入场 ≤ ${formatPlanPrice(opportunity.safe_entry_price, opportunity.currency)}`);
+  } else if (opportunity.trial_entry_price !== null && opportunity.trial_entry_price !== undefined) {
+    lines.push(`试仓入场 ≤ ${formatPlanPrice(opportunity.trial_entry_price, opportunity.currency)}`);
+  } else if (opportunity.entry_price !== null && opportunity.entry_price !== undefined) {
+    lines.push(`入场触发 ≤ ${formatPlanPrice(opportunity.entry_price, opportunity.currency)}`);
+  }
+  if (opportunity.stop_loss !== null && opportunity.stop_loss !== undefined) lines.push(`止损 ${formatPlanPrice(opportunity.stop_loss, opportunity.currency)}`);
+  if (opportunity.target_price !== null && opportunity.target_price !== undefined) lines.push(`目标 ${formatPlanPrice(opportunity.target_price, opportunity.currency)}`);
+  if (opportunity.one_share_risk !== null && opportunity.one_share_risk !== undefined) {
+    const riskPct = opportunity.one_share_risk_pct === null || opportunity.one_share_risk_pct === undefined ? "" : ` / ${Number(opportunity.one_share_risk_pct).toFixed(1)}%`;
+    lines.push(`单股最大风险 ${formatPlanPrice(opportunity.one_share_risk, opportunity.currency)}${riskPct}`);
+  }
+  return lines;
+}
+
 function formatDelta(value) {
   if (value === null || value === undefined || value === "") return "";
   const parsed = Number(value);
@@ -1317,6 +1354,19 @@ function renderOpportunityCards() {
       price.appendChild(item);
     });
 
+    const entryPlan = formatEntryPlan(opportunity);
+    const plan = document.createElement("div");
+    plan.className = "opportunity-plan";
+    if (entryPlan.length) {
+      entryPlan.forEach((line) => {
+        const item = document.createElement("span");
+        item.textContent = line;
+        plan.appendChild(item);
+      });
+    } else {
+      plan.textContent = "交易计划：等待结构化复核，暂不构成买入信号";
+    }
+
     const scores = document.createElement("div");
     scores.className = "opportunity-scores";
     const delta = opportunity.score_delta || {};
@@ -1345,7 +1395,7 @@ function renderOpportunityCards() {
     source.className = "opportunity-source";
     source.textContent = opportunity.source === "structured" ? "来源：结构化 opportunities" : `来源：${opportunity.source_label || "报告正文保守解析"}`;
 
-    card.append(header, theme, action, price, scores, change, conditions, source);
+    card.append(header, theme, action, price, plan, scores, change, conditions, source);
     els.opportunityCards.appendChild(card);
   });
 }
