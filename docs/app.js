@@ -608,15 +608,16 @@ function buildDashboardMetrics() {
     acc[item.status] = (acc[item.status] || 0) + 1;
     return acc;
   }, {});
+  const formalQualifiedCount = state.opportunities.filter((item) => item.formal_qualified === true).length;
 
   const executableZero = [deepseek, latest].filter(Boolean).some((report) => /今日没有普通买入标的|没有普通买入优先级|没有.*可执行/.test(reportText(report)));
-  const executable = executableZero ? 0 : dashboardOpportunityCount(
+  const executable = formalQualifiedCount || (executableZero ? 0 : dashboardOpportunityCount(
     ["executable_opportunity_count", "executable_count", "buyable_count", "actionable_count"],
     [deepseek, secondary, opportunity, latest],
     [/今日可执行机会(?:数量)?[：:]\s*(\d+)/, /可执行机会[：:]\s*(\d+)/, /普通买入标的[：:]\s*(\d+)/, /机械可买候选[：:]\s*(\d+)/],
     "executable",
     opportunityStatusCounts.executable || null
-  );
+  ));
   const trialEntry = opportunityStatusCounts.trial_entry || null;
   const waiting = dashboardOpportunityCount(
     ["waiting_entry_count", "wait_entry_count", "waiting_buy_point_count", "pullback_wait_count"],
@@ -1055,10 +1056,17 @@ function normalizeStructuredOpportunity(item) {
     rr_required: parseLooseNumber(item.rr_required),
     entry_price: parseLooseNumber(item.entry_price),
     safe_entry_price: parseLooseNumber(item.safe_entry_price),
+    safe_entry_zone_low: parseLooseNumber(item.safe_entry_zone_low),
+    safe_entry_zone_high: parseLooseNumber(item.safe_entry_zone_high),
+    safe_entry_max_price: parseLooseNumber(item.safe_entry_max_price),
     trial_entry_price: parseLooseNumber(item.trial_entry_price),
     stop_loss: parseLooseNumber(item.stop_loss),
     target_price: parseLooseNumber(item.target_price),
     entry_tier: cleanCellText(item.entry_tier || ""),
+    formal_qualified: item.formal_qualified === true,
+    entry_execution_status: cleanCellText(item.entry_execution_status || ""),
+    entry_execution_label: cleanCellText(item.entry_execution_label || ""),
+    entry_validity: cleanCellText(item.entry_validity || ""),
     one_share_risk: parseLooseNumber(item.one_share_risk),
     one_share_risk_pct: parseLooseNumber(item.one_share_risk_pct),
     score_delta: scoreDelta,
@@ -1086,7 +1094,7 @@ function mergeOpportunity(existing, incoming) {
   ["name", "market", "theme", "segment", "price_time", "price_source", "currency", "source_label"].forEach((key) => {
     if (!merged[key] && incoming[key]) merged[key] = incoming[key];
   });
-  ["opportunity_score", "trend_score", "crowding_score", "rr_ratio", "rr_required", "price", "entry_price", "safe_entry_price", "trial_entry_price", "stop_loss", "target_price", "one_share_risk", "one_share_risk_pct"].forEach((key) => {
+  ["opportunity_score", "trend_score", "crowding_score", "rr_ratio", "rr_required", "price", "entry_price", "safe_entry_price", "safe_entry_zone_low", "safe_entry_zone_high", "safe_entry_max_price", "trial_entry_price", "stop_loss", "target_price", "one_share_risk", "one_share_risk_pct"].forEach((key) => {
     if ((merged[key] === null || merged[key] === undefined) && incoming[key] !== null && incoming[key] !== undefined) merged[key] = incoming[key];
   });
   if (incomingHigherPriority) {
@@ -1096,6 +1104,10 @@ function mergeOpportunity(existing, incoming) {
     merged.source_rank = incoming.source_rank;
     merged.source_label = incoming.source_label || merged.source_label;
     merged.entry_tier = incoming.entry_tier || merged.entry_tier;
+    merged.formal_qualified = incoming.formal_qualified || merged.formal_qualified;
+    merged.entry_execution_status = incoming.entry_execution_status || merged.entry_execution_status;
+    merged.entry_execution_label = incoming.entry_execution_label || merged.entry_execution_label;
+    merged.entry_validity = incoming.entry_validity || merged.entry_validity;
   } else if (!merged.action && incoming.action) {
     merged.action = incoming.action;
   }
@@ -1232,17 +1244,24 @@ function formatPlanPrice(value, currency) {
 function formatEntryPlan(opportunity) {
   const lines = [];
   const hasSafeEntry = opportunity.safe_entry_price !== null && opportunity.safe_entry_price !== undefined;
+  const hasZoneLow = opportunity.safe_entry_zone_low !== null && opportunity.safe_entry_zone_low !== undefined;
+  const hasZoneHigh = opportunity.safe_entry_max_price !== null && opportunity.safe_entry_max_price !== undefined;
   const hasTrialEntry = opportunity.trial_entry_price !== null && opportunity.trial_entry_price !== undefined;
 
   if (opportunity.entry_tier === "formal") {
-    lines.push("级别：稳健买点（可按仓位计划执行）");
-    if (hasSafeEntry) {
+    lines.push(opportunity.formal_qualified ? "资格：稳健买点候选（严格门槛已通过）" : "级别：稳健买点（可按仓位计划执行）");
+    if (hasZoneLow && hasZoneHigh) {
+      lines.push(`稳健入场区间：${formatPlanPrice(opportunity.safe_entry_zone_low, opportunity.currency)} – ${formatPlanPrice(opportunity.safe_entry_max_price, opportunity.currency)}`);
+      if (hasSafeEntry) lines.push(`优先挂单参考：${formatPlanPrice(opportunity.safe_entry_price, opportunity.currency)}`);
+    } else if (hasSafeEntry) {
       lines.push(`安全买入价（正式建仓）≤ ${formatPlanPrice(opportunity.safe_entry_price, opportunity.currency)}`);
     } else if (opportunity.entry_price !== null && opportunity.entry_price !== undefined) {
       lines.push(`安全买入价（正式建仓）≤ ${formatPlanPrice(opportunity.entry_price, opportunity.currency)}`);
     } else {
       lines.push("安全买入价（正式建仓）：待确认，暂不执行");
     }
+    if (opportunity.entry_execution_label) lines.push(`当前执行：${opportunity.entry_execution_label}`);
+    if (opportunity.entry_validity) lines.push(`计划有效期：${opportunity.entry_validity}`);
   } else if (opportunity.entry_tier === "trial") {
     lines.push("级别：仅 1 股试仓（不可按正式仓位加仓）");
     lines.push("安全买入价（正式建仓）：尚未达到条件");
@@ -1288,10 +1307,16 @@ function hasScoreDelta(opportunity) {
 
 function filteredOpportunities() {
   return state.opportunities.filter((opportunity) => {
-    if (state.opportunityStatus !== "all" && opportunity.status !== state.opportunityStatus) return false;
+    if (state.opportunityStatus === "executable") {
+      // "稳健买点" shows every fully-qualified plan, including candidates that
+      // are deliberately waiting for the planned entry zone instead of chasing.
+      if (opportunity.status !== "executable" && opportunity.formal_qualified !== true) return false;
+    } else if (state.opportunityStatus !== "all" && opportunity.status !== state.opportunityStatus) {
+      return false;
+    }
     if (!state.opportunityQuery) return true;
     const query = state.opportunityQuery.toLowerCase();
-    return [opportunity.symbol, opportunity.name, opportunity.theme, opportunity.segment, opportunity.action]
+    return [opportunity.symbol, opportunity.name, opportunity.theme, opportunity.segment, opportunity.action, opportunity.entry_execution_label]
       .some((value) => String(value || "").toLowerCase().includes(query));
   });
 }

@@ -492,6 +492,7 @@ DEFAULT_ENTRY_GUARDRAILS = {
     "formal_min_trend_score": 70.0,
     "formal_max_crowding_score": 35.0,
     "formal_max_entry_premium_pct": 0.5,
+    "formal_entry_zone_lower_pct": 3.0,
     "trial_min_rr": 2.5,
     "trial_min_opportunity_score": 65.0,
     "trial_min_trend_score": 60.0,
@@ -516,6 +517,7 @@ def entry_guardrails() -> dict[str, float]:
         "formal_min_trend_score",
         "formal_max_crowding_score",
         "formal_max_entry_premium_pct",
+        "formal_entry_zone_lower_pct",
         "trial_min_opportunity_score",
         "trial_min_trend_score",
         "trial_max_crowding_score",
@@ -655,7 +657,12 @@ def formal_entry_path(
     guardrails: dict[str, float],
     market_status: str,
 ) -> dict[str, Any] | None:
-    """Return a formal entry only when every defensive gate has passed."""
+    """Return a formally qualified plan without using the snapshot price as a gate.
+
+    Qualification answers whether the stock deserves a fully specified plan.  The
+    current quote only decides whether the plan may be executed now, so a quote
+    above the planned price does not make an otherwise qualified candidate vanish.
+    """
     price = number(item.get("price"))
     entry = number(item.get("strict_entry") or item.get("entry_price"))
     stop_loss = number(item.get("stop_loss") or item.get("invalidation"))
@@ -667,9 +674,7 @@ def formal_entry_path(
     premium = ((price / entry) - 1) * 100 if price is not None and entry is not None and entry > 0 else None
     if market_entry_blocker(market_status):
         return None
-    if not valid_path(entry, stop_loss, target) or rr is None or price is None:
-        return None
-    if price > entry * (1 + guardrails["formal_max_entry_premium_pct"] / 100):
+    if not valid_path(entry, stop_loss, target) or rr is None:
         return None
     if rr < guardrails["formal_min_rr"]:
         return None
@@ -686,7 +691,38 @@ def formal_entry_path(
         "target": target,
         "rr": rr,
         "premium_pct": premium,
+        "zone_low": formal_entry_zone_low(entry, stop_loss, guardrails),
+        "zone_high": entry,
+        "max_execution_price": round(entry * (1 + guardrails["formal_max_entry_premium_pct"] / 100), 2),
+        "execution_state": formal_entry_execution_state(price, entry, stop_loss, guardrails),
     }
+
+
+def formal_entry_zone_low(entry: float, stop_loss: float, guardrails: dict[str, float]) -> float:
+    """Keep the lower edge above the stop so a falling price is never auto-bought."""
+    configured_floor = entry * (1 - guardrails["formal_entry_zone_lower_pct"] / 100)
+    protected_floor = stop_loss * 1.02
+    return round(min(entry, max(configured_floor, protected_floor)), 2)
+
+
+def formal_entry_execution_state(
+    price: float | None,
+    entry: float,
+    stop_loss: float,
+    guardrails: dict[str, float],
+) -> str:
+    """Classify timing only; it must never alter formal qualification."""
+    if price is None:
+        return "price_pending"
+    if price <= stop_loss:
+        return "invalidated"
+    zone_low = formal_entry_zone_low(entry, stop_loss, guardrails)
+    max_execution_price = entry * (1 + guardrails["formal_max_entry_premium_pct"] / 100)
+    if price > max_execution_price:
+        return "wait_pullback"
+    if price < zone_low:
+        return "recheck_support"
+    return "in_zone"
 
 
 def executable_starter_path(
@@ -749,6 +785,71 @@ def executable_breakout_path(
     return {"signal_type": "breakout", "entry": trigger, "stop_loss": stop_loss, "target": target, "rr": rr}
 
 
+def apply_formal_candidate(item: dict[str, Any], path: dict[str, Any], guardrails: dict[str, float]) -> None:
+    """Publish a stable, fully-qualified entry plan and its current timing state."""
+    original_rr = number(item.get("rr_ratio"))
+    if original_rr is not None:
+        item["mechanical_rr_ratio"] = original_rr
+    entry = round(float(path["entry"]), 2)
+    stop_loss = round(float(path["stop_loss"]), 2)
+    target = round(float(path["target"]), 2)
+    execution_state = clean_text(path.get("execution_state")) or "price_pending"
+    execution_labels = {
+        "in_zone": "区间内，可按计划执行",
+        "wait_pullback": "等待回踩，不追高",
+        "recheck_support": "低于区间，等待支撑确认",
+        "price_pending": "现价待确认，暂不执行",
+        "invalidated": "已跌破止损，路径失效",
+    }
+    item.update(
+        {
+            "formal_qualified": True,
+            "signal_type": "formal",
+            "entry_tier": "formal",
+            "entry_price": entry,
+            "safe_entry_price": entry,
+            "safe_entry_zone_low": round(float(path["zone_low"]), 2),
+            "safe_entry_zone_high": round(float(path["zone_high"]), 2),
+            "safe_entry_max_price": round(float(path["max_execution_price"]), 2),
+            "entry_execution_status": execution_state,
+            "entry_execution_label": execution_labels.get(execution_state, "执行状态待确认"),
+            "entry_validity": "下次日报刷新前有效；收盘跌破止损立即失效",
+            "stop_loss": stop_loss,
+            "target_price": target,
+            "rr_ratio": round(float(path["rr"]), 2),
+            "rr_required": guardrails["formal_min_rr"],
+            "one_share_risk": round(entry - stop_loss, 2),
+            "one_share_risk_pct": round((entry - stop_loss) / entry * 100, 2),
+        }
+    )
+    if execution_state == "in_zone":
+        item["status"] = "executable"
+        item["status_label"] = "稳健买点·区间内"
+        item["action"] = "稳健买点：资格通过且当前在稳健入场区间内，可按既定止损执行。"
+        reason = "资格通过，现价处于稳健入场区间；可按计划执行，不可高于上限追价。"
+    elif execution_state == "wait_pullback":
+        item["status"] = "waiting_entry"
+        item["status_label"] = "稳健候选·等待回踩"
+        item["action"] = "资格通过：当前高于稳健入场区间，等待回踩；不追高。"
+        reason = "资格通过但现价高于稳健入场区间上限；保留候选，等待回踩而非追价。"
+    elif execution_state == "recheck_support":
+        item["status"] = "waiting_entry"
+        item["status_label"] = "稳健候选·等待支撑确认"
+        item["action"] = "资格通过但现价跌破稳健入场区间下沿，等待支撑确认或重新计算；不机械抄底。"
+        reason = "资格通过但价格低于稳健区间下沿；需确认支撑，不能把下跌自动视作买点。"
+    elif execution_state == "invalidated":
+        item["status"] = "invalidated"
+        item["status_label"] = status_label("invalidated")
+        item["action"] = "原稳健入场路径已跌破止损，等待 Buy-Side 重新定义交易计划。"
+        reason = "现价已跌破止损，原稳健入场路径失效。"
+    else:
+        item["status"] = "waiting_entry"
+        item["status_label"] = "稳健候选·现价待确认"
+        item["action"] = "资格通过，但现价数据待确认；暂不执行。"
+        reason = "资格通过，但现价数据待确认，暂不生成执行指令。"
+    item["why_changed"] = unique_list([*(item.get("why_changed") or []), reason], limit=8)
+
+
 def apply_executable_path(item: dict[str, Any], path: dict[str, Any]) -> None:
     original_rr = number(item.get("rr_ratio"))
     if original_rr is not None:
@@ -798,7 +899,7 @@ def entry_gate_failures(item: dict[str, Any], guardrails: dict[str, float], mark
     elif rr < guardrails["formal_min_rr"]:
         failures.append(f"正式买点要求 R/R ≥ {guardrails['formal_min_rr']:.1f}:1（当前 {rr:.2f}:1）。")
     if price is not None and entry is not None and price > entry * (1 + guardrails["formal_max_entry_premium_pct"] / 100):
-        failures.append(f"现价高于稳健入场触发价超过 {guardrails['formal_max_entry_premium_pct']:.1f}%，等待回踩。")
+        failures.append(f"现价高于稳健入场区间上限超过 {guardrails['formal_max_entry_premium_pct']:.1f}%，等待回踩；不作为资格本身的否决项。")
     opportunity = number(item.get("opportunity_score"))
     if opportunity is None or opportunity < guardrails["formal_min_opportunity_score"]:
         failures.append(f"机会分未达到 {guardrails['formal_min_opportunity_score']:.0f} 分正式门槛。")
@@ -863,6 +964,49 @@ def derive_opportunity_conditions(item: dict[str, Any]) -> tuple[list[str], list
         return buy, avoid, invalid
 
     signal_type = clean_text(item.get("signal_type"))
+    if signal_type == "formal" and bool(item.get("formal_qualified")) and stop_loss is not None and target is not None and entry is not None:
+        zone_low = number(item.get("safe_entry_zone_low")) or entry
+        zone_high = number(item.get("safe_entry_zone_high")) or entry
+        max_execution_price = number(item.get("safe_entry_max_price")) or zone_high
+        execution_state = clean_text(item.get("entry_execution_status")) or "price_pending"
+        zone_line = (
+            f"稳健入场区间：{fmt_price(zone_low, currency)}–{fmt_price(max_execution_price, currency)}；"
+            f"优先挂单参考 {fmt_price(zone_high, currency)}"
+        )
+        if execution_state == "in_zone":
+            headline = "什么时候买：资格通过，现价位于稳健入场区间内，可按计划执行"
+            execution_line = "执行纪律：按独立仓位计划执行；收盘跌破止损立即退出，不补仓、不摊低成本"
+        elif execution_state == "wait_pullback":
+            headline = "什么时候买：资格通过，但现价高于稳健入场区间，等待回踩；不追高"
+            execution_line = "现价高于区间上限时不追；只在回到区间且硬门槛仍通过时执行"
+        elif execution_state == "recheck_support":
+            headline = "什么时候买：资格通过，但现价低于稳健区间下沿，先等支撑确认；不机械抄底"
+            execution_line = "确认支撑有效并重新核对止损、目标与 R/R 后，才可恢复执行"
+        elif execution_state == "invalidated":
+            headline = "暂不买：现价已跌破止损，原稳健入场路径失效"
+            execution_line = "必须由下一轮 Buy-Side 重新定义入场、止损、目标和 R/R"
+        else:
+            headline = "暂不买：资格通过，但现价数据待确认"
+            execution_line = "确认最新价和时点后，再判断是否进入稳健入场区间"
+        buy = [
+            headline,
+            zone_line,
+            f"风控框架：止损 {fmt_price(stop_loss, currency)}；目标 {fmt_price(target, currency)}；计划 R/R {fmt_ratio(rr)}",
+            execution_line,
+            "有效期：下次日报刷新前；财务/事件/产业链证据恶化时立即重新复核",
+        ]
+        avoid = [
+            f"高于稳健入场区间上限 {fmt_price(max_execution_price, currency)} 不追高",
+            "低于区间下沿但未确认支撑时不机械抄底",
+            f"计划 R/R 低于 {rr_required:.1f}:1、数据缺口未修复或市场转为 Risk-off 时不新增仓位",
+        ]
+        invalid = [
+            f"收盘跌破止损 {fmt_price(stop_loss, currency)} 后路径失效",
+            "财报/指引/订单/价格证据弱于预期",
+            "产业链需求或核心假设被证伪",
+        ]
+        return buy, avoid, invalid
+
     if signal_type in {"trial", "formal", "breakout"} and price is not None and stop_loss is not None and target is not None and entry is not None:
         if signal_type == "trial" or entry_tier == "trial":
             headline = "什么时候买：仅当现价不高于试仓触发价时，可买 1 股验证；不是正式建仓信号"
@@ -962,6 +1106,7 @@ def finalize_opportunities(
         )
         item["status"] = status
         item["status_label"] = status_label(status)
+        item["formal_qualified"] = False
         formal_path = formal_entry_path(item, guardrails, market_status)
         breakout_path = executable_breakout_path(item, guardrails, market_status)
         starter_path = executable_starter_path(item, guardrails, market_status)
@@ -971,7 +1116,7 @@ def finalize_opportunities(
         # review and Buy-Side queue items remain protected from auto-upgrades.
         protected_statuses = {"invalidated", "review", "secondary_analysis"}
         if status not in protected_statuses and formal_path:
-            apply_executable_path(item, formal_path)
+            apply_formal_candidate(item, formal_path, guardrails)
         elif status not in protected_statuses and breakout_path:
             apply_executable_path(item, breakout_path)
         elif status not in protected_statuses and starter_path:
@@ -1013,11 +1158,18 @@ def finalize_opportunities(
                 "rr_required": item.get("rr_required") or guardrails["formal_min_rr"],
                 "entry_price": item.get("entry_price") or item.get("strict_entry"),
                 "safe_entry_price": item.get("safe_entry_price"),
+                "safe_entry_zone_low": item.get("safe_entry_zone_low"),
+                "safe_entry_zone_high": item.get("safe_entry_zone_high"),
+                "safe_entry_max_price": item.get("safe_entry_max_price"),
                 "trial_entry_price": item.get("trial_entry_price"),
                 "stop_loss": item.get("stop_loss") or item.get("invalidation"),
                 "target_price": item.get("target_price") or item.get("mechanical_target"),
                 "signal_type": item.get("signal_type"),
                 "entry_tier": item.get("entry_tier"),
+                "formal_qualified": bool(item.get("formal_qualified")),
+                "entry_execution_status": item.get("entry_execution_status") or "",
+                "entry_execution_label": item.get("entry_execution_label") or "",
+                "entry_validity": item.get("entry_validity") or "",
                 "one_share_risk": item.get("one_share_risk"),
                 "one_share_risk_pct": item.get("one_share_risk_pct"),
                 "mechanical_rr_ratio": item.get("mechanical_rr_ratio"),
