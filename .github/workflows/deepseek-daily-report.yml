@@ -1,12 +1,10 @@
 name: DeepSeek cloud daily report
 
 on:
-  schedule:
-    # 12:17-18:47 Asia/Shanghai watchdog window.
-    # GitHub scheduled workflows can be delayed or dropped; repeated freshness
-    # checks are cheap and the generate job only runs when today's DeepSeek
-    # report is still missing.
-    - cron: "17,47 4-10 * * *"
+  # The watchdog owns scheduling.  Repeated schedule events here used the same
+  # concurrency group as the long-running report job, which meant a new queued
+  # check could cancel the previous queued check before either one started.
+  # Keep this workflow dispatch-only so there can be one deliberate run per day.
   workflow_dispatch:
     inputs:
       mode:
