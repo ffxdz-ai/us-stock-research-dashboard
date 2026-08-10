@@ -21,10 +21,6 @@ permissions:
   pages: write
   id-token: write
 
-concurrency:
-  group: deepseek-cloud-daily-report
-  cancel-in-progress: false
-
 jobs:
   freshness-check:
     runs-on: ubuntu-latest
