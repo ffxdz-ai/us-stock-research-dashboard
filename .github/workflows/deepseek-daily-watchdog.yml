@@ -2,11 +2,9 @@ name: DeepSeek daily report watchdog
 
 on:
   schedule:
-    # 12:07-21:52 Asia/Shanghai. This is a lightweight watchdog that only
-    # dispatches the heavy daily report workflow when today's DeepSeek report
-    # is still missing. GitHub scheduled workflows are best-effort, so this
-    # independent workflow reduces missed-report risk.
-    - cron: "7,22,37,52 4-13 * * *"
+    # 08:00 Asia/Shanghai = 00:00 UTC. The lightweight watchdog dispatches
+    # exactly one full report only when today's DeepSeek report is missing.
+    - cron: "0 0 * * *"
   workflow_dispatch:
 
 permissions:
