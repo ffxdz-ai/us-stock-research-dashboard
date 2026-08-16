@@ -1,13 +1,13 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-15T09:25:31+08:00",
-  "generated_label": "2026-08-15 09:25",
+  "generated_at": "2026-08-16T09:36:39+08:00",
+  "generated_label": "2026-08-16 09:36",
   "summary": {
     "theme_count": 5,
     "accelerating_theme_count": 1,
     "cross_market_signal_count": 1,
     "secondary_research_candidate_count": 5,
-    "event_backlog_count": 7,
+    "event_backlog_count": 5,
     "tracked_security_count": 38
   },
   "themes": [
@@ -18,7 +18,7 @@
       "status": "需求加速，等待更多市场确认",
       "horizon": "3-12个月",
       "thesis": "训练和推理需求首先兑现到 GPU、ASIC、HBM、先进制程和 CoWoS/先进封装；但龙头可能已被充分定价，系统重点识别估值、利润兑现和拥挤度的错配。",
-      "demand_acceleration_score": 73.3,
+      "demand_acceleration_score": 72.7,
       "theme_score": 74.1,
       "score_components": {
         "demand_shift": 92.0,
@@ -28,7 +28,7 @@
         "market_underpricing": 63.1,
         "trend_avg": 65.8,
         "market_breadth": 59,
-        "change_signal": 8,
+        "change_signal": 0,
         "crowding_penalty": 32.6
       },
       "market_breadth": {
@@ -99,7 +99,7 @@
               "crowding_score": 28.8,
               "score_delta": null,
               "first_seen_at": "2026-06-21T04:10:31+08:00",
-              "secondary_status": "retreated",
+              "secondary_status": "active",
               "data_status": "行情已接入",
               "action": "已在二次分析生命周期中；交给 Buy-Side 二次分析"
             }
@@ -433,7 +433,7 @@
           "crowding_score": 28.8,
           "score_delta": null,
           "first_seen_at": "2026-06-21T04:10:31+08:00",
-          "secondary_status": "retreated",
+          "secondary_status": "active",
           "data_status": "行情已接入",
           "action": "已在二次分析生命周期中；交给 Buy-Side 二次分析"
         },
@@ -642,7 +642,7 @@
       "status": "观察跟踪",
       "horizon": "3-12个月",
       "thesis": "AI 集群从单卡算力扩展到网络互连瓶颈，800G、1.6T、硅光、CPO 和交换机升级会把需求向光器件、DSP、交换机和上游材料扩散。",
-      "demand_acceleration_score": 71.3,
+      "demand_acceleration_score": 70.3,
       "theme_score": 69.9,
       "score_components": {
         "demand_shift": 90.0,
@@ -652,7 +652,7 @@
         "market_underpricing": 52.6,
         "trend_avg": 61.5,
         "market_breadth": 71,
-        "change_signal": 12,
+        "change_signal": 0,
         "crowding_penalty": 42.9
       },
       "market_breadth": {
@@ -1223,7 +1223,7 @@
       "status": "观察跟踪",
       "horizon": "6-18个月",
       "thesis": "AI 数据中心功耗密度抬升后，瓶颈从芯片扩散到电力接入、UPS、配电、液冷和工程建设；这些环节通常滞后兑现，但持续性可能更强。",
-      "demand_acceleration_score": 65.2,
+      "demand_acceleration_score": 64.9,
       "theme_score": 61.4,
       "score_components": {
         "demand_shift": 86.0,
@@ -1233,7 +1233,7 @@
         "market_underpricing": 63.3,
         "trend_avg": 59.1,
         "market_breadth": 53,
-        "change_signal": 4,
+        "change_signal": 0,
         "crowding_penalty": 35.2
       },
       "market_breadth": {
@@ -2421,7 +2421,7 @@
       "status": "证据不足",
       "horizon": "6-24个月",
       "thesis": "大模型从数字世界扩展到物理世界后，机器人、工业自动化、传感器、执行器和边缘 AI 可能形成新的需求曲线；当前仍处早期，必须用订单和应用落地验证。",
-      "demand_acceleration_score": 56.4,
+      "demand_acceleration_score": 56.0,
       "theme_score": 59.0,
       "score_components": {
         "demand_shift": 78.0,
@@ -2431,7 +2431,7 @@
         "market_underpricing": 57.9,
         "trend_avg": 38.9,
         "market_breadth": 35,
-        "change_signal": 4,
+        "change_signal": 0,
         "crowding_penalty": 21.2
       },
       "market_breadth": {
@@ -2984,7 +2984,7 @@
       "opportunity_score": 85.5,
       "trend_score": 88.0,
       "crowding_score": 28.8,
-      "demand_acceleration_score": 73.3,
+      "demand_acceleration_score": 72.7,
       "reason": "已在二次分析生命周期中；交给 Buy-Side 二次分析"
     },
     {
@@ -2997,7 +2997,7 @@
       "opportunity_score": 76.9,
       "trend_score": 76.0,
       "crowding_score": 22.0,
-      "demand_acceleration_score": 73.3,
+      "demand_acceleration_score": 72.7,
       "reason": "已在二次分析生命周期中；交给 Buy-Side 二次分析"
     },
     {
@@ -3010,7 +3010,7 @@
       "opportunity_score": 66.2,
       "trend_score": 76.0,
       "crowding_score": 58.0,
-      "demand_acceleration_score": 73.3,
+      "demand_acceleration_score": 72.7,
       "reason": "已在二次分析生命周期中；观察"
     },
     {
@@ -3023,7 +3023,7 @@
       "opportunity_score": 65.7,
       "trend_score": 76.0,
       "crowding_score": 22.0,
-      "demand_acceleration_score": 73.3,
+      "demand_acceleration_score": 72.7,
       "reason": "已在二次分析生命周期中；观察"
     },
     {
@@ -3036,21 +3036,11 @@
       "opportunity_score": 59.8,
       "trend_score": 76.0,
       "crowding_score": 42.0,
-      "demand_acceleration_score": 73.3,
+      "demand_acceleration_score": 72.7,
       "reason": "已在二次分析生命周期中；观察"
     }
   ],
   "event_extraction_backlog": [
-    {
-      "type": "filing",
-      "priority": "high",
-      "item": "本轮新增 1 条申报变化，需要抽取业务/订单/风险措辞。"
-    },
-    {
-      "type": "metric",
-      "priority": "medium",
-      "item": "本轮新增 6 条指标变化，需要判断是逻辑增强还是价格波动。"
-    },
     {
       "type": "permission",
       "priority": "high",
