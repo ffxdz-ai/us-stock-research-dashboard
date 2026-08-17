@@ -1,10 +1,10 @@
 {
-  "generated_at": "2026-08-16T01:39:32+00:00",
-  "generated_label": "2026-08-16 01:39",
+  "generated_at": "2026-08-17T01:33:21+00:00",
+  "generated_label": "2026-08-17 01:33",
   "privacy": "public-sanitized",
   "report_count": 80,
   "review_stats": {
-    "updated_at": "2026-08-16 09:37",
+    "updated_at": "2026-08-17 09:29",
     "tracked_count": 23,
     "completed_count": 0,
     "pending_count": 10,
@@ -385,7 +385,7 @@
     ]
   },
   "evidence_gap_breakdown": {
-    "updated_at": "2026-08-16 09:37",
+    "updated_at": "2026-08-17 09:29",
     "original_total": 20,
     "data_gap": 13,
     "permission_limited": 3,
@@ -457,7 +457,7 @@
       "action": "可试仓（仅 1 股验证）：未达到稳健买点标准，不得按正式仓位买入。",
       "price": 392.99,
       "currency": "USD",
-      "price_time": "2026-08-16 09:36",
+      "price_time": "2026-08-17 09:27",
       "price_source": "跨市场情报行情快照",
       "opportunity_score": 76.9,
       "trend_score": 76.0,
@@ -514,7 +514,7 @@
         "产业链需求或核心假设被证伪"
       ],
       "source": "opportunity_radar",
-      "updated_at": "2026-08-16 09:36"
+      "updated_at": "2026-08-17 09:27"
     },
     {
       "symbol": "US.TSM",
@@ -527,7 +527,7 @@
       "action": "可试仓（仅 1 股验证）：未达到稳健买点标准，不得按正式仓位买入。",
       "price": 426.35,
       "currency": "USD",
-      "price_time": "2026-08-16 09:36",
+      "price_time": "2026-08-17 09:27",
       "price_source": "跨市场情报行情快照",
       "opportunity_score": 65.7,
       "trend_score": 76.0,
@@ -585,7 +585,75 @@
         "产业链需求或核心假设被证伪"
       ],
       "source": "opportunity_radar",
-      "updated_at": "2026-08-16 09:36"
+      "updated_at": "2026-08-17 09:27"
+    },
+    {
+      "symbol": "US.NVDA",
+      "name": "NVIDIA",
+      "market": "US",
+      "theme": "GPU / ASIC / HBM / 先进封装",
+      "segment": "GPU",
+      "status": "secondary_analysis",
+      "status_label": "二次分析",
+      "action": "证据只支持观察/二次研究；R/R 未达标，不允许普通买入。",
+      "price": 225.16,
+      "currency": "USD",
+      "price_time": "2026-08-17 09:27",
+      "price_source": "跨市场情报行情快照",
+      "opportunity_score": 85.5,
+      "trend_score": 88.0,
+      "crowding_score": 28.8,
+      "rr_ratio": 0.88,
+      "rr_required": 2,
+      "entry_price": 199.51,
+      "safe_entry_price": null,
+      "safe_entry_zone_low": null,
+      "safe_entry_zone_high": null,
+      "safe_entry_max_price": null,
+      "trial_entry_price": null,
+      "stop_loss": 179.33,
+      "target_price": 265.69,
+      "signal_type": null,
+      "entry_tier": null,
+      "formal_qualified": false,
+      "entry_execution_status": "",
+      "entry_execution_label": "",
+      "entry_validity": "",
+      "one_share_risk": null,
+      "one_share_risk_pct": null,
+      "mechanical_rr_ratio": null,
+      "starter_entry": 226.29,
+      "starter_stop": 204.08,
+      "starter_target": 270.19,
+      "starter_reward_risk": 1.98,
+      "breakout_trigger": 228.63,
+      "breakout_stop": 204.9,
+      "breakout_target": 269.78,
+      "breakout_reward_risk": 1.73,
+      "score_delta": null,
+      "why_changed": [
+        "重新触发",
+        "趋势确认和产业链机会分重新达到触发门槛。",
+        "证据较完整"
+      ],
+      "buy_conditions": [
+        "暂不买：当前 R/R 0.88:1 低于 2:1，等价格回到买点再看",
+        "价格触发：现价 ≤ 199.51 USD 再考虑，还需回落 11.4%；若突破追入，必须重新计算 R/R ≥ 2:1",
+        "风控框架：止损 179.33 USD；目标 265.69 USD；当前 R/R 0.88:1",
+        "确认信号：趋势不恶化，财务/事件证据至少一项继续改善"
+      ],
+      "avoid_conditions": [
+        "R/R 低于 2:1 不追高；价格高于 199.51 USD 且未重新计算 R/R 时不买",
+        "数据缺口未修复前不升级为买入",
+        "高开大幅追涨或财报前波动率过高"
+      ],
+      "invalid_conditions": [
+        "收盘跌破止损位 179.33 USD",
+        "产业链需求、订单或价格弱于预期",
+        "财报/指引/申报显示核心假设恶化"
+      ],
+      "source": "opportunity_radar",
+      "updated_at": "2026-08-17 09:27"
     },
     {
       "symbol": "US.ASML",
@@ -598,7 +666,7 @@
       "action": "进入二次分析候选池；等待 Buy-Side 复核",
       "price": 1844.08,
       "currency": "USD",
-      "price_time": "2026-08-16T09:37:54+08:00",
+      "price_time": "2026-08-17T09:29:20+08:00",
       "price_source": "行情已接入",
       "opportunity_score": 79.5,
       "trend_score": 88.0,
@@ -632,8 +700,8 @@
       "breakout_reward_risk": null,
       "score_delta": null,
       "why_changed": [
-        "重新触发",
-        "趋势确认和产业链机会分重新达到触发门槛。"
+        "退回观察",
+        "美股候选 R/R 0.63:1 低于 3.0:1，退回观察。"
       ],
       "buy_conditions": [
         "暂不买：缺少完整的入场价、止损价或目标价，等待系统补齐后再决策",
@@ -652,7 +720,7 @@
         "财报/指引/申报显示核心假设恶化"
       ],
       "source": "secondary_analysis_queue",
-      "updated_at": "2026-08-16 09:37"
+      "updated_at": "2026-08-17 09:29"
     },
     {
       "symbol": "SH.688981",
@@ -719,7 +787,7 @@
         "财报/指引/申报显示核心假设恶化"
       ],
       "source": "secondary_analysis_queue",
-      "updated_at": "2026-08-16 09:37"
+      "updated_at": "2026-08-17 09:29"
     },
     {
       "symbol": "SZ.000988",
@@ -786,7 +854,7 @@
         "财报/指引/申报显示核心假设恶化"
       ],
       "source": "secondary_analysis_queue",
-      "updated_at": "2026-08-16 09:37"
+      "updated_at": "2026-08-17 09:29"
     },
     {
       "symbol": "SZ.000063",
@@ -853,7 +921,7 @@
         "财报/指引/申报显示核心假设恶化"
       ],
       "source": "secondary_analysis_queue",
-      "updated_at": "2026-08-16 09:37"
+      "updated_at": "2026-08-17 09:29"
     },
     {
       "symbol": "SZ.002938",
@@ -920,7 +988,7 @@
         "财报/指引/申报显示核心假设恶化"
       ],
       "source": "secondary_analysis_queue",
-      "updated_at": "2026-08-16 09:37"
+      "updated_at": "2026-08-17 09:29"
     },
     {
       "symbol": "SZ.300274",
@@ -987,7 +1055,7 @@
         "财报/指引/申报显示核心假设恶化"
       ],
       "source": "secondary_analysis_queue",
-      "updated_at": "2026-08-16 09:37"
+      "updated_at": "2026-08-17 09:29"
     },
     {
       "symbol": "SZ.002916",
@@ -1054,7 +1122,7 @@
         "财报/指引/申报显示核心假设恶化"
       ],
       "source": "secondary_analysis_queue",
-      "updated_at": "2026-08-16 09:37"
+      "updated_at": "2026-08-17 09:29"
     },
     {
       "symbol": "US.GE",
@@ -1067,7 +1135,7 @@
       "action": "进入二次分析候选池；等待 Buy-Side 复核",
       "price": 368.38,
       "currency": "USD",
-      "price_time": "2026-08-16T09:37:54+08:00",
+      "price_time": "2026-08-17T09:29:20+08:00",
       "price_source": "行情已接入",
       "opportunity_score": 75.0,
       "trend_score": 88.0,
@@ -1121,7 +1189,7 @@
         "财报/指引/申报显示核心假设恶化"
       ],
       "source": "secondary_analysis_queue",
-      "updated_at": "2026-08-16 09:37"
+      "updated_at": "2026-08-17 09:29"
     },
     {
       "symbol": "SZ.300394",
@@ -1134,7 +1202,7 @@
       "action": "跨市场强候选；进入二次分析候选池，需 Futu/财报/流动性复核",
       "price": 267.71,
       "currency": "CNY",
-      "price_time": "2026-08-16 09:36",
+      "price_time": "2026-08-17 09:27",
       "price_source": "公开日线行情已接入；需 Futu/券商复核",
       "opportunity_score": 57.7,
       "trend_score": 76.0,
@@ -1188,7 +1256,7 @@
         "财报/指引/申报显示核心假设恶化"
       ],
       "source": "cross_market_intelligence",
-      "updated_at": "2026-08-16 09:36"
+      "updated_at": "2026-08-17 09:27"
     },
     {
       "symbol": "HK.00981",
@@ -1199,9 +1267,9 @@
       "status": "secondary_analysis",
       "status_label": "二次分析",
       "action": "跨市场强候选；进入二次分析候选池，需 Futu/财报/流动性复核",
-      "price": 70.8,
+      "price": 71.0,
       "currency": "HKD",
-      "price_time": "2026-08-16 09:36",
+      "price_time": "2026-08-17 09:27",
       "price_source": "公开日线行情已接入；需 Futu/券商复核",
       "opportunity_score": 52.5,
       "trend_score": 50.0,
@@ -1240,7 +1308,7 @@
       ],
       "buy_conditions": [
         "暂不买：缺少完整的入场价、止损价或目标价，等待系统补齐后再决策",
-        "必须先补齐：当前价 70.8 HKD / 止损 待确认 / 目标 待确认",
+        "必须先补齐：当前价 71 HKD / 止损 待确认 / 目标 待确认",
         "补齐后再检查 R/R 是否 ≥ 2:1，未达标不升级为买入",
         "需要财务、趋势或事件证据至少一项继续改善"
       ],
@@ -1255,7 +1323,7 @@
         "财报/指引/申报显示核心假设恶化"
       ],
       "source": "cross_market_intelligence",
-      "updated_at": "2026-08-16 09:36"
+      "updated_at": "2026-08-17 09:27"
     },
     {
       "symbol": "SZ.300502",
@@ -1268,7 +1336,7 @@
       "action": "跨市场强候选；进入二次分析候选池，需 Futu/财报/流动性复核",
       "price": 448.08,
       "currency": "CNY",
-      "price_time": "2026-08-16 09:36",
+      "price_time": "2026-08-17 09:27",
       "price_source": "公开日线行情已接入；需 Futu/券商复核",
       "opportunity_score": 52.5,
       "trend_score": 50.0,
@@ -1322,7 +1390,7 @@
         "财报/指引/申报显示核心假设恶化"
       ],
       "source": "cross_market_intelligence",
-      "updated_at": "2026-08-16 09:36"
+      "updated_at": "2026-08-17 09:27"
     },
     {
       "symbol": "HK.00148",
@@ -1333,9 +1401,9 @@
       "status": "secondary_analysis",
       "status_label": "二次分析",
       "action": "跨市场强候选；进入二次分析候选池，需 Futu/财报/流动性复核",
-      "price": 47.84,
+      "price": 47.58,
       "currency": "HKD",
-      "price_time": "2026-08-16 09:36",
+      "price_time": "2026-08-17 09:27",
       "price_source": "公开日线行情已接入；需 Futu/券商复核",
       "opportunity_score": 50.8,
       "trend_score": 42.0,
@@ -1374,7 +1442,7 @@
       ],
       "buy_conditions": [
         "暂不买：缺少完整的入场价、止损价或目标价，等待系统补齐后再决策",
-        "必须先补齐：当前价 47.84 HKD / 止损 待确认 / 目标 待确认",
+        "必须先补齐：当前价 47.58 HKD / 止损 待确认 / 目标 待确认",
         "补齐后再检查 R/R 是否 ≥ 2:1，未达标不升级为买入",
         "需要财务、趋势或事件证据至少一项继续改善"
       ],
@@ -1389,7 +1457,7 @@
         "财报/指引/申报显示核心假设恶化"
       ],
       "source": "cross_market_intelligence",
-      "updated_at": "2026-08-16 09:36"
+      "updated_at": "2026-08-17 09:27"
     },
     {
       "symbol": "HK.01347",
@@ -1400,9 +1468,9 @@
       "status": "secondary_analysis",
       "status_label": "二次分析",
       "action": "跨市场强候选；进入二次分析候选池，需 Futu/财报/流动性复核",
-      "price": 130.2,
+      "price": 132.6,
       "currency": "HKD",
-      "price_time": "2026-08-16 09:36",
+      "price_time": "2026-08-17 09:27",
       "price_source": "公开日线行情已接入；需 Futu/券商复核",
       "opportunity_score": 50.8,
       "trend_score": 42.0,
@@ -1441,7 +1509,7 @@
       ],
       "buy_conditions": [
         "暂不买：缺少完整的入场价、止损价或目标价，等待系统补齐后再决策",
-        "必须先补齐：当前价 130.2 HKD / 止损 待确认 / 目标 待确认",
+        "必须先补齐：当前价 132.6 HKD / 止损 待确认 / 目标 待确认",
         "补齐后再检查 R/R 是否 ≥ 2:1，未达标不升级为买入",
         "需要财务、趋势或事件证据至少一项继续改善"
       ],
@@ -1456,7 +1524,7 @@
         "财报/指引/申报显示核心假设恶化"
       ],
       "source": "cross_market_intelligence",
-      "updated_at": "2026-08-16 09:36"
+      "updated_at": "2026-08-17 09:27"
     },
     {
       "symbol": "HK.01888",
@@ -1467,9 +1535,9 @@
       "status": "secondary_analysis",
       "status_label": "二次分析",
       "action": "跨市场强候选；进入二次分析候选池，需 Futu/财报/流动性复核",
-      "price": 38.6,
+      "price": 39.8,
       "currency": "HKD",
-      "price_time": "2026-08-16 09:36",
+      "price_time": "2026-08-17 09:27",
       "price_source": "公开日线行情已接入；需 Futu/券商复核",
       "opportunity_score": 50.8,
       "trend_score": 42.0,
@@ -1508,7 +1576,7 @@
       ],
       "buy_conditions": [
         "暂不买：缺少完整的入场价、止损价或目标价，等待系统补齐后再决策",
-        "必须先补齐：当前价 38.6 HKD / 止损 待确认 / 目标 待确认",
+        "必须先补齐：当前价 39.8 HKD / 止损 待确认 / 目标 待确认",
         "补齐后再检查 R/R 是否 ≥ 2:1，未达标不升级为买入",
         "需要财务、趋势或事件证据至少一项继续改善"
       ],
@@ -1523,7 +1591,7 @@
         "财报/指引/申报显示核心假设恶化"
       ],
       "source": "cross_market_intelligence",
-      "updated_at": "2026-08-16 09:36"
+      "updated_at": "2026-08-17 09:27"
     },
     {
       "symbol": "SH.603256",
@@ -1536,7 +1604,7 @@
       "action": "跨市场强候选；进入二次分析候选池，需 Futu/财报/流动性复核",
       "price": 154.18,
       "currency": "CNY",
-      "price_time": "2026-08-16 09:36",
+      "price_time": "2026-08-17 09:27",
       "price_source": "公开日线行情已接入；需 Futu/券商复核",
       "opportunity_score": 50.8,
       "trend_score": 42.0,
@@ -1590,7 +1658,7 @@
         "财报/指引/申报显示核心假设恶化"
       ],
       "source": "cross_market_intelligence",
-      "updated_at": "2026-08-16 09:36"
+      "updated_at": "2026-08-17 09:27"
     },
     {
       "symbol": "SZ.300308",
@@ -1603,7 +1671,7 @@
       "action": "跨市场强候选；进入二次分析候选池，需 Futu/财报/流动性复核",
       "price": 943.0,
       "currency": "CNY",
-      "price_time": "2026-08-16 09:36",
+      "price_time": "2026-08-17 09:27",
       "price_source": "公开日线行情已接入；需 Futu/券商复核",
       "opportunity_score": 50.8,
       "trend_score": 42.0,
@@ -1657,7 +1725,7 @@
         "财报/指引/申报显示核心假设恶化"
       ],
       "source": "cross_market_intelligence",
-      "updated_at": "2026-08-16 09:36"
+      "updated_at": "2026-08-17 09:27"
     },
     {
       "symbol": "SZ.002335",
@@ -1670,7 +1738,7 @@
       "action": "跨市场强候选；进入二次分析候选池，需 Futu/财报/流动性复核",
       "price": 32.7,
       "currency": "CNY",
-      "price_time": "2026-08-16 09:36",
+      "price_time": "2026-08-17 09:27",
       "price_source": "公开日线行情已接入；需 Futu/券商复核",
       "opportunity_score": 44.8,
       "trend_score": 12.0,
@@ -1724,7 +1792,7 @@
         "财报/指引/申报显示核心假设恶化"
       ],
       "source": "cross_market_intelligence",
-      "updated_at": "2026-08-16 09:36"
+      "updated_at": "2026-08-17 09:27"
     },
     {
       "symbol": "SZ.300476",
@@ -1737,7 +1805,7 @@
       "action": "跨市场强候选；进入二次分析候选池，需 Futu/财报/流动性复核",
       "price": 269.33,
       "currency": "CNY",
-      "price_time": "2026-08-16 09:36",
+      "price_time": "2026-08-17 09:27",
       "price_source": "公开日线行情已接入；需 Futu/券商复核",
       "opportunity_score": 44.8,
       "trend_score": 12.0,
@@ -1791,7 +1859,7 @@
         "财报/指引/申报显示核心假设恶化"
       ],
       "source": "cross_market_intelligence",
-      "updated_at": "2026-08-16 09:36"
+      "updated_at": "2026-08-17 09:27"
     },
     {
       "symbol": "SZ.300499",
@@ -1804,7 +1872,7 @@
       "action": "跨市场强候选；进入二次分析候选池，需 Futu/财报/流动性复核",
       "price": 29.75,
       "currency": "CNY",
-      "price_time": "2026-08-16 09:36",
+      "price_time": "2026-08-17 09:27",
       "price_source": "公开日线行情已接入；需 Futu/券商复核",
       "opportunity_score": 44.8,
       "trend_score": 12.0,
@@ -1858,77 +1926,7 @@
         "财报/指引/申报显示核心假设恶化"
       ],
       "source": "cross_market_intelligence",
-      "updated_at": "2026-08-16 09:36"
-    },
-    {
-      "symbol": "US.NVDA",
-      "name": "NVIDIA",
-      "market": "US",
-      "theme": "GPU / ASIC / HBM / 先进封装",
-      "segment": "GPU",
-      "status": "waiting_entry",
-      "status_label": "稳健候选·等待回踩",
-      "action": "资格通过：当前高于稳健入场区间，等待回踩；不追高。",
-      "price": 225.16,
-      "currency": "USD",
-      "price_time": "2026-08-16 09:36",
-      "price_source": "跨市场情报行情快照",
-      "opportunity_score": 85.5,
-      "trend_score": 88.0,
-      "crowding_score": 28.8,
-      "rr_ratio": 3.28,
-      "rr_required": 3.0,
-      "entry_price": 199.51,
-      "safe_entry_price": 199.51,
-      "safe_entry_zone_low": 193.52,
-      "safe_entry_zone_high": 199.51,
-      "safe_entry_max_price": 200.51,
-      "trial_entry_price": null,
-      "stop_loss": 179.33,
-      "target_price": 265.69,
-      "signal_type": "formal",
-      "entry_tier": "formal",
-      "formal_qualified": true,
-      "entry_execution_status": "wait_pullback",
-      "entry_execution_label": "等待回踩，不追高",
-      "entry_validity": "下次日报刷新前有效；收盘跌破止损立即失效",
-      "one_share_risk": 20.18,
-      "one_share_risk_pct": 10.11,
-      "mechanical_rr_ratio": 0.88,
-      "starter_entry": 226.29,
-      "starter_stop": 204.08,
-      "starter_target": 270.19,
-      "starter_reward_risk": 1.98,
-      "breakout_trigger": 228.63,
-      "breakout_stop": 204.9,
-      "breakout_target": 269.78,
-      "breakout_reward_risk": 1.73,
-      "score_delta": null,
-      "why_changed": [
-        "退回观察",
-        "美股候选 R/R 0.88:1 低于 3.0:1，退回观察。",
-        "证据较完整",
-        "资格通过但现价高于稳健入场区间上限；保留候选，等待回踩而非追价。"
-      ],
-      "buy_conditions": [
-        "什么时候买：资格通过，但现价高于稳健入场区间，等待回踩；不追高",
-        "稳健入场区间：193.52 USD–200.51 USD；优先挂单参考 199.51 USD",
-        "风控框架：止损 179.33 USD；目标 265.69 USD；计划 R/R 3.28:1",
-        "现价高于区间上限时不追；只在回到区间且硬门槛仍通过时执行",
-        "有效期：下次日报刷新前；财务/事件/产业链证据恶化时立即重新复核"
-      ],
-      "avoid_conditions": [
-        "高于稳健入场区间上限 200.51 USD 不追高",
-        "低于区间下沿但未确认支撑时不机械抄底",
-        "计划 R/R 低于 3.0:1、数据缺口未修复或市场转为 Risk-off 时不新增仓位"
-      ],
-      "invalid_conditions": [
-        "收盘跌破止损 179.33 USD 后路径失效",
-        "财报/指引/订单/价格证据弱于预期",
-        "产业链需求或核心假设被证伪"
-      ],
-      "source": "opportunity_radar",
-      "updated_at": "2026-08-16 09:36"
+      "updated_at": "2026-08-17 09:27"
     },
     {
       "symbol": "US.HON",
@@ -1941,7 +1939,7 @@
       "action": "观察",
       "price": 233.96,
       "currency": "USD",
-      "price_time": "2026-08-16 09:36",
+      "price_time": "2026-08-17 09:27",
       "price_source": "跨市场情报行情快照",
       "opportunity_score": 49.6,
       "trend_score": 14.0,
@@ -1996,7 +1994,7 @@
         "财报/指引/申报显示核心假设恶化"
       ],
       "source": "cross_market_intelligence",
-      "updated_at": "2026-08-16 09:36"
+      "updated_at": "2026-08-17 09:27"
     },
     {
       "symbol": "US.JBL",
@@ -2009,7 +2007,7 @@
       "action": "证据只支持观察/二次研究；R/R 未达标，不允许普通买入。",
       "price": 363.1,
       "currency": "USD",
-      "price_time": "2026-08-16 09:36",
+      "price_time": "2026-08-17 09:27",
       "price_source": "行情已接入",
       "opportunity_score": 70.2,
       "trend_score": 76.0,
@@ -2065,7 +2063,7 @@
         "财报/指引/申报显示核心假设恶化"
       ],
       "source": "opportunity_radar",
-      "updated_at": "2026-08-16 09:36"
+      "updated_at": "2026-08-17 09:27"
     },
     {
       "symbol": "US.ANET",
@@ -2078,9 +2076,9 @@
       "action": "证据只支持观察/二次研究；R/R 未达标，不允许普通买入。",
       "price": 198.82,
       "currency": "USD",
-      "price_time": "2026-08-16 09:36",
+      "price_time": "2026-08-17 09:27",
       "price_source": "行情已接入",
-      "opportunity_score": 69.3,
+      "opportunity_score": 69.4,
       "trend_score": 88.0,
       "crowding_score": 70.0,
       "rr_ratio": 0.57,
@@ -2133,7 +2131,7 @@
         "财报/指引/申报显示核心假设恶化"
       ],
       "source": "opportunity_radar",
-      "updated_at": "2026-08-16 09:36"
+      "updated_at": "2026-08-17 09:27"
     },
     {
       "symbol": "US.MRVL",
@@ -2146,7 +2144,7 @@
       "action": "证据只支持观察/二次研究；R/R 未达标，不允许普通买入。",
       "price": 222.02,
       "currency": "USD",
-      "price_time": "2026-08-16 09:36",
+      "price_time": "2026-08-17 09:27",
       "price_source": "行情已接入",
       "opportunity_score": 69.1,
       "trend_score": 42.0,
@@ -2201,7 +2199,7 @@
         "财报/指引/申报显示核心假设恶化"
       ],
       "source": "opportunity_radar",
-      "updated_at": "2026-08-16 09:36"
+      "updated_at": "2026-08-17 09:27"
     },
     {
       "symbol": "US.ISRG",
@@ -2214,7 +2212,7 @@
       "action": "证据只支持观察/二次研究；R/R 未达标，不允许普通买入。",
       "price": 394.51,
       "currency": "USD",
-      "price_time": "2026-08-16 09:36",
+      "price_time": "2026-08-17 09:27",
       "price_source": "跨市场情报行情快照",
       "opportunity_score": 68.5,
       "trend_score": 40.0,
@@ -2267,7 +2265,7 @@
         "财报/指引/申报显示核心假设恶化"
       ],
       "source": "opportunity_radar",
-      "updated_at": "2026-08-16 09:36"
+      "updated_at": "2026-08-17 09:27"
     },
     {
       "symbol": "US.COHR",
@@ -2280,7 +2278,7 @@
       "action": "证据只支持观察/二次研究；R/R 未达标，不允许普通买入。",
       "price": 325.83,
       "currency": "USD",
-      "price_time": "2026-08-16 09:36",
+      "price_time": "2026-08-17 09:27",
       "price_source": "行情已接入",
       "opportunity_score": 67.0,
       "trend_score": 50.0,
@@ -2335,7 +2333,7 @@
         "财报/指引/申报显示核心假设恶化"
       ],
       "source": "opportunity_radar",
-      "updated_at": "2026-08-16 09:36"
+      "updated_at": "2026-08-17 09:27"
     },
     {
       "symbol": "US.AMD",
@@ -2348,7 +2346,7 @@
       "action": "证据只支持观察/二次研究；R/R 未达标，不允许普通买入。",
       "price": 514.39,
       "currency": "USD",
-      "price_time": "2026-08-16 09:36",
+      "price_time": "2026-08-17 09:27",
       "price_source": "跨市场情报行情快照",
       "opportunity_score": 66.2,
       "trend_score": 76.0,
@@ -2403,7 +2401,7 @@
         "财报/指引/申报显示核心假设恶化"
       ],
       "source": "opportunity_radar",
-      "updated_at": "2026-08-16 09:36"
+      "updated_at": "2026-08-17 09:27"
     },
     {
       "symbol": "US.TTMI",
@@ -2416,7 +2414,7 @@
       "action": "证据只支持观察/二次研究；R/R 未达标，不允许普通买入。",
       "price": 140.0,
       "currency": "USD",
-      "price_time": "2026-08-16 09:36",
+      "price_time": "2026-08-17 09:27",
       "price_source": "行情已接入",
       "opportunity_score": 65.7,
       "trend_score": 42.0,
@@ -2472,7 +2470,7 @@
         "财报/指引/申报显示核心假设恶化"
       ],
       "source": "opportunity_radar",
-      "updated_at": "2026-08-16 09:36"
+      "updated_at": "2026-08-17 09:27"
     },
     {
       "symbol": "US.FLEX",
@@ -2485,7 +2483,7 @@
       "action": "证据只支持观察/二次研究；R/R 未达标，不允许普通买入。",
       "price": 126.16,
       "currency": "USD",
-      "price_time": "2026-08-16 09:36",
+      "price_time": "2026-08-17 09:27",
       "price_source": "行情已接入",
       "opportunity_score": 63.3,
       "trend_score": 50.0,
@@ -2541,7 +2539,7 @@
         "财报/指引/申报显示核心假设恶化"
       ],
       "source": "opportunity_radar",
-      "updated_at": "2026-08-16 09:36"
+      "updated_at": "2026-08-17 09:27"
     },
     {
       "symbol": "US.CIEN",
@@ -2554,7 +2552,7 @@
       "action": "证据只支持观察/二次研究；R/R 未达标，不允许普通买入。",
       "price": 428.77,
       "currency": "USD",
-      "price_time": "2026-08-16 09:36",
+      "price_time": "2026-08-17 09:27",
       "price_source": "行情已接入",
       "opportunity_score": 62.3,
       "trend_score": 68.0,
@@ -2608,7 +2606,7 @@
         "财报/指引/申报显示核心假设恶化"
       ],
       "source": "opportunity_radar",
-      "updated_at": "2026-08-16 09:36"
+      "updated_at": "2026-08-17 09:27"
     },
     {
       "symbol": "US.LITE",
@@ -2621,7 +2619,7 @@
       "action": "证据只支持观察/二次研究；R/R 未达标，不允许普通买入。",
       "price": 926.14,
       "currency": "USD",
-      "price_time": "2026-08-16 09:36",
+      "price_time": "2026-08-17 09:27",
       "price_source": "行情已接入",
       "opportunity_score": 62.2,
       "trend_score": 76.0,
@@ -2677,7 +2675,7 @@
         "财报/指引/申报显示核心假设恶化"
       ],
       "source": "opportunity_radar",
-      "updated_at": "2026-08-16 09:36"
+      "updated_at": "2026-08-17 09:27"
     },
     {
       "symbol": "US.SYM",
@@ -2690,7 +2688,7 @@
       "action": "可进入试仓观察：已有入场/止损/目标/R/R，需小仓位并盘中确认。",
       "price": 42.7,
       "currency": "USD",
-      "price_time": "2026-08-16 09:36",
+      "price_time": "2026-08-17 09:27",
       "price_source": "跨市场情报行情快照",
       "opportunity_score": 61.3,
       "trend_score": 40.0,
@@ -2743,7 +2741,7 @@
         "财报/指引/申报显示核心假设恶化"
       ],
       "source": "opportunity_radar",
-      "updated_at": "2026-08-16 09:36"
+      "updated_at": "2026-08-17 09:27"
     },
     {
       "symbol": "US.ETN",
@@ -2756,7 +2754,7 @@
       "action": "证据只支持观察/二次研究；R/R 未达标，不允许普通买入。",
       "price": 451.51,
       "currency": "USD",
-      "price_time": "2026-08-16 09:36",
+      "price_time": "2026-08-17 09:27",
       "price_source": "行情已接入",
       "opportunity_score": 60.6,
       "trend_score": 88.0,
@@ -2812,7 +2810,7 @@
         "财报/指引/申报显示核心假设恶化"
       ],
       "source": "opportunity_radar",
-      "updated_at": "2026-08-16 09:36"
+      "updated_at": "2026-08-17 09:27"
     },
     {
       "symbol": "US.PH",
@@ -2825,7 +2823,7 @@
       "action": "证据只支持观察/二次研究；R/R 未达标，不允许普通买入。",
       "price": 1055.85,
       "currency": "USD",
-      "price_time": "2026-08-16 09:36",
+      "price_time": "2026-08-17 09:27",
       "price_source": "行情已接入",
       "opportunity_score": 60.4,
       "trend_score": 88.0,
@@ -2881,7 +2879,7 @@
         "财报/指引/申报显示核心假设恶化"
       ],
       "source": "opportunity_radar",
-      "updated_at": "2026-08-16 09:36"
+      "updated_at": "2026-08-17 09:27"
     },
     {
       "symbol": "US.MU",
@@ -2894,7 +2892,7 @@
       "action": "证据只支持观察/二次研究；R/R 未达标，不允许普通买入。",
       "price": 971.66,
       "currency": "USD",
-      "price_time": "2026-08-16 09:36",
+      "price_time": "2026-08-17 09:27",
       "price_source": "跨市场情报行情快照",
       "opportunity_score": 59.8,
       "trend_score": 76.0,
@@ -2950,7 +2948,7 @@
         "财报/指引/申报显示核心假设恶化"
       ],
       "source": "cross_market_intelligence",
-      "updated_at": "2026-08-16 09:36"
+      "updated_at": "2026-08-17 09:27"
     },
     {
       "symbol": "US.EMR",
@@ -2963,7 +2961,7 @@
       "action": "证据只支持观察/二次研究；R/R 未达标，不允许普通买入。",
       "price": 163.17,
       "currency": "USD",
-      "price_time": "2026-08-16 09:36",
+      "price_time": "2026-08-17 09:27",
       "price_source": "行情已接入",
       "opportunity_score": 58.4,
       "trend_score": 88.0,
@@ -3019,7 +3017,7 @@
         "财报/指引/申报显示核心假设恶化"
       ],
       "source": "opportunity_radar",
-      "updated_at": "2026-08-16 09:36"
+      "updated_at": "2026-08-17 09:27"
     },
     {
       "symbol": "US.PWR",
@@ -3032,7 +3030,7 @@
       "action": "证据只支持观察/二次研究；R/R 未达标，不允许普通买入。",
       "price": 685.78,
       "currency": "USD",
-      "price_time": "2026-08-16 09:36",
+      "price_time": "2026-08-17 09:27",
       "price_source": "行情已接入",
       "opportunity_score": 55.5,
       "trend_score": 76.0,
@@ -3088,7 +3086,7 @@
         "财报/指引/申报显示核心假设恶化"
       ],
       "source": "opportunity_radar",
-      "updated_at": "2026-08-16 09:36"
+      "updated_at": "2026-08-17 09:27"
     },
     {
       "symbol": "US.ROK",
@@ -3101,7 +3099,7 @@
       "action": "证据只支持观察/二次研究；R/R 未达标，不允许普通买入。",
       "price": 449.37,
       "currency": "USD",
-      "price_time": "2026-08-16 09:36",
+      "price_time": "2026-08-17 09:27",
       "price_source": "跨市场情报行情快照",
       "opportunity_score": 54.5,
       "trend_score": 54.0,
@@ -3155,7 +3153,7 @@
         "财报/指引/申报显示核心假设恶化"
       ],
       "source": "opportunity_radar",
-      "updated_at": "2026-08-16 09:36"
+      "updated_at": "2026-08-17 09:27"
     },
     {
       "symbol": "US.VRT",
@@ -3168,7 +3166,7 @@
       "action": "证据只支持观察/二次研究；R/R 未达标，不允许普通买入。",
       "price": 293.84,
       "currency": "USD",
-      "price_time": "2026-08-16 09:36",
+      "price_time": "2026-08-17 09:27",
       "price_source": "行情已接入",
       "opportunity_score": 54.3,
       "trend_score": 50.0,
@@ -3224,7 +3222,7 @@
         "财报/指引/申报显示核心假设恶化"
       ],
       "source": "opportunity_radar",
-      "updated_at": "2026-08-16 09:36"
+      "updated_at": "2026-08-17 09:27"
     },
     {
       "symbol": "SH.600183",
@@ -3237,7 +3235,7 @@
       "action": "证据只支持观察/二次研究；R/R 未达标，不允许普通买入。",
       "price": 143.21,
       "currency": "CNY",
-      "price_time": "2026-08-16 09:36",
+      "price_time": "2026-08-17 09:27",
       "price_source": "公开日线行情已接入；需 Futu/券商复核",
       "opportunity_score": 52.5,
       "trend_score": 50.0,
@@ -3293,7 +3291,7 @@
         "财报/指引/申报显示核心假设恶化"
       ],
       "source": "opportunity_radar",
-      "updated_at": "2026-08-16 09:36"
+      "updated_at": "2026-08-17 09:27"
     },
     {
       "symbol": "SH.688183",
@@ -3306,7 +3304,7 @@
       "action": "证据只支持观察/二次研究；R/R 未达标，不允许普通买入。",
       "price": 115.99,
       "currency": "CNY",
-      "price_time": "2026-08-16 09:36",
+      "price_time": "2026-08-17 09:27",
       "price_source": "公开日线行情已接入；需 Futu/券商复核",
       "opportunity_score": 52.5,
       "trend_score": 50.0,
@@ -3362,7 +3360,7 @@
         "财报/指引/申报显示核心假设恶化"
       ],
       "source": "opportunity_radar",
-      "updated_at": "2026-08-16 09:36"
+      "updated_at": "2026-08-17 09:27"
     },
     {
       "symbol": "SH.688322",
@@ -3375,7 +3373,7 @@
       "action": "证据只支持观察/二次研究；R/R 未达标，不允许普通买入。",
       "price": 109.98,
       "currency": "CNY",
-      "price_time": "2026-08-16 09:36",
+      "price_time": "2026-08-17 09:27",
       "price_source": "跨市场情报行情快照",
       "opportunity_score": 50.5,
       "trend_score": 55.0,
@@ -3429,7 +3427,7 @@
         "财报/指引/申报显示核心假设恶化"
       ],
       "source": "opportunity_radar",
-      "updated_at": "2026-08-16 09:36"
+      "updated_at": "2026-08-17 09:27"
     },
     {
       "symbol": "SZ.002747",
@@ -3442,7 +3440,7 @@
       "action": "证据只支持观察/二次研究；R/R 未达标，不允许普通买入。",
       "price": 34.75,
       "currency": "CNY",
-      "price_time": "2026-08-16 09:36",
+      "price_time": "2026-08-17 09:27",
       "price_source": "跨市场情报行情快照",
       "opportunity_score": 50.5,
       "trend_score": 55.0,
@@ -3496,7 +3494,7 @@
         "财报/指引/申报显示核心假设恶化"
       ],
       "source": "opportunity_radar",
-      "updated_at": "2026-08-16 09:36"
+      "updated_at": "2026-08-17 09:27"
     },
     {
       "symbol": "US.TSLA",
@@ -3509,7 +3507,7 @@
       "action": "观察",
       "price": 342.27,
       "currency": "USD",
-      "price_time": "2026-08-16 09:36",
+      "price_time": "2026-08-17 09:27",
       "price_source": "跨市场情报行情快照",
       "opportunity_score": 35.2,
       "trend_score": 14.0,
@@ -3560,7 +3558,7 @@
         "财报/指引/申报显示核心假设恶化"
       ],
       "source": "cross_market_intelligence",
-      "updated_at": "2026-08-16 09:36"
+      "updated_at": "2026-08-17 09:27"
     }
   ],
   "data_health": [
@@ -3570,7 +3568,7 @@
       "status": "normal",
       "message": "SEC ticker mapping available.",
       "impact": "Impacts US official filing/companyfacts fallback.",
-      "updated_at": "2026-08-16T09:36:39+08:00"
+      "updated_at": "2026-08-17T09:27:53+08:00"
     },
     {
       "name": "SEC EDGAR company data",
@@ -3578,7 +3576,7 @@
       "status": "normal",
       "message": "SEC fallback returned data for 16/16 checked US symbols.",
       "impact": "Impacts official US filing and financial statement evidence.",
-      "updated_at": "2026-08-16T09:36:44+08:00"
+      "updated_at": "2026-08-17T09:28:00+08:00"
     },
     {
       "name": "FRED",
@@ -3586,7 +3584,7 @@
       "status": "normal",
       "message": "FRED returned 8/8 configured macro/liquidity series.",
       "impact": "Impacts macro regime, rates, inflation, labor and credit spread evidence.",
-      "updated_at": "2026-08-16T09:36:44+08:00"
+      "updated_at": "2026-08-17T09:28:00+08:00"
     },
     {
       "name": "Alpha Vantage",
@@ -3594,7 +3592,7 @@
       "status": "normal",
       "message": "Alpha Vantage fallback completed with 21 successful response blocks; limited/empty responses are kept as data gaps.",
       "impact": "Impacts earnings estimates, surprise, calendar and transcript fallback confidence.",
-      "updated_at": "2026-08-16T09:36:46+08:00"
+      "updated_at": "2026-08-17T09:28:03+08:00"
     },
     {
       "name": "OpenFIGI",
@@ -3602,7 +3600,7 @@
       "status": "normal",
       "message": "OpenFIGI mapped 12/12 requested symbols.",
       "impact": "Impacts cross-market symbol mapping only; does not replace official filings.",
-      "updated_at": "2026-08-16T09:37:11+08:00"
+      "updated_at": "2026-08-17T09:28:33+08:00"
     },
     {
       "name": "Yahoo Finance",
@@ -3610,7 +3608,7 @@
       "status": "normal",
       "message": "Yahoo public chart fallback returned 15/15 HK/A quote blocks.",
       "impact": "Impacts HK/A price, technical levels and mechanical R/R fallback; not official filings.",
-      "updated_at": "2026-08-16T09:37:12+08:00"
+      "updated_at": "2026-08-17T09:28:33+08:00"
     },
     {
       "name": "CNINFO",
@@ -3618,7 +3616,7 @@
       "status": "normal",
       "message": "CNINFO official disclosure fallback returned 11/11 A-share records.",
       "impact": "Impacts A-share announcement/financial statement confidence; official CNINFO metadata is used when available.",
-      "updated_at": "2026-08-16T09:37:13+08:00"
+      "updated_at": "2026-08-17T09:28:36+08:00"
     },
     {
       "name": "HKEXnews",
@@ -3626,12 +3624,12 @@
       "status": "normal",
       "message": "HKEXnews official disclosure fallback returned 4/4 HK records.",
       "impact": "Impacts HK announcement/financial statement confidence; official HKEXnews metadata is used when available.",
-      "updated_at": "2026-08-16T09:37:27+08:00"
+      "updated_at": "2026-08-17T09:28:56+08:00"
     }
   ],
   "free_data_fallback": {
-    "generated_at": "2026-08-16T09:36:39+08:00",
-    "generated_label": "2026-08-16 09:36",
+    "generated_at": "2026-08-17T09:27:53+08:00",
+    "generated_label": "2026-08-17 09:27",
     "summary": {
       "symbol_count": 42,
       "field_count": 105,
@@ -3675,8 +3673,8 @@
   },
   "market_sentiment": {
     "schema_version": 1,
-    "generated_at": "2026-08-16T09:36:07+08:00",
-    "generated_label": "2026-08-16 09:36",
+    "generated_at": "2026-08-17T09:27:06+08:00",
+    "generated_label": "2026-08-17 09:27",
     "score": 64.9,
     "status": "neutral",
     "status_label": "Neutral",
@@ -3730,7 +3728,7 @@
         "status": "risk_on",
         "message": "FRED 流动性、金融条件和信用利差用于判断风险资产背景。",
         "source": "FRED",
-        "updated_at": "2026-08-16 09:36",
+        "updated_at": "2026-08-17 09:26",
         "confidence": "high"
       },
       {
@@ -3754,6 +3752,395 @@
   },
   "schema_version": 2,
   "reports": [
+    {
+      "id": "20260817-0933-deepseek-cloud-20260817-0933",
+      "filename": "deepseek-cloud-20260817-0933.md",
+      "title": "DeepSeek 云端美股投研报告 - 2026-08-17",
+      "kind": "deepseek-cloud",
+      "kind_label": "DeepSeek云端",
+      "published_at": "2026-08-17T09:33+00:00",
+      "published_label": "2026-08-17 09:33",
+      "is_latest": false,
+      "summary": "DeepSeek 云端美股投研报告 - 2026-08-17",
+      "symbols": [
+        "US.NVDA",
+        "US.ANET",
+        "US.AMD",
+        "US.AVGO",
+        "US.MRVL",
+        "US.MU"
+      ],
+      "themes": [
+        "GPU",
+        "ASIC",
+        "HBM",
+        "先进封装",
+        "光模块",
+        "CPO",
+        "PCB",
+        "覆铜板",
+        "电子布",
+        "铜箔",
+        "液冷",
+        "电力"
+      ]
+    },
+    {
+      "id": "20260817-0929-free-data-fallback-20260817-0929",
+      "filename": "free-data-fallback-20260817-0929.md",
+      "title": "免费数据源 fallback 雷达",
+      "kind": "free-data-fallback",
+      "kind_label": "免费数据源",
+      "published_at": "2026-08-17T09:29+00:00",
+      "published_label": "2026-08-17 09:29",
+      "is_latest": false,
+      "summary": "免费数据源 fallback 雷达",
+      "symbols": [],
+      "themes": []
+    },
+    {
+      "id": "20260817-0929-latest-secondary-analysis-queue",
+      "filename": "latest-secondary-analysis-queue.md",
+      "title": "二次分析队列",
+      "kind": "secondary-queue",
+      "kind_label": "二次分析队列",
+      "published_at": "2026-08-17T09:29+00:00",
+      "published_label": "2026-08-17 09:29",
+      "is_latest": true,
+      "summary": "二次分析队列",
+      "symbols": [
+        "US.ASML",
+        "US.NVDA",
+        "US.ANET",
+        "US.EMR",
+        "US.ETN",
+        "US.GE",
+        "US.PH",
+        "US.MRVL",
+        "HK.00981",
+        "US.AMD",
+        "US.AVGO",
+        "US.MU",
+        "US.TSM",
+        "HK.01347",
+        "SH.688981",
+        "SZ.300476",
+        "SZ.000988",
+        "SZ.300308",
+        "SZ.000063",
+        "SZ.300394",
+        "US.LITE",
+        "HK.00148",
+        "SZ.002335",
+        "SZ.002938"
+      ],
+      "themes": [
+        "GPU",
+        "ASIC",
+        "HBM",
+        "先进封装",
+        "光模块",
+        "CPO",
+        "PCB",
+        "覆铜板",
+        "电子布",
+        "铜箔",
+        "液冷",
+        "电力"
+      ]
+    },
+    {
+      "id": "20260817-0929-latest-opportunity-review-metrics",
+      "filename": "latest-opportunity-review-metrics.md",
+      "title": "机会雷达复盘统计",
+      "kind": "opportunity-review-metrics",
+      "kind_label": "机会复盘",
+      "published_at": "2026-08-17T09:29+00:00",
+      "published_label": "2026-08-17 09:29",
+      "is_latest": true,
+      "summary": "机会雷达复盘统计",
+      "symbols": [
+        "US.PH",
+        "US.VRT",
+        "US.SYM",
+        "US.TSLA",
+        "US.ANET",
+        "US.MRVL",
+        "US.NVDA",
+        "US.JBL",
+        "US.TTMI"
+      ],
+      "themes": [
+        "GPU",
+        "ASIC",
+        "HBM",
+        "先进封装",
+        "光模块",
+        "CPO",
+        "PCB",
+        "覆铜板",
+        "电子布",
+        "铜箔",
+        "液冷",
+        "电力"
+      ]
+    },
+    {
+      "id": "20260817-0929-latest-event-evidence",
+      "filename": "latest-event-evidence.md",
+      "title": "事件证据提取雷达",
+      "kind": "event-evidence",
+      "kind_label": "事件证据",
+      "published_at": "2026-08-17T09:29+00:00",
+      "published_label": "2026-08-17 09:29",
+      "is_latest": true,
+      "summary": "事件证据提取雷达",
+      "symbols": [
+        "US.MU",
+        "US.ETN",
+        "US.PH",
+        "US.EMR",
+        "US.PWR",
+        "US.LITE",
+        "US.VRT",
+        "US.CIEN",
+        "SH.600183",
+        "SH.688183",
+        "SZ.002747",
+        "SH.688322",
+        "US.NVDA",
+        "US.AMD",
+        "US.AVGO",
+        "US.MRVL",
+        "US.TSM",
+        "US.ANET",
+        "US.COHR",
+        "US.ISRG",
+        "US.SYM",
+        "US.ROK",
+        "US.JBL",
+        "US.FLEX"
+      ],
+      "themes": [
+        "GPU",
+        "ASIC",
+        "HBM",
+        "先进封装",
+        "光模块",
+        "CPO",
+        "PCB",
+        "覆铜板",
+        "电子布",
+        "铜箔",
+        "液冷",
+        "电力"
+      ]
+    },
+    {
+      "id": "20260817-0927-latest-fmp-research",
+      "filename": "latest-fmp-research.md",
+      "title": "FMP 预期与财报雷达",
+      "kind": "fmp-research",
+      "kind_label": "FMP预期",
+      "published_at": "2026-08-17T09:27+00:00",
+      "published_label": "2026-08-17 09:27",
+      "is_latest": true,
+      "summary": "FMP 预期与财报雷达",
+      "symbols": [],
+      "themes": []
+    },
+    {
+      "id": "20260817-0927-latest-market-sentiment",
+      "filename": "latest-market-sentiment.md",
+      "title": "市场情绪雷达",
+      "kind": "market-sentiment",
+      "kind_label": "市场情绪",
+      "published_at": "2026-08-17T09:27+00:00",
+      "published_label": "2026-08-17 09:27",
+      "is_latest": true,
+      "summary": "市场情绪雷达",
+      "symbols": [],
+      "themes": []
+    },
+    {
+      "id": "20260817-0927-macro-regime-20260817-0927",
+      "filename": "macro-regime-20260817-0927.md",
+      "title": "FRED 宏观环境雷达",
+      "kind": "macro-regime",
+      "kind_label": "宏观雷达",
+      "published_at": "2026-08-17T09:27+00:00",
+      "published_label": "2026-08-17 09:27",
+      "is_latest": false,
+      "summary": "FRED 宏观环境雷达",
+      "symbols": [],
+      "themes": []
+    },
+    {
+      "id": "20260817-0927-latest-opportunity-radar",
+      "filename": "latest-opportunity-radar.md",
+      "title": "机会发现雷达",
+      "kind": "opportunity-radar",
+      "kind_label": "机会雷达",
+      "published_at": "2026-08-17T09:27+00:00",
+      "published_label": "2026-08-17 09:27",
+      "is_latest": true,
+      "summary": "机会发现雷达",
+      "symbols": [
+        "US.NVDA",
+        "US.AVGO",
+        "US.MRVL",
+        "US.ANET",
+        "US.COHR",
+        "US.JBL",
+        "US.TTMI",
+        "US.FLEX",
+        "US.ETN",
+        "US.PH",
+        "US.EMR",
+        "US.ISRG",
+        "US.SYM",
+        "US.ROK",
+        "US.AMD",
+        "US.TSM",
+        "US.MU",
+        "HK.00981",
+        "HK.01347",
+        "US.CIEN",
+        "US.LITE",
+        "SZ.300394",
+        "SZ.300502",
+        "SZ.300308"
+      ],
+      "themes": [
+        "GPU",
+        "ASIC",
+        "HBM",
+        "先进封装",
+        "光模块",
+        "CPO",
+        "PCB",
+        "覆铜板",
+        "电子布",
+        "铜箔",
+        "液冷",
+        "电力"
+      ]
+    },
+    {
+      "id": "20260817-0927-latest-cross-market-intelligence",
+      "filename": "latest-cross-market-intelligence.md",
+      "title": "跨市场产业链情报雷达",
+      "kind": "cross-market-intelligence",
+      "kind_label": "跨市场情报",
+      "published_at": "2026-08-17T09:27+00:00",
+      "published_label": "2026-08-17 09:27",
+      "is_latest": true,
+      "summary": "跨市场产业链情报雷达",
+      "symbols": [
+        "US.NVDA",
+        "US.AVGO",
+        "US.AMD",
+        "US.TSM",
+        "US.MU",
+        "US.ANET",
+        "US.COHR",
+        "US.LITE",
+        "SZ.300394",
+        "US.CIEN",
+        "US.MRVL",
+        "SZ.300502",
+        "SZ.300308",
+        "US.ETN",
+        "US.PH",
+        "US.EMR",
+        "US.PWR",
+        "US.VRT",
+        "US.JBL",
+        "US.FLEX",
+        "US.TTMI",
+        "SH.600183",
+        "HK.01888",
+        "HK.00148"
+      ],
+      "themes": [
+        "GPU",
+        "ASIC",
+        "HBM",
+        "先进封装",
+        "光模块",
+        "CPO",
+        "PCB",
+        "覆铜板",
+        "电子布",
+        "铜箔",
+        "液冷",
+        "电力"
+      ]
+    },
+    {
+      "id": "20260817-0127-supply-chain-radar-20260817-0127",
+      "filename": "supply-chain-radar-20260817-0127.md",
+      "title": "产业链需求雷达",
+      "kind": "supply-chain",
+      "kind_label": "产业链雷达",
+      "published_at": "2026-08-17T01:27+00:00",
+      "published_label": "2026-08-17 01:27",
+      "is_latest": false,
+      "summary": "产业链需求雷达",
+      "symbols": [
+        "US.NVDA",
+        "US.ASML",
+        "US.AVGO",
+        "US.AMD",
+        "US.MU",
+        "US.TSM",
+        "HK.00981",
+        "SH.688981",
+        "US.MRVL",
+        "HK.01347",
+        "US.ANET",
+        "US.LITE",
+        "SZ.300394",
+        "US.CIEN",
+        "US.COHR",
+        "SZ.300502",
+        "SZ.300308",
+        "SZ.000988",
+        "HK.00763",
+        "SZ.000063",
+        "US.ETN",
+        "US.GE",
+        "US.EMR",
+        "US.PH"
+      ],
+      "themes": [
+        "GPU",
+        "ASIC",
+        "HBM",
+        "先进封装",
+        "光模块",
+        "CPO",
+        "PCB",
+        "覆铜板",
+        "电子布",
+        "铜箔",
+        "液冷",
+        "电力"
+      ]
+    },
+    {
+      "id": "20260817-0126-latest-market-brief",
+      "filename": "latest-market-brief.md",
+      "title": "美股市场机械预筛报告",
+      "kind": "daily",
+      "kind_label": "每日分析",
+      "published_at": "2026-08-17T01:26+00:00",
+      "published_label": "2026-08-17 01:26",
+      "is_latest": true,
+      "summary": "美股市场机械预筛报告",
+      "symbols": [],
+      "themes": []
+    },
     {
       "id": "20260816-0939-deepseek-cloud-20260816-0939",
       "filename": "deepseek-cloud-20260816-0939.md",
@@ -3786,19 +4173,6 @@
         "液冷",
         "电力"
       ]
-    },
-    {
-      "id": "20260816-0937-free-data-fallback-20260816-0937",
-      "filename": "free-data-fallback-20260816-0937.md",
-      "title": "免费数据源 fallback 雷达",
-      "kind": "free-data-fallback",
-      "kind_label": "免费数据源",
-      "published_at": "2026-08-16T09:37+00:00",
-      "published_label": "2026-08-16 09:37",
-      "is_latest": false,
-      "summary": "免费数据源 fallback 雷达",
-      "symbols": [],
-      "themes": []
     },
     {
       "id": "20260816-0937-latest-secondary-analysis-queue",
@@ -3937,45 +4311,6 @@
         "液冷",
         "电力"
       ]
-    },
-    {
-      "id": "20260816-0936-fmp-research-20260816-0936",
-      "filename": "fmp-research-20260816-0936.md",
-      "title": "FMP 预期与财报雷达",
-      "kind": "fmp-research",
-      "kind_label": "FMP预期",
-      "published_at": "2026-08-16T09:36+00:00",
-      "published_label": "2026-08-16 09:36",
-      "is_latest": false,
-      "summary": "FMP 预期与财报雷达",
-      "symbols": [],
-      "themes": []
-    },
-    {
-      "id": "20260816-0936-latest-market-sentiment",
-      "filename": "latest-market-sentiment.md",
-      "title": "市场情绪雷达",
-      "kind": "market-sentiment",
-      "kind_label": "市场情绪",
-      "published_at": "2026-08-16T09:36+00:00",
-      "published_label": "2026-08-16 09:36",
-      "is_latest": true,
-      "summary": "市场情绪雷达",
-      "symbols": [],
-      "themes": []
-    },
-    {
-      "id": "20260816-0936-latest-macro-regime",
-      "filename": "latest-macro-regime.md",
-      "title": "FRED 宏观环境雷达",
-      "kind": "macro-regime",
-      "kind_label": "宏观雷达",
-      "published_at": "2026-08-16T09:36+00:00",
-      "published_label": "2026-08-16 09:36",
-      "is_latest": true,
-      "summary": "FRED 宏观环境雷达",
-      "symbols": [],
-      "themes": []
     },
     {
       "id": "20260816-0936-latest-opportunity-radar",
@@ -6235,229 +6570,6 @@
         "SZ.300308",
         "SZ.300502",
         "SZ.300394"
-      ],
-      "themes": [
-        "GPU",
-        "ASIC",
-        "HBM",
-        "先进封装",
-        "光模块",
-        "CPO",
-        "PCB",
-        "覆铜板",
-        "电子布",
-        "铜箔",
-        "液冷",
-        "电力"
-      ]
-    },
-    {
-      "id": "20260810-2235-fmp-research-20260810-2235",
-      "filename": "fmp-research-20260810-2235.md",
-      "title": "FMP 预期与财报雷达",
-      "kind": "fmp-research",
-      "kind_label": "FMP预期",
-      "published_at": "2026-08-10T22:35+00:00",
-      "published_label": "2026-08-10 22:35",
-      "is_latest": false,
-      "summary": "FMP 预期与财报雷达",
-      "symbols": [],
-      "themes": []
-    },
-    {
-      "id": "20260810-2235-latest-market-sentiment",
-      "filename": "latest-market-sentiment.md",
-      "title": "市场情绪雷达",
-      "kind": "market-sentiment",
-      "kind_label": "市场情绪",
-      "published_at": "2026-08-10T22:35+00:00",
-      "published_label": "2026-08-10 22:35",
-      "is_latest": true,
-      "summary": "市场情绪雷达",
-      "symbols": [],
-      "themes": []
-    },
-    {
-      "id": "20260810-2235-latest-macro-regime",
-      "filename": "latest-macro-regime.md",
-      "title": "FRED 宏观环境雷达",
-      "kind": "macro-regime",
-      "kind_label": "宏观雷达",
-      "published_at": "2026-08-10T22:35+00:00",
-      "published_label": "2026-08-10 22:35",
-      "is_latest": true,
-      "summary": "FRED 宏观环境雷达",
-      "symbols": [],
-      "themes": []
-    },
-    {
-      "id": "20260810-1436-supply-chain-radar-20260810-1436",
-      "filename": "supply-chain-radar-20260810-1436.md",
-      "title": "产业链需求雷达",
-      "kind": "supply-chain",
-      "kind_label": "产业链雷达",
-      "published_at": "2026-08-10T14:36+00:00",
-      "published_label": "2026-08-10 14:36",
-      "is_latest": false,
-      "summary": "产业链需求雷达",
-      "symbols": [
-        "US.NVDA",
-        "US.AVGO",
-        "US.ASML",
-        "US.AMD",
-        "US.TSM",
-        "SH.688981",
-        "US.MRVL",
-        "US.MU",
-        "HK.01347",
-        "HK.00981",
-        "US.ANET",
-        "US.LITE",
-        "US.COHR",
-        "US.CIEN",
-        "SZ.300308",
-        "SZ.300502",
-        "SZ.300394",
-        "SZ.000988",
-        "HK.00763",
-        "SZ.000063",
-        "US.ETN",
-        "US.GE",
-        "US.EMR",
-        "US.PH"
-      ],
-      "themes": [
-        "GPU",
-        "ASIC",
-        "HBM",
-        "先进封装",
-        "光模块",
-        "CPO",
-        "PCB",
-        "覆铜板",
-        "电子布",
-        "铜箔",
-        "液冷",
-        "电力"
-      ]
-    },
-    {
-      "id": "20260810-1435-latest-market-brief",
-      "filename": "latest-market-brief.md",
-      "title": "美股市场机械预筛报告",
-      "kind": "daily",
-      "kind_label": "每日分析",
-      "published_at": "2026-08-10T14:35+00:00",
-      "published_label": "2026-08-10 14:35",
-      "is_latest": true,
-      "summary": "美股市场机械预筛报告",
-      "symbols": [],
-      "themes": []
-    },
-    {
-      "id": "20260807-1222-deepseek-cloud-20260807-1222",
-      "filename": "deepseek-cloud-20260807-1222.md",
-      "title": "DeepSeek 云端美股投研报告 - 2026-08-07",
-      "kind": "deepseek-cloud",
-      "kind_label": "DeepSeek云端",
-      "published_at": "2026-08-07T12:22+00:00",
-      "published_label": "2026-08-07 12:22",
-      "is_latest": false,
-      "summary": "DeepSeek 云端美股投研报告 - 2026-08-07",
-      "symbols": [
-        "US.NVDA",
-        "US.ANET",
-        "US.AVGO",
-        "US.AMD",
-        "US.MRVL",
-        "US.SYM"
-      ],
-      "themes": [
-        "GPU",
-        "ASIC",
-        "HBM",
-        "先进封装",
-        "光模块",
-        "CPO",
-        "PCB",
-        "覆铜板",
-        "电子布",
-        "铜箔",
-        "液冷",
-        "电力"
-      ]
-    },
-    {
-      "id": "20260807-1220-secondary-analysis-queue-20260807-1220",
-      "filename": "secondary-analysis-queue-20260807-1220.md",
-      "title": "二次分析队列",
-      "kind": "secondary-queue",
-      "kind_label": "二次分析队列",
-      "published_at": "2026-08-07T12:20+00:00",
-      "published_label": "2026-08-07 12:20",
-      "is_latest": false,
-      "summary": "二次分析队列",
-      "symbols": [
-        "US.NVDA",
-        "US.EMR",
-        "US.ETN",
-        "US.GE",
-        "US.PH",
-        "US.MRVL",
-        "HK.00981",
-        "US.TSM",
-        "HK.01347",
-        "US.MU",
-        "US.AMD",
-        "US.AVGO",
-        "SH.688981",
-        "US.ASML",
-        "US.COHR",
-        "SZ.300476",
-        "SZ.300394",
-        "SZ.000988",
-        "SZ.300308",
-        "SZ.000063",
-        "HK.00148",
-        "SZ.002335",
-        "SZ.002938",
-        "SZ.300274"
-      ],
-      "themes": [
-        "GPU",
-        "ASIC",
-        "HBM",
-        "先进封装",
-        "光模块",
-        "CPO",
-        "PCB",
-        "覆铜板",
-        "电子布",
-        "铜箔",
-        "液冷",
-        "电力"
-      ]
-    },
-    {
-      "id": "20260807-1220-latest-opportunity-review-metrics",
-      "filename": "latest-opportunity-review-metrics.md",
-      "title": "机会雷达复盘统计",
-      "kind": "opportunity-review-metrics",
-      "kind_label": "机会复盘",
-      "published_at": "2026-08-07T12:20+00:00",
-      "published_label": "2026-08-07 12:20",
-      "is_latest": true,
-      "summary": "机会雷达复盘统计",
-      "symbols": [
-        "US.PH",
-        "US.VRT",
-        "US.HON",
-        "US.TSLA",
-        "US.ANET",
-        "US.MRVL",
-        "US.NVDA",
-        "US.JBL",
-        "US.TTMI"
       ],
       "themes": [
         "GPU",
