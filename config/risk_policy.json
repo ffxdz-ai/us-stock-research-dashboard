@@ -1,0 +1,21 @@
+{
+  "schema_version": 2,
+  "policy_version": "2.0.0",
+  "formal_min_rr": 3.0,
+  "starter_min_rr": 2.5,
+  "breakout_min_rr": 3.0,
+  "min_data_confidence": 0.68,
+  "formal_min_opportunity_score": 75.0,
+  "formal_min_trend_score": 70.0,
+  "formal_max_crowding_score": 35.0,
+  "starter_min_opportunity_score": 65.0,
+  "starter_min_trend_score": 60.0,
+  "starter_max_crowding_score": 55.0,
+  "formal_max_entry_premium_pct": 0.5,
+  "starter_max_entry_premium_pct": 1.0,
+  "formal_entry_zone_lower_pct": 3.0,
+  "breakout_buffer": 0.005,
+  "intraday_quote_max_age_minutes": 5,
+  "eod_max_age_days": 4,
+  "fallback_execution_allowed": false
+}

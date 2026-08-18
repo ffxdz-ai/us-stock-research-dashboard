@@ -12,6 +12,8 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any
 
+from model_v2 import load_risk_policy
+
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA_DIR = ROOT / "data"
@@ -336,7 +338,7 @@ def extract_candidate_fields(ticker: str, item: dict[str, Any]) -> dict[str, Any
 def build_radar_rows(
     tickers: list[str],
     cmap: dict[str, dict[str, Any]],
-    min_rr: float,
+    risk_policy: Any,
     focus_score_threshold: float,
     min_confidence: float,
 ) -> list[dict[str, Any]]:
@@ -350,9 +352,16 @@ def build_radar_rows(
         pullback_entry = fields["add_zone"] or strict_entry
         breakout_high = fields["prior_high252"] or fields["high252"]
         paths = [
-            classify_current_path(price, strict_entry, target, stop, min_rr),
-            classify_pullback_path(price, pullback_entry, target, stop, min_rr),
-            classify_breakout_path(price, breakout_high, fields["ma50"], fields["low20"], target, min_rr),
+            classify_current_path(price, strict_entry, target, stop, risk_policy.starter_min_rr),
+            classify_pullback_path(price, pullback_entry, target, stop, risk_policy.formal_min_rr),
+            classify_breakout_path(
+                price,
+                breakout_high,
+                fields["ma50"],
+                fields["low20"],
+                target,
+                risk_policy.breakout_min_rr,
+            ),
         ]
         actionable = [path for path in paths if path.status in {"可复核", "接近/进入", "接近触发", "已突破待验证"}]
         score_ok = fields.get("overall_score") is not None and fields["overall_score"] >= focus_score_threshold
@@ -399,7 +408,7 @@ def path_summary(path: PathCheck) -> str:
 def render_entry_radar(
     rows: list[dict[str, Any]],
     as_of: str,
-    min_rr: float,
+    risk_policy: Any,
     pack: dict[str, Any],
     focus_score_threshold: float,
     min_confidence: float,
@@ -410,7 +419,9 @@ def render_entry_radar(
         "",
         f"- 生成时间：{now_local().strftime('%Y-%m-%d %H:%M')}",
         f"- 数据时间：{as_of or '数据不足'}",
-        f"- 硬门槛：普通买入、当前价试仓、突破确认均需独立满足 R/R >= {min_rr:.1f}:1。",
+        "- 硬门槛：正式建仓 R/R >= "
+        f"{risk_policy.formal_min_rr:.1f}:1；试仓 >= {risk_policy.starter_min_rr:.1f}:1；"
+        f"突破确认 >= {risk_policy.breakout_min_rr:.1f}:1。",
         "- 防未来函数：突破确认价优先使用上一交易日 252 日高点；缺失时只降级观察，并在审计报告中提示。",
         f"- 重点门槛：路径可行 + 机械分数 >= {focus_score_threshold:.1f} + 数据置信度 >= {min_confidence:.2f}。",
         f"- 数据质量：{source_note}",
@@ -649,7 +660,7 @@ def build_future_function_audit(
             raw_time=row.get("quote_time"),
             signal_time=signal_time,
             required=True,
-            stale_after=timedelta(hours=96),
+            stale_after=timedelta(days=load_risk_policy().eod_max_age_days),
         )
         audit_time_field(
             issues,
@@ -658,7 +669,7 @@ def build_future_function_audit(
             raw_time=row.get("chart_time"),
             signal_time=signal_time,
             required=True,
-            stale_after=timedelta(days=7),
+            stale_after=timedelta(days=load_risk_policy().eod_max_age_days),
         )
         audit_time_field(
             issues,
@@ -904,14 +915,14 @@ def main() -> int:
     portfolio = load_json(args.portfolio, {})
     pack = load_json(args.market_pack, {})
     compact = load_json(args.compact_input, {})
-    min_rr = float(config.get("min_reward_risk_for_buy", 2.0) or 2.0)
+    risk_policy = load_risk_policy()
     cmap = candidate_map(pack, compact)
     tickers = ordered_tickers(config, portfolio, cmap)
-    min_confidence = float(config.get("min_data_confidence_for_buy", 0.68) or 0.68)
-    rows = build_radar_rows(tickers, cmap, min_rr, args.focus_score_threshold, min_confidence)
+    min_confidence = risk_policy.min_data_confidence
+    rows = build_radar_rows(tickers, cmap, risk_policy, args.focus_score_threshold, min_confidence)
     as_of = str(pack.get("as_of_utc") or compact.get("as_of_utc") or datetime.now(timezone.utc).isoformat())
 
-    entry_report = render_entry_radar(rows, as_of, min_rr, pack, args.focus_score_threshold, min_confidence)
+    entry_report = render_entry_radar(rows, as_of, risk_policy, pack, args.focus_score_threshold, min_confidence)
     write_text(REPORTS_DIR / "latest-entry-radar.md", entry_report)
     stamp = now_local().strftime("%Y%m%d-%H%M")
     write_text(REPORTS_DIR / f"entry-radar-{stamp}.md", entry_report)

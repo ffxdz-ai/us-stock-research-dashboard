@@ -22,6 +22,8 @@ from pathlib import Path
 from typing import Any
 from zoneinfo import ZoneInfo
 
+from model_v2 import load_risk_policy, risk_policy_public
+
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA_DIR = ROOT / "data"
@@ -241,10 +243,21 @@ def security_signal(
         "breakout_target": breakout_target,
         "breakout_reward_risk": breakout_reward_risk,
         "opportunity_score": opportunity,
+        "entry_score": security.get("entry_score") or market_row.get("entry_score"),
         "supply_layer_score": supply_layer,
         "trend_score": trend,
         "underpricing_score": underpricing,
         "crowding_score": crowding,
+        "data_confidence": security.get("data_confidence") or market_row.get("data_confidence"),
+        "price_freshness": security.get("price_freshness") or market_row.get("price_freshness"),
+        "execution_allowed": security.get("execution_allowed") is True or market_row.get("execution_allowed") is True,
+        "technical_data_complete": security.get("technical_data_complete") is True or market_row.get("technical_data_complete") is True,
+        "future_function_audit": security.get("future_function_audit") or market_row.get("future_function_audit"),
+        "gate_failures": security.get("gate_failures") or market_row.get("gate_failures") or [],
+        "alpha_percentile": security.get("alpha_percentile") or market_row.get("alpha_percentile"),
+        "sector_rank_percentile": security.get("sector_rank_percentile") or market_row.get("sector_rank_percentile"),
+        "universe_rank": security.get("universe_rank") or market_row.get("universe_rank"),
+        "factor_coverage": security.get("factor_coverage") or market_row.get("factor_coverage"),
         "score_delta": score_delta,
         "first_seen_at": historical_first,
         "secondary_status": secondary.get("status") or ("tracked" if secondary else None),
@@ -299,25 +312,42 @@ def theme_intelligence(
     ]
     breadth_score, breadth = market_breadth_score(securities)
     components = theme.get("score_components") if isinstance(theme.get("score_components"), dict) else {}
-    demand = number(components.get("demand_shift")) or number(theme.get("demand_shift_score")) or 0
-    supply = number(components.get("supply_constraint")) or 0
-    earnings = number(components.get("earnings_leverage")) or 0
-    catalyst = number(components.get("catalyst_timing")) or 0
-    underpricing = number(components.get("market_underpricing")) or 0
-    crowding = number(components.get("crowding_penalty")) or 0
-    trend_avg = avg([value for item in securities if (value := number(item.get("trend_score"))) is not None]) or 45
+    theme_score = number(theme.get("expectation_gap_score") or components.get("final_theme_score"))
+    base_score = number(components.get("base_score"))
+    dynamic_center = number(components.get("dynamic_center"))
+    earnings = number(components.get("earnings_leverage"))
+    revision = number(components.get("earnings_revision"))
+    underpricing = number(components.get("market_underpricing"))
+    crowding_score = number(components.get("crowding_score"))
+    crowding_penalty = number(components.get("crowding_penalty"))
+    data_confidence = number(components.get("data_confidence"))
+    trend_values = [value for item in securities if (value := number(item.get("trend_score"))) is not None]
+    trend_avg = avg(trend_values)
     change_score = change_signal_score(theme, securities)
-
-    acceleration = clamp(
-        demand * 0.23
-        + supply * 0.13
-        + earnings * 0.13
-        + catalyst * 0.12
-        + underpricing * 0.12
-        + trend_avg * 0.12
-        + breadth_score * 0.10
-        + change_score * 0.08
-        - max(0, crowding - 65) * 0.15
+    acceleration_inputs = {
+        "theme_score": (theme_score, 0.30),
+        "dynamic_center": (dynamic_center, 0.10),
+        "earnings_leverage": (earnings, 0.10),
+        "earnings_revision": (revision, 0.15),
+        "market_underpricing": (underpricing, 0.10),
+        "trend_avg": (trend_avg, 0.10),
+        "market_breadth": (breadth_score if securities else None, 0.10),
+        "change_signal": (change_score if securities else None, 0.025),
+        "data_confidence": (data_confidence, 0.025),
+    }
+    available_weight = sum(weight for value, weight in acceleration_inputs.values() if value is not None)
+    raw_acceleration = (
+        sum(float(value) * weight for value, weight in acceleration_inputs.values() if value is not None) / available_weight
+        if available_weight
+        else None
+    )
+    acceleration_coverage = available_weight
+    # Missing evidence lowers conviction instead of silently becoming a
+    # neutral 50.  A static narrative prior alone cannot imply acceleration.
+    acceleration = (
+        clamp(raw_acceleration * (0.45 + 0.55 * acceleration_coverage))
+        if raw_acceleration is not None
+        else 0.0
     )
 
     layer_rows: dict[str, list[dict[str, Any]]] = defaultdict(list)
@@ -344,11 +374,13 @@ def theme_intelligence(
     layers.sort(key=lambda item: number(item.get("score")) or 0, reverse=True)
     securities.sort(key=lambda item: (number(item.get("opportunity_score")) or 0, number(item.get("trend_score")) or 0), reverse=True)
 
-    if acceleration >= 78 and breadth.get("active_market_count", 0) >= 2:
+    if acceleration_coverage < 0.35:
+        status = "证据不足"
+    elif acceleration >= 78 and breadth.get("active_market_count", 0) >= 2:
         status = "需求加速且跨市场扩散"
     elif acceleration >= 72:
         status = "需求加速，等待更多市场确认"
-    elif crowding >= 72:
+    elif crowding_score is not None and crowding_score >= 72:
         status = "景气强但拥挤"
     elif acceleration >= 62:
         status = "观察跟踪"
@@ -363,17 +395,20 @@ def theme_intelligence(
         "horizon": theme.get("horizon"),
         "thesis": theme.get("thesis"),
         "demand_acceleration_score": round(acceleration, 1),
-        "theme_score": theme.get("expectation_gap_score"),
+        "theme_score": theme_score,
+        "acceleration_coverage": round(acceleration_coverage, 3),
         "score_components": {
-            "demand_shift": demand,
-            "supply_constraint": supply,
+            "base_theme_prior": base_score,
+            "dynamic_center": dynamic_center,
             "earnings_leverage": earnings,
-            "catalyst_timing": catalyst,
+            "earnings_revision": revision,
             "market_underpricing": underpricing,
-            "trend_avg": round(trend_avg, 1),
+            "trend_avg": round(trend_avg, 1) if trend_avg is not None else None,
             "market_breadth": breadth_score,
             "change_signal": change_score,
-            "crowding_penalty": crowding,
+            "data_confidence": data_confidence,
+            "crowding_score": crowding_score,
+            "crowding_penalty": crowding_penalty,
         },
         "market_breadth": breadth,
         "leading_indicators": theme.get("leading_indicators", []),
@@ -435,6 +470,26 @@ def secondary_research_candidates(themes: list[dict[str, Any]]) -> list[dict[str
                         "opportunity_score": item.get("opportunity_score"),
                         "trend_score": item.get("trend_score"),
                         "crowding_score": crowding,
+                        "entry_score": item.get("entry_score"),
+                        "data_confidence": item.get("data_confidence"),
+                        "price_freshness": item.get("price_freshness"),
+                        "execution_allowed": item.get("execution_allowed"),
+                        "technical_data_complete": item.get("technical_data_complete"),
+                        "future_function_audit": item.get("future_function_audit"),
+                        "gate_failures": item.get("gate_failures"),
+                        "alpha_percentile": item.get("alpha_percentile"),
+                        "sector_rank_percentile": item.get("sector_rank_percentile"),
+                        "universe_rank": item.get("universe_rank"),
+                        "factor_coverage": item.get("factor_coverage"),
+                        "reward_risk": item.get("reward_risk"),
+                        "starter_entry": item.get("starter_entry"),
+                        "starter_stop": item.get("starter_stop"),
+                        "starter_target": item.get("starter_target"),
+                        "starter_reward_risk": item.get("starter_reward_risk"),
+                        "breakout_trigger": item.get("breakout_trigger"),
+                        "breakout_stop": item.get("breakout_stop"),
+                        "breakout_target": item.get("breakout_target"),
+                        "breakout_reward_risk": item.get("breakout_reward_risk"),
                         "demand_acceleration_score": theme.get("demand_acceleration_score"),
                         "reason": item.get("action"),
                     }
@@ -474,13 +529,15 @@ def feedback_summary(journal: dict[str, Any], opportunity_radar: dict[str, Any])
         "due_review_count": len(due),
         "latest_reviews": completed[:12],
         "review_due": due[:12],
-        "rule": "用 30/60/90 天复盘校准机会雷达，后续应统计命中率、最大回撤和是否提前发现。",
+        "rule": "用 5/20/60/120 交易日未来收益、基准超额、MAE/MFE 与 IC 校准机会雷达；score_delta 不计命中。",
     }
 
 
 def public_payload(payload: dict[str, Any]) -> dict[str, Any]:
     return {
         "schema_version": payload.get("schema_version"),
+        "model_version": payload.get("model_version"),
+        "risk_policy": payload.get("risk_policy"),
         "generated_at": payload.get("generated_at"),
         "generated_label": payload.get("generated_label"),
         "summary": payload.get("summary"),
@@ -517,7 +574,9 @@ def build_intelligence(
     feedback = feedback_summary(journal, opportunity_radar)
     now = now_local()
     return {
-        "schema_version": 1,
+        "schema_version": 2,
+        "model_version": "2.0.0",
+        "risk_policy": risk_policy_public(),
         "generated_at": now.isoformat(timespec="seconds"),
         "generated_label": now.strftime("%Y-%m-%d %H:%M"),
         "summary": {
@@ -531,7 +590,7 @@ def build_intelligence(
         "data_boundary": {
             "role": "cross-market intelligence and research routing; not trading instruction",
             "markets": "US/HK/CN public and Futu-enhanced data when available",
-            "buy_side_gate": "任何买入必须回到 Buy-Side、R/R >= 2:1、估值纪律、整股执行和本地组合复核。",
+            "buy_side_gate": f"正式买入 R/R >= {load_risk_policy().formal_min_rr:.1f}:1；试仓 R/R >= {load_risk_policy().starter_min_rr:.1f}:1，并通过 PIT、数据质量、整股执行和本地组合复核。",
         },
         "themes": themes,
         "lead_lag_signals": lead_lag,
@@ -561,7 +620,7 @@ def render_report(payload: dict[str, Any]) -> str:
         "",
         f"- 生成时间：{payload.get('generated_label')}",
         "- 定位：把宏观/产业链/机会雷达/二次分析队列合并，识别需求加速和跨市场扩散；不构成买入建议。",
-        "- 硬约束：任何股票进入交易前，必须回到 Buy-Side 分析、R/R >= 2:1、估值纪律和复星证券整股执行。",
+        f"- 硬约束：任何股票进入正式交易前，必须回到 Buy-Side 分析、R/R >= {load_risk_policy().formal_min_rr:.1f}:1、估值纪律和复星证券整股执行。",
         "",
         "## 本轮结论",
         "",

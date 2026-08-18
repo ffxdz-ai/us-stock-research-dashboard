@@ -23,6 +23,8 @@ from pathlib import Path
 from typing import Any
 from zoneinfo import ZoneInfo
 
+from model_v2 import load_risk_policy
+
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA_DIR = ROOT / "data"
@@ -536,7 +538,7 @@ def build_report(payload: dict[str, Any]) -> str:
             "## 使用纪律",
             "",
             "- 情绪分只决定“今天更适合进攻、平衡还是防守”，不能替代单股 Buy-Side 分析。",
-            "- 个股仍必须满足完整入场价、止损价、目标价和 R/R ≥ 2:1。",
+            f"- 个股正式路径仍必须满足完整入场价、止损价、目标价和 R/R ≥ {load_risk_policy().formal_min_rr:.1f}:1。",
             "- 当情绪 Risk-off 时，降低试错频率；当情绪 Risk-on 时，也不得追高违反 R/R 纪律。",
             "",
         ]

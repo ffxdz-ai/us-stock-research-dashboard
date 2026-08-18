@@ -1159,6 +1159,7 @@ h1 {
 .opportunity-price,
 .opportunity-scores,
 .opportunity-plan,
+.opportunity-audit,
 .opportunity-list-block {
   border: 1px solid rgba(135, 167, 178, 0.16);
   background: rgba(7, 16, 22, 0.72);
@@ -1175,6 +1176,50 @@ h1 {
 
 .opportunity-list-block strong {
   color: #9fdbe7;
+}
+
+.opportunity-audit {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 12px;
+  border-radius: 10px;
+}
+
+.model-audit-badge {
+  border: 1px solid rgba(148, 163, 184, 0.22);
+  border-radius: 999px;
+  padding: 4px 9px;
+  font-size: 0.76rem;
+  color: #cbd5e1;
+}
+
+.model-audit-badge.pass {
+  border-color: rgba(34, 197, 94, 0.35);
+  background: rgba(34, 197, 94, 0.10);
+  color: #86efac;
+}
+
+.model-audit-badge.blocked {
+  border-color: rgba(245, 158, 11, 0.38);
+  background: rgba(245, 158, 11, 0.10);
+  color: #fdba74;
+}
+
+.opportunity-audit details {
+  flex-basis: 100%;
+  color: #fdba74;
+}
+
+.opportunity-audit summary {
+  cursor: pointer;
+  font-size: 0.82rem;
+}
+
+.opportunity-audit ul {
+  margin: 8px 0 0;
+  padding-left: 20px;
+  color: #c8dbe2;
 }
 
 .research-layout {

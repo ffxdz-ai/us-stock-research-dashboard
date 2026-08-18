@@ -21,6 +21,8 @@ from pathlib import Path
 from typing import Any
 from zoneinfo import ZoneInfo
 
+from model_v2 import load_risk_policy
+
 
 ROOT = Path(__file__).resolve().parents[1]
 CONFIG_DIR = ROOT / "config"
@@ -629,7 +631,7 @@ def build_research(
             "FMP 目标价不是目标价结论，只是卖方预期输入。",
             "预期上修要结合股价是否已反映；不能因为目标价有上行空间就买入。",
             "电话会 transcript 和新闻如果未开权限，报告必须标记为数据不足。",
-            "最终交易仍需 Buy-Side 分析、R/R >= 2:1 和整股仓位复核。",
+            f"最终正式交易仍需 Buy-Side 分析、R/R >= {load_risk_policy().formal_min_rr:.1f}:1 和整股仓位复核。",
         ],
     }
     return payload, next_state
@@ -697,7 +699,7 @@ def render_report(payload: dict[str, Any]) -> str:
         "",
         f"- 生成时间：{payload.get('generated_label')}",
         "- 定位：跟踪分析师预期、目标价、评级快照和财报 surprise；不构成买入建议。",
-        "- 执行纪律：预期差只提供研究线索，最终必须回到 Buy-Side 分析、R/R >= 2:1 和整股执行。",
+        f"- 执行纪律：预期差只提供研究线索，最终必须回到 Buy-Side 分析、正式 R/R >= {load_risk_policy().formal_min_rr:.1f}:1 和整股执行。",
         "",
     ]
     if not payload.get("fmp_enabled"):

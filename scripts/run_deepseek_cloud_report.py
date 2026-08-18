@@ -15,6 +15,8 @@ from pathlib import Path
 from typing import Any
 from zoneinfo import ZoneInfo
 
+from model_v2 import load_risk_policy, risk_policy_public, validate_llm_commentary
+
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA_DIR = ROOT / "data"
@@ -123,6 +125,15 @@ def concise_candidate(item: dict[str, Any]) -> dict[str, Any]:
         "finnhub_ps": item.get("finnhub_ps") or financials.get("finnhub_ps"),
         "finnhub_roe": item.get("finnhub_roe") or financials.get("finnhub_roe"),
         "data_confidence": item.get("data_confidence"),
+        "price_freshness": item.get("price_freshness"),
+        "execution_allowed": item.get("execution_allowed"),
+        "technical_data_complete": item.get("technical_data_complete"),
+        "future_function_audit": item.get("future_function_audit"),
+        "formal_qualified": item.get("formal_qualified"),
+        "gate_failures": item.get("gate_failures") or [],
+        "opportunity_score": item.get("opportunity_score"),
+        "entry_score": item.get("entry_score"),
+        "factor_snapshot": item.get("factor_snapshot"),
         "scores": {
             "quality": item.get("quality_score") or mechanical_scores.get("quality"),
             "valuation": item.get("valuation_score") or mechanical_scores.get("valuation"),
@@ -633,7 +644,9 @@ def prepare_public_context(
     watchlist = [concise_candidate(item) for item in pack.get("physical_ai_watchlist", []) if isinstance(item, dict)]
 
     return {
-        "schema_version": 1,
+        "schema_version": 2,
+        "model_version": "2.0.0",
+        "risk_policy": risk_policy_public(),
         "generated_for": "public DeepSeek cloud report",
         "as_of_utc": compact.get("as_of_utc") or pack.get("as_of_utc") or datetime.now(timezone.utc).isoformat(),
         "data_boundary": {
@@ -647,7 +660,9 @@ def prepare_public_context(
             "whole_shares_only": True,
             "cash_floor_pct": 15,
             "max_single_position_pct": 35,
-            "normal_buy_min_reward_risk": 2.0,
+            "normal_buy_min_reward_risk": load_risk_policy().formal_min_rr,
+            "starter_min_reward_risk": load_risk_policy().starter_min_rr,
+            "breakout_min_reward_risk": load_risk_policy().breakout_min_rr,
             "do_not_chase_overheated_setups": True,
         },
         "market": market,
@@ -774,7 +789,7 @@ def build_focus_brief(context: dict[str, Any]) -> str:
         f"| 总判断 | {macro_label}；{action_line} |",
         f"| 市场情绪 | {sentiment_label}；情绪分 {sentiment_score}/100；{sentiment_stance} |",
         f"| 市场快照 | {index_line} |",
-        f"| 交易纪律 | 二次分析活跃 {active_count} 个；本轮退回观察 {retreated} 个；R/R 不达 2:1 的标的不能普通买入。 |",
+        f"| 交易纪律 | 二次分析活跃 {active_count} 个；本轮退回观察 {retreated} 个；正式 R/R 不达 {load_risk_policy().formal_min_rr:.1f}:1 的标的不能正式买入。 |",
         f"| 机会发现 | 需求加速主题 {cross_summary.get('accelerating_theme_count', 0)} 个；跨市场信号 {cross_summary.get('cross_market_signal_count', 0)} 个；二次研究候选 {cross_summary.get('secondary_research_candidate_count', 0)} 个。 |",
         f"| 证据质量 | 可用证据 {event_summary.get('usable_evidence_count', 0)} 个；证据缺口 {event_summary.get('gap_count', 0)} 个；新闻/电话会权限缺口 {event_summary.get('permission_gap_count', 0)} 个。 |",
         f"| 机会复盘 | 成熟主题 {review_summary.get('mature_theme_count', 0)} 个；命中率 {fmt_brief_number(review_summary.get('hit_rate_pct'), 1, '%')}；未满 30 天的机会不算验证成功。 |",
@@ -811,7 +826,7 @@ def build_focus_brief(context: dict[str, Any]) -> str:
                 "",
                 f"- 新闻/电话会正文仍未接入或受限：{endpoints}；报告不能编造管理层表述。",
                 "- 机会雷达仍处在早期跟踪阶段，未完成 30/60/90 天 checkpoint 前，不统计为命中。",
-                "- 若当前价试仓、突破确认或普通买入路径无法独立满足 R/R >= 2:1，只能观察或等待。",
+                f"- 正式/突破路径必须 R/R >= {load_risk_policy().formal_min_rr:.1f}:1，试仓必须 >= {load_risk_policy().starter_min_rr:.1f}:1；否则只能观察或等待。",
                 "",
             ]
         )
@@ -826,9 +841,10 @@ def build_user_prompt(context: dict[str, Any], mode: str) -> str:
 模式：{mode}
 
 强制要求：
-- 输出 Markdown。
-- 不要寒暄，不要写“好的/以下是”，直接从报告正文开始。
-- 不要重复输出一级标题；标题由外层系统生成。
+- 只输出一个合法 JSON 对象，不要 Markdown 代码围栏、不要寒暄。
+- JSON 顶层只能包含 market_view 和 stock_commentary。
+- stock_commentary 每项只能包含 symbol、thesis、bull_case、bear_case、catalysts、risks、missing_evidence。
+- 严禁输出或修改 entry、stop、target、R/R、分数、formal_qualified 等确定性字段。
 - 报告必须先给结论，不要先铺背景；重点信息必须放在开头。
 - 正文开头必须用短表格或短清单回答：今天能不能主动买、最重要机会、最大风险、下一步看什么。
 - 详细宏观、FMP、个股分析放在后面，不要把关键结论埋在中段。
@@ -852,7 +868,7 @@ def build_user_prompt(context: dict[str, Any], mode: str) -> str:
 - 必须阅读 free_data_fallback：当 FMP/Finnhub 不可用、限流或缺字段时，优先引用 SEC/FRED 官方源；Alpha Vantage/OpenFIGI/AkShare/Tushare/Yahoo 只能标为降级 fallback；任何 data_gap 不得编造。
 - 估值优先使用 valuation_pe 和 valuation_pe_source；forward_pe/trailing_pe 缺失时，不得忽略 Finnhub P/E 或 SEC 市值/净利润估算 P/E。
 - 每只重点股票必须分别评估：当前价试仓、理想回调、突破确认。
-- 每条可执行买入路径必须独立满足 R/R >= 2:1；不满足就写观察或等待。
+- 正式买入路径必须满足 R/R >= {load_risk_policy().formal_min_rr:.1f}:1；试仓必须满足 R/R >= {load_risk_policy().starter_min_rr:.1f}:1；不满足就写观察或等待。
 - 公开版不得给最终买入股数；整股执行写“需本地组合复核”。
 - 加入“第二分析师审查”部分，指出主结论的反对意见和可能打脸点。
 
@@ -861,10 +877,29 @@ def build_user_prompt(context: dict[str, Any], mode: str) -> str:
 ```json
 {context_text}
 ```
+
+返回结构：
+{{
+  "market_view": {{"summary": "...", "stance": "...", "key_risks": ["..."], "next_checks": ["..."]}},
+  "stock_commentary": [
+    {{"symbol": "NVDA", "thesis": "...", "bull_case": "...", "bear_case": "...", "catalysts": ["..."], "risks": ["..."], "missing_evidence": ["..."]}}
+  ]
+}}
 """
 
 
-def deepseek_request(api_key: str, system_prompt: str, user_prompt: str) -> str:
+def parse_model_json(content: str) -> dict[str, Any]:
+    cleaned = content.strip()
+    if cleaned.startswith("```"):
+        cleaned = re.sub(r"^```(?:json)?\s*", "", cleaned, flags=re.IGNORECASE)
+        cleaned = re.sub(r"\s*```$", "", cleaned)
+    payload = json.loads(cleaned)
+    if not isinstance(payload, dict):
+        raise ValueError("DeepSeek structured output is not an object")
+    return payload
+
+
+def deepseek_request(api_key: str, system_prompt: str, user_prompt: str) -> dict[str, Any]:
     api_url = os.getenv("DEEPSEEK_API_URL", DEFAULT_API_URL)
     primary_model = os.getenv("DEEPSEEK_MODEL", DEFAULT_MODEL)
     candidates = [
@@ -890,45 +925,96 @@ def deepseek_request(api_key: str, system_prompt: str, user_prompt: str) -> str:
     ]
     last_error = ""
     for payload_options in candidates:
-        payload = {
-            **payload_options,
-            "messages": messages,
-            "stream": False,
-        }
-        body = json.dumps(payload, ensure_ascii=False).encode("utf-8")
-        request = urllib.request.Request(
-            api_url,
-            data=body,
-            headers={
-                "Authorization": f"Bearer {api_key}",
-                "Content-Type": "application/json",
-                "Accept": "application/json",
-            },
-            method="POST",
-        )
-        try:
-            with urllib.request.urlopen(request, timeout=180) as response:
-                data = json.loads(response.read().decode("utf-8"))
-        except urllib.error.HTTPError as exc:
-            error_body = exc.read().decode("utf-8", errors="replace")
-            last_error = f"HTTP {exc.code}: {error_body[:500]}"
-            continue
-        except (urllib.error.URLError, TimeoutError, json.JSONDecodeError) as exc:
-            last_error = str(exc)
-            time.sleep(1)
-            continue
+        # Prefer native JSON mode, but retry the same model with the strict
+        # prompt alone when a compatible provider/model rejects response_format.
+        for native_json_mode in (True, False):
+            payload = {**payload_options, "messages": messages, "stream": False}
+            if native_json_mode:
+                payload["response_format"] = {"type": "json_object"}
+            body = json.dumps(payload, ensure_ascii=False).encode("utf-8")
+            request = urllib.request.Request(
+                api_url,
+                data=body,
+                headers={
+                    "Authorization": f"Bearer {api_key}",
+                    "Content-Type": "application/json",
+                    "Accept": "application/json",
+                },
+                method="POST",
+            )
+            try:
+                with urllib.request.urlopen(request, timeout=180) as response:
+                    data = json.loads(response.read().decode("utf-8"))
+            except urllib.error.HTTPError as exc:
+                error_body = exc.read().decode("utf-8", errors="replace")
+                last_error = f"HTTP {exc.code}: {error_body[:500]}"
+                continue
+            except (urllib.error.URLError, TimeoutError, json.JSONDecodeError) as exc:
+                last_error = str(exc)
+                time.sleep(1)
+                continue
 
-        choices = data.get("choices") or []
-        if not choices:
-            last_error = f"empty choices: {str(data)[:500]}"
-            continue
-        message = choices[0].get("message") or {}
-        content = message.get("content")
-        if isinstance(content, str) and content.strip():
-            return content.strip()
-        last_error = f"empty content: {str(data)[:500]}"
+            choices = data.get("choices") or []
+            if not choices:
+                last_error = f"empty choices: {str(data)[:500]}"
+                continue
+            message = choices[0].get("message") or {}
+            content = message.get("content")
+            if isinstance(content, str) and content.strip():
+                try:
+                    return parse_model_json(content)
+                except (json.JSONDecodeError, ValueError) as exc:
+                    last_error = f"invalid structured JSON: {exc}"
+                    continue
+            last_error = f"empty content: {str(data)[:500]}"
 
     raise RuntimeError(f"DeepSeek request failed: {last_error}")
+
+
+def render_structured_commentary(payload: dict[str, Any]) -> str:
+    market = payload.get("market_view") if isinstance(payload.get("market_view"), dict) else {}
+    lines = ["## AI 解释层", "", "### 市场解释", ""]
+    if market.get("summary"):
+        lines.append(str(market["summary"]))
+    if market.get("stance"):
+        lines.append(f"- 倾向：{market['stance']}")
+    for label, key in (("主要风险", "key_risks"), ("下一步核查", "next_checks")):
+        values = market.get(key) if isinstance(market.get(key), list) else []
+        if values:
+            lines.extend(["", f"#### {label}", ""])
+            lines.extend(f"- {value}" for value in values[:8])
+    commentary = payload.get("stock_commentary") if isinstance(payload.get("stock_commentary"), list) else []
+    if commentary:
+        lines.extend(["", "### 个股解释", ""])
+    for item in commentary:
+        if not isinstance(item, dict):
+            continue
+        lines.extend([f"#### {item.get('symbol')}", "", str(item.get("thesis") or "证据不足")])
+        if item.get("bull_case"):
+            lines.append(f"- 多头论据：{item['bull_case']}")
+        if item.get("bear_case"):
+            lines.append(f"- 反方观点：{item['bear_case']}")
+        for label, key in (("催化剂", "catalysts"), ("风险", "risks"), ("待补证据", "missing_evidence")):
+            values = item.get(key) if isinstance(item.get(key), list) else []
+            if values:
+                lines.append(f"- {label}：" + "；".join(str(value) for value in values[:6]))
+        lines.append("")
+    return "\n".join(lines).strip()
+
+
+def collect_context_symbols(value: Any) -> list[str]:
+    """Collect only symbols that already exist in the deterministic context."""
+    output: set[str] = set()
+    if isinstance(value, dict):
+        for key, child in value.items():
+            if key in {"ticker", "symbol", "code"} and isinstance(child, str) and child.strip():
+                output.add(child.strip().upper())
+            else:
+                output.update(collect_context_symbols(child))
+    elif isinstance(value, list):
+        for child in value:
+            output.update(collect_context_symbols(child))
+    return sorted(output)
 
 
 def wrap_report(content: str, context: dict[str, Any], mode: str) -> str:
@@ -1012,8 +1098,14 @@ def main() -> int:
     if not api_key:
         raise RuntimeError("DEEPSEEK_API_KEY is not set.")
 
-    content = deepseek_request(api_key, system_prompt, user_prompt)
-    report = wrap_report(normalize_model_markdown(content), context, args.mode)
+    structured = deepseek_request(api_key, system_prompt, user_prompt)
+    universe = collect_context_symbols(context)
+    try:
+        validated = validate_llm_commentary(structured, universe)
+        narrative = render_structured_commentary(validated)
+    except ValueError as exc:
+        narrative = "## AI 解释层\n\n本轮 LLM 输出未通过金融校验，已拒绝发布该段：" + str(exc)
+    report = wrap_report(narrative, context, args.mode)
     validate_public_text(report)
 
     bj = datetime.now(beijing_timezone())

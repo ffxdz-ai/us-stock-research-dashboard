@@ -22,6 +22,8 @@ from statistics import median
 from typing import Any
 from zoneinfo import ZoneInfo
 
+from model_v2 import calculate_rr, load_risk_policy, risk_policy_public
+
 try:
     from collect_market_data import sec_summary, sec_ticker_map
 except Exception:  # noqa: BLE001
@@ -495,6 +497,7 @@ def price_evidence(
     fallback_row: dict[str, Any],
     fallback_records: list[dict[str, Any]] | None = None,
 ) -> dict[str, Any]:
+    policy = load_risk_policy()
     free_quote = free_quote_summary(fallback_records or [])
     chart = market_row.get("chart") if isinstance(market_row.get("chart"), dict) else {}
     price = number(market_row.get("price")) or number(fallback_row.get("price")) or number(free_quote.get("price"))
@@ -535,12 +538,10 @@ def price_evidence(
         if target is None and high252 is not None and high252 > price:
             target = high252
             fallback_reason = "目标价用 52 周高点兜底"
-        if target is not None and invalidation is not None and price > invalidation:
-            risk = price - invalidation
-            reward = target - price
-            if risk > 0 and reward > 0:
-                rr = round(reward / risk, 2)
-                fallback_reason = fallback_reason or "由当前价/目标价/止损位计算"
+        if target is not None and invalidation is not None and strict_entry is not None:
+            rr = calculate_rr(strict_entry, invalidation, target)
+            if rr is not None:
+                fallback_reason = fallback_reason or "由计划入场价/目标价/止损位计算"
     trend = number(fallback_row.get("trend_score"))
     score = 45.0
     if price and ma50:
@@ -552,8 +553,8 @@ def price_evidence(
     if trend is not None:
         score += 10 if trend >= 70 else -4 if trend < 45 else 0
     if rr is not None:
-        score += 18 if rr >= 2 else -12
-    if starter_reward_risk is not None and starter_reward_risk >= 1.5:
+        score += 18 if rr >= policy.formal_min_rr else -12
+    if starter_reward_risk is not None and starter_reward_risk >= policy.starter_min_rr:
         score += 8
     strict_complete = price is not None and target is not None and invalidation is not None and rr is not None
     starter_complete = (
@@ -579,6 +580,13 @@ def price_evidence(
         "entry_path_complete": strict_complete or starter_complete or breakout_complete,
         "entry_path_fallback": fallback_reason,
         "trend_score": trend,
+        "entry_score": market_row.get("entry_score") or fallback_row.get("entry_score"),
+        "data_confidence": market_row.get("data_confidence") or fallback_row.get("data_confidence"),
+        "price_freshness": market_row.get("price_freshness") or fallback_row.get("price_freshness") or "unknown",
+        "execution_allowed": market_row.get("execution_allowed") is True or fallback_row.get("execution_allowed") is True,
+        "technical_data_complete": market_row.get("technical_data_complete") is True or fallback_row.get("technical_data_complete") is True,
+        "future_function_audit": market_row.get("future_function_audit") or fallback_row.get("future_function_audit") or "BLOCK",
+        "gate_failures": market_row.get("gate_failures") or fallback_row.get("gate_failures") or [],
         "source": "market_pack" if market_row.get("price") else "cross_market_intelligence" if fallback_row.get("price") else "Yahoo chart fallback" if free_quote.get("price") else None,
         "strict_entry": strict_entry,
         "invalidation": invalidation,
@@ -669,13 +677,13 @@ def evidence_card(
     starter_rr = number(price.get("starter_reward_risk"))
     breakout_rr = number(price.get("breakout_reward_risk"))
     has_tactical_path = bool(
-        (starter_rr is not None and starter_rr >= 1.5)
-        or (breakout_rr is not None and breakout_rr >= 2)
+        (starter_rr is not None and starter_rr >= load_risk_policy().starter_min_rr)
+        or (breakout_rr is not None and breakout_rr >= load_risk_policy().breakout_min_rr)
     )
     if not price.get("entry_path_complete"):
         gaps.append("缺少完整 R/R 或机械入场路径")
-    elif number(price.get("reward_risk")) is not None and float(price["reward_risk"]) < 2 and not has_tactical_path:
-        gaps.append("R/R 未达 2:1，不能进入普通买入")
+    elif number(price.get("reward_risk")) is not None and float(price["reward_risk"]) < load_risk_policy().formal_min_rr and not has_tactical_path:
+        gaps.append(f"R/R 未达 {load_risk_policy().formal_min_rr:.1f}:1，不能进入正式买入")
 
     score = (
         float(filing.get("score") or 0) * 0.18
@@ -789,7 +797,7 @@ def classify_gap(gap: str) -> tuple[str, str, str]:
 
 def gap_label(key: str, original: str) -> str:
     labels = {
-        "rr_discipline": "R/R 未达 2:1",
+        "rr_discipline": f"正式 R/R 未达 {load_risk_policy().formal_min_rr:.1f}:1",
         "entry_path_missing": "缺少完整 R/R 或机械入场路径",
         "fmp_estimate_snapshot": "缺少 FMP 预期/财报快照",
         "analyst_estimate": "缺少年/季度分析师预期",
@@ -901,7 +909,9 @@ def build_payload(
     permission = permission_gaps(fmp_research)
     gap_breakdown = build_gap_breakdown(cards, permission)
     payload = {
-        "schema_version": 1,
+        "schema_version": 2,
+        "model_version": "2.0.0",
+        "risk_policy": risk_policy_public(),
         "generated_at": now.isoformat(timespec="seconds"),
         "generated_label": now.strftime("%Y-%m-%d %H:%M"),
         "data_boundary": {
@@ -928,7 +938,7 @@ def build_payload(
         "discipline": [
             "证据卡只解决“有什么证据/缺什么证据”，不直接给买入结论。",
             "FMP 新闻或电话会端点受限时，系统必须明确未读取正文，不得编造管理层表述。",
-            "R/R 低于 2:1 时，即使产业逻辑增强，也只能进入观察或二次研究。",
+            f"正式 R/R 低于 {load_risk_policy().formal_min_rr:.1f}:1 时，即使产业逻辑增强，也只能进入观察或二次研究。",
         ],
     }
     return payload
@@ -937,6 +947,8 @@ def build_payload(
 def public_payload(payload: dict[str, Any]) -> dict[str, Any]:
     return {
         "schema_version": payload.get("schema_version"),
+        "model_version": payload.get("model_version"),
+        "risk_policy": payload.get("risk_policy"),
         "generated_at": payload.get("generated_at"),
         "generated_label": payload.get("generated_label"),
         "data_boundary": payload.get("data_boundary"),

@@ -16,15 +16,13 @@
     "confirming": 68,
     "crowded_penalty": 65
   },
-  "review_checkpoints_days": [30, 60, 90],
+  "review_checkpoints_days": [5, 20, 60, 120],
   "themes": [
     {
       "id": "ai_optical_cpo_networking",
       "name": "AI 光模块 / CPO / 数据中心网络",
       "horizon": "3-12个月",
-      "demand_shift_score": 90,
-      "supply_constraint_score": 82,
-      "catalyst_timing_score": 76,
+      "base_theme_prior": 83,
       "thesis": "AI 集群从单卡算力扩展到网络互连瓶颈，800G、1.6T、硅光、CPO 和交换机升级会把需求向光器件、DSP、交换机和上游材料扩散。",
       "leading_indicators": [
         "云厂商 AI CAPEX 是否继续上修",
@@ -54,9 +52,7 @@
       "id": "ai_pcb_ccl_materials",
       "name": "高速 PCB / 覆铜板 / 电子布 / 铜箔",
       "horizon": "3-12个月",
-      "demand_shift_score": 84,
-      "supply_constraint_score": 78,
-      "catalyst_timing_score": 72,
+      "base_theme_prior": 78,
       "thesis": "AI 服务器和高速交换机需要高层数、低损耗 PCB 与高端 CCL，若电子布、铜箔、树脂和高端覆铜板涨价，利润弹性可能从设备和光模块向材料端扩散。",
       "leading_indicators": [
         "高端 CCL 报价和交期",
@@ -87,9 +83,7 @@
       "id": "ai_advanced_packaging_hbm",
       "name": "GPU / ASIC / HBM / 先进封装",
       "horizon": "3-12个月",
-      "demand_shift_score": 92,
-      "supply_constraint_score": 86,
-      "catalyst_timing_score": 76,
+      "base_theme_prior": 85,
       "thesis": "训练和推理需求首先兑现到 GPU、ASIC、HBM、先进制程和 CoWoS/先进封装；但龙头可能已被充分定价，系统重点识别估值、利润兑现和拥挤度的错配。",
       "leading_indicators": [
         "HBM 合同价格和供需",
@@ -119,9 +113,7 @@
       "id": "ai_datacenter_power_cooling",
       "name": "AI 数据中心电力 / 液冷 / 配电",
       "horizon": "6-18个月",
-      "demand_shift_score": 86,
-      "supply_constraint_score": 80,
-      "catalyst_timing_score": 74,
+      "base_theme_prior": 80,
       "thesis": "AI 数据中心功耗密度抬升后，瓶颈从芯片扩散到电力接入、UPS、配电、液冷和工程建设；这些环节通常滞后兑现，但持续性可能更强。",
       "leading_indicators": [
         "云厂商电力容量预订",
@@ -150,9 +142,7 @@
       "id": "physical_ai_robotics",
       "name": "Physical AI / 机器人 / 自动化",
       "horizon": "6-24个月",
-      "demand_shift_score": 78,
-      "supply_constraint_score": 62,
-      "catalyst_timing_score": 66,
+      "base_theme_prior": 69,
       "thesis": "大模型从数字世界扩展到物理世界后，机器人、工业自动化、传感器、执行器和边缘 AI 可能形成新的需求曲线；当前仍处早期，必须用订单和应用落地验证。",
       "leading_indicators": [
         "机器人量产和真实订单",
