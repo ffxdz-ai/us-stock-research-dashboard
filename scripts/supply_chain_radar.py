@@ -12,10 +12,13 @@ import argparse
 import json
 import math
 import os
+import socket
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
+
+from model_v2 import load_risk_policy, risk_policy_public
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -145,6 +148,14 @@ def collect_futu_snapshots(codes: list[str]) -> tuple[dict[str, dict[str, Any]],
         port = int(os.getenv("FUTU_OPEND_PORT", "11111").strip() or "11111")
     except ValueError:
         port = 11111
+
+    # The Futu SDK keeps reconnecting when OpenD is offline.  Probe the socket
+    # once so a cloud/local report can degrade immediately to public data.
+    try:
+        with socket.create_connection((host, port), timeout=0.6):
+            pass
+    except OSError as exc:
+        return {}, f"Futu OpenD unavailable after TCP probe: {exc}; HK/A股使用公开 fallback"
 
     ctx = None
     output: dict[str, dict[str, Any]] = {}
@@ -358,17 +369,29 @@ def market_confirmation_score(
     return round(max(0, min(100, score)), 1), notes
 
 
-def weighted_layer_score(layer: dict[str, Any], market_score: float | None, weights: dict[str, float]) -> float:
-    confirmation = market_score if market_score is not None else 45.0
-    raw = (
-        float(layer.get("structural_score", 50)) * weights.get("downstream_demand", 0.3)
-        + float(layer.get("supply_constraint_score", 50)) * weights.get("supply_constraint", 0.2)
-        + float(layer.get("earnings_translation_score", 50)) * weights.get("earnings_translation", 0.15)
-        + float(layer.get("margin_leverage_score", 50)) * weights.get("margin_leverage", 0.15)
-        + confirmation * weights.get("market_confirmation", 0.1)
-        + float(layer.get("valuation_gap_score", 50)) * weights.get("valuation_gap", 0.1)
-    )
-    return round(raw, 1)
+def weighted_layer_score(layer: dict[str, Any], market_score: float | None, weights: dict[str, float]) -> tuple[float, dict[str, Any]]:
+    """Combine transparent structural priors with live confirmation.
+
+    Missing inputs are excluded and weights are renormalized; they are never
+    silently replaced by neutral 50/45 defaults.
+    """
+    fields = {
+        "downstream_demand": number(layer.get("structural_score")),
+        "supply_constraint": number(layer.get("supply_constraint_score")),
+        "earnings_translation": number(layer.get("earnings_translation_score")),
+        "margin_leverage": number(layer.get("margin_leverage_score")),
+        "market_confirmation": market_score,
+        "valuation_gap": number(layer.get("valuation_gap_score")),
+    }
+    available = {key: value for key, value in fields.items() if value is not None and number(weights.get(key)) is not None}
+    total_weight = sum(float(weights[key]) for key in available)
+    score = sum(float(value) * float(weights[key]) for key, value in available.items()) / total_weight if total_weight > 0 else 0.0
+    return round(score, 1), {
+        "inputs": fields,
+        "available_weight": round(total_weight, 3),
+        "missing_inputs": [key for key, value in fields.items() if value is None],
+        "method": "renormalized structural priors + live market confirmation",
+    }
 
 
 def layer_status(score: float) -> str:
@@ -453,12 +476,13 @@ def build_radar(config: dict[str, Any], market_pack: dict[str, Any]) -> dict[str
                     }
                 )
             avg_market = round(sum(market_scores) / len(market_scores), 1) if market_scores else None
-            score = weighted_layer_score(layer, avg_market, weights)
+            score, score_detail = weighted_layer_score(layer, avg_market, weights)
             enriched = {
                 **layer,
                 "opportunity_score": score,
                 "status": layer_status(score),
                 "market_confirmation_avg": avg_market,
+                "score_detail": score_detail,
                 "securities": securities,
             }
             layer_rows.append(enriched)
@@ -501,7 +525,9 @@ def build_radar(config: dict[str, Any], market_pack: dict[str, Any]) -> dict[str
     )
     now = datetime.now().astimezone()
     return {
-        "schema_version": 1,
+        "schema_version": 2,
+        "model_version": "2.0.0",
+        "risk_policy": risk_policy_public(),
         "generated_at": now.isoformat(timespec="seconds"),
         "generated_label": now.strftime("%Y-%m-%d %H:%M"),
         "data_sources": [
@@ -592,7 +618,7 @@ def render_report(radar: dict[str, Any]) -> str:
             "- 产业链强不等于股票马上可以买；如果股价已大幅透支，只能等待回踩或突破确认。",
             "- 对覆铜板、电子布、光模块、CPO 等高弹性环节，要确认订单、产能、涨价、毛利率四项是否同步。",
             "- 港股/A股候选只作为跨市场雷达，不纳入复星证券美股整股约束；若后续交易，需单独建对应账户规则。",
-            "- 系统不会因为主题热度直接买入，最终仍以 Buy-Side 分析和 R/R >= 2:1 为硬门槛。",
+            f"- 系统不会因为主题热度直接买入，最终仍以 Buy-Side 分析和正式 R/R >= {load_risk_policy().formal_min_rr:.1f}:1 为硬门槛。",
         ]
     )
     return "\n".join(lines) + "\n"

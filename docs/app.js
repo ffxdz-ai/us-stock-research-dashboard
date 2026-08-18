@@ -341,7 +341,7 @@ function gapCategoryMeta(key) {
       fallback: "补齐当前价、支撑、止损、目标价、R/R",
     },
     rr_discipline: {
-      label: "R/R 未达 2:1",
+      label: `正式 R/R 未达 ${parseLooseNumber(activeRiskPolicy().formal_min_rr) || 3}:1`,
       group: "discipline",
       groupLabel: "交易纪律不通过",
       severity: "warning",
@@ -1031,6 +1031,11 @@ function normalizeList(value) {
   return [];
 }
 
+function activeRiskPolicy() {
+  const policy = archiveObject().risk_policy;
+  return policy && typeof policy === "object" && !Array.isArray(policy) ? policy : {};
+}
+
 function normalizeStructuredOpportunity(item) {
   if (!item || typeof item !== "object" || Array.isArray(item)) return { symbol: "" };
   const text = [item.status, item.status_label, item.action, ...(Array.isArray(item.why_changed) ? item.why_changed : [])].join(" ");
@@ -1050,6 +1055,7 @@ function normalizeStructuredOpportunity(item) {
     price_time: cleanCellText(item.price_time || item.updated_at || ""),
     price_source: cleanCellText(item.price_source || ""),
     opportunity_score: parseLooseNumber(item.opportunity_score),
+    entry_score: parseLooseNumber(item.entry_score),
     trend_score: parseLooseNumber(item.trend_score),
     crowding_score: parseLooseNumber(item.crowding_score),
     rr_ratio: parseLooseNumber(item.rr_ratio),
@@ -1069,6 +1075,18 @@ function normalizeStructuredOpportunity(item) {
     entry_validity: cleanCellText(item.entry_validity || ""),
     one_share_risk: parseLooseNumber(item.one_share_risk),
     one_share_risk_pct: parseLooseNumber(item.one_share_risk_pct),
+    data_confidence: parseLooseNumber(item.data_confidence),
+    price_freshness: cleanCellText(item.price_freshness || "unknown"),
+    execution_allowed: item.execution_allowed === true,
+    technical_data_complete: item.technical_data_complete === true,
+    future_function_audit: cleanCellText(item.future_function_audit || "BLOCK"),
+    gate_failures: normalizeList(item.gate_failures),
+    risk_policy_version: cleanCellText(item.risk_policy_version || ""),
+    alpha_percentile: parseLooseNumber(item.alpha_percentile),
+    sector_rank_percentile: parseLooseNumber(item.sector_rank_percentile),
+    universe_rank: parseLooseNumber(item.universe_rank),
+    factor_coverage: parseLooseNumber(item.factor_coverage),
+    field_provenance: item.field_provenance && typeof item.field_provenance === "object" ? item.field_provenance : {},
     score_delta: scoreDelta,
     why_changed: normalizeList(item.why_changed),
     buy_conditions: normalizeList(item.buy_conditions),
@@ -1094,7 +1112,7 @@ function mergeOpportunity(existing, incoming) {
   ["name", "market", "theme", "segment", "price_time", "price_source", "currency", "source_label"].forEach((key) => {
     if (!merged[key] && incoming[key]) merged[key] = incoming[key];
   });
-  ["opportunity_score", "trend_score", "crowding_score", "rr_ratio", "rr_required", "price", "entry_price", "safe_entry_price", "safe_entry_zone_low", "safe_entry_zone_high", "safe_entry_max_price", "trial_entry_price", "stop_loss", "target_price", "one_share_risk", "one_share_risk_pct"].forEach((key) => {
+  ["opportunity_score", "entry_score", "trend_score", "crowding_score", "data_confidence", "alpha_percentile", "sector_rank_percentile", "universe_rank", "factor_coverage", "rr_ratio", "rr_required", "price", "entry_price", "safe_entry_price", "safe_entry_zone_low", "safe_entry_zone_high", "safe_entry_max_price", "trial_entry_price", "stop_loss", "target_price", "one_share_risk", "one_share_risk_pct"].forEach((key) => {
     if ((merged[key] === null || merged[key] === undefined) && incoming[key] !== null && incoming[key] !== undefined) merged[key] = incoming[key];
   });
   if (incomingHigherPriority) {
@@ -1108,6 +1126,11 @@ function mergeOpportunity(existing, incoming) {
     merged.entry_execution_status = incoming.entry_execution_status || merged.entry_execution_status;
     merged.entry_execution_label = incoming.entry_execution_label || merged.entry_execution_label;
     merged.entry_validity = incoming.entry_validity || merged.entry_validity;
+    merged.price_freshness = incoming.price_freshness || merged.price_freshness;
+    merged.execution_allowed = incoming.execution_allowed === true;
+    merged.technical_data_complete = incoming.technical_data_complete === true;
+    merged.future_function_audit = incoming.future_function_audit || merged.future_function_audit;
+    merged.gate_failures = incoming.gate_failures || merged.gate_failures;
   } else if (!merged.action && incoming.action) {
     merged.action = incoming.action;
   }
@@ -1146,7 +1169,7 @@ function fallbackOpportunityBase(symbol, report, rank, context, extras = {}) {
     trend_score: extras.trend_score !== undefined ? extras.trend_score : null,
     crowding_score: extras.crowding_score !== undefined ? extras.crowding_score : null,
     rr_ratio: rr,
-    rr_required: 2,
+    rr_required: parseLooseNumber(activeRiskPolicy().formal_min_rr) || 3,
     score_delta: null,
     why_changed: cleanContext ? [cleanContext] : [],
     buy_conditions: [],
@@ -1301,6 +1324,63 @@ function formatScoreMetric(label, value, delta, options = {}) {
   return `${label} ${display}${formatDelta(delta)}`;
 }
 
+const GATE_FAILURE_LABELS = {
+  opportunity_score_below_threshold: "机会分未达门槛",
+  trend_score_below_threshold: "趋势分未达门槛",
+  crowding_score_above_threshold: "拥挤度过高或缺失",
+  data_confidence_below_threshold: "数据置信度不足",
+  price_freshness_not_pass: "行情新鲜度未通过",
+  technical_data_incomplete: "MA/前高窗口不完整",
+  future_function_audit_failed: "PIT/未来函数审计未通过",
+  execution_not_allowed: "当前数据源禁止执行",
+  invalid_or_incomplete_path: "入场/止损/目标路径不完整",
+  valid_path_false: "交易路径无效",
+  market_regime_blocks_new_entry: "市场状态阻止新增仓位",
+};
+
+function formatGateFailure(value) {
+  const key = cleanCellText(value);
+  if (GATE_FAILURE_LABELS[key]) return GATE_FAILURE_LABELS[key];
+  const rrMatch = key.match(/^rr_below_([0-9.]+)$/);
+  if (rrMatch) return `计划 R/R 低于 ${rrMatch[1]}:1`;
+  return key || "未知门槛未通过";
+}
+
+function renderModelAudit(opportunity) {
+  const audit = document.createElement("div");
+  audit.className = "opportunity-audit";
+  const confidence = opportunity.data_confidence === null || opportunity.data_confidence === undefined
+    ? "待确认"
+    : `${(Number(opportunity.data_confidence) * 100).toFixed(1)}%`;
+  const states = [
+    [`数据置信度 ${confidence}`, Number(opportunity.data_confidence) >= (parseLooseNumber(activeRiskPolicy().min_data_confidence) || 0.68)],
+    [`行情 ${opportunity.price_freshness || "unknown"}`, opportunity.price_freshness === "fresh"],
+    [opportunity.technical_data_complete ? "技术窗口完整" : "技术窗口不完整", opportunity.technical_data_complete],
+    [`PIT ${opportunity.future_function_audit || "BLOCK"}`, opportunity.future_function_audit === "PASS"],
+    [opportunity.execution_allowed ? "数据允许执行" : "仅供观察", opportunity.execution_allowed],
+  ];
+  states.forEach(([label, passed]) => {
+    const badge = document.createElement("span");
+    badge.className = `model-audit-badge ${passed ? "pass" : "blocked"}`;
+    badge.textContent = label;
+    audit.appendChild(badge);
+  });
+  if (opportunity.gate_failures && opportunity.gate_failures.length) {
+    const details = document.createElement("details");
+    const summary = document.createElement("summary");
+    summary.textContent = `硬门槛未通过 ${opportunity.gate_failures.length} 项`;
+    const list = document.createElement("ul");
+    opportunity.gate_failures.slice(0, 8).forEach((failure) => {
+      const item = document.createElement("li");
+      item.textContent = formatGateFailure(failure);
+      list.appendChild(item);
+    });
+    details.append(summary, list);
+    audit.appendChild(details);
+  }
+  return audit;
+}
+
 function hasScoreDelta(opportunity) {
   return opportunity.score_delta && typeof opportunity.score_delta === "object" && Object.keys(opportunity.score_delta).length > 0;
 }
@@ -1414,12 +1494,17 @@ function renderOpportunityCards() {
     const scores = document.createElement("div");
     scores.className = "opportunity-scores";
     const delta = opportunity.score_delta || {};
-    [
-      formatScoreMetric("机会分", opportunity.opportunity_score, delta.opportunity_score),
+    const scoreLines = [
+      formatScoreMetric("机会发现分", opportunity.opportunity_score, delta.opportunity_score),
+      formatScoreMetric("入场执行分", opportunity.entry_score, delta.entry_score),
       formatScoreMetric("趋势确认", opportunity.trend_score, delta.trend_score),
       formatScoreMetric("拥挤度", opportunity.crowding_score, delta.crowding_score),
       formatScoreMetric("R/R", opportunity.rr_ratio, delta.rr_ratio, { rr: true }),
-    ].forEach((line) => {
+    ];
+    if (opportunity.alpha_percentile !== null && opportunity.alpha_percentile !== undefined) scoreLines.push(`全市场分位 ${opportunity.alpha_percentile}%`);
+    if (opportunity.sector_rank_percentile !== null && opportunity.sector_rank_percentile !== undefined) scoreLines.push(`行业分位 ${opportunity.sector_rank_percentile}%`);
+    if (opportunity.universe_rank !== null && opportunity.universe_rank !== undefined) scoreLines.push(`全池排名 #${opportunity.universe_rank}`);
+    scoreLines.forEach((line) => {
       const item = document.createElement("span");
       item.textContent = line;
       scores.appendChild(item);
@@ -1428,6 +1513,8 @@ function renderOpportunityCards() {
     const change = document.createElement("div");
     change.className = "opportunity-change";
     appendListBlock(change, "变化解释", opportunity.why_changed, hasScoreDelta(opportunity) ? "变化原因待确认" : "暂无历史变化");
+
+    const modelAudit = renderModelAudit(opportunity);
 
     const conditions = document.createElement("div");
     conditions.className = "opportunity-conditions";
@@ -1439,7 +1526,7 @@ function renderOpportunityCards() {
     source.className = "opportunity-source";
     source.textContent = opportunity.source === "structured" ? "来源：结构化 opportunities" : `来源：${opportunity.source_label || "报告正文保守解析"}`;
 
-    card.append(header, theme, action, price, plan, scores, change, conditions, source);
+    card.append(header, theme, action, price, plan, scores, modelAudit, change, conditions, source);
     els.opportunityCards.appendChild(card);
   });
 }

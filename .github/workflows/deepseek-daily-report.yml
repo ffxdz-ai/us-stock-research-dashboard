@@ -129,6 +129,19 @@ jobs:
       - name: Collect public market data
         run: python scripts/collect_market_data.py --mode "$REPORT_MODE"
 
+      - name: Validate V2 schema and point-in-time invariants
+        shell: bash
+        run: |
+          if [ "$REPORT_MODE" = "weekly" ]; then
+            MARKET_PACK="data/latest_weekly_market_pack.json"
+          else
+            MARKET_PACK="data/latest_market_pack.json"
+          fi
+          python scripts/validate_model_v2.py --market-pack "$MARKET_PACK"
+
+      - name: Run deterministic V2 unit tests
+        run: python -m unittest discover -s tests -p "test_*.py" -v
+
       - name: Generate FRED macro regime
         run: python scripts/macro_regime.py
 
@@ -170,7 +183,7 @@ jobs:
           else
             MARKET_PACK="data/latest_market_pack.json"
           fi
-          python scripts/opportunity_radar.py --market-pack "$MARKET_PACK"
+          python scripts/opportunity_radar.py --market-pack "$MARKET_PACK" --fmp-research data/latest_fmp_research.json
 
       - name: Generate cross-market intelligence
         shell: bash
@@ -238,7 +251,15 @@ jobs:
         run: python scripts/export_public_reports.py --limit 80
 
       - name: Validate public archive
-        run: python scripts/validate_public_archive.py docs/data/reports.json
+        shell: bash
+        run: |
+          if [ "$REPORT_MODE" = "weekly" ]; then
+            MARKET_PACK="data/latest_weekly_market_pack.json"
+          else
+            MARKET_PACK="data/latest_market_pack.json"
+          fi
+          python scripts/validate_public_archive.py docs/data/reports.json
+          python scripts/validate_model_v2.py --market-pack "$MARKET_PACK" --public-index docs/data/index.json
 
       - name: Commit public archive
         shell: bash

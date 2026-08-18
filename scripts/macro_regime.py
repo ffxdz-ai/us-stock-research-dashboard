@@ -19,6 +19,8 @@ from pathlib import Path
 from typing import Any
 from zoneinfo import ZoneInfo
 
+from model_v2 import load_risk_policy
+
 
 ROOT = Path(__file__).resolve().parents[1]
 CONFIG_DIR = ROOT / "config"
@@ -593,7 +595,7 @@ def render_report(payload: dict[str, Any]) -> str:
         "",
         f"- 生成时间：{payload.get('generated_label')}",
         "- 定位：判断宏观环境、流动性和风险偏好；不直接生成股票买卖指令。",
-        "- 执行纪律：宏观只决定进攻/防守强度，个股买入仍需 Buy-Side、R/R >= 2:1 和整股约束。",
+        f"- 执行纪律：宏观只决定进攻/防守强度，个股正式买入仍需 Buy-Side、R/R >= {load_risk_policy().formal_min_rr:.1f}:1 和整股约束。",
         "",
     ]
     if not payload.get("fred_enabled"):

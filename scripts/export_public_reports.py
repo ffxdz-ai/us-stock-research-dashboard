@@ -11,6 +11,15 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+from model_v2 import (
+    build_entry_path,
+    evaluate_risk_gate,
+    load_risk_policy,
+    risk_policy_public,
+    select_best_field_value,
+    source_quality,
+)
+
 
 ROOT = Path(__file__).resolve().parents[1]
 REPORTS_DIR = ROOT / "reports"
@@ -25,7 +34,6 @@ DEFAULT_CROSS_MARKET_PATH = ROOT / "docs" / "data" / "cross_market_intelligence.
 DEFAULT_SECONDARY_QUEUE_PATH = ROOT / "docs" / "data" / "secondary_analysis_queue.json"
 DEFAULT_FREE_DATA_FALLBACK_PATH = ROOT / "docs" / "data" / "free_data_fallback.json"
 DEFAULT_MARKET_SENTIMENT_PATH = ROOT / "docs" / "data" / "market_sentiment.json"
-DEFAULT_CONFIG_PATH = ROOT / "config" / "agent_config.json"
 
 PRIVATE_SECTION_MARKERS = (
     "持仓输入",
@@ -486,47 +494,22 @@ def load_first_json(*paths: Path) -> dict[str, Any]:
     return {}
 
 
-DEFAULT_ENTRY_GUARDRAILS = {
-    "formal_min_rr": 3.0,
-    "formal_min_opportunity_score": 75.0,
-    "formal_min_trend_score": 70.0,
-    "formal_max_crowding_score": 35.0,
-    "formal_max_entry_premium_pct": 0.5,
-    "formal_entry_zone_lower_pct": 3.0,
-    "trial_min_rr": 2.5,
-    "trial_min_opportunity_score": 65.0,
-    "trial_min_trend_score": 60.0,
-    "trial_max_crowding_score": 55.0,
-    "trial_max_entry_premium_pct": 1.0,
-}
-
-
 def entry_guardrails() -> dict[str, float]:
-    """Return public-card entry thresholds from config with safe defaults.
-
-    The archive layer repeats these checks so an upstream data source cannot turn
-    a provisional path into a public "formal entry" merely by supplying R/R.
-    """
-    config = load_json_file(DEFAULT_CONFIG_PATH)
-    rules = config.get("entry_rules") if isinstance(config.get("entry_rules"), dict) else {}
-    values = dict(DEFAULT_ENTRY_GUARDRAILS)
-    values["formal_min_rr"] = float(config.get("min_reward_risk_for_buy", values["formal_min_rr"]) or values["formal_min_rr"])
-    values["trial_min_rr"] = float(config.get("min_starter_reward_risk", values["trial_min_rr"]) or values["trial_min_rr"])
-    for key in (
-        "formal_min_opportunity_score",
-        "formal_min_trend_score",
-        "formal_max_crowding_score",
-        "formal_max_entry_premium_pct",
-        "formal_entry_zone_lower_pct",
-        "trial_min_opportunity_score",
-        "trial_min_trend_score",
-        "trial_max_crowding_score",
-        "trial_max_entry_premium_pct",
-    ):
-        parsed = number(rules.get(key))
-        if parsed is not None:
-            values[key] = parsed
-    return values
+    """Compatibility view backed only by the central RiskPolicy."""
+    policy = load_risk_policy()
+    return {
+        "formal_min_rr": policy.formal_min_rr,
+        "formal_min_opportunity_score": policy.formal_min_opportunity_score,
+        "formal_min_trend_score": policy.formal_min_trend_score,
+        "formal_max_crowding_score": policy.formal_max_crowding_score,
+        "formal_max_entry_premium_pct": policy.formal_max_entry_premium_pct,
+        "formal_entry_zone_lower_pct": policy.formal_entry_zone_lower_pct,
+        "trial_min_rr": policy.starter_min_rr,
+        "trial_min_opportunity_score": policy.starter_min_opportunity_score,
+        "trial_min_trend_score": policy.starter_min_trend_score,
+        "trial_max_crowding_score": policy.starter_max_crowding_score,
+        "trial_max_entry_premium_pct": policy.starter_max_entry_premium_pct,
+    }
 
 
 def market_entry_blocker(market_status: str) -> str | None:
@@ -550,7 +533,7 @@ def opportunity_status(action: str, rr_ratio: float | None, queue_status: str = 
         return "secondary_analysis"
     if re.search(r"避免追高|禁止追高|不追高|严禁追高", text):
         return "avoid_chasing"
-    if rr_ratio is not None and rr_ratio < 2:
+    if rr_ratio is not None and rr_ratio < load_risk_policy().starter_min_rr:
         return "avoid_chasing"
     if re.search(r"等待|回踩|回调|买点|突破确认", text):
         return "waiting_entry"
@@ -576,10 +559,33 @@ def status_label(status: str) -> str:
 
 
 def merge_opportunity(base: dict[str, Any] | None, incoming: dict[str, Any]) -> dict[str, Any]:
+    provenance_fields = {
+        "price", "opportunity_score", "entry_score", "trend_score", "crowding_score", "data_confidence",
+        "rr_ratio", "entry_price", "stop_loss", "target_price", "starter_entry", "starter_stop", "starter_target",
+        "breakout_trigger", "breakout_stop", "breakout_target",
+    }
     if not base:
-        return dict(incoming)
+        created = dict(incoming)
+        provenance = dict(created.get("field_provenance") or {})
+        default_source = created.get("price_source") or created.get("source") or "unknown"
+        default_time = created.get("price_time") or created.get("updated_at")
+        for key in provenance_fields:
+            if created.get(key) not in (None, "") and key not in provenance:
+                provenance[key] = {
+                    "source": default_source,
+                    "source_time": default_time,
+                    "retrieved_at": created.get("updated_at") or default_time,
+                    "fallback_used": "fallback" in str(default_source).lower(),
+                    "confidence": source_quality(default_source),
+                }
+        created["field_provenance"] = provenance
+        return created
     merged = dict(base)
+    merged_provenance = dict(merged.get("field_provenance") or {})
+    incoming_provenance = incoming.get("field_provenance") if isinstance(incoming.get("field_provenance"), dict) else {}
     for key, value in incoming.items():
+        if key == "field_provenance":
+            continue
         if key in {"why_changed", "buy_conditions", "avoid_conditions", "invalid_conditions"}:
             merged[key] = unique_list([*(merged.get(key) or []), *(value or [])], limit=8)
             continue
@@ -588,9 +594,42 @@ def merge_opportunity(base: dict[str, Any] | None, incoming: dict[str, Any]) -> 
             extra = value if isinstance(value, dict) else {}
             merged[key] = {**existing, **{k: v for k, v in extra.items() if v is not None}}
             continue
+        if key in provenance_fields and value not in (None, ""):
+            base_meta = merged_provenance.get(key) if isinstance(merged_provenance.get(key), dict) else {}
+            incoming_meta = incoming_provenance.get(key) if isinstance(incoming_provenance.get(key), dict) else {}
+            candidates = []
+            if merged.get(key) not in (None, ""):
+                candidates.append(
+                    {
+                        "value": merged.get(key),
+                        "source": base_meta.get("source") or merged.get("price_source") or merged.get("source"),
+                        "source_time": base_meta.get("source_time") or merged.get("price_time") or merged.get("updated_at"),
+                        "confidence": base_meta.get("confidence") or source_quality(base_meta.get("source") or merged.get("price_source") or merged.get("source")),
+                    }
+                )
+            candidates.append(
+                {
+                    "value": value,
+                    "source": incoming_meta.get("source") or incoming.get("price_source") or incoming.get("source"),
+                    "source_time": incoming_meta.get("source_time") or incoming.get("price_time") or incoming.get("updated_at"),
+                    "confidence": incoming_meta.get("confidence") or source_quality(incoming_meta.get("source") or incoming.get("price_source") or incoming.get("source")),
+                }
+            )
+            selected = select_best_field_value(candidates)
+            if selected:
+                merged[key] = selected["value"]
+                merged_provenance[key] = {
+                    "source": selected.get("source") or "unknown",
+                    "source_time": selected.get("source_time"),
+                    "retrieved_at": incoming.get("updated_at") or merged.get("updated_at"),
+                    "fallback_used": "fallback" in str(selected.get("source") or "").lower(),
+                    "confidence": selected.get("confidence"),
+                }
+            continue
         if value not in (None, "", [], {}):
             if merged.get(key) in (None, "", [], {}) or key in {"action", "status", "status_label"}:
                 merged[key] = value
+    merged["field_provenance"] = merged_provenance
     return merged
 
 
@@ -667,22 +706,21 @@ def formal_entry_path(
     entry = number(item.get("strict_entry") or item.get("entry_price"))
     stop_loss = number(item.get("stop_loss") or item.get("invalidation"))
     target = number(item.get("target_price") or item.get("mechanical_target"))
-    opportunity = number(item.get("opportunity_score"))
-    trend = number(item.get("trend_score"))
-    crowding = number(item.get("crowding_score"))
-    rr = path_rr_ratio(entry, stop_loss, target)
+    policy = load_risk_policy()
+    path = build_entry_path("formal", entry, stop_loss, target, policy.formal_min_rr)
+    rr = path.rr
     premium = ((price / entry) - 1) * 100 if price is not None and entry is not None and entry > 0 else None
+    gate_input = {**item, "valid_path": path.valid}
+    gate = evaluate_risk_gate(gate_input, path, path_type="formal", policy=policy)
+    failures = list(gate.gate_failures)
     if market_entry_blocker(market_status):
-        return None
-    if not valid_path(entry, stop_loss, target) or rr is None:
-        return None
-    if rr < guardrails["formal_min_rr"]:
-        return None
-    if opportunity is None or opportunity < guardrails["formal_min_opportunity_score"]:
-        return None
-    if trend is None or trend < guardrails["formal_min_trend_score"]:
-        return None
-    if crowding is None or crowding > guardrails["formal_max_crowding_score"]:
+        failures.append("market_regime_blocks_new_entry")
+    # Recompute from the fully enriched candidate.  Upstream collection runs
+    # before cross-sectional/crowding factors exist, so carrying its provisional
+    # failures here would permanently block an otherwise valid enriched record.
+    item["gate_failures"] = list(dict.fromkeys(failures))
+    item["risk_policy_version"] = policy.policy_version
+    if failures:
         return None
     return {
         "signal_type": "formal",
@@ -734,23 +772,19 @@ def executable_starter_path(
     entry = number(item.get("starter_entry"))
     stop_loss = number(item.get("starter_stop"))
     target = number(item.get("starter_target"))
-    rr = number(item.get("starter_reward_risk"))
-    opportunity = number(item.get("opportunity_score"))
-    trend = number(item.get("trend_score"))
-    crowding = number(item.get("crowding_score"))
-    if not valid_path(entry, stop_loss, target) or rr is None or price is None:
-        return None
-    if market_entry_blocker(market_status):
+    policy = load_risk_policy()
+    path = build_entry_path("starter", entry, stop_loss, target, policy.starter_min_rr)
+    rr = path.rr
+    if price is None or entry is None:
         return None
     if price > entry * (1 + guardrails["trial_max_entry_premium_pct"] / 100):
         return None
-    if rr < guardrails["trial_min_rr"]:
-        return None
-    if opportunity is None or opportunity < guardrails["trial_min_opportunity_score"]:
-        return None
-    if trend is None or trend < guardrails["trial_min_trend_score"]:
-        return None
-    if crowding is None or crowding > guardrails["trial_max_crowding_score"]:
+    gate = evaluate_risk_gate({**item, "valid_path": path.valid}, path, path_type="starter", policy=policy)
+    failures = list(gate.gate_failures)
+    if market_entry_blocker(market_status):
+        failures.append("market_regime_blocks_new_entry")
+    item["starter_gate_failures"] = failures
+    if failures:
         return None
     return {"signal_type": "trial", "entry": entry, "stop_loss": stop_loss, "target": target, "rr": rr}
 
@@ -764,23 +798,19 @@ def executable_breakout_path(
     trigger = number(item.get("breakout_trigger"))
     stop_loss = number(item.get("breakout_stop"))
     target = number(item.get("breakout_target"))
-    rr = number(item.get("breakout_reward_risk"))
-    opportunity = number(item.get("opportunity_score"))
-    trend = number(item.get("trend_score"))
-    crowding = number(item.get("crowding_score"))
-    if not valid_path(trigger, stop_loss, target) or rr is None or price is None:
-        return None
-    if market_entry_blocker(market_status):
+    policy = load_risk_policy()
+    path = build_entry_path("breakout", trigger, stop_loss, target, policy.breakout_min_rr)
+    rr = path.rr
+    if price is None or trigger is None:
         return None
     if price < trigger or price > trigger * (1 + guardrails["formal_max_entry_premium_pct"] / 100):
         return None
-    if rr < guardrails["formal_min_rr"]:
-        return None
-    if opportunity is None or opportunity < guardrails["formal_min_opportunity_score"]:
-        return None
-    if trend is None or trend < guardrails["formal_min_trend_score"]:
-        return None
-    if crowding is None or crowding > guardrails["formal_max_crowding_score"]:
+    gate = evaluate_risk_gate({**item, "valid_path": path.valid}, path, path_type="breakout", policy=policy)
+    failures = list(gate.gate_failures)
+    if market_entry_blocker(market_status):
+        failures.append("market_regime_blocks_new_entry")
+    item["breakout_gate_failures"] = failures
+    if failures:
         return None
     return {"signal_type": "breakout", "entry": trigger, "stop_loss": stop_loss, "target": target, "rr": rr}
 
@@ -909,13 +939,29 @@ def entry_gate_failures(item: dict[str, Any], guardrails: dict[str, float], mark
     crowding = number(item.get("crowding_score"))
     if crowding is None or crowding > guardrails["formal_max_crowding_score"]:
         failures.append(f"拥挤度未通过正式门槛（需 ≤ {guardrails['formal_max_crowding_score']:.0f}）。")
-    return unique_list(failures, limit=4)
+    confidence = number(item.get("data_confidence"))
+    policy = load_risk_policy()
+    if confidence is None or confidence < policy.min_data_confidence:
+        failures.append(f"数据置信度未达到 {policy.min_data_confidence:.2f}。")
+    if item.get("price_freshness") != "fresh":
+        failures.append("行情新鲜度未通过；公开 fallback 只能观察，不能执行。")
+    if item.get("technical_data_complete") is not True:
+        failures.append("MA20/50/200 或 prior-high 窗口不完整。")
+    if item.get("future_function_audit") != "PASS":
+        failures.append("Point-in-Time / 未来函数审计未通过。")
+    failures.extend(str(value) for value in item.get("gate_failures", []) if value)
+    return unique_list(failures, limit=8)
 
 
 def derive_opportunity_conditions(item: dict[str, Any]) -> tuple[list[str], list[str], list[str]]:
     rr = number(item.get("rr_ratio"))
     entry_tier = clean_text(item.get("entry_tier"))
-    rr_required = number(item.get("rr_required")) or (3.0 if entry_tier == "formal" else 2.5 if entry_tier == "trial" else 3.0)
+    policy = load_risk_policy()
+    rr_required = number(item.get("rr_required")) or (
+        policy.formal_min_rr if entry_tier == "formal"
+        else policy.starter_min_rr if entry_tier == "trial"
+        else policy.breakout_min_rr
+    )
     price = number(item.get("price"))
     strict_entry = number(item.get("entry_price") or item.get("strict_entry"))
     stop_loss = number(item.get("stop_loss") or item.get("invalidation"))
@@ -1044,7 +1090,7 @@ def derive_opportunity_conditions(item: dict[str, Any]) -> tuple[list[str], list
         buy = [
             "暂不买：缺少完整的入场价、止损价或目标价，等待系统补齐后再决策",
             f"必须先补齐：当前价 {fmt_price(price, currency)} / 止损 {fmt_price(stop_loss, currency)} / 目标 {fmt_price(target, currency)}",
-            "补齐后再检查 R/R 是否 ≥ 2:1，未达标不升级为买入",
+            f"补齐后再检查正式 R/R 是否 ≥ {policy.formal_min_rr:.1f}:1，未达标不升级为买入",
             "需要财务、趋势或事件证据至少一项继续改善",
         ]
     else:
@@ -1152,8 +1198,20 @@ def finalize_opportunities(
                 "price_time": item.get("price_time") or "",
                 "price_source": item.get("price_source") or "",
                 "opportunity_score": item.get("opportunity_score"),
+                "entry_score": item.get("entry_score"),
                 "trend_score": item.get("trend_score"),
                 "crowding_score": item.get("crowding_score"),
+                "data_confidence": item.get("data_confidence"),
+                "alpha_percentile": item.get("alpha_percentile"),
+                "sector_rank_percentile": item.get("sector_rank_percentile"),
+                "universe_rank": item.get("universe_rank"),
+                "factor_coverage": item.get("factor_coverage"),
+                "price_freshness": item.get("price_freshness") or "unknown",
+                "execution_allowed": item.get("execution_allowed") is True,
+                "technical_data_complete": item.get("technical_data_complete") is True,
+                "future_function_audit": item.get("future_function_audit") or "BLOCK",
+                "gate_failures": unique_list(item.get("gate_failures") or [], limit=12),
+                "risk_policy_version": item.get("risk_policy_version") or load_risk_policy().policy_version,
                 "rr_ratio": item.get("rr_ratio"),
                 "rr_required": item.get("rr_required") or guardrails["formal_min_rr"],
                 "entry_price": item.get("entry_price") or item.get("strict_entry"),
@@ -1188,6 +1246,7 @@ def finalize_opportunities(
                 "invalid_conditions": item.get("invalid_conditions") or [],
                 "source": item.get("source") or "structured-public-data",
                 "updated_at": item.get("updated_at") or "",
+                "field_provenance": item.get("field_provenance") or {},
             }
         )
     return sorted(
@@ -1238,8 +1297,19 @@ def derive_opportunities() -> list[dict[str, Any]]:
                     "action": clean_text(candidate.get("action")),
                     "price": number(candidate.get("price")),
                     "opportunity_score": number(candidate.get("score")),
+                    "entry_score": number(candidate.get("entry_score")),
                     "trend_score": number(candidate.get("trend_score")),
                     "crowding_score": number(candidate.get("crowding_score")),
+                    "data_confidence": number(candidate.get("data_confidence")),
+                    "alpha_percentile": number(candidate.get("alpha_percentile")),
+                    "sector_rank_percentile": number(candidate.get("sector_rank_percentile")),
+                    "universe_rank": number(candidate.get("universe_rank")),
+                    "factor_coverage": number(candidate.get("factor_coverage")),
+                    "price_freshness": clean_text(candidate.get("price_freshness")),
+                    "execution_allowed": candidate.get("execution_allowed") is True,
+                    "technical_data_complete": candidate.get("technical_data_complete") is True,
+                    "future_function_audit": clean_text(candidate.get("future_function_audit")),
+                    "gate_failures": candidate.get("gate_failures") or [],
                     "rr_ratio": number(candidate.get("reward_risk")),
                     "starter_entry": number(candidate.get("starter_entry")),
                     "starter_stop": number(candidate.get("starter_stop")),
@@ -1276,10 +1346,21 @@ def derive_opportunities() -> list[dict[str, Any]]:
                 "price_time": cross_market.get("generated_label") or generated_at,
                 "price_source": "跨市场情报行情快照",
                 "opportunity_score": number(candidate.get("opportunity_score")),
+                "entry_score": number(candidate.get("entry_score")),
                 "trend_score": number(candidate.get("trend_score")),
                 "crowding_score": number(candidate.get("crowding_score")),
+                "data_confidence": number(candidate.get("data_confidence")),
+                "alpha_percentile": number(candidate.get("alpha_percentile")),
+                "sector_rank_percentile": number(candidate.get("sector_rank_percentile")),
+                "universe_rank": number(candidate.get("universe_rank")),
+                "factor_coverage": number(candidate.get("factor_coverage")),
+                "price_freshness": clean_text(candidate.get("price_freshness")),
+                "execution_allowed": candidate.get("execution_allowed") is True,
+                "technical_data_complete": candidate.get("technical_data_complete") is True,
+                "future_function_audit": clean_text(candidate.get("future_function_audit")),
+                "gate_failures": candidate.get("gate_failures") or [],
                 "rr_ratio": number(candidate.get("reward_risk")),
-                "rr_required": 2,
+                "rr_required": load_risk_policy().formal_min_rr,
                 "starter_entry": number(candidate.get("starter_entry")),
                 "starter_stop": number(candidate.get("starter_stop")),
                 "starter_target": number(candidate.get("starter_target")),
@@ -1324,10 +1405,21 @@ def derive_opportunities() -> list[dict[str, Any]]:
                     "price_time": cross_market.get("generated_label") or generated_at,
                     "price_source": clean_text(security.get("data_status")) or "跨市场情报行情快照",
                     "opportunity_score": number(security.get("opportunity_score")),
+                    "entry_score": number(security.get("entry_score")),
                     "trend_score": number(security.get("trend_score")),
                     "crowding_score": number(security.get("crowding_score")),
+                    "data_confidence": number(security.get("data_confidence")),
+                    "alpha_percentile": number(security.get("alpha_percentile")),
+                    "sector_rank_percentile": number(security.get("sector_rank_percentile")),
+                    "universe_rank": number(security.get("universe_rank")),
+                    "factor_coverage": number(security.get("factor_coverage")),
+                    "price_freshness": clean_text(security.get("price_freshness")),
+                    "execution_allowed": security.get("execution_allowed") is True,
+                    "technical_data_complete": security.get("technical_data_complete") is True,
+                    "future_function_audit": clean_text(security.get("future_function_audit")),
+                    "gate_failures": security.get("gate_failures") or [],
                     "rr_ratio": number(security.get("reward_risk")),
-                    "rr_required": 2,
+                    "rr_required": load_risk_policy().formal_min_rr,
                     "starter_entry": number(security.get("starter_entry")),
                     "starter_stop": number(security.get("starter_stop")),
                     "starter_target": number(security.get("starter_target")),
@@ -1395,8 +1487,17 @@ def derive_opportunities() -> list[dict[str, Any]]:
                 "price_time": clean_text(price.get("quote_time") or event_evidence.get("generated_label") or generated_at),
                 "price_source": clean_text(price.get("source")) or "事件证据行情快照",
                 "trend_score": number(price.get("trend_score")),
+                "opportunity_score": number(price.get("opportunity_score")),
+                "entry_score": number(price.get("entry_score")),
+                "crowding_score": number(price.get("crowding_score")),
+                "data_confidence": number(price.get("data_confidence")),
+                "price_freshness": clean_text(price.get("price_freshness")),
+                "execution_allowed": price.get("execution_allowed") is True,
+                "technical_data_complete": price.get("technical_data_complete") is True,
+                "future_function_audit": clean_text(price.get("future_function_audit")),
+                "gate_failures": price.get("gate_failures") or [],
                 "rr_ratio": number(price.get("reward_risk")),
-                "rr_required": 2,
+                "rr_required": load_risk_policy().formal_min_rr,
                 "entry_price": number(price.get("strict_entry")),
                 "stop_loss": number(price.get("invalidation")),
                 "target_price": number(price.get("mechanical_target")),
@@ -1659,7 +1760,9 @@ def build_archive(output: Path, limit: int = 80, merge_existing: bool = True) ->
 
     now = datetime.now(timezone.utc)
     payload = {
-        "schema_version": 1,
+        "schema_version": 2,
+        "model_version": "2.0.0",
+        "risk_policy": risk_policy_public(),
         "generated_at": now.isoformat(timespec="seconds"),
         "generated_label": now.astimezone().strftime("%Y-%m-%d %H:%M"),
         "privacy": "public-sanitized",

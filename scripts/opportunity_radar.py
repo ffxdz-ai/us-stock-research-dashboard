@@ -2,7 +2,7 @@
 """Generate an opportunity-discovery radar with review memory.
 
 This module is intentionally upstream of Buy-Side stock analysis. It tries to
-detect expectation gaps across themes and supply chains, then records 30/60/90
+detect expectation gaps across themes and supply chains, then records 5/20/60/120
 day review checkpoints. It must not bypass the project's risk/reward, valuation
 and whole-share execution discipline.
 """
@@ -17,6 +17,16 @@ from pathlib import Path
 from typing import Any
 from zoneinfo import ZoneInfo
 
+from model_v2 import (
+    apply_cross_sectional_ranks,
+    factor_snapshot,
+    infer_company_type,
+    load_model_config,
+    load_risk_policy,
+    risk_policy_public,
+    evaluate_split,
+)
+
 
 ROOT = Path(__file__).resolve().parents[1]
 CONFIG_DIR = ROOT / "config"
@@ -27,6 +37,7 @@ REPORTS_DIR = ROOT / "reports"
 DEFAULT_CONFIG = CONFIG_DIR / "opportunity_map.json"
 DEFAULT_MARKET_PACK = DATA_DIR / "latest_market_pack.json"
 DEFAULT_SUPPLY_RADAR = DATA_DIR / "latest_supply_chain_radar.json"
+DEFAULT_FMP_RESEARCH = DATA_DIR / "latest_fmp_research.json"
 DEFAULT_SECONDARY_QUEUE = DOCS_DATA_DIR / "secondary_analysis_queue.json"
 DEFAULT_STATE = DOCS_DATA_DIR / "opportunity_journal.json"
 DEFAULT_OUTPUT = DATA_DIR / "latest_opportunity_radar.json"
@@ -207,27 +218,34 @@ def chart_field(candidate: dict[str, Any], field: str) -> float | None:
 
 
 def trend_from_candidate(candidate: dict[str, Any]) -> float | None:
+    v2_score = number(candidate.get("technical_score_v2") or candidate.get("technical_score"))
+    if v2_score is not None and 0 <= v2_score <= 100:
+        return round(v2_score, 1)
     price = number(candidate.get("price"))
     ma50 = chart_field(candidate, "ma50")
     ma200 = chart_field(candidate, "ma200")
     high252 = chart_field(candidate, "high252")
     if price is None:
         return None
-    score = 42.0
+    score = 50.0
+    observed = 0
     if ma50:
+        observed += 1
         score += 18 if price >= ma50 else -8
     if ma200:
+        observed += 1
         score += 20 if price >= ma200 else -12
     if high252:
+        observed += 1
         distance = price / high252 - 1
         if distance >= -0.08:
             score += 12
         elif distance <= -0.30:
             score -= 8
-    return round(clamp(score), 1)
+    return round(clamp(score), 1) if observed else None
 
 
-def valuation_gap_score(candidate: dict[str, Any]) -> float:
+def valuation_gap_score(candidate: dict[str, Any]) -> float | None:
     raw_score = number(candidate.get("valuation_score"))
     if raw_score is not None:
         if -2 <= raw_score <= 2:
@@ -237,7 +255,7 @@ def valuation_gap_score(candidate: dict[str, Any]) -> float:
     pe = number(candidate.get("valuation_pe") or candidate.get("forward_pe") or candidate.get("trailing_pe") or candidate.get("estimated_pe_from_sec"))
     revenue_growth = number((candidate.get("sec") or {}).get("revenue_growth_yoy") if isinstance(candidate.get("sec"), dict) else None)
     if pe is None or pe <= 0:
-        return 45.0
+        return None
     if pe <= 15:
         score = 82
     elif pe <= 22:
@@ -255,82 +273,107 @@ def valuation_gap_score(candidate: dict[str, Any]) -> float:
     return round(clamp(score), 1)
 
 
-def earnings_leverage_score(candidate: dict[str, Any]) -> float:
+def earnings_leverage_score(candidate: dict[str, Any]) -> float | None:
     sec = candidate.get("sec") if isinstance(candidate.get("sec"), dict) else {}
     revenue_growth = number(sec.get("revenue_growth_yoy"))
     net_margin = number(sec.get("net_margin"))
     liabilities_to_assets = number(sec.get("liabilities_to_assets"))
-    score = 45.0
+    latest_fcf = sec.get("latest_annual_fcf") if isinstance(sec.get("latest_annual_fcf"), dict) else {}
+    fcf = number(latest_fcf.get("val"))
+    if all(value is None for value in (revenue_growth, net_margin, liabilities_to_assets, fcf)):
+        return None
+    score = 50.0
     if revenue_growth is not None:
         score += clamp(revenue_growth * 40, -18, 28)
     if net_margin is not None:
         score += clamp(net_margin * 35, -12, 22)
     if liabilities_to_assets is not None:
         score += clamp((0.65 - liabilities_to_assets) * 18, -10, 10)
-    latest_fcf = sec.get("latest_annual_fcf") if isinstance(sec.get("latest_annual_fcf"), dict) else {}
-    if number(latest_fcf.get("val")) and number(latest_fcf.get("val")) > 0:
+    if fcf is not None and fcf > 0:
         score += 7
     return round(clamp(score), 1)
 
 
-def data_confidence_score(candidate: dict[str, Any], supply_item: dict[str, Any]) -> float:
+def fmp_index(payload: dict[str, Any]) -> dict[str, dict[str, Any]]:
+    rows = payload.get("symbols") if isinstance(payload.get("symbols"), list) else []
+    return {str(item.get("symbol") or "").upper(): item for item in rows if isinstance(item, dict) and item.get("symbol")}
+
+
+def revision_factor(row: dict[str, Any]) -> tuple[float | None, dict[str, Any]]:
+    revision = row.get("estimate_revision") if isinstance(row.get("estimate_revision"), dict) else {}
+    supported = {
+        "fy1_eps_30d": number(revision.get("fy1_eps_revision_30d_pct")),
+        "fy1_eps_90d": number(revision.get("fy1_eps_revision_90d_pct")),
+        "revenue": number(revision.get("revenueAvg_change_pct")),
+        "next_quarter_eps": number(revision.get("next_quarter_eps_revision_pct")),
+        "next_quarter_revenue": number(revision.get("next_quarter_revenue_revision_pct")),
+        "positive_minus_negative": number(revision.get("positive_minus_negative_revisions")),
+        "guidance_change": number(revision.get("guidance_change_score")),
+    }
+    # Legacy FMP snapshots only provide the latest annual EPS comparison.  It is
+    # usable as a low-coverage revision observation, never as an invented 30/90d value.
+    if all(value is None for value in supported.values()):
+        supported["latest_eps_change"] = number(revision.get("epsAvg_change_pct"))
+    values = [value for value in supported.values() if value is not None]
+    if not values:
+        return None, {"status": "missing", "metrics": supported}
+    score = sum(clamp(50 + value * 4, 0, 100) for value in values) / len(values)
+    dispersion = number(revision.get("estimate_dispersion_pct"))
+    if dispersion is not None:
+        score -= min(15, max(0, dispersion) * 0.5)
+    return round(clamp(score), 1), {"status": "available", "metrics": supported, "estimate_dispersion_pct": dispersion}
+
+
+def data_confidence_score(candidate: dict[str, Any], supply_item: dict[str, Any]) -> float | None:
     confidence = number(candidate.get("data_confidence"))
     if confidence is not None:
         return round(clamp(confidence * 100 if confidence <= 1.5 else confidence), 1)
-    if number(supply_item.get("price")) is not None:
-        return 55.0
-    return 35.0
+    return None
 
 
-def crowding_score(candidate: dict[str, Any], supply_item: dict[str, Any]) -> float:
+def crowding_score(candidate: dict[str, Any], supply_item: dict[str, Any]) -> float | None:
     price = number(candidate.get("price") or supply_item.get("price"))
     ma50 = chart_field(candidate, "ma50") or number(supply_item.get("ma50"))
     ma200 = chart_field(candidate, "ma200") or number(supply_item.get("ma200"))
     high252 = chart_field(candidate, "high252") or number(supply_item.get("high252"))
     pe = number(candidate.get("valuation_pe") or candidate.get("forward_pe") or candidate.get("trailing_pe") or candidate.get("estimated_pe_from_sec"))
-    score = 22.0
+    components: list[float] = []
     if price and ma50:
         premium = price / ma50 - 1
-        if premium > 0.08:
-            score += min(24, premium * 120)
-        elif premium < -0.06:
-            score -= 6
+        components.append(clamp(35 + premium * 180))
     if price and ma200:
         premium = price / ma200 - 1
-        if premium > 0.30:
-            score += min(24, premium * 55)
+        components.append(clamp(30 + premium * 100))
     if price and high252:
         distance = price / high252 - 1
-        if distance > -0.04:
-            score += 18
-        elif distance < -0.25:
-            score -= 8
+        components.append(clamp(100 + distance * 180))
     if pe:
-        if pe > 60:
-            score += 22
-        elif pe > 40:
-            score += 12
-        elif pe < 20:
-            score -= 4
-    return round(clamp(score), 1)
+        components.append(clamp(20 + pe * 1.1))
+    return round(sum(components) / len(components), 1) if components else None
 
 
-def market_underpricing_score(valuation_gap: float, trend: float | None, crowding: float) -> float:
-    trend_component = 55.0 if trend is None else trend
-    score = valuation_gap * 0.5 + (100 - crowding) * 0.3 + trend_component * 0.2
-    return round(clamp(score), 1)
+def market_underpricing_score(valuation_gap: float | None, trend: float | None, crowding: float | None) -> float | None:
+    if valuation_gap is None:
+        return None
+    components = [(valuation_gap, 0.5)]
+    if crowding is not None:
+        components.append((100 - crowding, 0.3))
+    if trend is not None:
+        components.append((trend, 0.2))
+    total_weight = sum(weight for _, weight in components)
+    return round(clamp(sum(value * weight for value, weight in components) / total_weight), 1)
 
 
 def security_action(row: dict[str, Any]) -> str:
     market = str(row.get("market") or "")
     score = number(row.get("opportunity_score")) or 0
     underpricing = number(row.get("underpricing_score")) or 0
-    crowding = number(row.get("crowding_score")) or 0
+    crowding = number(row.get("crowding_score"))
     trend = number(row.get("trend_score")) or 0
     data_confidence = number(row.get("data_confidence_score")) or 0
     if data_confidence < 45:
         return "数据不足，补行情/财报后再判断"
-    if crowding >= 72 and underpricing < 55:
+    if crowding is not None and crowding >= 72 and underpricing < 55:
         return "景气强但拥挤，等待回踩或新催化"
     if market != "US":
         if score >= 72 and trend >= 65:
@@ -348,6 +391,7 @@ def build_security_signal(
     market_index: dict[str, dict[str, Any]],
     supply_by_code: dict[str, dict[str, Any]],
     secondary_by_code: dict[str, dict[str, Any]],
+    fmp_by_symbol: dict[str, dict[str, Any]],
 ) -> dict[str, Any]:
     code = normalize_code(security.get("code"))
     symbol = us_symbol(code)
@@ -358,12 +402,17 @@ def build_security_signal(
     price = number(candidate.get("price") or supply_item.get("price"))
     trend = number(supply_item.get("market_confirmation_score")) or trend_from_candidate(candidate)
     valuation_gap = valuation_gap_score(candidate)
-    earnings = earnings_leverage_score(candidate) if candidate else 45.0
+    earnings = earnings_leverage_score(candidate) if candidate else None
     confidence = data_confidence_score(candidate, supply_item)
     crowding = crowding_score(candidate, supply_item)
     underpricing = market_underpricing_score(valuation_gap, trend, crowding)
-    trend_component = 55.0 if trend is None else trend
-    score = earnings * 0.28 + valuation_gap * 0.22 + trend_component * 0.2 + confidence * 0.15 + (100 - crowding) * 0.15
+    fmp_row = fmp_by_symbol.get(symbol or "", {}) if symbol else {}
+    revision_score, revision_detail = revision_factor(fmp_row)
+    catalyst_score = None
+    surprise = fmp_row.get("latest_earnings_surprise") if isinstance(fmp_row.get("latest_earnings_surprise"), dict) else {}
+    surprise_pct = number(surprise.get("eps_surprise_pct"))
+    if surprise_pct is not None:
+        catalyst_score = round(clamp(50 + surprise_pct * 3), 1)
     latest = latest_filing(candidate)
 
     row = {
@@ -386,57 +435,93 @@ def build_security_signal(
         "breakout_target": candidate.get("breakout_target"),
         "breakout_reward_risk": candidate.get("breakout_reward_risk"),
         "buyable_now": bool(candidate.get("buyable_now")),
-        "trend_score": round(trend_component, 1),
+        "trend_score": round(trend, 1) if trend is not None else None,
         "valuation_gap_score": valuation_gap,
         "earnings_leverage_score": earnings,
         "underpricing_score": underpricing,
         "data_confidence_score": confidence,
         "crowding_score": crowding,
-        "opportunity_score": round(clamp(score), 1),
+        "earnings_revision_score": revision_score,
+        "earnings_revision_detail": revision_detail,
+        "catalyst_score": catalyst_score,
         "recent_filing": latest,
         "secondary_status": secondary.get("status") or secondary.get("review_result") or secondary.get("last_result"),
         "source": supply_item.get("data_status") or candidate.get("quote_source") or "theme map only",
     }
+    factor_input = {**candidate, **row, "ticker": symbol, "sec": candidate.get("sec", {})}
+    factors = factor_snapshot(factor_input)
+    row["company_type"] = infer_company_type(factor_input)
+    sector_map = load_model_config().get("sector_etf_map")
+    if not isinstance(sector_map, dict):
+        sector_map = {}
+    row["sector_etf"] = str(sector_map.get(row["company_type"]) or sector_map.get("default") or "SPY")
+    row["factor_snapshot"] = factors
+    row["opportunity_score"] = factors.get("opportunity_score")
+    row["entry_score"] = candidate.get("entry_score")
+    row["alpha_score"] = factors.get("raw_alpha_score")
+    row["factor_coverage"] = factors.get("factor_coverage")
+    row["missing_factors"] = factors.get("missing_factors")
+    row["data_confidence"] = candidate.get("data_confidence")
+    row["price_freshness"] = candidate.get("price_freshness")
+    row["execution_allowed"] = candidate.get("execution_allowed")
+    row["technical_data_complete"] = candidate.get("technical_data_complete")
+    row["future_function_audit"] = candidate.get("future_function_audit")
+    row["gate_failures"] = candidate.get("gate_failures") or []
     row["action"] = security_action(row)
     return row
 
 
-def weighted_theme_score(theme: dict[str, Any], securities: list[dict[str, Any]], weights: dict[str, float]) -> dict[str, float]:
+def weighted_theme_score(theme: dict[str, Any], securities: list[dict[str, Any]], weights: dict[str, float]) -> dict[str, Any]:
     if securities:
         top = sorted(securities, key=lambda item: number(item.get("opportunity_score")) or 0, reverse=True)[:5]
-        earnings = sum(number(item.get("earnings_leverage_score")) or 45 for item in top) / len(top)
-        underpricing = sum(number(item.get("underpricing_score")) or 45 for item in top) / len(top)
-        confidence = sum(number(item.get("data_confidence_score")) or 35 for item in top) / len(top)
-        crowding = sum(number(item.get("crowding_score")) or 30 for item in top) / len(top)
+        earnings_values = [value for item in top if (value := number(item.get("earnings_leverage_score"))) is not None]
+        revision_values = [value for item in top if (value := number(item.get("earnings_revision_score"))) is not None]
+        underpricing_values = [value for item in top if (value := number(item.get("underpricing_score"))) is not None]
+        trend_values = [value for item in top if (value := number(item.get("trend_score"))) is not None]
+        confidence_values = [value for item in top if (value := number(item.get("data_confidence_score"))) is not None]
+        earnings = sum(earnings_values) / len(earnings_values) if earnings_values else None
+        revision = sum(revision_values) / len(revision_values) if revision_values else None
+        underpricing = sum(underpricing_values) / len(underpricing_values) if underpricing_values else None
+        breadth = sum(1 for value in trend_values if value >= 65) / len(trend_values) * 100 if trend_values else None
+        confidence = sum(confidence_values) / len(confidence_values) if confidence_values else None
+        crowding_values = [value for item in top if (value := number(item.get("crowding_score"))) is not None]
+        crowding = sum(crowding_values) / len(crowding_values) if crowding_values else None
     else:
-        earnings, underpricing, confidence, crowding = 45.0, 45.0, 35.0, 30.0
+        earnings, revision, underpricing, breadth, confidence, crowding = None, None, None, None, None, None
 
+    base_score = number(theme.get("base_theme_prior"))
+    dynamic_inputs = [value for value in (earnings, revision, underpricing, breadth, confidence) if value is not None]
+    coverage = len(dynamic_inputs) / 5
+    dynamic_center = sum(dynamic_inputs) / len(dynamic_inputs) if dynamic_inputs else None
+    prior = base_score if base_score is not None else 50.0
+    blended = prior if dynamic_center is None else prior * 0.35 + dynamic_center * 0.65
+    crowding_penalty = max(0.0, crowding - 50.0) * 0.20 if crowding is not None else 0.0
+    # A narrative prior alone cannot produce a high-conviction theme. Missing
+    # live inputs reduce the score instead of being replaced by neutral values.
+    coverage_multiplier = 0.40 + coverage * 0.60
+    final_score = clamp((blended - crowding_penalty) * coverage_multiplier)
     components = {
-        "demand_shift": float(theme.get("demand_shift_score", 50)),
-        "supply_constraint": float(theme.get("supply_constraint_score", 50)),
-        "earnings_leverage": round(earnings, 1),
-        "market_underpricing": round(underpricing, 1),
-        "catalyst_timing": float(theme.get("catalyst_timing_score", 50)),
-        "data_confidence": round(confidence, 1),
-        "crowding_penalty": round(crowding, 1),
+        "base_score": round(base_score, 1) if base_score is not None else None,
+        "dynamic_center": round(dynamic_center, 1) if dynamic_center is not None else None,
+        "dynamic_coverage": round(coverage, 2),
+        "coverage_multiplier": round(coverage_multiplier, 2),
+        "earnings_leverage": round(earnings, 1) if earnings is not None else None,
+        "earnings_revision": round(revision, 1) if revision is not None else None,
+        "market_underpricing": round(underpricing, 1) if underpricing is not None else None,
+        "price_breadth": round(breadth, 1) if breadth is not None else None,
+        "data_confidence": round(confidence, 1) if confidence is not None else None,
+        "crowding_score": round(crowding, 1) if crowding is not None else None,
+        "crowding_penalty": round(crowding_penalty, 1),
+        "final_theme_score": round(final_score, 1),
     }
-    total = (
-        components["demand_shift"] * weights.get("demand_shift", 0.22)
-        + components["supply_constraint"] * weights.get("supply_constraint", 0.14)
-        + components["earnings_leverage"] * weights.get("earnings_leverage", 0.18)
-        + components["market_underpricing"] * weights.get("market_underpricing", 0.18)
-        + components["catalyst_timing"] * weights.get("catalyst_timing", 0.12)
-        + components["data_confidence"] * weights.get("data_confidence", 0.1)
-        - components["crowding_penalty"] * weights.get("crowding_penalty", 0.06)
-    )
-    components["expectation_gap_score"] = round(clamp(total), 1)
+    components["expectation_gap_score"] = round(final_score, 1)
     return components
 
 
-def theme_stage(components: dict[str, float], thresholds: dict[str, Any]) -> str:
+def theme_stage(components: dict[str, Any], thresholds: dict[str, Any]) -> str:
     score = components.get("expectation_gap_score", 0)
-    underpricing = components.get("market_underpricing", 0)
-    crowding = components.get("crowding_penalty", 0)
+    underpricing = number(components.get("market_underpricing")) or 0
+    crowding = number(components.get("crowding_score")) or 0
     if crowding >= float(thresholds.get("crowded_penalty", 65)) and underpricing < 55:
         return "景气拥挤"
     if score >= float(thresholds.get("expectation_gap", 78)) and underpricing >= 55:
@@ -559,14 +644,14 @@ def update_journal(
                 avg_price_change = sum(price_changes) / len(price_changes) if price_changes else None
                 score_delta = current_score - (number(record.get("initial_score")) or current_score)
                 crowding = number(theme.get("score_components", {}).get("crowding_penalty")) if isinstance(theme.get("score_components"), dict) else None
-                if score_delta >= 5:
-                    result = "逻辑增强"
-                elif score_delta <= -8:
-                    result = "逻辑转弱"
-                elif avg_price_change is not None and avg_price_change >= 0.2 and crowding and crowding >= 65:
-                    result = "价格可能已透支"
+                if avg_price_change is not None and avg_price_change >= 0.10:
+                    result = "价格验证成功"
+                elif avg_price_change is not None and avg_price_change <= -0.10:
+                    result = "价格验证失败"
+                elif avg_price_change is None:
+                    result = "未来价格缺失"
                 else:
-                    result = "继续验证"
+                    result = "价格中性，继续验证"
                 review = {
                     "theme_id": theme_id,
                     "theme_name": theme.get("name"),
@@ -577,7 +662,7 @@ def update_journal(
                     "current_score": current_score,
                     "score_delta": round(score_delta, 1),
                     "avg_price_change_pct": round(avg_price_change * 100, 2) if avg_price_change is not None else None,
-                    "note": "复盘只评价机会发现质量，不等同于买卖结果。",
+                    "note": "命中只由未来价格和基准超额收益判定；score_delta 仅记录逻辑变化，不计为命中。",
                 }
                 checkpoint["status"] = "completed"
                 checkpoint["reviewed_at"] = iso(now)
@@ -626,10 +711,35 @@ def update_journal(
                 continue
             previous = securities_state.get(code) if isinstance(securities_state.get(code), dict) else {}
             filing = item.get("recent_filing") if isinstance(item.get("recent_filing"), dict) else {}
+            price_history = previous.get("price_history") if isinstance(previous.get("price_history"), list) else []
+            current_price = number(item.get("price"))
+            today = now.date().isoformat()
+            if current_price is not None and not any(str(row.get("date")) == today for row in price_history if isinstance(row, dict)):
+                price_history.append({"date": today, "price": current_price})
+            first_seen_at = previous.get("first_seen_at") or iso(now)
+            signals = previous.get("signals") if isinstance(previous.get("signals"), list) else []
+            if not signals and current_price is not None:
+                signals.append(
+                    {
+                        "signal_time": first_seen_at,
+                        "signal_price": current_price,
+                        "signal_score": item.get("opportunity_score"),
+                        "signal_rank": item.get("universe_rank"),
+                        "signal_factors": item.get("factor_snapshot", {}).get("factors") if isinstance(item.get("factor_snapshot"), dict) else {},
+                        "signal_data_snapshot_id": f"{today}:{code}:v2",
+                        "evaluation_split": evaluate_split(now),
+                        "company_type": item.get("company_type"),
+                        "sector_etf": item.get("sector_etf"),
+                    }
+                )
+            rank_history = previous.get("rank_history") if isinstance(previous.get("rank_history"), list) else []
+            current_rank = number(item.get("universe_rank"))
+            if current_rank is not None and not any(str(row.get("date")) == today for row in rank_history if isinstance(row, dict)):
+                rank_history.append({"date": today, "rank": int(current_rank)})
             securities_state[code] = {
                 "code": code,
                 "name": item.get("name"),
-                "first_seen_at": previous.get("first_seen_at") or iso(now),
+                "first_seen_at": first_seen_at,
                 "last_seen_at": iso(now),
                 "latest_filing_accession": filing.get("accession"),
                 "latest_filing_form": filing.get("form"),
@@ -637,11 +747,20 @@ def update_journal(
                 "price": item.get("price"),
                 "valuation_pe": item.get("valuation_pe"),
                 "opportunity_score": item.get("opportunity_score"),
+                "entry_score": item.get("entry_score"),
                 "trend_score": item.get("trend_score"),
+                "alpha_percentile": item.get("alpha_percentile"),
+                "universe_rank": item.get("universe_rank"),
+                "factor_snapshot": item.get("factor_snapshot"),
+                "company_type": item.get("company_type"),
+                "sector_etf": item.get("sector_etf"),
+                "price_history": price_history[-260:],
+                "rank_history": rank_history[-260:],
+                "signals": signals[-20:],
             }
 
     next_state = {
-        "schema_version": 1,
+        "schema_version": 2,
         "generated_at": iso(now),
         "generated_label": now.strftime("%Y-%m-%d %H:%M"),
         "opportunities": dict(sorted(opportunities.items())),
@@ -659,11 +778,13 @@ def build_radar(
     supply_radar: dict[str, Any],
     secondary_queue: dict[str, Any],
     state: dict[str, Any],
+    fmp_research: dict[str, Any] | None = None,
 ) -> tuple[dict[str, Any], dict[str, Any]]:
     now = now_local()
     market_index = market_pack_index(market_pack)
     supply_by_code = supply_index(supply_radar)
     secondary_by_code = secondary_index(secondary_queue)
+    fmp_by_symbol = fmp_index(fmp_research or {})
     weights = config.get("default_weights") if isinstance(config.get("default_weights"), dict) else {}
     thresholds = config.get("stage_thresholds") if isinstance(config.get("stage_thresholds"), dict) else {}
     previous_security_state = state.get("securities") if isinstance(state.get("securities"), dict) else {}
@@ -674,7 +795,7 @@ def build_radar(
         if not isinstance(theme, dict):
             continue
         securities = [
-            build_security_signal(item, market_index, supply_by_code, secondary_by_code)
+            build_security_signal(item, market_index, supply_by_code, secondary_by_code, fmp_by_symbol)
             for item in theme.get("securities", [])
             if isinstance(item, dict) and normalize_code(item.get("code"))
         ]
@@ -708,6 +829,8 @@ def build_radar(
             }
         )
 
+    all_security_rows = [row for theme in themes for row in theme.get("securities", []) if isinstance(row, dict)]
+    apply_cross_sectional_ranks(all_security_rows)
     themes.sort(key=lambda item: number(item.get("expectation_gap_score")) or 0, reverse=True)
     checkpoint_days = config.get("review_checkpoints_days") if isinstance(config.get("review_checkpoints_days"), list) else [30, 60, 90]
     next_state, review_due, completed_reviews = update_journal(state, themes, all_security_changes, [int(x) for x in checkpoint_days], now)
@@ -724,6 +847,16 @@ def build_radar(
             "underpricing_score": item.get("underpricing_score"),
             "trend_score": item.get("trend_score"),
             "crowding_score": item.get("crowding_score"),
+            "entry_score": item.get("entry_score"),
+            "alpha_percentile": item.get("alpha_percentile"),
+            "sector_rank_percentile": item.get("sector_rank_percentile"),
+            "universe_rank": item.get("universe_rank"),
+            "data_confidence": item.get("data_confidence"),
+            "price_freshness": item.get("price_freshness"),
+            "execution_allowed": item.get("execution_allowed"),
+            "technical_data_complete": item.get("technical_data_complete"),
+            "future_function_audit": item.get("future_function_audit"),
+            "gate_failures": item.get("gate_failures"),
             "action": item.get("action"),
         }
         for theme in themes
@@ -743,12 +876,14 @@ def build_radar(
         "next_review_count": len(review_due),
     }
     payload = {
-        "schema_version": 1,
+        "schema_version": 2,
+        "model_version": "2.0.0",
+        "risk_policy": risk_policy_public(),
         "generated_at": iso(now),
         "generated_label": now.strftime("%Y-%m-%d %H:%M"),
         "data_boundary": {
             "role": "opportunity discovery, not trading instruction",
-            "buy_side_gate": "任何股票买入必须回到 Buy-Side 分析、R/R >= 2:1、估值纪律和复星证券整股约束。",
+            "buy_side_gate": f"正式买入 R/R >= {load_risk_policy().formal_min_rr:.1f}:1；试仓 R/R >= {load_risk_policy().starter_min_rr:.1f}:1；同时通过 PIT、数据质量与整股约束。",
             "transcripts": "暂未接入财报电话会或新闻逐字稿 API；变化检测当前使用 SEC 申报、价格、估值、趋势和机会分变化。",
         },
         "phases": {
@@ -770,7 +905,31 @@ def build_radar(
                         "code": sec.get("code"),
                         "name": sec.get("name"),
                         "market": sec.get("market"),
+                        "layer": sec.get("layer"),
+                        "price": sec.get("price"),
                         "score": sec.get("opportunity_score"),
+                        "entry_score": sec.get("entry_score"),
+                        "trend_score": sec.get("trend_score"),
+                        "crowding_score": sec.get("crowding_score"),
+                        "data_confidence": sec.get("data_confidence"),
+                        "price_freshness": sec.get("price_freshness"),
+                        "execution_allowed": sec.get("execution_allowed"),
+                        "technical_data_complete": sec.get("technical_data_complete"),
+                        "future_function_audit": sec.get("future_function_audit"),
+                        "gate_failures": sec.get("gate_failures"),
+                        "reward_risk": sec.get("reward_risk"),
+                        "starter_entry": sec.get("starter_entry"),
+                        "starter_stop": sec.get("starter_stop"),
+                        "starter_target": sec.get("starter_target"),
+                        "starter_reward_risk": sec.get("starter_reward_risk"),
+                        "breakout_trigger": sec.get("breakout_trigger"),
+                        "breakout_stop": sec.get("breakout_stop"),
+                        "breakout_target": sec.get("breakout_target"),
+                        "breakout_reward_risk": sec.get("breakout_reward_risk"),
+                        "alpha_percentile": sec.get("alpha_percentile"),
+                        "sector_rank_percentile": sec.get("sector_rank_percentile"),
+                        "universe_rank": sec.get("universe_rank"),
+                        "factor_coverage": sec.get("factor_coverage"),
                         "action": sec.get("action"),
                     }
                     for sec in item.get("securities", [])[:5]
@@ -795,7 +954,7 @@ def build_radar(
             "机会雷达只解决提前发现问题，不解决买入价格和仓位问题。",
             "主题分数高但拥挤度高时，优先等待回踩、业绩兑现或新催化，而不是追高。",
             "港股/A股候选必须单独用对应市场行情、财报、流动性和交易规则复核。",
-            "所有可交易结论必须回到 Buy-Side 分析和 R/R >= 2:1。",
+            f"所有正式可交易结论必须回到 Buy-Side 分析和 R/R >= {load_risk_policy().formal_min_rr:.1f}:1。",
         ],
     }
     return payload, next_state
@@ -807,7 +966,7 @@ def render_report(radar: dict[str, Any]) -> str:
         "",
         f"- 生成时间：{radar.get('generated_label')}",
         "- 定位：提前发现可能被市场低估的未来机会；不构成买入建议。",
-        "- 硬约束：最终交易必须回到 Buy-Side 分析、R/R >= 2:1、估值纪律和复星证券整股执行。",
+        f"- 硬约束：正式买入 R/R >= {load_risk_policy().formal_min_rr:.1f}:1；试仓 R/R >= {load_risk_policy().starter_min_rr:.1f}:1，并通过 PIT、数据质量与整股执行复核。",
         "",
         "## 本轮结论",
         "",
@@ -831,11 +990,11 @@ def render_report(radar: dict[str, Any]) -> str:
         )
 
     lines.extend(["", "## 预期差评分拆解", ""])
-    lines.extend(["| 主题 | 需求变化 | 供应约束 | 盈利弹性 | 市场错配 | 催化时点 | 数据置信 | 拥挤扣分 |", "|---|---:|---:|---:|---:|---:|---:|---:|"])
+    lines.extend(["| 主题 | 基础先验 | 动态调整 | 盈利弹性 | 预期修正 | 市场错配 | 价格广度 | 数据置信 | 拥挤扣分 | 最终分 |", "|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|"])
     for theme in radar.get("themes", [])[:10]:
         components = theme.get("score_components") if isinstance(theme.get("score_components"), dict) else {}
         lines.append(
-            f"| {theme.get('name')} | {fmt_num(components.get('demand_shift'))} | {fmt_num(components.get('supply_constraint'))} | {fmt_num(components.get('earnings_leverage'))} | {fmt_num(components.get('market_underpricing'))} | {fmt_num(components.get('catalyst_timing'))} | {fmt_num(components.get('data_confidence'))} | {fmt_num(components.get('crowding_penalty'))} |"
+            f"| {theme.get('name')} | {fmt_num(components.get('base_score'))} | {fmt_num(components.get('dynamic_adjustment'))} | {fmt_num(components.get('earnings_leverage'))} | {fmt_num(components.get('earnings_revision'))} | {fmt_num(components.get('market_underpricing'))} | {fmt_num(components.get('price_breadth'))} | {fmt_num(components.get('data_confidence'))} | {fmt_num(components.get('crowding_penalty'))} | {fmt_num(components.get('final_theme_score'))} |"
         )
 
     for theme in radar.get("themes", [])[:6]:
@@ -918,6 +1077,7 @@ def main() -> int:
     parser.add_argument("--config", type=Path, default=DEFAULT_CONFIG)
     parser.add_argument("--market-pack", type=Path, default=DEFAULT_MARKET_PACK)
     parser.add_argument("--supply-radar", type=Path, default=DEFAULT_SUPPLY_RADAR)
+    parser.add_argument("--fmp-research", type=Path, default=DEFAULT_FMP_RESEARCH)
     parser.add_argument("--secondary-queue", type=Path, default=DEFAULT_SECONDARY_QUEUE)
     parser.add_argument("--state", type=Path, default=DEFAULT_STATE)
     parser.add_argument("--out", type=Path, default=DEFAULT_OUTPUT)
@@ -931,10 +1091,11 @@ def main() -> int:
         raise SystemExit(f"Opportunity map not found or invalid: {args.config}")
     market_pack = load_json(args.market_pack, {})
     supply_radar = load_json(args.supply_radar, {})
+    fmp_research = load_json(args.fmp_research, {})
     secondary_queue = load_json(args.secondary_queue, {})
     state = load_json(args.state, {})
 
-    radar, next_state = build_radar(config, market_pack, supply_radar, secondary_queue, state)
+    radar, next_state = build_radar(config, market_pack, supply_radar, secondary_queue, state, fmp_research)
     write_json(args.out, radar)
     write_json(args.docs_out, radar)
     write_json(args.state, next_state)

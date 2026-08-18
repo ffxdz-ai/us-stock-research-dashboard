@@ -1,0 +1,33 @@
+{
+  "schema_version": 2,
+  "factor_weights": {
+    "quality": 0.15,
+    "growth": 0.15,
+    "earnings_revision": 0.20,
+    "valuation": 0.15,
+    "momentum": 0.15,
+    "catalyst": 0.10,
+    "crowding": 0.05,
+    "data_quality": 0.05
+  },
+  "valuation_anchors": {
+    "semiconductor_forward_pe": 32,
+    "software_forward_pe": 35,
+    "automation_forward_pe": 28,
+    "industrial_forward_pe": 24,
+    "default_forward_pe": 26
+  },
+  "review_horizons_trading_days": [5, 20, 60, 120],
+  "walk_forward": {
+    "train_end": "2023-12-31",
+    "validation_end": "2024-12-31",
+    "oos_start": "2025-01-01"
+  },
+  "sector_etf_map": {
+    "semiconductor": "SMH",
+    "software": "IGV",
+    "industrial": "XLI",
+    "automation": "XLI",
+    "default": "SPY"
+  }
+}

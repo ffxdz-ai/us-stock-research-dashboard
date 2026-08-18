@@ -7,6 +7,7 @@ import argparse
 import json
 import math
 import os
+import socket
 import statistics
 import time
 import urllib.error
@@ -16,6 +17,24 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any
+
+from model_v2 import (
+    apply_cross_sectional_ranks,
+    assess_price_freshness,
+    build_entry_path,
+    build_technical_snapshot,
+    calculate_data_confidence,
+    entry_score,
+    evaluate_risk_gate,
+    factor_snapshot,
+    future_function_audit,
+    infer_company_type,
+    load_model_config,
+    load_risk_policy,
+    risk_policy_public,
+    source_quality,
+    technical_score as technical_score_v2,
+)
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -41,7 +60,8 @@ CAPEX_TAGS = ["PaymentsToAcquirePropertyPlantAndEquipment"]
 ASSET_TAGS = ["Assets"]
 LIABILITY_TAGS = ["Liabilities"]
 EQUITY_TAGS = ["StockholdersEquity", "StockholdersEquityIncludingPortionAttributableToNoncontrollingInterest"]
-ETF_SYMBOLS = {"SPY", "QQQ", "DIA", "IWM", "TLT", "GLD", "USO"}
+ETF_SYMBOLS = {"SPY", "QQQ", "SMH", "IGV", "XLI", "BOTZ", "DIA", "IWM", "TLT", "GLD", "USO"}
+_FUTU_OPEND_AVAILABLE: bool | None = None
 
 
 def load_dotenv(path: Path) -> None:
@@ -123,10 +143,33 @@ def futu_code(symbol: str) -> str | None:
     return symbol if "." in symbol else f"US.{symbol}"
 
 
+def futu_opend_available() -> bool:
+    """Probe OpenD once so a missing local daemon never adds minutes of retries."""
+    global _FUTU_OPEND_AVAILABLE
+    if _FUTU_OPEND_AVAILABLE is not None:
+        return _FUTU_OPEND_AVAILABLE
+    if os.getenv("FUTU_QUOTE_DISABLED", "").strip().lower() in {"1", "true", "yes"}:
+        _FUTU_OPEND_AVAILABLE = False
+        return False
+    host = os.getenv("FUTU_OPEND_HOST", "127.0.0.1").strip() or "127.0.0.1"
+    try:
+        port = int(os.getenv("FUTU_OPEND_PORT", "11111").strip() or "11111")
+    except ValueError:
+        port = 11111
+    try:
+        with socket.create_connection((host, port), timeout=0.4):
+            _FUTU_OPEND_AVAILABLE = True
+    except OSError:
+        _FUTU_OPEND_AVAILABLE = False
+    return _FUTU_OPEND_AVAILABLE
+
+
 def collect_futu_session_quotes(symbols: list[str], base_quotes: dict[str, dict[str, Any]]) -> dict[str, dict[str, Any]]:
     """Overlay broker-session quotes from Futu OpenD on top of public quote fields."""
     if os.getenv("FUTU_QUOTE_DISABLED", "").strip().lower() in {"1", "true", "yes"}:
         return {}
+    if not futu_opend_available():
+        return load_local_futu_snapshot_quotes(symbols, base_quotes)
     try:
         from portfolio_ui_server import current_us_session, fetch_session_quote
     except Exception:
@@ -352,7 +395,7 @@ def collect_nasdaq_quotes(symbols: list[str]) -> dict[str, dict[str, Any]]:
 
 
 def yahoo_chart(symbol: str) -> dict[str, Any]:
-    url = f"https://query1.finance.yahoo.com/v8/finance/chart/{urllib.parse.quote(symbol)}?range=1y&interval=1d"
+    url = f"https://query1.finance.yahoo.com/v8/finance/chart/{urllib.parse.quote(symbol)}?range=2y&interval=1d"
     data, error = safe_http_json(url, timeout=5)
     if error or not data:
         fallback = nasdaq_chart(symbol)
@@ -365,41 +408,15 @@ def yahoo_chart(symbol: str) -> dict[str, Any]:
     closes = [float(x) for x in quote.get("close", []) if isinstance(x, (int, float))]
     highs = [float(x) for x in quote.get("high", []) if isinstance(x, (int, float))]
     lows = [float(x) for x in quote.get("low", []) if isinstance(x, (int, float))]
+    volumes = [float(x) for x in quote.get("volume", []) if isinstance(x, (int, float))]
     if not closes:
         return {"symbol": symbol, "error": "no closes"}
-
-    def avg(values: list[float], n: int) -> float | None:
-        return round(sum(values[-n:]) / n, 4) if len(values) >= n else None
-
-    def low(values: list[float], n: int) -> float | None:
-        return round(min(values[-n:]), 4) if len(values) >= n else None
-
-    def high(values: list[float], n: int) -> float | None:
-        return round(max(values[-n:]), 4) if len(values) >= n else None
-
-    returns = []
-    for prev, current in zip(closes[-21:-1], closes[-20:]):
-        if prev > 0 and current > 0:
-            returns.append(math.log(current / prev))
-    vol20 = None
-    if len(returns) > 2:
-        vol20 = round(statistics.stdev(returns) * math.sqrt(252), 4)
-
+    snapshot = build_technical_snapshot(closes, highs, lows, timestamps, volumes)
     return {
         "symbol": symbol,
         "last_close": round(closes[-1], 4),
-        "ma20": avg(closes, 20),
-        "ma50": avg(closes, 50),
-        "ma200": avg(closes, 200),
-        "low20": low(lows or closes, 20),
-        "low60": low(lows or closes, 60),
-        "high20": high(highs or closes, 20),
-        "high60": high(highs or closes, 60),
-        "high252": round(max(highs or closes), 4),
-        "prior_high252": round(max((highs or closes)[:-1]), 4) if len(highs or closes) > 1 else None,
-        "low252": round(min(lows or closes), 4),
-        "realized_vol20": vol20,
-        "chart_time": datetime.fromtimestamp(timestamps[-1], timezone.utc).isoformat() if timestamps else None,
+        **snapshot.to_dict(),
+        "chart_time": snapshot.reference_bar_end_time,
         "source": "Yahoo chart API fallback",
     }
 
@@ -409,7 +426,7 @@ def nasdaq_chart(symbol: str) -> dict[str, Any]:
     if not asset_class:
         return {"symbol": symbol, "error": "Nasdaq fallback does not support this symbol"}
     to_date = datetime.now(timezone.utc).date()
-    from_date = to_date - timedelta(days=370)
+    from_date = to_date - timedelta(days=800)
     params = urllib.parse.urlencode(
         {
             "assetclass": asset_class,
@@ -426,11 +443,13 @@ def nasdaq_chart(symbol: str) -> dict[str, Any]:
     closes: list[float] = []
     highs: list[float] = []
     lows: list[float] = []
+    volumes: list[float] = []
     bar_times: list[str] = []
     for row in reversed(rows):
         close = parse_market_number(row.get("close"))
         high = parse_market_number(row.get("high"))
         low = parse_market_number(row.get("low"))
+        volume = parse_market_number(row.get("volume"))
         bar_time = row.get("date")
         if close is not None:
             closes.append(close)
@@ -438,40 +457,19 @@ def nasdaq_chart(symbol: str) -> dict[str, Any]:
             highs.append(high)
         if low is not None:
             lows.append(low)
+        if volume is not None:
+            volumes.append(volume)
         if bar_time:
             bar_times.append(str(bar_time))
     if not closes:
         return {"symbol": symbol, "error": "no Nasdaq closes"}
 
-    def avg(values: list[float], n: int) -> float | None:
-        return round(sum(values[-n:]) / n, 4) if len(values) >= n else None
-
-    def low(values: list[float], n: int) -> float | None:
-        return round(min(values[-n:]), 4) if len(values) >= n else None
-
-    def high(values: list[float], n: int) -> float | None:
-        return round(max(values[-n:]), 4) if len(values) >= n else None
-
-    returns = []
-    for prev, current in zip(closes[-21:-1], closes[-20:]):
-        if prev > 0 and current > 0:
-            returns.append(math.log(current / prev))
-    vol20 = round(statistics.stdev(returns) * math.sqrt(252), 4) if len(returns) > 2 else None
+    snapshot = build_technical_snapshot(closes, highs, lows, bar_times, volumes)
     return {
         "symbol": symbol,
         "last_close": round(closes[-1], 4),
-        "ma20": avg(closes, 20),
-        "ma50": avg(closes, 50),
-        "ma200": avg(closes, 200),
-        "low20": low(lows or closes, 20),
-        "low60": low(lows or closes, 60),
-        "high20": high(highs or closes, 20),
-        "high60": high(highs or closes, 60),
-        "high252": round(max(highs or closes), 4),
-        "prior_high252": round(max((highs or closes)[:-1]), 4) if len(highs or closes) > 1 else None,
-        "low252": round(min(lows or closes), 4),
-        "realized_vol20": vol20,
-        "chart_time": bar_times[-1] if bar_times else None,
+        **snapshot.to_dict(),
+        "chart_time": snapshot.reference_bar_end_time,
         "source": "Nasdaq historical API fallback",
     }
 
@@ -492,7 +490,7 @@ def futu_chart(symbol: str) -> dict[str, Any]:
         port = 11111
 
     end = datetime.now(timezone.utc).date()
-    start = end - timedelta(days=430)
+    start = end - timedelta(days=800)
     ctx = None
     try:
         ctx = OpenQuoteContext(host=host, port=port, is_async_connect=False)
@@ -517,6 +515,7 @@ def futu_chart(symbol: str) -> dict[str, Any]:
         closes = numeric_values("close")
         highs = numeric_values("high")
         lows = numeric_values("low")
+        volumes = numeric_values("volume")
         bar_times = [
             str(value)
             for value in data.get("time_key", [])
@@ -534,49 +533,29 @@ def futu_chart(symbol: str) -> dict[str, Any]:
     if not closes:
         return {"symbol": symbol, "error": "Futu K-line returned no closes"}
 
-    def avg(values: list[float], n: int) -> float | None:
-        return round(sum(values[-n:]) / n, 4) if len(values) >= n else None
-
-    def low(values: list[float], n: int) -> float | None:
-        return round(min(values[-n:]), 4) if len(values) >= n else None
-
-    def high(values: list[float], n: int) -> float | None:
-        return round(max(values[-n:]), 4) if len(values) >= n else None
-
-    returns = []
-    for prev, current in zip(closes[-21:-1], closes[-20:]):
-        if prev > 0 and current > 0:
-            returns.append(math.log(current / prev))
-    vol20 = round(statistics.stdev(returns) * math.sqrt(252), 4) if len(returns) > 2 else None
+    snapshot = build_technical_snapshot(closes, highs, lows, bar_times, volumes)
     return {
         "symbol": symbol,
         "last_close": round(closes[-1], 4),
-        "ma20": avg(closes, 20),
-        "ma50": avg(closes, 50),
-        "ma200": avg(closes, 200),
-        "low20": low(lows or closes, 20),
-        "low60": low(lows or closes, 60),
-        "high20": high(highs or closes, 20),
-        "high60": high(highs or closes, 60),
-        "high252": round(max(highs or closes), 4),
-        "prior_high252": round(max((highs or closes)[:-1]), 4) if len(highs or closes) > 1 else None,
-        "low252": round(min(lows or closes), 4),
-        "realized_vol20": vol20,
-        "chart_time": bar_times[-1] if bar_times else None,
+        **snapshot.to_dict(),
+        "chart_time": snapshot.reference_bar_end_time,
         "source": "Futu OpenD daily K-line",
     }
 
 
 def collect_charts(symbols: list[str]) -> dict[str, dict[str, Any]]:
     charts: dict[str, dict[str, Any]] = {}
-    with ThreadPoolExecutor(max_workers=5) as executor:
-        futures = {executor.submit(futu_chart, symbol): symbol for symbol in symbols}
-        for future in as_completed(futures):
-            symbol = futures[future]
-            try:
-                charts[symbol] = future.result()
-            except Exception as exc:  # noqa: BLE001
-                charts[symbol] = {"symbol": symbol, "error": str(exc)}
+    if futu_opend_available():
+        with ThreadPoolExecutor(max_workers=5) as executor:
+            futures = {executor.submit(futu_chart, symbol): symbol for symbol in symbols}
+            for future in as_completed(futures):
+                symbol = futures[future]
+                try:
+                    charts[symbol] = future.result()
+                except Exception as exc:  # noqa: BLE001
+                    charts[symbol] = {"symbol": symbol, "error": str(exc)}
+    else:
+        charts = {symbol: {"symbol": symbol, "error": "Futu OpenD unavailable after one TCP probe"} for symbol in symbols}
     missing = [
         symbol
         for symbol, chart in charts.items()
@@ -1053,6 +1032,8 @@ def evaluate_candidate(
     config: dict[str, Any],
     finnhub: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
+    policy = load_risk_policy()
+    signal_time = datetime.now(timezone.utc).isoformat()
     price = number(quote.get("regularMarketPrice") or quote.get("postMarketPrice") or chart.get("last_close"))
     forward_pe = number(quote.get("forwardPE"))
     trailing_pe = number(quote.get("trailingPE"))
@@ -1072,19 +1053,39 @@ def evaluate_candidate(
     high20 = number(chart.get("high20"))
     high60 = number(chart.get("high60"))
     high252 = number(chart.get("high252") or quote.get("fiftyTwoWeekHigh"))
+    prior_high20 = number(chart.get("prior_high20"))
+    prior_high60 = number(chart.get("prior_high60"))
+    prior_high252 = number(chart.get("prior_high252"))
+    technical_data_complete = chart.get("technical_data_complete") is True
     physical = ticker in set(config.get("physical_ai_focus", []))
     rules = config.get("entry_rules", {})
-    pe_cap = rules.get("leader_forward_pe_cap" if physical else "standard_forward_pe_cap", 30)
+    company_type = infer_company_type({"ticker": ticker, "name": quote.get("shortName") or quote.get("longName")})
+    model_config = load_model_config()
+    anchors = model_config.get("valuation_anchors") if isinstance(model_config.get("valuation_anchors"), dict) else {}
+    pe_cap = number(anchors.get(f"{company_type}_forward_pe") or anchors.get("default_forward_pe")) or 26.0
 
-    confidence_items = [
+    completeness_items = [
         bool(price),
+        bool(ma20),
         bool(ma50),
         bool(ma200),
         bool(sec.get("sec_coverage")),
         bool(sec.get("latest_annual_revenue")),
         bool(sec.get("recent_filings")),
     ]
-    data_confidence = round(sum(confidence_items) / len(confidence_items), 2)
+    freshness = assess_price_freshness(quote.get("regularMarketTime"), quote.get("source"), signal_time, mode="eod", policy=policy)
+    freshness_factor = {"fresh": 1.0, "fallback_only": 0.80, "stale": 0.35, "unknown": 0.0}.get(str(freshness["price_freshness"]), 0.0)
+    chart_close = number(chart.get("last_close"))
+    agreement = 0.65
+    if price and chart_close:
+        difference = abs(price / chart_close - 1)
+        agreement = 1.0 if difference <= 0.02 else 0.85 if difference <= 0.05 else 0.50
+    data_confidence, data_confidence_components = calculate_data_confidence(
+        completeness=sum(completeness_items) / len(completeness_items),
+        freshness=freshness_factor,
+        source_quality_score=source_quality(quote.get("source")),
+        cross_source_agreement=agreement,
+    )
 
     revenue_growth = number(sec.get("revenue_growth_yoy"))
     net_margin = number(sec.get("net_margin"))
@@ -1110,16 +1111,7 @@ def evaluate_candidate(
     if pe and pe > 0:
         valuation_score = max(-1.5, min(1.2, (pe_cap - pe) / pe_cap))
 
-    technical_score = 0.0
-    if price and ma50:
-        premium50 = (price / ma50) - 1
-        technical_score += 0.4 if premium50 <= 0.03 else -min(0.8, premium50)
-    if price and ma200:
-        extension200 = (price / ma200) - 1
-        technical_score += 0.4 if extension200 <= 0.18 else -min(0.8, extension200 / 2)
-    if price and high252:
-        drawdown = (price / high252) - 1
-        technical_score += 0.2 if drawdown < -0.08 else -0.1
+    technical_score = technical_score_v2(price, chart)
 
     technical_anchor_values = [
         x
@@ -1131,32 +1123,33 @@ def evaluate_candidate(
         ]
         if x and price
     ]
-    technical_max = min(technical_anchor_values) if technical_anchor_values else (price * 0.95 if price else None)
-    valuation_max = None
-    if price and pe and pe > 0:
-        valuation_max = price * min(1.03, pe_cap / pe)
-    elif price:
-        valuation_max = price * 0.95
-    strict_entry = min([x for x in [technical_max, valuation_max] if x]) if price else None
+    technical_max = min(technical_anchor_values) if technical_anchor_values else None
+    # The formal planned entry is anchored to support/MA structure rather than
+    # today's quote, so a rising snapshot cannot move the safe entry upward.
+    # Valuation remains an OpportunityScore input and a gate, not a price peg.
+    strict_entry = technical_max
     add_zone = strict_entry * 0.94 if strict_entry else None
-    invalidation = min([x for x in [low60, ma200 * 0.92 if ma200 else None] if x], default=None)
+    invalidation_candidates = [
+        x for x in (low60, ma200 * 0.92 if ma200 else None)
+        if x is not None and strict_entry is not None and x < strict_entry
+    ]
+    invalidation = max(invalidation_candidates, default=None)
 
-    reward_risk = None
     mechanical_target = None
-    if price and strict_entry and invalidation and invalidation < price:
-        mechanical_target = price * (1.18 if physical else 1.12)
-        reward = mechanical_target - price
-        risk = price - invalidation
-        if risk > 0:
-            reward_risk = round(reward / risk, 2)
+    if strict_entry:
+        target_candidates = [value for value in [prior_high252, high252] if value is not None and value > strict_entry]
+        mechanical_target = max(target_candidates, default=None)
+    reward_risk = rr_ratio(strict_entry, invalidation, mechanical_target)
 
     buyable = bool(
         price
         and strict_entry
         and price <= strict_entry * 1.005
-        and data_confidence >= config.get("min_data_confidence_for_buy", 0.68)
+        and data_confidence >= policy.min_data_confidence
         and reward_risk is not None
-        and reward_risk >= config.get("min_reward_risk_for_buy", 2.0)
+        and reward_risk >= policy.formal_min_rr
+        and freshness.get("execution_allowed") is True
+        and technical_data_complete
     )
 
     starter_stop_candidates = [
@@ -1165,7 +1158,7 @@ def evaluate_candidate(
             low20 * 0.985 if low20 else None,
             ma20 * 0.97 if ma20 else None,
             ma50 * 0.94 if ma50 else None,
-            price * (0.90 if physical else 0.92) if price else None,
+            price * 0.92 if price else None,
         ]
         if value is not None and price and value < price
     ]
@@ -1173,7 +1166,6 @@ def evaluate_candidate(
     starter_target_candidates = [
         mechanical_target,
         high252 * 1.03 if high252 and price and high252 > price else None,
-        price * (1.20 if physical else 1.14) if price else None,
     ]
     starter_target = max([value for value in starter_target_candidates if value is not None], default=None)
     starter_entry = price * 1.005 if price and starter_stop and starter_target else None
@@ -1186,9 +1178,12 @@ def evaluate_candidate(
         and starter_stop
         and starter_target
         and starter_reward_risk is not None
-        and starter_reward_risk >= float(config.get("min_starter_reward_risk", 1.5))
-        and data_confidence >= float(config.get("min_starter_data_confidence", 0.5))
-        and technical_score >= float(config.get("min_starter_technical_score", -0.35))
+        and starter_reward_risk >= policy.starter_min_rr
+        and data_confidence >= policy.min_data_confidence
+        and technical_score is not None
+        and technical_score >= policy.starter_min_trend_score
+        and freshness.get("execution_allowed") is True
+        and technical_data_complete
         and (premium50_for_starter is None or premium50_for_starter <= float(config.get("max_starter_premium_to_50dma_pct", 22)) / 100)
         and (
             premium20_for_starter is None
@@ -1196,20 +1191,19 @@ def evaluate_candidate(
         )
     )
 
-    breakout_trigger = high20 * 1.005 if high20 else None
+    breakout_trigger = prior_high20 * (1 + policy.breakout_buffer) if prior_high20 else None
     breakout_stop_candidates = [
         value
         for value in [
             low20 * 0.985 if low20 else None,
             ma20 * 0.97 if ma20 else None,
-            price * (0.91 if physical else 0.93) if price else None,
+            breakout_trigger * 0.93 if breakout_trigger else None,
         ]
         if value is not None and breakout_trigger and value < breakout_trigger
     ]
     breakout_stop = max(breakout_stop_candidates) if breakout_stop_candidates else None
     breakout_target_candidates = [
         high252 * 1.05 if high252 and breakout_trigger and high252 >= breakout_trigger else None,
-        breakout_trigger * (1.18 if physical else 1.12) if breakout_trigger else None,
     ]
     breakout_target = max([value for value in breakout_target_candidates if value is not None], default=None)
     breakout_reward_risk = rr_ratio(breakout_trigger, breakout_stop, breakout_target)
@@ -1219,9 +1213,12 @@ def evaluate_candidate(
         and price >= breakout_trigger
         and price <= breakout_trigger * 1.01
         and breakout_reward_risk is not None
-        and breakout_reward_risk >= float(config.get("min_reward_risk_for_buy", 2.0))
-        and data_confidence >= float(config.get("min_data_confidence_for_buy", 0.68))
-        and technical_score >= float(config.get("min_starter_technical_score", -0.35))
+        and breakout_reward_risk >= policy.breakout_min_rr
+        and data_confidence >= policy.min_data_confidence
+        and technical_score is not None
+        and technical_score >= policy.formal_min_trend_score
+        and freshness.get("execution_allowed") is True
+        and technical_data_complete
     )
 
     entry_path_type = "wait"
@@ -1233,13 +1230,7 @@ def evaluate_candidate(
         entry_path_type = "breakout"
 
     effective_buyable = bool(buyable or starter_buyable or breakout_buyable)
-    overall = quality_score + valuation_score + technical_score + (0.4 if physical else 0.0)
-    if buyable:
-        overall += 0.8
-    elif starter_buyable or breakout_buyable:
-        overall += 0.35
-
-    return {
+    result = {
         "ticker": ticker,
         "name": quote.get("shortName") or quote.get("longName") or sec.get("company"),
         "physical_ai_focus": physical,
@@ -1253,6 +1244,8 @@ def evaluate_candidate(
         "chart_time": chart.get("chart_time"),
         "chart_cache_status": chart.get("cache_status"),
         "chart_cached_at_utc": chart.get("cached_at_utc"),
+        "reference_bar_end_time": chart.get("reference_bar_end_time") or chart.get("chart_time"),
+        "signal_bar_time": signal_time,
         "sec_filing_poll_time_utc": sec.get("filing_poll_time_utc"),
         "market_cap": market_cap,
         "forward_pe": forward_pe,
@@ -1270,10 +1263,17 @@ def evaluate_candidate(
         or quote.get("fundamental_source")
         or quote.get("source"),
         "data_confidence": data_confidence,
+        "data_confidence_components": data_confidence_components,
+        "price_freshness": freshness.get("price_freshness"),
+        "quote_age_minutes": freshness.get("quote_age_minutes"),
+        "execution_allowed": freshness.get("execution_allowed"),
+        "bar_count": chart.get("bar_count"),
+        "technical_data_complete": technical_data_complete,
+        "breakout_reference_excludes_current_bar": chart.get("breakout_reference_excludes_current_bar") is True,
         "quality_score": round(quality_score, 2),
         "valuation_score": round(valuation_score, 2),
-        "technical_score": round(technical_score, 2),
-        "overall_score": round(overall, 2),
+        "technical_score": technical_score,
+        "technical_score_v2": technical_score,
         "strict_entry": round(strict_entry, 2) if strict_entry else None,
         "add_zone": round(add_zone, 2) if add_zone else None,
         "invalidation": round(invalidation, 2) if invalidation else None,
@@ -1293,10 +1293,38 @@ def evaluate_candidate(
         "breakout_target": finite_round(breakout_target),
         "breakout_reward_risk": breakout_reward_risk,
         "breakout_buyable": breakout_buyable,
+        "prior_high20": prior_high20,
+        "prior_high60": prior_high60,
+        "prior_high252": prior_high252,
         "chart": chart,
         "sec": sec,
         "quote_error": quote.get("error"),
     }
+    factors = factor_snapshot(result)
+    result["company_type"] = company_type
+    result["factor_snapshot"] = factors
+    result["opportunity_score"] = factors.get("opportunity_score")
+    result["overall_score"] = factors.get("opportunity_score")
+    formal_path = build_entry_path("formal", strict_entry, invalidation, mechanical_target, policy.formal_min_rr)
+    starter_path = build_entry_path("starter", starter_entry, starter_stop, starter_target, policy.starter_min_rr)
+    breakout_path = build_entry_path("breakout", breakout_trigger, breakout_stop, breakout_target, policy.breakout_min_rr)
+    result["entry_paths"] = {
+        "formal": formal_path.to_dict(),
+        "starter": starter_path.to_dict(),
+        "breakout": breakout_path.to_dict(),
+    }
+    result["entry_score"] = entry_score(result, [formal_path, starter_path, breakout_path])
+    audit = future_function_audit(result, signal_time)
+    result["future_function_audit"] = audit["status"]
+    result["future_function_audit_detail"] = audit
+    result["valid_path"] = formal_path.valid
+    gate = evaluate_risk_gate(result, formal_path, path_type="formal", policy=policy)
+    result["formal_qualified"] = gate.qualified
+    result["gate_failures"] = gate.gate_failures
+    result["risk_policy_version"] = gate.policy_version
+    result["buyable_now"] = bool(gate.qualified and freshness.get("execution_allowed"))
+    result["strict_buyable_now"] = result["buyable_now"]
+    return result
 
 
 def quote_from_cached_candidate(candidate: dict[str, Any]) -> dict[str, Any]:
@@ -1411,7 +1439,8 @@ def build_pack(
             )
         )
 
-    candidates.sort(key=lambda item: item.get("overall_score", -99), reverse=True)
+    apply_cross_sectional_ranks(candidates)
+    candidates.sort(key=lambda item: number(item.get("opportunity_score")) if number(item.get("opportunity_score")) is not None else -99, reverse=True)
     buyable = [item for item in candidates if item.get("buyable_now")][: config.get("max_buy_ideas", 5)]
     watchlist = [
         item
@@ -1420,8 +1449,11 @@ def build_pack(
     ][:12]
 
     return {
+        "schema_version": 2,
         "as_of_utc": datetime.now(timezone.utc).isoformat(),
         "mode": mode,
+        "model_version": "2.0.0",
+        "risk_policy": risk_policy_public(),
         "cache_stats": cache_stats,
         "source_notes": [
             "Quotes: Futu OpenD session-aware market snapshot first when connected; Nasdaq/Yahoo public quote fields are fallback/enrichment only.",
@@ -1431,6 +1463,7 @@ def build_pack(
             "Mechanical scores are only a pre-screen; the Codex Buy-Side Stock Analysis pass must verify every actionable conclusion.",
         ],
         "market": {symbol: quotes.get(symbol, {}) for symbol in market_symbols},
+        "market_charts": {symbol: charts.get(symbol, {}) for symbol in market_symbols},
         "portfolio": portfolio,
         "candidates": candidates,
         "buyable_now": buyable,
@@ -1596,6 +1629,7 @@ def compact_candidate(
 
 
 def candidate_gate(item: dict[str, Any], config: dict[str, Any]) -> tuple[bool, list[str]]:
+    policy = load_risk_policy()
     reasons: list[str] = []
     price = number(item.get("price"))
     entry = number(item.get("strict_entry"))
@@ -1603,17 +1637,18 @@ def candidate_gate(item: dict[str, Any], config: dict[str, Any]) -> tuple[bool, 
     reward_risk = number(item.get("reward_risk"))
     technical = number(item.get("technical_score"))
     if item.get("starter_buyable") or item.get("breakout_buyable"):
-        if technical is not None and technical < float(config.get("min_starter_technical_score", -0.35)):
+        if technical is not None and technical < policy.starter_min_trend_score:
             reasons.append("starter/breakout technical gate failed")
         return not reasons, reasons
-    if confidence < float(config.get("min_data_confidence_for_buy", 0.68)):
+    if confidence < policy.min_data_confidence:
         reasons.append("数据覆盖不足")
     if price is None or entry is None or price > entry * 1.05:
         reasons.append("未进入买入区间附近")
-    if reward_risk is None or reward_risk < float(config.get("min_reward_risk_for_buy", 2.0)):
-        reasons.append("R/R低于2或无法计算")
-    if technical is None or technical < -0.4:
+    if reward_risk is None or reward_risk < policy.formal_min_rr:
+        reasons.append(f"R/R低于{policy.formal_min_rr:.1f}或无法计算")
+    if technical is None or technical < policy.formal_min_trend_score:
         reasons.append("技术面过热或结构不佳")
+    reasons.extend(str(value) for value in item.get("gate_failures", []) if value)
     return not reasons, reasons
 
 
@@ -1704,8 +1739,8 @@ def build_compact_input(
         "as_of_utc": pack.get("as_of_utc"),
         "rules": {
             "max_model_candidates": "all screened names" if mode == "weekly" else int(config.get("model_candidate_limit", 3)),
-            "min_data_confidence": config.get("min_data_confidence_for_buy", 0.68),
-            "min_reward_risk": config.get("min_reward_risk_for_buy", 2.0),
+            "min_data_confidence": load_risk_policy().min_data_confidence,
+            "min_reward_risk": load_risk_policy().formal_min_rr,
             "quick_mode_policy": "只报告变化；没有新判断时沿用上一份完整报告，不重新研究财报",
         },
         "market": {

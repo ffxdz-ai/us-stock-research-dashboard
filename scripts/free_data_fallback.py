@@ -27,6 +27,8 @@ from pathlib import Path
 from typing import Any
 from zoneinfo import ZoneInfo
 
+from model_v2 import build_technical_snapshot, calculate_rr, load_risk_policy
+
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA_DIR = ROOT / "data"
@@ -947,47 +949,80 @@ def yahoo_chart_value(data: Any) -> dict[str, Any] | None:
     indicators = result.get("indicators") if isinstance(result.get("indicators"), dict) else {}
     quotes = indicators.get("quote") if isinstance(indicators.get("quote"), list) else []
     quote = quotes[0] if quotes and isinstance(quotes[0], dict) else {}
-    closes = [parsed for value in quote.get("close", []) if (parsed := number(value)) is not None]
-    lows = [parsed for value in quote.get("low", []) if (parsed := number(value)) is not None]
-    highs = [parsed for value in quote.get("high", []) if (parsed := number(value)) is not None]
+    timestamps = result.get("timestamp") if isinstance(result.get("timestamp"), list) else []
+    closes_raw = quote.get("close", []) if isinstance(quote.get("close"), list) else []
+    highs_raw = quote.get("high", []) if isinstance(quote.get("high"), list) else []
+    lows_raw = quote.get("low", []) if isinstance(quote.get("low"), list) else []
+    volumes_raw = quote.get("volume", []) if isinstance(quote.get("volume"), list) else []
+    bars: list[dict[str, Any]] = []
+    for index, stamp in enumerate(timestamps):
+        close = number(closes_raw[index]) if index < len(closes_raw) else None
+        if close is None:
+            continue
+        try:
+            bar_time = datetime.fromtimestamp(int(stamp), tz=timezone.utc).isoformat()
+        except (ValueError, OSError, OverflowError, TypeError):
+            continue
+        bars.append({
+            "time": bar_time,
+            "close": close,
+            "high": number(highs_raw[index]) if index < len(highs_raw) else None,
+            "low": number(lows_raw[index]) if index < len(lows_raw) else None,
+            "volume": number(volumes_raw[index]) if index < len(volumes_raw) else None,
+        })
+    technical = build_technical_snapshot(
+        [bar.get("close") for bar in bars],
+        [bar.get("high") for bar in bars],
+        [bar.get("low") for bar in bars],
+        [bar.get("time") for bar in bars],
+        [bar.get("volume") for bar in bars],
+    ).to_dict()
+    closes = [float(bar["close"]) for bar in bars]
     price = number(meta.get("regularMarketPrice")) or (closes[-1] if closes else None)
     if price is None:
         return None
-    timestamps = result.get("timestamp") if isinstance(result.get("timestamp"), list) else []
     quote_time = None
     if timestamps:
         try:
             quote_time = datetime.fromtimestamp(int(timestamps[-1]), tz=timezone.utc).astimezone(beijing_timezone()).isoformat(timespec="seconds")
         except (ValueError, OSError, OverflowError):
             quote_time = None
-    low20 = min(lows[-20:]) if len(lows) >= 5 else None
-    low60 = min(lows[-60:]) if len(lows) >= 20 else low20
-    low252 = min(lows[-252:]) if lows else None
-    high252 = max(highs[-252:]) if highs else None
-    invalidation_candidates = [value for value in (low60, low20, low252) if value is not None and value < price]
-    invalidation = min(invalidation_candidates) if invalidation_candidates else None
+    low20 = number(technical.get("low20"))
+    low60 = number(technical.get("low60"))
+    low252 = number(technical.get("low252"))
+    high252 = number(technical.get("prior_high252"))
+    invalidation_candidates = [value for value in (low60, low20) if value is not None and value < price]
+    invalidation = max(invalidation_candidates) if invalidation_candidates else None
     mechanical_target = high252 if high252 is not None and high252 > price else None
-    reward_risk = None
-    if invalidation is not None and mechanical_target is not None:
-        risk = price - invalidation
-        reward = mechanical_target - price
-        if risk > 0 and reward > 0:
-            reward_risk = round(reward / risk, 2)
+    planned_entry_candidates = [value for value in (number(technical.get("ma20")), number(technical.get("ma50"))) if value is not None and invalidation is not None and value > invalidation]
+    planned_entry = min(planned_entry_candidates) if planned_entry_candidates else None
+    reward_risk = calculate_rr(planned_entry, invalidation, mechanical_target)
     return {
         "price": round(price, 4),
         "currency": meta.get("currency"),
         "quote_time": quote_time,
         "exchange": meta.get("exchangeName") or meta.get("fullExchangeName"),
-        "ma50": avg(closes[-50:]) if len(closes) >= 20 else None,
-        "ma200": avg(closes[-200:]) if len(closes) >= 80 else None,
+        "ma20": technical.get("ma20"),
+        "ma50": technical.get("ma50"),
+        "ma200": technical.get("ma200"),
         "low20": round(low20, 4) if low20 is not None else None,
         "low60": round(low60, 4) if low60 is not None else None,
         "low252": round(low252, 4) if low252 is not None else None,
         "high252": round(high252, 4) if high252 is not None else None,
+        "prior_high20": technical.get("prior_high20"),
+        "prior_high60": technical.get("prior_high60"),
+        "prior_high252": technical.get("prior_high252"),
+        "strict_entry": round(planned_entry, 4) if planned_entry is not None else None,
         "invalidation": round(invalidation, 4) if invalidation is not None else None,
         "mechanical_target": round(mechanical_target, 4) if mechanical_target is not None else None,
         "reward_risk": reward_risk,
-        "bar_count": len(closes),
+        "bar_count": technical.get("bar_count"),
+        "technical_data_complete": technical.get("technical_data_complete"),
+        "breakout_reference_excludes_current_bar": True,
+        "execution_allowed": False,
+        "price_freshness": "fallback_only",
+        "risk_policy_version": load_risk_policy().policy_version,
+        "bars": technical.get("bars", []),
     }
 
 
@@ -1003,7 +1038,7 @@ def collect_yahoo_quote_layer(fetcher: Fetcher, symbols: list[str], max_symbols:
             gaps.append({"symbol": symbol, "source": "Yahoo Finance", "data_gap": "No Yahoo symbol mapping"})
             continue
         safe = urllib.parse.quote(mapped, safe="")
-        url = f"https://query1.finance.yahoo.com/v8/finance/chart/{safe}?range=1y&interval=1d&includePrePost=false"
+        url = f"https://query1.finance.yahoo.com/v8/finance/chart/{safe}?range=2y&interval=1d&includePrePost=false"
         data, error, status = fetcher.http_json(url, timeout=15)
         value = yahoo_chart_value(data)
         records.append(

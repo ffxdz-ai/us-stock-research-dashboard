@@ -18,6 +18,8 @@ from pathlib import Path
 from typing import Any
 from zoneinfo import ZoneInfo
 
+from model_v2 import load_risk_policy, risk_policy_public
+
 
 ROOT = Path(__file__).resolve().parents[1]
 CONFIG_DIR = ROOT / "config"
@@ -333,8 +335,9 @@ def evaluate_record(record: dict[str, Any], current: dict[str, Any] | None, pack
     indexed = pack_index.get(code) or (pack_index.get(symbol) if symbol else None) or {}
     reward_risk = number(indexed.get("reward_risk") or (indexed.get("entry") or {}).get("reward_risk"))
     data_confidence = number(indexed.get("data_confidence"))
-    min_rr = float(cfg.get("min_reward_risk_for_buy", 2.0))
-    min_confidence = float(cfg.get("min_data_confidence_for_buy", 0.68))
+    policy = load_risk_policy()
+    min_rr = policy.formal_min_rr
+    min_confidence = policy.min_data_confidence
 
     if symbol and reward_risk is not None and reward_risk < min_rr:
         return False, f"美股候选 R/R {reward_risk:.2f}:1 低于 {min_rr:.1f}:1，退回观察。"
@@ -361,8 +364,8 @@ def update_queue(
     config: dict[str, Any],
 ) -> tuple[dict[str, Any], dict[str, Any]]:
     cfg = secondary_config(config)
-    cfg["min_reward_risk_for_buy"] = float(config.get("min_reward_risk_for_buy", 2.0) or 2.0)
-    cfg["min_data_confidence_for_buy"] = float(config.get("min_data_confidence_for_buy", 0.68) or 0.68)
+    cfg["formal_min_rr"] = load_risk_policy().formal_min_rr
+    cfg["min_data_confidence"] = load_risk_policy().min_data_confidence
 
     now = now_local(str(cfg.get("review_timezone") or "Asia/Shanghai"))
     current_review_slot = review_slot(now, cfg)
@@ -537,7 +540,9 @@ def update_queue(
         "review_time_beijing": f"{int(cfg.get('review_hour', 12)):02d}:{int(cfg.get('review_minute', 0)):02d}",
     }
     next_state = {
-        "schema_version": 1,
+        "schema_version": 2,
+        "model_version": "2.0.0",
+        "risk_policy": risk_policy_public(),
         "generated_at": iso(now),
         "generated_label": now.strftime("%Y-%m-%d %H:%M"),
         "rules": cfg,
@@ -545,7 +550,9 @@ def update_queue(
         "records": dict(sorted(records.items())),
     }
     latest = {
-        "schema_version": 1,
+        "schema_version": 2,
+        "model_version": "2.0.0",
+        "risk_policy": risk_policy_public(),
         "generated_at": next_state["generated_at"],
         "generated_label": next_state["generated_label"],
         "rules": cfg,
@@ -629,7 +636,7 @@ def render_report(payload: dict[str, Any]) -> str:
             "- 通过复核只代表继续占用研究名额，不代表可以买。",
             "- 退回观察不是永久放弃；没有时间冷却，只要重新满足触发条件就可以再次进入队列。",
             "- 港股/A股即使通过队列复核，也必须单独用 Futu/财报/流动性确认后才允许进一步讨论交易。",
-            "- 如果 R/R 明确低于 2:1，或趋势明显转弱，直接退回观察。",
+            f"- 如果正式路径 R/R 明确低于 {load_risk_policy().formal_min_rr:.1f}:1，或趋势明显转弱，直接退回观察。",
         ]
     )
     return "\n".join(lines) + "\n"
