@@ -118,6 +118,8 @@ jobs:
       FMP_API_KEY: ${{ secrets.FMP_API_KEY }}
       ALPHA_VANTAGE_API_KEY: ${{ secrets.ALPHA_VANTAGE_API_KEY }}
       OPENFIGI_API_KEY: ${{ secrets.OPENFIGI_API_KEY }}
+      FEISHU_BOT_WEBHOOK: ${{ secrets.FEISHU_BOT_WEBHOOK }}
+      FEISHU_BOT_SECRET: ${{ secrets.FEISHU_BOT_SECRET }}
       SEC_USER_AGENT: "ffxdz-ai public research dashboard contact@example.com"
       REPORT_MODE: ${{ github.event.inputs.mode || 'full' }}
     steps:
@@ -275,12 +277,16 @@ jobs:
           python scripts/validate_public_archive.py docs/data/reports.json
           python scripts/validate_model_v2.py --market-pack "$MARKET_PACK" --public-index docs/data/index.json
 
+      - name: Send Feishu steady-buy alerts
+        continue-on-error: true
+        run: python scripts/feishu_steady_buy_alerts.py --index docs/data/index.json --state docs/data/feishu_alert_state.json
+
       - name: Commit public archive
         shell: bash
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add docs/data/reports.json docs/data/index.json docs/data/reports docs/data/secondary_analysis_queue.json docs/data/opportunity_radar.json docs/data/opportunity_journal.json docs/data/cross_market_intelligence.json docs/data/event_evidence.json docs/data/opportunity_review_metrics.json docs/data/free_data_fallback.json docs/data/macro_regime.json docs/data/market_sentiment.json docs/data/fmp_research.json docs/data/fmp_research_state.json
+          git add docs/data/reports.json docs/data/index.json docs/data/reports docs/data/secondary_analysis_queue.json docs/data/opportunity_radar.json docs/data/opportunity_journal.json docs/data/cross_market_intelligence.json docs/data/event_evidence.json docs/data/opportunity_review_metrics.json docs/data/free_data_fallback.json docs/data/macro_regime.json docs/data/market_sentiment.json docs/data/fmp_research.json docs/data/fmp_research_state.json docs/data/feishu_alert_state.json
           if git diff --cached --quiet; then
             echo "No public archive changes to commit."
           else
