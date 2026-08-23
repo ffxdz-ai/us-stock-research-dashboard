@@ -152,6 +152,69 @@ h1 {
 .section-heading time,
 .section-heading > span { color: var(--muted); font-size: 11px; line-height: 1.5; text-align: right; }
 
+.dashboard-update-control {
+  display: flex;
+  align-items: flex-end;
+  flex: 0 1 480px;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.dashboard-update-row {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.manual-update-button {
+  min-height: 34px;
+  border: 1px solid rgba(34, 211, 238, 0.48);
+  border-radius: 999px;
+  background: rgba(34, 211, 238, 0.10);
+  padding: 7px 13px;
+  color: #baf4ff;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 780;
+  cursor: pointer;
+  transition: border-color .18s ease, background .18s ease, color .18s ease, transform .18s ease;
+}
+
+.manual-update-button:hover {
+  border-color: rgba(34, 211, 238, 0.88);
+  background: rgba(34, 211, 238, 0.18);
+  transform: translateY(-1px);
+}
+
+.manual-update-button.is-current {
+  border-color: rgba(34, 197, 94, 0.42);
+  background: rgba(34, 197, 94, 0.10);
+  color: #9cf1b7;
+}
+
+.manual-update-button.is-stale,
+.manual-update-button.is-failed {
+  border-color: rgba(251, 146, 60, 0.72);
+  background: rgba(251, 146, 60, 0.14);
+  color: #fdba74;
+  box-shadow: 0 0 0 1px rgba(251, 146, 60, 0.08), 0 0 18px rgba(251, 146, 60, 0.08);
+}
+
+.manual-update-button.is-running {
+  border-color: rgba(167, 139, 250, 0.62);
+  background: rgba(167, 139, 250, 0.14);
+  color: #d8ccff;
+}
+
+.manual-update-status {
+  max-width: 480px;
+  color: #8fa8b2;
+  font-size: 11px;
+  line-height: 1.5;
+  text-align: right;
+}
+
 .section-kicker {
   color: var(--accent);
   font-size: 10px;
@@ -1331,6 +1394,19 @@ footer {
   .toolbar { order: 5; }
   .research-layout { order: 6; }
   .review-stats-panel { order: 7; }
+
+  .decision-dashboard .section-heading {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .dashboard-update-control {
+    align-items: flex-start;
+    flex-basis: auto;
+  }
+
+  .dashboard-update-row { justify-content: flex-start; }
+  .manual-update-status { text-align: left; }
 
   .opportunity-panel .section-title,
   .opportunity-panel .opportunity-controls {
