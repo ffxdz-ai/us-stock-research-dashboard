@@ -6,7 +6,7 @@
     <meta name="description" content="AI 美股投研驾驶舱公开脱敏版" />
     <title>AI投研驾驶舱</title>
     <link rel="icon" href="data:," />
-    <link rel="stylesheet" href="./styles.css?v=20260620" />
+    <link rel="stylesheet" href="./styles.css?v=20260821-manual-update" />
   </head>
   <body>
     <header class="site-header">
@@ -54,7 +54,18 @@
             <span class="section-kicker">TODAY DECISION DASHBOARD</span>
             <h2 id="dashboardTitle">今日决策驾驶舱</h2>
           </div>
-          <time id="dashboardUpdated">读取中</time>
+          <div class="dashboard-update-control">
+            <div class="dashboard-update-row">
+              <time id="dashboardUpdated">读取中</time>
+              <button
+                class="manual-update-button"
+                id="manualUpdateButton"
+                type="button"
+                aria-describedby="manualUpdateStatus"
+              >检查更新</button>
+            </div>
+            <small class="manual-update-status" id="manualUpdateStatus" role="status" aria-live="polite">正在检查今日更新状态…</small>
+          </div>
         </div>
 
         <div class="dashboard-grid" id="dashboardMetrics" aria-live="polite">
@@ -223,6 +234,6 @@
     <footer>
       <p>数据与观点具有时效性，仅供研究记录，不构成投资建议或交易指令。</p>
     </footer>
-    <script src="./app.js?v=20260625-sentiment"></script>
+    <script src="./app.js?v=20260821-manual-update"></script>
   </body>
 </html>

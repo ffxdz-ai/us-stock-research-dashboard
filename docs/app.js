@@ -8,6 +8,8 @@ const state = {
   query: "",
   opportunityStatus: "all",
   opportunityQuery: "",
+  manualUpdateRequestedAt: 0,
+  lastReloadedWorkflowRunId: null,
 };
 
 const els = {
@@ -21,6 +23,8 @@ const els = {
   reportDate: document.querySelector("#reportDate"),
   reportContent: document.querySelector("#reportContent"),
   dashboardUpdated: document.querySelector("#dashboardUpdated"),
+  manualUpdateButton: document.querySelector("#manualUpdateButton"),
+  manualUpdateStatus: document.querySelector("#manualUpdateStatus"),
   marketStatus: document.querySelector("#marketStatus"),
   marketStatusNote: document.querySelector("#marketStatusNote"),
   sentimentScore: document.querySelector("#sentimentScore"),
@@ -68,6 +72,14 @@ const OPPORTUNITY_STATUS_META = {
 };
 
 const OPPORTUNITY_REPORT_KINDS = ["secondary-queue", "opportunity-radar", "cross-market-intelligence"];
+
+const MANUAL_UPDATE_CONFIG = {
+  workflowPage: "https://github.com/ffxdz-ai/us-stock-research-dashboard/actions/workflows/deepseek-daily-report.yml",
+  workflowRunsApi: "https://api.github.com/repos/ffxdz-ai/us-stock-research-dashboard/actions/workflows/deepseek-daily-report.yml/runs?branch=main&per_page=1",
+  timeZone: "Asia/Shanghai",
+};
+
+let manualUpdatePollTimer = null;
 
 function escapeHtml(value) {
   return String(value || "").replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll('"', "&quot;").replaceAll("'", "&#039;");
@@ -588,9 +600,28 @@ function deriveMarketSentiment() {
   };
 }
 
+function formatBeijingDateTime(value) {
+  const parsed = new Date(value);
+  if (Number.isNaN(parsed.getTime())) return String(value || "");
+  const parts = new Intl.DateTimeFormat("zh-CN", {
+    timeZone: MANUAL_UPDATE_CONFIG.timeZone,
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    hourCycle: "h23",
+  }).formatToParts(parsed).reduce((result, part) => ({ ...result, [part.type]: part.value }), {});
+  return `${parts.year}-${parts.month}-${parts.day} ${parts.hour}:${parts.minute}`;
+}
+
 function latestReportTimeLabel() {
   const archive = archiveObject();
-  return archive.generated_label || archive.generated_at || (latestReport() && latestReport().published_label) || "待确认";
+  const latest = latestReport();
+  return formatBeijingDateTime(archive.generated_at || (latest && latest.published_at))
+    || archive.generated_label
+    || (latest && latest.published_label)
+    || "待确认";
 }
 
 function buildDashboardMetrics() {
@@ -1029,6 +1060,128 @@ function normalizeList(value) {
   if (Array.isArray(value)) return value.map((item) => cleanCellText(item)).filter(Boolean);
   if (typeof value === "string" && value.trim()) return [cleanCellText(value)];
   return [];
+}
+
+function beijingDayKey(value = new Date()) {
+  const parsed = value instanceof Date ? value : new Date(value);
+  if (Number.isNaN(parsed.getTime())) {
+    const matched = String(value || "").match(/^(\d{4}-\d{2}-\d{2})/);
+    return matched ? matched[1] : "";
+  }
+  return new Intl.DateTimeFormat("en-CA", {
+    timeZone: MANUAL_UPDATE_CONFIG.timeZone,
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  }).format(parsed);
+}
+
+function archiveGeneratedTimestamp() {
+  const archive = archiveObject();
+  const latest = latestReport();
+  return archive.generated_at
+    || (latest && latest.published_at)
+    || archive.generated_label
+    || (latest && latest.published_label)
+    || "";
+}
+
+function archiveUpdatedToday() {
+  const generatedDay = beijingDayKey(archiveGeneratedTimestamp());
+  return Boolean(generatedDay && generatedDay === beijingDayKey());
+}
+
+function latestRunStartedToday(run) {
+  return Boolean(run && beijingDayKey(run.created_at) === beijingDayKey());
+}
+
+function renderManualUpdateControl(run = null, message = "") {
+  if (!els.manualUpdateButton || !els.manualUpdateStatus) return;
+  const updatedToday = archiveUpdatedToday();
+  const runToday = latestRunStartedToday(run);
+  const running = runToday && run.status !== "completed";
+  const failed = runToday && run.status === "completed" && run.conclusion !== "success";
+  const awaitingPages = runToday && run.status === "completed" && run.conclusion === "success" && !updatedToday;
+  els.manualUpdateButton.classList.toggle("is-current", updatedToday && !running);
+  els.manualUpdateButton.classList.toggle("is-stale", !updatedToday && !running && !failed);
+  els.manualUpdateButton.classList.toggle("is-running", running || awaitingPages);
+  els.manualUpdateButton.classList.toggle("is-failed", failed);
+  els.manualUpdateButton.textContent = running
+    ? "查看更新进度"
+    : awaitingPages
+      ? "检查部署结果"
+      : updatedToday
+        ? "重新运行"
+        : failed
+          ? "重新更新"
+          : "手动更新今日报告";
+  const defaultMessage = running
+    ? "任务运行中；完成后本页会自动读取最新报告。"
+    : awaitingPages
+      ? "今日工作流已成功，但 GitHub Pages 数据仍在同步；稍后返回本页会自动检查。"
+      : updatedToday
+        ? `北京时间今日已更新：${latestReportTimeLabel()}`
+        : failed
+          ? "今日任务未成功；点击按钮查看日志并重新运行。"
+          : "北京时间今日尚未更新；请登录有仓库权限的 GitHub 账号后点击按钮。";
+  els.manualUpdateStatus.textContent = message || defaultMessage;
+}
+
+async function fetchLatestWorkflowRun() {
+  const response = await fetch(`${MANUAL_UPDATE_CONFIG.workflowRunsApi}&v=${Date.now()}`, {
+    headers: { Accept: "application/vnd.github+json" },
+    cache: "no-store",
+  });
+  if (!response.ok) throw new Error(`GitHub Actions HTTP ${response.status}`);
+  const payload = await response.json();
+  return Array.isArray(payload.workflow_runs) ? (payload.workflow_runs[0] || null) : null;
+}
+
+async function checkManualUpdateStatus({ reloadArchive = false } = {}) {
+  if (els.manualUpdateStatus) els.manualUpdateStatus.textContent = "正在检查 GitHub 更新任务…";
+  try {
+    const run = await fetchLatestWorkflowRun();
+    if (
+      reloadArchive
+      && run
+      && latestRunStartedToday(run)
+      && run.status === "completed"
+      && run.conclusion === "success"
+      && state.lastReloadedWorkflowRunId !== run.id
+    ) {
+      state.lastReloadedWorkflowRunId = run.id;
+      await loadArchive();
+    }
+    renderManualUpdateControl(run);
+    if (run && run.status === "completed" && manualUpdatePollTimer) {
+      clearInterval(manualUpdatePollTimer);
+      manualUpdatePollTimer = null;
+    }
+    return run;
+  } catch (error) {
+    renderManualUpdateControl(null, `自动状态检查暂不可用：${error.message}。仍可点击按钮前往 GitHub 手动更新。`);
+    return null;
+  }
+}
+
+function startManualUpdatePolling() {
+  if (manualUpdatePollTimer) clearInterval(manualUpdatePollTimer);
+  let checksRemaining = 16;
+  manualUpdatePollTimer = setInterval(async () => {
+    checksRemaining -= 1;
+    const run = await checkManualUpdateStatus({ reloadArchive: true });
+    if (checksRemaining <= 0 || (run && run.status === "completed")) {
+      clearInterval(manualUpdatePollTimer);
+      manualUpdatePollTimer = null;
+    }
+  }, 45000);
+}
+
+function handleManualUpdateClick() {
+  state.manualUpdateRequestedAt = Date.now();
+  window.open(MANUAL_UPDATE_CONFIG.workflowPage, "_blank", "noopener,noreferrer");
+  renderManualUpdateControl(null, "已打开 GitHub：登录有仓库权限的账号，点击 Run workflow，再点绿色 Run workflow。返回本页后会自动检查进度。");
+  startManualUpdatePolling();
 }
 
 function activeRiskPolicy() {
@@ -1595,7 +1748,7 @@ function renderList() {
 async function loadArchive() {
   state.archive = await loadArchiveIndex();
   state.reports = Array.isArray(state.archive) ? state.archive : (Array.isArray(state.archive.reports) ? state.archive.reports : []);
-  els.generatedAt.textContent = `更新 ${state.archive.generated_label || "--"}`;
+  els.generatedAt.textContent = `更新 ${latestReportTimeLabel()}`;
   await preloadFallbackReportContent();
   state.opportunities = deriveOpportunities();
   renderDecisionDashboard();
@@ -1605,6 +1758,7 @@ async function loadArchive() {
   renderOpportunityCards();
   renderList();
   if (state.reports[0]) selectReport(state.reports[0]);
+  renderManualUpdateControl();
 }
 
 els.filters.addEventListener("click", (event) => {
@@ -1644,7 +1798,18 @@ if (els.dashboardReports) {
   });
 }
 
-loadArchive().catch((error) => {
-  els.reportTitle.textContent = "报告加载失败";
-  els.reportContent.innerHTML = `<p class="empty">${escapeHtml(error.message)}。请稍后刷新页面。</p>`;
+if (els.manualUpdateButton) {
+  els.manualUpdateButton.addEventListener("click", handleManualUpdateClick);
+}
+
+window.addEventListener("focus", () => {
+  if (state.manualUpdateRequestedAt) checkManualUpdateStatus({ reloadArchive: true });
 });
+
+loadArchive()
+  .then(() => checkManualUpdateStatus())
+  .catch((error) => {
+    els.reportTitle.textContent = "报告加载失败";
+    els.reportContent.innerHTML = `<p class="empty">${escapeHtml(error.message)}。请稍后刷新页面。</p>`;
+    renderManualUpdateControl(null, "报告索引加载失败，仍可前往 GitHub 手动运行更新。 ");
+  });
