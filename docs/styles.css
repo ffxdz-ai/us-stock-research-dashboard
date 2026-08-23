@@ -187,6 +187,12 @@ h1 {
   transform: translateY(-1px);
 }
 
+.manual-update-button:disabled {
+  cursor: default;
+  opacity: 0.78;
+  transform: none;
+}
+
 .manual-update-button.is-current {
   border-color: rgba(34, 197, 94, 0.42);
   background: rgba(34, 197, 94, 0.10);

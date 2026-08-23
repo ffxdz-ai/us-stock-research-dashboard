@@ -1,0 +1,18 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "us-stock-research-trigger",
+  "main": "src/index.js",
+  "compatibility_date": "2026-08-23",
+  "workers_dev": true,
+  "observability": {
+    "enabled": true
+  },
+  "vars": {
+    "ALLOWED_ORIGIN": "https://ffxdz-ai.github.io",
+    "ARCHIVE_INDEX_URL": "https://ffxdz-ai.github.io/us-stock-research-dashboard/data/index.json",
+    "GITHUB_OWNER": "ffxdz-ai",
+    "GITHUB_REPO": "us-stock-research-dashboard",
+    "GITHUB_WORKFLOW": "deepseek-daily-report.yml",
+    "GITHUB_REF": "main"
+  }
+}

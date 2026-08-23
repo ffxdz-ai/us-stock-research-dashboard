@@ -74,8 +74,7 @@ const OPPORTUNITY_STATUS_META = {
 const OPPORTUNITY_REPORT_KINDS = ["secondary-queue", "opportunity-radar", "cross-market-intelligence"];
 
 const MANUAL_UPDATE_CONFIG = {
-  workflowPage: "https://github.com/ffxdz-ai/us-stock-research-dashboard/actions/workflows/deepseek-daily-report.yml",
-  workflowRunsApi: "https://api.github.com/repos/ffxdz-ai/us-stock-research-dashboard/actions/workflows/deepseek-daily-report.yml/runs?branch=main&per_page=1",
+  triggerApi: String(document.querySelector('meta[name="update-service-url"]')?.content || "").replace(/\/$/, ""),
   timeZone: "Asia/Shanghai",
 };
 
@@ -1106,15 +1105,17 @@ function renderManualUpdateControl(run = null, message = "") {
   els.manualUpdateButton.classList.toggle("is-stale", !updatedToday && !running && !failed);
   els.manualUpdateButton.classList.toggle("is-running", running || awaitingPages);
   els.manualUpdateButton.classList.toggle("is-failed", failed);
+  els.manualUpdateButton.disabled = updatedToday || running || awaitingPages;
+  els.manualUpdateButton.setAttribute("aria-busy", running || awaitingPages ? "true" : "false");
   els.manualUpdateButton.textContent = running
-    ? "查看更新进度"
+    ? "正在更新"
     : awaitingPages
-      ? "检查部署结果"
+      ? "正在部署"
       : updatedToday
-        ? "重新运行"
+        ? "今日已更新"
         : failed
           ? "重新更新"
-          : "手动更新今日报告";
+          : "一键更新今日报告";
   const defaultMessage = running
     ? "任务运行中；完成后本页会自动读取最新报告。"
     : awaitingPages
@@ -1122,66 +1123,112 @@ function renderManualUpdateControl(run = null, message = "") {
       : updatedToday
         ? `北京时间今日已更新：${latestReportTimeLabel()}`
         : failed
-          ? "今日任务未成功；点击按钮查看日志并重新运行。"
-          : "北京时间今日尚未更新；请登录有仓库权限的 GitHub 账号后点击按钮。";
+          ? "今日任务未成功；可以直接重新提交，无需登录 GitHub。"
+          : "北京时间今日尚未更新；点击即可生成，无需登录 GitHub。";
   els.manualUpdateStatus.textContent = message || defaultMessage;
 }
 
-async function fetchLatestWorkflowRun() {
-  const response = await fetch(`${MANUAL_UPDATE_CONFIG.workflowRunsApi}&v=${Date.now()}`, {
-    headers: { Accept: "application/vnd.github+json" },
+async function fetchUpdateServiceStatus() {
+  if (!MANUAL_UPDATE_CONFIG.triggerApi) throw new Error("一键更新服务尚未配置");
+  const response = await fetch(`${MANUAL_UPDATE_CONFIG.triggerApi}/status?v=${Date.now()}`, {
+    headers: { Accept: "application/json" },
     cache: "no-store",
   });
-  if (!response.ok) throw new Error(`GitHub Actions HTTP ${response.status}`);
+  if (!response.ok) throw new Error(`更新服务 HTTP ${response.status}`);
   const payload = await response.json();
-  return Array.isArray(payload.workflow_runs) ? (payload.workflow_runs[0] || null) : null;
+  if (!payload || payload.ok !== true) throw new Error(payload?.message || "更新服务返回异常");
+  return payload;
+}
+
+async function requestManualUpdate() {
+  if (!MANUAL_UPDATE_CONFIG.triggerApi) throw new Error("一键更新服务尚未配置");
+  const response = await fetch(`${MANUAL_UPDATE_CONFIG.triggerApi}/trigger`, {
+    method: "POST",
+    headers: { Accept: "application/json", "Content-Type": "application/json" },
+    body: JSON.stringify({ requested_at: new Date().toISOString() }),
+  });
+  const payload = await response.json().catch(() => ({}));
+  if (!response.ok && !["already_current", "already_running", "cooldown"].includes(payload.code)) {
+    throw new Error(payload.message || `更新服务 HTTP ${response.status}`);
+  }
+  return payload;
 }
 
 async function checkManualUpdateStatus({ reloadArchive = false } = {}) {
-  if (els.manualUpdateStatus) els.manualUpdateStatus.textContent = "正在检查 GitHub 更新任务…";
+  if (els.manualUpdateStatus) els.manualUpdateStatus.textContent = "正在检查今日更新状态…";
   try {
-    const run = await fetchLatestWorkflowRun();
+    const service = await fetchUpdateServiceStatus();
+    const run = service.latest_run || null;
     if (
-      reloadArchive
-      && run
-      && latestRunStartedToday(run)
-      && run.status === "completed"
-      && run.conclusion === "success"
-      && state.lastReloadedWorkflowRunId !== run.id
+      (reloadArchive || service.archive_updated_today)
+      && service.archive_updated_today
+      && (!archiveUpdatedToday() || (run && state.lastReloadedWorkflowRunId !== run.id))
     ) {
-      state.lastReloadedWorkflowRunId = run.id;
+      if (run) state.lastReloadedWorkflowRunId = run.id;
       await loadArchive();
     }
     renderManualUpdateControl(run);
-    if (run && run.status === "completed" && manualUpdatePollTimer) {
+    if (
+      run
+      && run.status === "completed"
+      && (run.conclusion !== "success" || archiveUpdatedToday())
+      && manualUpdatePollTimer
+    ) {
       clearInterval(manualUpdatePollTimer);
       manualUpdatePollTimer = null;
     }
     return run;
   } catch (error) {
-    renderManualUpdateControl(null, `自动状态检查暂不可用：${error.message}。仍可点击按钮前往 GitHub 手动更新。`);
+    renderManualUpdateControl(null, `一键更新状态暂不可用：${error.message}。报告阅读功能不受影响。`);
     return null;
   }
 }
 
 function startManualUpdatePolling() {
   if (manualUpdatePollTimer) clearInterval(manualUpdatePollTimer);
-  let checksRemaining = 16;
+  let checksRemaining = 30;
   manualUpdatePollTimer = setInterval(async () => {
     checksRemaining -= 1;
     const run = await checkManualUpdateStatus({ reloadArchive: true });
-    if (checksRemaining <= 0 || (run && run.status === "completed")) {
+    if (
+      checksRemaining <= 0
+      || (run && run.status === "completed" && (run.conclusion !== "success" || archiveUpdatedToday()))
+    ) {
       clearInterval(manualUpdatePollTimer);
       manualUpdatePollTimer = null;
     }
-  }, 45000);
+  }, 30000);
 }
 
-function handleManualUpdateClick() {
+async function handleManualUpdateClick() {
+  if (archiveUpdatedToday()) {
+    renderManualUpdateControl(null);
+    return;
+  }
   state.manualUpdateRequestedAt = Date.now();
-  window.open(MANUAL_UPDATE_CONFIG.workflowPage, "_blank", "noopener,noreferrer");
-  renderManualUpdateControl(null, "已打开 GitHub：登录有仓库权限的账号，点击 Run workflow，再点绿色 Run workflow。返回本页后会自动检查进度。");
-  startManualUpdatePolling();
+  els.manualUpdateButton.disabled = true;
+  els.manualUpdateButton.setAttribute("aria-busy", "true");
+  els.manualUpdateButton.textContent = "正在提交";
+  els.manualUpdateStatus.textContent = "正在安全提交今日报告任务…";
+  try {
+    const result = await requestManualUpdate();
+    if (result.code === "already_current") {
+      await loadArchive();
+      renderManualUpdateControl(result.latest_run || null, "北京时间今日报告已经更新。 ");
+      return;
+    }
+    renderManualUpdateControl(result.latest_run || null, result.message || "更新任务已提交；完成后页面会自动刷新。 ");
+    if (["accepted", "cooldown"].includes(result.code)) {
+      els.manualUpdateButton.disabled = true;
+      els.manualUpdateButton.setAttribute("aria-busy", "true");
+      els.manualUpdateButton.classList.add("is-running");
+      els.manualUpdateButton.textContent = result.code === "accepted" ? "已提交" : "等待启动";
+    }
+    startManualUpdatePolling();
+    window.setTimeout(() => checkManualUpdateStatus({ reloadArchive: true }), 5000);
+  } catch (error) {
+    renderManualUpdateControl(null, `提交失败：${error.message}。请稍后再试。`);
+  }
 }
 
 function activeRiskPolicy() {
@@ -1811,5 +1858,5 @@ loadArchive()
   .catch((error) => {
     els.reportTitle.textContent = "报告加载失败";
     els.reportContent.innerHTML = `<p class="empty">${escapeHtml(error.message)}。请稍后刷新页面。</p>`;
-    renderManualUpdateControl(null, "报告索引加载失败，仍可前往 GitHub 手动运行更新。 ");
+    renderManualUpdateControl(null, "报告索引加载失败；恢复后可直接一键更新。 ");
   });
