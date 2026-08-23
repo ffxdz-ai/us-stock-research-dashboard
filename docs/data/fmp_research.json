@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-22T09:23:41+08:00",
-  "generated_label": "2026-08-22 09:23",
+  "generated_at": "2026-08-23T09:37:39+08:00",
+  "generated_label": "2026-08-23 09:37",
   "fmp_enabled": true,
   "data_boundary": {
     "role": "FMP analyst expectations and earnings layer; not a trading instruction",
@@ -30,28 +30,28 @@
       "coverage_status": "ok",
       "restricted_endpoints": [],
       "price": 214.72,
-      "quote_time": "Aug 21, 2026",
+      "quote_time": "Aug 20, 2026",
       "annual_estimate": {
         "date": "2029-01-25",
-        "revenueAvg": 694409867868,
-        "revenueLow": 601841882822,
-        "revenueHigh": 825089039749,
+        "revenueAvg": 694409867867,
+        "revenueLow": 599662401820,
+        "revenueHigh": 822101102320,
         "epsAvg": 15.39767,
-        "epsLow": 12.86834,
-        "epsHigh": 19.42488,
-        "ebitdaAvg": 355152602767,
-        "numAnalystsRevenue": 26,
-        "numAnalystsEps": 16
+        "epsLow": 12.82851,
+        "epsHigh": 19.36477,
+        "ebitdaAvg": 355152602766,
+        "numAnalystsRevenue": 27,
+        "numAnalystsEps": 15
       },
       "quarterly_estimate": null,
       "estimate_revision": {
         "status": "compared",
-        "epsAvg_change": 0.0574,
-        "epsAvg_change_pct": 0.374,
-        "revenueAvg_change": 2887017965.0,
-        "revenueAvg_change_pct": 0.4175,
-        "ebitdaAvg_change": 1476551518.0,
-        "ebitdaAvg_change_pct": 0.4175,
+        "epsAvg_change": 0.0,
+        "epsAvg_change_pct": 0.0,
+        "revenueAvg_change": -1.0,
+        "revenueAvg_change_pct": -0.0,
+        "ebitdaAvg_change": -1.0,
+        "ebitdaAvg_change_pct": -0.0,
         "status_label": "无明显修正"
       },
       "price_target_summary": {
@@ -60,8 +60,8 @@
         "lastMonthAvgPriceTarget": 310,
         "lastQuarterCount": 6,
         "lastQuarterAvgPriceTarget": 332.5,
-        "lastYearCount": 87,
-        "lastYearAvgPriceTarget": 281.2,
+        "lastYearCount": 86,
+        "lastYearAvgPriceTarget": 281.98,
         "allTimeCount": 322,
         "allTimeAvgPriceTarget": 140.92,
         "publishers": "[\"StreetInsider\",\"Benzinga\",\"Pulse 2.0\",\"MarketWatch\",\"Barrons\"]"
@@ -92,8 +92,8 @@
           "epsActual": null,
           "epsEstimated": 2.09,
           "revenueActual": null,
-          "revenueEstimated": 92038840000,
-          "lastUpdated": "2026-08-21"
+          "revenueEstimated": 92060120000,
+          "lastUpdated": "2026-08-23"
         },
         {
           "symbol": "NVDA",
@@ -144,138 +144,20 @@
       "action": "预期差增强，进入 Buy-Side 复核"
     },
     {
-      "symbol": "AMD",
-      "name": "Advanced Micro Devices, Inc. Common Stock",
-      "coverage_status": "ok",
-      "restricted_endpoints": [],
-      "price": 473.25,
-      "quote_time": "Aug 21, 2026",
-      "annual_estimate": {
-        "date": "2028-12-27",
-        "revenueAvg": 121175859622,
-        "revenueLow": 81354620074,
-        "revenueHigh": 165829177407,
-        "epsAvg": 22.39182,
-        "epsLow": 14.06032,
-        "epsHigh": 31.11838,
-        "ebitdaAvg": 26291703945,
-        "numAnalystsRevenue": 35,
-        "numAnalystsEps": 20
-      },
-      "quarterly_estimate": null,
-      "estimate_revision": {
-        "status": "compared",
-        "epsAvg_change": 0.8389,
-        "epsAvg_change_pct": 3.8924,
-        "revenueAvg_change": 3186978312.0,
-        "revenueAvg_change_pct": 2.7011,
-        "ebitdaAvg_change": 691483358.0,
-        "ebitdaAvg_change_pct": 2.7011,
-        "status_label": "有明显修正"
-      },
-      "price_target_summary": {
-        "symbol": "AMD",
-        "lastMonthCount": 15,
-        "lastMonthAvgPriceTarget": 665.93,
-        "lastQuarterCount": 26,
-        "lastQuarterAvgPriceTarget": 654,
-        "lastYearCount": 97,
-        "lastYearAvgPriceTarget": 416.72,
-        "allTimeCount": 261,
-        "allTimeAvgPriceTarget": 245.61,
-        "publishers": "[\"StreetInsider\",\"Benzinga\",\"MarketWatch\",\"Pulse 2.0\",\"Investing\",\"Barrons\",\"TipRanks\"]"
-      },
-      "price_target_consensus": {
-        "symbol": "AMD",
-        "targetHigh": 1250,
-        "targetLow": 260,
-        "targetConsensus": 592.23,
-        "targetMedian": 625
-      },
-      "price_target_upside_pct": 25.14,
-      "latest_earnings_surprise": {
-        "date": "2026-08-04",
-        "eps_actual": 1.66,
-        "eps_estimated": 1.62,
-        "eps_surprise": 0.04,
-        "eps_surprise_pct": 2.47,
-        "revenue_actual": 11536000000.0,
-        "revenue_estimated": 11309650000.0,
-        "revenue_surprise_pct": 2.0,
-        "last_updated": "2026-08-21"
-      },
-      "earnings_history": [
-        {
-          "symbol": "AMD",
-          "date": "2026-11-03",
-          "epsActual": null,
-          "epsEstimated": 1.9,
-          "revenueActual": null,
-          "revenueEstimated": 12968670000,
-          "lastUpdated": "2026-08-21"
-        },
-        {
-          "symbol": "AMD",
-          "date": "2026-08-04",
-          "epsActual": 1.66,
-          "epsEstimated": 1.62,
-          "revenueActual": 11536000000,
-          "revenueEstimated": 11309650000,
-          "lastUpdated": "2026-08-21"
-        },
-        {
-          "symbol": "AMD",
-          "date": "2026-05-05",
-          "epsActual": 1.37,
-          "epsEstimated": 1.29,
-          "revenueActual": 10253000000,
-          "revenueEstimated": 9900008000,
-          "lastUpdated": "2026-08-05"
-        },
-        {
-          "symbol": "AMD",
-          "date": "2026-02-03",
-          "epsActual": 1.53,
-          "epsEstimated": 1.32,
-          "revenueActual": 10270000000,
-          "revenueEstimated": 9668357000,
-          "lastUpdated": "2026-05-03"
-        }
-      ],
-      "rating_snapshot": {
-        "symbol": "AMD",
-        "rating": "B-",
-        "overallScore": 3,
-        "discountedCashFlowScore": 2,
-        "returnOnEquityScore": 3,
-        "returnOnAssetsScore": 4,
-        "debtToEquityScore": 4,
-        "priceToEarningsScore": 1,
-        "priceToBookScore": 1
-      },
-      "expectation_score": 83.0,
-      "score_notes": [
-        "一致目标价上行空间 25.1%",
-        "EPS 预期上修 3.9%",
-        "收入预期上修 2.7%"
-      ],
-      "action": "预期差增强，进入 Buy-Side 复核"
-    },
-    {
       "symbol": "TSM",
       "name": "Taiwan Semiconductor Manufacturing Company Ltd.",
       "coverage_status": "ok",
       "restricted_endpoints": [],
       "price": 418.95,
-      "quote_time": "Aug 21, 2026",
+      "quote_time": "Aug 20, 2026",
       "annual_estimate": {
         "date": "2027-12-31",
         "revenueAvg": 7267796682586,
         "revenueLow": 6593038074668,
         "revenueHigh": 7945922349425,
-        "epsAvg": 699.60426,
-        "epsLow": 560.15271,
-        "epsHigh": 796.81808,
+        "epsAvg": 699.61144,
+        "epsLow": 560.15846,
+        "epsHigh": 796.82625,
         "ebitdaAvg": 5082540697077,
         "numAnalystsRevenue": 22,
         "numAnalystsEps": 10
@@ -283,12 +165,12 @@
       "quarterly_estimate": null,
       "estimate_revision": {
         "status": "compared",
-        "epsAvg_change": 1.7988,
-        "epsAvg_change_pct": 0.2578,
-        "revenueAvg_change": 1067791720.0,
-        "revenueAvg_change_pct": 0.0147,
-        "ebitdaAvg_change": 746731796.0,
-        "ebitdaAvg_change_pct": 0.0147,
+        "epsAvg_change": 0.0072,
+        "epsAvg_change_pct": 0.001,
+        "revenueAvg_change": 0.0,
+        "revenueAvg_change_pct": 0.0,
+        "ebitdaAvg_change": 0.0,
+        "ebitdaAvg_change_pct": 0.0,
         "status_label": "无明显修正"
       },
       "price_target_summary": {
@@ -320,7 +202,7 @@
         "revenue_actual": 39356270000.0,
         "revenue_estimated": 39834730000.0,
         "revenue_surprise_pct": -1.2,
-        "last_updated": "2026-08-22"
+        "last_updated": "2026-08-23"
       },
       "earnings_history": [
         {
@@ -330,7 +212,7 @@
           "epsEstimated": 4.45,
           "revenueActual": null,
           "revenueEstimated": 45052550000,
-          "lastUpdated": "2026-08-22"
+          "lastUpdated": "2026-08-23"
         },
         {
           "symbol": "TSM",
@@ -339,7 +221,7 @@
           "epsEstimated": 3.87,
           "revenueActual": 39356270000,
           "revenueEstimated": 39834730000,
-          "lastUpdated": "2026-08-22"
+          "lastUpdated": "2026-08-23"
         },
         {
           "symbol": "TSM",
@@ -379,6 +261,122 @@
       "action": "预期面改善，保留观察"
     },
     {
+      "symbol": "AMD",
+      "name": "Advanced Micro Devices, Inc. Common Stock",
+      "coverage_status": "ok",
+      "restricted_endpoints": [],
+      "price": 473.25,
+      "quote_time": "Aug 20, 2026",
+      "annual_estimate": {
+        "date": "2028-12-27",
+        "revenueAvg": 121175859622,
+        "revenueLow": 81354620074,
+        "revenueHigh": 165829177407,
+        "epsAvg": 22.39182,
+        "epsLow": 14.06032,
+        "epsHigh": 31.11838,
+        "ebitdaAvg": 26291703945,
+        "numAnalystsRevenue": 35,
+        "numAnalystsEps": 20
+      },
+      "quarterly_estimate": null,
+      "estimate_revision": {
+        "status": "compared",
+        "epsAvg_change": 0.0,
+        "epsAvg_change_pct": 0.0,
+        "revenueAvg_change": 0.0,
+        "revenueAvg_change_pct": 0.0,
+        "ebitdaAvg_change": 0.0,
+        "ebitdaAvg_change_pct": 0.0,
+        "status_label": "无明显修正"
+      },
+      "price_target_summary": {
+        "symbol": "AMD",
+        "lastMonthCount": 15,
+        "lastMonthAvgPriceTarget": 665.93,
+        "lastQuarterCount": 26,
+        "lastQuarterAvgPriceTarget": 654,
+        "lastYearCount": 97,
+        "lastYearAvgPriceTarget": 416.72,
+        "allTimeCount": 261,
+        "allTimeAvgPriceTarget": 245.61,
+        "publishers": "[\"StreetInsider\",\"Benzinga\",\"MarketWatch\",\"Pulse 2.0\",\"Investing\",\"Barrons\",\"TipRanks\"]"
+      },
+      "price_target_consensus": {
+        "symbol": "AMD",
+        "targetHigh": 1250,
+        "targetLow": 260,
+        "targetConsensus": 592.23,
+        "targetMedian": 625
+      },
+      "price_target_upside_pct": 25.14,
+      "latest_earnings_surprise": {
+        "date": "2026-08-04",
+        "eps_actual": 1.66,
+        "eps_estimated": 1.62,
+        "eps_surprise": 0.04,
+        "eps_surprise_pct": 2.47,
+        "revenue_actual": 11536000000.0,
+        "revenue_estimated": 11309650000.0,
+        "revenue_surprise_pct": 2.0,
+        "last_updated": "2026-08-23"
+      },
+      "earnings_history": [
+        {
+          "symbol": "AMD",
+          "date": "2026-11-03",
+          "epsActual": null,
+          "epsEstimated": 1.9,
+          "revenueActual": null,
+          "revenueEstimated": 12970090000,
+          "lastUpdated": "2026-08-23"
+        },
+        {
+          "symbol": "AMD",
+          "date": "2026-08-04",
+          "epsActual": 1.66,
+          "epsEstimated": 1.62,
+          "revenueActual": 11536000000,
+          "revenueEstimated": 11309650000,
+          "lastUpdated": "2026-08-23"
+        },
+        {
+          "symbol": "AMD",
+          "date": "2026-05-05",
+          "epsActual": 1.37,
+          "epsEstimated": 1.29,
+          "revenueActual": 10253000000,
+          "revenueEstimated": 9900008000,
+          "lastUpdated": "2026-08-05"
+        },
+        {
+          "symbol": "AMD",
+          "date": "2026-02-03",
+          "epsActual": 1.53,
+          "epsEstimated": 1.32,
+          "revenueActual": 10270000000,
+          "revenueEstimated": 9668357000,
+          "lastUpdated": "2026-05-03"
+        }
+      ],
+      "rating_snapshot": {
+        "symbol": "AMD",
+        "rating": "B-",
+        "overallScore": 3,
+        "discountedCashFlowScore": 2,
+        "returnOnEquityScore": 3,
+        "returnOnAssetsScore": 4,
+        "debtToEquityScore": 4,
+        "priceToEarningsScore": 1,
+        "priceToBookScore": 1
+      },
+      "expectation_score": 63.0,
+      "score_notes": [
+        "一致目标价上行空间 25.1%"
+      ],
+      "action": "预期面改善，保留观察"
+    },
+    {
       "symbol": "AVGO",
       "name": "Broadcom Inc. Common Stock",
       "coverage_status": "restricted",
@@ -390,7 +388,7 @@
         "/ratings-snapshot"
       ],
       "price": 368.45,
-      "quote_time": "Aug 21, 2026",
+      "quote_time": "Aug 20, 2026",
       "annual_estimate": null,
       "quarterly_estimate": null,
       "estimate_revision": {
@@ -421,7 +419,7 @@
         "/ratings-snapshot"
       ],
       "price": 243.32,
-      "quote_time": "Aug 21, 2026",
+      "quote_time": "Aug 20, 2026",
       "annual_estimate": null,
       "quarterly_estimate": null,
       "estimate_revision": {
@@ -452,7 +450,7 @@
         "/ratings-snapshot"
       ],
       "price": 237.04,
-      "quote_time": "Aug 21, 2026",
+      "quote_time": "Aug 20, 2026",
       "annual_estimate": null,
       "quarterly_estimate": null,
       "estimate_revision": {
@@ -483,7 +481,7 @@
         "/ratings-snapshot"
       ],
       "price": 289.52,
-      "quote_time": "Aug 21, 2026",
+      "quote_time": "Aug 20, 2026",
       "annual_estimate": null,
       "quarterly_estimate": null,
       "estimate_revision": {
@@ -514,7 +512,7 @@
         "/ratings-snapshot"
       ],
       "price": 1763.76,
-      "quote_time": "Aug 21, 2026",
+      "quote_time": "Aug 20, 2026",
       "annual_estimate": null,
       "quarterly_estimate": null,
       "estimate_revision": {
@@ -545,7 +543,7 @@
         "/ratings-snapshot"
       ],
       "price": 492.32,
-      "quote_time": "Aug 21, 2026",
+      "quote_time": "Aug 20, 2026",
       "annual_estimate": null,
       "quarterly_estimate": null,
       "estimate_revision": {
@@ -576,7 +574,7 @@
         "/ratings-snapshot"
       ],
       "price": 314.0,
-      "quote_time": "Aug 21, 2026",
+      "quote_time": "Aug 20, 2026",
       "annual_estimate": null,
       "quarterly_estimate": null,
       "estimate_revision": {
@@ -607,7 +605,7 @@
         "/ratings-snapshot"
       ],
       "price": 183.99,
-      "quote_time": "Aug 21, 2026",
+      "quote_time": "Aug 20, 2026",
       "annual_estimate": null,
       "quarterly_estimate": null,
       "estimate_revision": {
@@ -638,7 +636,7 @@
         "/ratings-snapshot"
       ],
       "price": 375.74,
-      "quote_time": "Aug 21, 2026",
+      "quote_time": "Aug 20, 2026",
       "annual_estimate": null,
       "quarterly_estimate": null,
       "estimate_revision": {
@@ -665,28 +663,28 @@
       "coverage_status": "ok",
       "restricted_endpoints": [],
       "price": 214.72,
-      "quote_time": "Aug 21, 2026",
+      "quote_time": "Aug 20, 2026",
       "annual_estimate": {
         "date": "2029-01-25",
-        "revenueAvg": 694409867868,
-        "revenueLow": 601841882822,
-        "revenueHigh": 825089039749,
+        "revenueAvg": 694409867867,
+        "revenueLow": 599662401820,
+        "revenueHigh": 822101102320,
         "epsAvg": 15.39767,
-        "epsLow": 12.86834,
-        "epsHigh": 19.42488,
-        "ebitdaAvg": 355152602767,
-        "numAnalystsRevenue": 26,
-        "numAnalystsEps": 16
+        "epsLow": 12.82851,
+        "epsHigh": 19.36477,
+        "ebitdaAvg": 355152602766,
+        "numAnalystsRevenue": 27,
+        "numAnalystsEps": 15
       },
       "quarterly_estimate": null,
       "estimate_revision": {
         "status": "compared",
-        "epsAvg_change": 0.0574,
-        "epsAvg_change_pct": 0.374,
-        "revenueAvg_change": 2887017965.0,
-        "revenueAvg_change_pct": 0.4175,
-        "ebitdaAvg_change": 1476551518.0,
-        "ebitdaAvg_change_pct": 0.4175,
+        "epsAvg_change": 0.0,
+        "epsAvg_change_pct": 0.0,
+        "revenueAvg_change": -1.0,
+        "revenueAvg_change_pct": -0.0,
+        "ebitdaAvg_change": -1.0,
+        "ebitdaAvg_change_pct": -0.0,
         "status_label": "无明显修正"
       },
       "price_target_summary": {
@@ -695,8 +693,8 @@
         "lastMonthAvgPriceTarget": 310,
         "lastQuarterCount": 6,
         "lastQuarterAvgPriceTarget": 332.5,
-        "lastYearCount": 87,
-        "lastYearAvgPriceTarget": 281.2,
+        "lastYearCount": 86,
+        "lastYearAvgPriceTarget": 281.98,
         "allTimeCount": 322,
         "allTimeAvgPriceTarget": 140.92,
         "publishers": "[\"StreetInsider\",\"Benzinga\",\"Pulse 2.0\",\"MarketWatch\",\"Barrons\"]"
@@ -727,8 +725,8 @@
           "epsActual": null,
           "epsEstimated": 2.09,
           "revenueActual": null,
-          "revenueEstimated": 92038840000,
-          "lastUpdated": "2026-08-21"
+          "revenueEstimated": 92060120000,
+          "lastUpdated": "2026-08-23"
         },
         {
           "symbol": "NVDA",
@@ -779,138 +777,20 @@
       "action": "预期差增强，进入 Buy-Side 复核"
     },
     {
-      "symbol": "AMD",
-      "name": "Advanced Micro Devices, Inc. Common Stock",
-      "coverage_status": "ok",
-      "restricted_endpoints": [],
-      "price": 473.25,
-      "quote_time": "Aug 21, 2026",
-      "annual_estimate": {
-        "date": "2028-12-27",
-        "revenueAvg": 121175859622,
-        "revenueLow": 81354620074,
-        "revenueHigh": 165829177407,
-        "epsAvg": 22.39182,
-        "epsLow": 14.06032,
-        "epsHigh": 31.11838,
-        "ebitdaAvg": 26291703945,
-        "numAnalystsRevenue": 35,
-        "numAnalystsEps": 20
-      },
-      "quarterly_estimate": null,
-      "estimate_revision": {
-        "status": "compared",
-        "epsAvg_change": 0.8389,
-        "epsAvg_change_pct": 3.8924,
-        "revenueAvg_change": 3186978312.0,
-        "revenueAvg_change_pct": 2.7011,
-        "ebitdaAvg_change": 691483358.0,
-        "ebitdaAvg_change_pct": 2.7011,
-        "status_label": "有明显修正"
-      },
-      "price_target_summary": {
-        "symbol": "AMD",
-        "lastMonthCount": 15,
-        "lastMonthAvgPriceTarget": 665.93,
-        "lastQuarterCount": 26,
-        "lastQuarterAvgPriceTarget": 654,
-        "lastYearCount": 97,
-        "lastYearAvgPriceTarget": 416.72,
-        "allTimeCount": 261,
-        "allTimeAvgPriceTarget": 245.61,
-        "publishers": "[\"StreetInsider\",\"Benzinga\",\"MarketWatch\",\"Pulse 2.0\",\"Investing\",\"Barrons\",\"TipRanks\"]"
-      },
-      "price_target_consensus": {
-        "symbol": "AMD",
-        "targetHigh": 1250,
-        "targetLow": 260,
-        "targetConsensus": 592.23,
-        "targetMedian": 625
-      },
-      "price_target_upside_pct": 25.14,
-      "latest_earnings_surprise": {
-        "date": "2026-08-04",
-        "eps_actual": 1.66,
-        "eps_estimated": 1.62,
-        "eps_surprise": 0.04,
-        "eps_surprise_pct": 2.47,
-        "revenue_actual": 11536000000.0,
-        "revenue_estimated": 11309650000.0,
-        "revenue_surprise_pct": 2.0,
-        "last_updated": "2026-08-21"
-      },
-      "earnings_history": [
-        {
-          "symbol": "AMD",
-          "date": "2026-11-03",
-          "epsActual": null,
-          "epsEstimated": 1.9,
-          "revenueActual": null,
-          "revenueEstimated": 12968670000,
-          "lastUpdated": "2026-08-21"
-        },
-        {
-          "symbol": "AMD",
-          "date": "2026-08-04",
-          "epsActual": 1.66,
-          "epsEstimated": 1.62,
-          "revenueActual": 11536000000,
-          "revenueEstimated": 11309650000,
-          "lastUpdated": "2026-08-21"
-        },
-        {
-          "symbol": "AMD",
-          "date": "2026-05-05",
-          "epsActual": 1.37,
-          "epsEstimated": 1.29,
-          "revenueActual": 10253000000,
-          "revenueEstimated": 9900008000,
-          "lastUpdated": "2026-08-05"
-        },
-        {
-          "symbol": "AMD",
-          "date": "2026-02-03",
-          "epsActual": 1.53,
-          "epsEstimated": 1.32,
-          "revenueActual": 10270000000,
-          "revenueEstimated": 9668357000,
-          "lastUpdated": "2026-05-03"
-        }
-      ],
-      "rating_snapshot": {
-        "symbol": "AMD",
-        "rating": "B-",
-        "overallScore": 3,
-        "discountedCashFlowScore": 2,
-        "returnOnEquityScore": 3,
-        "returnOnAssetsScore": 4,
-        "debtToEquityScore": 4,
-        "priceToEarningsScore": 1,
-        "priceToBookScore": 1
-      },
-      "expectation_score": 83.0,
-      "score_notes": [
-        "一致目标价上行空间 25.1%",
-        "EPS 预期上修 3.9%",
-        "收入预期上修 2.7%"
-      ],
-      "action": "预期差增强，进入 Buy-Side 复核"
-    },
-    {
       "symbol": "TSM",
       "name": "Taiwan Semiconductor Manufacturing Company Ltd.",
       "coverage_status": "ok",
       "restricted_endpoints": [],
       "price": 418.95,
-      "quote_time": "Aug 21, 2026",
+      "quote_time": "Aug 20, 2026",
       "annual_estimate": {
         "date": "2027-12-31",
         "revenueAvg": 7267796682586,
         "revenueLow": 6593038074668,
         "revenueHigh": 7945922349425,
-        "epsAvg": 699.60426,
-        "epsLow": 560.15271,
-        "epsHigh": 796.81808,
+        "epsAvg": 699.61144,
+        "epsLow": 560.15846,
+        "epsHigh": 796.82625,
         "ebitdaAvg": 5082540697077,
         "numAnalystsRevenue": 22,
         "numAnalystsEps": 10
@@ -918,12 +798,12 @@
       "quarterly_estimate": null,
       "estimate_revision": {
         "status": "compared",
-        "epsAvg_change": 1.7988,
-        "epsAvg_change_pct": 0.2578,
-        "revenueAvg_change": 1067791720.0,
-        "revenueAvg_change_pct": 0.0147,
-        "ebitdaAvg_change": 746731796.0,
-        "ebitdaAvg_change_pct": 0.0147,
+        "epsAvg_change": 0.0072,
+        "epsAvg_change_pct": 0.001,
+        "revenueAvg_change": 0.0,
+        "revenueAvg_change_pct": 0.0,
+        "ebitdaAvg_change": 0.0,
+        "ebitdaAvg_change_pct": 0.0,
         "status_label": "无明显修正"
       },
       "price_target_summary": {
@@ -955,7 +835,7 @@
         "revenue_actual": 39356270000.0,
         "revenue_estimated": 39834730000.0,
         "revenue_surprise_pct": -1.2,
-        "last_updated": "2026-08-22"
+        "last_updated": "2026-08-23"
       },
       "earnings_history": [
         {
@@ -965,7 +845,7 @@
           "epsEstimated": 4.45,
           "revenueActual": null,
           "revenueEstimated": 45052550000,
-          "lastUpdated": "2026-08-22"
+          "lastUpdated": "2026-08-23"
         },
         {
           "symbol": "TSM",
@@ -974,7 +854,7 @@
           "epsEstimated": 3.87,
           "revenueActual": 39356270000,
           "revenueEstimated": 39834730000,
-          "lastUpdated": "2026-08-22"
+          "lastUpdated": "2026-08-23"
         },
         {
           "symbol": "TSM",
@@ -1010,6 +890,122 @@
       "score_notes": [
         "一致目标价上行空间 40.6%",
         "最近 EPS 超预期 11.4%"
+      ],
+      "action": "预期面改善，保留观察"
+    },
+    {
+      "symbol": "AMD",
+      "name": "Advanced Micro Devices, Inc. Common Stock",
+      "coverage_status": "ok",
+      "restricted_endpoints": [],
+      "price": 473.25,
+      "quote_time": "Aug 20, 2026",
+      "annual_estimate": {
+        "date": "2028-12-27",
+        "revenueAvg": 121175859622,
+        "revenueLow": 81354620074,
+        "revenueHigh": 165829177407,
+        "epsAvg": 22.39182,
+        "epsLow": 14.06032,
+        "epsHigh": 31.11838,
+        "ebitdaAvg": 26291703945,
+        "numAnalystsRevenue": 35,
+        "numAnalystsEps": 20
+      },
+      "quarterly_estimate": null,
+      "estimate_revision": {
+        "status": "compared",
+        "epsAvg_change": 0.0,
+        "epsAvg_change_pct": 0.0,
+        "revenueAvg_change": 0.0,
+        "revenueAvg_change_pct": 0.0,
+        "ebitdaAvg_change": 0.0,
+        "ebitdaAvg_change_pct": 0.0,
+        "status_label": "无明显修正"
+      },
+      "price_target_summary": {
+        "symbol": "AMD",
+        "lastMonthCount": 15,
+        "lastMonthAvgPriceTarget": 665.93,
+        "lastQuarterCount": 26,
+        "lastQuarterAvgPriceTarget": 654,
+        "lastYearCount": 97,
+        "lastYearAvgPriceTarget": 416.72,
+        "allTimeCount": 261,
+        "allTimeAvgPriceTarget": 245.61,
+        "publishers": "[\"StreetInsider\",\"Benzinga\",\"MarketWatch\",\"Pulse 2.0\",\"Investing\",\"Barrons\",\"TipRanks\"]"
+      },
+      "price_target_consensus": {
+        "symbol": "AMD",
+        "targetHigh": 1250,
+        "targetLow": 260,
+        "targetConsensus": 592.23,
+        "targetMedian": 625
+      },
+      "price_target_upside_pct": 25.14,
+      "latest_earnings_surprise": {
+        "date": "2026-08-04",
+        "eps_actual": 1.66,
+        "eps_estimated": 1.62,
+        "eps_surprise": 0.04,
+        "eps_surprise_pct": 2.47,
+        "revenue_actual": 11536000000.0,
+        "revenue_estimated": 11309650000.0,
+        "revenue_surprise_pct": 2.0,
+        "last_updated": "2026-08-23"
+      },
+      "earnings_history": [
+        {
+          "symbol": "AMD",
+          "date": "2026-11-03",
+          "epsActual": null,
+          "epsEstimated": 1.9,
+          "revenueActual": null,
+          "revenueEstimated": 12970090000,
+          "lastUpdated": "2026-08-23"
+        },
+        {
+          "symbol": "AMD",
+          "date": "2026-08-04",
+          "epsActual": 1.66,
+          "epsEstimated": 1.62,
+          "revenueActual": 11536000000,
+          "revenueEstimated": 11309650000,
+          "lastUpdated": "2026-08-23"
+        },
+        {
+          "symbol": "AMD",
+          "date": "2026-05-05",
+          "epsActual": 1.37,
+          "epsEstimated": 1.29,
+          "revenueActual": 10253000000,
+          "revenueEstimated": 9900008000,
+          "lastUpdated": "2026-08-05"
+        },
+        {
+          "symbol": "AMD",
+          "date": "2026-02-03",
+          "epsActual": 1.53,
+          "epsEstimated": 1.32,
+          "revenueActual": 10270000000,
+          "revenueEstimated": 9668357000,
+          "lastUpdated": "2026-05-03"
+        }
+      ],
+      "rating_snapshot": {
+        "symbol": "AMD",
+        "rating": "B-",
+        "overallScore": 3,
+        "discountedCashFlowScore": 2,
+        "returnOnEquityScore": 3,
+        "returnOnAssetsScore": 4,
+        "debtToEquityScore": 4,
+        "priceToEarningsScore": 1,
+        "priceToBookScore": 1
+      },
+      "expectation_score": 63.0,
+      "score_notes": [
+        "一致目标价上行空间 25.1%"
       ],
       "action": "预期面改善，保留观察"
     }

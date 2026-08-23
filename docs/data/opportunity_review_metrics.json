@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
-  "generated_at": "2026-08-22T09:25:47+08:00",
-  "generated_label": "2026-08-22 09:25",
+  "generated_at": "2026-08-23T09:39:49+08:00",
+  "generated_label": "2026-08-23 09:39",
   "data_boundary": {
     "role": "opportunity discovery feedback loop; not trading instruction",
     "hit_rate_rule": "20D 命中要求未来收益为正，并同时跑赢 SPY、QQQ 与行业 ETF；score_delta 不参与命中判定。",
@@ -17,7 +17,7 @@
     "completed_review_count": 0,
     "due_checkpoint_count": 0,
     "pending_checkpoint_count": 5,
-    "avg_live_return_pct": -12.1,
+    "avg_live_return_pct": -12.05,
     "best_theme": "AI 数据中心电力 / 液冷 / 配电",
     "tracked_security_count": 38,
     "completed_security_count": 23,
@@ -1826,19 +1826,19 @@
       "theme_id": "ai_datacenter_power_cooling",
       "theme_name": "AI 数据中心电力 / 液冷 / 配电",
       "first_seen_at": "2026-06-21T04:10:31+08:00",
-      "age_days": 62,
+      "age_days": 63,
       "initial_score": 66.4,
       "current_score": 44.0,
       "score_delta": -22.4,
       "tracked_security_count": 7,
       "priced_security_count": 5,
-      "avg_return_pct": -4.32,
+      "avg_return_pct": -4.29,
       "median_return_pct": -0.61,
       "best_security": {
         "code": "US.PH",
         "initial_price": 953.27,
-        "current_price": 1000.13,
-        "return_pct": 4.92
+        "current_price": 1001.74,
+        "return_pct": 5.08
       },
       "worst_security": {
         "code": "US.VRT",
@@ -1856,8 +1856,8 @@
         {
           "code": "US.PH",
           "initial_price": 953.27,
-          "current_price": 1000.13,
-          "return_pct": 4.92
+          "current_price": 1001.74,
+          "return_pct": 5.08
         },
         {
           "code": "US.EMR",
@@ -1889,13 +1889,13 @@
       "theme_id": "physical_ai_robotics",
       "theme_name": "Physical AI / 机器人 / 自动化",
       "first_seen_at": "2026-06-21T04:10:31+08:00",
-      "age_days": 62,
+      "age_days": 63,
       "initial_score": 62.4,
       "current_score": 42.1,
       "score_delta": -20.3,
       "tracked_security_count": 5,
       "priced_security_count": 5,
-      "avg_return_pct": -6.12,
+      "avg_return_pct": -5.88,
       "median_return_pct": -6.88,
       "best_security": {
         "code": "US.SYM",
@@ -1937,8 +1937,8 @@
         {
           "code": "US.ROK",
           "initial_price": 473.79,
-          "current_price": 431.45,
-          "return_pct": -8.94
+          "current_price": 437.08,
+          "return_pct": -7.75
         },
         {
           "code": "US.TSLA",
@@ -1952,7 +1952,7 @@
       "theme_id": "ai_optical_cpo_networking",
       "theme_name": "AI 光模块 / CPO / 数据中心网络",
       "first_seen_at": "2026-06-21T04:10:31+08:00",
-      "age_days": 62,
+      "age_days": 63,
       "initial_score": 67.2,
       "current_score": 57.7,
       "score_delta": -9.5,
@@ -2015,10 +2015,10 @@
       "theme_id": "ai_advanced_packaging_hbm",
       "theme_name": "GPU / ASIC / HBM / 先进封装",
       "first_seen_at": "2026-06-21T04:10:31+08:00",
-      "age_days": 62,
+      "age_days": 63,
       "initial_score": 70.8,
-      "current_score": 68.3,
-      "score_delta": -2.5,
+      "current_score": 67.5,
+      "score_delta": -3.3,
       "tracked_security_count": 8,
       "priced_security_count": 6,
       "avg_return_pct": -11.37,
@@ -2084,7 +2084,7 @@
       "theme_id": "ai_pcb_ccl_materials",
       "theme_name": "高速 PCB / 覆铜板 / 电子布 / 铜箔",
       "first_seen_at": "2026-06-21T04:10:31+08:00",
-      "age_days": 62,
+      "age_days": 63,
       "initial_score": 61.8,
       "current_score": 46.9,
       "score_delta": -14.9,
