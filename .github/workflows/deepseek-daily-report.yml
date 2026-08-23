@@ -12,9 +12,9 @@ on:
         type: choice
         required: true
         default: full
-          options:
-            - full
-            - weekly
+        options:
+          - full
+          - weekly
       force:
         description: "Force a second report even if Beijing today is already current"
         type: boolean
