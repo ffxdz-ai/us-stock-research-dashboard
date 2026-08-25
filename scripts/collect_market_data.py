@@ -17,6 +17,7 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any
+from zoneinfo import ZoneInfo
 
 from model_v2 import (
     apply_cross_sectional_ranks,
@@ -228,7 +229,9 @@ def load_local_futu_snapshot_quotes(symbols: list[str], base_quotes: dict[str, d
     quote_map = payload.get("quotes")
     if not isinstance(quote_map, dict):
         return {}
-    generated_label = payload.get("generated_label")
+    trusted_bridge = bool((payload.get("bridge") or {}).get("authenticated"))
+    new_york_now = datetime.now(ZoneInfo("America/New_York"))
+    session_minutes = new_york_now.hour * 60 + new_york_now.minute
     output: dict[str, dict[str, Any]] = {}
     for symbol in symbols:
         code = futu_code(symbol)
@@ -237,18 +240,35 @@ def load_local_futu_snapshot_quotes(symbols: list[str], base_quotes: dict[str, d
         raw = quote_map.get(code)
         if not isinstance(raw, dict):
             continue
-        price = parse_market_number(raw.get("last_price") or raw.get("cur_price") or raw.get("overnight_price") or raw.get("after_price"))
+        preferred_fields = ["last_price", "cur_price"]
+        if code.startswith("US."):
+            if session_minutes >= 20 * 60 or session_minutes < 4 * 60:
+                preferred_fields = ["overnight_price", "last_price", "cur_price"]
+            elif session_minutes < 9 * 60 + 30:
+                preferred_fields = ["pre_price", "last_price", "cur_price"]
+            elif session_minutes >= 16 * 60:
+                preferred_fields = ["after_price", "last_price", "cur_price"]
+        price = next(
+            (
+                parsed
+                for field in preferred_fields
+                if (parsed := parse_market_number(raw.get(field))) is not None and parsed > 0
+            ),
+            None,
+        )
         if price is None:
             continue
         previous_close = parse_market_number(raw.get("prev_close_price"))
         change_pct = parse_market_number(raw.get("change_rate"))
         if change_pct is None and previous_close:
             change_pct = ((price / previous_close) - 1) * 100
-        quote_time = " ".join(
-            part
-            for part in [str(raw.get("data_date") or "").strip(), str(raw.get("data_time") or raw.get("update_time") or "").strip()]
-            if part
-        ).strip() or generated_label
+        quote_time = str(raw.get("quote_time") or "").strip()
+        if not quote_time:
+            # A collection time is not an exchange quote timestamp. Preserve
+            # the legacy value if present, but never invent it from generated_at.
+            quote_time = str(raw.get("update_time") or "").strip()
+        source = "Futu OpenD authenticated bridge" if trusted_bridge else "Futu OpenD local snapshot fallback"
+        session_label = "Futu 云端认证行情" if trusted_bridge else "本地快照"
         merged = dict(base_quotes.get(symbol, {}))
         merged.update(
             {
@@ -256,14 +276,14 @@ def load_local_futu_snapshot_quotes(symbols: list[str], base_quotes: dict[str, d
                 "regularMarketPrice": price,
                 "regularMarketChangePercent": round(change_pct, 4) if change_pct is not None else None,
                 "regularMarketTime": quote_time,
-                "futu_session": "snapshot",
-                "futu_session_label": "本地快照",
-                "futu_source_session": "snapshot",
-                "futu_source_session_label": "本地快照",
+                "futu_session": "authenticated_bridge" if trusted_bridge else "snapshot",
+                "futu_session_label": session_label,
+                "futu_source_session": "authenticated_bridge" if trusted_bridge else "snapshot",
+                "futu_source_session_label": session_label,
                 "futu_regular_price": parse_market_number(raw.get("last_price") or raw.get("cur_price")),
                 "futu_previous_close": previous_close,
-                "source": "Futu OpenD local snapshot fallback",
-                "source_priority": "Futu local snapshot first when fresh; public quote fields used only as fallback/enrichment",
+                "source": source,
+                "source_priority": "Authenticated Futu quote first when fresh; public fields used only as fallback/enrichment",
             }
         )
         output[symbol] = merged

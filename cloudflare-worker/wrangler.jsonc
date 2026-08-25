@@ -7,6 +7,12 @@
   "observability": {
     "enabled": true
   },
+  "kv_namespaces": [
+    {
+      "binding": "FUTU_SNAPSHOT_KV",
+      "id": "4f282b7153124990aeb7c96c28df5ff8"
+    }
+  ],
   "vars": {
     "ALLOWED_ORIGIN": "https://ffxdz-ai.github.io",
     "ARCHIVE_INDEX_URL": "https://ffxdz-ai.github.io/us-stock-research-dashboard/data/index.json",

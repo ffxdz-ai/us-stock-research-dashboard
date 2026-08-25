@@ -587,7 +587,15 @@ def price_evidence(
         "technical_data_complete": market_row.get("technical_data_complete") is True or fallback_row.get("technical_data_complete") is True,
         "future_function_audit": market_row.get("future_function_audit") or fallback_row.get("future_function_audit") or "BLOCK",
         "gate_failures": market_row.get("gate_failures") or fallback_row.get("gate_failures") or [],
-        "source": "market_pack" if market_row.get("price") else "cross_market_intelligence" if fallback_row.get("price") else "Yahoo chart fallback" if free_quote.get("price") else None,
+        "source": (
+            market_row.get("quote_source") or "market_pack"
+            if market_row.get("price")
+            else fallback_row.get("quote_source") or "cross_market_intelligence"
+            if fallback_row.get("price")
+            else "Yahoo chart fallback"
+            if free_quote.get("price")
+            else None
+        ),
         "strict_entry": strict_entry,
         "invalidation": invalidation,
         "mechanical_target": target,

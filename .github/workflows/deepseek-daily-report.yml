@@ -120,6 +120,8 @@ jobs:
       OPENFIGI_API_KEY: ${{ secrets.OPENFIGI_API_KEY }}
       FEISHU_BOT_WEBHOOK: ${{ secrets.FEISHU_BOT_WEBHOOK }}
       FEISHU_BOT_SECRET: ${{ secrets.FEISHU_BOT_SECRET }}
+      FUTU_BRIDGE_URL: ${{ vars.FUTU_BRIDGE_URL }}
+      FUTU_BRIDGE_TOKEN: ${{ secrets.FUTU_BRIDGE_TOKEN }}
       SEC_USER_AGENT: "ffxdz-ai public research dashboard contact@example.com"
       REPORT_MODE: ${{ github.event.inputs.mode || 'full' }}
     steps:
@@ -141,6 +143,10 @@ jobs:
             echo "DEEPSEEK_API_KEY secret is not configured."
             exit 1
           fi
+
+      - name: Download authenticated Futu market-only quote snapshot
+        continue-on-error: true
+        run: python scripts/futu_cloud_bridge.py pull --max-age-hours 12
 
       - name: Collect public market data
         run: python scripts/collect_market_data.py --mode "$REPORT_MODE"

@@ -374,7 +374,10 @@ def source_quality(source: Any) -> float:
     normalized = str(source or "").strip().lower()
     # A disclosed fallback must never inherit the quality of a higher-priority
     # provider merely because its label also contains that provider's name.
-    if "fallback" in normalized:
+    if "fallback" in normalized or (
+        "futu" in normalized
+        and any(marker in normalized for marker in ("需 futu", "需futu", "券商复核", "broker verification"))
+    ):
         return SOURCE_QUALITY["fallback"]
     for key, quality in SOURCE_QUALITY.items():
         if key in normalized:
