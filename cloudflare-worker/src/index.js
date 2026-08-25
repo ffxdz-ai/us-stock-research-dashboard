@@ -7,7 +7,13 @@ const DEFAULT_WORKFLOW = "deepseek-daily-report.yml";
 const DEFAULT_REF = "main";
 const COOLDOWN_SECONDS = 120;
 const FUTU_SNAPSHOT_KEY = "latest_futu_public_quote_snapshot";
+const FUTU_FEISHU_CONFIG_KEY = "encrypted_futu_feishu_config_v1";
+const FUTU_LIVE_ALERT_STATE_KEY = "futu_live_steady_buy_state_v1";
 const FUTU_SNAPSHOT_TTL_SECONDS = 12 * 60 * 60;
+const FUTU_LIVE_ALERT_STATE_TTL_SECONDS = 30 * 24 * 60 * 60;
+const MAX_LIVE_QUOTE_AGE_MS = 15 * 60 * 1000;
+const MAX_RESEARCH_AGE_MS = 24 * 60 * 60 * 1000;
+const MAX_FEISHU_CONFIG_BYTES = 16 * 1024;
 const MAX_FUTU_SNAPSHOT_BYTES = 1024 * 1024;
 const MAX_FUTU_QUOTES = 250;
 const PUBLIC_QUOTE_FIELDS = new Set([
@@ -36,6 +42,311 @@ function bearerTokenMatches(request, expected) {
     mismatch |= actual.charCodeAt(index) ^ wanted.charCodeAt(index);
   }
   return mismatch === 0;
+}
+
+function finiteNumber(value) {
+  if (value === null || value === undefined || value === "") return null;
+  const parsed = Number(value);
+  return Number.isFinite(parsed) ? parsed : null;
+}
+
+function encodeBase64(value) {
+  const bytes = value instanceof Uint8Array ? value : new Uint8Array(value);
+  let binary = "";
+  for (const byte of bytes) binary += String.fromCharCode(byte);
+  return btoa(binary);
+}
+
+function decodeBase64(value) {
+  return Uint8Array.from(atob(value), (character) => character.charCodeAt(0));
+}
+
+async function feishuEncryptionKey(token) {
+  const material = new TextEncoder().encode(`futu-feishu-alert-v1:${token}`);
+  const digest = await crypto.subtle.digest("SHA-256", material);
+  return crypto.subtle.importKey("raw", digest, { name: "AES-GCM" }, false, ["encrypt", "decrypt"]);
+}
+
+export async function encryptFeishuConfig(config, token) {
+  const iv = crypto.getRandomValues(new Uint8Array(12));
+  const plaintext = new TextEncoder().encode(JSON.stringify(config));
+  const ciphertext = await crypto.subtle.encrypt({ name: "AES-GCM", iv }, await feishuEncryptionKey(token), plaintext);
+  return JSON.stringify({ version: 1, iv: encodeBase64(iv), ciphertext: encodeBase64(ciphertext) });
+}
+
+async function decryptFeishuConfig(value, token) {
+  const encrypted = JSON.parse(value);
+  if (encrypted?.version !== 1 || !encrypted.iv || !encrypted.ciphertext) throw new Error("invalid encrypted configuration");
+  const plaintext = await crypto.subtle.decrypt(
+    { name: "AES-GCM", iv: decodeBase64(encrypted.iv) },
+    await feishuEncryptionKey(token),
+    decodeBase64(encrypted.ciphertext),
+  );
+  return JSON.parse(new TextDecoder().decode(plaintext));
+}
+
+function approvedFeishuWebhook(value) {
+  try {
+    const parsed = new URL(String(value || ""));
+    return parsed.protocol === "https:"
+      && ["open.feishu.cn", "open.larksuite.com"].includes(parsed.hostname)
+      && parsed.pathname.startsWith("/open-apis/bot/v2/hook/")
+      && !parsed.username
+      && !parsed.password;
+  } catch {
+    return false;
+  }
+}
+
+async function handleFeishuConfig(request, env) {
+  if (!bearerTokenMatches(request, env.FUTU_BRIDGE_TOKEN)) {
+    return bridgeJsonResponse({ ok: false, code: "unauthorized" }, 401);
+  }
+  if (!env.FUTU_SNAPSHOT_KV) return bridgeJsonResponse({ ok: false, code: "bridge_not_configured" }, 503);
+  if (request.method !== "PUT") return bridgeJsonResponse({ ok: false, code: "method_not_allowed" }, 405);
+  if (Number(request.headers.get("Content-Length") || 0) > MAX_FEISHU_CONFIG_BYTES) {
+    return bridgeJsonResponse({ ok: false, code: "configuration_too_large" }, 413);
+  }
+  let raw;
+  try {
+    raw = await request.text();
+    if (new TextEncoder().encode(raw).length > MAX_FEISHU_CONFIG_BYTES) {
+      return bridgeJsonResponse({ ok: false, code: "configuration_too_large" }, 413);
+    }
+    const payload = JSON.parse(raw);
+    const webhook = String(payload?.webhook || "").trim();
+    const secret = String(payload?.secret || "").trim();
+    if (!approvedFeishuWebhook(webhook) || secret.length > 2048) {
+      return bridgeJsonResponse({ ok: false, code: "invalid_feishu_configuration" }, 422);
+    }
+    const encrypted = await encryptFeishuConfig({ webhook, secret }, env.FUTU_BRIDGE_TOKEN);
+    await env.FUTU_SNAPSHOT_KV.put(FUTU_FEISHU_CONFIG_KEY, encrypted);
+    return bridgeJsonResponse({ ok: true, configured: true, encrypted: true });
+  } catch {
+    return bridgeJsonResponse({ ok: false, code: "configuration_unavailable" }, 503);
+  }
+}
+
+function newYorkMinutes(now) {
+  const parts = new Intl.DateTimeFormat("en-US", {
+    timeZone: "America/New_York",
+    hourCycle: "h23",
+    hour: "2-digit",
+    minute: "2-digit",
+  }).formatToParts(now);
+  const hour = Number(parts.find((part) => part.type === "hour")?.value || 0);
+  const minute = Number(parts.find((part) => part.type === "minute")?.value || 0);
+  return hour * 60 + minute;
+}
+
+export function liveQuotePrice(symbol, quote, now = new Date()) {
+  if (!quote || typeof quote !== "object") return null;
+  const options = [];
+  if (String(symbol || "").startsWith("US.")) {
+    const minutes = newYorkMinutes(now);
+    if (minutes >= 20 * 60 || minutes < 4 * 60) options.push(quote.overnight_price);
+    else if (minutes < 9 * 60 + 30) options.push(quote.pre_price);
+    else if (minutes >= 16 * 60) options.push(quote.after_price);
+  }
+  options.push(quote.last_price, quote.cur_price);
+  return options.map(finiteNumber).find((value) => value !== null && value > 0) ?? null;
+}
+
+function quoteIsFresh(quote, now) {
+  const timestamp = Date.parse(String(quote?.quote_time || ""));
+  if (!Number.isFinite(timestamp)) return false;
+  const age = now.getTime() - timestamp;
+  return age >= -5 * 60 * 1000 && age <= MAX_LIVE_QUOTE_AGE_MS;
+}
+
+function validLiveTradePath(item) {
+  const entry = finiteNumber(item?.entry_price ?? item?.safe_entry_price);
+  const stop = finiteNumber(item?.stop_loss);
+  const target = finiteNumber(item?.target_price);
+  const ratio = finiteNumber(item?.rr_ratio);
+  const required = finiteNumber(item?.rr_required);
+  return entry !== null && stop !== null && target !== null && ratio !== null && required !== null
+    && stop < entry && entry < target && ratio >= required;
+}
+
+export function qualifiesLiveSteadyBuyPlan(item, quote, now = new Date()) {
+  if (!item || typeof item !== "object" || !quote || !quoteIsFresh(quote, now)) return false;
+  if (item.status !== "waiting_entry" || item.entry_tier !== "formal" || item.signal_type !== "formal") return false;
+  if (item.formal_qualified !== true || item.entry_execution_status !== "wait_pullback") return false;
+  if (item.execution_allowed !== true || item.technical_data_complete !== true) return false;
+  if (item.future_function_audit !== "PASS" || item.price_freshness !== "fresh" || item.gate_failures?.length) return false;
+  if (!validLiveTradePath(item)) return false;
+  if (["opportunity_score", "trend_score", "crowding_score"].some((field) => finiteNumber(item[field]) === null)) return false;
+
+  const price = liveQuotePrice(item.symbol, quote, now);
+  const low = finiteNumber(item.safe_entry_zone_low);
+  const high = finiteNumber(item.safe_entry_zone_high);
+  const maximum = finiteNumber(item.safe_entry_max_price ?? high);
+  const stop = finiteNumber(item.stop_loss);
+  return price !== null && low !== null && high !== null && maximum !== null && stop !== null
+    && stop < low && low <= high && high <= maximum && price >= low && price <= maximum && price > stop;
+}
+
+async function liveSignalFingerprint(item) {
+  const fields = {
+    entry_price: finiteNumber(item.entry_price),
+    risk_policy_version: String(item.risk_policy_version || ""),
+    rr_ratio: finiteNumber(item.rr_ratio),
+    safe_entry_max_price: finiteNumber(item.safe_entry_max_price),
+    safe_entry_zone_high: finiteNumber(item.safe_entry_zone_high),
+    safe_entry_zone_low: finiteNumber(item.safe_entry_zone_low),
+    signal_type: String(item.signal_type || ""),
+    stop_loss: finiteNumber(item.stop_loss),
+    symbol: String(item.symbol || ""),
+    target_price: finiteNumber(item.target_price),
+  };
+  const digest = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(JSON.stringify(fields)));
+  return Array.from(new Uint8Array(digest), (value) => value.toString(16).padStart(2, "0")).join("").slice(0, 24);
+}
+
+function displayPrice(value, currency) {
+  const parsed = finiteNumber(value);
+  return parsed === null ? "待确认" : `${parsed.toFixed(2)} ${String(currency || "").trim()}`.trim();
+}
+
+function liveFeishuCard(items) {
+  const elements = [];
+  for (const [index, item] of items.entries()) {
+    if (index) elements.push({ tag: "hr" });
+    const currency = String(item.currency || "");
+    const content = [
+      `**${item.symbol} · ${String(item.name || "名称待确认")}**`,
+      `真实 Futu 现价：${displayPrice(item.live_price, currency)}（${item.live_quote_time}）`,
+      `稳健买入区间：${displayPrice(item.safe_entry_zone_low, currency)} ～ ${displayPrice(item.safe_entry_zone_high, currency)}`,
+      `最高执行价：${displayPrice(item.safe_entry_max_price, currency)}｜止损：${displayPrice(item.stop_loss, currency)}｜目标：${displayPrice(item.target_price, currency)}`,
+      `R/R：${finiteNumber(item.rr_ratio).toFixed(2)}:1｜机会分：${finiteNumber(item.opportunity_score).toFixed(1)}｜趋势：${finiteNumber(item.trend_score).toFixed(1)}`,
+      "**已进入稳健买入区间；下单前请再次核对实时行情，跳空高于最高执行价不追。**",
+    ].join("\n");
+    elements.push({ tag: "div", text: { tag: "lark_md", content } });
+  }
+  elements.push(
+    { tag: "note", elements: [{ tag: "plain_text", content: "正式到价提醒来自认证 Futu 行情，已复核全部研究风控门槛；不自动下单。" }] },
+    { tag: "action", actions: [{ tag: "button", type: "primary", text: { tag: "plain_text", content: "查看投研驾驶舱" }, url: "https://ffxdz-ai.github.io/us-stock-research-dashboard/" }] },
+  );
+  return {
+    config: { wide_screen_mode: true },
+    header: { template: "green", title: { tag: "plain_text", content: `Futu 稳健买点到价 · ${items.length} 只` } },
+    elements,
+  };
+}
+
+async function signedFeishuPayload(card, secret) {
+  const payload = { msg_type: "interactive", card };
+  if (!secret) return payload;
+  const timestamp = Math.floor(Date.now() / 1000).toString();
+  const key = await crypto.subtle.importKey(
+    "raw",
+    new TextEncoder().encode(`${timestamp}\n${secret}`),
+    { name: "HMAC", hash: "SHA-256" },
+    false,
+    ["sign"],
+  );
+  const signature = await crypto.subtle.sign("HMAC", key, new Uint8Array());
+  return { ...payload, timestamp, sign: encodeBase64(signature) };
+}
+
+async function sendLiveFeishuCard(config, items) {
+  const response = await fetch(config.webhook, {
+    method: "POST",
+    headers: { "Content-Type": "application/json; charset=utf-8", "User-Agent": "us-stock-research-futu-alerts/1.0" },
+    body: JSON.stringify(await signedFeishuPayload(liveFeishuCard(items), config.secret)),
+  });
+  if (!response.ok) throw new Error(`Feishu HTTP ${response.status}`);
+  const result = await response.json();
+  if (![0, null, undefined].includes(result?.code ?? result?.StatusCode)) {
+    throw new Error(`Feishu rejected code ${result.code ?? result.StatusCode}`);
+  }
+}
+
+async function readLiveAlertArchive(env, now) {
+  const url = new URL(env.ARCHIVE_INDEX_URL || DEFAULT_ARCHIVE_INDEX_URL);
+  url.searchParams.set("live_quote_check", now.getTime().toString());
+  const response = await fetch(url, {
+    headers: { Accept: "application/json", "User-Agent": "us-stock-research-futu-alerts/1.0" },
+    cache: "no-store",
+  });
+  if (!response.ok) throw new Error(`archive HTTP ${response.status}`);
+  const archive = await response.json();
+  const generatedAt = Date.parse(String(archive?.generated_at || ""));
+  const age = now.getTime() - generatedAt;
+  if (!Number.isFinite(generatedAt) || age < -5 * 60 * 1000 || age > MAX_RESEARCH_AGE_MS) {
+    return { archive: null, status: "research_expired" };
+  }
+  return { archive, status: "ready" };
+}
+
+async function evaluateLiveFeishuAlerts(snapshot, env) {
+  const encryptedConfig = await env.FUTU_SNAPSHOT_KV.get(FUTU_FEISHU_CONFIG_KEY);
+  if (!encryptedConfig) return { status: "not_configured", monitored_candidates: 0, alerts_sent: 0 };
+  const config = await decryptFeishuConfig(encryptedConfig, env.FUTU_BRIDGE_TOKEN);
+  if (!approvedFeishuWebhook(config.webhook)) throw new Error("invalid encrypted notification configuration");
+
+  const now = new Date();
+  const { archive, status } = await readLiveAlertArchive(env, now);
+  if (!archive) return { status, monitored_candidates: 0, alerts_sent: 0 };
+  const opportunities = Array.isArray(archive.opportunities) ? archive.opportunities : [];
+  const monitored = opportunities.filter((item) => item?.formal_qualified === true && item?.status === "waiting_entry");
+  let state = {};
+  try {
+    state = JSON.parse(await env.FUTU_SNAPSHOT_KV.get(FUTU_LIVE_ALERT_STATE_KEY) || "{}");
+  } catch {
+    state = {};
+  }
+  const previous = state.signals && typeof state.signals === "object" ? state.signals : {};
+  const current = {};
+  const selected = [];
+
+  for (const item of monitored) {
+    const symbol = String(item.symbol || "").trim().toUpperCase();
+    const quote = snapshot.quotes[symbol];
+    if (!qualifiesLiveSteadyBuyPlan(item, quote, now)) continue;
+    const fingerprint = await liveSignalFingerprint(item);
+    current[symbol] = fingerprint;
+    const prior = previous[symbol] && typeof previous[symbol] === "object" ? previous[symbol] : {};
+    if (prior.active !== true || prior.fingerprint !== fingerprint) {
+      selected.push({ ...item, live_price: liveQuotePrice(symbol, quote, now), live_quote_time: quote.quote_time });
+    }
+  }
+
+  const timestamp = now.toISOString();
+  const signals = {};
+  for (const [symbol, prior] of Object.entries(previous)) {
+    signals[symbol] = { ...(prior && typeof prior === "object" ? prior : {}), active: Boolean(current[symbol]), last_checked_at: timestamp };
+  }
+  let sent = 0;
+  for (let offset = 0; offset < selected.length; offset += 4) {
+    const batch = selected.slice(offset, offset + 4);
+    try {
+      await sendLiveFeishuCard(config, batch);
+      for (const item of batch) {
+        signals[item.symbol] = { active: true, fingerprint: current[item.symbol], last_notified_at: timestamp, last_checked_at: timestamp };
+      }
+      sent += batch.length;
+    } catch {
+      for (const item of batch) {
+        signals[item.symbol] = { ...signals[item.symbol], active: false, pending_fingerprint: current[item.symbol], last_checked_at: timestamp };
+      }
+    }
+  }
+  for (const [symbol, fingerprint] of Object.entries(current)) {
+    if (!signals[symbol]) signals[symbol] = { active: false, pending_fingerprint: fingerprint, last_checked_at: timestamp };
+  }
+  await env.FUTU_SNAPSHOT_KV.put(
+    FUTU_LIVE_ALERT_STATE_KEY,
+    JSON.stringify({ schema_version: 1, updated_at: timestamp, signals }),
+    { expirationTtl: FUTU_LIVE_ALERT_STATE_TTL_SECONDS },
+  );
+  return {
+    status: selected.length > sent ? "notification_retry_pending" : "active",
+    monitored_candidates: monitored.length,
+    in_zone: Object.keys(current).length,
+    alerts_sent: sent,
+  };
 }
 
 export function sanitizeFutuSnapshot(payload, receivedAt = new Date().toISOString()) {
@@ -129,11 +440,19 @@ async function handleFutuSnapshot(request, env) {
   await env.FUTU_SNAPSHOT_KV.put(FUTU_SNAPSHOT_KEY, JSON.stringify(payload), {
     expirationTtl: FUTU_SNAPSHOT_TTL_SECONDS,
   });
+  let liveAlerts;
+  try {
+    liveAlerts = await evaluateLiveFeishuAlerts(payload, env);
+  } catch {
+    // A notification outage must never interrupt the authenticated quote feed.
+    liveAlerts = { status: "temporarily_unavailable", monitored_candidates: 0, alerts_sent: 0 };
+  }
   return bridgeJsonResponse({
     ok: true,
     quotes_returned: payload.summary.quotes_returned,
     received_at: payload.bridge.received_at,
     expires_in_seconds: FUTU_SNAPSHOT_TTL_SECONDS,
+    live_alerts: liveAlerts,
   });
 }
 
@@ -291,6 +610,9 @@ async function statusPayload(env) {
 
 async function handleRequest(request, env) {
   const url = new URL(request.url);
+  if (url.pathname === "/futu/feishu-config") {
+    return handleFeishuConfig(request, env);
+  }
   if (url.pathname === "/futu/snapshot") {
     try {
       return await handleFutuSnapshot(request, env);

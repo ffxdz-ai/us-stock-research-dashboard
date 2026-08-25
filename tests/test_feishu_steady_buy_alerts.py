@@ -1,7 +1,10 @@
 import unittest
 
 from scripts.feishu_steady_buy_alerts import (
+    build_candidate_card,
     new_alerts,
+    new_candidate_alerts,
+    qualifies_for_candidate_alert,
     qualifies_for_steady_buy_alert,
     signal_fingerprint,
     update_state,
@@ -76,6 +79,45 @@ class FeishuSteadyBuyAlertTests(unittest.TestCase):
             failed_state["signals"]["US.MU"]["pending_fingerprint"],
             signal_fingerprint(item),
         )
+
+    def test_candidate_preview_requires_every_formal_gate_and_above_zone(self):
+        item = candidate(status="waiting_entry", entry_execution_status="wait_pullback", price=110)
+        self.assertTrue(qualifies_for_candidate_alert(item))
+        self.assertFalse(qualifies_for_candidate_alert(candidate()))
+        self.assertFalse(qualifies_for_candidate_alert({**item, "price": 100}))
+        self.assertFalse(qualifies_for_candidate_alert({**item, "future_function_audit": "BLOCK"}))
+        self.assertFalse(qualifies_for_candidate_alert({**item, "price_freshness": "stale"}))
+        self.assertFalse(qualifies_for_candidate_alert({**item, "gate_failures": ["missing_fundamentals"]}))
+        self.assertFalse(qualifies_for_candidate_alert({**item, "formal_qualified": False}))
+
+    def test_candidate_preview_is_deduplicated_independently_from_entry_alert(self):
+        item = candidate(status="waiting_entry", entry_execution_status="wait_pullback", price=110)
+        selected, current = new_candidate_alerts([item], {"signals": {}, "candidate_signals": {}})
+        self.assertEqual([row["symbol"] for row in selected], ["US.MU"])
+        state = update_state({}, {}, [], current, selected)
+        repeated, _ = new_candidate_alerts([item], state)
+        self.assertEqual(repeated, [])
+        executable, _ = new_alerts([candidate()], state)
+        self.assertEqual([row["symbol"] for row in executable], ["US.MU"])
+        inactive = update_state(state, {}, [], {}, [])
+        requalified, _ = new_candidate_alerts([item], inactive)
+        self.assertEqual([row["symbol"] for row in requalified], ["US.MU"])
+
+    def test_failed_candidate_preview_remains_retryable(self):
+        item = candidate(status="waiting_entry", entry_execution_status="wait_pullback", price=110)
+        selected, current = new_candidate_alerts([item], {})
+        failed_state = update_state({}, {}, [], current, [])
+        self.assertFalse(failed_state["candidate_signals"]["US.MU"]["active"])
+        retried, _ = new_candidate_alerts([item], failed_state)
+        self.assertEqual([row["symbol"] for row in retried], ["US.MU"])
+
+    def test_candidate_card_explains_pullback_and_does_not_claim_buy_signal(self):
+        item = candidate(status="waiting_entry", entry_execution_status="wait_pullback", price=110, currency="USD")
+        card = build_candidate_card([item], "https://ffxdz-ai.github.io/us-stock-research-dashboard/")
+        content = card["elements"][0]["text"]["content"]
+        self.assertIn("稳健买入区间", content)
+        self.assertIn("尚未到价，不买、不追高", content)
+        self.assertIn("仍需回调", content)
 
 
 if __name__ == "__main__":

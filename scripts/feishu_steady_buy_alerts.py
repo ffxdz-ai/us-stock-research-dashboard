@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Send deduplicated Feishu alerts for fully executable steady-buy signals."""
+"""Send separately deduplicated Feishu candidate and steady-buy alerts."""
 
 from __future__ import annotations
 
@@ -91,6 +91,35 @@ def qualifies_for_steady_buy_alert(item: dict[str, Any]) -> bool:
     return False
 
 
+def qualifies_for_candidate_alert(item: dict[str, Any]) -> bool:
+    """Preview only qualified formal plans that still need a safe pullback."""
+    if not isinstance(item, dict) or not text(item.get("symbol")):
+        return False
+    if item.get("status") != "waiting_entry" or item.get("entry_tier") != "formal":
+        return False
+    if item.get("signal_type") != "formal" or item.get("formal_qualified") is not True:
+        return False
+    if item.get("entry_execution_status") != "wait_pullback":
+        return False
+    if item.get("execution_allowed") is not True or item.get("technical_data_complete") is not True:
+        return False
+    if item.get("future_function_audit") != "PASS" or item.get("price_freshness") != "fresh":
+        return False
+    if item.get("gate_failures") or not valid_trade_path(item):
+        return False
+    if any(number(item.get(field)) is None for field in ("price", "opportunity_score", "trend_score", "crowding_score")):
+        return False
+
+    price = number(item.get("price"))
+    zone_low = number(item.get("safe_entry_zone_low"))
+    zone_high = number(item.get("safe_entry_zone_high"))
+    max_price = number(item.get("safe_entry_max_price") or zone_high)
+    stop = number(item.get("stop_loss"))
+    if None in (price, zone_low, zone_high, max_price, stop):
+        return False
+    return bool(stop < zone_low <= zone_high <= max_price < price)
+
+
 def signal_fingerprint(item: dict[str, Any]) -> str:
     fields = {
         "symbol": text(item.get("symbol")),
@@ -129,6 +158,26 @@ def new_alerts(opportunities: list[dict[str, Any]], state: dict[str, Any]) -> tu
         if qualifies_for_steady_buy_alert(item)
     }
     previous = state.get("signals") if isinstance(state.get("signals"), dict) else {}
+    selected = []
+    for item in opportunities:
+        symbol = text(item.get("symbol"))
+        if symbol not in current:
+            continue
+        prior = previous.get(symbol) if isinstance(previous.get(symbol), dict) else {}
+        if prior.get("active") is not True or prior.get("fingerprint") != current[symbol]:
+            selected.append(item)
+    return selected, current
+
+
+def new_candidate_alerts(
+    opportunities: list[dict[str, Any]], state: dict[str, Any]
+) -> tuple[list[dict[str, Any]], dict[str, str]]:
+    current = {
+        text(item.get("symbol")): signal_fingerprint(item)
+        for item in opportunities
+        if qualifies_for_candidate_alert(item)
+    }
+    previous = state.get("candidate_signals") if isinstance(state.get("candidate_signals"), dict) else {}
     selected = []
     for item in opportunities:
         symbol = text(item.get("symbol"))
@@ -205,6 +254,43 @@ def build_card(items: list[dict[str, Any]], dashboard_url: str, test_message: bo
     }
 
 
+def build_candidate_card(items: list[dict[str, Any]], dashboard_url: str) -> dict[str, Any]:
+    elements: list[dict[str, Any]] = []
+    for index, item in enumerate(items):
+        if index:
+            elements.append({"tag": "hr"})
+        currency = text(item.get("currency"))
+        price = number(item.get("price"))
+        max_price = number(item.get("safe_entry_max_price"))
+        pullback = (price - max_price) / price * 100 if price and max_price else None
+        content = (
+            f"**{text(item.get('symbol'))} · {text(item.get('name')) or '名称待确认'}**\n"
+            f"现价：{fmt_price(price, currency)}｜仍需回调：{pullback:.2f}%\n"
+            f"稳健买入区间：{fmt_price(item.get('safe_entry_zone_low'), currency)} ～ "
+            f"{fmt_price(item.get('safe_entry_zone_high'), currency)}\n"
+            f"最高执行价：{fmt_price(max_price, currency)}｜止损：{fmt_price(item.get('stop_loss'), currency)}"
+            f"｜目标：{fmt_price(item.get('target_price'), currency)}\n"
+            f"R/R：{number(item.get('rr_ratio')):.2f}:1｜机会分：{number(item.get('opportunity_score')):.1f}"
+            f"｜趋势：{number(item.get('trend_score')):.1f}\n"
+            "**尚未到价，不买、不追高；进入安全区间后会再次提醒。**"
+        )
+        elements.append({"tag": "div", "text": {"tag": "lark_md", "content": content}})
+    elements.extend([
+        {"tag": "note", "elements": [{"tag": "plain_text", "content": "候选预警不是买入指令；正式到价提醒仍须通过全部风控和真实行情校验。"}]},
+        {"tag": "action", "actions": [
+            {"tag": "button", "type": "primary", "text": {"tag": "plain_text", "content": "查看稳健候选"}, "url": dashboard_url}
+        ]},
+    ])
+    return {
+        "config": {"wide_screen_mode": True},
+        "header": {
+            "template": "orange",
+            "title": {"tag": "plain_text", "content": f"稳健候选预警 · {len(items)} 只"},
+        },
+        "elements": elements,
+    }
+
+
 def signed_payload(card: dict[str, Any], secret: str) -> dict[str, Any]:
     payload: dict[str, Any] = {"msg_type": "interactive", "card": card}
     if secret:
@@ -241,38 +327,48 @@ def update_state(
     state: dict[str, Any],
     current: dict[str, str],
     successful: list[dict[str, Any]],
+    candidate_current: dict[str, str] | None = None,
+    candidate_successful: list[dict[str, Any]] | None = None,
 ) -> dict[str, Any]:
     timestamp = now_label()
-    previous = state.get("signals") if isinstance(state.get("signals"), dict) else {}
-    sent_symbols = {text(item.get("symbol")) for item in successful}
-    next_signals: dict[str, Any] = {}
-    for symbol, prior_value in previous.items():
-        prior = prior_value if isinstance(prior_value, dict) else {}
-        next_signals[symbol] = {**prior, "active": symbol in current, "last_checked_at": timestamp}
-    for symbol, fingerprint in current.items():
-        prior = next_signals.get(symbol, {})
-        if symbol in sent_symbols:
-            record = {
-                **prior,
-                "fingerprint": fingerprint,
-                "active": True,
-                "last_checked_at": timestamp,
-            }
-            record["last_notified_at"] = timestamp
-            record.pop("pending_fingerprint", None)
-        elif prior.get("active") is True and prior.get("fingerprint") == fingerprint:
-            record = {**prior, "active": True, "last_checked_at": timestamp}
-        else:
-            # A new or materially changed signal must remain retryable when the
-            # Feishu request fails. Never mark an unsent plan as notified/active.
-            record = {
-                **prior,
-                "active": False,
-                "pending_fingerprint": fingerprint,
-                "last_checked_at": timestamp,
-            }
-        next_signals[symbol] = record
-    return {"schema_version": 1, "updated_at": timestamp, "signals": next_signals}
+
+    def updated_signals(key: str, active: dict[str, str], sent: list[dict[str, Any]]) -> dict[str, Any]:
+        previous = state.get(key) if isinstance(state.get(key), dict) else {}
+        sent_symbols = {text(item.get("symbol")) for item in sent}
+        next_signals: dict[str, Any] = {}
+        for symbol, prior_value in previous.items():
+            prior = prior_value if isinstance(prior_value, dict) else {}
+            next_signals[symbol] = {**prior, "active": symbol in active, "last_checked_at": timestamp}
+        for symbol, fingerprint in active.items():
+            prior = next_signals.get(symbol, {})
+            if symbol in sent_symbols:
+                record = {
+                    **prior,
+                    "fingerprint": fingerprint,
+                    "active": True,
+                    "last_checked_at": timestamp,
+                    "last_notified_at": timestamp,
+                }
+                record.pop("pending_fingerprint", None)
+            elif prior.get("active") is True and prior.get("fingerprint") == fingerprint:
+                record = {**prior, "active": True, "last_checked_at": timestamp}
+            else:
+                # Never mark a failed notification as delivered: it must retry.
+                record = {
+                    **prior,
+                    "active": False,
+                    "pending_fingerprint": fingerprint,
+                    "last_checked_at": timestamp,
+                }
+            next_signals[symbol] = record
+        return next_signals
+
+    return {
+        "schema_version": 2,
+        "updated_at": timestamp,
+        "signals": updated_signals("signals", current, successful),
+        "candidate_signals": updated_signals("candidate_signals", candidate_current or {}, candidate_successful or []),
+    }
 
 
 def parse_args() -> argparse.Namespace:
@@ -299,17 +395,25 @@ def main() -> int:
 
     archive = load_json(args.index, {})
     opportunities = archive.get("opportunities") if isinstance(archive.get("opportunities"), list) else []
-    state = load_json(args.state, {"schema_version": 1, "signals": {}})
+    state = load_json(args.state, {"schema_version": 2, "signals": {}, "candidate_signals": {}})
     selected, current = new_alerts(opportunities, state)
-    print(f"Steady-buy signals: {len(current)}; new Feishu alerts: {len(selected)}")
+    candidates, candidate_current = new_candidate_alerts(opportunities, state)
+    print(
+        f"Steady-buy signals: {len(current)}; new Feishu alerts: {len(selected)}; "
+        f"qualified candidates: {len(candidate_current)}; new candidate alerts: {len(candidates)}"
+    )
     if args.dry_run:
-        print(json.dumps([{"symbol": item.get("symbol"), "fingerprint": signal_fingerprint(item)} for item in selected], ensure_ascii=False))
+        print(json.dumps({
+            "steady_buy": [{"symbol": item.get("symbol"), "fingerprint": signal_fingerprint(item)} for item in selected],
+            "candidates": [{"symbol": item.get("symbol"), "fingerprint": signal_fingerprint(item)} for item in candidates],
+        }, ensure_ascii=False))
         return 0
     if not webhook:
         print("FEISHU_BOT_WEBHOOK is not configured; notification step skipped.")
         return 0
 
     successful: list[dict[str, Any]] = []
+    successful_candidates: list[dict[str, Any]] = []
     failures: list[str] = []
     batch_size = max(1, min(args.batch_size, 6))
     for offset in range(0, len(selected), batch_size):
@@ -321,9 +425,20 @@ def main() -> int:
             symbols = ", ".join(text(item.get("symbol")) for item in batch)
             failures.append(f"{symbols}: {error}")
 
-    write_json(args.state, update_state(state, current, successful))
+    for offset in range(0, len(candidates), batch_size):
+        batch = candidates[offset : offset + batch_size]
+        try:
+            send_card(webhook, secret, build_candidate_card(batch, args.dashboard_url))
+            successful_candidates.extend(batch)
+        except Exception as error:  # Never expose webhook credentials in logs.
+            symbols = ", ".join(text(item.get("symbol")) for item in batch)
+            failures.append(f"candidate {symbols}: {error}")
+
+    write_json(args.state, update_state(state, current, successful, candidate_current, successful_candidates))
     if successful:
         print("Feishu alerts sent: " + ", ".join(text(item.get("symbol")) for item in successful))
+    if successful_candidates:
+        print("Feishu candidate alerts sent: " + ", ".join(text(item.get("symbol")) for item in successful_candidates))
     if failures:
         print("Feishu alert failures: " + " | ".join(failures))
         return 2

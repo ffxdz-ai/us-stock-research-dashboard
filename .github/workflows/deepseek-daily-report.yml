@@ -148,6 +148,10 @@ jobs:
         continue-on-error: true
         run: python scripts/futu_cloud_bridge.py pull --max-age-hours 12
 
+      - name: Configure encrypted live Futu-to-Feishu alerts
+        continue-on-error: true
+        run: python scripts/futu_cloud_bridge.py configure-alerts --strict
+
       - name: Collect public market data
         run: python scripts/collect_market_data.py --mode "$REPORT_MODE"
 
@@ -283,7 +287,7 @@ jobs:
           python scripts/validate_public_archive.py docs/data/reports.json
           python scripts/validate_model_v2.py --market-pack "$MARKET_PACK" --public-index docs/data/index.json
 
-      - name: Send Feishu steady-buy alerts
+      - name: Send Feishu candidate previews and steady-buy alerts
         continue-on-error: true
         run: python scripts/feishu_steady_buy_alerts.py --index docs/data/index.json --state docs/data/feishu_alert_state.json
 

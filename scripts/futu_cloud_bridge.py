@@ -30,6 +30,10 @@ PUBLIC_QUOTE_FIELDS = frozenset({
     "quote_time", "pe_ttm", "pb_rate", "ps_ttm", "market_val", "pre_price",
     "after_price", "overnight_price", "source",
 })
+ALLOWED_FEISHU_WEBHOOK_PREFIXES = (
+    "https://open.feishu.cn/open-apis/bot/v2/hook/",
+    "https://open.larksuite.com/open-apis/bot/v2/hook/",
+)
 
 
 def configured_value(name: str) -> str:
@@ -46,14 +50,16 @@ def configured_value(name: str) -> str:
         return ""
 
 
-def bridge_endpoint() -> str:
+def bridge_endpoint(path: str = "/futu/snapshot") -> str:
     base_url = configured_value("FUTU_BRIDGE_URL")
     if not base_url:
         raise RuntimeError("FUTU_BRIDGE_URL is not configured")
     parsed = urllib.parse.urlparse(base_url)
     if parsed.scheme != "https" or not parsed.netloc or parsed.username or parsed.password:
         raise RuntimeError("FUTU_BRIDGE_URL must be an HTTPS endpoint without embedded credentials")
-    return base_url.rstrip("/") + "/futu/snapshot"
+    if path not in ("/futu/snapshot", "/futu/feishu-config"):
+        raise RuntimeError("Unsupported authenticated bridge endpoint")
+    return base_url.rstrip("/") + path
 
 
 def bridge_headers() -> dict[str, str]:
@@ -112,9 +118,14 @@ def public_snapshot(payload: Any) -> dict[str, Any]:
     }
 
 
-def request_bridge(method: str, payload: dict[str, Any] | None = None) -> dict[str, Any]:
+def request_bridge(
+    method: str,
+    payload: dict[str, Any] | None = None,
+    *,
+    path: str = "/futu/snapshot",
+) -> dict[str, Any]:
     body = None if payload is None else json.dumps(payload, ensure_ascii=False).encode("utf-8")
-    request = urllib.request.Request(bridge_endpoint(), data=body, headers=bridge_headers(), method=method)
+    request = urllib.request.Request(bridge_endpoint(path), data=body, headers=bridge_headers(), method=method)
     try:
         with urllib.request.urlopen(request, timeout=30) as response:
             result = json.loads(response.read().decode("utf-8"))
@@ -129,6 +140,19 @@ def request_bridge(method: str, payload: dict[str, Any] | None = None) -> dict[s
 
 def push_snapshot_payload(payload: dict[str, Any]) -> dict[str, Any]:
     return request_bridge("PUT", public_snapshot(payload))
+
+
+def configure_live_feishu_alerts() -> dict[str, Any]:
+    """Provision GitHub-only bot secrets into encrypted Worker-side storage."""
+    webhook = configured_value("FEISHU_BOT_WEBHOOK")
+    if not webhook or not webhook.startswith(ALLOWED_FEISHU_WEBHOOK_PREFIXES):
+        raise RuntimeError("FEISHU_BOT_WEBHOOK is missing or is not an approved Feishu/Lark bot URL")
+    secret = configured_value("FEISHU_BOT_SECRET")
+    return request_bridge(
+        "PUT",
+        {"webhook": webhook, "secret": secret},
+        path="/futu/feishu-config",
+    )
 
 
 def pull_snapshot(path: Path = DEFAULT_SNAPSHOT, *, max_age_hours: float = 12.0) -> dict[str, Any]:
@@ -164,7 +188,7 @@ def pull_snapshot(path: Path = DEFAULT_SNAPSHOT, *, max_age_hours: float = 12.0)
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("action", choices=("pull", "push"))
+    parser.add_argument("action", choices=("pull", "push", "configure-alerts"))
     parser.add_argument("--path", type=Path, default=DEFAULT_SNAPSHOT)
     parser.add_argument("--max-age-hours", type=float, default=12.0)
     parser.add_argument("--strict", action="store_true")
@@ -176,10 +200,13 @@ def main() -> int:
             snapshot = pull_snapshot(args.path, max_age_hours=args.max_age_hours)
             count = int((snapshot.get("summary") or {}).get("quotes_returned") or 0)
             message = f"Downloaded {count} authenticated, quote-only Futu market snapshots"
-        else:
+        elif args.action == "push":
             snapshot = json.loads(args.path.read_text(encoding="utf-8"))
             result = push_snapshot_payload(snapshot)
             message = f"Uploaded {int(result.get('quotes_returned') or 0)} quote-only Futu market snapshots"
+        else:
+            configure_live_feishu_alerts()
+            message = "Configured encrypted cloud Futu-to-Feishu price monitoring"
         if not args.quiet:
             print(message)
         return 0
