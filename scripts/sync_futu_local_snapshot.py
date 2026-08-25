@@ -136,6 +136,25 @@ def configured_symbols(scope: str) -> list[str]:
         symbols.extend(str(item) for item in config.get("universe", []) if item)
     if scope == "all":
         symbols.extend(str(item) for item in config.get("cross_market_supply_chain_universe", []) if item)
+        opportunity_map = load_json(ROOT / "config" / "opportunity_map.json", {})
+        for theme in opportunity_map.get("themes", []) or []:
+            if isinstance(theme, dict):
+                symbols.extend(
+                    str(security.get("code"))
+                    for security in theme.get("securities", []) or []
+                    if isinstance(security, dict) and security.get("code")
+                )
+        supply_map = load_json(ROOT / "config" / "supply_chain_map.json", {})
+        for chain in supply_map.get("chains", []) or []:
+            if not isinstance(chain, dict):
+                continue
+            for layer in chain.get("layers", []) or []:
+                if isinstance(layer, dict):
+                    symbols.extend(
+                        str(security.get("code"))
+                        for security in layer.get("securities", []) or []
+                        if isinstance(security, dict) and security.get("code")
+                    )
     return unique(symbols)
 
 
