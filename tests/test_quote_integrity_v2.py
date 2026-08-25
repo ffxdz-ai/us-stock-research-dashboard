@@ -10,7 +10,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
 from export_public_reports import finalize_opportunities, merge_opportunity, opportunity_status
 from futu_cloud_bridge import public_snapshot
 from model_v2 import assess_price_freshness, source_quality
-from sync_futu_local_snapshot import canonical_quote_time
+from sync_futu_local_snapshot import canonical_quote_time, configured_symbols
 
 
 class QuoteIntegrityV2Tests(unittest.TestCase):
@@ -28,6 +28,11 @@ class QuoteIntegrityV2Tests(unittest.TestCase):
 
     def test_unavailable_exchange_time_is_never_fabricated(self) -> None:
         self.assertEqual(canonical_quote_time("SH.688981", {}), "")
+
+    def test_full_snapshot_includes_dynamic_opportunity_map_securities(self) -> None:
+        symbols = configured_symbols("all")
+        self.assertIn("SH.688322", symbols)
+        self.assertIn("SZ.002747", symbols)
 
     def test_public_quote_needing_futu_verification_is_not_futu(self) -> None:
         self.assertEqual(
