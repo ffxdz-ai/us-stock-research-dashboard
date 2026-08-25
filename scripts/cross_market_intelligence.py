@@ -22,7 +22,7 @@ from pathlib import Path
 from typing import Any
 from zoneinfo import ZoneInfo
 
-from model_v2 import load_risk_policy, risk_policy_public
+from model_v2 import assess_price_freshness, load_risk_policy, risk_policy_public
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -142,6 +142,31 @@ def index_supply_candidates(supply_radar: dict[str, Any]) -> dict[str, dict[str,
         symbol = us_symbol(code)
         if symbol:
             output[symbol] = item
+
+    # Dynamic opportunity themes can reference names absent from the older
+    # static supply-chain map. They still deserve an honest authenticated quote,
+    # but a quote alone must never invent trend, R/R, or a buy signal.
+    snapshot = load_json(DATA_DIR / "latest_futu_local_snapshot.json", {})
+    if isinstance(snapshot, dict) and (snapshot.get("bridge") or {}).get("authenticated"):
+        raw_quotes = snapshot.get("quotes") if isinstance(snapshot.get("quotes"), dict) else {}
+        for raw_code, raw_row in raw_quotes.items():
+            code = normalize_code(raw_code)
+            if not code or code in output or not isinstance(raw_row, dict):
+                continue
+            quote_time = raw_row.get("quote_time")
+            price = number(raw_row.get("last_price")) or number(raw_row.get("cur_price"))
+            if price is None or not quote_time:
+                continue
+            source = "Futu OpenD authenticated bridge"
+            output[code] = {
+                "code": code,
+                "name": raw_row.get("name"),
+                "price": price,
+                "quote_time": quote_time,
+                "quote_source": source,
+                "data_status": "Futu/OpenD 行情已接入",
+                **assess_price_freshness(quote_time, source),
+            }
     return output
 
 
