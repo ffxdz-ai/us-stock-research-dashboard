@@ -17,8 +17,9 @@ import sys
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
+from zoneinfo import ZoneInfo
 
-from model_v2 import load_risk_policy, risk_policy_public
+from model_v2 import assess_price_freshness, load_risk_policy, risk_policy_public
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -29,6 +30,7 @@ DEFAULT_MAP_PATH = CONFIG_DIR / "supply_chain_map.json"
 DEFAULT_MARKET_PACK = DATA_DIR / "latest_market_pack.json"
 DEFAULT_OUTPUT = DATA_DIR / "latest_supply_chain_radar.json"
 DEFAULT_REPORT = REPORTS_DIR / "latest-supply-chain-radar.md"
+LOCAL_FUTU_SNAPSHOT_PATH = DATA_DIR / "latest_futu_local_snapshot.json"
 
 
 def load_json(path: Path, default: Any) -> Any:
@@ -138,10 +140,28 @@ def collect_futu_snapshots(codes: list[str]) -> tuple[dict[str, dict[str, Any]],
     """Best-effort Futu snapshot collection for HK/A/US codes."""
     if not codes or os.getenv("FUTU_QUOTE_DISABLED", "").strip().lower() in {"1", "true", "yes"}:
         return {}, "Futu disabled or no cross-market codes"
+
+    def authenticated_bridge() -> tuple[dict[str, dict[str, Any]], str]:
+        payload = load_json(LOCAL_FUTU_SNAPSHOT_PATH, {})
+        if not isinstance(payload, dict) or not (payload.get("bridge") or {}).get("authenticated"):
+            return {}, "Authenticated Futu quote bridge unavailable; HK/A股使用公开 fallback"
+        quote_map = payload.get("quotes")
+        if not isinstance(quote_map, dict):
+            return {}, "Authenticated Futu quote bridge contains no quote data"
+        requested = {display_code(code).upper() for code in codes}
+        quotes = {
+            code: {**row, "_authenticated_bridge": True}
+            for code, row in quote_map.items()
+            if code.upper() in requested and isinstance(row, dict) and row.get("quote_time")
+        }
+        if not quotes:
+            return {}, "Authenticated Futu quote bridge contains no requested cross-market symbols"
+        return quotes, "Futu OpenD authenticated bridge"
+
     try:
         from futu import OpenQuoteContext, RET_OK  # type: ignore
     except Exception:  # noqa: BLE001
-        return {}, "Futu/OpenD unavailable in current runtime; HK/A股行情需本地补全"
+        return authenticated_bridge()
 
     host = os.getenv("FUTU_OPEND_HOST", "127.0.0.1").strip() or "127.0.0.1"
     try:
@@ -154,8 +174,8 @@ def collect_futu_snapshots(codes: list[str]) -> tuple[dict[str, dict[str, Any]],
     try:
         with socket.create_connection((host, port), timeout=0.6):
             pass
-    except OSError as exc:
-        return {}, f"Futu OpenD unavailable after TCP probe: {exc}; HK/A股使用公开 fallback"
+    except OSError:
+        return authenticated_bridge()
 
     ctx = None
     output: dict[str, dict[str, Any]] = {}
@@ -287,12 +307,13 @@ def price_from_sources(
 
     futu_row = futu_quotes.get(display.upper()) or futu_quotes.get(code.upper()) or {}
     if futu_row:
+        authenticated = bool(futu_row.get("_authenticated_bridge"))
         quote = {
             **quote,
             "regularMarketPrice": number(futu_row.get("last_price") or futu_row.get("price") or futu_row.get("nominal_price")),
             "regularMarketChangePercent": number(futu_row.get("change_rate") or futu_row.get("change_pct")),
-            "regularMarketTime": futu_row.get("update_time"),
-            "source": "Futu OpenD market snapshot",
+            "regularMarketTime": futu_row.get("quote_time") or futu_row.get("update_time"),
+            "source": "Futu OpenD authenticated bridge" if authenticated else "Futu OpenD market snapshot",
             "shortName": futu_row.get("name") or quote.get("shortName"),
         }
 
@@ -311,6 +332,9 @@ def price_from_sources(
             data_status = "公开日线行情已接入；需 Futu/券商复核"
     else:
         data_status = "美股公开行情缺失" if market == "US" else "需本地 Futu/OpenD 补全行情"
+    quote_source = quote.get("source") or chart.get("source")
+    quote_time = quote.get("regularMarketTime")
+    freshness = assess_price_freshness(quote_time, quote_source)
     return {
         "code": display,
         "market": market,
@@ -320,8 +344,12 @@ def price_from_sources(
         "ma200": ma200,
         "high252": high252,
         "change_pct": change_pct,
-        "quote_time": quote.get("regularMarketTime"),
-        "quote_source": quote.get("source") or chart.get("source"),
+        "quote_time": quote_time,
+        "quote_source": quote_source,
+        "price_freshness": freshness.get("price_freshness"),
+        "quote_age_minutes": freshness.get("quote_age_minutes"),
+        "execution_allowed": freshness.get("execution_allowed"),
+        "technical_data_complete": all(value is not None for value in (ma50, ma200, high252)),
         "market_confirmation_score": market_score,
         "market_notes": market_notes,
         "data_status": data_status,
@@ -501,6 +529,12 @@ def build_radar(config: dict[str, Any], market_pack: dict[str, Any]) -> dict[str
                         "market": security.get("market"),
                         "role": security.get("role"),
                         "price": security.get("price"),
+                        "quote_time": security.get("quote_time"),
+                        "quote_source": security.get("quote_source"),
+                        "price_freshness": security.get("price_freshness"),
+                        "quote_age_minutes": security.get("quote_age_minutes"),
+                        "execution_allowed": security.get("execution_allowed"),
+                        "technical_data_complete": security.get("technical_data_complete"),
                         "market_confirmation_score": security.get("market_confirmation_score"),
                         "data_status": security.get("data_status"),
                         "action": action,
@@ -523,7 +557,7 @@ def build_radar(config: dict[str, Any], market_pack: dict[str, Any]) -> dict[str
         ),
         reverse=True,
     )
-    now = datetime.now().astimezone()
+    now = datetime.now(ZoneInfo("Asia/Shanghai"))
     return {
         "schema_version": 2,
         "model_version": "2.0.0",

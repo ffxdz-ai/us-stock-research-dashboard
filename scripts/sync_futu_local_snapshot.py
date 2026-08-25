@@ -186,6 +186,32 @@ def clean_value(value: Any) -> Any:
     return str(value)
 
 
+def canonical_quote_time(code: str, row: dict[str, Any]) -> str:
+    """Convert the exchange's actual quote timestamp to unambiguous Beijing time."""
+    update_time = str(row.get("update_time") or "").strip()
+    data_date = str(row.get("data_date") or "").strip()
+    data_time = str(row.get("data_time") or "").strip()
+    candidates = [update_time]
+    if data_date and data_time:
+        candidates.append(f"{data_date} {data_time}")
+    elif data_time:
+        candidates.append(data_time)
+
+    market_zone = ZoneInfo("America/New_York") if code.upper().startswith("US.") else beijing_timezone()
+    for raw in candidates:
+        if not raw or raw.lower() in {"n/a", "none", "nan"}:
+            continue
+        candidate = raw.replace("Z", "+00:00")
+        try:
+            parsed = datetime.fromisoformat(candidate)
+        except ValueError:
+            continue
+        if parsed.tzinfo is None:
+            parsed = parsed.replace(tzinfo=market_zone)
+        return parsed.astimezone(beijing_timezone()).isoformat(timespec="seconds")
+    return ""
+
+
 def quote_record(row: dict[str, Any]) -> dict[str, Any]:
     code = str(row.get("code") or "").upper()
     record = {
@@ -196,6 +222,9 @@ def quote_record(row: dict[str, Any]) -> dict[str, Any]:
     record["code"] = code
     record["symbol"] = display_symbol(code)
     record["source"] = "Futu OpenD local public-safe quote snapshot"
+    quote_time = canonical_quote_time(code, row)
+    if quote_time:
+        record["quote_time"] = quote_time
     return record
 
 
@@ -302,6 +331,8 @@ def main() -> int:
     parser.add_argument("--out", type=Path, default=DEFAULT_OUTPUT)
     parser.add_argument("--status-out", type=Path, default=DEFAULT_STATUS)
     parser.add_argument("--strict", action="store_true", help="Exit non-zero when OpenD is unavailable or no quote is returned.")
+    parser.add_argument("--push-cloud", action="store_true", help="Upload quote-only data through the authenticated HTTPS bridge.")
+    parser.add_argument("--quiet", action="store_true", help="Suppress normal output for the invisible scheduled uploader.")
     args = parser.parse_args()
 
     payload = build_payload(args)
@@ -310,10 +341,23 @@ def main() -> int:
 
     connected = bool((payload.get("opend") or {}).get("connected"))
     quotes_returned = int((payload.get("summary") or {}).get("quotes_returned") or 0)
-    print(f"Wrote {args.out} ({quotes_returned} Futu quotes; connected={connected})")
-    print(f"Wrote {args.status_out}")
+    if not args.quiet:
+        print(f"Wrote {args.out} ({quotes_returned} Futu quotes; connected={connected})")
+        print(f"Wrote {args.status_out}")
     if args.strict and (not connected or quotes_returned == 0):
         return 1
+    if args.push_cloud and connected and quotes_returned:
+        try:
+            from futu_cloud_bridge import push_snapshot_payload
+
+            result = push_snapshot_payload(payload)
+            if not args.quiet:
+                print(f"Uploaded {int(result.get('quotes_returned') or 0)} quote-only Futu snapshots to the authenticated bridge")
+        except (OSError, ValueError, RuntimeError) as exc:
+            if not args.quiet:
+                print(f"Futu cloud bridge unavailable; local snapshot remains available: {exc}")
+            if args.strict:
+                return 1
     return 0
 
 

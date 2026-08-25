@@ -10,12 +10,15 @@ import re
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
+from zoneinfo import ZoneInfo
 
 from model_v2 import (
+    assess_price_freshness,
     build_entry_path,
     evaluate_risk_gate,
     load_risk_policy,
     risk_policy_public,
+    parse_timestamp,
     select_best_field_value,
     source_quality,
 )
@@ -527,7 +530,7 @@ def opportunity_status(action: str, rr_ratio: float | None, queue_status: str = 
         return "invalidated"
     if re.search(r"复盘|review", text, re.IGNORECASE):
         return "review"
-    if re.search(r"退回观察", text):
+    if queue_status.strip().lower() in {"retreated", "inactive", "watchlist"} or re.search(r"退回观察", text):
         return "watchlist"
     if re.search(r"二次分析|Buy-Side|重点池", text, re.IGNORECASE) or queue_status == "active":
         return "secondary_analysis"
@@ -568,12 +571,12 @@ def merge_opportunity(base: dict[str, Any] | None, incoming: dict[str, Any]) -> 
         created = dict(incoming)
         provenance = dict(created.get("field_provenance") or {})
         default_source = created.get("price_source") or created.get("source") or "unknown"
-        default_time = created.get("price_time") or created.get("updated_at")
+        default_time = created.get("price_time")
         for key in provenance_fields:
             if created.get(key) not in (None, "") and key not in provenance:
                 provenance[key] = {
                     "source": default_source,
-                    "source_time": default_time,
+                    "source_time": default_time if key == "price" else default_time or created.get("updated_at"),
                     "retrieved_at": created.get("updated_at") or default_time,
                     "fallback_used": "fallback" in str(default_source).lower(),
                     "confidence": source_quality(default_source),
@@ -599,25 +602,44 @@ def merge_opportunity(base: dict[str, Any] | None, incoming: dict[str, Any]) -> 
             incoming_meta = incoming_provenance.get(key) if isinstance(incoming_provenance.get(key), dict) else {}
             candidates = []
             if merged.get(key) not in (None, ""):
+                base_source = base_meta.get("source") or merged.get("price_source") or merged.get("source")
+                base_time = base_meta.get("source_time") or merged.get("price_time")
+                if key != "price":
+                    base_time = base_time or merged.get("updated_at")
+                base_freshness = assess_price_freshness(base_time, base_source) if key == "price" else {}
                 candidates.append(
                     {
                         "value": merged.get(key),
-                        "source": base_meta.get("source") or merged.get("price_source") or merged.get("source"),
-                        "source_time": base_meta.get("source_time") or merged.get("price_time") or merged.get("updated_at"),
-                        "confidence": base_meta.get("confidence") or source_quality(base_meta.get("source") or merged.get("price_source") or merged.get("source")),
+                        "source": base_source,
+                        "source_time": base_time,
+                        "confidence": base_meta.get("confidence") or source_quality(base_source),
+                        "stale": key == "price" and base_freshness.get("price_freshness") in {"stale", "unknown"},
                     }
                 )
+            incoming_source = incoming_meta.get("source") or incoming.get("price_source") or incoming.get("source")
+            incoming_time = incoming_meta.get("source_time") or incoming.get("price_time")
+            if key != "price":
+                incoming_time = incoming_time or incoming.get("updated_at")
+            incoming_freshness = assess_price_freshness(incoming_time, incoming_source) if key == "price" else {}
             candidates.append(
                 {
                     "value": value,
-                    "source": incoming_meta.get("source") or incoming.get("price_source") or incoming.get("source"),
-                    "source_time": incoming_meta.get("source_time") or incoming.get("price_time") or incoming.get("updated_at"),
-                    "confidence": incoming_meta.get("confidence") or source_quality(incoming_meta.get("source") or incoming.get("price_source") or incoming.get("source")),
+                    "source": incoming_source,
+                    "source_time": incoming_time,
+                    "confidence": incoming_meta.get("confidence") or source_quality(incoming_source),
+                    "stale": key == "price" and incoming_freshness.get("price_freshness") in {"stale", "unknown"},
                 }
             )
             selected = select_best_field_value(candidates)
             if selected:
                 merged[key] = selected["value"]
+                if key == "price":
+                    # Price, source and exchange timestamp form one atomic
+                    # observation; mixing providers creates fictitious quotes.
+                    merged["price_time"] = selected.get("source_time") or ""
+                    merged["price_source"] = selected.get("source") or ""
+                    selected_freshness = assess_price_freshness(merged["price_time"], merged["price_source"])
+                    merged.update(selected_freshness)
                 merged_provenance[key] = {
                     "source": selected.get("source") or "unknown",
                     "source_time": selected.get("source_time"),
@@ -1143,6 +1165,16 @@ def finalize_opportunities(
     finalized: list[dict[str, Any]] = []
     guardrails = entry_guardrails()
     for item in items.values():
+        raw_quote_time = clean_text(item.get("price_time"))
+        quote_timestamp = parse_timestamp(raw_quote_time, ZoneInfo("Asia/Shanghai")) if raw_quote_time else None
+        item["price_time"] = (
+            quote_timestamp.astimezone(ZoneInfo("Asia/Shanghai")).isoformat(timespec="seconds")
+            if quote_timestamp
+            else ""
+        )
+        actual_source = clean_text(item.get("price_source"))
+        freshness = assess_price_freshness(item["price_time"], actual_source)
+        item.update(freshness)
         rr = number(item.get("rr_ratio"))
         status = opportunity_status(
             clean_text(item.get("action")),
@@ -1174,10 +1206,6 @@ def finalize_opportunities(
             item["why_changed"] = unique_list([*(item.get("why_changed") or []), *entry_gate_failures(item, guardrails, market_status)], limit=8)
         elif item.get("status") == "waiting_entry":
             item["why_changed"] = unique_list([*(item.get("why_changed") or []), *entry_gate_failures(item, guardrails, market_status)], limit=8)
-        if not item.get("price_source") and item.get("price") is not None:
-            item["price_source"] = "公开行情快照"
-        if not item.get("price_time"):
-            item["price_time"] = item.get("updated_at") or item.get("last_seen_at") or ""
         buy, avoid, invalid = derive_opportunity_conditions(item)
         item["buy_conditions"] = unique_list([*(item.get("buy_conditions") or []), *buy], limit=5)
         item["avoid_conditions"] = unique_list([*(item.get("avoid_conditions") or []), *avoid], limit=5)
@@ -1207,6 +1235,7 @@ def finalize_opportunities(
                 "universe_rank": item.get("universe_rank"),
                 "factor_coverage": item.get("factor_coverage"),
                 "price_freshness": item.get("price_freshness") or "unknown",
+                "quote_age_minutes": item.get("quote_age_minutes"),
                 "execution_allowed": item.get("execution_allowed") is True,
                 "technical_data_complete": item.get("technical_data_complete") is True,
                 "future_function_audit": item.get("future_function_audit") or "BLOCK",
@@ -1296,6 +1325,8 @@ def derive_opportunities() -> list[dict[str, Any]]:
                     "segment": clean_text(candidate.get("layer")),
                     "action": clean_text(candidate.get("action")),
                     "price": number(candidate.get("price")),
+                    "price_time": clean_text(candidate.get("quote_time")),
+                    "price_source": clean_text(candidate.get("quote_source")),
                     "opportunity_score": number(candidate.get("score")),
                     "entry_score": number(candidate.get("entry_score")),
                     "trend_score": number(candidate.get("trend_score")),
@@ -1343,8 +1374,8 @@ def derive_opportunities() -> list[dict[str, Any]]:
                 "action": clean_text(candidate.get("reason")) or "进入二次研究候选",
                 "price": number(candidate.get("price")),
                 "currency": currency_for_symbol(symbol),
-                "price_time": cross_market.get("generated_label") or generated_at,
-                "price_source": "跨市场情报行情快照",
+                "price_time": clean_text(candidate.get("quote_time")),
+                "price_source": clean_text(candidate.get("quote_source")),
                 "opportunity_score": number(candidate.get("opportunity_score")),
                 "entry_score": number(candidate.get("entry_score")),
                 "trend_score": number(candidate.get("trend_score")),
@@ -1402,8 +1433,8 @@ def derive_opportunities() -> list[dict[str, Any]]:
                     "action": clean_text(security.get("action")),
                     "price": number(security.get("price")),
                     "currency": currency_for_symbol(symbol),
-                    "price_time": cross_market.get("generated_label") or generated_at,
-                    "price_source": clean_text(security.get("data_status")) or "跨市场情报行情快照",
+                    "price_time": clean_text(security.get("quote_time")),
+                    "price_source": clean_text(security.get("quote_source")),
                     "opportunity_score": number(security.get("opportunity_score")),
                     "entry_score": number(security.get("entry_score")),
                     "trend_score": number(security.get("trend_score")),
@@ -1446,6 +1477,10 @@ def derive_opportunities() -> list[dict[str, Any]]:
         if not isinstance(record, dict):
             continue
         symbol = clean_text(record.get("code")).upper()
+        queue_status = clean_text(record.get("status"))
+        if queue_status.lower() == "retreated" and symbol not in items:
+            # An obsolete queue record is history, not a current opportunity.
+            continue
         upsert_opportunity(
             items,
             {
@@ -1454,15 +1489,19 @@ def derive_opportunities() -> list[dict[str, Any]]:
                 "market": clean_text(record.get("market")),
                 "theme": clean_text(record.get("layer_name")),
                 "segment": clean_text(record.get("role")),
-                "action": clean_text(record.get("radar_action") or record.get("last_reason")),
+                "action": (
+                    clean_text(record.get("last_result") or record.get("last_reason"))
+                    if queue_status.lower() == "retreated"
+                    else clean_text(record.get("radar_action") or record.get("last_reason"))
+                ),
                 "price": number(record.get("price")),
                 "currency": currency_for_symbol(symbol),
-                "price_time": clean_text(record.get("last_seen_at") or secondary_queue.get("generated_label") or generated_at),
-                "price_source": clean_text(record.get("data_status")) or "二次分析队列行情快照",
+                "price_time": clean_text(record.get("quote_time")),
+                "price_source": clean_text(record.get("quote_source")),
                 "opportunity_score": number(record.get("layer_score")),
                 "trend_score": number(record.get("trend_score")),
                 "updated_at": secondary_queue.get("generated_label") or generated_at,
-                "queue_status": clean_text(record.get("status")),
+                "queue_status": queue_status,
                 "why_changed": [clean_text(record.get("last_result")), clean_text(record.get("last_reason"))],
                 "source": "secondary_analysis_queue",
             },
@@ -1484,8 +1523,8 @@ def derive_opportunities() -> list[dict[str, Any]]:
                 "action": clean_text(card.get("action")),
                 "price": number(price.get("price")),
                 "currency": currency_for_symbol(symbol),
-                "price_time": clean_text(price.get("quote_time") or event_evidence.get("generated_label") or generated_at),
-                "price_source": clean_text(price.get("source")) or "事件证据行情快照",
+                "price_time": clean_text(price.get("quote_time")),
+                "price_source": clean_text(price.get("source")),
                 "trend_score": number(price.get("trend_score")),
                 "opportunity_score": number(price.get("opportunity_score")),
                 "entry_score": number(price.get("entry_score")),
@@ -1758,13 +1797,13 @@ def build_archive(output: Path, limit: int = 80, merge_existing: bool = True) ->
         if len(reports) >= limit:
             break
 
-    now = datetime.now(timezone.utc)
+    now = datetime.now(ZoneInfo("Asia/Shanghai"))
     payload = {
         "schema_version": 2,
         "model_version": "2.0.0",
         "risk_policy": risk_policy_public(),
         "generated_at": now.isoformat(timespec="seconds"),
-        "generated_label": now.astimezone().strftime("%Y-%m-%d %H:%M"),
+        "generated_label": now.strftime("%Y-%m-%d %H:%M"),
         "privacy": "public-sanitized",
         "report_count": len(reports),
         "reports": reports,

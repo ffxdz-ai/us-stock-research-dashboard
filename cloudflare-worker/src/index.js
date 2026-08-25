@@ -6,6 +6,136 @@ const DEFAULT_REPO = "us-stock-research-dashboard";
 const DEFAULT_WORKFLOW = "deepseek-daily-report.yml";
 const DEFAULT_REF = "main";
 const COOLDOWN_SECONDS = 120;
+const FUTU_SNAPSHOT_KEY = "latest_futu_public_quote_snapshot";
+const FUTU_SNAPSHOT_TTL_SECONDS = 12 * 60 * 60;
+const MAX_FUTU_SNAPSHOT_BYTES = 1024 * 1024;
+const MAX_FUTU_QUOTES = 250;
+const PUBLIC_QUOTE_FIELDS = new Set([
+  "code", "symbol", "name", "last_price", "cur_price", "prev_close_price", "open_price",
+  "high_price", "low_price", "volume", "turnover", "turnover_rate", "change_rate",
+  "update_time", "data_date", "data_time", "quote_time", "pe_ttm", "pb_rate", "ps_ttm",
+  "market_val", "pre_price", "after_price", "overnight_price", "source",
+]);
+
+function bridgeJsonResponse(payload, status = 200) {
+  return new Response(JSON.stringify(payload), {
+    status,
+    headers: {
+      "Content-Type": "application/json; charset=utf-8",
+      "Cache-Control": "no-store, private",
+    },
+  });
+}
+
+function bearerTokenMatches(request, expected) {
+  const actual = String(request.headers.get("Authorization") || "");
+  const wanted = `Bearer ${String(expected || "")}`;
+  if (!expected || actual.length !== wanted.length) return false;
+  let mismatch = 0;
+  for (let index = 0; index < wanted.length; index += 1) {
+    mismatch |= actual.charCodeAt(index) ^ wanted.charCodeAt(index);
+  }
+  return mismatch === 0;
+}
+
+export function sanitizeFutuSnapshot(payload, receivedAt = new Date().toISOString()) {
+  if (!payload || typeof payload !== "object" || Array.isArray(payload)) return null;
+  if (!payload.opend?.connected || !payload.quotes || typeof payload.quotes !== "object") return null;
+  const entries = Object.entries(payload.quotes);
+  if (!entries.length || entries.length > MAX_FUTU_QUOTES) return null;
+
+  const quotes = {};
+  for (const [key, quote] of entries) {
+    const code = String(key || "").trim().toUpperCase();
+    if (!/^(US|HK|SH|SZ|SG|MY|JP|CC)\.[A-Z0-9]+$/.test(code)) continue;
+    if (!quote || typeof quote !== "object" || Array.isArray(quote)) continue;
+    const clean = {};
+    for (const [field, value] of Object.entries(quote)) {
+      if (!PUBLIC_QUOTE_FIELDS.has(field)) continue;
+      if (value === null || ["string", "number", "boolean"].includes(typeof value)) clean[field] = value;
+    }
+    clean.code = code;
+    if (!clean.quote_time) continue;
+    quotes[code] = clean;
+  }
+  if (!Object.keys(quotes).length) return null;
+
+  return {
+    schema_version: 2,
+    generated_at: String(payload.generated_at || ""),
+    generated_label: String(payload.generated_label || ""),
+    opend: { connected: true, market_data_only: true },
+    summary: {
+      scope: String(payload.summary?.scope || "all"),
+      quotes_returned: Object.keys(quotes).length,
+    },
+    privacy: {
+      contains_account: false,
+      contains_positions: false,
+      contains_cash: false,
+      contains_cost_basis: false,
+      trading_disabled: true,
+    },
+    bridge: {
+      authenticated: true,
+      transport: "cloudflare-worker-kv",
+      received_at: receivedAt,
+    },
+    quotes,
+  };
+}
+
+async function handleFutuSnapshot(request, env) {
+  if (!bearerTokenMatches(request, env.FUTU_BRIDGE_TOKEN)) {
+    return bridgeJsonResponse({ ok: false, code: "unauthorized" }, 401);
+  }
+  if (!env.FUTU_SNAPSHOT_KV) {
+    return bridgeJsonResponse({ ok: false, code: "bridge_not_configured" }, 503);
+  }
+
+  if (request.method === "GET") {
+    const stored = await env.FUTU_SNAPSHOT_KV.get(FUTU_SNAPSHOT_KEY);
+    if (!stored) return bridgeJsonResponse({ ok: false, code: "snapshot_unavailable" }, 404);
+    try {
+      return bridgeJsonResponse({ ok: true, snapshot: JSON.parse(stored) });
+    } catch {
+      return bridgeJsonResponse({ ok: false, code: "snapshot_invalid" }, 503);
+    }
+  }
+
+  if (request.method !== "PUT") {
+    return bridgeJsonResponse({ ok: false, code: "method_not_allowed" }, 405);
+  }
+  const contentLength = Number(request.headers.get("Content-Length") || 0);
+  if (contentLength > MAX_FUTU_SNAPSHOT_BYTES) {
+    return bridgeJsonResponse({ ok: false, code: "snapshot_too_large" }, 413);
+  }
+  let raw;
+  try {
+    raw = await request.text();
+  } catch {
+    return bridgeJsonResponse({ ok: false, code: "invalid_snapshot" }, 400);
+  }
+  if (new TextEncoder().encode(raw).length > MAX_FUTU_SNAPSHOT_BYTES) {
+    return bridgeJsonResponse({ ok: false, code: "snapshot_too_large" }, 413);
+  }
+  let payload;
+  try {
+    payload = sanitizeFutuSnapshot(JSON.parse(raw));
+  } catch {
+    payload = null;
+  }
+  if (!payload) return bridgeJsonResponse({ ok: false, code: "invalid_or_empty_snapshot" }, 422);
+  await env.FUTU_SNAPSHOT_KV.put(FUTU_SNAPSHOT_KEY, JSON.stringify(payload), {
+    expirationTtl: FUTU_SNAPSHOT_TTL_SECONDS,
+  });
+  return bridgeJsonResponse({
+    ok: true,
+    quotes_returned: payload.summary.quotes_returned,
+    received_at: payload.bridge.received_at,
+    expires_in_seconds: FUTU_SNAPSHOT_TTL_SECONDS,
+  });
+}
 
 export function beijingDayKey(value = new Date()) {
   const parsed = value instanceof Date ? value : new Date(value);
@@ -160,11 +290,19 @@ async function statusPayload(env) {
 }
 
 async function handleRequest(request, env) {
+  const url = new URL(request.url);
+  if (url.pathname === "/futu/snapshot") {
+    try {
+      return await handleFutuSnapshot(request, env);
+    } catch (error) {
+      console.error("Futu quote bridge failed", error);
+      return bridgeJsonResponse({ ok: false, code: "bridge_unavailable" }, 503);
+    }
+  }
   const origin = allowedRequestOrigin(request, env);
   if (!origin) return jsonResponse({ ok: false, code: "origin_not_allowed", message: "请求来源不受信任。" }, 403, "null");
 
   if (request.method === "OPTIONS") return new Response(null, { status: 204, headers: corsHeaders(origin) });
-  const url = new URL(request.url);
 
   if (request.method === "GET" && url.pathname === "/status") {
     try {

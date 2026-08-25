@@ -423,6 +423,8 @@ def build_security_signal(
         "layer": security.get("layer") or supply_item.get("layer_name"),
         "role": security.get("role") or supply_item.get("role"),
         "price": price,
+        "quote_time": candidate.get("quote_time") or supply_item.get("quote_time"),
+        "quote_source": candidate.get("quote_source") or supply_item.get("quote_source"),
         "valuation_pe": candidate.get("valuation_pe") or candidate.get("forward_pe") or candidate.get("trailing_pe") or candidate.get("estimated_pe_from_sec"),
         "valuation_pe_source": candidate.get("valuation_pe_source") or candidate.get("valuation_source"),
         "reward_risk": candidate.get("reward_risk"),
@@ -446,7 +448,7 @@ def build_security_signal(
         "catalyst_score": catalyst_score,
         "recent_filing": latest,
         "secondary_status": secondary.get("status") or secondary.get("review_result") or secondary.get("last_result"),
-        "source": supply_item.get("data_status") or candidate.get("quote_source") or "theme map only",
+        "source": candidate.get("quote_source") or supply_item.get("quote_source") or supply_item.get("data_status") or "theme map only",
     }
     factor_input = {**candidate, **row, "ticker": symbol, "sec": candidate.get("sec", {})}
     factors = factor_snapshot(factor_input)
@@ -843,6 +845,8 @@ def build_radar(
             "market": item.get("market"),
             "layer": item.get("layer"),
             "price": item.get("price"),
+            "quote_time": item.get("quote_time"),
+            "quote_source": item.get("quote_source"),
             "opportunity_score": item.get("opportunity_score"),
             "underpricing_score": item.get("underpricing_score"),
             "trend_score": item.get("trend_score"),
@@ -907,6 +911,8 @@ def build_radar(
                         "market": sec.get("market"),
                         "layer": sec.get("layer"),
                         "price": sec.get("price"),
+                        "quote_time": sec.get("quote_time"),
+                        "quote_source": sec.get("quote_source"),
                         "score": sec.get("opportunity_score"),
                         "entry_score": sec.get("entry_score"),
                         "trend_score": sec.get("trend_score"),

@@ -1252,7 +1252,7 @@ function normalizeStructuredOpportunity(item) {
     action: cleanCellText(item.action || "动作待确认"),
     price: parseLooseNumber(item.price),
     currency: cleanCellText(item.currency || ""),
-    price_time: cleanCellText(item.price_time || item.updated_at || ""),
+    price_time: cleanCellText(item.price_time || ""),
     price_source: cleanCellText(item.price_source || ""),
     opportunity_score: parseLooseNumber(item.opportunity_score),
     entry_score: parseLooseNumber(item.entry_score),
@@ -1277,6 +1277,7 @@ function normalizeStructuredOpportunity(item) {
     one_share_risk_pct: parseLooseNumber(item.one_share_risk_pct),
     data_confidence: parseLooseNumber(item.data_confidence),
     price_freshness: cleanCellText(item.price_freshness || "unknown"),
+    quote_age_minutes: parseLooseNumber(item.quote_age_minutes),
     execution_allowed: item.execution_allowed === true,
     technical_data_complete: item.technical_data_complete === true,
     future_function_audit: cleanCellText(item.future_function_audit || "BLOCK"),
@@ -1450,11 +1451,34 @@ function formatPriceMeta(opportunity) {
     return ["价格数据：待确认"];
   }
   const price = Number.isFinite(Number(opportunity.price)) ? Number(opportunity.price).toLocaleString(undefined, { maximumFractionDigits: 2 }) : String(opportunity.price);
-  return [
+  const timestamp = String(opportunity.price_time || "").trim();
+  const explicitZone = /(?:Z|[+-]\d{2}:?\d{2})$/i.test(timestamp);
+  const parsed = explicitZone ? new Date(timestamp) : null;
+  const beijingTime = parsed && !Number.isNaN(parsed.getTime())
+    ? new Intl.DateTimeFormat("zh-CN", {
+      timeZone: "Asia/Shanghai",
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+      hour12: false,
+    }).format(parsed).replaceAll("/", "-")
+    : timestamp;
+  const rows = [
     `最新价：${price} ${opportunity.currency}`,
-    `时间：${opportunity.price_time}`,
+    `时间：${beijingTime}（北京时间）`,
     `来源：${opportunity.price_source}`,
   ];
+  if (opportunity.price_freshness === "stale") {
+    rows.push("时效：行情已过期，仅供观察，禁止作为买入依据");
+  } else if (opportunity.price_freshness === "unknown") {
+    rows.push("时效：无法验证，禁止作为买入依据");
+  } else if (opportunity.price_freshness === "fallback_only") {
+    rows.push("时效：公开来源参考，仍需券商行情复核");
+  }
+  return rows;
 }
 
 function formatPlanPrice(value, currency) {
