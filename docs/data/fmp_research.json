@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-26T09:35:45+08:00",
-  "generated_label": "2026-08-26 09:35",
+  "generated_at": "2026-08-27T10:35:38+08:00",
+  "generated_label": "2026-08-27 10:35",
   "fmp_enabled": true,
   "data_boundary": {
     "role": "FMP analyst expectations and earnings layer; not a trading instruction",
@@ -17,147 +17,28 @@
   ],
   "summary": {
     "symbol_count": 12,
-    "actionable_count": 2,
+    "actionable_count": 1,
     "restricted_endpoint_count": 3,
-    "restricted_result_count": 45,
+    "restricted_result_count": 50,
     "rate_limited_result_count": 0,
     "error_count": 0
   },
   "symbols": [
     {
-      "symbol": "NVDA",
-      "name": "NVIDIA Corporation Common Stock",
-      "coverage_status": "ok",
-      "restricted_endpoints": [],
-      "price": 213.05,
-      "quote_time": "Aug 25, 2026",
-      "annual_estimate": {
-        "date": "2029-01-25",
-        "revenueAvg": 694409867867,
-        "revenueLow": 599662401820,
-        "revenueHigh": 822101102320,
-        "epsAvg": 15.39767,
-        "epsLow": 12.82851,
-        "epsHigh": 19.36477,
-        "ebitdaAvg": 355152602766,
-        "numAnalystsRevenue": 27,
-        "numAnalystsEps": 15
-      },
-      "quarterly_estimate": null,
-      "estimate_revision": {
-        "status": "compared",
-        "epsAvg_change": 0.0,
-        "epsAvg_change_pct": 0.0,
-        "revenueAvg_change": 0.0,
-        "revenueAvg_change_pct": 0.0,
-        "ebitdaAvg_change": 0.0,
-        "ebitdaAvg_change_pct": 0.0,
-        "status_label": "无明显修正"
-      },
-      "price_target_summary": {
-        "symbol": "NVDA",
-        "lastMonthCount": 5,
-        "lastMonthAvgPriceTarget": 318.4,
-        "lastQuarterCount": 7,
-        "lastQuarterAvgPriceTarget": 335.29,
-        "lastYearCount": 85,
-        "lastYearAvgPriceTarget": 284.29,
-        "allTimeCount": 323,
-        "allTimeAvgPriceTarget": 141.58,
-        "publishers": "[\"StreetInsider\",\"Benzinga\",\"Pulse 2.0\",\"MarketWatch\",\"Barrons\"]"
-      },
-      "price_target_consensus": {
-        "symbol": "NVDA",
-        "targetHigh": 500,
-        "targetLow": 218,
-        "targetConsensus": 320.38,
-        "targetMedian": 303.5
-      },
-      "price_target_upside_pct": 50.38,
-      "latest_earnings_surprise": {
-        "date": "2026-05-20",
-        "eps_actual": 1.87,
-        "eps_estimated": 1.76,
-        "eps_surprise": 0.11,
-        "eps_surprise_pct": 6.25,
-        "revenue_actual": 81615000000.0,
-        "revenue_estimated": 78423370000.0,
-        "revenue_surprise_pct": 4.07,
-        "last_updated": "2026-08-20"
-      },
-      "earnings_history": [
-        {
-          "symbol": "NVDA",
-          "date": "2026-08-26",
-          "epsActual": null,
-          "epsEstimated": 2.09,
-          "revenueActual": null,
-          "revenueEstimated": 92270940000,
-          "lastUpdated": "2026-08-26"
-        },
-        {
-          "symbol": "NVDA",
-          "date": "2026-05-20",
-          "epsActual": 1.87,
-          "epsEstimated": 1.76,
-          "revenueActual": 81615000000,
-          "revenueEstimated": 78423370000,
-          "lastUpdated": "2026-08-20"
-        },
-        {
-          "symbol": "NVDA",
-          "date": "2026-02-25",
-          "epsActual": 1.62,
-          "epsEstimated": 1.54,
-          "revenueActual": 68127000000,
-          "revenueEstimated": 66126470000,
-          "lastUpdated": "2026-05-25"
-        },
-        {
-          "symbol": "NVDA",
-          "date": "2025-11-19",
-          "epsActual": 1.3,
-          "epsEstimated": 1.26,
-          "revenueActual": 57006000000,
-          "revenueEstimated": 54961119678,
-          "lastUpdated": "2026-03-25"
-        }
-      ],
-      "rating_snapshot": {
-        "symbol": "NVDA",
-        "rating": "A-",
-        "overallScore": 4,
-        "discountedCashFlowScore": 4,
-        "returnOnEquityScore": 5,
-        "returnOnAssetsScore": 5,
-        "debtToEquityScore": 4,
-        "priceToEarningsScore": 2,
-        "priceToBookScore": 1
-      },
-      "expectation_score": 84.0,
-      "score_notes": [
-        "一致目标价上行空间 50.4%",
-        "最近 EPS 超预期 6.2%",
-        "收入超预期 4.1%",
-        "FMP rating score 4.0"
-      ],
-      "action": "预期差增强，进入 Buy-Side 复核"
-    },
-    {
       "symbol": "TSM",
-      "name": "Taiwan Semiconductor Manufacturing Company Ltd.",
+      "name": "TAIWAN SEMICONDUCTOR MANUFACTURING CO LTD",
       "coverage_status": "ok",
       "restricted_endpoints": [],
-      "price": 417.41,
-      "quote_time": "Aug 25, 2026",
+      "price": 423.8,
+      "quote_time": "2026-08-27T10:33:15+08:00",
       "annual_estimate": {
         "date": "2027-12-31",
         "revenueAvg": 7267796682586,
         "revenueLow": 6593038074668,
         "revenueHigh": 7945922349425,
-        "epsAvg": 699.60926,
-        "epsLow": 560.15672,
-        "epsHigh": 796.82377,
+        "epsAvg": 699.65519,
+        "epsLow": 560.19349,
+        "epsHigh": 796.87608,
         "ebitdaAvg": 5082540697077,
         "numAnalystsRevenue": 22,
         "numAnalystsEps": 10
@@ -165,8 +46,8 @@
       "quarterly_estimate": null,
       "estimate_revision": {
         "status": "compared",
-        "epsAvg_change": 0.0,
-        "epsAvg_change_pct": 0.0,
+        "epsAvg_change": 0.0459,
+        "epsAvg_change_pct": 0.0066,
         "revenueAvg_change": 0.0,
         "revenueAvg_change_pct": 0.0,
         "ebitdaAvg_change": 0.0,
@@ -192,7 +73,7 @@
         "targetConsensus": 589,
         "targetMedian": 577
       },
-      "price_target_upside_pct": 41.11,
+      "price_target_upside_pct": 38.98,
       "latest_earnings_surprise": {
         "date": "2026-07-16",
         "eps_actual": 4.31,
@@ -202,7 +83,7 @@
         "revenue_actual": 39356270000.0,
         "revenue_estimated": 39834730000.0,
         "revenue_surprise_pct": -1.2,
-        "last_updated": "2026-08-26"
+        "last_updated": "2026-08-27"
       },
       "earnings_history": [
         {
@@ -212,7 +93,7 @@
           "epsEstimated": 4.45,
           "revenueActual": null,
           "revenueEstimated": 45052550000,
-          "lastUpdated": "2026-08-26"
+          "lastUpdated": "2026-08-27"
         },
         {
           "symbol": "TSM",
@@ -221,7 +102,7 @@
           "epsEstimated": 3.87,
           "revenueActual": 39356270000,
           "revenueEstimated": 39834730000,
-          "lastUpdated": "2026-08-26"
+          "lastUpdated": "2026-08-27"
         },
         {
           "symbol": "TSM",
@@ -255,39 +136,39 @@
       },
       "expectation_score": 71.0,
       "score_notes": [
-        "一致目标价上行空间 41.1%",
+        "一致目标价上行空间 39.0%",
         "最近 EPS 超预期 11.4%"
       ],
       "action": "预期面改善，保留观察"
     },
     {
       "symbol": "AMD",
-      "name": "Advanced Micro Devices, Inc. Common Stock",
+      "name": "ADVANCED MICRO DEVICES INC",
       "coverage_status": "ok",
       "restricted_endpoints": [],
-      "price": 479.18,
-      "quote_time": "Aug 25, 2026",
+      "price": 483.06,
+      "quote_time": "2026-08-27T10:32:28+08:00",
       "annual_estimate": {
         "date": "2028-12-27",
-        "revenueAvg": 121817128095,
-        "revenueLow": 81785152633,
-        "revenueHigh": 166706753384,
-        "epsAvg": 22.46822,
-        "epsLow": 14.10829,
-        "epsHigh": 31.22456,
-        "ebitdaAvg": 26430840906,
-        "numAnalystsRevenue": 35,
-        "numAnalystsEps": 20
+        "revenueAvg": 121950106883,
+        "revenueLow": 81859061790,
+        "revenueHigh": 166857406103,
+        "epsAvg": 22.55983,
+        "epsLow": 14.2367,
+        "epsHigh": 31.50875,
+        "ebitdaAvg": 26459693508,
+        "numAnalystsRevenue": 36,
+        "numAnalystsEps": 21
       },
       "quarterly_estimate": null,
       "estimate_revision": {
         "status": "compared",
-        "epsAvg_change": 0.0,
-        "epsAvg_change_pct": 0.0,
-        "revenueAvg_change": 0.0,
-        "revenueAvg_change_pct": 0.0,
-        "ebitdaAvg_change": 0.0,
-        "ebitdaAvg_change_pct": 0.0,
+        "epsAvg_change": 0.0916,
+        "epsAvg_change_pct": 0.4077,
+        "revenueAvg_change": 132978788.0,
+        "revenueAvg_change_pct": 0.1092,
+        "ebitdaAvg_change": 28852602.0,
+        "ebitdaAvg_change_pct": 0.1092,
         "status_label": "无明显修正"
       },
       "price_target_summary": {
@@ -296,8 +177,8 @@
         "lastMonthAvgPriceTarget": 609.09,
         "lastQuarterCount": 27,
         "lastQuarterAvgPriceTarget": 653.52,
-        "lastYearCount": 98,
-        "lastYearAvgPriceTarget": 419.01,
+        "lastYearCount": 97,
+        "lastYearAvgPriceTarget": 421.13,
         "allTimeCount": 262,
         "allTimeAvgPriceTarget": 247.12,
         "publishers": "[\"StreetInsider\",\"Benzinga\",\"MarketWatch\",\"Pulse 2.0\",\"Investing\",\"Barrons\"]"
@@ -309,7 +190,7 @@
         "targetConsensus": 594.04,
         "targetMedian": 625
       },
-      "price_target_upside_pct": 23.97,
+      "price_target_upside_pct": 22.97,
       "latest_earnings_surprise": {
         "date": "2026-08-04",
         "eps_actual": 1.66,
@@ -319,7 +200,7 @@
         "revenue_actual": 11536000000.0,
         "revenue_estimated": 11309650000.0,
         "revenue_surprise_pct": 2.0,
-        "last_updated": "2026-08-25"
+        "last_updated": "2026-08-26"
       },
       "earnings_history": [
         {
@@ -328,8 +209,8 @@
           "epsActual": null,
           "epsEstimated": 1.9,
           "revenueActual": null,
-          "revenueEstimated": 12970090000,
-          "lastUpdated": "2026-08-25"
+          "revenueEstimated": 12966720000,
+          "lastUpdated": "2026-08-26"
         },
         {
           "symbol": "AMD",
@@ -338,7 +219,7 @@
           "epsEstimated": 1.62,
           "revenueActual": 11536000000,
           "revenueEstimated": 11309650000,
-          "lastUpdated": "2026-08-25"
+          "lastUpdated": "2026-08-26"
         },
         {
           "symbol": "AMD",
@@ -372,75 +253,13 @@
       },
       "expectation_score": 55.0,
       "score_notes": [
-        "目标价仍有上行空间 24.0%"
+        "目标价仍有上行空间 23.0%"
       ],
       "action": "普通观察"
     },
     {
-      "symbol": "AVGO",
-      "name": "Broadcom Inc. Common Stock",
-      "coverage_status": "restricted",
-      "restricted_endpoints": [
-        "/analyst-estimates",
-        "/earnings",
-        "/price-target-consensus",
-        "/price-target-summary",
-        "/ratings-snapshot"
-      ],
-      "price": 356.74,
-      "quote_time": "Aug 25, 2026",
-      "annual_estimate": null,
-      "quarterly_estimate": null,
-      "estimate_revision": {
-        "status": "missing",
-        "status_label": "缺少分析师预期"
-      },
-      "price_target_summary": {},
-      "price_target_consensus": {},
-      "price_target_upside_pct": null,
-      "latest_earnings_surprise": null,
-      "earnings_history": [],
-      "rating_snapshot": {},
-      "expectation_score": null,
-      "score_notes": [
-        "FMP 套餐或 symbol 权限受限，不能评价预期差"
-      ],
-      "action": "FMP 权限受限，暂不评价"
-    },
-    {
-      "symbol": "ARM",
-      "name": "Arm Holdings plc American Depositary Shares",
-      "coverage_status": "restricted",
-      "restricted_endpoints": [
-        "/analyst-estimates",
-        "/earnings",
-        "/price-target-consensus",
-        "/price-target-summary",
-        "/ratings-snapshot"
-      ],
-      "price": 241.56,
-      "quote_time": "Aug 25, 2026",
-      "annual_estimate": null,
-      "quarterly_estimate": null,
-      "estimate_revision": {
-        "status": "missing",
-        "status_label": "缺少分析师预期"
-      },
-      "price_target_summary": {},
-      "price_target_consensus": {},
-      "price_target_upside_pct": null,
-      "latest_earnings_surprise": null,
-      "earnings_history": [],
-      "rating_snapshot": {},
-      "expectation_score": null,
-      "score_notes": [
-        "FMP 套餐或 symbol 权限受限，不能评价预期差"
-      ],
-      "action": "FMP 权限受限，暂不评价"
-    },
-    {
       "symbol": "MRVL",
-      "name": "Marvell Technology, Inc. Common Stock",
+      "name": "Marvell Technology, Inc.",
       "coverage_status": "restricted",
       "restricted_endpoints": [
         "/analyst-estimates",
@@ -449,8 +268,8 @@
         "/price-target-summary",
         "/ratings-snapshot"
       ],
-      "price": 240.38,
-      "quote_time": "Aug 25, 2026",
+      "price": 255.19,
+      "quote_time": "2026-08-27T10:33:13+08:00",
       "annual_estimate": null,
       "quarterly_estimate": null,
       "estimate_revision": {
@@ -470,8 +289,8 @@
       "action": "FMP 权限受限，暂不评价"
     },
     {
-      "symbol": "COHR",
-      "name": "Coherent Corp. Common Stock",
+      "symbol": "ISRG",
+      "name": "INTUITIVE SURGICAL INC",
       "coverage_status": "restricted",
       "restricted_endpoints": [
         "/analyst-estimates",
@@ -480,8 +299,8 @@
         "/price-target-summary",
         "/ratings-snapshot"
       ],
-      "price": 288.14,
-      "quote_time": "Aug 25, 2026",
+      "price": 369.7,
+      "quote_time": "2026-08-27T10:29:44+08:00",
       "annual_estimate": null,
       "quarterly_estimate": null,
       "estimate_revision": {
@@ -502,7 +321,7 @@
     },
     {
       "symbol": "ASML",
-      "name": "ASML Holding N.V. New York Registry Shares",
+      "name": "ASML HOLDING NV",
       "coverage_status": "restricted",
       "restricted_endpoints": [
         "/analyst-estimates",
@@ -511,8 +330,8 @@
         "/price-target-summary",
         "/ratings-snapshot"
       ],
-      "price": 1744.16,
-      "quote_time": "Aug 25, 2026",
+      "price": 1773.1,
+      "quote_time": "2026-08-27T10:31:46+08:00",
       "annual_estimate": null,
       "quarterly_estimate": null,
       "estimate_revision": {
@@ -532,8 +351,8 @@
       "action": "FMP 权限受限，暂不评价"
     },
     {
-      "symbol": "AMAT",
-      "name": "Applied Materials, Inc. Common Stock",
+      "symbol": "ANET",
+      "name": "Arista Networks, Inc.",
       "coverage_status": "restricted",
       "restricted_endpoints": [
         "/analyst-estimates",
@@ -542,8 +361,39 @@
         "/price-target-summary",
         "/ratings-snapshot"
       ],
-      "price": 480.04,
-      "quote_time": "Aug 25, 2026",
+      "price": 204.76,
+      "quote_time": "2026-08-27T10:33:01+08:00",
+      "annual_estimate": null,
+      "quarterly_estimate": null,
+      "estimate_revision": {
+        "status": "missing",
+        "status_label": "缺少分析师预期"
+      },
+      "price_target_summary": {},
+      "price_target_consensus": {},
+      "price_target_upside_pct": null,
+      "latest_earnings_surprise": null,
+      "earnings_history": [],
+      "rating_snapshot": {},
+      "expectation_score": null,
+      "score_notes": [
+        "FMP 套餐或 symbol 权限受限，不能评价预期差"
+      ],
+      "action": "FMP 权限受限，暂不评价"
+    },
+    {
+      "symbol": "LITE",
+      "name": "Lumentum Holdings Inc.",
+      "coverage_status": "restricted",
+      "restricted_endpoints": [
+        "/analyst-estimates",
+        "/earnings",
+        "/price-target-consensus",
+        "/price-target-summary",
+        "/ratings-snapshot"
+      ],
+      "price": 964.98,
+      "quote_time": "2026-08-27T10:32:46+08:00",
       "annual_estimate": null,
       "quarterly_estimate": null,
       "estimate_revision": {
@@ -564,7 +414,7 @@
     },
     {
       "symbol": "LRCX",
-      "name": "Lam Research Corporation Common Stock",
+      "name": "LAM RESEARCH CORP",
       "coverage_status": "restricted",
       "restricted_endpoints": [
         "/analyst-estimates",
@@ -573,8 +423,70 @@
         "/price-target-summary",
         "/ratings-snapshot"
       ],
-      "price": 314.66,
-      "quote_time": "Aug 25, 2026",
+      "price": 319.19,
+      "quote_time": "2026-08-27T10:33:13+08:00",
+      "annual_estimate": null,
+      "quarterly_estimate": null,
+      "estimate_revision": {
+        "status": "missing",
+        "status_label": "缺少分析师预期"
+      },
+      "price_target_summary": {},
+      "price_target_consensus": {},
+      "price_target_upside_pct": null,
+      "latest_earnings_surprise": null,
+      "earnings_history": [],
+      "rating_snapshot": {},
+      "expectation_score": null,
+      "score_notes": [
+        "FMP 套餐或 symbol 权限受限，不能评价预期差"
+      ],
+      "action": "FMP 权限受限，暂不评价"
+    },
+    {
+      "symbol": "AMAT",
+      "name": "APPLIED MATERIALS INC /DE",
+      "coverage_status": "restricted",
+      "restricted_endpoints": [
+        "/analyst-estimates",
+        "/earnings",
+        "/price-target-consensus",
+        "/price-target-summary",
+        "/ratings-snapshot"
+      ],
+      "price": 487.99,
+      "quote_time": "2026-08-27T10:29:51+08:00",
+      "annual_estimate": null,
+      "quarterly_estimate": null,
+      "estimate_revision": {
+        "status": "missing",
+        "status_label": "缺少分析师预期"
+      },
+      "price_target_summary": {},
+      "price_target_consensus": {},
+      "price_target_upside_pct": null,
+      "latest_earnings_surprise": null,
+      "earnings_history": [],
+      "rating_snapshot": {},
+      "expectation_score": null,
+      "score_notes": [
+        "FMP 套餐或 symbol 权限受限，不能评价预期差"
+      ],
+      "action": "FMP 权限受限，暂不评价"
+    },
+    {
+      "symbol": "AVGO",
+      "name": "Broadcom Inc.",
+      "coverage_status": "restricted",
+      "restricted_endpoints": [
+        "/analyst-estimates",
+        "/earnings",
+        "/price-target-consensus",
+        "/price-target-summary",
+        "/ratings-snapshot"
+      ],
+      "price": 360.4,
+      "quote_time": "2026-08-27T10:33:00+08:00",
       "annual_estimate": null,
       "quarterly_estimate": null,
       "estimate_revision": {
@@ -595,7 +507,7 @@
     },
     {
       "symbol": "KLAC",
-      "name": "KLA Corporation Common Stock",
+      "name": "KLA CORP",
       "coverage_status": "restricted",
       "restricted_endpoints": [
         "/analyst-estimates",
@@ -604,8 +516,8 @@
         "/price-target-summary",
         "/ratings-snapshot"
       ],
-      "price": 183.34,
-      "quote_time": "Aug 25, 2026",
+      "price": 187.41,
+      "quote_time": "2026-08-27T10:31:19+08:00",
       "annual_estimate": null,
       "quarterly_estimate": null,
       "estimate_revision": {
@@ -625,8 +537,8 @@
       "action": "FMP 权限受限，暂不评价"
     },
     {
-      "symbol": "TER",
-      "name": "Teradyne, Inc. Common Stock",
+      "symbol": "FLEX",
+      "name": "FLEX LTD.",
       "coverage_status": "restricted",
       "restricted_endpoints": [
         "/analyst-estimates",
@@ -635,8 +547,8 @@
         "/price-target-summary",
         "/ratings-snapshot"
       ],
-      "price": 366.43,
-      "quote_time": "Aug 25, 2026",
+      "price": 112.89,
+      "quote_time": "2026-08-27T08:38:29+08:00",
       "annual_estimate": null,
       "quarterly_estimate": null,
       "estimate_revision": {
@@ -658,139 +570,20 @@
   ],
   "actionable": [
     {
-      "symbol": "NVDA",
-      "name": "NVIDIA Corporation Common Stock",
-      "coverage_status": "ok",
-      "restricted_endpoints": [],
-      "price": 213.05,
-      "quote_time": "Aug 25, 2026",
-      "annual_estimate": {
-        "date": "2029-01-25",
-        "revenueAvg": 694409867867,
-        "revenueLow": 599662401820,
-        "revenueHigh": 822101102320,
-        "epsAvg": 15.39767,
-        "epsLow": 12.82851,
-        "epsHigh": 19.36477,
-        "ebitdaAvg": 355152602766,
-        "numAnalystsRevenue": 27,
-        "numAnalystsEps": 15
-      },
-      "quarterly_estimate": null,
-      "estimate_revision": {
-        "status": "compared",
-        "epsAvg_change": 0.0,
-        "epsAvg_change_pct": 0.0,
-        "revenueAvg_change": 0.0,
-        "revenueAvg_change_pct": 0.0,
-        "ebitdaAvg_change": 0.0,
-        "ebitdaAvg_change_pct": 0.0,
-        "status_label": "无明显修正"
-      },
-      "price_target_summary": {
-        "symbol": "NVDA",
-        "lastMonthCount": 5,
-        "lastMonthAvgPriceTarget": 318.4,
-        "lastQuarterCount": 7,
-        "lastQuarterAvgPriceTarget": 335.29,
-        "lastYearCount": 85,
-        "lastYearAvgPriceTarget": 284.29,
-        "allTimeCount": 323,
-        "allTimeAvgPriceTarget": 141.58,
-        "publishers": "[\"StreetInsider\",\"Benzinga\",\"Pulse 2.0\",\"MarketWatch\",\"Barrons\"]"
-      },
-      "price_target_consensus": {
-        "symbol": "NVDA",
-        "targetHigh": 500,
-        "targetLow": 218,
-        "targetConsensus": 320.38,
-        "targetMedian": 303.5
-      },
-      "price_target_upside_pct": 50.38,
-      "latest_earnings_surprise": {
-        "date": "2026-05-20",
-        "eps_actual": 1.87,
-        "eps_estimated": 1.76,
-        "eps_surprise": 0.11,
-        "eps_surprise_pct": 6.25,
-        "revenue_actual": 81615000000.0,
-        "revenue_estimated": 78423370000.0,
-        "revenue_surprise_pct": 4.07,
-        "last_updated": "2026-08-20"
-      },
-      "earnings_history": [
-        {
-          "symbol": "NVDA",
-          "date": "2026-08-26",
-          "epsActual": null,
-          "epsEstimated": 2.09,
-          "revenueActual": null,
-          "revenueEstimated": 92270940000,
-          "lastUpdated": "2026-08-26"
-        },
-        {
-          "symbol": "NVDA",
-          "date": "2026-05-20",
-          "epsActual": 1.87,
-          "epsEstimated": 1.76,
-          "revenueActual": 81615000000,
-          "revenueEstimated": 78423370000,
-          "lastUpdated": "2026-08-20"
-        },
-        {
-          "symbol": "NVDA",
-          "date": "2026-02-25",
-          "epsActual": 1.62,
-          "epsEstimated": 1.54,
-          "revenueActual": 68127000000,
-          "revenueEstimated": 66126470000,
-          "lastUpdated": "2026-05-25"
-        },
-        {
-          "symbol": "NVDA",
-          "date": "2025-11-19",
-          "epsActual": 1.3,
-          "epsEstimated": 1.26,
-          "revenueActual": 57006000000,
-          "revenueEstimated": 54961119678,
-          "lastUpdated": "2026-03-25"
-        }
-      ],
-      "rating_snapshot": {
-        "symbol": "NVDA",
-        "rating": "A-",
-        "overallScore": 4,
-        "discountedCashFlowScore": 4,
-        "returnOnEquityScore": 5,
-        "returnOnAssetsScore": 5,
-        "debtToEquityScore": 4,
-        "priceToEarningsScore": 2,
-        "priceToBookScore": 1
-      },
-      "expectation_score": 84.0,
-      "score_notes": [
-        "一致目标价上行空间 50.4%",
-        "最近 EPS 超预期 6.2%",
-        "收入超预期 4.1%",
-        "FMP rating score 4.0"
-      ],
-      "action": "预期差增强，进入 Buy-Side 复核"
-    },
-    {
       "symbol": "TSM",
-      "name": "Taiwan Semiconductor Manufacturing Company Ltd.",
+      "name": "TAIWAN SEMICONDUCTOR MANUFACTURING CO LTD",
       "coverage_status": "ok",
       "restricted_endpoints": [],
-      "price": 417.41,
-      "quote_time": "Aug 25, 2026",
+      "price": 423.8,
+      "quote_time": "2026-08-27T10:33:15+08:00",
       "annual_estimate": {
         "date": "2027-12-31",
         "revenueAvg": 7267796682586,
         "revenueLow": 6593038074668,
         "revenueHigh": 7945922349425,
-        "epsAvg": 699.60926,
-        "epsLow": 560.15672,
-        "epsHigh": 796.82377,
+        "epsAvg": 699.65519,
+        "epsLow": 560.19349,
+        "epsHigh": 796.87608,
         "ebitdaAvg": 5082540697077,
         "numAnalystsRevenue": 22,
         "numAnalystsEps": 10
@@ -798,8 +591,8 @@
       "quarterly_estimate": null,
       "estimate_revision": {
         "status": "compared",
-        "epsAvg_change": 0.0,
-        "epsAvg_change_pct": 0.0,
+        "epsAvg_change": 0.0459,
+        "epsAvg_change_pct": 0.0066,
         "revenueAvg_change": 0.0,
         "revenueAvg_change_pct": 0.0,
         "ebitdaAvg_change": 0.0,
@@ -825,7 +618,7 @@
         "targetConsensus": 589,
         "targetMedian": 577
       },
-      "price_target_upside_pct": 41.11,
+      "price_target_upside_pct": 38.98,
       "latest_earnings_surprise": {
         "date": "2026-07-16",
         "eps_actual": 4.31,
@@ -835,7 +628,7 @@
         "revenue_actual": 39356270000.0,
         "revenue_estimated": 39834730000.0,
         "revenue_surprise_pct": -1.2,
-        "last_updated": "2026-08-26"
+        "last_updated": "2026-08-27"
       },
       "earnings_history": [
         {
@@ -845,7 +638,7 @@
           "epsEstimated": 4.45,
           "revenueActual": null,
           "revenueEstimated": 45052550000,
-          "lastUpdated": "2026-08-26"
+          "lastUpdated": "2026-08-27"
         },
         {
           "symbol": "TSM",
@@ -854,7 +647,7 @@
           "epsEstimated": 3.87,
           "revenueActual": 39356270000,
           "revenueEstimated": 39834730000,
-          "lastUpdated": "2026-08-26"
+          "lastUpdated": "2026-08-27"
         },
         {
           "symbol": "TSM",
@@ -888,7 +681,7 @@
       },
       "expectation_score": 71.0,
       "score_notes": [
-        "一致目标价上行空间 41.1%",
+        "一致目标价上行空间 39.0%",
         "最近 EPS 超预期 11.4%"
       ],
       "action": "预期面改善，保留观察"
@@ -916,76 +709,6 @@
   ],
   "restricted_results": [
     {
-      "symbol": "AVGO",
-      "endpoint": "/analyst-estimates",
-      "status": 402,
-      "kind": "restricted",
-      "message": "Premium Query Parameter: 'Special Endpoint : This value set for 'symbol' is not available under your current subscription please visit our subscription page to upgrade your plan at https://financialmodelingprep.com/"
-    },
-    {
-      "symbol": "AVGO",
-      "endpoint": "/price-target-summary",
-      "status": 402,
-      "kind": "restricted",
-      "message": "Premium Query Parameter: 'Special Endpoint : This value set for 'symbol' is not available under your current subscription please visit our subscription page to upgrade your plan at https://financialmodelingprep.com/"
-    },
-    {
-      "symbol": "AVGO",
-      "endpoint": "/price-target-consensus",
-      "status": 402,
-      "kind": "restricted",
-      "message": "Premium Query Parameter: 'Special Endpoint : This value set for 'symbol' is not available under your current subscription please visit our subscription page to upgrade your plan at https://financialmodelingprep.com/"
-    },
-    {
-      "symbol": "AVGO",
-      "endpoint": "/earnings",
-      "status": 402,
-      "kind": "restricted",
-      "message": "Premium Query Parameter: 'Special Endpoint : This value set for 'symbol' is not available under your current subscription please visit our subscription page to upgrade your plan at https://financialmodelingprep.com/"
-    },
-    {
-      "symbol": "AVGO",
-      "endpoint": "/ratings-snapshot",
-      "status": 402,
-      "kind": "restricted",
-      "message": "Premium Query Parameter: 'Special Endpoint : This value set for 'symbol' is not available under your current subscription please visit our subscription page to upgrade your plan at https://financialmodelingprep.com/"
-    },
-    {
-      "symbol": "ARM",
-      "endpoint": "/analyst-estimates",
-      "status": 402,
-      "kind": "restricted",
-      "message": "Premium Query Parameter: 'Special Endpoint : This value set for 'symbol' is not available under your current subscription please visit our subscription page to upgrade your plan at https://financialmodelingprep.com/"
-    },
-    {
-      "symbol": "ARM",
-      "endpoint": "/price-target-summary",
-      "status": 402,
-      "kind": "restricted",
-      "message": "Premium Query Parameter: 'Special Endpoint : This value set for 'symbol' is not available under your current subscription please visit our subscription page to upgrade your plan at https://financialmodelingprep.com/"
-    },
-    {
-      "symbol": "ARM",
-      "endpoint": "/price-target-consensus",
-      "status": 402,
-      "kind": "restricted",
-      "message": "Premium Query Parameter: 'Special Endpoint : This value set for 'symbol' is not available under your current subscription please visit our subscription page to upgrade your plan at https://financialmodelingprep.com/"
-    },
-    {
-      "symbol": "ARM",
-      "endpoint": "/earnings",
-      "status": 402,
-      "kind": "restricted",
-      "message": "Premium Query Parameter: 'Special Endpoint : This value set for 'symbol' is not available under your current subscription please visit our subscription page to upgrade your plan at https://financialmodelingprep.com/"
-    },
-    {
-      "symbol": "ARM",
-      "endpoint": "/ratings-snapshot",
-      "status": 402,
-      "kind": "restricted",
-      "message": "Premium Query Parameter: 'Special Endpoint : This value set for 'symbol' is not available under your current subscription please visit our subscription page to upgrade your plan at https://financialmodelingprep.com/"
-    },
-    {
       "symbol": "MRVL",
       "endpoint": "/analyst-estimates",
       "status": 402,
@@ -1021,35 +744,35 @@
       "message": "Premium Query Parameter: 'Special Endpoint : This value set for 'symbol' is not available under your current subscription please visit our subscription page to upgrade your plan at https://financialmodelingprep.com/"
     },
     {
-      "symbol": "COHR",
+      "symbol": "ISRG",
       "endpoint": "/analyst-estimates",
       "status": 402,
       "kind": "restricted",
       "message": "Premium Query Parameter: 'Special Endpoint : This value set for 'symbol' is not available under your current subscription please visit our subscription page to upgrade your plan at https://financialmodelingprep.com/"
     },
     {
-      "symbol": "COHR",
+      "symbol": "ISRG",
       "endpoint": "/price-target-summary",
       "status": 402,
       "kind": "restricted",
       "message": "Premium Query Parameter: 'Special Endpoint : This value set for 'symbol' is not available under your current subscription please visit our subscription page to upgrade your plan at https://financialmodelingprep.com/"
     },
     {
-      "symbol": "COHR",
+      "symbol": "ISRG",
       "endpoint": "/price-target-consensus",
       "status": 402,
       "kind": "restricted",
       "message": "Premium Query Parameter: 'Special Endpoint : This value set for 'symbol' is not available under your current subscription please visit our subscription page to upgrade your plan at https://financialmodelingprep.com/"
     },
     {
-      "symbol": "COHR",
+      "symbol": "ISRG",
       "endpoint": "/earnings",
       "status": 402,
       "kind": "restricted",
       "message": "Premium Query Parameter: 'Special Endpoint : This value set for 'symbol' is not available under your current subscription please visit our subscription page to upgrade your plan at https://financialmodelingprep.com/"
     },
     {
-      "symbol": "COHR",
+      "symbol": "ISRG",
       "endpoint": "/ratings-snapshot",
       "status": 402,
       "kind": "restricted",
@@ -1091,35 +814,70 @@
       "message": "Premium Query Parameter: 'Special Endpoint : This value set for 'symbol' is not available under your current subscription please visit our subscription page to upgrade your plan at https://financialmodelingprep.com/"
     },
     {
-      "symbol": "AMAT",
+      "symbol": "ANET",
       "endpoint": "/analyst-estimates",
       "status": 402,
       "kind": "restricted",
       "message": "Premium Query Parameter: 'Special Endpoint : This value set for 'symbol' is not available under your current subscription please visit our subscription page to upgrade your plan at https://financialmodelingprep.com/"
     },
     {
-      "symbol": "AMAT",
+      "symbol": "ANET",
       "endpoint": "/price-target-summary",
       "status": 402,
       "kind": "restricted",
       "message": "Premium Query Parameter: 'Special Endpoint : This value set for 'symbol' is not available under your current subscription please visit our subscription page to upgrade your plan at https://financialmodelingprep.com/"
     },
     {
-      "symbol": "AMAT",
+      "symbol": "ANET",
       "endpoint": "/price-target-consensus",
       "status": 402,
       "kind": "restricted",
       "message": "Premium Query Parameter: 'Special Endpoint : This value set for 'symbol' is not available under your current subscription please visit our subscription page to upgrade your plan at https://financialmodelingprep.com/"
     },
     {
-      "symbol": "AMAT",
+      "symbol": "ANET",
       "endpoint": "/earnings",
       "status": 402,
       "kind": "restricted",
       "message": "Premium Query Parameter: 'Special Endpoint : This value set for 'symbol' is not available under your current subscription please visit our subscription page to upgrade your plan at https://financialmodelingprep.com/"
     },
     {
-      "symbol": "AMAT",
+      "symbol": "ANET",
+      "endpoint": "/ratings-snapshot",
+      "status": 402,
+      "kind": "restricted",
+      "message": "Premium Query Parameter: 'Special Endpoint : This value set for 'symbol' is not available under your current subscription please visit our subscription page to upgrade your plan at https://financialmodelingprep.com/"
+    },
+    {
+      "symbol": "LITE",
+      "endpoint": "/analyst-estimates",
+      "status": 402,
+      "kind": "restricted",
+      "message": "Premium Query Parameter: 'Special Endpoint : This value set for 'symbol' is not available under your current subscription please visit our subscription page to upgrade your plan at https://financialmodelingprep.com/"
+    },
+    {
+      "symbol": "LITE",
+      "endpoint": "/price-target-summary",
+      "status": 402,
+      "kind": "restricted",
+      "message": "Premium Query Parameter: 'Special Endpoint : This value set for 'symbol' is not available under your current subscription please visit our subscription page to upgrade your plan at https://financialmodelingprep.com/"
+    },
+    {
+      "symbol": "LITE",
+      "endpoint": "/price-target-consensus",
+      "status": 402,
+      "kind": "restricted",
+      "message": "Premium Query Parameter: 'Special Endpoint : This value set for 'symbol' is not available under your current subscription please visit our subscription page to upgrade your plan at https://financialmodelingprep.com/"
+    },
+    {
+      "symbol": "LITE",
+      "endpoint": "/earnings",
+      "status": 402,
+      "kind": "restricted",
+      "message": "Premium Query Parameter: 'Special Endpoint : This value set for 'symbol' is not available under your current subscription please visit our subscription page to upgrade your plan at https://financialmodelingprep.com/"
+    },
+    {
+      "symbol": "LITE",
       "endpoint": "/ratings-snapshot",
       "status": 402,
       "kind": "restricted",
@@ -1161,6 +919,76 @@
       "message": "Premium Query Parameter: 'Special Endpoint : This value set for 'symbol' is not available under your current subscription please visit our subscription page to upgrade your plan at https://financialmodelingprep.com/"
     },
     {
+      "symbol": "AMAT",
+      "endpoint": "/analyst-estimates",
+      "status": 402,
+      "kind": "restricted",
+      "message": "Premium Query Parameter: 'Special Endpoint : This value set for 'symbol' is not available under your current subscription please visit our subscription page to upgrade your plan at https://financialmodelingprep.com/"
+    },
+    {
+      "symbol": "AMAT",
+      "endpoint": "/price-target-summary",
+      "status": 402,
+      "kind": "restricted",
+      "message": "Premium Query Parameter: 'Special Endpoint : This value set for 'symbol' is not available under your current subscription please visit our subscription page to upgrade your plan at https://financialmodelingprep.com/"
+    },
+    {
+      "symbol": "AMAT",
+      "endpoint": "/price-target-consensus",
+      "status": 402,
+      "kind": "restricted",
+      "message": "Premium Query Parameter: 'Special Endpoint : This value set for 'symbol' is not available under your current subscription please visit our subscription page to upgrade your plan at https://financialmodelingprep.com/"
+    },
+    {
+      "symbol": "AMAT",
+      "endpoint": "/earnings",
+      "status": 402,
+      "kind": "restricted",
+      "message": "Premium Query Parameter: 'Special Endpoint : This value set for 'symbol' is not available under your current subscription please visit our subscription page to upgrade your plan at https://financialmodelingprep.com/"
+    },
+    {
+      "symbol": "AMAT",
+      "endpoint": "/ratings-snapshot",
+      "status": 402,
+      "kind": "restricted",
+      "message": "Premium Query Parameter: 'Special Endpoint : This value set for 'symbol' is not available under your current subscription please visit our subscription page to upgrade your plan at https://financialmodelingprep.com/"
+    },
+    {
+      "symbol": "AVGO",
+      "endpoint": "/analyst-estimates",
+      "status": 402,
+      "kind": "restricted",
+      "message": "Premium Query Parameter: 'Special Endpoint : This value set for 'symbol' is not available under your current subscription please visit our subscription page to upgrade your plan at https://financialmodelingprep.com/"
+    },
+    {
+      "symbol": "AVGO",
+      "endpoint": "/price-target-summary",
+      "status": 402,
+      "kind": "restricted",
+      "message": "Premium Query Parameter: 'Special Endpoint : This value set for 'symbol' is not available under your current subscription please visit our subscription page to upgrade your plan at https://financialmodelingprep.com/"
+    },
+    {
+      "symbol": "AVGO",
+      "endpoint": "/price-target-consensus",
+      "status": 402,
+      "kind": "restricted",
+      "message": "Premium Query Parameter: 'Special Endpoint : This value set for 'symbol' is not available under your current subscription please visit our subscription page to upgrade your plan at https://financialmodelingprep.com/"
+    },
+    {
+      "symbol": "AVGO",
+      "endpoint": "/earnings",
+      "status": 402,
+      "kind": "restricted",
+      "message": "Premium Query Parameter: 'Special Endpoint : This value set for 'symbol' is not available under your current subscription please visit our subscription page to upgrade your plan at https://financialmodelingprep.com/"
+    },
+    {
+      "symbol": "AVGO",
+      "endpoint": "/ratings-snapshot",
+      "status": 402,
+      "kind": "restricted",
+      "message": "Premium Query Parameter: 'Special Endpoint : This value set for 'symbol' is not available under your current subscription please visit our subscription page to upgrade your plan at https://financialmodelingprep.com/"
+    },
+    {
       "symbol": "KLAC",
       "endpoint": "/analyst-estimates",
       "status": 402,
@@ -1196,35 +1024,35 @@
       "message": "Premium Query Parameter: 'Special Endpoint : This value set for 'symbol' is not available under your current subscription please visit our subscription page to upgrade your plan at https://financialmodelingprep.com/"
     },
     {
-      "symbol": "TER",
+      "symbol": "FLEX",
       "endpoint": "/analyst-estimates",
       "status": 402,
       "kind": "restricted",
       "message": "Premium Query Parameter: 'Special Endpoint : This value set for 'symbol' is not available under your current subscription please visit our subscription page to upgrade your plan at https://financialmodelingprep.com/"
     },
     {
-      "symbol": "TER",
+      "symbol": "FLEX",
       "endpoint": "/price-target-summary",
       "status": 402,
       "kind": "restricted",
       "message": "Premium Query Parameter: 'Special Endpoint : This value set for 'symbol' is not available under your current subscription please visit our subscription page to upgrade your plan at https://financialmodelingprep.com/"
     },
     {
-      "symbol": "TER",
+      "symbol": "FLEX",
       "endpoint": "/price-target-consensus",
       "status": 402,
       "kind": "restricted",
       "message": "Premium Query Parameter: 'Special Endpoint : This value set for 'symbol' is not available under your current subscription please visit our subscription page to upgrade your plan at https://financialmodelingprep.com/"
     },
     {
-      "symbol": "TER",
+      "symbol": "FLEX",
       "endpoint": "/earnings",
       "status": 402,
       "kind": "restricted",
       "message": "Premium Query Parameter: 'Special Endpoint : This value set for 'symbol' is not available under your current subscription please visit our subscription page to upgrade your plan at https://financialmodelingprep.com/"
     },
     {
-      "symbol": "TER",
+      "symbol": "FLEX",
       "endpoint": "/ratings-snapshot",
       "status": 402,
       "kind": "restricted",
