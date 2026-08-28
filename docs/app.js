@@ -9,7 +9,6 @@ const state = {
   opportunityStatus: "all",
   opportunityQuery: "",
   manualUpdateRequestedAt: 0,
-  lastReloadedWorkflowRunId: null,
 };
 
 const els = {
@@ -1085,46 +1084,78 @@ function archiveGeneratedTimestamp() {
     || "";
 }
 
+function archiveDeepseekTimestamp() {
+  const report = state.reports.find((item) => item && item.kind === "deepseek-cloud");
+  return (report && (report.published_at || report.published_label || report.id)) || archiveGeneratedTimestamp();
+}
+
 function archiveUpdatedToday() {
-  const generatedDay = beijingDayKey(archiveGeneratedTimestamp());
+  const generatedDay = beijingDayKey(archiveDeepseekTimestamp());
   return Boolean(generatedDay && generatedDay === beijingDayKey());
 }
 
-function latestRunStartedToday(run) {
-  return Boolean(run && beijingDayKey(run.created_at) === beijingDayKey());
+function parsedTimestamp(value) {
+  const parsed = new Date(value);
+  return Number.isNaN(parsed.getTime()) ? 0 : parsed.getTime();
+}
+
+function runIsActive(run) {
+  return Boolean(run && ["queued", "in_progress", "waiting", "pending", "requested"].includes(run.status));
+}
+
+function runStartedAfterManualRequest(run) {
+  if (!run || !state.manualUpdateRequestedAt) return false;
+  const startedAt = parsedTimestamp(run.created_at);
+  return Boolean(startedAt && startedAt >= state.manualUpdateRequestedAt - 15000);
+}
+
+function archiveIncludesManualUpdate() {
+  if (!state.manualUpdateRequestedAt) return true;
+  return parsedTimestamp(archiveDeepseekTimestamp()) >= state.manualUpdateRequestedAt;
 }
 
 function renderManualUpdateControl(run = null, message = "") {
   if (!els.manualUpdateButton || !els.manualUpdateStatus) return;
   const updatedToday = archiveUpdatedToday();
-  const runToday = latestRunStartedToday(run);
-  const running = runToday && run.status !== "completed";
-  const failed = runToday && run.status === "completed" && run.conclusion !== "success";
-  const awaitingPages = runToday && run.status === "completed" && run.conclusion === "success" && !updatedToday;
+  const requestedRunVisible = runStartedAfterManualRequest(run);
+  const waitingForRun = Boolean(state.manualUpdateRequestedAt && !archiveIncludesManualUpdate() && !requestedRunVisible);
+  const running = runIsActive(run);
+  const failed = Boolean(requestedRunVisible && run.status === "completed" && run.conclusion !== "success");
+  const awaitingPages = Boolean(
+    requestedRunVisible
+    && run.status === "completed"
+    && run.conclusion === "success"
+    && !archiveIncludesManualUpdate()
+  );
+  const busy = waitingForRun || running || awaitingPages;
   els.manualUpdateButton.classList.toggle("is-current", updatedToday && !running);
   els.manualUpdateButton.classList.toggle("is-stale", !updatedToday && !running && !failed);
-  els.manualUpdateButton.classList.toggle("is-running", running || awaitingPages);
+  els.manualUpdateButton.classList.toggle("is-running", busy);
   els.manualUpdateButton.classList.toggle("is-failed", failed);
-  els.manualUpdateButton.disabled = updatedToday || running || awaitingPages;
-  els.manualUpdateButton.setAttribute("aria-busy", running || awaitingPages ? "true" : "false");
-  els.manualUpdateButton.textContent = running
+  els.manualUpdateButton.disabled = busy;
+  els.manualUpdateButton.setAttribute("aria-busy", busy ? "true" : "false");
+  els.manualUpdateButton.textContent = waitingForRun
+    ? "等待启动"
+    : running
     ? "正在更新"
     : awaitingPages
       ? "正在部署"
       : updatedToday
-        ? "今日已更新"
+        ? "再次更新"
         : failed
           ? "重新更新"
           : "一键更新今日报告";
-  const defaultMessage = running
+  const defaultMessage = waitingForRun
+    ? "任务已提交，正在等待 GitHub 显示运行状态。"
+    : running
     ? "任务运行中；完成后本页会自动读取最新报告。"
     : awaitingPages
-      ? "今日工作流已成功，但 GitHub Pages 数据仍在同步；稍后返回本页会自动检查。"
+      ? "本次工作流已成功，GitHub Pages 数据正在同步；完成后按钮会重新开放。"
       : updatedToday
-        ? `北京时间今日已更新：${latestReportTimeLabel()}`
+        ? `最近更新：${latestReportTimeLabel()}；如需重跑可随时再次点击。`
         : failed
-          ? "今日任务未成功；可以直接重新提交，无需登录 GitHub。"
-          : "北京时间今日尚未更新；点击即可生成，无需登录 GitHub。";
+          ? "本次任务未成功；可以直接重新提交，无需登录 GitHub。"
+          : "北京时间今日尚未更新；点击即可生成，完成后仍可再次运行。";
   els.manualUpdateStatus.textContent = message || defaultMessage;
 }
 
@@ -1148,30 +1179,34 @@ async function requestManualUpdate() {
     body: JSON.stringify({ requested_at: new Date().toISOString() }),
   });
   const payload = await response.json().catch(() => ({}));
-  if (!response.ok && !["already_current", "already_running", "cooldown"].includes(payload.code)) {
+  if (!response.ok && payload.code !== "already_running") {
     throw new Error(payload.message || `更新服务 HTTP ${response.status}`);
   }
   return payload;
 }
 
 async function checkManualUpdateStatus({ reloadArchive = false } = {}) {
-  if (els.manualUpdateStatus) els.manualUpdateStatus.textContent = "正在检查今日更新状态…";
+  if (els.manualUpdateStatus) els.manualUpdateStatus.textContent = "正在检查手动更新状态…";
   try {
     const service = await fetchUpdateServiceStatus();
     const run = service.latest_run || null;
-    if (
-      (reloadArchive || service.archive_updated_today)
-      && service.archive_updated_today
-      && (!archiveUpdatedToday() || (run && state.lastReloadedWorkflowRunId !== run.id))
-    ) {
-      if (run) state.lastReloadedWorkflowRunId = run.id;
+    const serviceArchiveIsNewer = parsedTimestamp(service.archive_generated_at) > parsedTimestamp(archiveDeepseekTimestamp());
+    const completedRequestedRun = Boolean(
+      reloadArchive
+      && state.manualUpdateRequestedAt
+      && runStartedAfterManualRequest(run)
+      && run.status === "completed"
+      && run.conclusion === "success"
+    );
+    if (serviceArchiveIsNewer || completedRequestedRun) {
       await loadArchive();
     }
+    if (state.manualUpdateRequestedAt && archiveIncludesManualUpdate()) state.manualUpdateRequestedAt = 0;
     renderManualUpdateControl(run);
     if (
       run
       && run.status === "completed"
-      && (run.conclusion !== "success" || archiveUpdatedToday())
+      && (run.conclusion !== "success" || !state.manualUpdateRequestedAt)
       && manualUpdatePollTimer
     ) {
       clearInterval(manualUpdatePollTimer);
@@ -1192,7 +1227,7 @@ function startManualUpdatePolling() {
     const run = await checkManualUpdateStatus({ reloadArchive: true });
     if (
       checksRemaining <= 0
-      || (run && run.status === "completed" && (run.conclusion !== "success" || archiveUpdatedToday()))
+      || (run && run.status === "completed" && (run.conclusion !== "success" || !state.manualUpdateRequestedAt))
     ) {
       clearInterval(manualUpdatePollTimer);
       manualUpdatePollTimer = null;
@@ -1201,32 +1236,30 @@ function startManualUpdatePolling() {
 }
 
 async function handleManualUpdateClick() {
-  if (archiveUpdatedToday()) {
-    renderManualUpdateControl(null);
-    return;
-  }
   state.manualUpdateRequestedAt = Date.now();
   els.manualUpdateButton.disabled = true;
   els.manualUpdateButton.setAttribute("aria-busy", "true");
   els.manualUpdateButton.textContent = "正在提交";
-  els.manualUpdateStatus.textContent = "正在安全提交今日报告任务…";
+  els.manualUpdateStatus.textContent = "正在安全提交强制更新任务…";
   try {
     const result = await requestManualUpdate();
-    if (result.code === "already_current") {
-      await loadArchive();
-      renderManualUpdateControl(result.latest_run || null, "北京时间今日报告已经更新。 ");
+    if (result.code === "already_running") {
+      state.manualUpdateRequestedAt = 0;
+      renderManualUpdateControl(result.latest_run || null, "已有更新任务正在运行；完成后即可再次点击。 ");
+      startManualUpdatePolling();
       return;
     }
     renderManualUpdateControl(result.latest_run || null, result.message || "更新任务已提交；完成后页面会自动刷新。 ");
-    if (["accepted", "cooldown"].includes(result.code)) {
+    if (result.code === "accepted") {
       els.manualUpdateButton.disabled = true;
       els.manualUpdateButton.setAttribute("aria-busy", "true");
       els.manualUpdateButton.classList.add("is-running");
-      els.manualUpdateButton.textContent = result.code === "accepted" ? "已提交" : "等待启动";
+      els.manualUpdateButton.textContent = "已提交";
     }
     startManualUpdatePolling();
     window.setTimeout(() => checkManualUpdateStatus({ reloadArchive: true }), 5000);
   } catch (error) {
+    state.manualUpdateRequestedAt = 0;
     renderManualUpdateControl(null, `提交失败：${error.message}。请稍后再试。`);
   }
 }
