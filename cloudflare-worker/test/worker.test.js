@@ -67,6 +67,91 @@ test("allowedRequestOrigin accepts only the configured public site", () => {
   );
 });
 
+test("manual report refresh can run repeatedly on the same Beijing day and always forces generation", async () => {
+  const archiveTimestamp = new Date().toISOString();
+  const dispatchedBodies = [];
+  const originalFetch = globalThis.fetch;
+  globalThis.fetch = async (resource, options = {}) => {
+    const url = String(resource);
+    if (url.startsWith("https://ffxdz-ai.github.io/us-stock-research-dashboard/data/index.json")) {
+      return Response.json({ reports: [{ kind: "deepseek-cloud", published_at: archiveTimestamp }] });
+    }
+    if (url.includes("/actions/workflows/deepseek-daily-report.yml/runs")) {
+      return Response.json({
+        workflow_runs: [{
+          id: 100,
+          status: "completed",
+          conclusion: "success",
+          created_at: archiveTimestamp,
+          updated_at: archiveTimestamp,
+        }],
+      });
+    }
+    if (url.endsWith("/actions/workflows/deepseek-daily-report.yml/dispatches")) {
+      dispatchedBodies.push(JSON.parse(options.body));
+      return new Response(null, { status: 204 });
+    }
+    throw new Error(`Unexpected mocked request: ${url}`);
+  };
+  const env = { GITHUB_TOKEN: "test-only-token", ALLOWED_ORIGIN: "https://ffxdz-ai.github.io" };
+  const request = () => new Request("https://worker.example/trigger", {
+    method: "POST",
+    headers: { Origin: "https://ffxdz-ai.github.io", "Content-Type": "application/json" },
+    body: "{}",
+  });
+
+  try {
+    const first = await worker.fetch(request(), env);
+    const second = await worker.fetch(request(), env);
+    assert.equal(first.status, 202);
+    assert.equal(second.status, 202);
+    assert.equal(dispatchedBodies.length, 2);
+    assert.deepEqual(dispatchedBodies[0], { ref: "main", inputs: { mode: "full", force: "true" } });
+
+    const status = await worker.fetch(new Request("https://worker.example/status", {
+      headers: { Origin: "https://ffxdz-ai.github.io" },
+    }), env);
+    const payload = await status.json();
+    assert.equal(payload.archive_updated_today, true);
+    assert.equal(payload.can_trigger, true);
+    assert.equal(payload.repeat_trigger_allowed, true);
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
+
+test("manual report refresh still blocks a duplicate while a workflow is active", async () => {
+  let dispatchCount = 0;
+  const originalFetch = globalThis.fetch;
+  globalThis.fetch = async (resource) => {
+    const url = String(resource);
+    if (url.startsWith("https://ffxdz-ai.github.io/us-stock-research-dashboard/data/index.json")) {
+      return Response.json({ reports: [] });
+    }
+    if (url.includes("/actions/workflows/deepseek-daily-report.yml/runs")) {
+      return Response.json({ workflow_runs: [{ id: 101, status: "in_progress", conclusion: null }] });
+    }
+    if (url.endsWith("/actions/workflows/deepseek-daily-report.yml/dispatches")) {
+      dispatchCount += 1;
+      return new Response(null, { status: 204 });
+    }
+    throw new Error(`Unexpected mocked request: ${url}`);
+  };
+
+  try {
+    const response = await worker.fetch(new Request("https://worker.example/trigger", {
+      method: "POST",
+      headers: { Origin: "https://ffxdz-ai.github.io", "Content-Type": "application/json" },
+      body: "{}",
+    }), { GITHUB_TOKEN: "test-only-token", ALLOWED_ORIGIN: "https://ffxdz-ai.github.io" });
+    assert.equal(response.status, 409);
+    assert.equal((await response.json()).code, "already_running");
+    assert.equal(dispatchCount, 0);
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
+
 test("archive freshness follows the latest DeepSeek report, not an unrelated archive export", () => {
   const archive = {
     generated_at: "2026-08-23T10:00:00+08:00",

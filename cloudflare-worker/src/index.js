@@ -5,7 +5,6 @@ const DEFAULT_OWNER = "ffxdz-ai";
 const DEFAULT_REPO = "us-stock-research-dashboard";
 const DEFAULT_WORKFLOW = "deepseek-daily-report.yml";
 const DEFAULT_REF = "main";
-const COOLDOWN_SECONDS = 120;
 const FUTU_SNAPSHOT_KEY = "latest_futu_public_quote_snapshot";
 const FUTU_FEISHU_CONFIG_KEY = "encrypted_futu_feishu_config_v1";
 const FUTU_LIVE_ALERT_STATE_KEY = "futu_live_steady_buy_state_v1";
@@ -569,7 +568,7 @@ async function dispatchWorkflow(env) {
       ...githubHeaders(env, true),
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ ref, inputs: { mode: "full", force: "false" } }),
+    body: JSON.stringify({ ref, inputs: { mode: "full", force: "true" } }),
   });
   if (response.status !== 204 && !response.ok) {
     throw new Error(`GitHub dispatch HTTP ${response.status}`);
@@ -578,19 +577,6 @@ async function dispatchWorkflow(env) {
 
 function runIsActive(run) {
   return Boolean(run && ["queued", "in_progress", "waiting", "pending", "requested"].includes(run.status));
-}
-
-async function cooldownActive(request) {
-  if (typeof caches === "undefined" || !caches.default) return false;
-  const key = new Request(new URL("/__internal/trigger-cooldown", request.url), { method: "GET" });
-  return Boolean(await caches.default.match(key));
-}
-
-async function setCooldown(request) {
-  if (typeof caches === "undefined" || !caches.default) return;
-  const key = new Request(new URL("/__internal/trigger-cooldown", request.url), { method: "GET" });
-  const value = new Response("active", { headers: { "Cache-Control": `public, max-age=${COOLDOWN_SECONDS}` } });
-  await caches.default.put(key, value);
 }
 
 async function statusPayload(env) {
@@ -603,7 +589,8 @@ async function statusPayload(env) {
     archive_updated_today: archive.updated_today,
     archive_generated_at: archive.generated_at,
     latest_run: latestRun,
-    can_trigger: !archive.updated_today && !runIsActive(latestRun),
+    can_trigger: !runIsActive(latestRun),
+    repeat_trigger_allowed: true,
     time_zone: BEIJING_TIME_ZONE,
   };
 }
@@ -638,18 +625,11 @@ async function handleRequest(request, env) {
   if (request.method === "POST" && url.pathname === "/trigger") {
     try {
       const current = await statusPayload(env);
-      if (current.archive_updated_today) {
-        return jsonResponse({ ...current, code: "already_current", message: "北京时间今日报告已经更新。" }, 409, origin);
-      }
       if (runIsActive(current.latest_run)) {
         return jsonResponse({ ...current, code: "already_running", message: "更新任务已经在运行。" }, 409, origin);
       }
-      if (await cooldownActive(request)) {
-        return jsonResponse({ ...current, code: "cooldown", message: "刚刚已经提交更新，请稍后查看进度。" }, 429, origin);
-      }
       await dispatchWorkflow(env);
-      await setCooldown(request);
-      return jsonResponse({ ok: true, code: "accepted", message: "更新任务已提交。" }, 202, origin);
+      return jsonResponse({ ok: true, code: "accepted", message: "强制更新任务已提交；本次完成后可再次运行。" }, 202, origin);
     } catch (error) {
       console.error("workflow dispatch failed", error);
       return jsonResponse({ ok: false, code: "trigger_failed", message: "暂时无法提交更新，请稍后重试。" }, 502, origin);
