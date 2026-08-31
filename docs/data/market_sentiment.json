@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-30T12:32:47+08:00",
-  "generated_label": "2026-08-30 12:32",
+  "generated_at": "2026-08-31T12:18:45+08:00",
+  "generated_label": "2026-08-31 12:18",
   "data_boundary": "公开脱敏市场情绪层；只用于判断风险环境，不生成交易指令，不替代个股 R/R 纪律。",
   "score": 63.8,
   "status": "neutral",
@@ -37,7 +37,7 @@
       "message": "用 SPY/QQQ/DIA/IWM 涨跌幅判断当天股票风险偏好。",
       "source": "public market quote",
       "source_type": "vendor_fallback",
-      "updated_at": "Aug 27, 2026",
+      "updated_at": "Aug 28, 2026",
       "confidence": "medium"
     },
     {
@@ -53,7 +53,7 @@
       "message": "成长股和小盘股相对大盘越强，风险偏好通常越高。",
       "source": "public market quote",
       "source_type": "vendor_fallback",
-      "updated_at": "Aug 27, 2026",
+      "updated_at": "Aug 28, 2026",
       "confidence": "medium"
     },
     {
@@ -87,7 +87,7 @@
       "message": "FRED 流动性、金融条件和信用利差用于判断风险资产背景。",
       "source": "FRED",
       "source_type": "official",
-      "updated_at": "2026-08-30 12:32",
+      "updated_at": "2026-08-31 12:18",
       "confidence": "high"
     },
     {

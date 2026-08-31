@@ -21,8 +21,8 @@
     "eod_max_age_days": 4,
     "fallback_execution_allowed": false
   },
-  "generated_at": "2026-08-30T12:33:19+08:00",
-  "generated_label": "2026-08-30 12:33",
+  "generated_at": "2026-08-31T12:19:33+08:00",
+  "generated_label": "2026-08-31 12:19",
   "data_boundary": {
     "role": "opportunity discovery, not trading instruction",
     "buy_side_gate": "正式买入 R/R >= 3.0:1；试仓 R/R >= 2.5:1；同时通过 PIT、数据质量与整股约束。",
@@ -39,7 +39,7 @@
     "expectation_gap_count": 0,
     "confirming_count": 0,
     "crowded_count": 0,
-    "security_change_count": 18,
+    "security_change_count": 1,
     "secondary_candidate_count": 0,
     "completed_review_count": 0,
     "next_review_count": 5
@@ -49,7 +49,7 @@
       "id": "ai_advanced_packaging_hbm",
       "name": "GPU / ASIC / HBM / 先进封装",
       "stage": "观察跟踪",
-      "score": 65.9,
+      "score": 59.8,
       "beneficiary_layers": [
         "GPU",
         "ASIC",
@@ -70,8 +70,8 @@
           "entry_score": 77.7,
           "trend_score": 76.0,
           "crowding_score": 52.4,
-          "data_confidence": 0.48,
-          "price_freshness": "fallback_only",
+          "data_confidence": 0.21,
+          "price_freshness": "stale",
           "execution_allowed": false,
           "technical_data_complete": true,
           "future_function_audit": "BLOCK",
@@ -98,7 +98,7 @@
           "sector_rank_percentile": 50.0,
           "universe_rank": 18,
           "factor_coverage": 1.0,
-          "action": "普通观察"
+          "action": "数据不足，补行情/财报后再判断"
         },
         {
           "code": "US.AVGO",
@@ -112,8 +112,8 @@
           "entry_score": 44.2,
           "trend_score": 20.0,
           "crowding_score": 38.9,
-          "data_confidence": 0.48,
-          "price_freshness": "fallback_only",
+          "data_confidence": 0.21,
+          "price_freshness": "stale",
           "execution_allowed": false,
           "technical_data_complete": true,
           "future_function_audit": "BLOCK",
@@ -139,7 +139,7 @@
           "sector_rank_percentile": 50.0,
           "universe_rank": 19,
           "factor_coverage": 0.7,
-          "action": "普通观察"
+          "action": "数据不足，补行情/财报后再判断"
         },
         {
           "code": "US.AMD",
@@ -153,8 +153,8 @@
           "entry_score": 62.9,
           "trend_score": 50.0,
           "crowding_score": 55.2,
-          "data_confidence": 0.48,
-          "price_freshness": "fallback_only",
+          "data_confidence": 0.21,
+          "price_freshness": "stale",
           "execution_allowed": false,
           "technical_data_complete": true,
           "future_function_audit": "BLOCK",
@@ -180,7 +180,7 @@
           "sector_rank_percentile": 50.0,
           "universe_rank": 20,
           "factor_coverage": 1.0,
-          "action": "普通观察"
+          "action": "数据不足，补行情/财报后再判断"
         },
         {
           "code": "US.MRVL",
@@ -194,8 +194,8 @@
           "entry_score": 63.2,
           "trend_score": 42.0,
           "crowding_score": 49.7,
-          "data_confidence": 0.48,
-          "price_freshness": "fallback_only",
+          "data_confidence": 0.21,
+          "price_freshness": "stale",
           "execution_allowed": false,
           "technical_data_complete": true,
           "future_function_audit": "BLOCK",
@@ -221,7 +221,7 @@
           "sector_rank_percentile": 50.0,
           "universe_rank": 21,
           "factor_coverage": 0.7,
-          "action": "普通观察"
+          "action": "数据不足，补行情/财报后再判断"
         },
         {
           "code": "US.MU",
@@ -235,8 +235,8 @@
           "entry_score": 72.5,
           "trend_score": 50.0,
           "crowding_score": 49.9,
-          "data_confidence": 0.2743,
-          "price_freshness": "fallback_only",
+          "data_confidence": 0.12,
+          "price_freshness": "stale",
           "execution_allowed": false,
           "technical_data_complete": true,
           "future_function_audit": "BLOCK",
@@ -269,7 +269,7 @@
       "id": "ai_optical_cpo_networking",
       "name": "AI 光模块 / CPO / 数据中心网络",
       "stage": "观察跟踪",
-      "score": 55.1,
+      "score": 51.3,
       "beneficiary_layers": [
         "光模块",
         "CPO",
@@ -289,9 +289,9 @@
           "score": 0.0,
           "entry_score": 86.4,
           "trend_score": 76.0,
-          "crowding_score": 66.5,
-          "data_confidence": 0.48,
-          "price_freshness": "fallback_only",
+          "crowding_score": 66.4,
+          "data_confidence": 0.21,
+          "price_freshness": "stale",
           "execution_allowed": false,
           "technical_data_complete": true,
           "future_function_audit": "BLOCK",
@@ -316,7 +316,7 @@
           "sector_rank_percentile": 50.0,
           "universe_rank": 1,
           "factor_coverage": 0.7,
-          "action": "普通观察"
+          "action": "数据不足，补行情/财报后再判断"
         },
         {
           "code": "US.MRVL",
@@ -330,8 +330,8 @@
           "entry_score": 63.2,
           "trend_score": 42.0,
           "crowding_score": 49.7,
-          "data_confidence": 0.48,
-          "price_freshness": "fallback_only",
+          "data_confidence": 0.21,
+          "price_freshness": "stale",
           "execution_allowed": false,
           "technical_data_complete": true,
           "future_function_audit": "BLOCK",
@@ -357,7 +357,7 @@
           "sector_rank_percentile": 50.0,
           "universe_rank": 2,
           "factor_coverage": 0.7,
-          "action": "普通观察"
+          "action": "数据不足，补行情/财报后再判断"
         },
         {
           "code": "US.COHR",
@@ -371,8 +371,8 @@
           "entry_score": 49.1,
           "trend_score": 42.0,
           "crowding_score": 32.8,
-          "data_confidence": 0.48,
-          "price_freshness": "fallback_only",
+          "data_confidence": 0.21,
+          "price_freshness": "stale",
           "execution_allowed": false,
           "technical_data_complete": true,
           "future_function_audit": "BLOCK",
@@ -398,7 +398,7 @@
           "sector_rank_percentile": 50.0,
           "universe_rank": 3,
           "factor_coverage": 0.7,
-          "action": "普通观察"
+          "action": "数据不足，补行情/财报后再判断"
         },
         {
           "code": "US.LITE",
@@ -412,8 +412,8 @@
           "entry_score": 80.0,
           "trend_score": 76.0,
           "crowding_score": 61.8,
-          "data_confidence": 0.48,
-          "price_freshness": "fallback_only",
+          "data_confidence": 0.21,
+          "price_freshness": "stale",
           "execution_allowed": false,
           "technical_data_complete": true,
           "future_function_audit": "BLOCK",
@@ -438,7 +438,7 @@
           "sector_rank_percentile": 50.0,
           "universe_rank": 4,
           "factor_coverage": 0.7,
-          "action": "普通观察"
+          "action": "数据不足，补行情/财报后再判断"
         },
         {
           "code": "US.CIEN",
@@ -451,9 +451,9 @@
           "score": 0.0,
           "entry_score": 51.8,
           "trend_score": 42.0,
-          "crowding_score": 40.2,
-          "data_confidence": 0.48,
-          "price_freshness": "fallback_only",
+          "crowding_score": 40.1,
+          "data_confidence": 0.21,
+          "price_freshness": "stale",
           "execution_allowed": false,
           "technical_data_complete": true,
           "future_function_audit": "BLOCK",
@@ -479,7 +479,7 @@
           "sector_rank_percentile": 50.0,
           "universe_rank": 5,
           "factor_coverage": 0.7,
-          "action": "普通观察"
+          "action": "数据不足，补行情/财报后再判断"
         }
       ]
     },
@@ -487,7 +487,7 @@
       "id": "ai_pcb_ccl_materials",
       "name": "高速 PCB / 覆铜板 / 电子布 / 铜箔",
       "stage": "观察跟踪",
-      "score": 46.8,
+      "score": 45.6,
       "beneficiary_layers": [
         "高端 PCB",
         "覆铜板",
@@ -502,7 +502,7 @@
           "market": "US",
           "layer": "高端 PCB",
           "price": 118.65,
-          "quote_time": "Aug 27, 2026",
+          "quote_time": "Aug 28, 2026",
           "quote_source": "Nasdaq quote API fallback",
           "score": 0.0,
           "entry_score": null,
@@ -512,14 +512,13 @@
           "price_freshness": "fallback_only",
           "execution_allowed": false,
           "technical_data_complete": true,
-          "future_function_audit": "BLOCK",
+          "future_function_audit": "PASS",
           "gate_failures": [
             "opportunity_score_below_threshold",
             "trend_score_below_threshold",
             "crowding_score_above_threshold",
             "data_confidence_below_threshold",
             "price_freshness_not_pass",
-            "future_function_audit_failed",
             "execution_not_allowed"
           ],
           "reward_risk": 14.71,
@@ -543,7 +542,7 @@
           "market": "US",
           "layer": "电子制造",
           "price": 301.45,
-          "quote_time": "Aug 27, 2026",
+          "quote_time": "Aug 28, 2026",
           "quote_source": "Nasdaq quote API fallback",
           "score": 0.0,
           "entry_score": 60.7,
@@ -553,14 +552,13 @@
           "price_freshness": "fallback_only",
           "execution_allowed": false,
           "technical_data_complete": true,
-          "future_function_audit": "BLOCK",
+          "future_function_audit": "PASS",
           "gate_failures": [
             "opportunity_score_below_threshold",
             "trend_score_below_threshold",
             "crowding_score_above_threshold",
             "data_confidence_below_threshold",
             "price_freshness_not_pass",
-            "future_function_audit_failed",
             "execution_not_allowed"
           ],
           "reward_risk": 5.26,
@@ -590,8 +588,8 @@
           "entry_score": 60.5,
           "trend_score": 42.0,
           "crowding_score": 35.2,
-          "data_confidence": 0.48,
-          "price_freshness": "fallback_only",
+          "data_confidence": 0.21,
+          "price_freshness": "stale",
           "execution_allowed": false,
           "technical_data_complete": true,
           "future_function_audit": "BLOCK",
@@ -617,15 +615,15 @@
           "sector_rank_percentile": 50.0,
           "universe_rank": 11,
           "factor_coverage": 0.7,
-          "action": "普通观察"
+          "action": "数据不足，补行情/财报后再判断"
         },
         {
           "code": "HK.01888",
           "name": "建滔积层板",
           "market": "HK",
           "layer": "覆铜板",
-          "price": 45.16,
-          "quote_time": "2026-08-28T01:30:00+00:00",
+          "price": 45.14,
+          "quote_time": "2026-08-31T01:30:00+00:00",
           "quote_source": "Yahoo chart API cross-market fallback",
           "score": 0.0,
           "entry_score": null,
@@ -657,8 +655,8 @@
           "name": "建滔集团",
           "market": "HK",
           "layer": "覆铜板/材料",
-          "price": 52.65,
-          "quote_time": "2026-08-28T01:30:00+00:00",
+          "price": 52.35,
+          "quote_time": "2026-08-31T01:30:00+00:00",
           "quote_source": "Yahoo chart API cross-market fallback",
           "score": 0.0,
           "entry_score": null,
@@ -691,7 +689,7 @@
       "id": "physical_ai_robotics",
       "name": "Physical AI / 机器人 / 自动化",
       "stage": "观察跟踪",
-      "score": 42.2,
+      "score": 40.1,
       "beneficiary_layers": [
         "机器人",
         "工业自动化",
@@ -712,8 +710,8 @@
           "entry_score": null,
           "trend_score": 0.0,
           "crowding_score": 30.9,
-          "data_confidence": 0.48,
-          "price_freshness": "fallback_only",
+          "data_confidence": 0.21,
+          "price_freshness": "stale",
           "execution_allowed": false,
           "technical_data_complete": true,
           "future_function_audit": "BLOCK",
@@ -739,7 +737,7 @@
           "sector_rank_percentile": 50.0,
           "universe_rank": 33,
           "factor_coverage": 0.7,
-          "action": "普通观察"
+          "action": "数据不足，补行情/财报后再判断"
         },
         {
           "code": "US.ROK",
@@ -753,8 +751,8 @@
           "entry_score": 66.4,
           "trend_score": 51.1,
           "crowding_score": 47.3,
-          "data_confidence": 0.2743,
-          "price_freshness": "fallback_only",
+          "data_confidence": 0.12,
+          "price_freshness": "stale",
           "execution_allowed": false,
           "technical_data_complete": true,
           "future_function_audit": "BLOCK",
@@ -796,8 +794,8 @@
           "entry_score": null,
           "trend_score": 0.0,
           "crowding_score": 13.9,
-          "data_confidence": 0.2743,
-          "price_freshness": "fallback_only",
+          "data_confidence": 0.12,
+          "price_freshness": "stale",
           "execution_allowed": false,
           "technical_data_complete": true,
           "future_function_audit": "BLOCK",
@@ -831,7 +829,7 @@
           "market": "US",
           "layer": "仓储机器人",
           "price": 39.875,
-          "quote_time": "Aug 27, 2026",
+          "quote_time": "Aug 28, 2026",
           "quote_source": "Nasdaq quote API fallback",
           "score": 0.0,
           "entry_score": null,
@@ -841,14 +839,13 @@
           "price_freshness": "fallback_only",
           "execution_allowed": false,
           "technical_data_complete": true,
-          "future_function_audit": "BLOCK",
+          "future_function_audit": "PASS",
           "gate_failures": [
             "opportunity_score_below_threshold",
             "trend_score_below_threshold",
             "crowding_score_above_threshold",
             "data_confidence_below_threshold",
             "price_freshness_not_pass",
-            "future_function_audit_failed",
             "execution_not_allowed"
           ],
           "reward_risk": 16.19,
@@ -878,8 +875,8 @@
           "entry_score": null,
           "trend_score": 0.0,
           "crowding_score": 48.0,
-          "data_confidence": 0.2743,
-          "price_freshness": "fallback_only",
+          "data_confidence": 0.12,
+          "price_freshness": "stale",
           "execution_allowed": false,
           "technical_data_complete": true,
           "future_function_audit": "BLOCK",
@@ -913,7 +910,7 @@
       "id": "ai_datacenter_power_cooling",
       "name": "AI 数据中心电力 / 液冷 / 配电",
       "stage": "观察跟踪",
-      "score": 40.7,
+      "score": 38.1,
       "beneficiary_layers": [
         "配电",
         "UPS",
@@ -934,8 +931,8 @@
           "entry_score": 60.3,
           "trend_score": 42.0,
           "crowding_score": 34.8,
-          "data_confidence": 0.2743,
-          "price_freshness": "fallback_only",
+          "data_confidence": 0.12,
+          "price_freshness": "stale",
           "execution_allowed": false,
           "technical_data_complete": true,
           "future_function_audit": "BLOCK",
@@ -975,8 +972,8 @@
           "entry_score": 67.5,
           "trend_score": 50.0,
           "crowding_score": 46.4,
-          "data_confidence": 0.2743,
-          "price_freshness": "fallback_only",
+          "data_confidence": 0.12,
+          "price_freshness": "stale",
           "execution_allowed": false,
           "technical_data_complete": true,
           "future_function_audit": "BLOCK",
@@ -1016,8 +1013,8 @@
           "entry_score": 61.6,
           "trend_score": 50.0,
           "crowding_score": 44.0,
-          "data_confidence": 0.2743,
-          "price_freshness": "fallback_only",
+          "data_confidence": 0.12,
+          "price_freshness": "stale",
           "execution_allowed": false,
           "technical_data_complete": true,
           "future_function_audit": "BLOCK",
@@ -1057,8 +1054,8 @@
           "entry_score": 80.9,
           "trend_score": 88.0,
           "crowding_score": 53.2,
-          "data_confidence": 0.2743,
-          "price_freshness": "fallback_only",
+          "data_confidence": 0.12,
+          "price_freshness": "stale",
           "execution_allowed": false,
           "technical_data_complete": true,
           "future_function_audit": "BLOCK",
@@ -1099,8 +1096,8 @@
           "entry_score": 74.5,
           "trend_score": 76.0,
           "crowding_score": 51.6,
-          "data_confidence": 0.2743,
-          "price_freshness": "fallback_only",
+          "data_confidence": 0.12,
+          "price_freshness": "stale",
           "execution_allowed": false,
           "technical_data_complete": true,
           "future_function_audit": "BLOCK",
@@ -1138,21 +1135,21 @@
       "name": "GPU / ASIC / HBM / 先进封装",
       "horizon": "3-12个月",
       "stage": "观察跟踪",
-      "expectation_gap_score": 65.9,
+      "expectation_gap_score": 59.8,
       "score_components": {
         "base_score": 85.0,
-        "dynamic_center": 55.6,
+        "dynamic_center": 46.2,
         "dynamic_coverage": 1.0,
         "coverage_multiplier": 1.0,
         "earnings_leverage": 87.0,
-        "earnings_revision": 75.5,
+        "earnings_revision": 53.1,
         "market_underpricing": 51.7,
         "price_breadth": 20.0,
-        "data_confidence": 43.9,
+        "data_confidence": 19.2,
         "crowding_score": 49.2,
         "crowding_penalty": 0.0,
-        "final_theme_score": 65.9,
-        "expectation_gap_score": 65.9
+        "final_theme_score": 59.8,
+        "expectation_gap_score": 59.8
       },
       "thesis": "训练和推理需求首先兑现到 GPU、ASIC、HBM、先进制程和 CoWoS/先进封装；但龙头可能已被充分定价，系统重点识别估值、利润兑现和拥挤度的错配。",
       "leading_indicators": [
@@ -1182,96 +1179,11 @@
         "先进封装"
       ],
       "top_evidence": [
-        "US.NVDA：机会分 0.0，普通观察",
-        "US.AVGO：机会分 0.0，普通观察",
-        "US.AMD：机会分 0.0，普通观察"
+        "US.NVDA：机会分 0.0，数据不足，补行情/财报后再判断",
+        "US.AVGO：机会分 0.0，数据不足，补行情/财报后再判断",
+        "US.AMD：机会分 0.0，数据不足，补行情/财报后再判断"
       ],
-      "changes": [
-        {
-          "type": "metric_change",
-          "code": "US.NVDA",
-          "name": "NVIDIA",
-          "detected_at": "2026-08-30T12:33:19+08:00",
-          "metric": "opportunity_score",
-          "label": "个股机会分",
-          "previous": 75.1,
-          "current": 0.0,
-          "change_pct": -100.0,
-          "note": "个股机会分变化超过阈值，需确认是机会扩大、逻辑兑现还是风险暴露。"
-        },
-        {
-          "type": "metric_change",
-          "code": "US.AVGO",
-          "name": "Broadcom",
-          "detected_at": "2026-08-30T12:33:19+08:00",
-          "metric": "opportunity_score",
-          "label": "个股机会分",
-          "previous": 72.8,
-          "current": 0.0,
-          "change_pct": -100.0,
-          "note": "个股机会分变化超过阈值，需确认是机会扩大、逻辑兑现还是风险暴露。"
-        },
-        {
-          "type": "metric_change",
-          "code": "US.AVGO",
-          "name": "Broadcom",
-          "detected_at": "2026-08-30T12:33:19+08:00",
-          "metric": "trend_score",
-          "label": "趋势确认",
-          "previous": 50.0,
-          "current": 20.0,
-          "change_pct": -60.0,
-          "note": "趋势确认变化超过阈值，需确认是机会扩大、逻辑兑现还是风险暴露。"
-        },
-        {
-          "type": "metric_change",
-          "code": "US.AMD",
-          "name": "AMD",
-          "detected_at": "2026-08-30T12:33:19+08:00",
-          "metric": "opportunity_score",
-          "label": "个股机会分",
-          "previous": 61.8,
-          "current": 0.0,
-          "change_pct": -100.0,
-          "note": "个股机会分变化超过阈值，需确认是机会扩大、逻辑兑现还是风险暴露。"
-        },
-        {
-          "type": "metric_change",
-          "code": "US.MRVL",
-          "name": "Marvell",
-          "detected_at": "2026-08-30T12:33:19+08:00",
-          "metric": "opportunity_score",
-          "label": "个股机会分",
-          "previous": 73.6,
-          "current": 0.0,
-          "change_pct": -100.0,
-          "note": "个股机会分变化超过阈值，需确认是机会扩大、逻辑兑现还是风险暴露。"
-        },
-        {
-          "type": "metric_change",
-          "code": "US.TSM",
-          "name": "TSMC ADR",
-          "detected_at": "2026-08-30T12:33:19+08:00",
-          "metric": "opportunity_score",
-          "label": "个股机会分",
-          "previous": 66.9,
-          "current": 0.0,
-          "change_pct": -100.0,
-          "note": "个股机会分变化超过阈值，需确认是机会扩大、逻辑兑现还是风险暴露。"
-        },
-        {
-          "type": "metric_change",
-          "code": "US.TSM",
-          "name": "TSMC ADR",
-          "detected_at": "2026-08-30T12:33:19+08:00",
-          "metric": "trend_score",
-          "label": "趋势确认",
-          "previous": 76.0,
-          "current": 50.0,
-          "change_pct": -34.21,
-          "note": "趋势确认变化超过阈值，需确认是机会扩大、逻辑兑现还是风险暴露。"
-        }
-      ],
+      "changes": [],
       "securities": [
         {
           "code": "US.NVDA",
@@ -1299,15 +1211,15 @@
           "valuation_gap_score": 62.0,
           "earnings_leverage_score": 100.0,
           "underpricing_score": 60.5,
-          "data_confidence_score": 48.0,
+          "data_confidence_score": 21.0,
           "crowding_score": 52.4,
-          "earnings_revision_score": 100.0,
+          "earnings_revision_score": 56.2,
           "earnings_revision_detail": {
             "status": "available",
             "metrics": {
               "fy1_eps_30d": null,
               "fy1_eps_90d": null,
-              "revenue": 26.0269,
+              "revenue": 1.5401,
               "next_quarter_eps": null,
               "next_quarter_revenue": null,
               "positive_minus_negative": null,
@@ -1329,16 +1241,16 @@
             "factors": {
               "quality": 80.7,
               "growth": 100.0,
-              "earnings_revision": 100.0,
+              "earnings_revision": 56.2,
               "valuation": 92.8,
               "momentum": 89.3,
               "catalyst": 68.7,
               "crowding": 47.6,
-              "data_quality": 48.0
+              "data_quality": 21.0
             },
             "factor_coverage": 1.0,
             "missing_factors": [],
-            "raw_alpha_score": 86.1,
+            "raw_alpha_score": 76.0,
             "confidence_multiplier": 0.0,
             "opportunity_score": 0.0,
             "valuation_detail": {
@@ -1352,11 +1264,11 @@
           },
           "opportunity_score": 0.0,
           "entry_score": 77.7,
-          "alpha_score": 86.1,
+          "alpha_score": 76.0,
           "factor_coverage": 1.0,
           "missing_factors": [],
-          "data_confidence": 0.48,
-          "price_freshness": "fallback_only",
+          "data_confidence": 0.21,
+          "price_freshness": "stale",
           "execution_allowed": false,
           "technical_data_complete": true,
           "future_function_audit": "BLOCK",
@@ -1370,7 +1282,7 @@
             "execution_not_allowed",
             "valid_path_false"
           ],
-          "action": "普通观察",
+          "action": "数据不足，补行情/财报后再判断",
           "factor_percentiles": {
             "quality": 89.3,
             "growth": 85.7,
@@ -1379,7 +1291,7 @@
             "momentum": 93.2,
             "catalyst": 50.0,
             "crowding": 18.8,
-            "data_quality": 70.8
+            "data_quality": 64.6
           },
           "alpha_percentile": 50.0,
           "sector_rank_percentile": 50.0,
@@ -1411,7 +1323,7 @@
           "valuation_gap_score": 58.4,
           "earnings_leverage_score": 81.7,
           "underpricing_score": 51.5,
-          "data_confidence_score": 48.0,
+          "data_confidence_score": 21.0,
           "crowding_score": 38.9,
           "earnings_revision_score": null,
           "earnings_revision_detail": {
@@ -1446,14 +1358,14 @@
               "momentum": 4.7,
               "catalyst": null,
               "crowding": 61.1,
-              "data_quality": 48.0
+              "data_quality": 21.0
             },
             "factor_coverage": 0.7,
             "missing_factors": [
               "earnings_revision",
               "catalyst"
             ],
-            "raw_alpha_score": 60.7,
+            "raw_alpha_score": 58.8,
             "confidence_multiplier": 0.0,
             "opportunity_score": 0.0,
             "valuation_detail": {
@@ -1467,14 +1379,14 @@
           },
           "opportunity_score": 0.0,
           "entry_score": 44.2,
-          "alpha_score": 60.7,
+          "alpha_score": 58.8,
           "factor_coverage": 0.7,
           "missing_factors": [
             "earnings_revision",
             "catalyst"
           ],
-          "data_confidence": 0.48,
-          "price_freshness": "fallback_only",
+          "data_confidence": 0.21,
+          "price_freshness": "stale",
           "execution_allowed": false,
           "technical_data_complete": true,
           "future_function_audit": "BLOCK",
@@ -1487,7 +1399,7 @@
             "future_function_audit_failed",
             "execution_not_allowed"
           ],
-          "action": "普通观察",
+          "action": "数据不足，补行情/财报后再判断",
           "factor_percentiles": {
             "quality": 60.7,
             "growth": 46.4,
@@ -1496,7 +1408,7 @@
             "momentum": 12.2,
             "catalyst": null,
             "crowding": 64.6,
-            "data_quality": 70.8
+            "data_quality": 64.6
           },
           "alpha_percentile": 50.0,
           "sector_rank_percentile": 50.0,
@@ -1528,15 +1440,15 @@
           "valuation_gap_score": 39.6,
           "earnings_leverage_score": 75.1,
           "underpricing_score": 43.2,
-          "data_confidence_score": 48.0,
+          "data_confidence_score": 21.0,
           "crowding_score": 55.2,
-          "earnings_revision_score": 51.0,
+          "earnings_revision_score": 50.0,
           "earnings_revision_detail": {
             "status": "available",
             "metrics": {
               "fy1_eps_30d": null,
               "fy1_eps_90d": null,
-              "revenue": 0.2523,
+              "revenue": 0.0,
               "next_quarter_eps": null,
               "next_quarter_revenue": null,
               "positive_minus_negative": null,
@@ -1558,16 +1470,16 @@
             "factors": {
               "quality": 71.9,
               "growth": 98.1,
-              "earnings_revision": 51.0,
+              "earnings_revision": 50.0,
               "valuation": 41.4,
               "momentum": 49.5,
               "catalyst": 57.4,
               "crowding": 44.8,
-              "data_quality": 48.0
+              "data_quality": 21.0
             },
             "factor_coverage": 1.0,
             "missing_factors": [],
-            "raw_alpha_score": 59.7,
+            "raw_alpha_score": 58.2,
             "confidence_multiplier": 0.0,
             "opportunity_score": 0.0,
             "valuation_detail": {
@@ -1581,11 +1493,11 @@
           },
           "opportunity_score": 0.0,
           "entry_score": 62.9,
-          "alpha_score": 59.7,
+          "alpha_score": 58.2,
           "factor_coverage": 1.0,
           "missing_factors": [],
-          "data_confidence": 0.48,
-          "price_freshness": "fallback_only",
+          "data_confidence": 0.21,
+          "price_freshness": "stale",
           "execution_allowed": false,
           "technical_data_complete": true,
           "future_function_audit": "BLOCK",
@@ -1598,16 +1510,16 @@
             "future_function_audit_failed",
             "execution_not_allowed"
           ],
-          "action": "普通观察",
+          "action": "数据不足，补行情/财报后再判断",
           "factor_percentiles": {
             "quality": 53.6,
             "growth": 67.9,
-            "earnings_revision": 50.0,
+            "earnings_revision": 33.3,
             "valuation": 27.1,
             "momentum": 60.8,
             "catalyst": 16.7,
             "crowding": 10.4,
-            "data_quality": 70.8
+            "data_quality": 64.6
           },
           "alpha_percentile": 50.0,
           "sector_rank_percentile": 50.0,
@@ -1639,7 +1551,7 @@
           "valuation_gap_score": 36.3,
           "earnings_leverage_score": 91.0,
           "underpricing_score": 41.6,
-          "data_confidence_score": 48.0,
+          "data_confidence_score": 21.0,
           "crowding_score": 49.7,
           "earnings_revision_score": null,
           "earnings_revision_detail": {
@@ -1674,14 +1586,14 @@
               "momentum": 59.2,
               "catalyst": null,
               "crowding": 50.3,
-              "data_quality": 48.0
+              "data_quality": 21.0
             },
             "factor_coverage": 0.7,
             "missing_factors": [
               "earnings_revision",
               "catalyst"
             ],
-            "raw_alpha_score": 70.4,
+            "raw_alpha_score": 68.5,
             "confidence_multiplier": 0.0,
             "opportunity_score": 0.0,
             "valuation_detail": {
@@ -1695,14 +1607,14 @@
           },
           "opportunity_score": 0.0,
           "entry_score": 63.2,
-          "alpha_score": 70.4,
+          "alpha_score": 68.5,
           "factor_coverage": 0.7,
           "missing_factors": [
             "earnings_revision",
             "catalyst"
           ],
-          "data_confidence": 0.48,
-          "price_freshness": "fallback_only",
+          "data_confidence": 0.21,
+          "price_freshness": "stale",
           "execution_allowed": false,
           "technical_data_complete": true,
           "future_function_audit": "BLOCK",
@@ -1715,7 +1627,7 @@
             "future_function_audit_failed",
             "execution_not_allowed"
           ],
-          "action": "普通观察",
+          "action": "数据不足，补行情/财报后再判断",
           "factor_percentiles": {
             "quality": 78.6,
             "growth": 85.7,
@@ -1724,7 +1636,7 @@
             "momentum": 70.3,
             "catalyst": null,
             "crowding": 33.3,
-            "data_quality": 70.8
+            "data_quality": 64.6
           },
           "alpha_percentile": 50.0,
           "sector_rank_percentile": 50.0,
@@ -1756,7 +1668,7 @@
           "valuation_gap_score": 73.0,
           "earnings_leverage_score": null,
           "underpricing_score": 61.5,
-          "data_confidence_score": 27.4,
+          "data_confidence_score": 12.0,
           "crowding_score": 49.9,
           "earnings_revision_score": null,
           "earnings_revision_detail": {
@@ -1787,7 +1699,7 @@
               "momentum": 70.4,
               "catalyst": null,
               "crowding": 50.1,
-              "data_quality": 27.4
+              "data_quality": 12.0
             },
             "factor_coverage": 0.4,
             "missing_factors": [
@@ -1796,7 +1708,7 @@
               "earnings_revision",
               "catalyst"
             ],
-            "raw_alpha_score": 73.6,
+            "raw_alpha_score": 71.7,
             "confidence_multiplier": 0.0,
             "opportunity_score": 0.0,
             "valuation_detail": {
@@ -1810,7 +1722,7 @@
           },
           "opportunity_score": 0.0,
           "entry_score": 72.5,
-          "alpha_score": 73.6,
+          "alpha_score": 71.7,
           "factor_coverage": 0.4,
           "missing_factors": [
             "quality",
@@ -1818,8 +1730,8 @@
             "earnings_revision",
             "catalyst"
           ],
-          "data_confidence": 0.2743,
-          "price_freshness": "fallback_only",
+          "data_confidence": 0.12,
+          "price_freshness": "stale",
           "execution_allowed": false,
           "technical_data_complete": true,
           "future_function_audit": "BLOCK",
@@ -1837,7 +1749,7 @@
             "growth": null,
             "earnings_revision": null,
             "valuation": 97.9,
-            "momentum": 77.0,
+            "momentum": 79.7,
             "catalyst": null,
             "crowding": 27.1,
             "data_quality": 18.8
@@ -1872,15 +1784,15 @@
           "valuation_gap_score": 59.2,
           "earnings_leverage_score": null,
           "underpricing_score": 54.9,
-          "data_confidence_score": 41.1,
+          "data_confidence_score": 18.0,
           "crowding_score": 49.0,
-          "earnings_revision_score": 49.7,
+          "earnings_revision_score": 50.0,
           "earnings_revision_detail": {
             "status": "available",
             "metrics": {
               "fy1_eps_30d": null,
               "fy1_eps_90d": null,
-              "revenue": -0.0669,
+              "revenue": 0.0,
               "next_quarter_eps": null,
               "next_quarter_revenue": null,
               "positive_minus_negative": null,
@@ -1902,19 +1814,19 @@
             "factors": {
               "quality": null,
               "growth": null,
-              "earnings_revision": 49.7,
+              "earnings_revision": 50.0,
               "valuation": 86.3,
               "momentum": 62.7,
               "catalyst": 84.1,
               "crowding": 51.0,
-              "data_quality": 41.1
+              "data_quality": 18.0
             },
             "factor_coverage": 0.7,
             "missing_factors": [
               "quality",
               "growth"
             ],
-            "raw_alpha_score": 64.7,
+            "raw_alpha_score": 63.2,
             "confidence_multiplier": 0.0,
             "opportunity_score": 0.0,
             "valuation_detail": {
@@ -1928,14 +1840,14 @@
           },
           "opportunity_score": 0.0,
           "entry_score": 72.5,
-          "alpha_score": 64.7,
+          "alpha_score": 63.2,
           "factor_coverage": 0.7,
           "missing_factors": [
             "quality",
             "growth"
           ],
-          "data_confidence": 0.4114,
-          "price_freshness": "fallback_only",
+          "data_confidence": 0.18,
+          "price_freshness": "stale",
           "execution_allowed": false,
           "technical_data_complete": true,
           "future_function_audit": "BLOCK",
@@ -1954,7 +1866,7 @@
           "factor_percentiles": {
             "quality": null,
             "growth": null,
-            "earnings_revision": 16.7,
+            "earnings_revision": 33.3,
             "valuation": 89.6,
             "momentum": 74.3,
             "catalyst": 83.3,
@@ -1972,8 +1884,8 @@
           "name": "华虹半导体",
           "layer": "特色工艺",
           "role": "中国半导体制造映射",
-          "price": 120.6,
-          "quote_time": "2026-08-28T01:30:00+00:00",
+          "price": 119.9,
+          "quote_time": "2026-08-31T01:30:00+00:00",
           "quote_source": "Yahoo chart API cross-market fallback",
           "valuation_pe": null,
           "valuation_pe_source": null,
@@ -2084,8 +1996,8 @@
           "name": "中芯国际",
           "layer": "晶圆代工",
           "role": "中国晶圆代工映射",
-          "price": 70.15,
-          "quote_time": "2026-08-28T01:30:00+00:00",
+          "price": 69.05,
+          "quote_time": "2026-08-31T01:30:00+00:00",
           "quote_source": "Yahoo chart API cross-market fallback",
           "valuation_pe": null,
           "valuation_pe_source": null,
@@ -2180,7 +2092,7 @@
             "growth": null,
             "earnings_revision": null,
             "valuation": null,
-            "momentum": 25.7,
+            "momentum": 23.0,
             "catalyst": null,
             "crowding": null,
             "data_quality": null
@@ -2196,21 +2108,21 @@
       "name": "AI 光模块 / CPO / 数据中心网络",
       "horizon": "3-12个月",
       "stage": "观察跟踪",
-      "expectation_gap_score": 55.1,
+      "expectation_gap_score": 51.3,
       "score_components": {
         "base_score": 83.0,
-        "dynamic_center": 51.7,
+        "dynamic_center": 45.0,
         "dynamic_coverage": 0.8,
         "coverage_multiplier": 0.88,
         "earnings_leverage": 78.3,
         "earnings_revision": null,
-        "market_underpricing": 40.6,
+        "market_underpricing": 40.7,
         "price_breadth": 40.0,
-        "data_confidence": 48.0,
+        "data_confidence": 21.0,
         "crowding_score": 50.2,
         "crowding_penalty": 0.0,
-        "final_theme_score": 55.1,
-        "expectation_gap_score": 55.1
+        "final_theme_score": 51.3,
+        "expectation_gap_score": 51.3
       },
       "thesis": "AI 集群从单卡算力扩展到网络互连瓶颈，800G、1.6T、硅光、CPO 和交换机升级会把需求向光器件、DSP、交换机和上游材料扩散。",
       "leading_indicators": [
@@ -2240,72 +2152,11 @@
         "交换机"
       ],
       "top_evidence": [
-        "US.ANET：机会分 0.0，普通观察",
-        "US.MRVL：机会分 0.0，普通观察",
-        "US.COHR：机会分 0.0，普通观察"
+        "US.ANET：机会分 0.0，数据不足，补行情/财报后再判断",
+        "US.MRVL：机会分 0.0，数据不足，补行情/财报后再判断",
+        "US.COHR：机会分 0.0，数据不足，补行情/财报后再判断"
       ],
-      "changes": [
-        {
-          "type": "metric_change",
-          "code": "US.ANET",
-          "name": "Arista Networks",
-          "detected_at": "2026-08-30T12:33:19+08:00",
-          "metric": "opportunity_score",
-          "label": "个股机会分",
-          "previous": 65.8,
-          "current": 0.0,
-          "change_pct": -100.0,
-          "note": "个股机会分变化超过阈值，需确认是机会扩大、逻辑兑现还是风险暴露。"
-        },
-        {
-          "type": "metric_change",
-          "code": "US.MRVL",
-          "name": "Marvell",
-          "detected_at": "2026-08-30T12:33:19+08:00",
-          "metric": "opportunity_score",
-          "label": "个股机会分",
-          "previous": 73.6,
-          "current": 0.0,
-          "change_pct": -100.0,
-          "note": "个股机会分变化超过阈值，需确认是机会扩大、逻辑兑现还是风险暴露。"
-        },
-        {
-          "type": "metric_change",
-          "code": "US.COHR",
-          "name": "Coherent",
-          "detected_at": "2026-08-30T12:33:19+08:00",
-          "metric": "opportunity_score",
-          "label": "个股机会分",
-          "previous": 55.2,
-          "current": 0.0,
-          "change_pct": -100.0,
-          "note": "个股机会分变化超过阈值，需确认是机会扩大、逻辑兑现还是风险暴露。"
-        },
-        {
-          "type": "metric_change",
-          "code": "US.LITE",
-          "name": "Lumentum",
-          "detected_at": "2026-08-30T12:33:19+08:00",
-          "metric": "opportunity_score",
-          "label": "个股机会分",
-          "previous": 65.0,
-          "current": 0.0,
-          "change_pct": -100.0,
-          "note": "个股机会分变化超过阈值，需确认是机会扩大、逻辑兑现还是风险暴露。"
-        },
-        {
-          "type": "metric_change",
-          "code": "US.CIEN",
-          "name": "Ciena",
-          "detected_at": "2026-08-30T12:33:19+08:00",
-          "metric": "opportunity_score",
-          "label": "个股机会分",
-          "previous": 42.9,
-          "current": 0.0,
-          "change_pct": -100.0,
-          "note": "个股机会分变化超过阈值，需确认是机会扩大、逻辑兑现还是风险暴露。"
-        }
-      ],
+      "changes": [],
       "securities": [
         {
           "code": "US.ANET",
@@ -2317,7 +2168,7 @@
           "price": 195.38,
           "quote_time": "Aug 27, 2026",
           "quote_source": "Nasdaq quote API fallback",
-          "valuation_pe": 47.709668071718525,
+          "valuation_pe": 47.576955201492225,
           "valuation_pe_source": "Finnhub forwardPE",
           "reward_risk": 4.98,
           "starter_entry": 196.36,
@@ -2330,11 +2181,11 @@
           "breakout_reward_risk": null,
           "buyable_now": false,
           "trend_score": 76.0,
-          "valuation_gap_score": 22.3,
+          "valuation_gap_score": 22.6,
           "earnings_leverage_score": 87.0,
-          "underpricing_score": 36.4,
-          "data_confidence_score": 48.0,
-          "crowding_score": 66.5,
+          "underpricing_score": 36.6,
+          "data_confidence_score": 21.0,
+          "crowding_score": 66.4,
           "earnings_revision_score": null,
           "earnings_revision_detail": {
             "status": "missing",
@@ -2364,24 +2215,24 @@
               "quality": 78.3,
               "growth": 90.0,
               "earnings_revision": null,
-              "valuation": 17.6,
+              "valuation": 17.8,
               "momentum": 100.0,
               "catalyst": null,
-              "crowding": 33.5,
-              "data_quality": 48.0
+              "crowding": 33.6,
+              "data_quality": 21.0
             },
             "factor_coverage": 0.7,
             "missing_factors": [
               "earnings_revision",
               "catalyst"
             ],
-            "raw_alpha_score": 67.1,
+            "raw_alpha_score": 65.2,
             "confidence_multiplier": 0.0,
             "opportunity_score": 0.0,
             "valuation_detail": {
               "company_type": "industrial",
               "metrics": {
-                "forward_pe": 47.709668071718525,
+                "forward_pe": 47.576955201492225,
                 "price_sales": 24.3635
               },
               "method": "industrial_forward_pe"
@@ -2389,14 +2240,14 @@
           },
           "opportunity_score": 0.0,
           "entry_score": 86.4,
-          "alpha_score": 67.1,
+          "alpha_score": 65.2,
           "factor_coverage": 0.7,
           "missing_factors": [
             "earnings_revision",
             "catalyst"
           ],
-          "data_confidence": 0.48,
-          "price_freshness": "fallback_only",
+          "data_confidence": 0.21,
+          "price_freshness": "stale",
           "execution_allowed": false,
           "technical_data_complete": true,
           "future_function_audit": "BLOCK",
@@ -2408,7 +2259,7 @@
             "future_function_audit_failed",
             "execution_not_allowed"
           ],
-          "action": "普通观察",
+          "action": "数据不足，补行情/财报后再判断",
           "factor_percentiles": {
             "quality": 67.9,
             "growth": 60.7,
@@ -2417,7 +2268,7 @@
             "momentum": 97.3,
             "catalyst": null,
             "crowding": 2.1,
-            "data_quality": 70.8
+            "data_quality": 64.6
           },
           "alpha_percentile": 50.0,
           "sector_rank_percentile": 50.0,
@@ -2449,7 +2300,7 @@
           "valuation_gap_score": 36.3,
           "earnings_leverage_score": 91.0,
           "underpricing_score": 41.6,
-          "data_confidence_score": 48.0,
+          "data_confidence_score": 21.0,
           "crowding_score": 49.7,
           "earnings_revision_score": null,
           "earnings_revision_detail": {
@@ -2484,14 +2335,14 @@
               "momentum": 59.2,
               "catalyst": null,
               "crowding": 50.3,
-              "data_quality": 48.0
+              "data_quality": 21.0
             },
             "factor_coverage": 0.7,
             "missing_factors": [
               "earnings_revision",
               "catalyst"
             ],
-            "raw_alpha_score": 70.4,
+            "raw_alpha_score": 68.5,
             "confidence_multiplier": 0.0,
             "opportunity_score": 0.0,
             "valuation_detail": {
@@ -2505,14 +2356,14 @@
           },
           "opportunity_score": 0.0,
           "entry_score": 63.2,
-          "alpha_score": 70.4,
+          "alpha_score": 68.5,
           "factor_coverage": 0.7,
           "missing_factors": [
             "earnings_revision",
             "catalyst"
           ],
-          "data_confidence": 0.48,
-          "price_freshness": "fallback_only",
+          "data_confidence": 0.21,
+          "price_freshness": "stale",
           "execution_allowed": false,
           "technical_data_complete": true,
           "future_function_audit": "BLOCK",
@@ -2525,7 +2376,7 @@
             "future_function_audit_failed",
             "execution_not_allowed"
           ],
-          "action": "普通观察",
+          "action": "数据不足，补行情/财报后再判断",
           "factor_percentiles": {
             "quality": 78.6,
             "growth": 85.7,
@@ -2534,7 +2385,7 @@
             "momentum": 70.3,
             "catalyst": null,
             "crowding": 33.3,
-            "data_quality": 70.8
+            "data_quality": 64.6
           },
           "alpha_percentile": 50.0,
           "sector_rank_percentile": 50.0,
@@ -2550,7 +2401,7 @@
           "price": 279.2,
           "quote_time": "Aug 27, 2026",
           "quote_source": "Nasdaq quote API fallback",
-          "valuation_pe": 29.736658136467433,
+          "valuation_pe": 29.58671115835471,
           "valuation_pe_source": "Finnhub forwardPE",
           "reward_risk": 11.42,
           "starter_entry": 280.6,
@@ -2563,10 +2414,10 @@
           "breakout_reward_risk": 2.49,
           "buyable_now": false,
           "trend_score": 42.0,
-          "valuation_gap_score": 43.3,
+          "valuation_gap_score": 43.6,
           "earnings_leverage_score": 67.7,
-          "underpricing_score": 50.2,
-          "data_confidence_score": 48.0,
+          "underpricing_score": 50.4,
+          "data_confidence_score": 21.0,
           "crowding_score": 32.8,
           "earnings_revision_score": null,
           "earnings_revision_detail": {
@@ -2597,24 +2448,24 @@
               "quality": 48.7,
               "growth": 81.5,
               "earnings_revision": null,
-              "valuation": 53.5,
+              "valuation": 53.8,
               "momentum": 31.4,
               "catalyst": null,
               "crowding": 67.2,
-              "data_quality": 48.0
+              "data_quality": 21.0
             },
             "factor_coverage": 0.7,
             "missing_factors": [
               "earnings_revision",
               "catalyst"
             ],
-            "raw_alpha_score": 54.3,
+            "raw_alpha_score": 52.5,
             "confidence_multiplier": 0.0,
             "opportunity_score": 0.0,
             "valuation_detail": {
               "company_type": "industrial",
               "metrics": {
-                "forward_pe": 29.736658136467433,
+                "forward_pe": 29.58671115835471,
                 "price_sales": 8.9938
               },
               "method": "industrial_forward_pe"
@@ -2622,14 +2473,14 @@
           },
           "opportunity_score": 0.0,
           "entry_score": 49.1,
-          "alpha_score": 54.3,
+          "alpha_score": 52.5,
           "factor_coverage": 0.7,
           "missing_factors": [
             "earnings_revision",
             "catalyst"
           ],
-          "data_confidence": 0.48,
-          "price_freshness": "fallback_only",
+          "data_confidence": 0.21,
+          "price_freshness": "stale",
           "execution_allowed": false,
           "technical_data_complete": true,
           "future_function_audit": "BLOCK",
@@ -2642,16 +2493,16 @@
             "future_function_audit_failed",
             "execution_not_allowed"
           ],
-          "action": "普通观察",
+          "action": "数据不足，补行情/财报后再判断",
           "factor_percentiles": {
             "quality": 25.0,
             "growth": 39.3,
             "earnings_revision": null,
             "valuation": 31.2,
-            "momentum": 31.1,
+            "momentum": 28.4,
             "catalyst": null,
             "crowding": 81.2,
-            "data_quality": 70.8
+            "data_quality": 64.6
           },
           "alpha_percentile": 50.0,
           "sector_rank_percentile": 50.0,
@@ -2683,7 +2534,7 @@
           "valuation_gap_score": 33.2,
           "earnings_leverage_score": 78.1,
           "underpricing_score": 43.3,
-          "data_confidence_score": 48.0,
+          "data_confidence_score": 21.0,
           "crowding_score": 61.8,
           "earnings_revision_score": null,
           "earnings_revision_detail": {
@@ -2718,14 +2569,14 @@
               "momentum": 100.0,
               "catalyst": null,
               "crowding": 38.2,
-              "data_quality": 48.0
+              "data_quality": 21.0
             },
             "factor_coverage": 0.7,
             "missing_factors": [
               "earnings_revision",
               "catalyst"
             ],
-            "raw_alpha_score": 66.5,
+            "raw_alpha_score": 64.5,
             "confidence_multiplier": 0.0,
             "opportunity_score": 0.0,
             "valuation_detail": {
@@ -2739,14 +2590,14 @@
           },
           "opportunity_score": 0.0,
           "entry_score": 80.0,
-          "alpha_score": 66.5,
+          "alpha_score": 64.5,
           "factor_coverage": 0.7,
           "missing_factors": [
             "earnings_revision",
             "catalyst"
           ],
-          "data_confidence": 0.48,
-          "price_freshness": "fallback_only",
+          "data_confidence": 0.21,
+          "price_freshness": "stale",
           "execution_allowed": false,
           "technical_data_complete": true,
           "future_function_audit": "BLOCK",
@@ -2758,7 +2609,7 @@
             "future_function_audit_failed",
             "execution_not_allowed"
           ],
-          "action": "普通观察",
+          "action": "数据不足，补行情/财报后再判断",
           "factor_percentiles": {
             "quality": 10.7,
             "growth": 85.7,
@@ -2767,7 +2618,7 @@
             "momentum": 97.3,
             "catalyst": null,
             "crowding": 6.2,
-            "data_quality": 70.8
+            "data_quality": 64.6
           },
           "alpha_percentile": 50.0,
           "sector_rank_percentile": 50.0,
@@ -2783,7 +2634,7 @@
           "price": 378.44,
           "quote_time": "Aug 27, 2026",
           "quote_source": "Nasdaq quote API fallback",
-          "valuation_pe": 58.09413500125216,
+          "valuation_pe": 57.7887452127757,
           "valuation_pe_source": "Finnhub forwardPE",
           "reward_risk": 51.76,
           "starter_entry": 380.33,
@@ -2796,11 +2647,11 @@
           "breakout_reward_risk": 6.28,
           "buyable_now": false,
           "trend_score": 42.0,
-          "valuation_gap_score": 10.2,
+          "valuation_gap_score": 10.5,
           "earnings_leverage_score": 67.7,
-          "underpricing_score": 31.4,
-          "data_confidence_score": 48.0,
-          "crowding_score": 40.2,
+          "underpricing_score": 31.6,
+          "data_confidence_score": 21.0,
+          "crowding_score": 40.1,
           "earnings_revision_score": null,
           "earnings_revision_detail": {
             "status": "missing",
@@ -2833,21 +2684,21 @@
               "valuation": 0.0,
               "momentum": 29.9,
               "catalyst": null,
-              "crowding": 59.8,
-              "data_quality": 48.0
+              "crowding": 59.9,
+              "data_quality": 21.0
             },
             "factor_coverage": 0.7,
             "missing_factors": [
               "earnings_revision",
               "catalyst"
             ],
-            "raw_alpha_score": 43.1,
+            "raw_alpha_score": 41.2,
             "confidence_multiplier": 0.0,
             "opportunity_score": 0.0,
             "valuation_detail": {
               "company_type": "industrial",
               "metrics": {
-                "forward_pe": 58.09413500125216,
+                "forward_pe": 57.7887452127757,
                 "price_sales": 11.2545
               },
               "method": "industrial_forward_pe"
@@ -2855,14 +2706,14 @@
           },
           "opportunity_score": 0.0,
           "entry_score": 51.8,
-          "alpha_score": 43.1,
+          "alpha_score": 41.2,
           "factor_coverage": 0.7,
           "missing_factors": [
             "earnings_revision",
             "catalyst"
           ],
-          "data_confidence": 0.48,
-          "price_freshness": "fallback_only",
+          "data_confidence": 0.21,
+          "price_freshness": "stale",
           "execution_allowed": false,
           "technical_data_complete": true,
           "future_function_audit": "BLOCK",
@@ -2875,16 +2726,16 @@
             "future_function_audit_failed",
             "execution_not_allowed"
           ],
-          "action": "普通观察",
+          "action": "数据不足，补行情/财报后再判断",
           "factor_percentiles": {
             "quality": 46.4,
             "growth": 17.9,
             "earnings_revision": null,
             "valuation": 4.2,
-            "momentum": 28.4,
+            "momentum": 25.7,
             "catalyst": null,
             "crowding": 60.4,
-            "data_quality": 70.8
+            "data_quality": 64.6
           },
           "alpha_percentile": 50.0,
           "sector_rank_percentile": 50.0,
@@ -2897,8 +2748,8 @@
           "name": "中际旭创",
           "layer": "光模块",
           "role": "高速光模块",
-          "price": 858.35,
-          "quote_time": "2026-08-28T01:30:00+00:00",
+          "price": 838.59,
+          "quote_time": "2026-08-31T01:30:00+00:00",
           "quote_source": "Yahoo chart API cross-market fallback",
           "valuation_pe": null,
           "valuation_pe_source": null,
@@ -3009,8 +2860,8 @@
           "name": "新易盛",
           "layer": "光模块",
           "role": "高速光模块",
-          "price": 399.0,
-          "quote_time": "2026-08-28T01:30:00+00:00",
+          "price": 396.04,
+          "quote_time": "2026-08-31T01:30:00+00:00",
           "quote_source": "Yahoo chart API cross-market fallback",
           "valuation_pe": null,
           "valuation_pe_source": null,
@@ -3121,8 +2972,8 @@
           "name": "天孚通信",
           "layer": "光器件",
           "role": "光器件",
-          "price": 263.58,
-          "quote_time": "2026-08-28T01:30:00+00:00",
+          "price": 258.16,
+          "quote_time": "2026-08-31T01:30:00+00:00",
           "quote_source": "Yahoo chart API cross-market fallback",
           "valuation_pe": null,
           "valuation_pe_source": null,
@@ -3136,7 +2987,7 @@
           "breakout_target": null,
           "breakout_reward_risk": null,
           "buyable_now": false,
-          "trend_score": 76.0,
+          "trend_score": 68.0,
           "valuation_gap_score": null,
           "earnings_leverage_score": null,
           "underpricing_score": null,
@@ -3168,7 +3019,7 @@
               "growth": null,
               "earnings_revision": null,
               "valuation": null,
-              "momentum": 76.0,
+              "momentum": 68.0,
               "catalyst": null,
               "crowding": null,
               "data_quality": null
@@ -3183,7 +3034,7 @@
               "crowding",
               "data_quality"
             ],
-            "raw_alpha_score": 76.0,
+            "raw_alpha_score": 68.0,
             "confidence_multiplier": 0.0,
             "opportunity_score": 0.0,
             "valuation_detail": {
@@ -3194,7 +3045,7 @@
           },
           "opportunity_score": 0.0,
           "entry_score": null,
-          "alpha_score": 76.0,
+          "alpha_score": 68.0,
           "factor_coverage": 0.15,
           "missing_factors": [
             "quality",
@@ -3217,7 +3068,7 @@
             "growth": null,
             "earnings_revision": null,
             "valuation": null,
-            "momentum": 82.4,
+            "momentum": 77.0,
             "catalyst": null,
             "crowding": null,
             "data_quality": null
@@ -3233,21 +3084,21 @@
       "name": "高速 PCB / 覆铜板 / 电子布 / 铜箔",
       "horizon": "3-12个月",
       "stage": "观察跟踪",
-      "expectation_gap_score": 46.8,
+      "expectation_gap_score": 45.6,
       "score_components": {
         "base_score": 78.0,
-        "dynamic_center": 39.9,
+        "dynamic_center": 37.6,
         "dynamic_coverage": 0.8,
         "coverage_multiplier": 0.88,
         "earnings_leverage": 57.5,
         "earnings_revision": null,
         "market_underpricing": 54.1,
         "price_breadth": 0.0,
-        "data_confidence": 48.0,
+        "data_confidence": 39.0,
         "crowding_score": 31.2,
         "crowding_penalty": 0.0,
-        "final_theme_score": 46.8,
-        "expectation_gap_score": 46.8
+        "final_theme_score": 45.6,
+        "expectation_gap_score": 45.6
       },
       "thesis": "AI 服务器和高速交换机需要高层数、低损耗 PCB 与高端 CCL，若电子布、铜箔、树脂和高端覆铜板涨价，利润弹性可能从设备和光模块向材料端扩散。",
       "leading_indicators": [
@@ -3280,58 +3131,9 @@
       "top_evidence": [
         "US.TTMI：机会分 0.0，普通观察",
         "US.JBL：机会分 0.0，普通观察",
-        "US.FLEX：机会分 0.0，普通观察"
+        "US.FLEX：机会分 0.0，数据不足，补行情/财报后再判断"
       ],
-      "changes": [
-        {
-          "type": "metric_change",
-          "code": "US.TTMI",
-          "name": "TTM Technologies",
-          "detected_at": "2026-08-30T12:33:19+08:00",
-          "metric": "opportunity_score",
-          "label": "个股机会分",
-          "previous": 53.5,
-          "current": 0.0,
-          "change_pct": -100.0,
-          "note": "个股机会分变化超过阈值，需确认是机会扩大、逻辑兑现还是风险暴露。"
-        },
-        {
-          "type": "metric_change",
-          "code": "US.TTMI",
-          "name": "TTM Technologies",
-          "detected_at": "2026-08-30T12:33:19+08:00",
-          "metric": "trend_score",
-          "label": "趋势确认",
-          "previous": 42.0,
-          "current": 12.0,
-          "change_pct": -71.43,
-          "note": "趋势确认变化超过阈值，需确认是机会扩大、逻辑兑现还是风险暴露。"
-        },
-        {
-          "type": "metric_change",
-          "code": "US.JBL",
-          "name": "Jabil",
-          "detected_at": "2026-08-30T12:33:19+08:00",
-          "metric": "opportunity_score",
-          "label": "个股机会分",
-          "previous": 54.8,
-          "current": 0.0,
-          "change_pct": -100.0,
-          "note": "个股机会分变化超过阈值，需确认是机会扩大、逻辑兑现还是风险暴露。"
-        },
-        {
-          "type": "metric_change",
-          "code": "US.FLEX",
-          "name": "Flex",
-          "detected_at": "2026-08-30T12:33:19+08:00",
-          "metric": "opportunity_score",
-          "label": "个股机会分",
-          "previous": 56.5,
-          "current": 0.0,
-          "change_pct": -100.0,
-          "note": "个股机会分变化超过阈值，需确认是机会扩大、逻辑兑现还是风险暴露。"
-        }
-      ],
+      "changes": [],
       "securities": [
         {
           "code": "US.TTMI",
@@ -3341,7 +3143,7 @@
           "layer": "高端 PCB",
           "role": "AI 服务器/网络 PCB 美股代理",
           "price": 118.65,
-          "quote_time": "Aug 27, 2026",
+          "quote_time": "Aug 28, 2026",
           "quote_source": "Nasdaq quote API fallback",
           "valuation_pe": 24.31374,
           "valuation_pe_source": "Finnhub forwardPE",
@@ -3425,14 +3227,13 @@
           "price_freshness": "fallback_only",
           "execution_allowed": false,
           "technical_data_complete": true,
-          "future_function_audit": "BLOCK",
+          "future_function_audit": "PASS",
           "gate_failures": [
             "opportunity_score_below_threshold",
             "trend_score_below_threshold",
             "crowding_score_above_threshold",
             "data_confidence_below_threshold",
             "price_freshness_not_pass",
-            "future_function_audit_failed",
             "execution_not_allowed"
           ],
           "action": "普通观察",
@@ -3441,10 +3242,10 @@
             "growth": 25.0,
             "earnings_revision": null,
             "valuation": 64.6,
-            "momentum": 18.9,
+            "momentum": 17.6,
             "catalyst": null,
             "crowding": 93.8,
-            "data_quality": 70.8
+            "data_quality": 93.8
           },
           "alpha_percentile": 50.0,
           "sector_rank_percentile": 50.0,
@@ -3458,7 +3259,7 @@
           "layer": "电子制造",
           "role": "AI 服务器制造代理",
           "price": 301.45,
-          "quote_time": "Aug 27, 2026",
+          "quote_time": "Aug 28, 2026",
           "quote_source": "Nasdaq quote API fallback",
           "valuation_pe": 18.88616,
           "valuation_pe_source": "Finnhub forwardPE",
@@ -3542,14 +3343,13 @@
           "price_freshness": "fallback_only",
           "execution_allowed": false,
           "technical_data_complete": true,
-          "future_function_audit": "BLOCK",
+          "future_function_audit": "PASS",
           "gate_failures": [
             "opportunity_score_below_threshold",
             "trend_score_below_threshold",
             "crowding_score_above_threshold",
             "data_confidence_below_threshold",
             "price_freshness_not_pass",
-            "future_function_audit_failed",
             "execution_not_allowed"
           ],
           "action": "普通观察",
@@ -3561,7 +3361,7 @@
             "momentum": 55.4,
             "catalyst": null,
             "crowding": 77.1,
-            "data_quality": 70.8
+            "data_quality": 93.8
           },
           "alpha_percentile": 50.0,
           "sector_rank_percentile": 50.0,
@@ -3593,7 +3393,7 @@
           "valuation_gap_score": 53.6,
           "earnings_leverage_score": 59.0,
           "underpricing_score": 54.6,
-          "data_confidence_score": 48.0,
+          "data_confidence_score": 21.0,
           "crowding_score": 35.2,
           "earnings_revision_score": null,
           "earnings_revision_detail": {
@@ -3628,14 +3428,14 @@
               "momentum": 44.8,
               "catalyst": null,
               "crowding": 64.8,
-              "data_quality": 48.0
+              "data_quality": 21.0
             },
             "factor_coverage": 0.7,
             "missing_factors": [
               "earnings_revision",
               "catalyst"
             ],
-            "raw_alpha_score": 57.3,
+            "raw_alpha_score": 55.4,
             "confidence_multiplier": 0.0,
             "opportunity_score": 0.0,
             "valuation_detail": {
@@ -3649,14 +3449,14 @@
           },
           "opportunity_score": 0.0,
           "entry_score": 60.5,
-          "alpha_score": 57.3,
+          "alpha_score": 55.4,
           "factor_coverage": 0.7,
           "missing_factors": [
             "earnings_revision",
             "catalyst"
           ],
-          "data_confidence": 0.48,
-          "price_freshness": "fallback_only",
+          "data_confidence": 0.21,
+          "price_freshness": "stale",
           "execution_allowed": false,
           "technical_data_complete": true,
           "future_function_audit": "BLOCK",
@@ -3669,7 +3469,7 @@
             "future_function_audit_failed",
             "execution_not_allowed"
           ],
-          "action": "普通观察",
+          "action": "数据不足，补行情/财报后再判断",
           "factor_percentiles": {
             "quality": 32.1,
             "growth": 10.7,
@@ -3678,7 +3478,7 @@
             "momentum": 58.1,
             "catalyst": null,
             "crowding": 68.8,
-            "data_quality": 70.8
+            "data_quality": 64.6
           },
           "alpha_percentile": 50.0,
           "sector_rank_percentile": 50.0,
@@ -3691,8 +3491,8 @@
           "name": "建滔积层板",
           "layer": "覆铜板",
           "role": "CCL",
-          "price": 45.16,
-          "quote_time": "2026-08-28T01:30:00+00:00",
+          "price": 45.14,
+          "quote_time": "2026-08-31T01:30:00+00:00",
           "quote_source": "Yahoo chart API cross-market fallback",
           "valuation_pe": null,
           "valuation_pe_source": null,
@@ -3803,8 +3603,8 @@
           "name": "建滔集团",
           "layer": "覆铜板/材料",
           "role": "CCL/材料",
-          "price": 52.65,
-          "quote_time": "2026-08-28T01:30:00+00:00",
+          "price": 52.35,
+          "quote_time": "2026-08-31T01:30:00+00:00",
           "quote_source": "Yahoo chart API cross-market fallback",
           "valuation_pe": null,
           "valuation_pe_source": null,
@@ -3915,8 +3715,8 @@
           "name": "生益科技",
           "layer": "覆铜板",
           "role": "高端 CCL",
-          "price": 145.65,
-          "quote_time": "2026-08-28T01:30:00+00:00",
+          "price": 150.09,
+          "quote_time": "2026-08-31T01:30:00+00:00",
           "quote_source": "Yahoo chart API cross-market fallback",
           "valuation_pe": null,
           "valuation_pe_source": null,
@@ -4011,7 +3811,7 @@
             "growth": null,
             "earnings_revision": null,
             "valuation": null,
-            "momentum": 82.4,
+            "momentum": 83.8,
             "catalyst": null,
             "crowding": null,
             "data_quality": null
@@ -4027,8 +3827,8 @@
           "name": "生益电子",
           "layer": "PCB",
           "role": "PCB",
-          "price": 131.2,
-          "quote_time": "2026-08-28T01:30:00+00:00",
+          "price": 126.43,
+          "quote_time": "2026-08-31T01:30:00+00:00",
           "quote_source": "Yahoo chart API cross-market fallback",
           "valuation_pe": null,
           "valuation_pe_source": null,
@@ -4123,7 +3923,7 @@
             "growth": null,
             "earnings_revision": null,
             "valuation": null,
-            "momentum": 82.4,
+            "momentum": 83.8,
             "catalyst": null,
             "crowding": null,
             "data_quality": null
@@ -4139,8 +3939,8 @@
           "name": "胜宏科技",
           "layer": "PCB",
           "role": "AI 服务器 PCB",
-          "price": 241.6,
-          "quote_time": "2026-08-28T01:30:00+00:00",
+          "price": 239.78,
+          "quote_time": "2026-08-31T01:30:00+00:00",
           "quote_source": "Yahoo chart API cross-market fallback",
           "valuation_pe": null,
           "valuation_pe_source": null,
@@ -4235,7 +4035,7 @@
             "growth": null,
             "earnings_revision": null,
             "valuation": null,
-            "momentum": 18.9,
+            "momentum": 17.6,
             "catalyst": null,
             "crowding": null,
             "data_quality": null
@@ -4251,8 +4051,8 @@
           "name": "宏和科技",
           "layer": "电子布",
           "role": "电子布",
-          "price": 139.17,
-          "quote_time": "2026-08-28T01:30:00+00:00",
+          "price": 141.69,
+          "quote_time": "2026-08-31T01:30:00+00:00",
           "quote_source": "Yahoo chart API cross-market fallback",
           "valuation_pe": null,
           "valuation_pe_source": null,
@@ -4363,21 +4163,21 @@
       "name": "Physical AI / 机器人 / 自动化",
       "horizon": "6-24个月",
       "stage": "观察跟踪",
-      "expectation_gap_score": 42.2,
+      "expectation_gap_score": 40.1,
       "score_components": {
         "base_score": 69.0,
-        "dynamic_center": 36.6,
+        "dynamic_center": 32.9,
         "dynamic_coverage": 0.8,
         "coverage_multiplier": 0.88,
         "earnings_leverage": 72.0,
         "earnings_revision": null,
         "market_underpricing": 38.5,
         "price_breadth": 0.0,
-        "data_confidence": 35.6,
+        "data_confidence": 21.0,
         "crowding_score": 33.1,
         "crowding_penalty": 0.0,
-        "final_theme_score": 42.2,
-        "expectation_gap_score": 42.2
+        "final_theme_score": 40.1,
+        "expectation_gap_score": 40.1
       },
       "thesis": "大模型从数字世界扩展到物理世界后，机器人、工业自动化、传感器、执行器和边缘 AI 可能形成新的需求曲线；当前仍处早期，必须用订单和应用落地验证。",
       "leading_indicators": [
@@ -4407,36 +4207,11 @@
         "边缘 AI"
       ],
       "top_evidence": [
-        "US.ISRG：机会分 0.0，普通观察",
+        "US.ISRG：机会分 0.0，数据不足，补行情/财报后再判断",
         "US.ROK：机会分 0.0，数据不足，补行情/财报后再判断",
         "US.HON：机会分 0.0，数据不足，补行情/财报后再判断"
       ],
-      "changes": [
-        {
-          "type": "metric_change",
-          "code": "US.ISRG",
-          "name": "Intuitive Surgical",
-          "detected_at": "2026-08-30T12:33:19+08:00",
-          "metric": "opportunity_score",
-          "label": "个股机会分",
-          "previous": 59.9,
-          "current": 0.0,
-          "change_pct": -100.0,
-          "note": "个股机会分变化超过阈值，需确认是机会扩大、逻辑兑现还是风险暴露。"
-        },
-        {
-          "type": "metric_change",
-          "code": "US.SYM",
-          "name": "Symbotic",
-          "detected_at": "2026-08-30T12:33:19+08:00",
-          "metric": "opportunity_score",
-          "label": "个股机会分",
-          "previous": 45.4,
-          "current": 0.0,
-          "change_pct": -100.0,
-          "note": "个股机会分变化超过阈值，需确认是机会扩大、逻辑兑现还是风险暴露。"
-        }
-      ],
+      "changes": [],
       "securities": [
         {
           "code": "US.ISRG",
@@ -4464,7 +4239,7 @@
           "valuation_gap_score": 42.4,
           "earnings_leverage_score": 77.6,
           "underpricing_score": 41.9,
-          "data_confidence_score": 48.0,
+          "data_confidence_score": 21.0,
           "crowding_score": 30.9,
           "earnings_revision_score": null,
           "earnings_revision_detail": {
@@ -4499,14 +4274,14 @@
               "momentum": 0.0,
               "catalyst": null,
               "crowding": 69.1,
-              "data_quality": 48.0
+              "data_quality": 21.0
             },
             "factor_coverage": 0.7,
             "missing_factors": [
               "earnings_revision",
               "catalyst"
             ],
-            "raw_alpha_score": 56.5,
+            "raw_alpha_score": 54.6,
             "confidence_multiplier": 0.0,
             "opportunity_score": 0.0,
             "valuation_detail": {
@@ -4520,14 +4295,14 @@
           },
           "opportunity_score": 0.0,
           "entry_score": null,
-          "alpha_score": 56.5,
+          "alpha_score": 54.6,
           "factor_coverage": 0.7,
           "missing_factors": [
             "earnings_revision",
             "catalyst"
           ],
-          "data_confidence": 0.48,
-          "price_freshness": "fallback_only",
+          "data_confidence": 0.21,
+          "price_freshness": "stale",
           "execution_allowed": false,
           "technical_data_complete": true,
           "future_function_audit": "BLOCK",
@@ -4540,7 +4315,7 @@
             "future_function_audit_failed",
             "execution_not_allowed"
           ],
-          "action": "普通观察",
+          "action": "数据不足，补行情/财报后再判断",
           "factor_percentiles": {
             "quality": 96.4,
             "growth": 32.1,
@@ -4549,7 +4324,7 @@
             "momentum": 5.4,
             "catalyst": null,
             "crowding": 85.4,
-            "data_quality": 70.8
+            "data_quality": 64.6
           },
           "alpha_percentile": 50.0,
           "sector_rank_percentile": 50.0,
@@ -4581,7 +4356,7 @@
           "valuation_gap_score": 39.6,
           "earnings_leverage_score": null,
           "underpricing_score": 45.8,
-          "data_confidence_score": 27.4,
+          "data_confidence_score": 12.0,
           "crowding_score": 47.3,
           "earnings_revision_score": null,
           "earnings_revision_detail": {
@@ -4612,7 +4387,7 @@
               "momentum": 51.1,
               "catalyst": null,
               "crowding": 52.7,
-              "data_quality": 27.4
+              "data_quality": 12.0
             },
             "factor_coverage": 0.4,
             "missing_factors": [
@@ -4621,7 +4396,7 @@
               "earnings_revision",
               "catalyst"
             ],
-            "raw_alpha_score": 49.9,
+            "raw_alpha_score": 48.0,
             "confidence_multiplier": 0.0,
             "opportunity_score": 0.0,
             "valuation_detail": {
@@ -4635,7 +4410,7 @@
           },
           "opportunity_score": 0.0,
           "entry_score": 66.4,
-          "alpha_score": 49.9,
+          "alpha_score": 48.0,
           "factor_coverage": 0.4,
           "missing_factors": [
             "quality",
@@ -4643,8 +4418,8 @@
             "earnings_revision",
             "catalyst"
           ],
-          "data_confidence": 0.2743,
-          "price_freshness": "fallback_only",
+          "data_confidence": 0.12,
+          "price_freshness": "stale",
           "execution_allowed": false,
           "technical_data_complete": true,
           "future_function_audit": "BLOCK",
@@ -4700,7 +4475,7 @@
           "valuation_gap_score": 47.5,
           "earnings_leverage_score": null,
           "underpricing_score": 49.6,
-          "data_confidence_score": 27.4,
+          "data_confidence_score": 12.0,
           "crowding_score": 13.9,
           "earnings_revision_score": null,
           "earnings_revision_detail": {
@@ -4731,7 +4506,7 @@
               "momentum": 0.0,
               "catalyst": null,
               "crowding": 86.1,
-              "data_quality": 27.4
+              "data_quality": 12.0
             },
             "factor_coverage": 0.4,
             "missing_factors": [
@@ -4740,7 +4515,7 @@
               "earnings_revision",
               "catalyst"
             ],
-            "raw_alpha_score": 39.9,
+            "raw_alpha_score": 38.0,
             "confidence_multiplier": 0.0,
             "opportunity_score": 0.0,
             "valuation_detail": {
@@ -4754,7 +4529,7 @@
           },
           "opportunity_score": 0.0,
           "entry_score": null,
-          "alpha_score": 39.9,
+          "alpha_score": 38.0,
           "factor_coverage": 0.4,
           "missing_factors": [
             "quality",
@@ -4762,8 +4537,8 @@
             "earnings_revision",
             "catalyst"
           ],
-          "data_confidence": 0.2743,
-          "price_freshness": "fallback_only",
+          "data_confidence": 0.12,
+          "price_freshness": "stale",
           "execution_allowed": false,
           "technical_data_complete": true,
           "future_function_audit": "BLOCK",
@@ -4799,7 +4574,7 @@
           "layer": "仓储机器人",
           "role": "自动化仓储",
           "price": 39.875,
-          "quote_time": "Aug 27, 2026",
+          "quote_time": "Aug 28, 2026",
           "quote_source": "Nasdaq quote API fallback",
           "valuation_pe": 43.96924,
           "valuation_pe_source": "Finnhub forwardPE",
@@ -4883,14 +4658,13 @@
           "price_freshness": "fallback_only",
           "execution_allowed": false,
           "technical_data_complete": true,
-          "future_function_audit": "BLOCK",
+          "future_function_audit": "PASS",
           "gate_failures": [
             "opportunity_score_below_threshold",
             "trend_score_below_threshold",
             "crowding_score_above_threshold",
             "data_confidence_below_threshold",
             "price_freshness_not_pass",
-            "future_function_audit_failed",
             "execution_not_allowed"
           ],
           "action": "普通观察",
@@ -4902,7 +4676,7 @@
             "momentum": 5.4,
             "catalyst": null,
             "crowding": 89.6,
-            "data_quality": 70.8
+            "data_quality": 93.8
           },
           "alpha_percentile": 50.0,
           "sector_rank_percentile": 50.0,
@@ -4934,7 +4708,7 @@
           "valuation_gap_score": 8.0,
           "earnings_leverage_score": null,
           "underpricing_score": 19.6,
-          "data_confidence_score": 27.4,
+          "data_confidence_score": 12.0,
           "crowding_score": 48.0,
           "earnings_revision_score": null,
           "earnings_revision_detail": {
@@ -4965,7 +4739,7 @@
               "momentum": 0.0,
               "catalyst": null,
               "crowding": 52.0,
-              "data_quality": 27.4
+              "data_quality": 12.0
             },
             "factor_coverage": 0.4,
             "missing_factors": [
@@ -4974,7 +4748,7 @@
               "earnings_revision",
               "catalyst"
             ],
-            "raw_alpha_score": 9.9,
+            "raw_alpha_score": 8.0,
             "confidence_multiplier": 0.0,
             "opportunity_score": 0.0,
             "valuation_detail": {
@@ -4988,7 +4762,7 @@
           },
           "opportunity_score": 0.0,
           "entry_score": null,
-          "alpha_score": 9.9,
+          "alpha_score": 8.0,
           "factor_coverage": 0.4,
           "missing_factors": [
             "quality",
@@ -4996,8 +4770,8 @@
             "earnings_revision",
             "catalyst"
           ],
-          "data_confidence": 0.2743,
-          "price_freshness": "fallback_only",
+          "data_confidence": 0.12,
+          "price_freshness": "stale",
           "execution_allowed": false,
           "technical_data_complete": true,
           "future_function_audit": "BLOCK",
@@ -5260,21 +5034,21 @@
       "name": "AI 数据中心电力 / 液冷 / 配电",
       "horizon": "6-18个月",
       "stage": "观察跟踪",
-      "expectation_gap_score": 40.7,
+      "expectation_gap_score": 38.1,
       "score_components": {
         "base_score": 80.0,
-        "dynamic_center": 39.2,
+        "dynamic_center": 34.1,
         "dynamic_coverage": 0.6,
         "coverage_multiplier": 0.76,
         "earnings_leverage": null,
         "earnings_revision": null,
         "market_underpricing": 50.3,
         "price_breadth": 40.0,
-        "data_confidence": 27.4,
+        "data_confidence": 12.0,
         "crowding_score": 46.0,
         "crowding_penalty": 0.0,
-        "final_theme_score": 40.7,
-        "expectation_gap_score": 40.7
+        "final_theme_score": 38.1,
+        "expectation_gap_score": 38.1
       },
       "thesis": "AI 数据中心功耗密度抬升后，瓶颈从芯片扩散到电力接入、UPS、配电、液冷和工程建设；这些环节通常滞后兑现，但持续性可能更强。",
       "leading_indicators": [
@@ -5307,7 +5081,20 @@
         "US.ETN：机会分 0.0，数据不足，补行情/财报后再判断",
         "US.PWR：机会分 0.0，数据不足，补行情/财报后再判断"
       ],
-      "changes": [],
+      "changes": [
+        {
+          "type": "metric_change",
+          "code": "SZ.300499",
+          "name": "高澜股份",
+          "detected_at": "2026-08-31T12:19:33+08:00",
+          "metric": "trend_score",
+          "label": "趋势确认",
+          "previous": 12.0,
+          "current": 38.0,
+          "change_pct": 216.67,
+          "note": "趋势确认变化超过阈值，需确认是机会扩大、逻辑兑现还是风险暴露。"
+        }
+      ],
       "securities": [
         {
           "code": "US.VRT",
@@ -5335,7 +5122,7 @@
           "valuation_gap_score": 44.4,
           "earnings_leverage_score": null,
           "underpricing_score": 50.2,
-          "data_confidence_score": 27.4,
+          "data_confidence_score": 12.0,
           "crowding_score": 34.8,
           "earnings_revision_score": null,
           "earnings_revision_detail": {
@@ -5366,7 +5153,7 @@
               "momentum": 43.5,
               "catalyst": null,
               "crowding": 65.2,
-              "data_quality": 27.4
+              "data_quality": 12.0
             },
             "factor_coverage": 0.4,
             "missing_factors": [
@@ -5375,7 +5162,7 @@
               "earnings_revision",
               "catalyst"
             ],
-            "raw_alpha_score": 48.6,
+            "raw_alpha_score": 46.7,
             "confidence_multiplier": 0.0,
             "opportunity_score": 0.0,
             "valuation_detail": {
@@ -5389,7 +5176,7 @@
           },
           "opportunity_score": 0.0,
           "entry_score": 60.3,
-          "alpha_score": 48.6,
+          "alpha_score": 46.7,
           "factor_coverage": 0.4,
           "missing_factors": [
             "quality",
@@ -5397,8 +5184,8 @@
             "earnings_revision",
             "catalyst"
           ],
-          "data_confidence": 0.2743,
-          "price_freshness": "fallback_only",
+          "data_confidence": 0.12,
+          "price_freshness": "stale",
           "execution_allowed": false,
           "technical_data_complete": true,
           "future_function_audit": "BLOCK",
@@ -5452,7 +5239,7 @@
           "valuation_gap_score": 47.2,
           "earnings_leverage_score": null,
           "underpricing_score": 49.7,
-          "data_confidence_score": 27.4,
+          "data_confidence_score": 12.0,
           "crowding_score": 46.4,
           "earnings_revision_score": null,
           "earnings_revision_detail": {
@@ -5483,7 +5270,7 @@
               "momentum": 54.6,
               "catalyst": null,
               "crowding": 53.6,
-              "data_quality": 27.4
+              "data_quality": 12.0
             },
             "factor_coverage": 0.4,
             "missing_factors": [
@@ -5492,7 +5279,7 @@
               "earnings_revision",
               "catalyst"
             ],
-            "raw_alpha_score": 53.1,
+            "raw_alpha_score": 51.2,
             "confidence_multiplier": 0.0,
             "opportunity_score": 0.0,
             "valuation_detail": {
@@ -5506,7 +5293,7 @@
           },
           "opportunity_score": 0.0,
           "entry_score": 67.5,
-          "alpha_score": 53.1,
+          "alpha_score": 51.2,
           "factor_coverage": 0.4,
           "missing_factors": [
             "quality",
@@ -5514,8 +5301,8 @@
             "earnings_revision",
             "catalyst"
           ],
-          "data_confidence": 0.2743,
-          "price_freshness": "fallback_only",
+          "data_confidence": 0.12,
+          "price_freshness": "stale",
           "execution_allowed": false,
           "technical_data_complete": true,
           "future_function_audit": "BLOCK",
@@ -5569,7 +5356,7 @@
           "valuation_gap_score": 28.7,
           "earnings_leverage_score": null,
           "underpricing_score": 41.1,
-          "data_confidence_score": 27.4,
+          "data_confidence_score": 12.0,
           "crowding_score": 44.0,
           "earnings_revision_score": null,
           "earnings_revision_detail": {
@@ -5600,7 +5387,7 @@
               "momentum": 42.2,
               "catalyst": null,
               "crowding": 56.0,
-              "data_quality": 27.4
+              "data_quality": 12.0
             },
             "factor_coverage": 0.4,
             "missing_factors": [
@@ -5609,7 +5396,7 @@
               "earnings_revision",
               "catalyst"
             ],
-            "raw_alpha_score": 37.0,
+            "raw_alpha_score": 35.0,
             "confidence_multiplier": 0.0,
             "opportunity_score": 0.0,
             "valuation_detail": {
@@ -5623,7 +5410,7 @@
           },
           "opportunity_score": 0.0,
           "entry_score": 61.6,
-          "alpha_score": 37.0,
+          "alpha_score": 35.0,
           "factor_coverage": 0.4,
           "missing_factors": [
             "quality",
@@ -5631,8 +5418,8 @@
             "earnings_revision",
             "catalyst"
           ],
-          "data_confidence": 0.2743,
-          "price_freshness": "fallback_only",
+          "data_confidence": 0.12,
+          "price_freshness": "stale",
           "execution_allowed": false,
           "technical_data_complete": true,
           "future_function_audit": "BLOCK",
@@ -5686,7 +5473,7 @@
           "valuation_gap_score": 53.4,
           "earnings_leverage_score": null,
           "underpricing_score": 58.3,
-          "data_confidence_score": 27.4,
+          "data_confidence_score": 12.0,
           "crowding_score": 53.2,
           "earnings_revision_score": null,
           "earnings_revision_detail": {
@@ -5717,7 +5504,7 @@
               "momentum": 82.7,
               "catalyst": null,
               "crowding": 46.8,
-              "data_quality": 27.4
+              "data_quality": 12.0
             },
             "factor_coverage": 0.4,
             "missing_factors": [
@@ -5726,7 +5513,7 @@
               "earnings_revision",
               "catalyst"
             ],
-            "raw_alpha_score": 69.9,
+            "raw_alpha_score": 67.9,
             "confidence_multiplier": 0.0,
             "opportunity_score": 0.0,
             "valuation_detail": {
@@ -5740,7 +5527,7 @@
           },
           "opportunity_score": 0.0,
           "entry_score": 80.9,
-          "alpha_score": 69.9,
+          "alpha_score": 67.9,
           "factor_coverage": 0.4,
           "missing_factors": [
             "quality",
@@ -5748,8 +5535,8 @@
             "earnings_revision",
             "catalyst"
           ],
-          "data_confidence": 0.2743,
-          "price_freshness": "fallback_only",
+          "data_confidence": 0.12,
+          "price_freshness": "stale",
           "execution_allowed": false,
           "technical_data_complete": true,
           "future_function_audit": "BLOCK",
@@ -5804,7 +5591,7 @@
           "valuation_gap_score": 45.0,
           "earnings_leverage_score": null,
           "underpricing_score": 52.2,
-          "data_confidence_score": 27.4,
+          "data_confidence_score": 12.0,
           "crowding_score": 51.6,
           "earnings_revision_score": null,
           "earnings_revision_detail": {
@@ -5835,7 +5622,7 @@
               "momentum": 85.5,
               "catalyst": null,
               "crowding": 48.4,
-              "data_quality": 27.4
+              "data_quality": 12.0
             },
             "factor_coverage": 0.4,
             "missing_factors": [
@@ -5844,7 +5631,7 @@
               "earnings_revision",
               "catalyst"
             ],
-            "raw_alpha_score": 62.7,
+            "raw_alpha_score": 60.8,
             "confidence_multiplier": 0.0,
             "opportunity_score": 0.0,
             "valuation_detail": {
@@ -5858,7 +5645,7 @@
           },
           "opportunity_score": 0.0,
           "entry_score": 74.5,
-          "alpha_score": 62.7,
+          "alpha_score": 60.8,
           "factor_coverage": 0.4,
           "missing_factors": [
             "quality",
@@ -5866,8 +5653,8 @@
             "earnings_revision",
             "catalyst"
           ],
-          "data_confidence": 0.2743,
-          "price_freshness": "fallback_only",
+          "data_confidence": 0.12,
+          "price_freshness": "stale",
           "execution_allowed": false,
           "technical_data_complete": true,
           "future_function_audit": "BLOCK",
@@ -5903,8 +5690,8 @@
           "name": "科华数据",
           "layer": "UPS/电源",
           "role": "数据中心电源",
-          "price": 30.62,
-          "quote_time": "2026-08-28T01:30:00+00:00",
+          "price": 30.04,
+          "quote_time": "2026-08-31T01:30:00+00:00",
           "quote_source": "Yahoo chart API cross-market fallback",
           "valuation_pe": null,
           "valuation_pe_source": null,
@@ -5999,7 +5786,7 @@
             "growth": null,
             "earnings_revision": null,
             "valuation": null,
-            "momentum": 18.9,
+            "momentum": 17.6,
             "catalyst": null,
             "crowding": null,
             "data_quality": null
@@ -6015,8 +5802,8 @@
           "name": "高澜股份",
           "layer": "液冷",
           "role": "液冷散热",
-          "price": 30.92,
-          "quote_time": "2026-08-28T01:30:00+00:00",
+          "price": 31.87,
+          "quote_time": "2026-08-31T01:30:00+00:00",
           "quote_source": "Yahoo chart API cross-market fallback",
           "valuation_pe": null,
           "valuation_pe_source": null,
@@ -6030,7 +5817,7 @@
           "breakout_target": null,
           "breakout_reward_risk": null,
           "buyable_now": false,
-          "trend_score": 12.0,
+          "trend_score": 38.0,
           "valuation_gap_score": null,
           "earnings_leverage_score": null,
           "underpricing_score": null,
@@ -6062,7 +5849,7 @@
               "growth": null,
               "earnings_revision": null,
               "valuation": null,
-              "momentum": 12.0,
+              "momentum": 38.0,
               "catalyst": null,
               "crowding": null,
               "data_quality": null
@@ -6077,7 +5864,7 @@
               "crowding",
               "data_quality"
             ],
-            "raw_alpha_score": 12.0,
+            "raw_alpha_score": 38.0,
             "confidence_multiplier": 0.0,
             "opportunity_score": 0.0,
             "valuation_detail": {
@@ -6088,7 +5875,7 @@
           },
           "opportunity_score": 0.0,
           "entry_score": null,
-          "alpha_score": 12.0,
+          "alpha_score": 38.0,
           "factor_coverage": 0.15,
           "missing_factors": [
             "quality",
@@ -6111,7 +5898,7 @@
             "growth": null,
             "earnings_revision": null,
             "valuation": null,
-            "momentum": 18.9,
+            "momentum": 31.1,
             "catalyst": null,
             "crowding": null,
             "data_quality": null
@@ -6127,219 +5914,15 @@
   "metric_changes": [
     {
       "type": "metric_change",
-      "code": "US.ANET",
-      "name": "Arista Networks",
-      "detected_at": "2026-08-30T12:33:19+08:00",
-      "metric": "opportunity_score",
-      "label": "个股机会分",
-      "previous": 65.8,
-      "current": 0.0,
-      "change_pct": -100.0,
-      "note": "个股机会分变化超过阈值，需确认是机会扩大、逻辑兑现还是风险暴露。"
-    },
-    {
-      "type": "metric_change",
-      "code": "US.MRVL",
-      "name": "Marvell",
-      "detected_at": "2026-08-30T12:33:19+08:00",
-      "metric": "opportunity_score",
-      "label": "个股机会分",
-      "previous": 73.6,
-      "current": 0.0,
-      "change_pct": -100.0,
-      "note": "个股机会分变化超过阈值，需确认是机会扩大、逻辑兑现还是风险暴露。"
-    },
-    {
-      "type": "metric_change",
-      "code": "US.COHR",
-      "name": "Coherent",
-      "detected_at": "2026-08-30T12:33:19+08:00",
-      "metric": "opportunity_score",
-      "label": "个股机会分",
-      "previous": 55.2,
-      "current": 0.0,
-      "change_pct": -100.0,
-      "note": "个股机会分变化超过阈值，需确认是机会扩大、逻辑兑现还是风险暴露。"
-    },
-    {
-      "type": "metric_change",
-      "code": "US.LITE",
-      "name": "Lumentum",
-      "detected_at": "2026-08-30T12:33:19+08:00",
-      "metric": "opportunity_score",
-      "label": "个股机会分",
-      "previous": 65.0,
-      "current": 0.0,
-      "change_pct": -100.0,
-      "note": "个股机会分变化超过阈值，需确认是机会扩大、逻辑兑现还是风险暴露。"
-    },
-    {
-      "type": "metric_change",
-      "code": "US.CIEN",
-      "name": "Ciena",
-      "detected_at": "2026-08-30T12:33:19+08:00",
-      "metric": "opportunity_score",
-      "label": "个股机会分",
-      "previous": 42.9,
-      "current": 0.0,
-      "change_pct": -100.0,
-      "note": "个股机会分变化超过阈值，需确认是机会扩大、逻辑兑现还是风险暴露。"
-    },
-    {
-      "type": "metric_change",
-      "code": "US.TTMI",
-      "name": "TTM Technologies",
-      "detected_at": "2026-08-30T12:33:19+08:00",
-      "metric": "opportunity_score",
-      "label": "个股机会分",
-      "previous": 53.5,
-      "current": 0.0,
-      "change_pct": -100.0,
-      "note": "个股机会分变化超过阈值，需确认是机会扩大、逻辑兑现还是风险暴露。"
-    },
-    {
-      "type": "metric_change",
-      "code": "US.TTMI",
-      "name": "TTM Technologies",
-      "detected_at": "2026-08-30T12:33:19+08:00",
+      "code": "SZ.300499",
+      "name": "高澜股份",
+      "detected_at": "2026-08-31T12:19:33+08:00",
       "metric": "trend_score",
       "label": "趋势确认",
-      "previous": 42.0,
-      "current": 12.0,
-      "change_pct": -71.43,
+      "previous": 12.0,
+      "current": 38.0,
+      "change_pct": 216.67,
       "note": "趋势确认变化超过阈值，需确认是机会扩大、逻辑兑现还是风险暴露。"
-    },
-    {
-      "type": "metric_change",
-      "code": "US.JBL",
-      "name": "Jabil",
-      "detected_at": "2026-08-30T12:33:19+08:00",
-      "metric": "opportunity_score",
-      "label": "个股机会分",
-      "previous": 54.8,
-      "current": 0.0,
-      "change_pct": -100.0,
-      "note": "个股机会分变化超过阈值，需确认是机会扩大、逻辑兑现还是风险暴露。"
-    },
-    {
-      "type": "metric_change",
-      "code": "US.FLEX",
-      "name": "Flex",
-      "detected_at": "2026-08-30T12:33:19+08:00",
-      "metric": "opportunity_score",
-      "label": "个股机会分",
-      "previous": 56.5,
-      "current": 0.0,
-      "change_pct": -100.0,
-      "note": "个股机会分变化超过阈值，需确认是机会扩大、逻辑兑现还是风险暴露。"
-    },
-    {
-      "type": "metric_change",
-      "code": "US.NVDA",
-      "name": "NVIDIA",
-      "detected_at": "2026-08-30T12:33:19+08:00",
-      "metric": "opportunity_score",
-      "label": "个股机会分",
-      "previous": 75.1,
-      "current": 0.0,
-      "change_pct": -100.0,
-      "note": "个股机会分变化超过阈值，需确认是机会扩大、逻辑兑现还是风险暴露。"
-    },
-    {
-      "type": "metric_change",
-      "code": "US.AVGO",
-      "name": "Broadcom",
-      "detected_at": "2026-08-30T12:33:19+08:00",
-      "metric": "opportunity_score",
-      "label": "个股机会分",
-      "previous": 72.8,
-      "current": 0.0,
-      "change_pct": -100.0,
-      "note": "个股机会分变化超过阈值，需确认是机会扩大、逻辑兑现还是风险暴露。"
-    },
-    {
-      "type": "metric_change",
-      "code": "US.AVGO",
-      "name": "Broadcom",
-      "detected_at": "2026-08-30T12:33:19+08:00",
-      "metric": "trend_score",
-      "label": "趋势确认",
-      "previous": 50.0,
-      "current": 20.0,
-      "change_pct": -60.0,
-      "note": "趋势确认变化超过阈值，需确认是机会扩大、逻辑兑现还是风险暴露。"
-    },
-    {
-      "type": "metric_change",
-      "code": "US.AMD",
-      "name": "AMD",
-      "detected_at": "2026-08-30T12:33:19+08:00",
-      "metric": "opportunity_score",
-      "label": "个股机会分",
-      "previous": 61.8,
-      "current": 0.0,
-      "change_pct": -100.0,
-      "note": "个股机会分变化超过阈值，需确认是机会扩大、逻辑兑现还是风险暴露。"
-    },
-    {
-      "type": "metric_change",
-      "code": "US.MRVL",
-      "name": "Marvell",
-      "detected_at": "2026-08-30T12:33:19+08:00",
-      "metric": "opportunity_score",
-      "label": "个股机会分",
-      "previous": 73.6,
-      "current": 0.0,
-      "change_pct": -100.0,
-      "note": "个股机会分变化超过阈值，需确认是机会扩大、逻辑兑现还是风险暴露。"
-    },
-    {
-      "type": "metric_change",
-      "code": "US.TSM",
-      "name": "TSMC ADR",
-      "detected_at": "2026-08-30T12:33:19+08:00",
-      "metric": "opportunity_score",
-      "label": "个股机会分",
-      "previous": 66.9,
-      "current": 0.0,
-      "change_pct": -100.0,
-      "note": "个股机会分变化超过阈值，需确认是机会扩大、逻辑兑现还是风险暴露。"
-    },
-    {
-      "type": "metric_change",
-      "code": "US.TSM",
-      "name": "TSMC ADR",
-      "detected_at": "2026-08-30T12:33:19+08:00",
-      "metric": "trend_score",
-      "label": "趋势确认",
-      "previous": 76.0,
-      "current": 50.0,
-      "change_pct": -34.21,
-      "note": "趋势确认变化超过阈值，需确认是机会扩大、逻辑兑现还是风险暴露。"
-    },
-    {
-      "type": "metric_change",
-      "code": "US.ISRG",
-      "name": "Intuitive Surgical",
-      "detected_at": "2026-08-30T12:33:19+08:00",
-      "metric": "opportunity_score",
-      "label": "个股机会分",
-      "previous": 59.9,
-      "current": 0.0,
-      "change_pct": -100.0,
-      "note": "个股机会分变化超过阈值，需确认是机会扩大、逻辑兑现还是风险暴露。"
-    },
-    {
-      "type": "metric_change",
-      "code": "US.SYM",
-      "name": "Symbotic",
-      "detected_at": "2026-08-30T12:33:19+08:00",
-      "metric": "opportunity_score",
-      "label": "个股机会分",
-      "previous": 45.4,
-      "current": 0.0,
-      "change_pct": -100.0,
-      "note": "个股机会分变化超过阈值，需确认是机会扩大、逻辑兑现还是风险暴露。"
     }
   ],
   "review_due": [
