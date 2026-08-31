@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-31T12:18:45+08:00",
-  "generated_label": "2026-08-31 12:18",
+  "generated_at": "2026-08-31T15:33:40+08:00",
+  "generated_label": "2026-08-31 15:33",
   "data_boundary": "公开脱敏市场情绪层；只用于判断风险环境，不生成交易指令，不替代个股 R/R 纪律。",
   "score": 63.8,
   "status": "neutral",
@@ -70,7 +70,7 @@
       "message": "股票强于长债/黄金代表风险偏好改善；反之提示避险。",
       "source": "public market quote",
       "source_type": "vendor_fallback",
-      "updated_at": "Aug 27, 2026",
+      "updated_at": "Aug 28, 2026",
       "confidence": "medium"
     },
     {
@@ -87,7 +87,7 @@
       "message": "FRED 流动性、金融条件和信用利差用于判断风险资产背景。",
       "source": "FRED",
       "source_type": "official",
-      "updated_at": "2026-08-31 12:18",
+      "updated_at": "2026-08-31 15:33",
       "confidence": "high"
     },
     {
@@ -103,7 +103,7 @@
       "message": "油价快速上涨会压低情绪分，因为它可能强化通胀和利率压力。",
       "source": "public market quote/FRED",
       "source_type": "vendor_fallback",
-      "updated_at": "Aug 27, 2026",
+      "updated_at": "Aug 28, 2026",
       "confidence": "medium"
     }
   ],
