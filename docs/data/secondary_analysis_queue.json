@@ -21,8 +21,8 @@
     "eod_max_age_days": 4,
     "fallback_execution_allowed": false
   },
-  "generated_at": "2026-09-01T12:20:27+08:00",
-  "generated_label": "2026-09-01 12:20",
+  "generated_at": "2026-09-02T11:42:58+08:00",
+  "generated_label": "2026-09-02 11:42",
   "rules": {
     "review_interval_days": 2,
     "max_active": null,
@@ -39,14 +39,14 @@
     "min_data_confidence": 0.68
   },
   "summary": {
-    "eligible_candidates": 4,
+    "eligible_candidates": 1,
     "opportunity_candidates": 0,
     "cross_market_candidates": 0,
     "new_entries": 0,
-    "reentries": 1,
-    "reviewed": 1,
+    "reentries": 0,
+    "reviewed": 0,
     "passed": 0,
-    "retreated": 1,
+    "retreated": 0,
     "active_count": 0,
     "retreated_count": 38,
     "due_remaining": 0,
@@ -3202,7 +3202,7 @@
           "price": 220.78
         }
       ],
-      "last_result": "退回观察",
+      "last_result": "退回观察，等待重新触发",
       "last_reason": "美股候选 R/R 2.08:1 低于 3.0:1，退回观察。",
       "code": "US.NVDA",
       "name": "NVIDIA",
@@ -3210,17 +3210,17 @@
       "layer_name": "GPU / ASIC / HBM / 先进封装",
       "chain_name": "AI 算力供应链",
       "role": "GPU/AI 加速器龙头",
-      "price": 220.78,
-      "layer_score": 78.1,
-      "trend_score": 88.0,
+      "price": 217.44,
+      "layer_score": 77.7,
+      "trend_score": 76.0,
       "data_status": "行情已接入",
       "radar_action": "进入二次分析候选池；等待 Buy-Side 复核",
-      "last_seen_at": "2026-09-01T12:20:27+08:00",
-      "priority": 181.72,
+      "last_seen_at": "2026-09-02T11:42:58+08:00",
+      "priority": 169.24,
       "last_analysis_at": "2026-09-01T12:00:00+08:00",
       "cooldown_until": null,
       "reentered_at": "2026-09-01T12:20:27+08:00",
-      "quote_time": "Aug 31, 2026",
+      "quote_time": "Sep 1, 2026",
       "quote_source": "Nasdaq quote API fallback"
     },
     "US.PH": {
