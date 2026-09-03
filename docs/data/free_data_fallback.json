@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-09-02T11:41:48+08:00",
-  "generated_label": "2026-09-02 11:41",
+  "generated_at": "2026-09-03T11:41:12+08:00",
+  "generated_label": "2026-09-03 11:41",
   "privacy": "public-sanitized",
   "data_boundary": {
     "role": "free fallback evidence layer; source tracing only; not trading instruction",
@@ -104,7 +104,7 @@
       "source": "SEC",
       "source_type": "official",
       "source_url": "https://www.sec.gov/files/company_tickers.json",
-      "updated_at": "2026-09-02T11:41:49+08:00",
+      "updated_at": "2026-09-03T11:41:13+08:00",
       "confidence": "high",
       "fallback_used": true,
       "data_gap": null
@@ -118,7 +118,7 @@
       "source": "SEC",
       "source_type": "official",
       "source_url": "https://www.sec.gov/files/company_tickers_exchange.json",
-      "updated_at": "2026-09-02T11:41:49+08:00",
+      "updated_at": "2026-09-03T11:41:13+08:00",
       "confidence": "high",
       "fallback_used": true,
       "data_gap": null
@@ -182,7 +182,7 @@
       "source": "SEC",
       "source_type": "official",
       "source_url": "https://data.sec.gov/submissions/CIK0001045810.json",
-      "updated_at": "2026-09-02T11:41:49+08:00",
+      "updated_at": "2026-09-03T11:41:13+08:00",
       "confidence": "high",
       "fallback_used": true,
       "data_gap": null
@@ -232,7 +232,7 @@
       "source": "SEC",
       "source_type": "official",
       "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001045810.json",
-      "updated_at": "2026-09-02T11:41:49+08:00",
+      "updated_at": "2026-09-03T11:41:13+08:00",
       "confidence": "high",
       "fallback_used": true,
       "data_gap": null
@@ -296,7 +296,7 @@
       "source": "SEC",
       "source_type": "official",
       "source_url": "https://data.sec.gov/submissions/CIK0001046179.json",
-      "updated_at": "2026-09-02T11:41:49+08:00",
+      "updated_at": "2026-09-03T11:41:13+08:00",
       "confidence": "high",
       "fallback_used": true,
       "data_gap": null
@@ -312,7 +312,7 @@
       "source": "SEC",
       "source_type": "official",
       "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001046179.json",
-      "updated_at": "2026-09-02T11:41:49+08:00",
+      "updated_at": "2026-09-03T11:41:13+08:00",
       "confidence": "low",
       "fallback_used": true,
       "data_gap": "HTTP 200"
@@ -376,7 +376,7 @@
       "source": "SEC",
       "source_type": "official",
       "source_url": "https://data.sec.gov/submissions/CIK0000002488.json",
-      "updated_at": "2026-09-02T11:41:49+08:00",
+      "updated_at": "2026-09-03T11:41:14+08:00",
       "confidence": "high",
       "fallback_used": true,
       "data_gap": null
@@ -417,7 +417,7 @@
       "source": "SEC",
       "source_type": "official",
       "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000002488.json",
-      "updated_at": "2026-09-02T11:41:49+08:00",
+      "updated_at": "2026-09-03T11:41:14+08:00",
       "confidence": "high",
       "fallback_used": true,
       "data_gap": null
@@ -428,6 +428,12 @@
         "cik": "0001730168",
         "company": "Broadcom Inc.",
         "recent_filings": [
+          {
+            "form": "8-K",
+            "filed": "2026-09-02",
+            "accession": "0001730168-26-000076",
+            "primary_document": "avgo-20260902.htm"
+          },
           {
             "form": "8-K",
             "filed": "2026-07-06",
@@ -469,19 +475,13 @@
             "filed": "2026-04-06",
             "accession": "0001193125-26-144028",
             "primary_document": "d87999d8k.htm"
-          },
-          {
-            "form": "8-K",
-            "filed": "2026-04-02",
-            "accession": "0001193125-26-140574",
-            "primary_document": "d109450d8k.htm"
           }
         ]
       },
       "source": "SEC",
       "source_type": "official",
       "source_url": "https://data.sec.gov/submissions/CIK0001730168.json",
-      "updated_at": "2026-09-02T11:41:49+08:00",
+      "updated_at": "2026-09-03T11:41:14+08:00",
       "confidence": "high",
       "fallback_used": true,
       "data_gap": null
@@ -531,7 +531,7 @@
       "source": "SEC",
       "source_type": "official",
       "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001730168.json",
-      "updated_at": "2026-09-02T11:41:49+08:00",
+      "updated_at": "2026-09-03T11:41:14+08:00",
       "confidence": "high",
       "fallback_used": true,
       "data_gap": null
@@ -565,7 +565,7 @@
       "source": "SEC",
       "source_type": "official",
       "source_url": "https://data.sec.gov/submissions/CIK0001973239.json",
-      "updated_at": "2026-09-02T11:41:50+08:00",
+      "updated_at": "2026-09-03T11:41:14+08:00",
       "confidence": "high",
       "fallback_used": true,
       "data_gap": null
@@ -615,7 +615,7 @@
       "source": "SEC",
       "source_type": "official",
       "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001973239.json",
-      "updated_at": "2026-09-02T11:41:50+08:00",
+      "updated_at": "2026-09-03T11:41:14+08:00",
       "confidence": "high",
       "fallback_used": true,
       "data_gap": null
@@ -679,7 +679,7 @@
       "source": "SEC",
       "source_type": "official",
       "source_url": "https://data.sec.gov/submissions/CIK0001835632.json",
-      "updated_at": "2026-09-02T11:41:50+08:00",
+      "updated_at": "2026-09-03T11:41:14+08:00",
       "confidence": "high",
       "fallback_used": true,
       "data_gap": null
@@ -729,7 +729,7 @@
       "source": "SEC",
       "source_type": "official",
       "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001835632.json",
-      "updated_at": "2026-09-02T11:41:50+08:00",
+      "updated_at": "2026-09-03T11:41:14+08:00",
       "confidence": "high",
       "fallback_used": true,
       "data_gap": null
@@ -793,7 +793,7 @@
       "source": "SEC",
       "source_type": "official",
       "source_url": "https://data.sec.gov/submissions/CIK0000820318.json",
-      "updated_at": "2026-09-02T11:41:50+08:00",
+      "updated_at": "2026-09-03T11:41:15+08:00",
       "confidence": "high",
       "fallback_used": true,
       "data_gap": null
@@ -843,7 +843,7 @@
       "source": "SEC",
       "source_type": "official",
       "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000820318.json",
-      "updated_at": "2026-09-02T11:41:50+08:00",
+      "updated_at": "2026-09-03T11:41:15+08:00",
       "confidence": "high",
       "fallback_used": true,
       "data_gap": null
@@ -907,7 +907,7 @@
       "source": "SEC",
       "source_type": "official",
       "source_url": "https://data.sec.gov/submissions/CIK0000937966.json",
-      "updated_at": "2026-09-02T11:41:50+08:00",
+      "updated_at": "2026-09-03T11:41:16+08:00",
       "confidence": "high",
       "fallback_used": true,
       "data_gap": null
@@ -957,7 +957,7 @@
       "source": "SEC",
       "source_type": "official",
       "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000937966.json",
-      "updated_at": "2026-09-02T11:41:50+08:00",
+      "updated_at": "2026-09-03T11:41:16+08:00",
       "confidence": "high",
       "fallback_used": true,
       "data_gap": null
@@ -1021,7 +1021,7 @@
       "source": "SEC",
       "source_type": "official",
       "source_url": "https://data.sec.gov/submissions/CIK0000006951.json",
-      "updated_at": "2026-09-02T11:41:51+08:00",
+      "updated_at": "2026-09-03T11:41:16+08:00",
       "confidence": "high",
       "fallback_used": true,
       "data_gap": null
@@ -1071,7 +1071,7 @@
       "source": "SEC",
       "source_type": "official",
       "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000006951.json",
-      "updated_at": "2026-09-02T11:41:51+08:00",
+      "updated_at": "2026-09-03T11:41:16+08:00",
       "confidence": "high",
       "fallback_used": true,
       "data_gap": null
@@ -1135,7 +1135,7 @@
       "source": "SEC",
       "source_type": "official",
       "source_url": "https://data.sec.gov/submissions/CIK0000707549.json",
-      "updated_at": "2026-09-02T11:41:51+08:00",
+      "updated_at": "2026-09-03T11:41:17+08:00",
       "confidence": "high",
       "fallback_used": true,
       "data_gap": null
@@ -1185,7 +1185,7 @@
       "source": "SEC",
       "source_type": "official",
       "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000707549.json",
-      "updated_at": "2026-09-02T11:41:51+08:00",
+      "updated_at": "2026-09-03T11:41:17+08:00",
       "confidence": "high",
       "fallback_used": true,
       "data_gap": null
@@ -1249,7 +1249,7 @@
       "source": "SEC",
       "source_type": "official",
       "source_url": "https://data.sec.gov/submissions/CIK0000319201.json",
-      "updated_at": "2026-09-02T11:41:51+08:00",
+      "updated_at": "2026-09-03T11:41:17+08:00",
       "confidence": "high",
       "fallback_used": true,
       "data_gap": null
@@ -1299,7 +1299,7 @@
       "source": "SEC",
       "source_type": "official",
       "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000319201.json",
-      "updated_at": "2026-09-02T11:41:51+08:00",
+      "updated_at": "2026-09-03T11:41:17+08:00",
       "confidence": "high",
       "fallback_used": true,
       "data_gap": null
@@ -1363,7 +1363,7 @@
       "source": "SEC",
       "source_type": "official",
       "source_url": "https://data.sec.gov/submissions/CIK0000097210.json",
-      "updated_at": "2026-09-02T11:41:52+08:00",
+      "updated_at": "2026-09-03T11:41:17+08:00",
       "confidence": "high",
       "fallback_used": true,
       "data_gap": null
@@ -1413,7 +1413,7 @@
       "source": "SEC",
       "source_type": "official",
       "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000097210.json",
-      "updated_at": "2026-09-02T11:41:52+08:00",
+      "updated_at": "2026-09-03T11:41:17+08:00",
       "confidence": "high",
       "fallback_used": true,
       "data_gap": null
@@ -1477,7 +1477,7 @@
       "source": "SEC",
       "source_type": "official",
       "source_url": "https://data.sec.gov/submissions/CIK0000723125.json",
-      "updated_at": "2026-09-02T11:41:52+08:00",
+      "updated_at": "2026-09-03T11:41:18+08:00",
       "confidence": "high",
       "fallback_used": true,
       "data_gap": null
@@ -1527,7 +1527,7 @@
       "source": "SEC",
       "source_type": "official",
       "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000723125.json",
-      "updated_at": "2026-09-02T11:41:52+08:00",
+      "updated_at": "2026-09-03T11:41:18+08:00",
       "confidence": "high",
       "fallback_used": true,
       "data_gap": null
@@ -1591,7 +1591,7 @@
       "source": "SEC",
       "source_type": "official",
       "source_url": "https://data.sec.gov/submissions/CIK0001596532.json",
-      "updated_at": "2026-09-02T11:41:52+08:00",
+      "updated_at": "2026-09-03T11:41:18+08:00",
       "confidence": "high",
       "fallback_used": true,
       "data_gap": null
@@ -1641,7 +1641,7 @@
       "source": "SEC",
       "source_type": "official",
       "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001596532.json",
-      "updated_at": "2026-09-02T11:41:52+08:00",
+      "updated_at": "2026-09-03T11:41:18+08:00",
       "confidence": "high",
       "fallback_used": true,
       "data_gap": null
@@ -1705,7 +1705,7 @@
       "source": "SEC",
       "source_type": "official",
       "source_url": "https://data.sec.gov/submissions/CIK0001633978.json",
-      "updated_at": "2026-09-02T11:41:53+08:00",
+      "updated_at": "2026-09-03T11:41:19+08:00",
       "confidence": "high",
       "fallback_used": true,
       "data_gap": null
@@ -1755,7 +1755,7 @@
       "source": "SEC",
       "source_type": "official",
       "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001633978.json",
-      "updated_at": "2026-09-02T11:41:53+08:00",
+      "updated_at": "2026-09-03T11:41:19+08:00",
       "confidence": "high",
       "fallback_used": true,
       "data_gap": null
@@ -1819,7 +1819,7 @@
       "source": "SEC",
       "source_type": "official",
       "source_url": "https://data.sec.gov/submissions/CIK0000936395.json",
-      "updated_at": "2026-09-02T11:41:53+08:00",
+      "updated_at": "2026-09-03T11:41:19+08:00",
       "confidence": "high",
       "fallback_used": true,
       "data_gap": null
@@ -1869,7 +1869,7 @@
       "source": "SEC",
       "source_type": "official",
       "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000936395.json",
-      "updated_at": "2026-09-02T11:41:53+08:00",
+      "updated_at": "2026-09-03T11:41:19+08:00",
       "confidence": "high",
       "fallback_used": true,
       "data_gap": null
@@ -1878,14 +1878,14 @@
       "field": "macro.DGS10",
       "value": {
         "series_id": "DGS10",
-        "latest_date": "2026-08-31",
-        "latest_value": 4.75,
+        "latest_date": "2026-09-01",
+        "latest_value": 4.79,
         "observation_count": 8
       },
       "source": "FRED",
       "source_type": "official",
       "source_url": "https://api.stlouisfed.org/fred/series/observations?series_id=DGS10&file_type=json",
-      "updated_at": "2026-09-02T11:41:53+08:00",
+      "updated_at": "2026-09-03T11:41:19+08:00",
       "confidence": "high",
       "fallback_used": true,
       "data_gap": null
@@ -1894,14 +1894,14 @@
       "field": "macro.DGS2",
       "value": {
         "series_id": "DGS2",
-        "latest_date": "2026-08-31",
-        "latest_value": 4.34,
+        "latest_date": "2026-09-01",
+        "latest_value": 4.39,
         "observation_count": 8
       },
       "source": "FRED",
       "source_type": "official",
       "source_url": "https://api.stlouisfed.org/fred/series/observations?series_id=DGS2&file_type=json",
-      "updated_at": "2026-09-02T11:41:53+08:00",
+      "updated_at": "2026-09-03T11:41:19+08:00",
       "confidence": "high",
       "fallback_used": true,
       "data_gap": null
@@ -1917,7 +1917,7 @@
       "source": "FRED",
       "source_type": "official",
       "source_url": "https://api.stlouisfed.org/fred/series/observations?series_id=FEDFUNDS&file_type=json",
-      "updated_at": "2026-09-02T11:41:53+08:00",
+      "updated_at": "2026-09-03T11:41:19+08:00",
       "confidence": "high",
       "fallback_used": true,
       "data_gap": null
@@ -1933,7 +1933,7 @@
       "source": "FRED",
       "source_type": "official",
       "source_url": "https://api.stlouisfed.org/fred/series/observations?series_id=CPIAUCSL&file_type=json",
-      "updated_at": "2026-09-02T11:41:53+08:00",
+      "updated_at": "2026-09-03T11:41:19+08:00",
       "confidence": "high",
       "fallback_used": true,
       "data_gap": null
@@ -1949,7 +1949,7 @@
       "source": "FRED",
       "source_type": "official",
       "source_url": "https://api.stlouisfed.org/fred/series/observations?series_id=PCEPI&file_type=json",
-      "updated_at": "2026-09-02T11:41:53+08:00",
+      "updated_at": "2026-09-03T11:41:19+08:00",
       "confidence": "high",
       "fallback_used": true,
       "data_gap": null
@@ -1965,7 +1965,7 @@
       "source": "FRED",
       "source_type": "official",
       "source_url": "https://api.stlouisfed.org/fred/series/observations?series_id=UNRATE&file_type=json",
-      "updated_at": "2026-09-02T11:41:53+08:00",
+      "updated_at": "2026-09-03T11:41:19+08:00",
       "confidence": "high",
       "fallback_used": true,
       "data_gap": null
@@ -1981,7 +1981,7 @@
       "source": "FRED",
       "source_type": "official",
       "source_url": "https://api.stlouisfed.org/fred/series/observations?series_id=PAYEMS&file_type=json",
-      "updated_at": "2026-09-02T11:41:53+08:00",
+      "updated_at": "2026-09-03T11:41:19+08:00",
       "confidence": "high",
       "fallback_used": true,
       "data_gap": null
@@ -1990,14 +1990,14 @@
       "field": "macro.BAMLH0A0HYM2",
       "value": {
         "series_id": "BAMLH0A0HYM2",
-        "latest_date": "2026-08-31",
-        "latest_value": 2.63,
+        "latest_date": "2026-09-01",
+        "latest_value": 2.65,
         "observation_count": 8
       },
       "source": "FRED",
       "source_type": "official",
       "source_url": "https://api.stlouisfed.org/fred/series/observations?series_id=BAMLH0A0HYM2&file_type=json",
-      "updated_at": "2026-09-02T11:41:53+08:00",
+      "updated_at": "2026-09-03T11:41:19+08:00",
       "confidence": "high",
       "fallback_used": true,
       "data_gap": null
@@ -2007,258 +2007,6 @@
       "value": {
         "format": "csv",
         "rows": [
-          {
-            "symbol": "AAME",
-            "name": "ATLANTIC AMERICAN CORPORATION",
-            "reportDate": "2026-09-01",
-            "fiscalDateEnding": "2026-06-30",
-            "estimate": "",
-            "currency": "USD",
-            "timeOfTheDay": ""
-          },
-          {
-            "symbol": "ALPS",
-            "name": "ALPS GROUP INCORPORATED",
-            "reportDate": "2026-09-01",
-            "fiscalDateEnding": "2026-06-30",
-            "estimate": "",
-            "currency": "USD",
-            "timeOfTheDay": ""
-          },
-          {
-            "symbol": "AREC",
-            "name": "AMERICAN RESOURCES CORPORATION",
-            "reportDate": "2026-09-01",
-            "fiscalDateEnding": "2026-06-30",
-            "estimate": "-0.09",
-            "currency": "USD",
-            "timeOfTheDay": ""
-          },
-          {
-            "symbol": "BRLS",
-            "name": "BOREALIS FOODS INCORPORATED",
-            "reportDate": "2026-09-01",
-            "fiscalDateEnding": "2026-06-30",
-            "estimate": "",
-            "currency": "USD",
-            "timeOfTheDay": ""
-          },
-          {
-            "symbol": "BRTX",
-            "name": "BIORESTORATIVE THERAPIES INCORPORATED",
-            "reportDate": "2026-09-01",
-            "fiscalDateEnding": "2026-06-30",
-            "estimate": "-0.15",
-            "currency": "USD",
-            "timeOfTheDay": ""
-          },
-          {
-            "symbol": "CRDO",
-            "name": "CREDO TECHNOLOGY GROUP HOLDING LIMITED",
-            "reportDate": "2026-09-01",
-            "fiscalDateEnding": "2026-07-31",
-            "estimate": "0.91",
-            "currency": "USD",
-            "timeOfTheDay": "post-market"
-          },
-          {
-            "symbol": "CSHR",
-            "name": "COINSHARES PUBLIC LIMITED COMPANY",
-            "reportDate": "2026-09-01",
-            "fiscalDateEnding": "2026-06-30",
-            "estimate": "",
-            "currency": "USD",
-            "timeOfTheDay": ""
-          },
-          {
-            "symbol": "DELL",
-            "name": "DELL TECHNOLOGIES INCORPORATED",
-            "reportDate": "2026-09-01",
-            "fiscalDateEnding": "2026-07-31",
-            "estimate": "4.72",
-            "currency": "USD",
-            "timeOfTheDay": "post-market"
-          },
-          {
-            "symbol": "ELME",
-            "name": "ELME COMMUNITIES",
-            "reportDate": "2026-09-01",
-            "fiscalDateEnding": "2026-06-30",
-            "estimate": "",
-            "currency": "USD",
-            "timeOfTheDay": ""
-          },
-          {
-            "symbol": "FLYE",
-            "name": "FLY-E GROUP INCORPORATED",
-            "reportDate": "2026-09-01",
-            "fiscalDateEnding": "2026-06-30",
-            "estimate": "",
-            "currency": "USD",
-            "timeOfTheDay": ""
-          },
-          {
-            "symbol": "GTEN",
-            "name": "GORES HOLDINGS X INCORPORATED",
-            "reportDate": "2026-09-01",
-            "fiscalDateEnding": "2026-06-30",
-            "estimate": "",
-            "currency": "USD",
-            "timeOfTheDay": ""
-          },
-          {
-            "symbol": "GTLB",
-            "name": "GITLAB INCORPORATED",
-            "reportDate": "2026-09-01",
-            "fiscalDateEnding": "2026-07-31",
-            "estimate": "-0.07",
-            "currency": "USD",
-            "timeOfTheDay": "post-market"
-          },
-          {
-            "symbol": "HMR",
-            "name": "HEIDMAR MARITIME HOLDINGS CORPORATION",
-            "reportDate": "2026-09-01",
-            "fiscalDateEnding": "2026-06-30",
-            "estimate": "0.1",
-            "currency": "USD",
-            "timeOfTheDay": "pre-market"
-          },
-          {
-            "symbol": "IRS",
-            "name": "IRSA INVERSIONES Y REPRESENTACIONES SOCIEDAD ANÓNIMA",
-            "reportDate": "2026-09-01",
-            "fiscalDateEnding": "2026-06-30",
-            "estimate": "",
-            "currency": "USD",
-            "timeOfTheDay": ""
-          },
-          {
-            "symbol": "MDB",
-            "name": "MONGODB INCORPORATED",
-            "reportDate": "2026-09-01",
-            "fiscalDateEnding": "2026-07-31",
-            "estimate": "0.08",
-            "currency": "USD",
-            "timeOfTheDay": "post-market"
-          },
-          {
-            "symbol": "MDT",
-            "name": "MEDTRONIC PUBLIC LIMITED COMPANY",
-            "reportDate": "2026-09-01",
-            "fiscalDateEnding": "2026-07-31",
-            "estimate": "1.38",
-            "currency": "USD",
-            "timeOfTheDay": "pre-market"
-          },
-          {
-            "symbol": "MMED",
-            "name": "MINIMED GROUP INCORPORATED",
-            "reportDate": "2026-09-01",
-            "fiscalDateEnding": "2026-07-31",
-            "estimate": "0.09",
-            "currency": "USD",
-            "timeOfTheDay": "pre-market"
-          },
-          {
-            "symbol": "NIO",
-            "name": "NIO INCORPORATED",
-            "reportDate": "2026-09-01",
-            "fiscalDateEnding": "2026-06-30",
-            "estimate": "-0.07",
-            "currency": "USD",
-            "timeOfTheDay": "pre-market"
-          },
-          {
-            "symbol": "PANW",
-            "name": "PALO ALTO NETWORKS INCORPORATED",
-            "reportDate": "2026-09-01",
-            "fiscalDateEnding": "2026-07-31",
-            "estimate": "0.51",
-            "currency": "USD",
-            "timeOfTheDay": "post-market"
-          },
-          {
-            "symbol": "RGS",
-            "name": "REGIS CORPORATION",
-            "reportDate": "2026-09-01",
-            "fiscalDateEnding": "2026-06-30",
-            "estimate": "",
-            "currency": "USD",
-            "timeOfTheDay": "pre-market"
-          },
-          {
-            "symbol": "RZLV",
-            "name": "REZOLVE AI PUBLIC LIMITED COMPANY",
-            "reportDate": "2026-09-01",
-            "fiscalDateEnding": "2026-06-30",
-            "estimate": "",
-            "currency": "USD",
-            "timeOfTheDay": "pre-market"
-          },
-          {
-            "symbol": "SEGG",
-            "name": "SPORTS ENTERTAINMENT GAMING GLOBAL CORPORATION",
-            "reportDate": "2026-09-01",
-            "fiscalDateEnding": "2026-06-30",
-            "estimate": "",
-            "currency": "USD",
-            "timeOfTheDay": ""
-          },
-          {
-            "symbol": "SHPH",
-            "name": "SHUTTLE PHARMACEUTICALS HOLDINGS INCORPORATED",
-            "reportDate": "2026-09-01",
-            "fiscalDateEnding": "2026-06-30",
-            "estimate": "",
-            "currency": "USD",
-            "timeOfTheDay": ""
-          },
-          {
-            "symbol": "SPWH",
-            "name": "SPORTSMAN'S WAREHOUSE HOLDINGS INCORPORATED",
-            "reportDate": "2026-09-01",
-            "fiscalDateEnding": "2026-07-31",
-            "estimate": "-0.11",
-            "currency": "USD",
-            "timeOfTheDay": "post-market"
-          },
-          {
-            "symbol": "UPXI",
-            "name": "UPEXI INCORPORATED",
-            "reportDate": "2026-09-01",
-            "fiscalDateEnding": "2026-06-30",
-            "estimate": "",
-            "currency": "USD",
-            "timeOfTheDay": ""
-          },
-          {
-            "symbol": "YEXT",
-            "name": "YEXT INCORPORATED",
-            "reportDate": "2026-09-01",
-            "fiscalDateEnding": "2026-07-31",
-            "estimate": "0.1",
-            "currency": "USD",
-            "timeOfTheDay": "pre-market"
-          },
-          {
-            "symbol": "ZENA",
-            "name": "ZENATECH INCORPORATED",
-            "reportDate": "2026-09-01",
-            "fiscalDateEnding": "2026-06-30",
-            "estimate": "-0.21",
-            "currency": "USD",
-            "timeOfTheDay": ""
-          },
-          {
-            "symbol": "ZEPP",
-            "name": "ZEPP HEALTH CORPORATION",
-            "reportDate": "2026-09-01",
-            "fiscalDateEnding": "2026-06-30",
-            "estimate": "",
-            "currency": "USD",
-            "timeOfTheDay": "pre-market"
-          },
           {
             "symbol": "AACG",
             "name": "ATA CREATIVITY GLOBAL",
@@ -3806,14 +3554,266 @@
             "estimate": "0.32",
             "currency": "USD",
             "timeOfTheDay": "pre-market"
+          },
+          {
+            "symbol": "TEN",
+            "name": "TSAKOS ENERGY NAVIGATION LIMITED",
+            "reportDate": "2026-09-10",
+            "fiscalDateEnding": "2026-06-30",
+            "estimate": "",
+            "currency": "USD",
+            "timeOfTheDay": "pre-market"
+          },
+          {
+            "symbol": "UROY",
+            "name": "URANIUM ROYALTY CORPORATION",
+            "reportDate": "2026-09-10",
+            "fiscalDateEnding": "2026-07-31",
+            "estimate": "0.05",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "VRA",
+            "name": "VERA BRADLEY INCORPORATED",
+            "reportDate": "2026-09-10",
+            "fiscalDateEnding": "2026-07-31",
+            "estimate": "-0.08",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "IHT",
+            "name": "INNSUITES HOSPITALITY TRUST",
+            "reportDate": "2026-09-11",
+            "fiscalDateEnding": "2026-07-31",
+            "estimate": "",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "JVA",
+            "name": "COFFEE HOLDING COMPANY INCORPORATED",
+            "reportDate": "2026-09-11",
+            "fiscalDateEnding": "2026-07-31",
+            "estimate": "",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "KR",
+            "name": "KROGER COMPANY (THE)",
+            "reportDate": "2026-09-11",
+            "fiscalDateEnding": "2026-07-31",
+            "estimate": "1.05",
+            "currency": "USD",
+            "timeOfTheDay": "pre-market"
+          },
+          {
+            "symbol": "RENT",
+            "name": "RENT THE RUNWAY INCORPORATED",
+            "reportDate": "2026-09-11",
+            "fiscalDateEnding": "2026-07-31",
+            "estimate": "",
+            "currency": "USD",
+            "timeOfTheDay": "pre-market"
+          },
+          {
+            "symbol": "TPET",
+            "name": "TRIO PETROLEUM CORPORATION",
+            "reportDate": "2026-09-11",
+            "fiscalDateEnding": "2026-07-31",
+            "estimate": "",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "BNR",
+            "name": "BURNING ROCK BIOTECH LIMITED",
+            "reportDate": "2026-09-14",
+            "fiscalDateEnding": "2026-06-30",
+            "estimate": "",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "CODA",
+            "name": "CODA OCTOPUS GROUP INCORPORATED",
+            "reportDate": "2026-09-14",
+            "fiscalDateEnding": "2026-07-31",
+            "estimate": "",
+            "currency": "USD",
+            "timeOfTheDay": "pre-market"
+          },
+          {
+            "symbol": "DLNG",
+            "name": "DYNAGAS LNG PARTNERS LIMITED PARTNERSHIP",
+            "reportDate": "2026-09-14",
+            "fiscalDateEnding": "2026-06-30",
+            "estimate": "",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "GROW",
+            "name": "U.S. GLOBAL INVESTORS INCORPORATED",
+            "reportDate": "2026-09-14",
+            "fiscalDateEnding": "2026-06-30",
+            "estimate": "",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "HAIN",
+            "name": "THE HAIN CELESTIAL GROUP INCORPORATED",
+            "reportDate": "2026-09-14",
+            "fiscalDateEnding": "2026-06-30",
+            "estimate": "-0.03",
+            "currency": "USD",
+            "timeOfTheDay": "pre-market"
+          },
+          {
+            "symbol": "HITI",
+            "name": "HIGH TIDE INCORPORATED",
+            "reportDate": "2026-09-14",
+            "fiscalDateEnding": "2026-07-31",
+            "estimate": "0.01",
+            "currency": "USD",
+            "timeOfTheDay": "post-market"
+          },
+          {
+            "symbol": "VZLA",
+            "name": "VIZSLA SILVER CORPORATION",
+            "reportDate": "2026-09-14",
+            "fiscalDateEnding": "2026-07-31",
+            "estimate": "0.0",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "EPM",
+            "name": "EVOLUTION PETROLEUM CORPORATION INCORPORATED",
+            "reportDate": "2026-09-15",
+            "fiscalDateEnding": "2026-06-30",
+            "estimate": "0.02",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "ESP",
+            "name": "ESPEY MFG. & ELECTRONICS CORPORATION",
+            "reportDate": "2026-09-15",
+            "fiscalDateEnding": "2026-06-30",
+            "estimate": "",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "CBRL",
+            "name": "CRACKER BARREL OLD COUNTRY STORE INCORPORATED",
+            "reportDate": "2026-09-16",
+            "fiscalDateEnding": "2026-07-31",
+            "estimate": "0.2",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "DSWL",
+            "name": "DESWELL INDUSTRIES INCORPORATED",
+            "reportDate": "2026-09-16",
+            "fiscalDateEnding": "2026-06-30",
+            "estimate": "",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "HERE",
+            "name": "HERE GROUP LIMITED",
+            "reportDate": "2026-09-16",
+            "fiscalDateEnding": "2026-06-30",
+            "estimate": "",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "LUXE",
+            "name": "LUXEXPERIENCE B.V.",
+            "reportDate": "2026-09-16",
+            "fiscalDateEnding": "2026-06-30",
+            "estimate": "-0.15",
+            "currency": "USD",
+            "timeOfTheDay": "pre-market"
+          },
+          {
+            "symbol": "MANU",
+            "name": "MANCHESTER UNITED LIMITED",
+            "reportDate": "2026-09-16",
+            "fiscalDateEnding": "2026-06-30",
+            "estimate": "",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "PLUR",
+            "name": "PLURI INCORPORATED",
+            "reportDate": "2026-09-16",
+            "fiscalDateEnding": "2026-06-30",
+            "estimate": "",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "RZLT",
+            "name": "REZOLUTE INCORPORATED",
+            "reportDate": "2026-09-16",
+            "fiscalDateEnding": "2026-06-30",
+            "estimate": "-0.13",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "SANG",
+            "name": "SANGOMA TECHNOLOGIES CORPORATION",
+            "reportDate": "2026-09-16",
+            "fiscalDateEnding": "2026-06-30",
+            "estimate": "-0.06",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "YI",
+            "name": "111 INCORPORATED",
+            "reportDate": "2026-09-16",
+            "fiscalDateEnding": "2026-06-30",
+            "estimate": "",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "ABAT",
+            "name": "AMERICAN BATTERY TECHNOLOGY COMPANY",
+            "reportDate": "2026-09-17",
+            "fiscalDateEnding": "2026-06-30",
+            "estimate": "",
+            "currency": "USD",
+            "timeOfTheDay": ""
+          },
+          {
+            "symbol": "DRI",
+            "name": "DARDEN RESTAURANTS INCORPORATED",
+            "reportDate": "2026-09-17",
+            "fiscalDateEnding": "2026-08-31",
+            "estimate": "2.07",
+            "currency": "USD",
+            "timeOfTheDay": ""
           }
         ],
-        "row_count": 1651
+        "row_count": 1778
       },
       "source": "Alpha Vantage",
       "source_type": "vendor_fallback",
       "source_url": "https://www.alphavantage.co/query?function=EARNINGS_CALENDAR&apikey=REDACTED&horizon=3month",
-      "updated_at": "2026-09-02T11:41:55+08:00",
+      "updated_at": "2026-09-03T11:41:21+08:00",
       "confidence": "medium",
       "fallback_used": true,
       "data_gap": null
@@ -3897,6 +3897,15 @@
           }
         ],
         "quarterlyEarnings": [
+          {
+            "fiscalDateEnding": "2026-07-31",
+            "reportedDate": "2026-09-02",
+            "reportedEPS": "None",
+            "estimatedEPS": "2.83",
+            "surprise": "0",
+            "surprisePercentage": "None",
+            "reportTime": "post-market"
+          },
           {
             "fiscalDateEnding": "2026-04-30",
             "reportedDate": "2026-06-03",
@@ -4514,7 +4523,7 @@
       "source": "Alpha Vantage",
       "source_type": "vendor_fallback",
       "source_url": "https://www.alphavantage.co/query?function=EARNINGS&apikey=REDACTED&symbol=AVGO",
-      "updated_at": "2026-09-02T11:41:55+08:00",
+      "updated_at": "2026-09-03T11:41:21+08:00",
       "confidence": "medium",
       "fallback_used": true,
       "data_gap": null
@@ -5349,7 +5358,7 @@
       "source": "Alpha Vantage",
       "source_type": "vendor_fallback",
       "source_url": "https://www.alphavantage.co/query?function=EARNINGS_ESTIMATES&apikey=REDACTED&symbol=AVGO",
-      "updated_at": "2026-09-02T11:41:55+08:00",
+      "updated_at": "2026-09-03T11:41:21+08:00",
       "confidence": "medium",
       "fallback_used": true,
       "data_gap": null
@@ -5499,7 +5508,7 @@
       "source": "Alpha Vantage",
       "source_type": "vendor_fallback",
       "source_url": "https://www.alphavantage.co/query?function=EARNINGS&apikey=REDACTED&symbol=ARM",
-      "updated_at": "2026-09-02T11:41:55+08:00",
+      "updated_at": "2026-09-03T11:41:21+08:00",
       "confidence": "medium",
       "fallback_used": true,
       "data_gap": null
@@ -5814,7 +5823,7 @@
       "source": "Alpha Vantage",
       "source_type": "vendor_fallback",
       "source_url": "https://www.alphavantage.co/query?function=EARNINGS_ESTIMATES&apikey=REDACTED&symbol=ARM",
-      "updated_at": "2026-09-02T11:41:55+08:00",
+      "updated_at": "2026-09-03T11:41:21+08:00",
       "confidence": "medium",
       "fallback_used": true,
       "data_gap": null
@@ -6884,7 +6893,7 @@
       "source": "Alpha Vantage",
       "source_type": "vendor_fallback",
       "source_url": "https://www.alphavantage.co/query?function=EARNINGS&apikey=REDACTED&symbol=MRVL",
-      "updated_at": "2026-09-02T11:41:55+08:00",
+      "updated_at": "2026-09-03T11:41:21+08:00",
       "confidence": "medium",
       "fallback_used": true,
       "data_gap": null
@@ -7719,7 +7728,7 @@
       "source": "Alpha Vantage",
       "source_type": "vendor_fallback",
       "source_url": "https://www.alphavantage.co/query?function=EARNINGS_ESTIMATES&apikey=REDACTED&symbol=MRVL",
-      "updated_at": "2026-09-02T11:41:55+08:00",
+      "updated_at": "2026-09-03T11:41:21+08:00",
       "confidence": "medium",
       "fallback_used": true,
       "data_gap": null
@@ -8958,7 +8967,7 @@
       "source": "Alpha Vantage",
       "source_type": "vendor_fallback",
       "source_url": "https://www.alphavantage.co/query?function=EARNINGS&apikey=REDACTED&symbol=COHR",
-      "updated_at": "2026-09-02T11:41:55+08:00",
+      "updated_at": "2026-09-03T11:41:21+08:00",
       "confidence": "medium",
       "fallback_used": true,
       "data_gap": null
@@ -9753,7 +9762,7 @@
       "source": "Alpha Vantage",
       "source_type": "vendor_fallback",
       "source_url": "https://www.alphavantage.co/query?function=EARNINGS_ESTIMATES&apikey=REDACTED&symbol=COHR",
-      "updated_at": "2026-09-02T11:41:55+08:00",
+      "updated_at": "2026-09-03T11:41:21+08:00",
       "confidence": "medium",
       "fallback_used": true,
       "data_gap": null
@@ -10866,7 +10875,7 @@
       "source": "Alpha Vantage",
       "source_type": "vendor_fallback",
       "source_url": "https://www.alphavantage.co/query?function=EARNINGS&apikey=REDACTED&symbol=ASML",
-      "updated_at": "2026-09-02T11:41:55+08:00",
+      "updated_at": "2026-09-03T11:41:21+08:00",
       "confidence": "medium",
       "fallback_used": true,
       "data_gap": null
@@ -11701,7 +11710,7 @@
       "source": "Alpha Vantage",
       "source_type": "vendor_fallback",
       "source_url": "https://www.alphavantage.co/query?function=EARNINGS_ESTIMATES&apikey=REDACTED&symbol=ASML",
-      "updated_at": "2026-09-02T11:41:55+08:00",
+      "updated_at": "2026-09-03T11:41:21+08:00",
       "confidence": "medium",
       "fallback_used": true,
       "data_gap": null
@@ -12940,7 +12949,7 @@
       "source": "Alpha Vantage",
       "source_type": "vendor_fallback",
       "source_url": "https://www.alphavantage.co/query?function=EARNINGS&apikey=REDACTED&symbol=AMAT",
-      "updated_at": "2026-09-02T11:41:55+08:00",
+      "updated_at": "2026-09-03T11:41:21+08:00",
       "confidence": "medium",
       "fallback_used": true,
       "data_gap": null
@@ -13795,7 +13804,7 @@
       "source": "Alpha Vantage",
       "source_type": "vendor_fallback",
       "source_url": "https://www.alphavantage.co/query?function=EARNINGS_ESTIMATES&apikey=REDACTED&symbol=AMAT",
-      "updated_at": "2026-09-02T11:41:55+08:00",
+      "updated_at": "2026-09-03T11:41:21+08:00",
       "confidence": "medium",
       "fallback_used": true,
       "data_gap": null
@@ -15034,7 +15043,7 @@
       "source": "Alpha Vantage",
       "source_type": "vendor_fallback",
       "source_url": "https://www.alphavantage.co/query?function=EARNINGS&apikey=REDACTED&symbol=LRCX",
-      "updated_at": "2026-09-02T11:41:55+08:00",
+      "updated_at": "2026-09-03T11:41:21+08:00",
       "confidence": "medium",
       "fallback_used": true,
       "data_gap": null
@@ -15869,7 +15878,7 @@
       "source": "Alpha Vantage",
       "source_type": "vendor_fallback",
       "source_url": "https://www.alphavantage.co/query?function=EARNINGS_ESTIMATES&apikey=REDACTED&symbol=LRCX",
-      "updated_at": "2026-09-02T11:41:55+08:00",
+      "updated_at": "2026-09-03T11:41:21+08:00",
       "confidence": "medium",
       "fallback_used": true,
       "data_gap": null
@@ -17108,7 +17117,7 @@
       "source": "Alpha Vantage",
       "source_type": "vendor_fallback",
       "source_url": "https://www.alphavantage.co/query?function=EARNINGS&apikey=REDACTED&symbol=KLAC",
-      "updated_at": "2026-09-02T11:41:55+08:00",
+      "updated_at": "2026-09-03T11:41:21+08:00",
       "confidence": "medium",
       "fallback_used": true,
       "data_gap": null
@@ -17943,7 +17952,7 @@
       "source": "Alpha Vantage",
       "source_type": "vendor_fallback",
       "source_url": "https://www.alphavantage.co/query?function=EARNINGS_ESTIMATES&apikey=REDACTED&symbol=KLAC",
-      "updated_at": "2026-09-02T11:41:55+08:00",
+      "updated_at": "2026-09-03T11:41:21+08:00",
       "confidence": "medium",
       "fallback_used": true,
       "data_gap": null
@@ -19182,7 +19191,7 @@
       "source": "Alpha Vantage",
       "source_type": "vendor_fallback",
       "source_url": "https://www.alphavantage.co/query?function=EARNINGS&apikey=REDACTED&symbol=TER",
-      "updated_at": "2026-09-02T11:41:55+08:00",
+      "updated_at": "2026-09-03T11:41:21+08:00",
       "confidence": "medium",
       "fallback_used": true,
       "data_gap": null
@@ -20017,7 +20026,7 @@
       "source": "Alpha Vantage",
       "source_type": "vendor_fallback",
       "source_url": "https://www.alphavantage.co/query?function=EARNINGS_ESTIMATES&apikey=REDACTED&symbol=TER",
-      "updated_at": "2026-09-02T11:41:55+08:00",
+      "updated_at": "2026-09-03T11:41:21+08:00",
       "confidence": "medium",
       "fallback_used": true,
       "data_gap": null
@@ -21256,7 +21265,7 @@
       "source": "Alpha Vantage",
       "source_type": "vendor_fallback",
       "source_url": "https://www.alphavantage.co/query?function=EARNINGS&apikey=REDACTED&symbol=MU",
-      "updated_at": "2026-09-02T11:41:55+08:00",
+      "updated_at": "2026-09-03T11:41:21+08:00",
       "confidence": "medium",
       "fallback_used": true,
       "data_gap": null
@@ -22091,7 +22100,7 @@
       "source": "Alpha Vantage",
       "source_type": "vendor_fallback",
       "source_url": "https://www.alphavantage.co/query?function=EARNINGS_ESTIMATES&apikey=REDACTED&symbol=MU",
-      "updated_at": "2026-09-02T11:41:55+08:00",
+      "updated_at": "2026-09-03T11:41:21+08:00",
       "confidence": "medium",
       "fallback_used": true,
       "data_gap": null
@@ -22115,7 +22124,7 @@
       "source": "OpenFIGI",
       "source_type": "open_source_fallback",
       "source_url": "https://api.openfigi.com/v3/mapping",
-      "updated_at": "2026-09-02T11:42:21+08:00",
+      "updated_at": "2026-09-03T11:41:47+08:00",
       "confidence": "medium",
       "fallback_used": true,
       "data_gap": null
@@ -22139,7 +22148,7 @@
       "source": "OpenFIGI",
       "source_type": "open_source_fallback",
       "source_url": "https://api.openfigi.com/v3/mapping",
-      "updated_at": "2026-09-02T11:42:21+08:00",
+      "updated_at": "2026-09-03T11:41:47+08:00",
       "confidence": "medium",
       "fallback_used": true,
       "data_gap": null
@@ -22163,7 +22172,7 @@
       "source": "OpenFIGI",
       "source_type": "open_source_fallback",
       "source_url": "https://api.openfigi.com/v3/mapping",
-      "updated_at": "2026-09-02T11:42:21+08:00",
+      "updated_at": "2026-09-03T11:41:47+08:00",
       "confidence": "medium",
       "fallback_used": true,
       "data_gap": null
@@ -22187,7 +22196,7 @@
       "source": "OpenFIGI",
       "source_type": "open_source_fallback",
       "source_url": "https://api.openfigi.com/v3/mapping",
-      "updated_at": "2026-09-02T11:42:21+08:00",
+      "updated_at": "2026-09-03T11:41:47+08:00",
       "confidence": "medium",
       "fallback_used": true,
       "data_gap": null
@@ -22211,7 +22220,7 @@
       "source": "OpenFIGI",
       "source_type": "open_source_fallback",
       "source_url": "https://api.openfigi.com/v3/mapping",
-      "updated_at": "2026-09-02T11:42:21+08:00",
+      "updated_at": "2026-09-03T11:41:47+08:00",
       "confidence": "medium",
       "fallback_used": true,
       "data_gap": null
@@ -22235,7 +22244,7 @@
       "source": "OpenFIGI",
       "source_type": "open_source_fallback",
       "source_url": "https://api.openfigi.com/v3/mapping",
-      "updated_at": "2026-09-02T11:42:21+08:00",
+      "updated_at": "2026-09-03T11:41:47+08:00",
       "confidence": "medium",
       "fallback_used": true,
       "data_gap": null
@@ -22259,7 +22268,7 @@
       "source": "OpenFIGI",
       "source_type": "open_source_fallback",
       "source_url": "https://api.openfigi.com/v3/mapping",
-      "updated_at": "2026-09-02T11:42:21+08:00",
+      "updated_at": "2026-09-03T11:41:47+08:00",
       "confidence": "medium",
       "fallback_used": true,
       "data_gap": null
@@ -22283,7 +22292,7 @@
       "source": "OpenFIGI",
       "source_type": "open_source_fallback",
       "source_url": "https://api.openfigi.com/v3/mapping",
-      "updated_at": "2026-09-02T11:42:21+08:00",
+      "updated_at": "2026-09-03T11:41:47+08:00",
       "confidence": "medium",
       "fallback_used": true,
       "data_gap": null
@@ -22307,7 +22316,7 @@
       "source": "OpenFIGI",
       "source_type": "open_source_fallback",
       "source_url": "https://api.openfigi.com/v3/mapping",
-      "updated_at": "2026-09-02T11:42:21+08:00",
+      "updated_at": "2026-09-03T11:41:47+08:00",
       "confidence": "medium",
       "fallback_used": true,
       "data_gap": null
@@ -22331,7 +22340,7 @@
       "source": "OpenFIGI",
       "source_type": "open_source_fallback",
       "source_url": "https://api.openfigi.com/v3/mapping",
-      "updated_at": "2026-09-02T11:42:21+08:00",
+      "updated_at": "2026-09-03T11:41:47+08:00",
       "confidence": "medium",
       "fallback_used": true,
       "data_gap": null
@@ -22355,7 +22364,7 @@
       "source": "OpenFIGI",
       "source_type": "open_source_fallback",
       "source_url": "https://api.openfigi.com/v3/mapping",
-      "updated_at": "2026-09-02T11:42:21+08:00",
+      "updated_at": "2026-09-03T11:41:47+08:00",
       "confidence": "medium",
       "fallback_used": true,
       "data_gap": null
@@ -22379,7 +22388,7 @@
       "source": "OpenFIGI",
       "source_type": "open_source_fallback",
       "source_url": "https://api.openfigi.com/v3/mapping",
-      "updated_at": "2026-09-02T11:42:21+08:00",
+      "updated_at": "2026-09-03T11:41:47+08:00",
       "confidence": "medium",
       "fallback_used": true,
       "data_gap": null
@@ -22387,24 +22396,24 @@
     {
       "field": "HK.01888.quote.yahoo_chart",
       "value": {
-        "price": 45.28,
+        "price": 46.5,
         "currency": "HKD",
-        "quote_time": "2026-09-02T09:30:00+08:00",
+        "quote_time": "2026-09-03T09:30:00+08:00",
         "exchange": "HKG",
-        "ma20": 39.473,
-        "ma50": 50.3042,
-        "ma200": 32.5859,
-        "low20": 32.1,
+        "ma20": 40.051,
+        "ma50": 49.3624,
+        "ma200": 32.7579,
+        "low20": 34.0,
         "low60": 26.48,
         "low252": 10.5,
         "high252": 107.2,
         "prior_high20": 47.68,
         "prior_high60": 107.2,
         "prior_high252": 107.2,
-        "strict_entry": 39.473,
-        "invalidation": 32.1,
+        "strict_entry": 40.051,
+        "invalidation": 34.0,
         "mechanical_target": 107.2,
-        "reward_risk": 9.1858,
+        "reward_risk": 11.0972,
         "bar_count": 491,
         "technical_data_complete": true,
         "breakout_reference_excludes_current_bar": true,
@@ -22412,12 +22421,6 @@
         "price_freshness": "fallback_only",
         "risk_policy_version": "2.0.0",
         "bars": [
-          {
-            "time": "2025-08-13T01:30:00+00:00",
-            "close": 10.96,
-            "high": 11.05,
-            "low": 10.79
-          },
           {
             "time": "2025-08-14T01:30:00+00:00",
             "close": 11.25,
@@ -23968,16 +23971,22 @@
           },
           {
             "time": "2026-09-02T01:30:00+00:00",
-            "close": 45.28,
-            "high": 45.78,
+            "close": 45.24,
+            "high": 46.6,
             "low": 42.28
+          },
+          {
+            "time": "2026-09-03T01:30:00+00:00",
+            "close": 46.5,
+            "high": 46.78,
+            "low": 43.82
           }
         ]
       },
       "source": "Yahoo Finance",
       "source_type": "open_source_fallback",
       "source_url": "https://finance.yahoo.com/quote/1888.HK",
-      "updated_at": "2026-09-02T11:42:21+08:00",
+      "updated_at": "2026-09-03T11:41:48+08:00",
       "confidence": "medium",
       "fallback_used": true,
       "data_gap": null
@@ -23985,24 +23994,24 @@
     {
       "field": "HK.00148.quote.yahoo_chart",
       "value": {
-        "price": 53.05,
+        "price": 52.3,
         "currency": "HKD",
-        "quote_time": "2026-09-02T09:30:00+08:00",
+        "quote_time": "2026-09-03T09:30:00+08:00",
         "exchange": "HKG",
-        "ma20": 48.5135,
-        "ma50": 61.6358,
-        "ma200": 46.887,
-        "low20": 43.0,
+        "ma20": 48.8865,
+        "ma50": 60.1358,
+        "ma200": 47.0121,
+        "low20": 43.24,
         "low60": 37.5,
         "low252": 25.1,
         "high252": 151.8,
         "prior_high20": 54.95,
         "prior_high60": 151.8,
         "prior_high252": 151.8,
-        "strict_entry": 48.5135,
-        "invalidation": 43.0,
+        "strict_entry": 48.8865,
+        "invalidation": 43.24,
         "mechanical_target": 151.8,
-        "reward_risk": 18.7334,
+        "reward_risk": 18.2261,
         "bar_count": 491,
         "technical_data_complete": true,
         "breakout_reference_excludes_current_bar": true,
@@ -24010,12 +24019,6 @@
         "price_freshness": "fallback_only",
         "risk_policy_version": "2.0.0",
         "bars": [
-          {
-            "time": "2025-08-13T01:30:00+00:00",
-            "close": 29.4,
-            "high": 29.8,
-            "low": 29.04
-          },
           {
             "time": "2025-08-14T01:30:00+00:00",
             "close": 29.86,
@@ -25566,16 +25569,22 @@
           },
           {
             "time": "2026-09-02T01:30:00+00:00",
-            "close": 53.05,
-            "high": 53.2,
+            "close": 52.55,
+            "high": 53.9,
             "low": 50.35
+          },
+          {
+            "time": "2026-09-03T01:30:00+00:00",
+            "close": 52.3,
+            "high": 53.8,
+            "low": 50.05
           }
         ]
       },
       "source": "Yahoo Finance",
       "source_type": "open_source_fallback",
       "source_url": "https://finance.yahoo.com/quote/0148.HK",
-      "updated_at": "2026-09-02T11:42:21+08:00",
+      "updated_at": "2026-09-03T11:41:48+08:00",
       "confidence": "medium",
       "fallback_used": true,
       "data_gap": null
@@ -25583,13 +25592,13 @@
     {
       "field": "HK.01347.quote.yahoo_chart",
       "value": {
-        "price": 116.1,
+        "price": 120.9,
         "currency": "HKD",
-        "quote_time": "2026-09-02T09:30:00+08:00",
+        "quote_time": "2026-09-03T09:30:00+08:00",
         "exchange": "HKG",
-        "ma20": 125.91,
-        "ma50": 149.392,
-        "ma200": 113.2188,
+        "ma20": 125.19,
+        "ma50": 147.998,
+        "ma200": 113.4398,
         "low20": 105.5,
         "low60": 105.5,
         "low252": 44.66,
@@ -25597,10 +25606,10 @@
         "prior_high20": 152.5,
         "prior_high60": 219.6,
         "prior_high252": 219.6,
-        "strict_entry": 125.91,
+        "strict_entry": 125.19,
         "invalidation": 105.5,
         "mechanical_target": 219.6,
-        "reward_risk": 4.5904,
+        "reward_risk": 4.7948,
         "bar_count": 491,
         "technical_data_complete": true,
         "breakout_reference_excludes_current_bar": true,
@@ -25608,12 +25617,6 @@
         "price_freshness": "fallback_only",
         "risk_policy_version": "2.0.0",
         "bars": [
-          {
-            "time": "2025-08-13T01:30:00+00:00",
-            "close": 47.32,
-            "high": 47.56,
-            "low": 44.68
-          },
           {
             "time": "2025-08-14T01:30:00+00:00",
             "close": 48.76,
@@ -27164,16 +27167,22 @@
           },
           {
             "time": "2026-09-02T01:30:00+00:00",
-            "close": 116.1,
+            "close": 117.5,
             "high": 120.9,
-            "low": 115.0
+            "low": 114.9
+          },
+          {
+            "time": "2026-09-03T01:30:00+00:00",
+            "close": 120.9,
+            "high": 121.3,
+            "low": 116.6
           }
         ]
       },
       "source": "Yahoo Finance",
       "source_type": "open_source_fallback",
       "source_url": "https://finance.yahoo.com/quote/1347.HK",
-      "updated_at": "2026-09-02T11:42:21+08:00",
+      "updated_at": "2026-09-03T11:41:48+08:00",
       "confidence": "medium",
       "fallback_used": true,
       "data_gap": null
@@ -27181,24 +27190,24 @@
     {
       "field": "HK.00981.quote.yahoo_chart",
       "value": {
-        "price": 67.7,
+        "price": 68.75,
         "currency": "HKD",
-        "quote_time": "2026-09-02T09:30:00+08:00",
+        "quote_time": "2026-09-03T09:30:00+08:00",
         "exchange": "HKG",
-        "ma20": 69.5575,
-        "ma50": 72.524,
-        "ma200": 70.1565,
-        "low20": 64.2,
+        "ma20": 69.755,
+        "ma50": 72.214,
+        "ma200": 70.1295,
+        "low20": 64.75,
         "low60": 61.3,
         "low252": 49.32,
         "high252": 93.5,
         "prior_high20": 77.75,
         "prior_high60": 91.55,
         "prior_high252": 93.5,
-        "strict_entry": 69.5575,
-        "invalidation": 64.2,
+        "strict_entry": 69.755,
+        "invalidation": 64.75,
         "mechanical_target": 93.5,
-        "reward_risk": 4.469,
+        "reward_risk": 4.7443,
         "bar_count": 491,
         "technical_data_complete": true,
         "breakout_reference_excludes_current_bar": true,
@@ -27206,12 +27215,6 @@
         "price_freshness": "fallback_only",
         "risk_policy_version": "2.0.0",
         "bars": [
-          {
-            "time": "2025-08-13T01:30:00+00:00",
-            "close": 52.05,
-            "high": 52.1,
-            "low": 50.95
-          },
           {
             "time": "2025-08-14T01:30:00+00:00",
             "close": 52.0,
@@ -28762,16 +28765,22 @@
           },
           {
             "time": "2026-09-02T01:30:00+00:00",
-            "close": 67.7,
-            "high": 68.15,
+            "close": 68.25,
+            "high": 68.65,
             "low": 66.75
+          },
+          {
+            "time": "2026-09-03T01:30:00+00:00",
+            "close": 68.75,
+            "high": 69.2,
+            "low": 67.8
           }
         ]
       },
       "source": "Yahoo Finance",
       "source_type": "open_source_fallback",
       "source_url": "https://finance.yahoo.com/quote/0981.HK",
-      "updated_at": "2026-09-02T11:42:21+08:00",
+      "updated_at": "2026-09-03T11:41:48+08:00",
       "confidence": "medium",
       "fallback_used": true,
       "data_gap": null
@@ -28779,24 +28788,24 @@
     {
       "field": "SZ.300308.quote.yahoo_chart",
       "value": {
-        "price": 824.74,
+        "price": 822.85,
         "currency": "CNY",
-        "quote_time": "2026-09-02T09:30:00+08:00",
+        "quote_time": "2026-09-03T09:30:00+08:00",
         "exchange": "SHZ",
-        "ma20": 898.5455,
-        "ma50": 1012.136,
-        "ma200": 798.1374,
-        "low20": 814.06,
+        "ma20": 891.821,
+        "ma50": 1002.0782,
+        "ma200": 799.7899,
+        "low20": 810.0,
         "low60": 793.03,
         "low252": 256.1,
         "high252": 1416.88,
         "prior_high20": 1014.87,
         "prior_high60": 1416.88,
         "prior_high252": 1416.88,
-        "strict_entry": 898.5455,
-        "invalidation": 814.06,
+        "strict_entry": 891.821,
+        "invalidation": 810.0,
         "mechanical_target": 1416.88,
-        "reward_risk": 6.1352,
+        "reward_risk": 6.4172,
         "bar_count": 485,
         "technical_data_complete": true,
         "breakout_reference_excludes_current_bar": true,
@@ -28804,12 +28813,6 @@
         "price_freshness": "fallback_only",
         "risk_policy_version": "2.0.0",
         "bars": [
-          {
-            "time": "2025-08-08T01:30:00+00:00",
-            "close": 209.3,
-            "high": 213.88,
-            "low": 205.0
-          },
           {
             "time": "2025-08-11T01:30:00+00:00",
             "close": 214.75,
@@ -30360,16 +30363,22 @@
           },
           {
             "time": "2026-09-02T01:30:00+00:00",
-            "close": 824.74,
+            "close": 822.4,
             "high": 848.0,
             "low": 814.06
+          },
+          {
+            "time": "2026-09-03T01:30:00+00:00",
+            "close": 822.85,
+            "high": 835.9,
+            "low": 810.0
           }
         ]
       },
       "source": "Yahoo Finance",
       "source_type": "open_source_fallback",
       "source_url": "https://finance.yahoo.com/quote/300308.SZ",
-      "updated_at": "2026-09-02T11:42:21+08:00",
+      "updated_at": "2026-09-03T11:41:48+08:00",
       "confidence": "medium",
       "fallback_used": true,
       "data_gap": null
@@ -30377,24 +30386,24 @@
     {
       "field": "SZ.300502.quote.yahoo_chart",
       "value": {
-        "price": 384.49,
+        "price": 388.23,
         "currency": "CNY",
-        "quote_time": "2026-09-02T09:30:00+08:00",
+        "quote_time": "2026-09-03T09:30:00+08:00",
         "exchange": "SHZ",
-        "ma20": 417.9615,
-        "ma50": 469.318,
-        "ma200": 375.2035,
+        "ma20": 416.39,
+        "ma50": 464.917,
+        "ma200": 375.9557,
         "low20": 378.56,
         "low60": 347.0,
-        "low252": 168.7286,
+        "low252": 175.8714,
         "high252": 618.87,
         "prior_high20": 472.0,
         "prior_high60": 618.87,
         "prior_high252": 618.87,
-        "strict_entry": 417.9615,
+        "strict_entry": 416.39,
         "invalidation": 378.56,
         "mechanical_target": 618.87,
-        "reward_risk": 5.099,
+        "reward_risk": 5.3524,
         "bar_count": 485,
         "technical_data_complete": true,
         "breakout_reference_excludes_current_bar": true,
@@ -30402,12 +30411,6 @@
         "price_freshness": "fallback_only",
         "risk_policy_version": "2.0.0",
         "bars": [
-          {
-            "time": "2025-08-08T01:30:00+00:00",
-            "close": 130.2,
-            "high": 132.5571,
-            "low": 129.2
-          },
           {
             "time": "2025-08-11T01:30:00+00:00",
             "close": 137.7786,
@@ -31958,16 +31961,22 @@
           },
           {
             "time": "2026-09-02T01:30:00+00:00",
-            "close": 384.49,
+            "close": 386.7,
             "high": 395.0,
             "low": 378.56
+          },
+          {
+            "time": "2026-09-03T01:30:00+00:00",
+            "close": 388.23,
+            "high": 397.79,
+            "low": 383.36
           }
         ]
       },
       "source": "Yahoo Finance",
       "source_type": "open_source_fallback",
       "source_url": "https://finance.yahoo.com/quote/300502.SZ",
-      "updated_at": "2026-09-02T11:42:21+08:00",
+      "updated_at": "2026-09-03T11:41:48+08:00",
       "confidence": "medium",
       "fallback_used": true,
       "data_gap": null
@@ -31975,24 +31984,24 @@
     {
       "field": "SZ.300394.quote.yahoo_chart",
       "value": {
-        "price": 241.24,
+        "price": 249.54,
         "currency": "CNY",
-        "quote_time": "2026-09-02T09:30:00+08:00",
+        "quote_time": "2026-09-03T09:30:00+08:00",
         "exchange": "SHZ",
-        "ma20": 255.903,
-        "ma50": 245.3962,
-        "ma200": 218.1234,
-        "low20": 202.0,
+        "ma20": 257.554,
+        "ma50": 243.7228,
+        "ma200": 218.772,
+        "low20": 216.68,
         "low60": 155.55,
-        "low252": 80.8214,
+        "low252": 82.4429,
         "high252": 375.0,
         "prior_high20": 295.0,
         "prior_high60": 346.0,
         "prior_high252": 375.0,
-        "strict_entry": 245.3962,
-        "invalidation": 202.0,
+        "strict_entry": 243.7228,
+        "invalidation": 216.68,
         "mechanical_target": 375.0,
-        "reward_risk": 2.9865,
+        "reward_risk": 4.8544,
         "bar_count": 485,
         "technical_data_complete": true,
         "breakout_reference_excludes_current_bar": true,
@@ -32000,12 +32009,6 @@
         "price_freshness": "fallback_only",
         "risk_policy_version": "2.0.0",
         "bars": [
-          {
-            "time": "2025-08-08T01:30:00+00:00",
-            "close": 71.8571,
-            "high": 73.1714,
-            "low": 71.3929
-          },
           {
             "time": "2025-08-11T01:30:00+00:00",
             "close": 74.0071,
@@ -33556,16 +33559,22 @@
           },
           {
             "time": "2026-09-02T01:30:00+00:00",
-            "close": 241.24,
-            "high": 248.6,
+            "close": 250.0,
+            "high": 255.69,
             "low": 237.8
+          },
+          {
+            "time": "2026-09-03T01:30:00+00:00",
+            "close": 249.54,
+            "high": 253.99,
+            "low": 243.96
           }
         ]
       },
       "source": "Yahoo Finance",
       "source_type": "open_source_fallback",
       "source_url": "https://finance.yahoo.com/quote/300394.SZ",
-      "updated_at": "2026-09-02T11:42:21+08:00",
+      "updated_at": "2026-09-03T11:41:48+08:00",
       "confidence": "medium",
       "fallback_used": true,
       "data_gap": null
@@ -33573,24 +33582,24 @@
     {
       "field": "SH.600183.quote.yahoo_chart",
       "value": {
-        "price": 147.66,
+        "price": 142.8,
         "currency": "CNY",
-        "quote_time": "2026-09-02T09:30:00+08:00",
+        "quote_time": "2026-09-03T09:30:00+08:00",
         "exchange": "SHH",
-        "ma20": 137.757,
-        "ma50": 138.6686,
-        "ma200": 94.2902,
-        "low20": 119.5,
+        "ma20": 138.4005,
+        "ma50": 137.727,
+        "ma200": 94.6908,
+        "low20": 122.05,
         "low60": 97.51,
-        "low252": 41.76,
+        "low252": 43.33,
         "high252": 191.88,
         "prior_high20": 157.28,
         "prior_high60": 191.88,
         "prior_high252": 191.88,
-        "strict_entry": 137.757,
-        "invalidation": 119.5,
+        "strict_entry": 137.727,
+        "invalidation": 122.05,
         "mechanical_target": 191.88,
-        "reward_risk": 2.9645,
+        "reward_risk": 3.4543,
         "bar_count": 485,
         "technical_data_complete": true,
         "breakout_reference_excludes_current_bar": true,
@@ -33598,12 +33607,6 @@
         "price_freshness": "fallback_only",
         "risk_policy_version": "2.0.0",
         "bars": [
-          {
-            "time": "2025-08-08T01:30:00+00:00",
-            "close": 39.82,
-            "high": 40.32,
-            "low": 39.24
-          },
           {
             "time": "2025-08-11T01:30:00+00:00",
             "close": 40.08,
@@ -35154,16 +35157,22 @@
           },
           {
             "time": "2026-09-02T01:30:00+00:00",
-            "close": 147.66,
+            "close": 144.98,
             "high": 149.23,
             "low": 138.99
+          },
+          {
+            "time": "2026-09-03T01:30:00+00:00",
+            "close": 142.8,
+            "high": 149.38,
+            "low": 140.42
           }
         ]
       },
       "source": "Yahoo Finance",
       "source_type": "open_source_fallback",
       "source_url": "https://finance.yahoo.com/quote/600183.SS",
-      "updated_at": "2026-09-02T11:42:21+08:00",
+      "updated_at": "2026-09-03T11:41:48+08:00",
       "confidence": "medium",
       "fallback_used": true,
       "data_gap": null
@@ -35171,24 +35180,24 @@
     {
       "field": "SH.688183.quote.yahoo_chart",
       "value": {
-        "price": 127.22,
+        "price": 124.52,
         "currency": "CNY",
-        "quote_time": "2026-09-02T09:30:00+08:00",
+        "quote_time": "2026-09-03T09:30:00+08:00",
         "exchange": "SHH",
-        "ma20": 113.9955,
-        "ma50": 113.2948,
-        "ma200": 102.7682,
+        "ma20": 114.6935,
+        "ma50": 112.974,
+        "ma200": 102.8742,
         "low20": 99.11,
         "low60": 81.5,
-        "low252": 51.5,
+        "low252": 56.39,
         "high252": 153.94,
         "prior_high20": 138.47,
         "prior_high60": 153.94,
         "prior_high252": 153.94,
-        "strict_entry": 113.2948,
+        "strict_entry": 112.974,
         "invalidation": 99.11,
         "mechanical_target": 153.94,
-        "reward_risk": 2.8654,
+        "reward_risk": 2.9548,
         "bar_count": 485,
         "technical_data_complete": true,
         "breakout_reference_excludes_current_bar": true,
@@ -35196,12 +35205,6 @@
         "price_freshness": "fallback_only",
         "risk_policy_version": "2.0.0",
         "bars": [
-          {
-            "time": "2025-08-08T01:30:00+00:00",
-            "close": 50.28,
-            "high": 52.5,
-            "low": 48.6
-          },
           {
             "time": "2025-08-11T01:30:00+00:00",
             "close": 54.87,
@@ -36752,16 +36755,22 @@
           },
           {
             "time": "2026-09-02T01:30:00+00:00",
-            "close": 127.22,
-            "high": 127.4,
+            "close": 124.86,
+            "high": 127.45,
             "low": 119.99
+          },
+          {
+            "time": "2026-09-03T01:30:00+00:00",
+            "close": 124.52,
+            "high": 128.0,
+            "low": 121.86
           }
         ]
       },
       "source": "Yahoo Finance",
       "source_type": "open_source_fallback",
       "source_url": "https://finance.yahoo.com/quote/688183.SS",
-      "updated_at": "2026-09-02T11:42:21+08:00",
+      "updated_at": "2026-09-03T11:41:48+08:00",
       "confidence": "medium",
       "fallback_used": true,
       "data_gap": null
@@ -36769,24 +36778,24 @@
     {
       "field": "SZ.300476.quote.yahoo_chart",
       "value": {
-        "price": 227.44,
+        "price": 224.41,
         "currency": "CNY",
-        "quote_time": "2026-09-02T09:30:00+08:00",
+        "quote_time": "2026-09-03T09:30:00+08:00",
         "exchange": "SHZ",
-        "ma20": 257.8255,
-        "ma50": 260.5992,
-        "ma200": 290.613,
-        "low20": 224.04,
+        "ma20": 256.4255,
+        "ma50": 258.039,
+        "ma200": 290.2141,
+        "low20": 221.0,
         "low60": 177.88,
         "low252": 177.88,
         "high252": 402.6,
         "prior_high20": 287.68,
         "prior_high60": 375.8,
         "prior_high252": 402.6,
-        "strict_entry": 257.8255,
-        "invalidation": 224.04,
+        "strict_entry": 256.4255,
+        "invalidation": 221.0,
         "mechanical_target": 402.6,
-        "reward_risk": 4.2851,
+        "reward_risk": 4.1263,
         "bar_count": 485,
         "technical_data_complete": true,
         "breakout_reference_excludes_current_bar": true,
@@ -36794,12 +36803,6 @@
         "price_freshness": "fallback_only",
         "risk_policy_version": "2.0.0",
         "bars": [
-          {
-            "time": "2025-08-08T01:30:00+00:00",
-            "close": 192.37,
-            "high": 194.64,
-            "low": 188.06
-          },
           {
             "time": "2025-08-11T01:30:00+00:00",
             "close": 202.45,
@@ -38350,16 +38353,22 @@
           },
           {
             "time": "2026-09-02T01:30:00+00:00",
-            "close": 227.44,
+            "close": 225.18,
             "high": 231.33,
             "low": 224.04
+          },
+          {
+            "time": "2026-09-03T01:30:00+00:00",
+            "close": 224.41,
+            "high": 229.99,
+            "low": 221.0
           }
         ]
       },
       "source": "Yahoo Finance",
       "source_type": "open_source_fallback",
       "source_url": "https://finance.yahoo.com/quote/300476.SZ",
-      "updated_at": "2026-09-02T11:42:21+08:00",
+      "updated_at": "2026-09-03T11:41:48+08:00",
       "confidence": "medium",
       "fallback_used": true,
       "data_gap": null
@@ -38367,13 +38376,13 @@
     {
       "field": "SH.603256.quote.yahoo_chart",
       "value": {
-        "price": 138.68,
+        "price": 134.9,
         "currency": "CNY",
-        "quote_time": "2026-09-02T09:30:00+08:00",
+        "quote_time": "2026-09-03T09:30:00+08:00",
         "exchange": "SHH",
-        "ma20": 146.0725,
-        "ma50": 171.557,
-        "ma200": 108.5767,
+        "ma20": 145.2615,
+        "ma50": 168.6722,
+        "ma200": 109.0785,
         "low20": 127.46,
         "low60": 112.6,
         "low252": 28.0,
@@ -38381,10 +38390,10 @@
         "prior_high20": 165.58,
         "prior_high60": 304.0,
         "prior_high252": 304.0,
-        "strict_entry": 146.0725,
+        "strict_entry": 145.2615,
         "invalidation": 127.46,
         "mechanical_target": 304.0,
-        "reward_risk": 8.485,
+        "reward_risk": 8.9171,
         "bar_count": 485,
         "technical_data_complete": true,
         "breakout_reference_excludes_current_bar": true,
@@ -38392,12 +38401,6 @@
         "price_freshness": "fallback_only",
         "risk_policy_version": "2.0.0",
         "bars": [
-          {
-            "time": "2025-08-08T01:30:00+00:00",
-            "close": 24.69,
-            "high": 26.0,
-            "low": 24.65
-          },
           {
             "time": "2025-08-11T01:30:00+00:00",
             "close": 25.08,
@@ -39948,16 +39951,22 @@
           },
           {
             "time": "2026-09-02T01:30:00+00:00",
-            "close": 138.68,
+            "close": 136.3,
             "high": 141.32,
             "low": 134.64
+          },
+          {
+            "time": "2026-09-03T01:30:00+00:00",
+            "close": 134.9,
+            "high": 138.0,
+            "low": 132.34
           }
         ]
       },
       "source": "Yahoo Finance",
       "source_type": "open_source_fallback",
       "source_url": "https://finance.yahoo.com/quote/603256.SS",
-      "updated_at": "2026-09-02T11:42:21+08:00",
+      "updated_at": "2026-09-03T11:41:48+08:00",
       "confidence": "medium",
       "fallback_used": true,
       "data_gap": null
@@ -39965,13 +39974,13 @@
     {
       "field": "SZ.002747.quote.yahoo_chart",
       "value": {
-        "price": 30.65,
+        "price": 30.94,
         "currency": "CNY",
-        "quote_time": "2026-09-02T09:30:00+08:00",
+        "quote_time": "2026-09-03T09:30:00+08:00",
         "exchange": "SHZ",
-        "ma20": 33.7005,
-        "ma50": 35.5062,
-        "ma200": 26.9491,
+        "ma20": 33.495,
+        "ma50": 35.3828,
+        "ma200": 26.9863,
         "low20": 30.14,
         "low60": 27.95,
         "low252": 19.21,
@@ -39979,10 +39988,10 @@
         "prior_high20": 40.04,
         "prior_high60": 49.0,
         "prior_high252": 49.0,
-        "strict_entry": 33.7005,
+        "strict_entry": 33.495,
         "invalidation": 30.14,
         "mechanical_target": 49.0,
-        "reward_risk": 4.297,
+        "reward_risk": 4.6215,
         "bar_count": 485,
         "technical_data_complete": true,
         "breakout_reference_excludes_current_bar": true,
@@ -39990,12 +39999,6 @@
         "price_freshness": "fallback_only",
         "risk_policy_version": "2.0.0",
         "bars": [
-          {
-            "time": "2025-08-08T01:30:00+00:00",
-            "close": 23.32,
-            "high": 23.85,
-            "low": 23.25
-          },
           {
             "time": "2025-08-11T01:30:00+00:00",
             "close": 23.61,
@@ -41546,16 +41549,22 @@
           },
           {
             "time": "2026-09-02T01:30:00+00:00",
-            "close": 30.65,
+            "close": 30.41,
             "high": 30.88,
             "low": 30.14
+          },
+          {
+            "time": "2026-09-03T01:30:00+00:00",
+            "close": 30.94,
+            "high": 31.4,
+            "low": 30.52
           }
         ]
       },
       "source": "Yahoo Finance",
       "source_type": "open_source_fallback",
       "source_url": "https://finance.yahoo.com/quote/002747.SZ",
-      "updated_at": "2026-09-02T11:42:21+08:00",
+      "updated_at": "2026-09-03T11:41:48+08:00",
       "confidence": "medium",
       "fallback_used": true,
       "data_gap": null
@@ -41563,13 +41572,13 @@
     {
       "field": "SH.688322.quote.yahoo_chart",
       "value": {
-        "price": 97.62,
+        "price": 96.82,
         "currency": "CNY",
-        "quote_time": "2026-09-02T09:30:00+08:00",
+        "quote_time": "2026-09-03T09:30:00+08:00",
         "exchange": "SHH",
-        "ma20": 103.8295,
-        "ma50": 107.0992,
-        "ma200": 95.1034,
+        "ma20": 103.1625,
+        "ma50": 106.5516,
+        "ma200": 95.1844,
         "low20": 90.18,
         "low60": 79.21,
         "low252": 72.45,
@@ -41577,10 +41586,10 @@
         "prior_high20": 117.42,
         "prior_high60": 153.3,
         "prior_high252": 153.3,
-        "strict_entry": 103.8295,
+        "strict_entry": 103.1625,
         "invalidation": 90.18,
         "mechanical_target": 153.3,
-        "reward_risk": 3.6243,
+        "reward_risk": 3.8619,
         "bar_count": 485,
         "technical_data_complete": true,
         "breakout_reference_excludes_current_bar": true,
@@ -41588,12 +41597,6 @@
         "price_freshness": "fallback_only",
         "risk_policy_version": "2.0.0",
         "bars": [
-          {
-            "time": "2025-08-08T01:30:00+00:00",
-            "close": 83.24,
-            "high": 86.65,
-            "low": 83.0
-          },
           {
             "time": "2025-08-11T01:30:00+00:00",
             "close": 84.9,
@@ -43144,16 +43147,22 @@
           },
           {
             "time": "2026-09-02T01:30:00+00:00",
-            "close": 97.62,
-            "high": 97.86,
+            "close": 96.42,
+            "high": 98.16,
             "low": 94.09
+          },
+          {
+            "time": "2026-09-03T01:30:00+00:00",
+            "close": 96.82,
+            "high": 99.97,
+            "low": 96.02
           }
         ]
       },
       "source": "Yahoo Finance",
       "source_type": "open_source_fallback",
       "source_url": "https://finance.yahoo.com/quote/688322.SS",
-      "updated_at": "2026-09-02T11:42:21+08:00",
+      "updated_at": "2026-09-03T11:41:48+08:00",
       "confidence": "medium",
       "fallback_used": true,
       "data_gap": null
@@ -43161,13 +43170,13 @@
     {
       "field": "SZ.002335.quote.yahoo_chart",
       "value": {
-        "price": 30.02,
+        "price": 29.97,
         "currency": "CNY",
-        "quote_time": "2026-09-02T09:30:00+08:00",
+        "quote_time": "2026-09-03T09:30:00+08:00",
         "exchange": "SHZ",
-        "ma20": 31.0255,
-        "ma50": 32.7578,
-        "ma200": 38.9215,
+        "ma20": 30.972,
+        "ma50": 32.5112,
+        "ma200": 38.8808,
         "low20": 29.23,
         "low60": 27.43,
         "low252": 27.43,
@@ -43175,10 +43184,10 @@
         "prior_high20": 34.33,
         "prior_high60": 44.87,
         "prior_high252": 54.5862,
-        "strict_entry": 31.0255,
+        "strict_entry": 30.972,
         "invalidation": 29.23,
         "mechanical_target": 54.5862,
-        "reward_risk": 13.1221,
+        "reward_risk": 13.5558,
         "bar_count": 485,
         "technical_data_complete": true,
         "breakout_reference_excludes_current_bar": true,
@@ -43186,12 +43195,6 @@
         "price_freshness": "fallback_only",
         "risk_policy_version": "2.0.0",
         "bars": [
-          {
-            "time": "2025-08-08T01:30:00+00:00",
-            "close": 29.4207,
-            "high": 29.7724,
-            "low": 28.5379
-          },
           {
             "time": "2025-08-11T01:30:00+00:00",
             "close": 30.4552,
@@ -44742,16 +44745,22 @@
           },
           {
             "time": "2026-09-02T01:30:00+00:00",
-            "close": 30.02,
-            "high": 30.09,
+            "close": 29.97,
+            "high": 30.22,
             "low": 29.33
+          },
+          {
+            "time": "2026-09-03T01:30:00+00:00",
+            "close": 29.97,
+            "high": 30.32,
+            "low": 29.68
           }
         ]
       },
       "source": "Yahoo Finance",
       "source_type": "open_source_fallback",
       "source_url": "https://finance.yahoo.com/quote/002335.SZ",
-      "updated_at": "2026-09-02T11:42:21+08:00",
+      "updated_at": "2026-09-03T11:41:48+08:00",
       "confidence": "medium",
       "fallback_used": true,
       "data_gap": null
@@ -44759,13 +44768,13 @@
     {
       "field": "SZ.300499.quote.yahoo_chart",
       "value": {
-        "price": 33.13,
+        "price": 33.47,
         "currency": "CNY",
-        "quote_time": "2026-09-02T09:30:00+08:00",
+        "quote_time": "2026-09-03T09:30:00+08:00",
         "exchange": "SHZ",
-        "ma20": 29.665,
-        "ma50": 31.3414,
-        "ma200": 33.8344,
+        "ma20": 29.903,
+        "ma50": 31.1396,
+        "ma200": 33.865,
         "low20": 26.87,
         "low60": 23.2,
         "low252": 23.2,
@@ -44773,10 +44782,10 @@
         "prior_high20": 33.35,
         "prior_high60": 46.46,
         "prior_high252": 48.04,
-        "strict_entry": 29.665,
+        "strict_entry": 29.903,
         "invalidation": 26.87,
         "mechanical_target": 48.04,
-        "reward_risk": 6.5742,
+        "reward_risk": 5.9799,
         "bar_count": 485,
         "technical_data_complete": true,
         "breakout_reference_excludes_current_bar": true,
@@ -44784,12 +44793,6 @@
         "price_freshness": "fallback_only",
         "risk_policy_version": "2.0.0",
         "bars": [
-          {
-            "time": "2025-08-08T01:30:00+00:00",
-            "close": 21.44,
-            "high": 21.78,
-            "low": 20.5
-          },
           {
             "time": "2025-08-11T01:30:00+00:00",
             "close": 21.69,
@@ -46340,16 +46343,22 @@
           },
           {
             "time": "2026-09-02T01:30:00+00:00",
-            "close": 33.13,
+            "close": 32.43,
             "high": 33.28,
             "low": 31.57
+          },
+          {
+            "time": "2026-09-03T01:30:00+00:00",
+            "close": 33.47,
+            "high": 33.87,
+            "low": 32.51
           }
         ]
       },
       "source": "Yahoo Finance",
       "source_type": "open_source_fallback",
       "source_url": "https://finance.yahoo.com/quote/300499.SZ",
-      "updated_at": "2026-09-02T11:42:21+08:00",
+      "updated_at": "2026-09-03T11:41:48+08:00",
       "confidence": "medium",
       "fallback_used": true,
       "data_gap": null
@@ -46433,7 +46442,7 @@
       "source": "CNINFO",
       "source_type": "official",
       "source_url": "http://www.cninfo.com.cn/new/disclosure/stock?stockCode=300308&orgId=9900022016",
-      "updated_at": "2026-09-02T11:42:22+08:00",
+      "updated_at": "2026-09-03T11:41:49+08:00",
       "confidence": "high",
       "fallback_used": true,
       "data_gap": null
@@ -46517,7 +46526,7 @@
       "source": "CNINFO",
       "source_type": "official",
       "source_url": "http://www.cninfo.com.cn/new/disclosure/stock?stockCode=300502&orgId=9900026455",
-      "updated_at": "2026-09-02T11:42:22+08:00",
+      "updated_at": "2026-09-03T11:41:49+08:00",
       "confidence": "high",
       "fallback_used": true,
       "data_gap": null
@@ -46601,7 +46610,7 @@
       "source": "CNINFO",
       "source_type": "official",
       "source_url": "http://www.cninfo.com.cn/new/disclosure/stock?stockCode=300394&orgId=9900023911",
-      "updated_at": "2026-09-02T11:42:22+08:00",
+      "updated_at": "2026-09-03T11:41:49+08:00",
       "confidence": "high",
       "fallback_used": true,
       "data_gap": null
@@ -46701,7 +46710,7 @@
       "source": "CNINFO",
       "source_type": "official",
       "source_url": "http://www.cninfo.com.cn/new/disclosure/stock?stockCode=600183&orgId=gssh0600183",
-      "updated_at": "2026-09-02T11:42:22+08:00",
+      "updated_at": "2026-09-03T11:41:49+08:00",
       "confidence": "high",
       "fallback_used": true,
       "data_gap": null
@@ -46801,7 +46810,7 @@
       "source": "CNINFO",
       "source_type": "official",
       "source_url": "http://www.cninfo.com.cn/new/disclosure/stock?stockCode=688183&orgId=nssc1000615",
-      "updated_at": "2026-09-02T11:42:22+08:00",
+      "updated_at": "2026-09-03T11:41:49+08:00",
       "confidence": "high",
       "fallback_used": true,
       "data_gap": null
@@ -46877,7 +46886,7 @@
       "source": "CNINFO",
       "source_type": "official",
       "source_url": "http://www.cninfo.com.cn/new/disclosure/stock?stockCode=300476&orgId=9900024582",
-      "updated_at": "2026-09-02T11:42:22+08:00",
+      "updated_at": "2026-09-03T11:41:49+08:00",
       "confidence": "high",
       "fallback_used": true,
       "data_gap": null
@@ -46889,8 +46898,8 @@
         "code": "603256",
         "company": "宏和科技",
         "org_id": "9900035335",
-        "total": 10,
-        "financial_hits": 9,
+        "total": 8,
+        "financial_hits": 7,
         "announcements": [
           {
             "title": "宏和科技2026年半年度报告摘要",
@@ -46955,29 +46964,13 @@
             "category": "",
             "source_id": "1224764124",
             "financial_related": true
-          },
-          {
-            "title": "宏和科技2025年半年度报告",
-            "date": "2025-08-28 00:00",
-            "url": "http://static.cninfo.com.cn/finalpage/2025-08-28/1224595204.PDF",
-            "category": "",
-            "source_id": "1224595204",
-            "financial_related": true
-          },
-          {
-            "title": "宏和科技2025年半年度报告摘要",
-            "date": "2025-08-28 00:00",
-            "url": "http://static.cninfo.com.cn/finalpage/2025-08-28/1224595203.PDF",
-            "category": "",
-            "source_id": "1224595203",
-            "financial_related": true
           }
         ]
       },
       "source": "CNINFO",
       "source_type": "official",
       "source_url": "http://www.cninfo.com.cn/new/disclosure/stock?stockCode=603256&orgId=9900035335",
-      "updated_at": "2026-09-02T11:42:22+08:00",
+      "updated_at": "2026-09-03T11:41:49+08:00",
       "confidence": "high",
       "fallback_used": true,
       "data_gap": null
@@ -47077,7 +47070,7 @@
       "source": "CNINFO",
       "source_type": "official",
       "source_url": "http://www.cninfo.com.cn/new/disclosure/stock?stockCode=002747&orgId=9900022936",
-      "updated_at": "2026-09-02T11:42:22+08:00",
+      "updated_at": "2026-09-03T11:41:49+08:00",
       "confidence": "high",
       "fallback_used": true,
       "data_gap": null
@@ -47169,7 +47162,7 @@
       "source": "CNINFO",
       "source_type": "official",
       "source_url": "http://www.cninfo.com.cn/new/disclosure/stock?stockCode=688322&orgId=9900048777",
-      "updated_at": "2026-09-02T11:42:22+08:00",
+      "updated_at": "2026-09-03T11:41:49+08:00",
       "confidence": "high",
       "fallback_used": true,
       "data_gap": null
@@ -47261,7 +47254,7 @@
       "source": "CNINFO",
       "source_type": "official",
       "source_url": "http://www.cninfo.com.cn/new/disclosure/stock?stockCode=002335&orgId=9900010032",
-      "updated_at": "2026-09-02T11:42:22+08:00",
+      "updated_at": "2026-09-03T11:41:49+08:00",
       "confidence": "high",
       "fallback_used": true,
       "data_gap": null
@@ -47337,7 +47330,7 @@
       "source": "CNINFO",
       "source_type": "official",
       "source_url": "http://www.cninfo.com.cn/new/disclosure/stock?stockCode=300499&orgId=9900023095",
-      "updated_at": "2026-09-02T11:42:22+08:00",
+      "updated_at": "2026-09-03T11:41:49+08:00",
       "confidence": "high",
       "fallback_used": true,
       "data_gap": null
@@ -47464,8 +47457,8 @@
       },
       "source": "HKEXnews",
       "source_type": "official",
-      "source_url": "https://www1.hkexnews.hk/search/titleSearchServlet.do?sortDir=0&sortByOptions=DateTime&category=0&market=SEHK&stockId=12989&documentType=-1&fromDate=20250828&toDate=20260902&title=&searchType=0&t1code=-2&t2Gcode=-2&t2code=-2&rowRange=20&lang=E",
-      "updated_at": "2026-09-02T11:42:35+08:00",
+      "source_url": "https://www1.hkexnews.hk/search/titleSearchServlet.do?sortDir=0&sortByOptions=DateTime&category=0&market=SEHK&stockId=12989&documentType=-1&fromDate=20250829&toDate=20260903&title=&searchType=0&t1code=-2&t2Gcode=-2&t2code=-2&rowRange=20&lang=E",
+      "updated_at": "2026-09-03T11:42:00+08:00",
       "confidence": "high",
       "fallback_used": true,
       "data_gap": null
@@ -47477,9 +47470,18 @@
         "code": "00148",
         "company": "KINGBOARD HLDG",
         "stock_id": "256",
-        "total": 37,
-        "financial_hits": 2,
+        "total": 38,
+        "financial_hits": 1,
         "announcements": [
+          {
+            "title": "Monthly Return of Equity Issuer on Movements in Securities",
+            "date": "02/09/2026 17:15",
+            "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0902/2026090201481.pdf",
+            "category": "Monthly Returns",
+            "file_type": "PDF",
+            "source_id": "12316086",
+            "financial_related": false
+          },
           {
             "title": "INTERIM DIVIDEND FOR THE SIX MONTHS ENDED 30 JUNE 2026",
             "date": "24/08/2026 12:17",
@@ -47578,22 +47580,13 @@
             "file_type": "PDF",
             "source_id": "12144943",
             "financial_related": false
-          },
-          {
-            "title": "2025 ESG REPORT",
-            "date": "23/04/2026 09:55",
-            "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0423/2026042300175.pdf",
-            "category": "Financial Statements/ESG Information - [Environmental, Social and Governance Information/Report]",
-            "file_type": "PDF",
-            "source_id": "12117088",
-            "financial_related": true
           }
         ]
       },
       "source": "HKEXnews",
       "source_type": "official",
-      "source_url": "https://www1.hkexnews.hk/search/titleSearchServlet.do?sortDir=0&sortByOptions=DateTime&category=0&market=SEHK&stockId=256&documentType=-1&fromDate=20250828&toDate=20260902&title=&searchType=0&t1code=-2&t2Gcode=-2&t2code=-2&rowRange=20&lang=E",
-      "updated_at": "2026-09-02T11:42:35+08:00",
+      "source_url": "https://www1.hkexnews.hk/search/titleSearchServlet.do?sortDir=0&sortByOptions=DateTime&category=0&market=SEHK&stockId=256&documentType=-1&fromDate=20250829&toDate=20260903&title=&searchType=0&t1code=-2&t2Gcode=-2&t2code=-2&rowRange=20&lang=E",
+      "updated_at": "2026-09-03T11:42:00+08:00",
       "confidence": "high",
       "fallback_used": true,
       "data_gap": null
@@ -47605,9 +47598,18 @@
         "code": "01347",
         "company": "HUA HONG GRACE",
         "stock_id": "112822",
-        "total": 117,
-        "financial_hits": 2,
+        "total": 114,
+        "financial_hits": 3,
         "announcements": [
+          {
+            "title": "Interim Report 2026",
+            "date": "02/09/2026 16:30",
+            "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0902/2026090200736.pdf",
+            "category": "Financial Statements/ESG Information - [Interim/Half-Year Report]",
+            "file_type": "PDF",
+            "source_id": "12315341",
+            "financial_related": true
+          },
           {
             "title": "DISCLOSEABLE TRANSACTION IN RELATION TO THE JV INVESTMENT AGREEMENT AND THE JV SHAREHOLDERS AGREEMENT",
             "date": "01/09/2026 21:15",
@@ -47706,22 +47708,13 @@
             "file_type": "PDF",
             "source_id": "12274573",
             "financial_related": false
-          },
-          {
-            "title": "An announcement has just been published by the issuer in the Chinese section of this website, a corresponding version of which may or may not be published in this section",
-            "date": "30/07/2026 17:38",
-            "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0730/2026073001065.htm",
-            "category": "Announcements and Notices - [Overseas Regulatory Announcement - Other]",
-            "file_type": "HTM",
-            "source_id": "12262100",
-            "financial_related": false
           }
         ]
       },
       "source": "HKEXnews",
       "source_type": "official",
-      "source_url": "https://www1.hkexnews.hk/search/titleSearchServlet.do?sortDir=0&sortByOptions=DateTime&category=0&market=SEHK&stockId=112822&documentType=-1&fromDate=20250828&toDate=20260902&title=&searchType=0&t1code=-2&t2Gcode=-2&t2code=-2&rowRange=20&lang=E",
-      "updated_at": "2026-09-02T11:42:35+08:00",
+      "source_url": "https://www1.hkexnews.hk/search/titleSearchServlet.do?sortDir=0&sortByOptions=DateTime&category=0&market=SEHK&stockId=112822&documentType=-1&fromDate=20250829&toDate=20260903&title=&searchType=0&t1code=-2&t2Gcode=-2&t2code=-2&rowRange=20&lang=E",
+      "updated_at": "2026-09-03T11:42:00+08:00",
       "confidence": "high",
       "fallback_used": true,
       "data_gap": null
@@ -47733,7 +47726,7 @@
         "code": "00981",
         "company": "SMIC",
         "stock_id": "7249",
-        "total": 130,
+        "total": 127,
         "financial_hits": 3,
         "announcements": [
           {
@@ -47848,8 +47841,8 @@
       },
       "source": "HKEXnews",
       "source_type": "official",
-      "source_url": "https://www1.hkexnews.hk/search/titleSearchServlet.do?sortDir=0&sortByOptions=DateTime&category=0&market=SEHK&stockId=7249&documentType=-1&fromDate=20250828&toDate=20260902&title=&searchType=0&t1code=-2&t2Gcode=-2&t2code=-2&rowRange=20&lang=E",
-      "updated_at": "2026-09-02T11:42:35+08:00",
+      "source_url": "https://www1.hkexnews.hk/search/titleSearchServlet.do?sortDir=0&sortByOptions=DateTime&category=0&market=SEHK&stockId=7249&documentType=-1&fromDate=20250829&toDate=20260903&title=&searchType=0&t1code=-2&t2Gcode=-2&t2code=-2&rowRange=20&lang=E",
+      "updated_at": "2026-09-03T11:42:00+08:00",
       "confidence": "high",
       "fallback_used": true,
       "data_gap": null
@@ -47860,24 +47853,24 @@
       {
         "field": "HK.00148.quote.yahoo_chart",
         "value": {
-          "price": 53.05,
+          "price": 52.3,
           "currency": "HKD",
-          "quote_time": "2026-09-02T09:30:00+08:00",
+          "quote_time": "2026-09-03T09:30:00+08:00",
           "exchange": "HKG",
-          "ma20": 48.5135,
-          "ma50": 61.6358,
-          "ma200": 46.887,
-          "low20": 43.0,
+          "ma20": 48.8865,
+          "ma50": 60.1358,
+          "ma200": 47.0121,
+          "low20": 43.24,
           "low60": 37.5,
           "low252": 25.1,
           "high252": 151.8,
           "prior_high20": 54.95,
           "prior_high60": 151.8,
           "prior_high252": 151.8,
-          "strict_entry": 48.5135,
-          "invalidation": 43.0,
+          "strict_entry": 48.8865,
+          "invalidation": 43.24,
           "mechanical_target": 151.8,
-          "reward_risk": 18.7334,
+          "reward_risk": 18.2261,
           "bar_count": 491,
           "technical_data_complete": true,
           "breakout_reference_excludes_current_bar": true,
@@ -47885,12 +47878,6 @@
           "price_freshness": "fallback_only",
           "risk_policy_version": "2.0.0",
           "bars": [
-            {
-              "time": "2025-08-13T01:30:00+00:00",
-              "close": 29.4,
-              "high": 29.8,
-              "low": 29.04
-            },
             {
               "time": "2025-08-14T01:30:00+00:00",
               "close": 29.86,
@@ -49441,16 +49428,22 @@
             },
             {
               "time": "2026-09-02T01:30:00+00:00",
-              "close": 53.05,
-              "high": 53.2,
+              "close": 52.55,
+              "high": 53.9,
               "low": 50.35
+            },
+            {
+              "time": "2026-09-03T01:30:00+00:00",
+              "close": 52.3,
+              "high": 53.8,
+              "low": 50.05
             }
           ]
         },
         "source": "Yahoo Finance",
         "source_type": "open_source_fallback",
         "source_url": "https://finance.yahoo.com/quote/0148.HK",
-        "updated_at": "2026-09-02T11:42:21+08:00",
+        "updated_at": "2026-09-03T11:41:48+08:00",
         "confidence": "medium",
         "fallback_used": true,
         "data_gap": null
@@ -49462,9 +49455,18 @@
           "code": "00148",
           "company": "KINGBOARD HLDG",
           "stock_id": "256",
-          "total": 37,
-          "financial_hits": 2,
+          "total": 38,
+          "financial_hits": 1,
           "announcements": [
+            {
+              "title": "Monthly Return of Equity Issuer on Movements in Securities",
+              "date": "02/09/2026 17:15",
+              "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0902/2026090201481.pdf",
+              "category": "Monthly Returns",
+              "file_type": "PDF",
+              "source_id": "12316086",
+              "financial_related": false
+            },
             {
               "title": "INTERIM DIVIDEND FOR THE SIX MONTHS ENDED 30 JUNE 2026",
               "date": "24/08/2026 12:17",
@@ -49563,22 +49565,13 @@
               "file_type": "PDF",
               "source_id": "12144943",
               "financial_related": false
-            },
-            {
-              "title": "2025 ESG REPORT",
-              "date": "23/04/2026 09:55",
-              "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0423/2026042300175.pdf",
-              "category": "Financial Statements/ESG Information - [Environmental, Social and Governance Information/Report]",
-              "file_type": "PDF",
-              "source_id": "12117088",
-              "financial_related": true
             }
           ]
         },
         "source": "HKEXnews",
         "source_type": "official",
-        "source_url": "https://www1.hkexnews.hk/search/titleSearchServlet.do?sortDir=0&sortByOptions=DateTime&category=0&market=SEHK&stockId=256&documentType=-1&fromDate=20250828&toDate=20260902&title=&searchType=0&t1code=-2&t2Gcode=-2&t2code=-2&rowRange=20&lang=E",
-        "updated_at": "2026-09-02T11:42:35+08:00",
+        "source_url": "https://www1.hkexnews.hk/search/titleSearchServlet.do?sortDir=0&sortByOptions=DateTime&category=0&market=SEHK&stockId=256&documentType=-1&fromDate=20250829&toDate=20260903&title=&searchType=0&t1code=-2&t2Gcode=-2&t2code=-2&rowRange=20&lang=E",
+        "updated_at": "2026-09-03T11:42:00+08:00",
         "confidence": "high",
         "fallback_used": true,
         "data_gap": null
@@ -49588,24 +49581,24 @@
       {
         "field": "HK.00981.quote.yahoo_chart",
         "value": {
-          "price": 67.7,
+          "price": 68.75,
           "currency": "HKD",
-          "quote_time": "2026-09-02T09:30:00+08:00",
+          "quote_time": "2026-09-03T09:30:00+08:00",
           "exchange": "HKG",
-          "ma20": 69.5575,
-          "ma50": 72.524,
-          "ma200": 70.1565,
-          "low20": 64.2,
+          "ma20": 69.755,
+          "ma50": 72.214,
+          "ma200": 70.1295,
+          "low20": 64.75,
           "low60": 61.3,
           "low252": 49.32,
           "high252": 93.5,
           "prior_high20": 77.75,
           "prior_high60": 91.55,
           "prior_high252": 93.5,
-          "strict_entry": 69.5575,
-          "invalidation": 64.2,
+          "strict_entry": 69.755,
+          "invalidation": 64.75,
           "mechanical_target": 93.5,
-          "reward_risk": 4.469,
+          "reward_risk": 4.7443,
           "bar_count": 491,
           "technical_data_complete": true,
           "breakout_reference_excludes_current_bar": true,
@@ -49613,12 +49606,6 @@
           "price_freshness": "fallback_only",
           "risk_policy_version": "2.0.0",
           "bars": [
-            {
-              "time": "2025-08-13T01:30:00+00:00",
-              "close": 52.05,
-              "high": 52.1,
-              "low": 50.95
-            },
             {
               "time": "2025-08-14T01:30:00+00:00",
               "close": 52.0,
@@ -51169,16 +51156,22 @@
             },
             {
               "time": "2026-09-02T01:30:00+00:00",
-              "close": 67.7,
-              "high": 68.15,
+              "close": 68.25,
+              "high": 68.65,
               "low": 66.75
+            },
+            {
+              "time": "2026-09-03T01:30:00+00:00",
+              "close": 68.75,
+              "high": 69.2,
+              "low": 67.8
             }
           ]
         },
         "source": "Yahoo Finance",
         "source_type": "open_source_fallback",
         "source_url": "https://finance.yahoo.com/quote/0981.HK",
-        "updated_at": "2026-09-02T11:42:21+08:00",
+        "updated_at": "2026-09-03T11:41:48+08:00",
         "confidence": "medium",
         "fallback_used": true,
         "data_gap": null
@@ -51190,7 +51183,7 @@
           "code": "00981",
           "company": "SMIC",
           "stock_id": "7249",
-          "total": 130,
+          "total": 127,
           "financial_hits": 3,
           "announcements": [
             {
@@ -51305,8 +51298,8 @@
         },
         "source": "HKEXnews",
         "source_type": "official",
-        "source_url": "https://www1.hkexnews.hk/search/titleSearchServlet.do?sortDir=0&sortByOptions=DateTime&category=0&market=SEHK&stockId=7249&documentType=-1&fromDate=20250828&toDate=20260902&title=&searchType=0&t1code=-2&t2Gcode=-2&t2code=-2&rowRange=20&lang=E",
-        "updated_at": "2026-09-02T11:42:35+08:00",
+        "source_url": "https://www1.hkexnews.hk/search/titleSearchServlet.do?sortDir=0&sortByOptions=DateTime&category=0&market=SEHK&stockId=7249&documentType=-1&fromDate=20250829&toDate=20260903&title=&searchType=0&t1code=-2&t2Gcode=-2&t2code=-2&rowRange=20&lang=E",
+        "updated_at": "2026-09-03T11:42:00+08:00",
         "confidence": "high",
         "fallback_used": true,
         "data_gap": null
@@ -51316,13 +51309,13 @@
       {
         "field": "HK.01347.quote.yahoo_chart",
         "value": {
-          "price": 116.1,
+          "price": 120.9,
           "currency": "HKD",
-          "quote_time": "2026-09-02T09:30:00+08:00",
+          "quote_time": "2026-09-03T09:30:00+08:00",
           "exchange": "HKG",
-          "ma20": 125.91,
-          "ma50": 149.392,
-          "ma200": 113.2188,
+          "ma20": 125.19,
+          "ma50": 147.998,
+          "ma200": 113.4398,
           "low20": 105.5,
           "low60": 105.5,
           "low252": 44.66,
@@ -51330,10 +51323,10 @@
           "prior_high20": 152.5,
           "prior_high60": 219.6,
           "prior_high252": 219.6,
-          "strict_entry": 125.91,
+          "strict_entry": 125.19,
           "invalidation": 105.5,
           "mechanical_target": 219.6,
-          "reward_risk": 4.5904,
+          "reward_risk": 4.7948,
           "bar_count": 491,
           "technical_data_complete": true,
           "breakout_reference_excludes_current_bar": true,
@@ -51341,12 +51334,6 @@
           "price_freshness": "fallback_only",
           "risk_policy_version": "2.0.0",
           "bars": [
-            {
-              "time": "2025-08-13T01:30:00+00:00",
-              "close": 47.32,
-              "high": 47.56,
-              "low": 44.68
-            },
             {
               "time": "2025-08-14T01:30:00+00:00",
               "close": 48.76,
@@ -52897,16 +52884,22 @@
             },
             {
               "time": "2026-09-02T01:30:00+00:00",
-              "close": 116.1,
+              "close": 117.5,
               "high": 120.9,
-              "low": 115.0
+              "low": 114.9
+            },
+            {
+              "time": "2026-09-03T01:30:00+00:00",
+              "close": 120.9,
+              "high": 121.3,
+              "low": 116.6
             }
           ]
         },
         "source": "Yahoo Finance",
         "source_type": "open_source_fallback",
         "source_url": "https://finance.yahoo.com/quote/1347.HK",
-        "updated_at": "2026-09-02T11:42:21+08:00",
+        "updated_at": "2026-09-03T11:41:48+08:00",
         "confidence": "medium",
         "fallback_used": true,
         "data_gap": null
@@ -52918,9 +52911,18 @@
           "code": "01347",
           "company": "HUA HONG GRACE",
           "stock_id": "112822",
-          "total": 117,
-          "financial_hits": 2,
+          "total": 114,
+          "financial_hits": 3,
           "announcements": [
+            {
+              "title": "Interim Report 2026",
+              "date": "02/09/2026 16:30",
+              "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0902/2026090200736.pdf",
+              "category": "Financial Statements/ESG Information - [Interim/Half-Year Report]",
+              "file_type": "PDF",
+              "source_id": "12315341",
+              "financial_related": true
+            },
             {
               "title": "DISCLOSEABLE TRANSACTION IN RELATION TO THE JV INVESTMENT AGREEMENT AND THE JV SHAREHOLDERS AGREEMENT",
               "date": "01/09/2026 21:15",
@@ -53019,22 +53021,13 @@
               "file_type": "PDF",
               "source_id": "12274573",
               "financial_related": false
-            },
-            {
-              "title": "An announcement has just been published by the issuer in the Chinese section of this website, a corresponding version of which may or may not be published in this section",
-              "date": "30/07/2026 17:38",
-              "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0730/2026073001065.htm",
-              "category": "Announcements and Notices - [Overseas Regulatory Announcement - Other]",
-              "file_type": "HTM",
-              "source_id": "12262100",
-              "financial_related": false
             }
           ]
         },
         "source": "HKEXnews",
         "source_type": "official",
-        "source_url": "https://www1.hkexnews.hk/search/titleSearchServlet.do?sortDir=0&sortByOptions=DateTime&category=0&market=SEHK&stockId=112822&documentType=-1&fromDate=20250828&toDate=20260902&title=&searchType=0&t1code=-2&t2Gcode=-2&t2code=-2&rowRange=20&lang=E",
-        "updated_at": "2026-09-02T11:42:35+08:00",
+        "source_url": "https://www1.hkexnews.hk/search/titleSearchServlet.do?sortDir=0&sortByOptions=DateTime&category=0&market=SEHK&stockId=112822&documentType=-1&fromDate=20250829&toDate=20260903&title=&searchType=0&t1code=-2&t2Gcode=-2&t2code=-2&rowRange=20&lang=E",
+        "updated_at": "2026-09-03T11:42:00+08:00",
         "confidence": "high",
         "fallback_used": true,
         "data_gap": null
@@ -53044,24 +53037,24 @@
       {
         "field": "HK.01888.quote.yahoo_chart",
         "value": {
-          "price": 45.28,
+          "price": 46.5,
           "currency": "HKD",
-          "quote_time": "2026-09-02T09:30:00+08:00",
+          "quote_time": "2026-09-03T09:30:00+08:00",
           "exchange": "HKG",
-          "ma20": 39.473,
-          "ma50": 50.3042,
-          "ma200": 32.5859,
-          "low20": 32.1,
+          "ma20": 40.051,
+          "ma50": 49.3624,
+          "ma200": 32.7579,
+          "low20": 34.0,
           "low60": 26.48,
           "low252": 10.5,
           "high252": 107.2,
           "prior_high20": 47.68,
           "prior_high60": 107.2,
           "prior_high252": 107.2,
-          "strict_entry": 39.473,
-          "invalidation": 32.1,
+          "strict_entry": 40.051,
+          "invalidation": 34.0,
           "mechanical_target": 107.2,
-          "reward_risk": 9.1858,
+          "reward_risk": 11.0972,
           "bar_count": 491,
           "technical_data_complete": true,
           "breakout_reference_excludes_current_bar": true,
@@ -53069,12 +53062,6 @@
           "price_freshness": "fallback_only",
           "risk_policy_version": "2.0.0",
           "bars": [
-            {
-              "time": "2025-08-13T01:30:00+00:00",
-              "close": 10.96,
-              "high": 11.05,
-              "low": 10.79
-            },
             {
               "time": "2025-08-14T01:30:00+00:00",
               "close": 11.25,
@@ -54625,16 +54612,22 @@
             },
             {
               "time": "2026-09-02T01:30:00+00:00",
-              "close": 45.28,
-              "high": 45.78,
+              "close": 45.24,
+              "high": 46.6,
               "low": 42.28
+            },
+            {
+              "time": "2026-09-03T01:30:00+00:00",
+              "close": 46.5,
+              "high": 46.78,
+              "low": 43.82
             }
           ]
         },
         "source": "Yahoo Finance",
         "source_type": "open_source_fallback",
         "source_url": "https://finance.yahoo.com/quote/1888.HK",
-        "updated_at": "2026-09-02T11:42:21+08:00",
+        "updated_at": "2026-09-03T11:41:48+08:00",
         "confidence": "medium",
         "fallback_used": true,
         "data_gap": null
@@ -54761,8 +54754,8 @@
         },
         "source": "HKEXnews",
         "source_type": "official",
-        "source_url": "https://www1.hkexnews.hk/search/titleSearchServlet.do?sortDir=0&sortByOptions=DateTime&category=0&market=SEHK&stockId=12989&documentType=-1&fromDate=20250828&toDate=20260902&title=&searchType=0&t1code=-2&t2Gcode=-2&t2code=-2&rowRange=20&lang=E",
-        "updated_at": "2026-09-02T11:42:35+08:00",
+        "source_url": "https://www1.hkexnews.hk/search/titleSearchServlet.do?sortDir=0&sortByOptions=DateTime&category=0&market=SEHK&stockId=12989&documentType=-1&fromDate=20250829&toDate=20260903&title=&searchType=0&t1code=-2&t2Gcode=-2&t2code=-2&rowRange=20&lang=E",
+        "updated_at": "2026-09-03T11:42:00+08:00",
         "confidence": "high",
         "fallback_used": true,
         "data_gap": null
@@ -54772,24 +54765,24 @@
       {
         "field": "SH.600183.quote.yahoo_chart",
         "value": {
-          "price": 147.66,
+          "price": 142.8,
           "currency": "CNY",
-          "quote_time": "2026-09-02T09:30:00+08:00",
+          "quote_time": "2026-09-03T09:30:00+08:00",
           "exchange": "SHH",
-          "ma20": 137.757,
-          "ma50": 138.6686,
-          "ma200": 94.2902,
-          "low20": 119.5,
+          "ma20": 138.4005,
+          "ma50": 137.727,
+          "ma200": 94.6908,
+          "low20": 122.05,
           "low60": 97.51,
-          "low252": 41.76,
+          "low252": 43.33,
           "high252": 191.88,
           "prior_high20": 157.28,
           "prior_high60": 191.88,
           "prior_high252": 191.88,
-          "strict_entry": 137.757,
-          "invalidation": 119.5,
+          "strict_entry": 137.727,
+          "invalidation": 122.05,
           "mechanical_target": 191.88,
-          "reward_risk": 2.9645,
+          "reward_risk": 3.4543,
           "bar_count": 485,
           "technical_data_complete": true,
           "breakout_reference_excludes_current_bar": true,
@@ -54797,12 +54790,6 @@
           "price_freshness": "fallback_only",
           "risk_policy_version": "2.0.0",
           "bars": [
-            {
-              "time": "2025-08-08T01:30:00+00:00",
-              "close": 39.82,
-              "high": 40.32,
-              "low": 39.24
-            },
             {
               "time": "2025-08-11T01:30:00+00:00",
               "close": 40.08,
@@ -56353,16 +56340,22 @@
             },
             {
               "time": "2026-09-02T01:30:00+00:00",
-              "close": 147.66,
+              "close": 144.98,
               "high": 149.23,
               "low": 138.99
+            },
+            {
+              "time": "2026-09-03T01:30:00+00:00",
+              "close": 142.8,
+              "high": 149.38,
+              "low": 140.42
             }
           ]
         },
         "source": "Yahoo Finance",
         "source_type": "open_source_fallback",
         "source_url": "https://finance.yahoo.com/quote/600183.SS",
-        "updated_at": "2026-09-02T11:42:21+08:00",
+        "updated_at": "2026-09-03T11:41:48+08:00",
         "confidence": "medium",
         "fallback_used": true,
         "data_gap": null
@@ -56462,7 +56455,7 @@
         "source": "CNINFO",
         "source_type": "official",
         "source_url": "http://www.cninfo.com.cn/new/disclosure/stock?stockCode=600183&orgId=gssh0600183",
-        "updated_at": "2026-09-02T11:42:22+08:00",
+        "updated_at": "2026-09-03T11:41:49+08:00",
         "confidence": "high",
         "fallback_used": true,
         "data_gap": null
@@ -56472,13 +56465,13 @@
       {
         "field": "SH.603256.quote.yahoo_chart",
         "value": {
-          "price": 138.68,
+          "price": 134.9,
           "currency": "CNY",
-          "quote_time": "2026-09-02T09:30:00+08:00",
+          "quote_time": "2026-09-03T09:30:00+08:00",
           "exchange": "SHH",
-          "ma20": 146.0725,
-          "ma50": 171.557,
-          "ma200": 108.5767,
+          "ma20": 145.2615,
+          "ma50": 168.6722,
+          "ma200": 109.0785,
           "low20": 127.46,
           "low60": 112.6,
           "low252": 28.0,
@@ -56486,10 +56479,10 @@
           "prior_high20": 165.58,
           "prior_high60": 304.0,
           "prior_high252": 304.0,
-          "strict_entry": 146.0725,
+          "strict_entry": 145.2615,
           "invalidation": 127.46,
           "mechanical_target": 304.0,
-          "reward_risk": 8.485,
+          "reward_risk": 8.9171,
           "bar_count": 485,
           "technical_data_complete": true,
           "breakout_reference_excludes_current_bar": true,
@@ -56497,12 +56490,6 @@
           "price_freshness": "fallback_only",
           "risk_policy_version": "2.0.0",
           "bars": [
-            {
-              "time": "2025-08-08T01:30:00+00:00",
-              "close": 24.69,
-              "high": 26.0,
-              "low": 24.65
-            },
             {
               "time": "2025-08-11T01:30:00+00:00",
               "close": 25.08,
@@ -58053,16 +58040,22 @@
             },
             {
               "time": "2026-09-02T01:30:00+00:00",
-              "close": 138.68,
+              "close": 136.3,
               "high": 141.32,
               "low": 134.64
+            },
+            {
+              "time": "2026-09-03T01:30:00+00:00",
+              "close": 134.9,
+              "high": 138.0,
+              "low": 132.34
             }
           ]
         },
         "source": "Yahoo Finance",
         "source_type": "open_source_fallback",
         "source_url": "https://finance.yahoo.com/quote/603256.SS",
-        "updated_at": "2026-09-02T11:42:21+08:00",
+        "updated_at": "2026-09-03T11:41:48+08:00",
         "confidence": "medium",
         "fallback_used": true,
         "data_gap": null
@@ -58074,8 +58067,8 @@
           "code": "603256",
           "company": "宏和科技",
           "org_id": "9900035335",
-          "total": 10,
-          "financial_hits": 9,
+          "total": 8,
+          "financial_hits": 7,
           "announcements": [
             {
               "title": "宏和科技2026年半年度报告摘要",
@@ -58140,29 +58133,13 @@
               "category": "",
               "source_id": "1224764124",
               "financial_related": true
-            },
-            {
-              "title": "宏和科技2025年半年度报告",
-              "date": "2025-08-28 00:00",
-              "url": "http://static.cninfo.com.cn/finalpage/2025-08-28/1224595204.PDF",
-              "category": "",
-              "source_id": "1224595204",
-              "financial_related": true
-            },
-            {
-              "title": "宏和科技2025年半年度报告摘要",
-              "date": "2025-08-28 00:00",
-              "url": "http://static.cninfo.com.cn/finalpage/2025-08-28/1224595203.PDF",
-              "category": "",
-              "source_id": "1224595203",
-              "financial_related": true
             }
           ]
         },
         "source": "CNINFO",
         "source_type": "official",
         "source_url": "http://www.cninfo.com.cn/new/disclosure/stock?stockCode=603256&orgId=9900035335",
-        "updated_at": "2026-09-02T11:42:22+08:00",
+        "updated_at": "2026-09-03T11:41:49+08:00",
         "confidence": "high",
         "fallback_used": true,
         "data_gap": null
@@ -58172,24 +58149,24 @@
       {
         "field": "SH.688183.quote.yahoo_chart",
         "value": {
-          "price": 127.22,
+          "price": 124.52,
           "currency": "CNY",
-          "quote_time": "2026-09-02T09:30:00+08:00",
+          "quote_time": "2026-09-03T09:30:00+08:00",
           "exchange": "SHH",
-          "ma20": 113.9955,
-          "ma50": 113.2948,
-          "ma200": 102.7682,
+          "ma20": 114.6935,
+          "ma50": 112.974,
+          "ma200": 102.8742,
           "low20": 99.11,
           "low60": 81.5,
-          "low252": 51.5,
+          "low252": 56.39,
           "high252": 153.94,
           "prior_high20": 138.47,
           "prior_high60": 153.94,
           "prior_high252": 153.94,
-          "strict_entry": 113.2948,
+          "strict_entry": 112.974,
           "invalidation": 99.11,
           "mechanical_target": 153.94,
-          "reward_risk": 2.8654,
+          "reward_risk": 2.9548,
           "bar_count": 485,
           "technical_data_complete": true,
           "breakout_reference_excludes_current_bar": true,
@@ -58197,12 +58174,6 @@
           "price_freshness": "fallback_only",
           "risk_policy_version": "2.0.0",
           "bars": [
-            {
-              "time": "2025-08-08T01:30:00+00:00",
-              "close": 50.28,
-              "high": 52.5,
-              "low": 48.6
-            },
             {
               "time": "2025-08-11T01:30:00+00:00",
               "close": 54.87,
@@ -59753,16 +59724,22 @@
             },
             {
               "time": "2026-09-02T01:30:00+00:00",
-              "close": 127.22,
-              "high": 127.4,
+              "close": 124.86,
+              "high": 127.45,
               "low": 119.99
+            },
+            {
+              "time": "2026-09-03T01:30:00+00:00",
+              "close": 124.52,
+              "high": 128.0,
+              "low": 121.86
             }
           ]
         },
         "source": "Yahoo Finance",
         "source_type": "open_source_fallback",
         "source_url": "https://finance.yahoo.com/quote/688183.SS",
-        "updated_at": "2026-09-02T11:42:21+08:00",
+        "updated_at": "2026-09-03T11:41:48+08:00",
         "confidence": "medium",
         "fallback_used": true,
         "data_gap": null
@@ -59862,7 +59839,7 @@
         "source": "CNINFO",
         "source_type": "official",
         "source_url": "http://www.cninfo.com.cn/new/disclosure/stock?stockCode=688183&orgId=nssc1000615",
-        "updated_at": "2026-09-02T11:42:22+08:00",
+        "updated_at": "2026-09-03T11:41:49+08:00",
         "confidence": "high",
         "fallback_used": true,
         "data_gap": null
@@ -59872,13 +59849,13 @@
       {
         "field": "SH.688322.quote.yahoo_chart",
         "value": {
-          "price": 97.62,
+          "price": 96.82,
           "currency": "CNY",
-          "quote_time": "2026-09-02T09:30:00+08:00",
+          "quote_time": "2026-09-03T09:30:00+08:00",
           "exchange": "SHH",
-          "ma20": 103.8295,
-          "ma50": 107.0992,
-          "ma200": 95.1034,
+          "ma20": 103.1625,
+          "ma50": 106.5516,
+          "ma200": 95.1844,
           "low20": 90.18,
           "low60": 79.21,
           "low252": 72.45,
@@ -59886,10 +59863,10 @@
           "prior_high20": 117.42,
           "prior_high60": 153.3,
           "prior_high252": 153.3,
-          "strict_entry": 103.8295,
+          "strict_entry": 103.1625,
           "invalidation": 90.18,
           "mechanical_target": 153.3,
-          "reward_risk": 3.6243,
+          "reward_risk": 3.8619,
           "bar_count": 485,
           "technical_data_complete": true,
           "breakout_reference_excludes_current_bar": true,
@@ -59897,12 +59874,6 @@
           "price_freshness": "fallback_only",
           "risk_policy_version": "2.0.0",
           "bars": [
-            {
-              "time": "2025-08-08T01:30:00+00:00",
-              "close": 83.24,
-              "high": 86.65,
-              "low": 83.0
-            },
             {
               "time": "2025-08-11T01:30:00+00:00",
               "close": 84.9,
@@ -61453,16 +61424,22 @@
             },
             {
               "time": "2026-09-02T01:30:00+00:00",
-              "close": 97.62,
-              "high": 97.86,
+              "close": 96.42,
+              "high": 98.16,
               "low": 94.09
+            },
+            {
+              "time": "2026-09-03T01:30:00+00:00",
+              "close": 96.82,
+              "high": 99.97,
+              "low": 96.02
             }
           ]
         },
         "source": "Yahoo Finance",
         "source_type": "open_source_fallback",
         "source_url": "https://finance.yahoo.com/quote/688322.SS",
-        "updated_at": "2026-09-02T11:42:21+08:00",
+        "updated_at": "2026-09-03T11:41:48+08:00",
         "confidence": "medium",
         "fallback_used": true,
         "data_gap": null
@@ -61554,7 +61531,7 @@
         "source": "CNINFO",
         "source_type": "official",
         "source_url": "http://www.cninfo.com.cn/new/disclosure/stock?stockCode=688322&orgId=9900048777",
-        "updated_at": "2026-09-02T11:42:22+08:00",
+        "updated_at": "2026-09-03T11:41:49+08:00",
         "confidence": "high",
         "fallback_used": true,
         "data_gap": null
@@ -61564,13 +61541,13 @@
       {
         "field": "SZ.002335.quote.yahoo_chart",
         "value": {
-          "price": 30.02,
+          "price": 29.97,
           "currency": "CNY",
-          "quote_time": "2026-09-02T09:30:00+08:00",
+          "quote_time": "2026-09-03T09:30:00+08:00",
           "exchange": "SHZ",
-          "ma20": 31.0255,
-          "ma50": 32.7578,
-          "ma200": 38.9215,
+          "ma20": 30.972,
+          "ma50": 32.5112,
+          "ma200": 38.8808,
           "low20": 29.23,
           "low60": 27.43,
           "low252": 27.43,
@@ -61578,10 +61555,10 @@
           "prior_high20": 34.33,
           "prior_high60": 44.87,
           "prior_high252": 54.5862,
-          "strict_entry": 31.0255,
+          "strict_entry": 30.972,
           "invalidation": 29.23,
           "mechanical_target": 54.5862,
-          "reward_risk": 13.1221,
+          "reward_risk": 13.5558,
           "bar_count": 485,
           "technical_data_complete": true,
           "breakout_reference_excludes_current_bar": true,
@@ -61589,12 +61566,6 @@
           "price_freshness": "fallback_only",
           "risk_policy_version": "2.0.0",
           "bars": [
-            {
-              "time": "2025-08-08T01:30:00+00:00",
-              "close": 29.4207,
-              "high": 29.7724,
-              "low": 28.5379
-            },
             {
               "time": "2025-08-11T01:30:00+00:00",
               "close": 30.4552,
@@ -63145,16 +63116,22 @@
             },
             {
               "time": "2026-09-02T01:30:00+00:00",
-              "close": 30.02,
-              "high": 30.09,
+              "close": 29.97,
+              "high": 30.22,
               "low": 29.33
+            },
+            {
+              "time": "2026-09-03T01:30:00+00:00",
+              "close": 29.97,
+              "high": 30.32,
+              "low": 29.68
             }
           ]
         },
         "source": "Yahoo Finance",
         "source_type": "open_source_fallback",
         "source_url": "https://finance.yahoo.com/quote/002335.SZ",
-        "updated_at": "2026-09-02T11:42:21+08:00",
+        "updated_at": "2026-09-03T11:41:48+08:00",
         "confidence": "medium",
         "fallback_used": true,
         "data_gap": null
@@ -63246,7 +63223,7 @@
         "source": "CNINFO",
         "source_type": "official",
         "source_url": "http://www.cninfo.com.cn/new/disclosure/stock?stockCode=002335&orgId=9900010032",
-        "updated_at": "2026-09-02T11:42:22+08:00",
+        "updated_at": "2026-09-03T11:41:49+08:00",
         "confidence": "high",
         "fallback_used": true,
         "data_gap": null
@@ -63256,13 +63233,13 @@
       {
         "field": "SZ.002747.quote.yahoo_chart",
         "value": {
-          "price": 30.65,
+          "price": 30.94,
           "currency": "CNY",
-          "quote_time": "2026-09-02T09:30:00+08:00",
+          "quote_time": "2026-09-03T09:30:00+08:00",
           "exchange": "SHZ",
-          "ma20": 33.7005,
-          "ma50": 35.5062,
-          "ma200": 26.9491,
+          "ma20": 33.495,
+          "ma50": 35.3828,
+          "ma200": 26.9863,
           "low20": 30.14,
           "low60": 27.95,
           "low252": 19.21,
@@ -63270,10 +63247,10 @@
           "prior_high20": 40.04,
           "prior_high60": 49.0,
           "prior_high252": 49.0,
-          "strict_entry": 33.7005,
+          "strict_entry": 33.495,
           "invalidation": 30.14,
           "mechanical_target": 49.0,
-          "reward_risk": 4.297,
+          "reward_risk": 4.6215,
           "bar_count": 485,
           "technical_data_complete": true,
           "breakout_reference_excludes_current_bar": true,
@@ -63281,12 +63258,6 @@
           "price_freshness": "fallback_only",
           "risk_policy_version": "2.0.0",
           "bars": [
-            {
-              "time": "2025-08-08T01:30:00+00:00",
-              "close": 23.32,
-              "high": 23.85,
-              "low": 23.25
-            },
             {
               "time": "2025-08-11T01:30:00+00:00",
               "close": 23.61,
@@ -64837,16 +64808,22 @@
             },
             {
               "time": "2026-09-02T01:30:00+00:00",
-              "close": 30.65,
+              "close": 30.41,
               "high": 30.88,
               "low": 30.14
+            },
+            {
+              "time": "2026-09-03T01:30:00+00:00",
+              "close": 30.94,
+              "high": 31.4,
+              "low": 30.52
             }
           ]
         },
         "source": "Yahoo Finance",
         "source_type": "open_source_fallback",
         "source_url": "https://finance.yahoo.com/quote/002747.SZ",
-        "updated_at": "2026-09-02T11:42:21+08:00",
+        "updated_at": "2026-09-03T11:41:48+08:00",
         "confidence": "medium",
         "fallback_used": true,
         "data_gap": null
@@ -64946,7 +64923,7 @@
         "source": "CNINFO",
         "source_type": "official",
         "source_url": "http://www.cninfo.com.cn/new/disclosure/stock?stockCode=002747&orgId=9900022936",
-        "updated_at": "2026-09-02T11:42:22+08:00",
+        "updated_at": "2026-09-03T11:41:49+08:00",
         "confidence": "high",
         "fallback_used": true,
         "data_gap": null
@@ -64956,24 +64933,24 @@
       {
         "field": "SZ.300308.quote.yahoo_chart",
         "value": {
-          "price": 824.74,
+          "price": 822.85,
           "currency": "CNY",
-          "quote_time": "2026-09-02T09:30:00+08:00",
+          "quote_time": "2026-09-03T09:30:00+08:00",
           "exchange": "SHZ",
-          "ma20": 898.5455,
-          "ma50": 1012.136,
-          "ma200": 798.1374,
-          "low20": 814.06,
+          "ma20": 891.821,
+          "ma50": 1002.0782,
+          "ma200": 799.7899,
+          "low20": 810.0,
           "low60": 793.03,
           "low252": 256.1,
           "high252": 1416.88,
           "prior_high20": 1014.87,
           "prior_high60": 1416.88,
           "prior_high252": 1416.88,
-          "strict_entry": 898.5455,
-          "invalidation": 814.06,
+          "strict_entry": 891.821,
+          "invalidation": 810.0,
           "mechanical_target": 1416.88,
-          "reward_risk": 6.1352,
+          "reward_risk": 6.4172,
           "bar_count": 485,
           "technical_data_complete": true,
           "breakout_reference_excludes_current_bar": true,
@@ -64981,12 +64958,6 @@
           "price_freshness": "fallback_only",
           "risk_policy_version": "2.0.0",
           "bars": [
-            {
-              "time": "2025-08-08T01:30:00+00:00",
-              "close": 209.3,
-              "high": 213.88,
-              "low": 205.0
-            },
             {
               "time": "2025-08-11T01:30:00+00:00",
               "close": 214.75,
@@ -66537,16 +66508,22 @@
             },
             {
               "time": "2026-09-02T01:30:00+00:00",
-              "close": 824.74,
+              "close": 822.4,
               "high": 848.0,
               "low": 814.06
+            },
+            {
+              "time": "2026-09-03T01:30:00+00:00",
+              "close": 822.85,
+              "high": 835.9,
+              "low": 810.0
             }
           ]
         },
         "source": "Yahoo Finance",
         "source_type": "open_source_fallback",
         "source_url": "https://finance.yahoo.com/quote/300308.SZ",
-        "updated_at": "2026-09-02T11:42:21+08:00",
+        "updated_at": "2026-09-03T11:41:48+08:00",
         "confidence": "medium",
         "fallback_used": true,
         "data_gap": null
@@ -66630,7 +66607,7 @@
         "source": "CNINFO",
         "source_type": "official",
         "source_url": "http://www.cninfo.com.cn/new/disclosure/stock?stockCode=300308&orgId=9900022016",
-        "updated_at": "2026-09-02T11:42:22+08:00",
+        "updated_at": "2026-09-03T11:41:49+08:00",
         "confidence": "high",
         "fallback_used": true,
         "data_gap": null
@@ -66640,24 +66617,24 @@
       {
         "field": "SZ.300394.quote.yahoo_chart",
         "value": {
-          "price": 241.24,
+          "price": 249.54,
           "currency": "CNY",
-          "quote_time": "2026-09-02T09:30:00+08:00",
+          "quote_time": "2026-09-03T09:30:00+08:00",
           "exchange": "SHZ",
-          "ma20": 255.903,
-          "ma50": 245.3962,
-          "ma200": 218.1234,
-          "low20": 202.0,
+          "ma20": 257.554,
+          "ma50": 243.7228,
+          "ma200": 218.772,
+          "low20": 216.68,
           "low60": 155.55,
-          "low252": 80.8214,
+          "low252": 82.4429,
           "high252": 375.0,
           "prior_high20": 295.0,
           "prior_high60": 346.0,
           "prior_high252": 375.0,
-          "strict_entry": 245.3962,
-          "invalidation": 202.0,
+          "strict_entry": 243.7228,
+          "invalidation": 216.68,
           "mechanical_target": 375.0,
-          "reward_risk": 2.9865,
+          "reward_risk": 4.8544,
           "bar_count": 485,
           "technical_data_complete": true,
           "breakout_reference_excludes_current_bar": true,
@@ -66665,12 +66642,6 @@
           "price_freshness": "fallback_only",
           "risk_policy_version": "2.0.0",
           "bars": [
-            {
-              "time": "2025-08-08T01:30:00+00:00",
-              "close": 71.8571,
-              "high": 73.1714,
-              "low": 71.3929
-            },
             {
               "time": "2025-08-11T01:30:00+00:00",
               "close": 74.0071,
@@ -68221,16 +68192,22 @@
             },
             {
               "time": "2026-09-02T01:30:00+00:00",
-              "close": 241.24,
-              "high": 248.6,
+              "close": 250.0,
+              "high": 255.69,
               "low": 237.8
+            },
+            {
+              "time": "2026-09-03T01:30:00+00:00",
+              "close": 249.54,
+              "high": 253.99,
+              "low": 243.96
             }
           ]
         },
         "source": "Yahoo Finance",
         "source_type": "open_source_fallback",
         "source_url": "https://finance.yahoo.com/quote/300394.SZ",
-        "updated_at": "2026-09-02T11:42:21+08:00",
+        "updated_at": "2026-09-03T11:41:48+08:00",
         "confidence": "medium",
         "fallback_used": true,
         "data_gap": null
@@ -68314,7 +68291,7 @@
         "source": "CNINFO",
         "source_type": "official",
         "source_url": "http://www.cninfo.com.cn/new/disclosure/stock?stockCode=300394&orgId=9900023911",
-        "updated_at": "2026-09-02T11:42:22+08:00",
+        "updated_at": "2026-09-03T11:41:49+08:00",
         "confidence": "high",
         "fallback_used": true,
         "data_gap": null
@@ -68324,24 +68301,24 @@
       {
         "field": "SZ.300476.quote.yahoo_chart",
         "value": {
-          "price": 227.44,
+          "price": 224.41,
           "currency": "CNY",
-          "quote_time": "2026-09-02T09:30:00+08:00",
+          "quote_time": "2026-09-03T09:30:00+08:00",
           "exchange": "SHZ",
-          "ma20": 257.8255,
-          "ma50": 260.5992,
-          "ma200": 290.613,
-          "low20": 224.04,
+          "ma20": 256.4255,
+          "ma50": 258.039,
+          "ma200": 290.2141,
+          "low20": 221.0,
           "low60": 177.88,
           "low252": 177.88,
           "high252": 402.6,
           "prior_high20": 287.68,
           "prior_high60": 375.8,
           "prior_high252": 402.6,
-          "strict_entry": 257.8255,
-          "invalidation": 224.04,
+          "strict_entry": 256.4255,
+          "invalidation": 221.0,
           "mechanical_target": 402.6,
-          "reward_risk": 4.2851,
+          "reward_risk": 4.1263,
           "bar_count": 485,
           "technical_data_complete": true,
           "breakout_reference_excludes_current_bar": true,
@@ -68349,12 +68326,6 @@
           "price_freshness": "fallback_only",
           "risk_policy_version": "2.0.0",
           "bars": [
-            {
-              "time": "2025-08-08T01:30:00+00:00",
-              "close": 192.37,
-              "high": 194.64,
-              "low": 188.06
-            },
             {
               "time": "2025-08-11T01:30:00+00:00",
               "close": 202.45,
@@ -69905,16 +69876,22 @@
             },
             {
               "time": "2026-09-02T01:30:00+00:00",
-              "close": 227.44,
+              "close": 225.18,
               "high": 231.33,
               "low": 224.04
+            },
+            {
+              "time": "2026-09-03T01:30:00+00:00",
+              "close": 224.41,
+              "high": 229.99,
+              "low": 221.0
             }
           ]
         },
         "source": "Yahoo Finance",
         "source_type": "open_source_fallback",
         "source_url": "https://finance.yahoo.com/quote/300476.SZ",
-        "updated_at": "2026-09-02T11:42:21+08:00",
+        "updated_at": "2026-09-03T11:41:48+08:00",
         "confidence": "medium",
         "fallback_used": true,
         "data_gap": null
@@ -69990,7 +69967,7 @@
         "source": "CNINFO",
         "source_type": "official",
         "source_url": "http://www.cninfo.com.cn/new/disclosure/stock?stockCode=300476&orgId=9900024582",
-        "updated_at": "2026-09-02T11:42:22+08:00",
+        "updated_at": "2026-09-03T11:41:49+08:00",
         "confidence": "high",
         "fallback_used": true,
         "data_gap": null
@@ -70000,13 +69977,13 @@
       {
         "field": "SZ.300499.quote.yahoo_chart",
         "value": {
-          "price": 33.13,
+          "price": 33.47,
           "currency": "CNY",
-          "quote_time": "2026-09-02T09:30:00+08:00",
+          "quote_time": "2026-09-03T09:30:00+08:00",
           "exchange": "SHZ",
-          "ma20": 29.665,
-          "ma50": 31.3414,
-          "ma200": 33.8344,
+          "ma20": 29.903,
+          "ma50": 31.1396,
+          "ma200": 33.865,
           "low20": 26.87,
           "low60": 23.2,
           "low252": 23.2,
@@ -70014,10 +69991,10 @@
           "prior_high20": 33.35,
           "prior_high60": 46.46,
           "prior_high252": 48.04,
-          "strict_entry": 29.665,
+          "strict_entry": 29.903,
           "invalidation": 26.87,
           "mechanical_target": 48.04,
-          "reward_risk": 6.5742,
+          "reward_risk": 5.9799,
           "bar_count": 485,
           "technical_data_complete": true,
           "breakout_reference_excludes_current_bar": true,
@@ -70025,12 +70002,6 @@
           "price_freshness": "fallback_only",
           "risk_policy_version": "2.0.0",
           "bars": [
-            {
-              "time": "2025-08-08T01:30:00+00:00",
-              "close": 21.44,
-              "high": 21.78,
-              "low": 20.5
-            },
             {
               "time": "2025-08-11T01:30:00+00:00",
               "close": 21.69,
@@ -71581,16 +71552,22 @@
             },
             {
               "time": "2026-09-02T01:30:00+00:00",
-              "close": 33.13,
+              "close": 32.43,
               "high": 33.28,
               "low": 31.57
+            },
+            {
+              "time": "2026-09-03T01:30:00+00:00",
+              "close": 33.47,
+              "high": 33.87,
+              "low": 32.51
             }
           ]
         },
         "source": "Yahoo Finance",
         "source_type": "open_source_fallback",
         "source_url": "https://finance.yahoo.com/quote/300499.SZ",
-        "updated_at": "2026-09-02T11:42:21+08:00",
+        "updated_at": "2026-09-03T11:41:48+08:00",
         "confidence": "medium",
         "fallback_used": true,
         "data_gap": null
@@ -71666,7 +71643,7 @@
         "source": "CNINFO",
         "source_type": "official",
         "source_url": "http://www.cninfo.com.cn/new/disclosure/stock?stockCode=300499&orgId=9900023095",
-        "updated_at": "2026-09-02T11:42:22+08:00",
+        "updated_at": "2026-09-03T11:41:49+08:00",
         "confidence": "high",
         "fallback_used": true,
         "data_gap": null
@@ -71676,24 +71653,24 @@
       {
         "field": "SZ.300502.quote.yahoo_chart",
         "value": {
-          "price": 384.49,
+          "price": 388.23,
           "currency": "CNY",
-          "quote_time": "2026-09-02T09:30:00+08:00",
+          "quote_time": "2026-09-03T09:30:00+08:00",
           "exchange": "SHZ",
-          "ma20": 417.9615,
-          "ma50": 469.318,
-          "ma200": 375.2035,
+          "ma20": 416.39,
+          "ma50": 464.917,
+          "ma200": 375.9557,
           "low20": 378.56,
           "low60": 347.0,
-          "low252": 168.7286,
+          "low252": 175.8714,
           "high252": 618.87,
           "prior_high20": 472.0,
           "prior_high60": 618.87,
           "prior_high252": 618.87,
-          "strict_entry": 417.9615,
+          "strict_entry": 416.39,
           "invalidation": 378.56,
           "mechanical_target": 618.87,
-          "reward_risk": 5.099,
+          "reward_risk": 5.3524,
           "bar_count": 485,
           "technical_data_complete": true,
           "breakout_reference_excludes_current_bar": true,
@@ -71701,12 +71678,6 @@
           "price_freshness": "fallback_only",
           "risk_policy_version": "2.0.0",
           "bars": [
-            {
-              "time": "2025-08-08T01:30:00+00:00",
-              "close": 130.2,
-              "high": 132.5571,
-              "low": 129.2
-            },
             {
               "time": "2025-08-11T01:30:00+00:00",
               "close": 137.7786,
@@ -73257,16 +73228,22 @@
             },
             {
               "time": "2026-09-02T01:30:00+00:00",
-              "close": 384.49,
+              "close": 386.7,
               "high": 395.0,
               "low": 378.56
+            },
+            {
+              "time": "2026-09-03T01:30:00+00:00",
+              "close": 388.23,
+              "high": 397.79,
+              "low": 383.36
             }
           ]
         },
         "source": "Yahoo Finance",
         "source_type": "open_source_fallback",
         "source_url": "https://finance.yahoo.com/quote/300502.SZ",
-        "updated_at": "2026-09-02T11:42:21+08:00",
+        "updated_at": "2026-09-03T11:41:48+08:00",
         "confidence": "medium",
         "fallback_used": true,
         "data_gap": null
@@ -73350,7 +73327,7 @@
         "source": "CNINFO",
         "source_type": "official",
         "source_url": "http://www.cninfo.com.cn/new/disclosure/stock?stockCode=300502&orgId=9900026455",
-        "updated_at": "2026-09-02T11:42:22+08:00",
+        "updated_at": "2026-09-03T11:41:49+08:00",
         "confidence": "high",
         "fallback_used": true,
         "data_gap": null
@@ -73416,7 +73393,7 @@
         "source": "SEC",
         "source_type": "official",
         "source_url": "https://data.sec.gov/submissions/CIK0000006951.json",
-        "updated_at": "2026-09-02T11:41:51+08:00",
+        "updated_at": "2026-09-03T11:41:16+08:00",
         "confidence": "high",
         "fallback_used": true,
         "data_gap": null
@@ -73466,7 +73443,7 @@
         "source": "SEC",
         "source_type": "official",
         "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000006951.json",
-        "updated_at": "2026-09-02T11:41:51+08:00",
+        "updated_at": "2026-09-03T11:41:16+08:00",
         "confidence": "high",
         "fallback_used": true,
         "data_gap": null
@@ -74705,7 +74682,7 @@
         "source": "Alpha Vantage",
         "source_type": "vendor_fallback",
         "source_url": "https://www.alphavantage.co/query?function=EARNINGS&apikey=REDACTED&symbol=AMAT",
-        "updated_at": "2026-09-02T11:41:55+08:00",
+        "updated_at": "2026-09-03T11:41:21+08:00",
         "confidence": "medium",
         "fallback_used": true,
         "data_gap": null
@@ -75560,7 +75537,7 @@
         "source": "Alpha Vantage",
         "source_type": "vendor_fallback",
         "source_url": "https://www.alphavantage.co/query?function=EARNINGS_ESTIMATES&apikey=REDACTED&symbol=AMAT",
-        "updated_at": "2026-09-02T11:41:55+08:00",
+        "updated_at": "2026-09-03T11:41:21+08:00",
         "confidence": "medium",
         "fallback_used": true,
         "data_gap": null
@@ -75584,7 +75561,7 @@
         "source": "OpenFIGI",
         "source_type": "open_source_fallback",
         "source_url": "https://api.openfigi.com/v3/mapping",
-        "updated_at": "2026-09-02T11:42:21+08:00",
+        "updated_at": "2026-09-03T11:41:47+08:00",
         "confidence": "medium",
         "fallback_used": true,
         "data_gap": null
@@ -75650,7 +75627,7 @@
         "source": "SEC",
         "source_type": "official",
         "source_url": "https://data.sec.gov/submissions/CIK0000002488.json",
-        "updated_at": "2026-09-02T11:41:49+08:00",
+        "updated_at": "2026-09-03T11:41:14+08:00",
         "confidence": "high",
         "fallback_used": true,
         "data_gap": null
@@ -75691,7 +75668,7 @@
         "source": "SEC",
         "source_type": "official",
         "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000002488.json",
-        "updated_at": "2026-09-02T11:41:49+08:00",
+        "updated_at": "2026-09-03T11:41:14+08:00",
         "confidence": "high",
         "fallback_used": true,
         "data_gap": null
@@ -75715,7 +75692,7 @@
         "source": "OpenFIGI",
         "source_type": "open_source_fallback",
         "source_url": "https://api.openfigi.com/v3/mapping",
-        "updated_at": "2026-09-02T11:42:21+08:00",
+        "updated_at": "2026-09-03T11:41:47+08:00",
         "confidence": "medium",
         "fallback_used": true,
         "data_gap": null
@@ -75781,7 +75758,7 @@
         "source": "SEC",
         "source_type": "official",
         "source_url": "https://data.sec.gov/submissions/CIK0001596532.json",
-        "updated_at": "2026-09-02T11:41:52+08:00",
+        "updated_at": "2026-09-03T11:41:18+08:00",
         "confidence": "high",
         "fallback_used": true,
         "data_gap": null
@@ -75831,7 +75808,7 @@
         "source": "SEC",
         "source_type": "official",
         "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001596532.json",
-        "updated_at": "2026-09-02T11:41:52+08:00",
+        "updated_at": "2026-09-03T11:41:18+08:00",
         "confidence": "high",
         "fallback_used": true,
         "data_gap": null
@@ -75867,7 +75844,7 @@
         "source": "SEC",
         "source_type": "official",
         "source_url": "https://data.sec.gov/submissions/CIK0001973239.json",
-        "updated_at": "2026-09-02T11:41:50+08:00",
+        "updated_at": "2026-09-03T11:41:14+08:00",
         "confidence": "high",
         "fallback_used": true,
         "data_gap": null
@@ -75917,7 +75894,7 @@
         "source": "SEC",
         "source_type": "official",
         "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001973239.json",
-        "updated_at": "2026-09-02T11:41:50+08:00",
+        "updated_at": "2026-09-03T11:41:14+08:00",
         "confidence": "high",
         "fallback_used": true,
         "data_gap": null
@@ -76067,7 +76044,7 @@
         "source": "Alpha Vantage",
         "source_type": "vendor_fallback",
         "source_url": "https://www.alphavantage.co/query?function=EARNINGS&apikey=REDACTED&symbol=ARM",
-        "updated_at": "2026-09-02T11:41:55+08:00",
+        "updated_at": "2026-09-03T11:41:21+08:00",
         "confidence": "medium",
         "fallback_used": true,
         "data_gap": null
@@ -76382,7 +76359,7 @@
         "source": "Alpha Vantage",
         "source_type": "vendor_fallback",
         "source_url": "https://www.alphavantage.co/query?function=EARNINGS_ESTIMATES&apikey=REDACTED&symbol=ARM",
-        "updated_at": "2026-09-02T11:41:55+08:00",
+        "updated_at": "2026-09-03T11:41:21+08:00",
         "confidence": "medium",
         "fallback_used": true,
         "data_gap": null
@@ -76406,7 +76383,7 @@
         "source": "OpenFIGI",
         "source_type": "open_source_fallback",
         "source_url": "https://api.openfigi.com/v3/mapping",
-        "updated_at": "2026-09-02T11:42:21+08:00",
+        "updated_at": "2026-09-03T11:41:47+08:00",
         "confidence": "medium",
         "fallback_used": true,
         "data_gap": null
@@ -76472,7 +76449,7 @@
         "source": "SEC",
         "source_type": "official",
         "source_url": "https://data.sec.gov/submissions/CIK0000937966.json",
-        "updated_at": "2026-09-02T11:41:50+08:00",
+        "updated_at": "2026-09-03T11:41:16+08:00",
         "confidence": "high",
         "fallback_used": true,
         "data_gap": null
@@ -76522,7 +76499,7 @@
         "source": "SEC",
         "source_type": "official",
         "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000937966.json",
-        "updated_at": "2026-09-02T11:41:50+08:00",
+        "updated_at": "2026-09-03T11:41:16+08:00",
         "confidence": "high",
         "fallback_used": true,
         "data_gap": null
@@ -77635,7 +77612,7 @@
         "source": "Alpha Vantage",
         "source_type": "vendor_fallback",
         "source_url": "https://www.alphavantage.co/query?function=EARNINGS&apikey=REDACTED&symbol=ASML",
-        "updated_at": "2026-09-02T11:41:55+08:00",
+        "updated_at": "2026-09-03T11:41:21+08:00",
         "confidence": "medium",
         "fallback_used": true,
         "data_gap": null
@@ -78470,7 +78447,7 @@
         "source": "Alpha Vantage",
         "source_type": "vendor_fallback",
         "source_url": "https://www.alphavantage.co/query?function=EARNINGS_ESTIMATES&apikey=REDACTED&symbol=ASML",
-        "updated_at": "2026-09-02T11:41:55+08:00",
+        "updated_at": "2026-09-03T11:41:21+08:00",
         "confidence": "medium",
         "fallback_used": true,
         "data_gap": null
@@ -78494,7 +78471,7 @@
         "source": "OpenFIGI",
         "source_type": "open_source_fallback",
         "source_url": "https://api.openfigi.com/v3/mapping",
-        "updated_at": "2026-09-02T11:42:21+08:00",
+        "updated_at": "2026-09-03T11:41:47+08:00",
         "confidence": "medium",
         "fallback_used": true,
         "data_gap": null
@@ -78507,6 +78484,12 @@
           "cik": "0001730168",
           "company": "Broadcom Inc.",
           "recent_filings": [
+            {
+              "form": "8-K",
+              "filed": "2026-09-02",
+              "accession": "0001730168-26-000076",
+              "primary_document": "avgo-20260902.htm"
+            },
             {
               "form": "8-K",
               "filed": "2026-07-06",
@@ -78548,19 +78531,13 @@
               "filed": "2026-04-06",
               "accession": "0001193125-26-144028",
               "primary_document": "d87999d8k.htm"
-            },
-            {
-              "form": "8-K",
-              "filed": "2026-04-02",
-              "accession": "0001193125-26-140574",
-              "primary_document": "d109450d8k.htm"
             }
           ]
         },
         "source": "SEC",
         "source_type": "official",
         "source_url": "https://data.sec.gov/submissions/CIK0001730168.json",
-        "updated_at": "2026-09-02T11:41:49+08:00",
+        "updated_at": "2026-09-03T11:41:14+08:00",
         "confidence": "high",
         "fallback_used": true,
         "data_gap": null
@@ -78610,7 +78587,7 @@
         "source": "SEC",
         "source_type": "official",
         "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001730168.json",
-        "updated_at": "2026-09-02T11:41:49+08:00",
+        "updated_at": "2026-09-03T11:41:14+08:00",
         "confidence": "high",
         "fallback_used": true,
         "data_gap": null
@@ -78694,6 +78671,15 @@
             }
           ],
           "quarterlyEarnings": [
+            {
+              "fiscalDateEnding": "2026-07-31",
+              "reportedDate": "2026-09-02",
+              "reportedEPS": "None",
+              "estimatedEPS": "2.83",
+              "surprise": "0",
+              "surprisePercentage": "None",
+              "reportTime": "post-market"
+            },
             {
               "fiscalDateEnding": "2026-04-30",
               "reportedDate": "2026-06-03",
@@ -79311,7 +79297,7 @@
         "source": "Alpha Vantage",
         "source_type": "vendor_fallback",
         "source_url": "https://www.alphavantage.co/query?function=EARNINGS&apikey=REDACTED&symbol=AVGO",
-        "updated_at": "2026-09-02T11:41:55+08:00",
+        "updated_at": "2026-09-03T11:41:21+08:00",
         "confidence": "medium",
         "fallback_used": true,
         "data_gap": null
@@ -80146,7 +80132,7 @@
         "source": "Alpha Vantage",
         "source_type": "vendor_fallback",
         "source_url": "https://www.alphavantage.co/query?function=EARNINGS_ESTIMATES&apikey=REDACTED&symbol=AVGO",
-        "updated_at": "2026-09-02T11:41:55+08:00",
+        "updated_at": "2026-09-03T11:41:21+08:00",
         "confidence": "medium",
         "fallback_used": true,
         "data_gap": null
@@ -80170,7 +80156,7 @@
         "source": "OpenFIGI",
         "source_type": "open_source_fallback",
         "source_url": "https://api.openfigi.com/v3/mapping",
-        "updated_at": "2026-09-02T11:42:21+08:00",
+        "updated_at": "2026-09-03T11:41:47+08:00",
         "confidence": "medium",
         "fallback_used": true,
         "data_gap": null
@@ -80236,7 +80222,7 @@
         "source": "SEC",
         "source_type": "official",
         "source_url": "https://data.sec.gov/submissions/CIK0000936395.json",
-        "updated_at": "2026-09-02T11:41:53+08:00",
+        "updated_at": "2026-09-03T11:41:19+08:00",
         "confidence": "high",
         "fallback_used": true,
         "data_gap": null
@@ -80286,7 +80272,7 @@
         "source": "SEC",
         "source_type": "official",
         "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000936395.json",
-        "updated_at": "2026-09-02T11:41:53+08:00",
+        "updated_at": "2026-09-03T11:41:19+08:00",
         "confidence": "high",
         "fallback_used": true,
         "data_gap": null
@@ -80352,7 +80338,7 @@
         "source": "SEC",
         "source_type": "official",
         "source_url": "https://data.sec.gov/submissions/CIK0000820318.json",
-        "updated_at": "2026-09-02T11:41:50+08:00",
+        "updated_at": "2026-09-03T11:41:15+08:00",
         "confidence": "high",
         "fallback_used": true,
         "data_gap": null
@@ -80402,7 +80388,7 @@
         "source": "SEC",
         "source_type": "official",
         "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000820318.json",
-        "updated_at": "2026-09-02T11:41:50+08:00",
+        "updated_at": "2026-09-03T11:41:15+08:00",
         "confidence": "high",
         "fallback_used": true,
         "data_gap": null
@@ -81641,7 +81627,7 @@
         "source": "Alpha Vantage",
         "source_type": "vendor_fallback",
         "source_url": "https://www.alphavantage.co/query?function=EARNINGS&apikey=REDACTED&symbol=COHR",
-        "updated_at": "2026-09-02T11:41:55+08:00",
+        "updated_at": "2026-09-03T11:41:21+08:00",
         "confidence": "medium",
         "fallback_used": true,
         "data_gap": null
@@ -82436,7 +82422,7 @@
         "source": "Alpha Vantage",
         "source_type": "vendor_fallback",
         "source_url": "https://www.alphavantage.co/query?function=EARNINGS_ESTIMATES&apikey=REDACTED&symbol=COHR",
-        "updated_at": "2026-09-02T11:41:55+08:00",
+        "updated_at": "2026-09-03T11:41:21+08:00",
         "confidence": "medium",
         "fallback_used": true,
         "data_gap": null
@@ -82460,7 +82446,7 @@
         "source": "OpenFIGI",
         "source_type": "open_source_fallback",
         "source_url": "https://api.openfigi.com/v3/mapping",
-        "updated_at": "2026-09-02T11:42:21+08:00",
+        "updated_at": "2026-09-03T11:41:47+08:00",
         "confidence": "medium",
         "fallback_used": true,
         "data_gap": null
@@ -82526,7 +82512,7 @@
         "source": "SEC",
         "source_type": "official",
         "source_url": "https://data.sec.gov/submissions/CIK0000319201.json",
-        "updated_at": "2026-09-02T11:41:51+08:00",
+        "updated_at": "2026-09-03T11:41:17+08:00",
         "confidence": "high",
         "fallback_used": true,
         "data_gap": null
@@ -82576,7 +82562,7 @@
         "source": "SEC",
         "source_type": "official",
         "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000319201.json",
-        "updated_at": "2026-09-02T11:41:51+08:00",
+        "updated_at": "2026-09-03T11:41:17+08:00",
         "confidence": "high",
         "fallback_used": true,
         "data_gap": null
@@ -83815,7 +83801,7 @@
         "source": "Alpha Vantage",
         "source_type": "vendor_fallback",
         "source_url": "https://www.alphavantage.co/query?function=EARNINGS&apikey=REDACTED&symbol=KLAC",
-        "updated_at": "2026-09-02T11:41:55+08:00",
+        "updated_at": "2026-09-03T11:41:21+08:00",
         "confidence": "medium",
         "fallback_used": true,
         "data_gap": null
@@ -84650,7 +84636,7 @@
         "source": "Alpha Vantage",
         "source_type": "vendor_fallback",
         "source_url": "https://www.alphavantage.co/query?function=EARNINGS_ESTIMATES&apikey=REDACTED&symbol=KLAC",
-        "updated_at": "2026-09-02T11:41:55+08:00",
+        "updated_at": "2026-09-03T11:41:21+08:00",
         "confidence": "medium",
         "fallback_used": true,
         "data_gap": null
@@ -84674,7 +84660,7 @@
         "source": "OpenFIGI",
         "source_type": "open_source_fallback",
         "source_url": "https://api.openfigi.com/v3/mapping",
-        "updated_at": "2026-09-02T11:42:21+08:00",
+        "updated_at": "2026-09-03T11:41:47+08:00",
         "confidence": "medium",
         "fallback_used": true,
         "data_gap": null
@@ -84740,7 +84726,7 @@
         "source": "SEC",
         "source_type": "official",
         "source_url": "https://data.sec.gov/submissions/CIK0001633978.json",
-        "updated_at": "2026-09-02T11:41:53+08:00",
+        "updated_at": "2026-09-03T11:41:19+08:00",
         "confidence": "high",
         "fallback_used": true,
         "data_gap": null
@@ -84790,7 +84776,7 @@
         "source": "SEC",
         "source_type": "official",
         "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001633978.json",
-        "updated_at": "2026-09-02T11:41:53+08:00",
+        "updated_at": "2026-09-03T11:41:19+08:00",
         "confidence": "high",
         "fallback_used": true,
         "data_gap": null
@@ -84856,7 +84842,7 @@
         "source": "SEC",
         "source_type": "official",
         "source_url": "https://data.sec.gov/submissions/CIK0000707549.json",
-        "updated_at": "2026-09-02T11:41:51+08:00",
+        "updated_at": "2026-09-03T11:41:17+08:00",
         "confidence": "high",
         "fallback_used": true,
         "data_gap": null
@@ -84906,7 +84892,7 @@
         "source": "SEC",
         "source_type": "official",
         "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000707549.json",
-        "updated_at": "2026-09-02T11:41:51+08:00",
+        "updated_at": "2026-09-03T11:41:17+08:00",
         "confidence": "high",
         "fallback_used": true,
         "data_gap": null
@@ -86145,7 +86131,7 @@
         "source": "Alpha Vantage",
         "source_type": "vendor_fallback",
         "source_url": "https://www.alphavantage.co/query?function=EARNINGS&apikey=REDACTED&symbol=LRCX",
-        "updated_at": "2026-09-02T11:41:55+08:00",
+        "updated_at": "2026-09-03T11:41:21+08:00",
         "confidence": "medium",
         "fallback_used": true,
         "data_gap": null
@@ -86980,7 +86966,7 @@
         "source": "Alpha Vantage",
         "source_type": "vendor_fallback",
         "source_url": "https://www.alphavantage.co/query?function=EARNINGS_ESTIMATES&apikey=REDACTED&symbol=LRCX",
-        "updated_at": "2026-09-02T11:41:55+08:00",
+        "updated_at": "2026-09-03T11:41:21+08:00",
         "confidence": "medium",
         "fallback_used": true,
         "data_gap": null
@@ -87004,7 +86990,7 @@
         "source": "OpenFIGI",
         "source_type": "open_source_fallback",
         "source_url": "https://api.openfigi.com/v3/mapping",
-        "updated_at": "2026-09-02T11:42:21+08:00",
+        "updated_at": "2026-09-03T11:41:47+08:00",
         "confidence": "medium",
         "fallback_used": true,
         "data_gap": null
@@ -87070,7 +87056,7 @@
         "source": "SEC",
         "source_type": "official",
         "source_url": "https://data.sec.gov/submissions/CIK0001835632.json",
-        "updated_at": "2026-09-02T11:41:50+08:00",
+        "updated_at": "2026-09-03T11:41:14+08:00",
         "confidence": "high",
         "fallback_used": true,
         "data_gap": null
@@ -87120,7 +87106,7 @@
         "source": "SEC",
         "source_type": "official",
         "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001835632.json",
-        "updated_at": "2026-09-02T11:41:50+08:00",
+        "updated_at": "2026-09-03T11:41:14+08:00",
         "confidence": "high",
         "fallback_used": true,
         "data_gap": null
@@ -88190,7 +88176,7 @@
         "source": "Alpha Vantage",
         "source_type": "vendor_fallback",
         "source_url": "https://www.alphavantage.co/query?function=EARNINGS&apikey=REDACTED&symbol=MRVL",
-        "updated_at": "2026-09-02T11:41:55+08:00",
+        "updated_at": "2026-09-03T11:41:21+08:00",
         "confidence": "medium",
         "fallback_used": true,
         "data_gap": null
@@ -89025,7 +89011,7 @@
         "source": "Alpha Vantage",
         "source_type": "vendor_fallback",
         "source_url": "https://www.alphavantage.co/query?function=EARNINGS_ESTIMATES&apikey=REDACTED&symbol=MRVL",
-        "updated_at": "2026-09-02T11:41:55+08:00",
+        "updated_at": "2026-09-03T11:41:21+08:00",
         "confidence": "medium",
         "fallback_used": true,
         "data_gap": null
@@ -89049,7 +89035,7 @@
         "source": "OpenFIGI",
         "source_type": "open_source_fallback",
         "source_url": "https://api.openfigi.com/v3/mapping",
-        "updated_at": "2026-09-02T11:42:21+08:00",
+        "updated_at": "2026-09-03T11:41:47+08:00",
         "confidence": "medium",
         "fallback_used": true,
         "data_gap": null
@@ -89115,7 +89101,7 @@
         "source": "SEC",
         "source_type": "official",
         "source_url": "https://data.sec.gov/submissions/CIK0000723125.json",
-        "updated_at": "2026-09-02T11:41:52+08:00",
+        "updated_at": "2026-09-03T11:41:18+08:00",
         "confidence": "high",
         "fallback_used": true,
         "data_gap": null
@@ -89165,7 +89151,7 @@
         "source": "SEC",
         "source_type": "official",
         "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000723125.json",
-        "updated_at": "2026-09-02T11:41:52+08:00",
+        "updated_at": "2026-09-03T11:41:18+08:00",
         "confidence": "high",
         "fallback_used": true,
         "data_gap": null
@@ -90404,7 +90390,7 @@
         "source": "Alpha Vantage",
         "source_type": "vendor_fallback",
         "source_url": "https://www.alphavantage.co/query?function=EARNINGS&apikey=REDACTED&symbol=MU",
-        "updated_at": "2026-09-02T11:41:55+08:00",
+        "updated_at": "2026-09-03T11:41:21+08:00",
         "confidence": "medium",
         "fallback_used": true,
         "data_gap": null
@@ -91239,7 +91225,7 @@
         "source": "Alpha Vantage",
         "source_type": "vendor_fallback",
         "source_url": "https://www.alphavantage.co/query?function=EARNINGS_ESTIMATES&apikey=REDACTED&symbol=MU",
-        "updated_at": "2026-09-02T11:41:55+08:00",
+        "updated_at": "2026-09-03T11:41:21+08:00",
         "confidence": "medium",
         "fallback_used": true,
         "data_gap": null
@@ -91305,7 +91291,7 @@
         "source": "SEC",
         "source_type": "official",
         "source_url": "https://data.sec.gov/submissions/CIK0001045810.json",
-        "updated_at": "2026-09-02T11:41:49+08:00",
+        "updated_at": "2026-09-03T11:41:13+08:00",
         "confidence": "high",
         "fallback_used": true,
         "data_gap": null
@@ -91355,7 +91341,7 @@
         "source": "SEC",
         "source_type": "official",
         "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001045810.json",
-        "updated_at": "2026-09-02T11:41:49+08:00",
+        "updated_at": "2026-09-03T11:41:13+08:00",
         "confidence": "high",
         "fallback_used": true,
         "data_gap": null
@@ -91379,7 +91365,7 @@
         "source": "OpenFIGI",
         "source_type": "open_source_fallback",
         "source_url": "https://api.openfigi.com/v3/mapping",
-        "updated_at": "2026-09-02T11:42:21+08:00",
+        "updated_at": "2026-09-03T11:41:47+08:00",
         "confidence": "medium",
         "fallback_used": true,
         "data_gap": null
@@ -91445,7 +91431,7 @@
         "source": "SEC",
         "source_type": "official",
         "source_url": "https://data.sec.gov/submissions/CIK0000097210.json",
-        "updated_at": "2026-09-02T11:41:52+08:00",
+        "updated_at": "2026-09-03T11:41:17+08:00",
         "confidence": "high",
         "fallback_used": true,
         "data_gap": null
@@ -91495,7 +91481,7 @@
         "source": "SEC",
         "source_type": "official",
         "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000097210.json",
-        "updated_at": "2026-09-02T11:41:52+08:00",
+        "updated_at": "2026-09-03T11:41:17+08:00",
         "confidence": "high",
         "fallback_used": true,
         "data_gap": null
@@ -92734,7 +92720,7 @@
         "source": "Alpha Vantage",
         "source_type": "vendor_fallback",
         "source_url": "https://www.alphavantage.co/query?function=EARNINGS&apikey=REDACTED&symbol=TER",
-        "updated_at": "2026-09-02T11:41:55+08:00",
+        "updated_at": "2026-09-03T11:41:21+08:00",
         "confidence": "medium",
         "fallback_used": true,
         "data_gap": null
@@ -93569,7 +93555,7 @@
         "source": "Alpha Vantage",
         "source_type": "vendor_fallback",
         "source_url": "https://www.alphavantage.co/query?function=EARNINGS_ESTIMATES&apikey=REDACTED&symbol=TER",
-        "updated_at": "2026-09-02T11:41:55+08:00",
+        "updated_at": "2026-09-03T11:41:21+08:00",
         "confidence": "medium",
         "fallback_used": true,
         "data_gap": null
@@ -93593,7 +93579,7 @@
         "source": "OpenFIGI",
         "source_type": "open_source_fallback",
         "source_url": "https://api.openfigi.com/v3/mapping",
-        "updated_at": "2026-09-02T11:42:21+08:00",
+        "updated_at": "2026-09-03T11:41:47+08:00",
         "confidence": "medium",
         "fallback_used": true,
         "data_gap": null
@@ -93659,7 +93645,7 @@
         "source": "SEC",
         "source_type": "official",
         "source_url": "https://data.sec.gov/submissions/CIK0001046179.json",
-        "updated_at": "2026-09-02T11:41:49+08:00",
+        "updated_at": "2026-09-03T11:41:13+08:00",
         "confidence": "high",
         "fallback_used": true,
         "data_gap": null
@@ -93675,7 +93661,7 @@
         "source": "SEC",
         "source_type": "official",
         "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001046179.json",
-        "updated_at": "2026-09-02T11:41:49+08:00",
+        "updated_at": "2026-09-03T11:41:13+08:00",
         "confidence": "low",
         "fallback_used": true,
         "data_gap": "HTTP 200"
@@ -93699,7 +93685,7 @@
         "source": "OpenFIGI",
         "source_type": "open_source_fallback",
         "source_url": "https://api.openfigi.com/v3/mapping",
-        "updated_at": "2026-09-02T11:42:21+08:00",
+        "updated_at": "2026-09-03T11:41:47+08:00",
         "confidence": "medium",
         "fallback_used": true,
         "data_gap": null
@@ -93712,56 +93698,56 @@
       "status": "normal",
       "message": "SEC ticker mapping available.",
       "impact": "Impacts US official filing/companyfacts fallback.",
-      "updated_at": "2026-09-02T11:41:49+08:00"
+      "updated_at": "2026-09-03T11:41:13+08:00"
     },
     {
       "source": "SEC EDGAR company data",
       "status": "normal",
       "message": "SEC fallback returned data for 16/16 checked US symbols.",
       "impact": "Impacts official US filing and financial statement evidence.",
-      "updated_at": "2026-09-02T11:41:53+08:00"
+      "updated_at": "2026-09-03T11:41:19+08:00"
     },
     {
       "source": "FRED",
       "status": "normal",
       "message": "FRED returned 8/8 configured macro/liquidity series.",
       "impact": "Impacts macro regime, rates, inflation, labor and credit spread evidence.",
-      "updated_at": "2026-09-02T11:41:53+08:00"
+      "updated_at": "2026-09-03T11:41:19+08:00"
     },
     {
       "source": "Alpha Vantage",
       "status": "normal",
       "message": "Alpha Vantage fallback completed with 21 successful response blocks; limited/empty responses are kept as data gaps.",
       "impact": "Impacts earnings estimates, surprise, calendar and transcript fallback confidence.",
-      "updated_at": "2026-09-02T11:41:55+08:00"
+      "updated_at": "2026-09-03T11:41:21+08:00"
     },
     {
       "source": "OpenFIGI",
       "status": "normal",
       "message": "OpenFIGI mapped 12/12 requested symbols.",
       "impact": "Impacts cross-market symbol mapping only; does not replace official filings.",
-      "updated_at": "2026-09-02T11:42:21+08:00"
+      "updated_at": "2026-09-03T11:41:47+08:00"
     },
     {
       "source": "Yahoo Finance",
       "status": "normal",
       "message": "Yahoo public chart fallback returned 15/15 HK/A quote blocks.",
       "impact": "Impacts HK/A price, technical levels and mechanical R/R fallback; not official filings.",
-      "updated_at": "2026-09-02T11:42:21+08:00"
+      "updated_at": "2026-09-03T11:41:48+08:00"
     },
     {
       "source": "CNINFO",
       "status": "normal",
       "message": "CNINFO official disclosure fallback returned 11/11 A-share records.",
       "impact": "Impacts A-share announcement/financial statement confidence; official CNINFO metadata is used when available.",
-      "updated_at": "2026-09-02T11:42:22+08:00"
+      "updated_at": "2026-09-03T11:41:49+08:00"
     },
     {
       "source": "HKEXnews",
       "status": "normal",
       "message": "HKEXnews official disclosure fallback returned 4/4 HK records.",
       "impact": "Impacts HK announcement/financial statement confidence; official HKEXnews metadata is used when available.",
-      "updated_at": "2026-09-02T11:42:35+08:00"
+      "updated_at": "2026-09-03T11:42:00+08:00"
     }
   ],
   "data_gaps": []
