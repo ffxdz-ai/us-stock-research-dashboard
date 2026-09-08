@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-09-08T11:47:28+08:00",
-  "generated_label": "2026-09-08 11:47",
+  "generated_at": "2026-09-08T22:43:39+08:00",
+  "generated_label": "2026-09-08 22:43",
   "fred_enabled": true,
   "data_boundary": "FRED 官方宏观数据层；只用于市场环境和风险偏好判断，不直接生成股票买卖指令。",
   "data_sources": [
@@ -9,7 +9,7 @@
     "config/macro_fred_series.json"
   ],
   "as_of": {
-    "freshest_observation_date": "2026-09-04",
+    "freshest_observation_date": "2026-09-07",
     "oldest_latest_observation_date": "2026-04-01",
     "note": "不同宏观指标发布频率不同，日报必须引用各指标自己的 latest_date。"
   },
@@ -434,21 +434,21 @@
       "dimension": "risk",
       "unit": "index",
       "frequency_hint": "daily",
-      "latest_date": "2026-09-03",
-      "latest_value": 14.32,
-      "one_month_ago_value": 15.99,
-      "three_month_ago_value": 16.06,
-      "six_month_ago_value": 21.15,
-      "one_year_ago_value": 17.17,
-      "one_month_change": -1.67,
-      "three_month_change": -1.74,
-      "six_month_change": -6.83,
-      "one_year_change": -2.85,
-      "one_month_pct_change": -10.444,
-      "three_month_pct_change": -10.8344,
-      "six_month_pct_change": -32.2931,
-      "yoy_pct_change": -16.5987,
-      "three_month_annualized_pct": -36.7894,
+      "latest_date": "2026-09-07",
+      "latest_value": 15.3,
+      "one_month_ago_value": 15.15,
+      "three_month_ago_value": 21.51,
+      "six_month_ago_value": 29.49,
+      "one_year_ago_value": 15.18,
+      "one_month_change": 0.15,
+      "three_month_change": -6.21,
+      "six_month_change": -14.19,
+      "one_year_change": 0.12,
+      "one_month_pct_change": 0.9901,
+      "three_month_pct_change": -28.8703,
+      "six_month_pct_change": -48.118,
+      "yoy_pct_change": 0.7905,
+      "three_month_annualized_pct": -74.4021,
       "status": "ok"
     },
     "DTWEXBGS": {
@@ -565,7 +565,7 @@
       "dimension": "risk",
       "label": "VIX 低位",
       "contribution": 9,
-      "detail": "14.32"
+      "detail": "15.30"
     }
   ],
   "regime": {
