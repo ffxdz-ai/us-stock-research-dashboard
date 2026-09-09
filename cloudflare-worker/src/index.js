@@ -10,7 +10,10 @@ const FUTU_FEISHU_CONFIG_KEY = "encrypted_futu_feishu_config_v1";
 const FUTU_LIVE_ALERT_STATE_KEY = "futu_live_steady_buy_state_v1";
 const FUTU_SNAPSHOT_TTL_SECONDS = 12 * 60 * 60;
 const FUTU_LIVE_ALERT_STATE_TTL_SECONDS = 30 * 24 * 60 * 60;
-const MAX_LIVE_QUOTE_AGE_MS = 15 * 60 * 1000;
+const MAX_LIVE_QUOTE_AGE_MS = 90 * 1000;
+const FUTU_KV_BACKUP_INTERVAL_MS = 5 * 60 * 1000;
+const LIVE_QUOTE_STORE_NAME = "global-live-quotes";
+const LIVE_RESEARCH_CACHE_MS = 2 * 60 * 1000;
 const MAX_RESEARCH_AGE_MS = 24 * 60 * 60 * 1000;
 const MAX_FEISHU_CONFIG_BYTES = 16 * 1024;
 const MAX_FUTU_SNAPSHOT_BYTES = 1024 * 1024;
@@ -20,6 +23,9 @@ const PUBLIC_QUOTE_FIELDS = new Set([
   "high_price", "low_price", "volume", "turnover", "turnover_rate", "change_rate",
   "update_time", "data_date", "data_time", "quote_time", "pe_ttm", "pb_rate", "ps_ttm",
   "market_val", "pre_price", "after_price", "overnight_price", "source",
+  "live_price", "live_quote_time", "live_session", "market_state",
+  "currency", "timestamp_kind", "received_at", "push_confirmed", "exchange_quote_time",
+  "quote_transport",
 ]);
 
 function bridgeJsonResponse(payload, status = 200) {
@@ -120,6 +126,11 @@ async function handleFeishuConfig(request, env) {
     }
     const encrypted = await encryptFeishuConfig({ webhook, secret }, env.FUTU_BRIDGE_TOKEN);
     await env.FUTU_SNAPSHOT_KV.put(FUTU_FEISHU_CONFIG_KEY, encrypted);
+    try {
+      await durableStoreWrite(env, "/feishu-config", { encrypted, updated_at: new Date().toISOString() });
+    } catch (error) {
+      console.error("Durable Feishu configuration cache failed", error);
+    }
     return bridgeJsonResponse({ ok: true, configured: true, encrypted: true });
   } catch {
     return bridgeJsonResponse({ ok: false, code: "configuration_unavailable" }, 503);
@@ -140,7 +151,7 @@ function newYorkMinutes(now) {
 
 export function liveQuotePrice(symbol, quote, now = new Date()) {
   if (!quote || typeof quote !== "object") return null;
-  const options = [];
+  const options = [quote.live_price];
   if (String(symbol || "").startsWith("US.")) {
     const minutes = newYorkMinutes(now);
     if (minutes >= 20 * 60 || minutes < 4 * 60) options.push(quote.overnight_price);
@@ -151,8 +162,22 @@ export function liveQuotePrice(symbol, quote, now = new Date()) {
   return options.map(finiteNumber).find((value) => value !== null && value > 0) ?? null;
 }
 
-function quoteIsFresh(quote, now) {
-  const timestamp = Date.parse(String(quote?.quote_time || ""));
+function quoteTimestamp(quote) {
+  return String(quote?.exchange_quote_time || quote?.live_quote_time || quote?.quote_time || "");
+}
+
+function isExtendedSession(quote) {
+  return ["pre", "pre_market", "premarket", "after", "after_hours", "post_market", "overnight"]
+    .includes(String(quote?.live_session || "").trim().toLowerCase());
+}
+
+export function quoteIsFresh(quote, now = new Date()) {
+  // Futu exposes no independent exchange timestamp for some U.S. extended-session
+  // fields. In that case freshness means a recent subscribed push was received; the
+  // receive time is never presented as the exchange trade time.
+  const extended = isExtendedSession(quote);
+  if (extended && quote?.push_confirmed !== true) return false;
+  const timestamp = Date.parse(extended ? String(quote?.received_at || "") : quoteTimestamp(quote));
   if (!Number.isFinite(timestamp)) return false;
   const age = now.getTime() - timestamp;
   return age >= -5 * 60 * 1000 && age <= MAX_LIVE_QUOTE_AGE_MS;
@@ -168,22 +193,54 @@ function validLiveTradePath(item) {
     && stop < entry && entry < target && ratio >= required;
 }
 
-export function qualifiesLiveSteadyBuyPlan(item, quote, now = new Date()) {
-  if (!item || typeof item !== "object" || !quote || !quoteIsFresh(quote, now)) return false;
-  if (item.status !== "waiting_entry" || item.entry_tier !== "formal" || item.signal_type !== "formal") return false;
-  if (item.formal_qualified !== true || item.entry_execution_status !== "wait_pullback") return false;
-  if (item.execution_allowed !== true || item.technical_data_complete !== true) return false;
-  if (item.future_function_audit !== "PASS" || item.price_freshness !== "fresh" || item.gate_failures?.length) return false;
-  if (!validLiveTradePath(item)) return false;
-  if (["opportunity_score", "trend_score", "crowding_score"].some((field) => finiteNumber(item[field]) === null)) return false;
+export function liveRiskReward(item, livePrice) {
+  const price = finiteNumber(livePrice);
+  const stop = finiteNumber(item?.stop_loss);
+  const target = finiteNumber(item?.target_price);
+  if (price === null || stop === null || target === null || price <= stop || price >= target) return null;
+  const risk = price - stop;
+  const reward = target - price;
+  return risk > 0 && reward > 0 ? reward / risk : null;
+}
+
+export function evaluateLiveSteadyBuyPlan(item, quote, now = new Date()) {
+  if (!item || typeof item !== "object" || !quote) return { qualified: false, status: "quote_missing" };
+  if (!quoteIsFresh(quote, now)) return { qualified: false, status: "quote_stale" };
+  if (item.status !== "waiting_entry" || item.entry_tier !== "formal" || item.signal_type !== "formal"
+    || item.formal_qualified !== true || item.entry_execution_status !== "wait_pullback"
+    || item.execution_allowed !== true || item.technical_data_complete !== true
+    || item.future_function_audit !== "PASS" || item.price_freshness !== "fresh"
+    || item.gate_failures?.length) {
+    return { qualified: false, status: "research_ineligible" };
+  }
+  if (!validLiveTradePath(item)) return { qualified: false, status: "trade_path_invalid" };
+  if (["opportunity_score", "trend_score", "crowding_score"].some((field) => finiteNumber(item[field]) === null)) {
+    return { qualified: false, status: "score_missing" };
+  }
 
   const price = liveQuotePrice(item.symbol, quote, now);
   const low = finiteNumber(item.safe_entry_zone_low);
   const high = finiteNumber(item.safe_entry_zone_high);
   const maximum = finiteNumber(item.safe_entry_max_price ?? high);
   const stop = finiteNumber(item.stop_loss);
-  return price !== null && low !== null && high !== null && maximum !== null && stop !== null
-    && stop < low && low <= high && high <= maximum && price >= low && price <= maximum && price > stop;
+  if (price === null) return { qualified: false, status: "price_unavailable" };
+  if (low === null || high === null || maximum === null || stop === null
+    || !(stop < low && low <= high && high <= maximum)) {
+    return { qualified: false, status: "zone_invalid", live_price: price };
+  }
+  if (price < low || price > maximum || price <= stop) {
+    return { qualified: false, status: "outside_zone", live_price: price };
+  }
+  const rr = liveRiskReward(item, price);
+  const required = finiteNumber(item.rr_required);
+  if (rr === null || required === null || rr < required) {
+    return { qualified: false, status: "rr_below_required", live_price: price, live_rr_ratio: rr };
+  }
+  return { qualified: true, status: "qualified", live_price: price, live_rr_ratio: rr };
+}
+
+export function qualifiesLiveSteadyBuyPlan(item, quote, now = new Date()) {
+  return evaluateLiveSteadyBuyPlan(item, quote, now).qualified;
 }
 
 async function liveSignalFingerprint(item) {
@@ -213,12 +270,18 @@ function liveFeishuCard(items) {
   for (const [index, item] of items.entries()) {
     if (index) elements.push({ tag: "hr" });
     const currency = String(item.currency || "");
+    const receiptTimed = String(item.timestamp_kind || "").includes("receipt");
+    const timeLine = receiptTimed
+      ? `Futu 推送接收：${item.live_received_at || "待确认"}（非交易所成交时间）｜最近交易所时间：${item.live_exchange_time || "待确认"}`
+      : `交易所报价时间：${item.live_exchange_time || item.live_quote_time || "待确认"}`;
     const content = [
       `**${item.symbol} · ${String(item.name || "名称待确认")}**`,
-      `真实 Futu 现价：${displayPrice(item.live_price, currency)}（${item.live_quote_time}）`,
+      `Futu 当前价：${displayPrice(item.live_price, currency)}`,
+      timeLine,
+      `行情时段：${String(item.live_session || "unknown")}｜实时 R/R：${finiteNumber(item.live_rr_ratio)?.toFixed(2) || "待确认"}:1`,
       `稳健买入区间：${displayPrice(item.safe_entry_zone_low, currency)} ～ ${displayPrice(item.safe_entry_zone_high, currency)}`,
       `最高执行价：${displayPrice(item.safe_entry_max_price, currency)}｜止损：${displayPrice(item.stop_loss, currency)}｜目标：${displayPrice(item.target_price, currency)}`,
-      `R/R：${finiteNumber(item.rr_ratio).toFixed(2)}:1｜机会分：${finiteNumber(item.opportunity_score).toFixed(1)}｜趋势：${finiteNumber(item.trend_score).toFixed(1)}`,
+      `研究计划 R/R：${finiteNumber(item.rr_ratio).toFixed(2)}:1｜机会分：${finiteNumber(item.opportunity_score).toFixed(1)}｜趋势：${finiteNumber(item.trend_score).toFixed(1)}`,
       "**已进入稳健买入区间；下单前请再次核对实时行情，跳空高于最高执行价不追。**",
     ].join("\n");
     elements.push({ tag: "div", text: { tag: "lark_md", content } });
@@ -263,6 +326,22 @@ async function sendLiveFeishuCard(config, items) {
 }
 
 async function readLiveAlertArchive(env, now) {
+  try {
+    const cached = await durableStoreRead(env, "/research-cache");
+    const cachedAt = Date.parse(String(cached?.fetched_at || ""));
+    if (cached?.archive && Number.isFinite(cachedAt)
+      && now.getTime() - cachedAt >= -5 * 60 * 1000
+      && now.getTime() - cachedAt <= LIVE_RESEARCH_CACHE_MS) {
+      const generatedAt = Date.parse(String(cached.archive.generated_at || ""));
+      const age = now.getTime() - generatedAt;
+      if (!Number.isFinite(generatedAt) || age < -5 * 60 * 1000 || age > MAX_RESEARCH_AGE_MS) {
+        return { archive: null, status: "research_expired" };
+      }
+      return { archive: cached.archive, status: "ready" };
+    }
+  } catch (error) {
+    console.error("Durable research cache read failed", error);
+  }
   const url = new URL(env.ARCHIVE_INDEX_URL || DEFAULT_ARCHIVE_INDEX_URL);
   url.searchParams.set("live_quote_check", now.getTime().toString());
   const response = await fetch(url, {
@@ -276,11 +355,21 @@ async function readLiveAlertArchive(env, now) {
   if (!Number.isFinite(generatedAt) || age < -5 * 60 * 1000 || age > MAX_RESEARCH_AGE_MS) {
     return { archive: null, status: "research_expired" };
   }
-  return { archive, status: "ready" };
+  const compactArchive = {
+    generated_at: archive.generated_at,
+    opportunities: Array.isArray(archive.opportunities) ? archive.opportunities : [],
+  };
+  try {
+    await durableStoreWrite(env, "/research-cache", { fetched_at: now.toISOString(), archive: compactArchive });
+  } catch (error) {
+    console.error("Durable research cache write failed", error);
+  }
+  return { archive: compactArchive, status: "ready" };
 }
 
 async function evaluateLiveFeishuAlerts(snapshot, env) {
-  const encryptedConfig = await env.FUTU_SNAPSHOT_KV.get(FUTU_FEISHU_CONFIG_KEY);
+  if (!env?.FUTU_SNAPSHOT_KV) return { status: "not_configured", monitored_candidates: 0, alerts_sent: 0 };
+  const encryptedConfig = await readEncryptedFeishuConfig(env);
   if (!encryptedConfig) return { status: "not_configured", monitored_candidates: 0, alerts_sent: 0 };
   const config = await decryptFeishuConfig(encryptedConfig, env.FUTU_BRIDGE_TOKEN);
   if (!approvedFeishuWebhook(config.webhook)) throw new Error("invalid encrypted notification configuration");
@@ -290,60 +379,89 @@ async function evaluateLiveFeishuAlerts(snapshot, env) {
   if (!archive) return { status, monitored_candidates: 0, alerts_sent: 0 };
   const opportunities = Array.isArray(archive.opportunities) ? archive.opportunities : [];
   const monitored = opportunities.filter((item) => item?.formal_qualified === true && item?.status === "waiting_entry");
-  let state = {};
-  try {
-    state = JSON.parse(await env.FUTU_SNAPSHOT_KV.get(FUTU_LIVE_ALERT_STATE_KEY) || "{}");
-  } catch {
-    state = {};
-  }
+  const state = await readLiveAlertState(env);
   const previous = state.signals && typeof state.signals === "object" ? state.signals : {};
-  const current = {};
+  const signals = Object.fromEntries(Object.entries(previous).map(([symbol, prior]) => [
+    symbol,
+    prior && typeof prior === "object" ? { ...prior } : {},
+  ]));
+  const qualifiedFingerprints = {};
   const selected = [];
+  const timestamp = now.toISOString();
 
   for (const item of monitored) {
     const symbol = String(item.symbol || "").trim().toUpperCase();
     const quote = snapshot.quotes[symbol];
-    if (!qualifiesLiveSteadyBuyPlan(item, quote, now)) continue;
-    const fingerprint = await liveSignalFingerprint(item);
-    current[symbol] = fingerprint;
+    const evaluation = evaluateLiveSteadyBuyPlan(item, quote, now);
     const prior = previous[symbol] && typeof previous[symbol] === "object" ? previous[symbol] : {};
+
+    // Missing or stale ticks are transport uncertainty, not evidence that a signal left its zone.
+    // Preserve active state so reconnects cannot generate duplicate notifications.
+    if (["quote_missing", "quote_stale", "price_unavailable"].includes(evaluation.status)) {
+      if (signals[symbol]) signals[symbol] = { ...signals[symbol], last_status: evaluation.status };
+      continue;
+    }
+    if (["outside_zone", "rr_below_required"].includes(evaluation.status)) {
+      signals[symbol] = { ...prior, active: false, last_status: evaluation.status, last_checked_at: timestamp };
+      continue;
+    }
+    if (!evaluation.qualified) {
+      if (signals[symbol]) signals[symbol] = { ...signals[symbol], last_status: evaluation.status, last_checked_at: timestamp };
+      continue;
+    }
+
+    const fingerprint = await liveSignalFingerprint(item);
+    qualifiedFingerprints[symbol] = fingerprint;
+    signals[symbol] = { ...prior, last_status: "qualified", last_checked_at: timestamp };
     if (prior.active !== true || prior.fingerprint !== fingerprint) {
-      selected.push({ ...item, live_price: liveQuotePrice(symbol, quote, now), live_quote_time: quote.quote_time });
+      selected.push({
+        ...item,
+        live_price: evaluation.live_price,
+        live_rr_ratio: evaluation.live_rr_ratio,
+        live_quote_time: quoteTimestamp(quote),
+        live_exchange_time: String(quote.exchange_quote_time || quote.quote_time || ""),
+        live_received_at: String(quote.received_at || ""),
+        live_session: String(quote.live_session || "unknown"),
+        timestamp_kind: String(quote.timestamp_kind || "exchange"),
+      });
     }
   }
 
-  const timestamp = now.toISOString();
-  const signals = {};
-  for (const [symbol, prior] of Object.entries(previous)) {
-    signals[symbol] = { ...(prior && typeof prior === "object" ? prior : {}), active: Boolean(current[symbol]), last_checked_at: timestamp };
-  }
   let sent = 0;
   for (let offset = 0; offset < selected.length; offset += 4) {
     const batch = selected.slice(offset, offset + 4);
     try {
       await sendLiveFeishuCard(config, batch);
       for (const item of batch) {
-        signals[item.symbol] = { active: true, fingerprint: current[item.symbol], last_notified_at: timestamp, last_checked_at: timestamp };
+        signals[item.symbol] = {
+          active: true,
+          fingerprint: qualifiedFingerprints[item.symbol],
+          last_notified_at: timestamp,
+          last_checked_at: timestamp,
+          last_status: "qualified",
+        };
       }
       sent += batch.length;
     } catch {
       for (const item of batch) {
-        signals[item.symbol] = { ...signals[item.symbol], active: false, pending_fingerprint: current[item.symbol], last_checked_at: timestamp };
+        signals[item.symbol] = {
+          ...signals[item.symbol],
+          active: signals[item.symbol]?.active === true,
+          pending_fingerprint: qualifiedFingerprints[item.symbol],
+          last_checked_at: timestamp,
+          last_status: "notification_retry_pending",
+        };
       }
     }
   }
-  for (const [symbol, fingerprint] of Object.entries(current)) {
+  for (const [symbol, fingerprint] of Object.entries(qualifiedFingerprints)) {
     if (!signals[symbol]) signals[symbol] = { active: false, pending_fingerprint: fingerprint, last_checked_at: timestamp };
   }
-  await env.FUTU_SNAPSHOT_KV.put(
-    FUTU_LIVE_ALERT_STATE_KEY,
-    JSON.stringify({ schema_version: 1, updated_at: timestamp, signals }),
-    { expirationTtl: FUTU_LIVE_ALERT_STATE_TTL_SECONDS },
-  );
+  await writeLiveAlertState(env, { schema_version: 2, updated_at: timestamp, signals });
   return {
     status: selected.length > sent ? "notification_retry_pending" : "active",
     monitored_candidates: monitored.length,
-    in_zone: Object.keys(current).length,
+    in_zone: Object.keys(qualifiedFingerprints).length,
     alerts_sent: sent,
   };
 }
@@ -388,29 +506,256 @@ export function sanitizeFutuSnapshot(payload, receivedAt = new Date().toISOStrin
     },
     bridge: {
       authenticated: true,
-      transport: "cloudflare-worker-kv",
+      transport: "cloudflare-worker",
       received_at: receivedAt,
     },
     quotes,
   };
 }
 
+function liveQuoteStoreStub(env) {
+  const namespace = env?.LIVE_QUOTES;
+  if (!namespace) return null;
+  if (typeof namespace.getByName === "function") return namespace.getByName(LIVE_QUOTE_STORE_NAME);
+  if (typeof namespace.idFromName === "function" && typeof namespace.get === "function") {
+    return namespace.get(namespace.idFromName(LIVE_QUOTE_STORE_NAME));
+  }
+  return null;
+}
+
+async function durableStoreRead(env, path) {
+  const stub = liveQuoteStoreStub(env);
+  if (!stub) return null;
+  const response = await stub.fetch(`https://live-quotes.internal${path}`, { method: "GET" });
+  if (response.status === 404) return null;
+  if (!response.ok) throw new Error(`live quote store GET ${response.status}`);
+  return response.json();
+}
+
+async function durableStoreWrite(env, path, value) {
+  const stub = liveQuoteStoreStub(env);
+  if (!stub) return false;
+  const response = await stub.fetch(`https://live-quotes.internal${path}`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(value),
+  });
+  if (!response.ok) throw new Error(`live quote store PUT ${response.status}`);
+  return true;
+}
+
+async function readStoredSnapshot(env) {
+  try {
+    const durable = await durableStoreRead(env, "/snapshot");
+    if (durable?.quotes) return durable;
+  } catch (error) {
+    console.error("Durable snapshot read failed; falling back to KV", error);
+  }
+  if (!env?.FUTU_SNAPSHOT_KV) return null;
+  const stored = await env.FUTU_SNAPSHOT_KV.get(FUTU_SNAPSHOT_KEY);
+  if (!stored) return null;
+  try {
+    const parsed = JSON.parse(stored);
+    return parsed?.quotes ? parsed : null;
+  } catch {
+    return null;
+  }
+}
+
+function backupTimestamp(value) {
+  return Date.parse(String(value?.bridge?.received_at || value?.updated_at || ""));
+}
+
+async function kvBackupIsDue(kv, key, value, now = new Date()) {
+  try {
+    const stored = await kv.get(key);
+    if (!stored) return true;
+    const existing = JSON.parse(stored);
+    const timestamp = backupTimestamp(existing);
+    return !Number.isFinite(timestamp) || now.getTime() - timestamp >= FUTU_KV_BACKUP_INTERVAL_MS;
+  } catch {
+    return true;
+  }
+}
+
+async function writeStoredSnapshot(env, snapshot) {
+  let durable = false;
+  try {
+    durable = await durableStoreWrite(env, "/snapshot", snapshot);
+  } catch (error) {
+    console.error("Durable snapshot write failed; falling back to KV", error);
+  }
+
+  let kv = false;
+  if (env?.FUTU_SNAPSHOT_KV) {
+    const shouldWrite = !durable || await kvBackupIsDue(env.FUTU_SNAPSHOT_KV, FUTU_SNAPSHOT_KEY, snapshot);
+    if (shouldWrite) {
+      await env.FUTU_SNAPSHOT_KV.put(FUTU_SNAPSHOT_KEY, JSON.stringify(snapshot), {
+        expirationTtl: FUTU_SNAPSHOT_TTL_SECONDS,
+      });
+      kv = true;
+    }
+  }
+  if (!durable && !kv) throw new Error("no live quote storage is configured");
+  return { durable, kv_backup_written: kv };
+}
+
+async function readLiveAlertState(env) {
+  try {
+    const durable = await durableStoreRead(env, "/alert-state");
+    if (durable && typeof durable === "object") return durable;
+  } catch (error) {
+    console.error("Durable alert state read failed; falling back to KV", error);
+  }
+  if (!env?.FUTU_SNAPSHOT_KV) return {};
+  try {
+    return JSON.parse(await env.FUTU_SNAPSHOT_KV.get(FUTU_LIVE_ALERT_STATE_KEY) || "{}");
+  } catch {
+    return {};
+  }
+}
+
+async function readEncryptedFeishuConfig(env) {
+  try {
+    const durable = await durableStoreRead(env, "/feishu-config");
+    if (typeof durable?.encrypted === "string" && durable.encrypted) return durable.encrypted;
+  } catch (error) {
+    console.error("Durable Feishu configuration read failed; falling back to KV", error);
+  }
+  if (!env?.FUTU_SNAPSHOT_KV) return null;
+  const encrypted = await env.FUTU_SNAPSHOT_KV.get(FUTU_FEISHU_CONFIG_KEY);
+  if (encrypted) {
+    try {
+      await durableStoreWrite(env, "/feishu-config", { encrypted, updated_at: new Date().toISOString() });
+    } catch (error) {
+      console.error("Durable Feishu configuration migration failed", error);
+    }
+  }
+  return encrypted;
+}
+
+async function writeLiveAlertState(env, state) {
+  let durable = false;
+  try {
+    durable = await durableStoreWrite(env, "/alert-state", state);
+  } catch (error) {
+    console.error("Durable alert state write failed; falling back to KV", error);
+  }
+  if (!env?.FUTU_SNAPSHOT_KV) {
+    if (!durable) throw new Error("no live alert state storage is configured");
+    return;
+  }
+  if (!durable || await kvBackupIsDue(env.FUTU_SNAPSHOT_KV, FUTU_LIVE_ALERT_STATE_KEY, state)) {
+    await env.FUTU_SNAPSHOT_KV.put(
+      FUTU_LIVE_ALERT_STATE_KEY,
+      JSON.stringify(state),
+      { expirationTtl: FUTU_LIVE_ALERT_STATE_TTL_SECONDS },
+    );
+  }
+}
+
+function quoteAgeSeconds(quote, now) {
+  const extended = isExtendedSession(quote);
+  const timestamp = Date.parse(extended ? String(quote?.received_at || "") : quoteTimestamp(quote));
+  return Number.isFinite(timestamp) ? Math.max(0, Math.round((now.getTime() - timestamp) / 1000)) : null;
+}
+
+export function publicLiveQuoteSnapshot(snapshot, now = new Date()) {
+  if (!snapshot?.quotes || typeof snapshot.quotes !== "object") return null;
+  const receivedAt = String(snapshot.bridge?.received_at || snapshot.generated_at || "");
+  const receivedTimestamp = Date.parse(receivedAt);
+  const transportFresh = Number.isFinite(receivedTimestamp)
+    && now.getTime() - receivedTimestamp >= -5 * 60 * 1000
+    && now.getTime() - receivedTimestamp <= MAX_LIVE_QUOTE_AGE_MS;
+  const quotes = {};
+  let freshCount = 0;
+  for (const [symbol, quote] of Object.entries(snapshot.quotes)) {
+    if (!quote || typeof quote !== "object") continue;
+    const fresh = transportFresh && quoteIsFresh(quote, now);
+    if (fresh) freshCount += 1;
+    const clean = {};
+    for (const [field, value] of Object.entries(quote)) {
+      if (!PUBLIC_QUOTE_FIELDS.has(field)) continue;
+      if (value === null || ["string", "number", "boolean"].includes(typeof value)) clean[field] = value;
+    }
+    const selectedPrice = liveQuotePrice(symbol, quote, now);
+    if (finiteNumber(clean.live_price) === null && selectedPrice !== null) clean.live_price = selectedPrice;
+    if (!clean.currency) {
+      clean.currency = symbol.startsWith("US.") ? "USD"
+        : symbol.startsWith("HK.") ? "HKD"
+          : /^(?:CN|SH|SZ)\./.test(symbol) ? "CNY" : "";
+    }
+    quotes[symbol] = { ...clean, code: symbol, stale: !fresh, age_seconds: quoteAgeSeconds(quote, now) };
+  }
+  const count = Object.keys(quotes).length;
+  const status = !transportFresh || freshCount === 0 ? "stale" : freshCount < count ? "limited" : "normal";
+  return {
+    schema_version: 1,
+    status,
+    stale: status === "stale",
+    source: "Futu OpenD",
+    received_at: receivedAt,
+    age_seconds: Number.isFinite(receivedTimestamp)
+      ? Math.max(0, Math.round((now.getTime() - receivedTimestamp) / 1000))
+      : null,
+    stale_after_seconds: Math.round(MAX_LIVE_QUOTE_AGE_MS / 1000),
+    quotes,
+    summary: { quotes_returned: count, quotes_fresh: freshCount },
+    privacy: {
+      contains_account: false,
+      contains_positions: false,
+      contains_cash: false,
+      contains_cost_basis: false,
+      trading_disabled: true,
+    },
+  };
+}
+
+export class LiveQuoteStore {
+  constructor(ctx, env) {
+    this.ctx = ctx;
+    this.env = env;
+  }
+
+  async fetch(request) {
+    const url = new URL(request.url);
+    const key = url.pathname === "/snapshot" ? "snapshot"
+      : url.pathname === "/alert-state" ? "alert-state"
+        : url.pathname === "/research-cache" ? "research-cache"
+          : url.pathname === "/feishu-config" ? "feishu-config"
+            : "";
+    if (!key) return bridgeJsonResponse({ ok: false, code: "not_found" }, 404);
+    if (request.method === "GET") {
+      const value = await this.ctx.storage.get(key);
+      return value === undefined ? bridgeJsonResponse({ ok: false, code: "not_found" }, 404)
+        : bridgeJsonResponse(value);
+    }
+    if (request.method === "PUT") {
+      const value = await request.json();
+      if (!value || typeof value !== "object" || Array.isArray(value)) {
+        return bridgeJsonResponse({ ok: false, code: "invalid_value" }, 422);
+      }
+      // This class is provisioned with new_sqlite_classes. The storage API below is
+      // backed by the SQLite Durable Object and serializes access to this global actor.
+      await this.ctx.storage.put(key, value);
+      return bridgeJsonResponse({ ok: true });
+    }
+    return bridgeJsonResponse({ ok: false, code: "method_not_allowed" }, 405);
+  }
+}
+
 async function handleFutuSnapshot(request, env) {
   if (!bearerTokenMatches(request, env.FUTU_BRIDGE_TOKEN)) {
     return bridgeJsonResponse({ ok: false, code: "unauthorized" }, 401);
   }
-  if (!env.FUTU_SNAPSHOT_KV) {
+  if (!env.FUTU_SNAPSHOT_KV && !liveQuoteStoreStub(env)) {
     return bridgeJsonResponse({ ok: false, code: "bridge_not_configured" }, 503);
   }
 
   if (request.method === "GET") {
-    const stored = await env.FUTU_SNAPSHOT_KV.get(FUTU_SNAPSHOT_KEY);
-    if (!stored) return bridgeJsonResponse({ ok: false, code: "snapshot_unavailable" }, 404);
-    try {
-      return bridgeJsonResponse({ ok: true, snapshot: JSON.parse(stored) });
-    } catch {
-      return bridgeJsonResponse({ ok: false, code: "snapshot_invalid" }, 503);
-    }
+    const stored = await readStoredSnapshot(env);
+    return stored ? bridgeJsonResponse({ ok: true, snapshot: stored })
+      : bridgeJsonResponse({ ok: false, code: "snapshot_unavailable" }, 404);
   }
 
   if (request.method !== "PUT") {
@@ -436,9 +781,7 @@ async function handleFutuSnapshot(request, env) {
     payload = null;
   }
   if (!payload) return bridgeJsonResponse({ ok: false, code: "invalid_or_empty_snapshot" }, 422);
-  await env.FUTU_SNAPSHOT_KV.put(FUTU_SNAPSHOT_KEY, JSON.stringify(payload), {
-    expirationTtl: FUTU_SNAPSHOT_TTL_SECONDS,
-  });
+  const storage = await writeStoredSnapshot(env, payload);
   let liveAlerts;
   try {
     liveAlerts = await evaluateLiveFeishuAlerts(payload, env);
@@ -451,6 +794,7 @@ async function handleFutuSnapshot(request, env) {
     quotes_returned: payload.summary.quotes_returned,
     received_at: payload.bridge.received_at,
     expires_in_seconds: FUTU_SNAPSHOT_TTL_SECONDS,
+    storage,
     live_alerts: liveAlerts,
   });
 }
@@ -501,6 +845,19 @@ function jsonResponse(payload, status, origin) {
     status,
     headers: {
       ...corsHeaders(origin),
+      "Content-Type": "application/json; charset=utf-8",
+    },
+  });
+}
+
+function publicQuoteResponse(payload, status = 200) {
+  return new Response(JSON.stringify(payload), {
+    status,
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "GET, OPTIONS",
+      "Access-Control-Max-Age": "86400",
+      "Cache-Control": "no-store",
       "Content-Type": "application/json; charset=utf-8",
     },
   });
@@ -606,6 +963,25 @@ async function handleRequest(request, env) {
     } catch (error) {
       console.error("Futu quote bridge failed", error);
       return bridgeJsonResponse({ ok: false, code: "bridge_unavailable" }, 503);
+    }
+  }
+  if (["/futu/quotes", "/quotes"].includes(url.pathname)) {
+    if (request.method === "OPTIONS") {
+      return new Response(null, { status: 204, headers: publicQuoteResponse({}).headers });
+    }
+    if (request.method !== "GET") {
+      return publicQuoteResponse({ ok: false, code: "method_not_allowed" }, 405);
+    }
+    try {
+      const snapshot = await readStoredSnapshot(env);
+      const publicSnapshot = publicLiveQuoteSnapshot(snapshot);
+      if (!publicSnapshot) {
+        return publicQuoteResponse({ ok: false, code: "quotes_unavailable", message: "Futu 实时行情暂不可用。" }, 404);
+      }
+      return publicQuoteResponse({ ok: true, ...publicSnapshot });
+    } catch (error) {
+      console.error("public Futu quotes failed", error);
+      return publicQuoteResponse({ ok: false, code: "quotes_unavailable", message: "Futu 实时行情暂不可用。" }, 503);
     }
   }
   const origin = allowedRequestOrigin(request, env);

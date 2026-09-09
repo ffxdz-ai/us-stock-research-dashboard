@@ -9,6 +9,8 @@ const state = {
   opportunityStatus: "all",
   opportunityQuery: "",
   manualUpdateRequestedAt: 0,
+  liveQuoteSnapshot: null,
+  liveQuoteError: "",
 };
 
 const els = {
@@ -48,6 +50,7 @@ const els = {
   opportunityStatusFilters: document.querySelector("#opportunityStatusFilters"),
   opportunitySearch: document.querySelector("#opportunitySearch"),
   opportunityCards: document.querySelector("#opportunityCards"),
+  liveQuoteStatus: document.querySelector("#liveQuoteStatus"),
 };
 
 const DASHBOARD_REPORT_TARGETS = [
@@ -77,7 +80,18 @@ const MANUAL_UPDATE_CONFIG = {
   timeZone: "Asia/Shanghai",
 };
 
+const LIVE_QUOTE_CONFIG = {
+  endpoint: String(document.querySelector('meta[name="live-quote-url"]')?.content || `${MANUAL_UPDATE_CONFIG.triggerApi}/futu/quotes`).trim(),
+  pollVisibleMs: 15000,
+  requestTimeoutMs: 8000,
+  maxQuoteAgeMs: 180000,
+  maxTransportAgeMs: 90000,
+};
+
 let manualUpdatePollTimer = null;
+let liveQuotePollTimer = null;
+let liveQuoteFetchController = null;
+let liveQuoteFetchInFlight = false;
 
 function escapeHtml(value) {
   return String(value || "").replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll('"', "&quot;").replaceAll("'", "&#039;");
@@ -1500,7 +1514,7 @@ function formatPriceMeta(opportunity) {
     }).format(parsed).replaceAll("/", "-")
     : timestamp;
   const rows = [
-    `最新价：${price} ${opportunity.currency}`,
+    `报告价（生成时快照）：${price} ${opportunity.currency}`,
     `时间：${beijingTime}（北京时间）`,
     `来源：${opportunity.price_source}`,
   ];
@@ -1680,6 +1694,185 @@ function appendListBlock(parent, title, items, fallbackText) {
   parent.appendChild(block);
 }
 
+function formatLiveQuoteNumber(value) {
+  const parsed = Number(value);
+  return Number.isFinite(parsed)
+    ? parsed.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 4 })
+    : "待确认";
+}
+
+function formatLiveTimestamp(value) {
+  const timestamp = String(value || "").trim();
+  if (!timestamp) return "待确认";
+  if (!/(?:Z|[+-]\d{2}:?\d{2})$/i.test(timestamp)) return `${timestamp}（交易所本地时间，时区待确认）`;
+  const parsed = new Date(timestamp);
+  if (Number.isNaN(parsed.getTime())) return `${timestamp}（格式待确认）`;
+  return `${new Intl.DateTimeFormat("zh-CN", {
+    timeZone: "Asia/Shanghai",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+    hour12: false,
+  }).format(parsed).replaceAll("/", "-")}（北京时间）`;
+}
+
+function appendLiveQuoteRow(parent, label, value, className = "") {
+  const row = document.createElement("span");
+  if (className) row.className = className;
+  const key = document.createElement("b");
+  key.textContent = label;
+  row.append(key, document.createTextNode(value));
+  parent.appendChild(row);
+}
+
+function liveOpportunityBySymbol(symbol) {
+  const normalized = String(symbol || "").trim().toUpperCase();
+  return state.opportunities.find((item) => String(item.symbol || "").trim().toUpperCase() === normalized) || null;
+}
+
+function updateLiveQuoteElement(container, opportunity) {
+  const utils = window.LiveQuoteUtils;
+  container.replaceChildren();
+  container.className = "opportunity-live-quote";
+
+  const heading = document.createElement("div");
+  heading.className = "live-quote-heading";
+  const title = document.createElement("strong");
+  title.textContent = "Futu 实时价";
+  const badge = document.createElement("span");
+  badge.className = "live-quote-badge";
+  heading.append(title, badge);
+  container.appendChild(heading);
+
+  if (!utils || !state.liveQuoteSnapshot) {
+    const waiting = document.createElement("p");
+    badge.textContent = state.liveQuoteError ? "连接失败" : "连接中";
+    container.classList.add(state.liveQuoteError ? "disconnected" : "pending");
+    waiting.textContent = state.liveQuoteError
+      ? `实时行情暂不可用：${state.liveQuoteError}`
+      : "正在连接公开只读行情端点…";
+    container.appendChild(waiting);
+    return;
+  }
+
+  const quote = state.liveQuoteSnapshot.quotes.get(String(opportunity.symbol || "").toUpperCase());
+  const freshness = utils.assessQuoteFreshness(quote, state.liveQuoteSnapshot, Date.now(), LIVE_QUOTE_CONFIG);
+  badge.textContent = freshness.label;
+  container.classList.add(freshness.status);
+
+  if (!quote || quote.price === null) {
+    const unavailable = document.createElement("p");
+    unavailable.textContent = freshness.reason || "该股票尚未收到 Futu 报价。";
+    container.appendChild(unavailable);
+    return;
+  }
+
+  appendLiveQuoteRow(container, "当前价：", `${formatLiveQuoteNumber(quote.price)} ${quote.currency || "币种待确认"}`, "live-quote-price");
+  appendLiveQuoteRow(container, "交易所报价时间：", formatLiveTimestamp(quote.quoteTime));
+  if (quote.pushReceivedAt) appendLiveQuoteRow(container, "Futu 推送接收时间：", formatLiveTimestamp(quote.pushReceivedAt));
+  appendLiveQuoteRow(container, "时段/来源：", `${quote.sessionLabel} · ${quote.source}`);
+
+  const metrics = utils.calculateLivePlanMetrics(opportunity, quote.price);
+  const metricBox = document.createElement("div");
+  metricBox.className = "live-quote-metrics";
+  const distance = document.createElement("span");
+  distance.textContent = metrics.entryText;
+  const rr = document.createElement("span");
+  rr.textContent = metrics.rrText;
+  metricBox.append(distance, rr);
+  container.appendChild(metricBox);
+  if (metrics.entryState === "inside") container.classList.add("in-entry-zone");
+
+  const note = document.createElement("small");
+  if (freshness.status === "live") {
+    note.textContent = "仅动态监控价格；即使进入计划价区，也必须继续满足卡片中的原有硬门槛。";
+  } else if (freshness.status === "push") {
+    note.textContent = "扩展时段仅确认 Futu 推送接收时点，不能冒充交易所成交时间；不会自动升级买入信号。";
+  } else {
+    note.textContent = `${freshness.reason}。当前行情不可作为执行依据，固定研究计划未改变。`;
+  }
+  container.appendChild(note);
+}
+
+function applyLiveQuotesToCards() {
+  document.querySelectorAll("[data-live-quote][data-symbol]").forEach((container) => {
+    const opportunity = liveOpportunityBySymbol(container.dataset.symbol);
+    if (opportunity) updateLiveQuoteElement(container, opportunity);
+  });
+  renderLiveQuoteStatus();
+}
+
+function renderLiveQuoteStatus() {
+  if (!els.liveQuoteStatus) return;
+  els.liveQuoteStatus.className = "live-quote-status";
+  if (!state.liveQuoteSnapshot) {
+    els.liveQuoteStatus.textContent = state.liveQuoteError ? `Futu 行情连接失败：${state.liveQuoteError}` : "Futu 行情连接中…";
+    if (state.liveQuoteError) els.liveQuoteStatus.classList.add("disconnected");
+    return;
+  }
+  const utils = window.LiveQuoteUtils;
+  const visibleSymbols = [...document.querySelectorAll("[data-live-quote][data-symbol]")].map((item) => item.dataset.symbol);
+  let liveCount = 0;
+  visibleSymbols.forEach((symbol) => {
+    const quote = state.liveQuoteSnapshot.quotes.get(String(symbol || "").toUpperCase());
+    const status = utils?.assessQuoteFreshness(quote, state.liveQuoteSnapshot, Date.now(), LIVE_QUOTE_CONFIG)?.status;
+    if (status === "live" || status === "push") liveCount += 1;
+  });
+  els.liveQuoteStatus.textContent = `Futu 行情 ${liveCount}/${visibleSymbols.length} 个已连接 · 每 15 秒刷新 · ${formatLiveTimestamp(state.liveQuoteSnapshot.receivedAt)}`;
+  if (!liveCount) els.liveQuoteStatus.classList.add("disconnected");
+}
+
+function scheduleLiveQuoteFetch(delay = LIVE_QUOTE_CONFIG.pollVisibleMs) {
+  window.clearTimeout(liveQuotePollTimer);
+  liveQuotePollTimer = null;
+  if (document.hidden || !LIVE_QUOTE_CONFIG.endpoint) return;
+  liveQuotePollTimer = window.setTimeout(fetchLiveQuotes, delay);
+}
+
+async function fetchLiveQuotes() {
+  if (document.hidden || liveQuoteFetchInFlight || !LIVE_QUOTE_CONFIG.endpoint || !window.LiveQuoteUtils) return;
+  liveQuoteFetchInFlight = true;
+  liveQuoteFetchController = new AbortController();
+  let requestTimedOut = false;
+  const requestTimeout = window.setTimeout(() => {
+    requestTimedOut = true;
+    liveQuoteFetchController?.abort();
+  }, LIVE_QUOTE_CONFIG.requestTimeoutMs);
+  try {
+    const separator = LIVE_QUOTE_CONFIG.endpoint.includes("?") ? "&" : "?";
+    const response = await fetch(`${LIVE_QUOTE_CONFIG.endpoint}${separator}_=${Date.now()}`, {
+      cache: "no-store",
+      credentials: "omit",
+      headers: { Accept: "application/json", "Cache-Control": "no-cache" },
+      referrerPolicy: "no-referrer",
+      signal: liveQuoteFetchController.signal,
+    });
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    const payload = await response.json();
+    state.liveQuoteSnapshot = window.LiveQuoteUtils.normalizeSnapshot(payload, Date.now());
+    state.liveQuoteError = "";
+    applyLiveQuotesToCards();
+  } catch (error) {
+    if (error.name !== "AbortError" || requestTimedOut) {
+      state.liveQuoteError = requestTimedOut ? "请求超时" : (error.message || "网络请求失败");
+      applyLiveQuotesToCards();
+    }
+  } finally {
+    window.clearTimeout(requestTimeout);
+    liveQuoteFetchInFlight = false;
+    liveQuoteFetchController = null;
+    scheduleLiveQuoteFetch();
+  }
+}
+
+function startLiveQuotePolling() {
+  renderLiveQuoteStatus();
+  fetchLiveQuotes();
+}
+
 function renderOpportunityCards() {
   if (!els.opportunityCards) return;
   const opportunities = filteredOpportunities();
@@ -1705,6 +1898,7 @@ function renderOpportunityCards() {
     const meta = OPPORTUNITY_STATUS_META[opportunity.status] || OPPORTUNITY_STATUS_META.watchlist;
     const card = document.createElement("article");
     card.className = `opportunity-card ${meta.className}`;
+    card.dataset.symbol = opportunity.symbol;
 
     const header = document.createElement("div");
     header.className = "opportunity-card-header";
@@ -1734,6 +1928,13 @@ function renderOpportunityCards() {
       item.textContent = line;
       price.appendChild(item);
     });
+
+    const liveQuote = document.createElement("div");
+    liveQuote.className = "opportunity-live-quote pending";
+    liveQuote.dataset.liveQuote = "true";
+    liveQuote.dataset.symbol = opportunity.symbol;
+    liveQuote.setAttribute("aria-live", "off");
+    updateLiveQuoteElement(liveQuote, opportunity);
 
     const entryPlan = formatEntryPlan(opportunity);
     const plan = document.createElement("div");
@@ -1783,7 +1984,7 @@ function renderOpportunityCards() {
     source.className = "opportunity-source";
     source.textContent = opportunity.source === "structured" ? "来源：结构化 opportunities" : `来源：${opportunity.source_label || "报告正文保守解析"}`;
 
-    card.append(header, theme, action, price, plan, scores, modelAudit, change, conditions, source);
+    card.append(header, theme, action, liveQuote, price, plan, scores, modelAudit, change, conditions, source);
     els.opportunityCards.appendChild(card);
   });
 }
@@ -1910,8 +2111,21 @@ window.addEventListener("focus", () => {
   if (state.manualUpdateRequestedAt) checkManualUpdateStatus({ reloadArchive: true });
 });
 
+document.addEventListener("visibilitychange", () => {
+  if (document.hidden) {
+    window.clearTimeout(liveQuotePollTimer);
+    liveQuotePollTimer = null;
+    if (liveQuoteFetchController) liveQuoteFetchController.abort();
+    return;
+  }
+  fetchLiveQuotes();
+});
+
 loadArchive()
-  .then(() => checkManualUpdateStatus())
+  .then(() => {
+    checkManualUpdateStatus();
+    startLiveQuotePolling();
+  })
   .catch((error) => {
     els.reportTitle.textContent = "报告加载失败";
     els.reportContent.innerHTML = `<p class="empty">${escapeHtml(error.message)}。请稍后刷新页面。</p>`;

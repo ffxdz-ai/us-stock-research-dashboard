@@ -1,7 +1,8 @@
 param(
     [string]$TaskName = "USStockFutuQuoteBridge",
     [string]$ProjectRoot = (Split-Path -Parent $PSScriptRoot),
-    [int]$IntervalMinutes = 5
+    [int]$IntervalSeconds = 15,
+    [int]$HeartbeatSeconds = 60
 )
 
 $ErrorActionPreference = "Stop"
@@ -32,13 +33,10 @@ if ([string]::IsNullOrWhiteSpace($bridgeUrl) -or [string]::IsNullOrWhiteSpace($b
     throw "Configure per-user FUTU_BRIDGE_URL and FUTU_BRIDGE_TOKEN before installing the uploader."
 }
 
-$arguments = '"{0}" --scope all --push-cloud --quiet' -f $syncScript
+$safeInterval = [Math]::Max(5, $IntervalSeconds)
+$safeHeartbeat = [Math]::Max(30, $HeartbeatSeconds)
+$arguments = '"{0}" --scope all --interval-seconds {1} --heartbeat-seconds {2}' -f $daemonScript, $safeInterval, $safeHeartbeat
 $action = New-ScheduledTaskAction -Execute $pythonw -Argument $arguments -WorkingDirectory $resolvedRoot
-$repeatTrigger = New-ScheduledTaskTrigger `
-    -Once `
-    -At (Get-Date).AddMinutes(1) `
-    -RepetitionInterval (New-TimeSpan -Minutes $IntervalMinutes) `
-    -RepetitionDuration (New-TimeSpan -Days 3650)
 $logonTrigger = New-ScheduledTaskTrigger -AtLogOn
 $settings = New-ScheduledTaskSettingsSet `
     -Hidden `
@@ -46,7 +44,9 @@ $settings = New-ScheduledTaskSettingsSet `
     -AllowStartIfOnBatteries `
     -DontStopIfGoingOnBatteries `
     -MultipleInstances IgnoreNew `
-    -ExecutionTimeLimit (New-TimeSpan -Minutes 3)
+    -RestartCount 999 `
+    -RestartInterval (New-TimeSpan -Minutes 1) `
+    -ExecutionTimeLimit ([TimeSpan]::Zero)
 $principal = New-ScheduledTaskPrincipal `
     -UserId ([System.Security.Principal.WindowsIdentity]::GetCurrent().Name) `
     -LogonType Interactive `
@@ -56,14 +56,19 @@ try {
     Register-ScheduledTask `
         -TaskName $TaskName `
         -Action $action `
-        -Trigger @($repeatTrigger, $logonTrigger) `
+        -Trigger $logonTrigger `
         -Settings $settings `
         -Principal $principal `
         -Description "Upload market-only Futu OpenD quotes through an authenticated HTTPS bridge; no account or trading access." `
         -Force `
         -ErrorAction Stop | Out-Null
+    $startupDirectory = [Environment]::GetFolderPath("Startup")
+    $legacyShortcut = Join-Path $startupDirectory ($TaskName + ".lnk")
+    if (Test-Path -LiteralPath $legacyShortcut -PathType Leaf) {
+        Remove-Item -LiteralPath $legacyShortcut -Force
+    }
     Start-ScheduledTask -TaskName $TaskName -ErrorAction Stop
-    Write-Output "Installed hidden Futu quote bridge task: $TaskName (every $IntervalMinutes minutes)."
+    Write-Output "Installed hidden continuous Futu quote bridge task: $TaskName (${safeInterval}s coalescing; ${safeHeartbeat}s heartbeat)."
 } catch {
     $startupDirectory = [Environment]::GetFolderPath("Startup")
     if (-not (Test-Path -LiteralPath $startupDirectory -PathType Container)) {
@@ -72,7 +77,7 @@ try {
     $shortcutPath = Join-Path $startupDirectory ($TaskName + ".lnk")
     $shortcut = (New-Object -ComObject WScript.Shell).CreateShortcut($shortcutPath)
     $shortcut.TargetPath = $pythonw
-    $shortcut.Arguments = '"{0}" --interval-seconds {1}' -f $daemonScript, ($IntervalMinutes * 60)
+    $shortcut.Arguments = '"{0}" --scope all --interval-seconds {1} --heartbeat-seconds {2}' -f $daemonScript, $safeInterval, $safeHeartbeat
     $shortcut.WorkingDirectory = $resolvedRoot
     $shortcut.WindowStyle = 7
     $shortcut.Description = "Invisible read-only Futu market quote bridge; no account or trading access"
@@ -82,9 +87,9 @@ try {
     }
     Start-Process `
         -FilePath $pythonw `
-        -ArgumentList @('"' + $daemonScript + '"', "--interval-seconds", ($IntervalMinutes * 60)) `
+        -ArgumentList @('"' + $daemonScript + '"', "--scope", "all", "--interval-seconds", $safeInterval, "--heartbeat-seconds", $safeHeartbeat) `
         -WorkingDirectory $resolvedRoot `
         -WindowStyle Hidden `
         -ErrorAction Stop | Out-Null
-    Write-Output "Installed invisible per-user Futu Startup shortcut: $TaskName (every $IntervalMinutes minutes; no administrator required)."
+    Write-Output "Installed invisible continuous Futu Startup bridge: $TaskName (${safeInterval}s coalescing; no administrator required)."
 }
