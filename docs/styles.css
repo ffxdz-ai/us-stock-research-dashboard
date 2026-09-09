@@ -1451,3 +1451,163 @@ footer {
     min-height: 110px;
   }
 }
+
+/* Live Futu quote overlay: current price is deliberately separate from the
+   immutable report snapshot and research plan. */
+.opportunity-heading-meta {
+  display: flex;
+  align-items: flex-end;
+  flex-direction: column;
+  gap: 4px;
+  text-align: right;
+}
+
+.live-quote-status {
+  color: #7dd3fc;
+  font-size: 0.75rem;
+  font-weight: 650;
+}
+
+.live-quote-status.disconnected {
+  color: #fbbf24;
+}
+
+.opportunity-live-quote {
+  display: grid;
+  gap: 6px;
+  border: 1px solid rgba(56, 189, 248, 0.26);
+  border-left: 3px solid #38bdf8;
+  border-radius: 10px;
+  background: linear-gradient(135deg, rgba(14, 116, 144, 0.12), rgba(7, 16, 22, 0.74));
+  padding: 11px 12px;
+}
+
+.live-quote-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.live-quote-heading strong {
+  color: #a5f3fc;
+  font-size: 0.82rem;
+  letter-spacing: 0.03em;
+}
+
+.live-quote-badge {
+  border: 1px solid rgba(56, 189, 248, 0.32);
+  border-radius: 999px;
+  background: rgba(56, 189, 248, 0.11);
+  padding: 3px 8px;
+  color: #7dd3fc;
+  font-size: 0.7rem;
+  font-weight: 760;
+  white-space: nowrap;
+}
+
+.opportunity-live-quote > span,
+.opportunity-live-quote > p,
+.opportunity-live-quote > small {
+  margin: 0;
+  color: #b8cfd8;
+  font-size: 0.77rem;
+  line-height: 1.48;
+}
+
+.opportunity-live-quote > span b {
+  color: #8fb3c1;
+  font-weight: 670;
+}
+
+.opportunity-live-quote .live-quote-price {
+  color: #e6fbff;
+  font-size: 1rem;
+  font-weight: 760;
+}
+
+.opportunity-live-quote .live-quote-price b {
+  color: #a5f3fc;
+}
+
+.live-quote-metrics {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 7px;
+  margin-top: 3px;
+}
+
+.live-quote-metrics span {
+  border: 1px solid rgba(135, 167, 178, 0.16);
+  border-radius: 7px;
+  background: rgba(2, 10, 15, 0.46);
+  padding: 7px 8px;
+  color: #d6e8ed;
+  font-size: 0.74rem;
+  line-height: 1.42;
+}
+
+.opportunity-live-quote.live.in-entry-zone {
+  border-color: rgba(34, 197, 94, 0.48);
+  border-left-color: #22c55e;
+}
+
+.opportunity-live-quote.pending,
+.opportunity-live-quote.unverified,
+.opportunity-live-quote.snapshot {
+  border-color: rgba(148, 163, 184, 0.24);
+  border-left-color: #94a3b8;
+}
+
+.opportunity-live-quote.pending .live-quote-badge,
+.opportunity-live-quote.unverified .live-quote-badge,
+.opportunity-live-quote.snapshot .live-quote-badge {
+  border-color: rgba(148, 163, 184, 0.3);
+  background: rgba(148, 163, 184, 0.1);
+  color: #cbd5e1;
+}
+
+.opportunity-live-quote.delayed,
+.opportunity-live-quote.disconnected,
+.opportunity-live-quote.unavailable {
+  border-color: rgba(245, 158, 11, 0.3);
+  border-left-color: #f59e0b;
+  background: rgba(120, 53, 15, 0.08);
+}
+
+.opportunity-live-quote.delayed .live-quote-badge,
+.opportunity-live-quote.disconnected .live-quote-badge,
+.opportunity-live-quote.unavailable .live-quote-badge {
+  border-color: rgba(245, 158, 11, 0.38);
+  background: rgba(245, 158, 11, 0.1);
+  color: #fdba74;
+}
+
+.opportunity-price {
+  opacity: 0.82;
+}
+
+@media (max-width: 620px) {
+  .opportunity-heading-meta {
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  .live-quote-metrics {
+    grid-template-columns: 1fr;
+  }
+
+  .opportunity-live-quote {
+    padding: 10px;
+  }
+}
+
+.opportunity-live-quote.live.in-entry-zone .live-quote-badge {
+  border-color: rgba(34, 197, 94, 0.38);
+  background: rgba(34, 197, 94, 0.12);
+  color: #86efac;
+}
+
+.opportunity-live-quote.push {
+  border-left-color: #22d3ee;
+}

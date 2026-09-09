@@ -29,6 +29,9 @@ PUBLIC_QUOTE_FIELDS = frozenset({
     "turnover_rate", "change_rate", "update_time", "data_date", "data_time",
     "quote_time", "pe_ttm", "pb_rate", "ps_ttm", "market_val", "pre_price",
     "after_price", "overnight_price", "source",
+    "live_price", "live_quote_time", "live_session", "market_state",
+    "currency", "timestamp_kind", "received_at", "push_confirmed",
+    "exchange_quote_time", "quote_transport",
 })
 ALLOWED_FEISHU_WEBHOOK_PREFIXES = (
     "https://open.feishu.cn/open-apis/bot/v2/hook/",

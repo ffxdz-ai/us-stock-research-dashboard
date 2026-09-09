@@ -5,9 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content="AI 美股投研驾驶舱公开脱敏版" />
     <meta name="update-service-url" content="https://us-stock-research-trigger.us-stock-research-trigger.workers.dev" />
+    <meta name="live-quote-url" content="https://us-stock-research-trigger.us-stock-research-trigger.workers.dev/futu/quotes" />
     <title>AI投研驾驶舱</title>
     <link rel="icon" href="data:," />
-    <link rel="stylesheet" href="./styles.css?v=20260823-one-click-update" />
+    <link rel="stylesheet" href="./styles.css?v=20260909-live-quotes" />
   </head>
   <body>
     <header class="site-header">
@@ -179,7 +180,10 @@
             <span class="section-kicker">STOCK STATUS CARDS</span>
             <h2 id="opportunityTitle">股票状态卡</h2>
           </div>
-          <span id="opportunityCount">读取中</span>
+          <div class="opportunity-heading-meta">
+            <span id="opportunityCount">读取中</span>
+            <small class="live-quote-status" id="liveQuoteStatus">Futu 行情连接中…</small>
+          </div>
         </div>
 
         <div class="opportunity-toolbar" aria-label="股票状态筛选">
@@ -235,6 +239,7 @@
     <footer>
       <p>数据与观点具有时效性，仅供研究记录，不构成投资建议或交易指令。</p>
     </footer>
-    <script src="./app.js?v=20260823-one-click-update"></script>
+    <script src="./live-quotes.js?v=20260909-realtime-overlay"></script>
+    <script src="./app.js?v=20260909-realtime-overlay"></script>
   </body>
 </html>
