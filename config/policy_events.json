@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "description": "政策事件按时间戳记录会前预期、正式决定与路径修正。新增事件须有可追溯来源；缺字段不得推断。",
+  "events": [
+    {
+      "id": "fomc-2026-09-16",
+      "name": "2026-09-16 FOMC",
+      "event_date": "2026-09-16",
+      "release_at": "2026-09-16T14:00:00-04:00",
+      "expected_change_bps": 25,
+      "expectation_as_of_date": "2026-09-16",
+      "expectation_session": "morning_pre_release",
+      "expectation_note": "会前市场预计加息25基点的概率超过90%；来源仅标注当日上午，未提供精确发布时刻。",
+      "expectation_source": "Nasdaq Dorsey Wright",
+      "expectation_source_url": "https://dorseywright.nasdaq.com/research/bigwire/2026/09/15/09-15-2026",
+      "actual_change_bps": 25,
+      "decision_source": "Federal Reserve",
+      "decision_source_url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20260916a.htm",
+      "year_end_rate_median_current_pct": 4.1,
+      "year_end_rate_median_prior_pct": 3.8,
+      "path_source": "Federal Reserve SEP",
+      "path_source_url": "https://www.federalreserve.gov/monetarypolicy/fomcprojtabl20260916.htm"
+    }
+  ]
+}
