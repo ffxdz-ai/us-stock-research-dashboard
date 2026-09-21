@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-09-21T16:34:31+08:00",
-  "generated_label": "2026-09-21 16:34",
+  "generated_at": "2026-09-21T16:49:16+08:00",
+  "generated_label": "2026-09-21 16:49",
   "fred_enabled": true,
   "data_boundary": "FRED 官方宏观数据层；只用于市场环境和风险偏好判断，不直接生成股票买卖指令。",
   "data_sources": [
@@ -20,6 +20,7 @@
       "dimension": "growth",
       "unit": "billions chained 2017 dollars",
       "frequency_hint": "quarterly",
+      "recent_observations": [],
       "latest_date": "2026-04-01",
       "latest_value": 24269.613,
       "one_month_ago_value": 24180.419,
@@ -43,6 +44,7 @@
       "dimension": "growth",
       "unit": "index",
       "frequency_hint": "monthly",
+      "recent_observations": [],
       "latest_date": "2026-08-01",
       "latest_value": 103.0682,
       "one_month_ago_value": 102.842,
@@ -66,6 +68,7 @@
       "dimension": "labor",
       "unit": "thousand persons",
       "frequency_hint": "monthly",
+      "recent_observations": [],
       "latest_date": "2026-08-01",
       "latest_value": 159075.0,
       "one_month_ago_value": 158892.0,
@@ -89,6 +92,7 @@
       "dimension": "labor",
       "unit": "percent",
       "frequency_hint": "monthly",
+      "recent_observations": [],
       "latest_date": "2026-08-01",
       "latest_value": 4.1,
       "one_month_ago_value": 4.2,
@@ -112,6 +116,7 @@
       "dimension": "inflation",
       "unit": "index",
       "frequency_hint": "monthly",
+      "recent_observations": [],
       "latest_date": "2026-08-01",
       "latest_value": 334.131,
       "one_month_ago_value": 332.568,
@@ -135,6 +140,7 @@
       "dimension": "inflation",
       "unit": "index",
       "frequency_hint": "monthly",
+      "recent_observations": [],
       "latest_date": "2026-08-01",
       "latest_value": 337.765,
       "one_month_ago_value": 336.065,
@@ -158,6 +164,7 @@
       "dimension": "inflation",
       "unit": "index",
       "frequency_hint": "monthly",
+      "recent_observations": [],
       "latest_date": "2026-07-01",
       "latest_value": 131.659,
       "one_month_ago_value": 131.576,
@@ -181,6 +188,7 @@
       "dimension": "inflation",
       "unit": "index",
       "frequency_hint": "monthly",
+      "recent_observations": [],
       "latest_date": "2026-07-01",
       "latest_value": 130.658,
       "one_month_ago_value": 130.147,
@@ -204,6 +212,7 @@
       "dimension": "policy",
       "unit": "percent",
       "frequency_hint": "monthly",
+      "recent_observations": [],
       "latest_date": "2026-08-01",
       "latest_value": 3.63,
       "one_month_ago_value": 3.63,
@@ -221,12 +230,473 @@
       "three_month_annualized_pct": 0,
       "status": "ok"
     },
+    "SP500": {
+      "id": "SP500",
+      "name": "标普500指数收盘值",
+      "dimension": "policy_event_market",
+      "unit": "index",
+      "frequency_hint": "daily",
+      "recent_observations": [
+        {
+          "date": "2026-08-14",
+          "value": 7785.76
+        },
+        {
+          "date": "2026-08-17",
+          "value": 7745.06
+        },
+        {
+          "date": "2026-08-18",
+          "value": 7691.76
+        },
+        {
+          "date": "2026-08-19",
+          "value": 7707.98
+        },
+        {
+          "date": "2026-08-20",
+          "value": 7641.16
+        },
+        {
+          "date": "2026-08-21",
+          "value": 7674.37
+        },
+        {
+          "date": "2026-08-24",
+          "value": 7652.86
+        },
+        {
+          "date": "2026-08-25",
+          "value": 7677.28
+        },
+        {
+          "date": "2026-08-26",
+          "value": 7675.7
+        },
+        {
+          "date": "2026-08-27",
+          "value": 7730.99
+        },
+        {
+          "date": "2026-08-28",
+          "value": 7711.76
+        },
+        {
+          "date": "2026-08-31",
+          "value": 7686.14
+        },
+        {
+          "date": "2026-09-01",
+          "value": 7631.47
+        },
+        {
+          "date": "2026-09-02",
+          "value": 7666.6
+        },
+        {
+          "date": "2026-09-03",
+          "value": 7747.71
+        },
+        {
+          "date": "2026-09-04",
+          "value": 7718.6
+        },
+        {
+          "date": "2026-09-08",
+          "value": 7673.52
+        },
+        {
+          "date": "2026-09-09",
+          "value": 7636.36
+        },
+        {
+          "date": "2026-09-10",
+          "value": 7591.7
+        },
+        {
+          "date": "2026-09-11",
+          "value": 7656.98
+        },
+        {
+          "date": "2026-09-14",
+          "value": 7619.98
+        },
+        {
+          "date": "2026-09-15",
+          "value": 7585.73
+        },
+        {
+          "date": "2026-09-16",
+          "value": 7551.81
+        },
+        {
+          "date": "2026-09-17",
+          "value": 7637.76
+        }
+      ],
+      "latest_date": "2026-09-17",
+      "latest_value": 7637.76,
+      "one_month_ago_value": 7785.76,
+      "three_month_ago_value": 7420.1,
+      "six_month_ago_value": 6624.7,
+      "one_year_ago_value": 6606.76,
+      "one_month_change": -148.0,
+      "three_month_change": 217.66,
+      "six_month_change": 1013.06,
+      "one_year_change": 1031.0,
+      "one_month_pct_change": -1.9009,
+      "three_month_pct_change": 2.9334,
+      "six_month_pct_change": 15.2922,
+      "yoy_pct_change": 15.6052,
+      "three_month_annualized_pct": 12.26,
+      "status": "ok"
+    },
+    "NASDAQCOM": {
+      "id": "NASDAQCOM",
+      "name": "纳斯达克综合指数收盘值",
+      "dimension": "policy_event_market",
+      "unit": "index",
+      "frequency_hint": "daily",
+      "recent_observations": [
+        {
+          "date": "2026-08-17",
+          "value": 26644.91
+        },
+        {
+          "date": "2026-08-18",
+          "value": 26289.71
+        },
+        {
+          "date": "2026-08-19",
+          "value": 26331.09
+        },
+        {
+          "date": "2026-08-20",
+          "value": 26067.17
+        },
+        {
+          "date": "2026-08-21",
+          "value": 26180.45
+        },
+        {
+          "date": "2026-08-24",
+          "value": 25980.19
+        },
+        {
+          "date": "2026-08-25",
+          "value": 26151.3
+        },
+        {
+          "date": "2026-08-26",
+          "value": 26130.2
+        },
+        {
+          "date": "2026-08-27",
+          "value": 26541.35
+        },
+        {
+          "date": "2026-08-28",
+          "value": 26402.42
+        },
+        {
+          "date": "2026-08-31",
+          "value": 26370.89
+        },
+        {
+          "date": "2026-09-01",
+          "value": 26099.77
+        },
+        {
+          "date": "2026-09-02",
+          "value": 26217.83
+        },
+        {
+          "date": "2026-09-03",
+          "value": 26584.06
+        },
+        {
+          "date": "2026-09-04",
+          "value": 26506.99
+        },
+        {
+          "date": "2026-09-08",
+          "value": 26421.41
+        },
+        {
+          "date": "2026-09-09",
+          "value": 26253.34
+        },
+        {
+          "date": "2026-09-10",
+          "value": 26081.72
+        },
+        {
+          "date": "2026-09-11",
+          "value": 26333.04
+        },
+        {
+          "date": "2026-09-14",
+          "value": 26186.41
+        },
+        {
+          "date": "2026-09-15",
+          "value": 25981.57
+        },
+        {
+          "date": "2026-09-16",
+          "value": 25978.42
+        },
+        {
+          "date": "2026-09-17",
+          "value": 26418.3
+        },
+        {
+          "date": "2026-09-18",
+          "value": 26522.55
+        }
+      ],
+      "latest_date": "2026-09-18",
+      "latest_value": 26522.55,
+      "one_month_ago_value": 26644.91,
+      "three_month_ago_value": 26517.93,
+      "six_month_ago_value": 22090.69,
+      "one_year_ago_value": 22261.33,
+      "one_month_change": -122.36,
+      "three_month_change": 4.62,
+      "six_month_change": 4431.86,
+      "one_year_change": 4261.22,
+      "one_month_pct_change": -0.4592,
+      "three_month_pct_change": 0.0174,
+      "six_month_pct_change": 20.0621,
+      "yoy_pct_change": 19.1418,
+      "three_month_annualized_pct": 0.0697,
+      "status": "ok"
+    },
+    "DJIA": {
+      "id": "DJIA",
+      "name": "道琼斯工业指数收盘值",
+      "dimension": "policy_event_market",
+      "unit": "index",
+      "frequency_hint": "daily",
+      "recent_observations": [
+        {
+          "date": "2026-08-17",
+          "value": 53459.78
+        },
+        {
+          "date": "2026-08-18",
+          "value": 53343.4
+        },
+        {
+          "date": "2026-08-19",
+          "value": 53463.05
+        },
+        {
+          "date": "2026-08-20",
+          "value": 52759.21
+        },
+        {
+          "date": "2026-08-21",
+          "value": 53277.01
+        },
+        {
+          "date": "2026-08-24",
+          "value": 53417.16
+        },
+        {
+          "date": "2026-08-25",
+          "value": 53577.4
+        },
+        {
+          "date": "2026-08-26",
+          "value": 53463.88
+        },
+        {
+          "date": "2026-08-27",
+          "value": 53569.44
+        },
+        {
+          "date": "2026-08-28",
+          "value": 53559.99
+        },
+        {
+          "date": "2026-08-31",
+          "value": 53185.9
+        },
+        {
+          "date": "2026-09-01",
+          "value": 52766.88
+        },
+        {
+          "date": "2026-09-02",
+          "value": 53061.95
+        },
+        {
+          "date": "2026-09-03",
+          "value": 53686.11
+        },
+        {
+          "date": "2026-09-04",
+          "value": 53414.25
+        },
+        {
+          "date": "2026-09-08",
+          "value": 52786.07
+        },
+        {
+          "date": "2026-09-09",
+          "value": 52380.66
+        },
+        {
+          "date": "2026-09-10",
+          "value": 52064.1
+        },
+        {
+          "date": "2026-09-11",
+          "value": 52573.29
+        },
+        {
+          "date": "2026-09-14",
+          "value": 52421.2
+        },
+        {
+          "date": "2026-09-15",
+          "value": 52093.11
+        },
+        {
+          "date": "2026-09-16",
+          "value": 51461.9
+        },
+        {
+          "date": "2026-09-17",
+          "value": 51778.04
+        },
+        {
+          "date": "2026-09-18",
+          "value": 51682.64
+        }
+      ],
+      "latest_date": "2026-09-18",
+      "latest_value": 51682.64,
+      "one_month_ago_value": 53459.78,
+      "three_month_ago_value": 51564.7,
+      "six_month_ago_value": 46021.43,
+      "one_year_ago_value": 46018.32,
+      "one_month_change": -1777.14,
+      "three_month_change": 117.94,
+      "six_month_change": 5661.21,
+      "one_year_change": 5664.32,
+      "one_month_pct_change": -3.3243,
+      "three_month_pct_change": 0.2287,
+      "six_month_pct_change": 12.3012,
+      "yoy_pct_change": 12.3088,
+      "three_month_annualized_pct": 0.918,
+      "status": "ok"
+    },
     "DGS10": {
       "id": "DGS10",
       "name": "10年期美债收益率",
       "dimension": "rates",
       "unit": "percent",
       "frequency_hint": "daily",
+      "recent_observations": [
+        {
+          "date": "2026-08-14",
+          "value": 4.68
+        },
+        {
+          "date": "2026-08-17",
+          "value": 4.72
+        },
+        {
+          "date": "2026-08-18",
+          "value": 4.71
+        },
+        {
+          "date": "2026-08-19",
+          "value": 4.65
+        },
+        {
+          "date": "2026-08-20",
+          "value": 4.69
+        },
+        {
+          "date": "2026-08-21",
+          "value": 4.74
+        },
+        {
+          "date": "2026-08-24",
+          "value": 4.7
+        },
+        {
+          "date": "2026-08-25",
+          "value": 4.64
+        },
+        {
+          "date": "2026-08-26",
+          "value": 4.66
+        },
+        {
+          "date": "2026-08-27",
+          "value": 4.67
+        },
+        {
+          "date": "2026-08-28",
+          "value": 4.73
+        },
+        {
+          "date": "2026-08-31",
+          "value": 4.75
+        },
+        {
+          "date": "2026-09-01",
+          "value": 4.79
+        },
+        {
+          "date": "2026-09-02",
+          "value": 4.79
+        },
+        {
+          "date": "2026-09-03",
+          "value": 4.77
+        },
+        {
+          "date": "2026-09-04",
+          "value": 4.78
+        },
+        {
+          "date": "2026-09-08",
+          "value": 4.8
+        },
+        {
+          "date": "2026-09-09",
+          "value": 4.83
+        },
+        {
+          "date": "2026-09-10",
+          "value": 4.95
+        },
+        {
+          "date": "2026-09-11",
+          "value": 4.96
+        },
+        {
+          "date": "2026-09-14",
+          "value": 4.97
+        },
+        {
+          "date": "2026-09-15",
+          "value": 5.0
+        },
+        {
+          "date": "2026-09-16",
+          "value": 5.01
+        },
+        {
+          "date": "2026-09-17",
+          "value": 4.94
+        }
+      ],
       "latest_date": "2026-09-17",
       "latest_value": 4.94,
       "one_month_ago_value": 4.68,
@@ -250,6 +720,104 @@
       "dimension": "rates",
       "unit": "percent",
       "frequency_hint": "daily",
+      "recent_observations": [
+        {
+          "date": "2026-08-14",
+          "value": 4.17
+        },
+        {
+          "date": "2026-08-17",
+          "value": 4.19
+        },
+        {
+          "date": "2026-08-18",
+          "value": 4.19
+        },
+        {
+          "date": "2026-08-19",
+          "value": 4.19
+        },
+        {
+          "date": "2026-08-20",
+          "value": 4.19
+        },
+        {
+          "date": "2026-08-21",
+          "value": 4.24
+        },
+        {
+          "date": "2026-08-24",
+          "value": 4.24
+        },
+        {
+          "date": "2026-08-25",
+          "value": 4.17
+        },
+        {
+          "date": "2026-08-26",
+          "value": 4.19
+        },
+        {
+          "date": "2026-08-27",
+          "value": 4.2
+        },
+        {
+          "date": "2026-08-28",
+          "value": 4.34
+        },
+        {
+          "date": "2026-08-31",
+          "value": 4.34
+        },
+        {
+          "date": "2026-09-01",
+          "value": 4.39
+        },
+        {
+          "date": "2026-09-02",
+          "value": 4.39
+        },
+        {
+          "date": "2026-09-03",
+          "value": 4.34
+        },
+        {
+          "date": "2026-09-04",
+          "value": 4.37
+        },
+        {
+          "date": "2026-09-08",
+          "value": 4.39
+        },
+        {
+          "date": "2026-09-09",
+          "value": 4.43
+        },
+        {
+          "date": "2026-09-10",
+          "value": 4.56
+        },
+        {
+          "date": "2026-09-11",
+          "value": 4.63
+        },
+        {
+          "date": "2026-09-14",
+          "value": 4.65
+        },
+        {
+          "date": "2026-09-15",
+          "value": 4.67
+        },
+        {
+          "date": "2026-09-16",
+          "value": 4.74
+        },
+        {
+          "date": "2026-09-17",
+          "value": 4.67
+        }
+      ],
       "latest_date": "2026-09-17",
       "latest_value": 4.67,
       "one_month_ago_value": 4.17,
@@ -273,6 +841,104 @@
       "dimension": "rates",
       "unit": "percent",
       "frequency_hint": "daily",
+      "recent_observations": [
+        {
+          "date": "2026-08-14",
+          "value": 3.86
+        },
+        {
+          "date": "2026-08-17",
+          "value": 3.87
+        },
+        {
+          "date": "2026-08-18",
+          "value": 3.86
+        },
+        {
+          "date": "2026-08-19",
+          "value": 3.86
+        },
+        {
+          "date": "2026-08-20",
+          "value": 3.87
+        },
+        {
+          "date": "2026-08-21",
+          "value": 3.88
+        },
+        {
+          "date": "2026-08-24",
+          "value": 3.87
+        },
+        {
+          "date": "2026-08-25",
+          "value": 3.86
+        },
+        {
+          "date": "2026-08-26",
+          "value": 3.85
+        },
+        {
+          "date": "2026-08-27",
+          "value": 3.84
+        },
+        {
+          "date": "2026-08-28",
+          "value": 3.9
+        },
+        {
+          "date": "2026-08-31",
+          "value": 3.91
+        },
+        {
+          "date": "2026-09-01",
+          "value": 3.92
+        },
+        {
+          "date": "2026-09-02",
+          "value": 3.92
+        },
+        {
+          "date": "2026-09-03",
+          "value": 3.89
+        },
+        {
+          "date": "2026-09-04",
+          "value": 3.91
+        },
+        {
+          "date": "2026-09-08",
+          "value": 3.94
+        },
+        {
+          "date": "2026-09-09",
+          "value": 3.95
+        },
+        {
+          "date": "2026-09-10",
+          "value": 4.0
+        },
+        {
+          "date": "2026-09-11",
+          "value": 4.07
+        },
+        {
+          "date": "2026-09-14",
+          "value": 4.11
+        },
+        {
+          "date": "2026-09-15",
+          "value": 4.11
+        },
+        {
+          "date": "2026-09-16",
+          "value": 4.14
+        },
+        {
+          "date": "2026-09-17",
+          "value": 4.12
+        }
+      ],
       "latest_date": "2026-09-17",
       "latest_value": 4.12,
       "one_month_ago_value": 3.86,
@@ -296,6 +962,104 @@
       "dimension": "rates",
       "unit": "percent",
       "frequency_hint": "daily",
+      "recent_observations": [
+        {
+          "date": "2026-08-17",
+          "value": 0.53
+        },
+        {
+          "date": "2026-08-18",
+          "value": 0.52
+        },
+        {
+          "date": "2026-08-19",
+          "value": 0.46
+        },
+        {
+          "date": "2026-08-20",
+          "value": 0.5
+        },
+        {
+          "date": "2026-08-21",
+          "value": 0.5
+        },
+        {
+          "date": "2026-08-24",
+          "value": 0.46
+        },
+        {
+          "date": "2026-08-25",
+          "value": 0.47
+        },
+        {
+          "date": "2026-08-26",
+          "value": 0.47
+        },
+        {
+          "date": "2026-08-27",
+          "value": 0.47
+        },
+        {
+          "date": "2026-08-28",
+          "value": 0.39
+        },
+        {
+          "date": "2026-08-31",
+          "value": 0.41
+        },
+        {
+          "date": "2026-09-01",
+          "value": 0.4
+        },
+        {
+          "date": "2026-09-02",
+          "value": 0.4
+        },
+        {
+          "date": "2026-09-03",
+          "value": 0.43
+        },
+        {
+          "date": "2026-09-04",
+          "value": 0.41
+        },
+        {
+          "date": "2026-09-08",
+          "value": 0.41
+        },
+        {
+          "date": "2026-09-09",
+          "value": 0.4
+        },
+        {
+          "date": "2026-09-10",
+          "value": 0.39
+        },
+        {
+          "date": "2026-09-11",
+          "value": 0.33
+        },
+        {
+          "date": "2026-09-14",
+          "value": 0.32
+        },
+        {
+          "date": "2026-09-15",
+          "value": 0.33
+        },
+        {
+          "date": "2026-09-16",
+          "value": 0.27
+        },
+        {
+          "date": "2026-09-17",
+          "value": 0.27
+        },
+        {
+          "date": "2026-09-18",
+          "value": 0.25
+        }
+      ],
       "latest_date": "2026-09-18",
       "latest_value": 0.25,
       "one_month_ago_value": 0.53,
@@ -319,6 +1083,104 @@
       "dimension": "rates",
       "unit": "percent",
       "frequency_hint": "daily",
+      "recent_observations": [
+        {
+          "date": "2026-08-17",
+          "value": 0.85
+        },
+        {
+          "date": "2026-08-18",
+          "value": 0.85
+        },
+        {
+          "date": "2026-08-19",
+          "value": 0.79
+        },
+        {
+          "date": "2026-08-20",
+          "value": 0.82
+        },
+        {
+          "date": "2026-08-21",
+          "value": 0.86
+        },
+        {
+          "date": "2026-08-24",
+          "value": 0.83
+        },
+        {
+          "date": "2026-08-25",
+          "value": 0.78
+        },
+        {
+          "date": "2026-08-26",
+          "value": 0.81
+        },
+        {
+          "date": "2026-08-27",
+          "value": 0.83
+        },
+        {
+          "date": "2026-08-28",
+          "value": 0.83
+        },
+        {
+          "date": "2026-08-31",
+          "value": 0.84
+        },
+        {
+          "date": "2026-09-01",
+          "value": 0.87
+        },
+        {
+          "date": "2026-09-02",
+          "value": 0.87
+        },
+        {
+          "date": "2026-09-03",
+          "value": 0.88
+        },
+        {
+          "date": "2026-09-04",
+          "value": 0.87
+        },
+        {
+          "date": "2026-09-08",
+          "value": 0.86
+        },
+        {
+          "date": "2026-09-09",
+          "value": 0.88
+        },
+        {
+          "date": "2026-09-10",
+          "value": 0.95
+        },
+        {
+          "date": "2026-09-11",
+          "value": 0.89
+        },
+        {
+          "date": "2026-09-14",
+          "value": 0.86
+        },
+        {
+          "date": "2026-09-15",
+          "value": 0.89
+        },
+        {
+          "date": "2026-09-16",
+          "value": 0.87
+        },
+        {
+          "date": "2026-09-17",
+          "value": 0.82
+        },
+        {
+          "date": "2026-09-18",
+          "value": 0.87
+        }
+      ],
       "latest_date": "2026-09-18",
       "latest_value": 0.87,
       "one_month_ago_value": 0.85,
@@ -342,6 +1204,7 @@
       "dimension": "liquidity",
       "unit": "billions dollars",
       "frequency_hint": "monthly",
+      "recent_observations": [],
       "latest_date": "2026-07-01",
       "latest_value": 23218.0,
       "one_month_ago_value": 23013.9,
@@ -365,6 +1228,7 @@
       "dimension": "liquidity",
       "unit": "millions dollars",
       "frequency_hint": "weekly",
+      "recent_observations": [],
       "latest_date": "2026-09-16",
       "latest_value": 6746548.0,
       "one_month_ago_value": 6759955.0,
@@ -388,6 +1252,7 @@
       "dimension": "liquidity",
       "unit": "index",
       "frequency_hint": "weekly",
+      "recent_observations": [],
       "latest_date": "2026-09-11",
       "latest_value": -0.56,
       "one_month_ago_value": -0.542,
@@ -411,6 +1276,104 @@
       "dimension": "credit",
       "unit": "percent",
       "frequency_hint": "daily",
+      "recent_observations": [
+        {
+          "date": "2026-08-14",
+          "value": 1.69
+        },
+        {
+          "date": "2026-08-17",
+          "value": 1.69
+        },
+        {
+          "date": "2026-08-18",
+          "value": 1.68
+        },
+        {
+          "date": "2026-08-19",
+          "value": 1.64
+        },
+        {
+          "date": "2026-08-20",
+          "value": 1.64
+        },
+        {
+          "date": "2026-08-21",
+          "value": 1.63
+        },
+        {
+          "date": "2026-08-24",
+          "value": 1.63
+        },
+        {
+          "date": "2026-08-25",
+          "value": 1.62
+        },
+        {
+          "date": "2026-08-26",
+          "value": 1.61
+        },
+        {
+          "date": "2026-08-27",
+          "value": 1.6
+        },
+        {
+          "date": "2026-08-28",
+          "value": 1.54
+        },
+        {
+          "date": "2026-08-31",
+          "value": 1.59
+        },
+        {
+          "date": "2026-09-01",
+          "value": 1.58
+        },
+        {
+          "date": "2026-09-02",
+          "value": 1.58
+        },
+        {
+          "date": "2026-09-03",
+          "value": 1.57
+        },
+        {
+          "date": "2026-09-04",
+          "value": 1.56
+        },
+        {
+          "date": "2026-09-08",
+          "value": 1.57
+        },
+        {
+          "date": "2026-09-09",
+          "value": 1.55
+        },
+        {
+          "date": "2026-09-10",
+          "value": 1.51
+        },
+        {
+          "date": "2026-09-11",
+          "value": 1.5
+        },
+        {
+          "date": "2026-09-14",
+          "value": 1.47
+        },
+        {
+          "date": "2026-09-15",
+          "value": 1.48
+        },
+        {
+          "date": "2026-09-16",
+          "value": 1.43
+        },
+        {
+          "date": "2026-09-17",
+          "value": 1.44
+        }
+      ],
       "latest_date": "2026-09-17",
       "latest_value": 1.44,
       "one_month_ago_value": 1.69,
@@ -434,6 +1397,104 @@
       "dimension": "risk",
       "unit": "index",
       "frequency_hint": "daily",
+      "recent_observations": [
+        {
+          "date": "2026-08-17",
+          "value": 15.19
+        },
+        {
+          "date": "2026-08-18",
+          "value": 15.84
+        },
+        {
+          "date": "2026-08-19",
+          "value": 14.89
+        },
+        {
+          "date": "2026-08-20",
+          "value": 16.01
+        },
+        {
+          "date": "2026-08-21",
+          "value": 15.13
+        },
+        {
+          "date": "2026-08-24",
+          "value": 15.85
+        },
+        {
+          "date": "2026-08-25",
+          "value": 15.45
+        },
+        {
+          "date": "2026-08-26",
+          "value": 15.21
+        },
+        {
+          "date": "2026-08-27",
+          "value": 14.51
+        },
+        {
+          "date": "2026-08-28",
+          "value": 14.43
+        },
+        {
+          "date": "2026-08-31",
+          "value": 14.92
+        },
+        {
+          "date": "2026-09-01",
+          "value": 16.34
+        },
+        {
+          "date": "2026-09-02",
+          "value": 15.2
+        },
+        {
+          "date": "2026-09-03",
+          "value": 14.32
+        },
+        {
+          "date": "2026-09-04",
+          "value": 14.53
+        },
+        {
+          "date": "2026-09-07",
+          "value": 15.3
+        },
+        {
+          "date": "2026-09-08",
+          "value": 15.72
+        },
+        {
+          "date": "2026-09-09",
+          "value": 16.46
+        },
+        {
+          "date": "2026-09-10",
+          "value": 17.84
+        },
+        {
+          "date": "2026-09-11",
+          "value": 15.84
+        },
+        {
+          "date": "2026-09-14",
+          "value": 17.1
+        },
+        {
+          "date": "2026-09-15",
+          "value": 17.2
+        },
+        {
+          "date": "2026-09-16",
+          "value": 17.71
+        },
+        {
+          "date": "2026-09-17",
+          "value": 15.44
+        }
+      ],
       "latest_date": "2026-09-17",
       "latest_value": 15.44,
       "one_month_ago_value": 14.25,
@@ -457,6 +1518,104 @@
       "dimension": "risk",
       "unit": "index",
       "frequency_hint": "daily",
+      "recent_observations": [
+        {
+          "date": "2026-08-10",
+          "value": 119.1187
+        },
+        {
+          "date": "2026-08-11",
+          "value": 119.179
+        },
+        {
+          "date": "2026-08-12",
+          "value": 119.1179
+        },
+        {
+          "date": "2026-08-13",
+          "value": 119.1848
+        },
+        {
+          "date": "2026-08-14",
+          "value": 118.9028
+        },
+        {
+          "date": "2026-08-17",
+          "value": 118.814
+        },
+        {
+          "date": "2026-08-18",
+          "value": 118.9831
+        },
+        {
+          "date": "2026-08-19",
+          "value": 118.3328
+        },
+        {
+          "date": "2026-08-20",
+          "value": 118.2548
+        },
+        {
+          "date": "2026-08-21",
+          "value": 118.0628
+        },
+        {
+          "date": "2026-08-24",
+          "value": 118.3195
+        },
+        {
+          "date": "2026-08-25",
+          "value": 118.2283
+        },
+        {
+          "date": "2026-08-26",
+          "value": 118.4461
+        },
+        {
+          "date": "2026-08-27",
+          "value": 118.3583
+        },
+        {
+          "date": "2026-08-28",
+          "value": 118.7479
+        },
+        {
+          "date": "2026-08-31",
+          "value": 118.5679
+        },
+        {
+          "date": "2026-09-01",
+          "value": 118.6568
+        },
+        {
+          "date": "2026-09-02",
+          "value": 118.5296
+        },
+        {
+          "date": "2026-09-03",
+          "value": 118.127
+        },
+        {
+          "date": "2026-09-04",
+          "value": 118.0732
+        },
+        {
+          "date": "2026-09-08",
+          "value": 117.9127
+        },
+        {
+          "date": "2026-09-09",
+          "value": 117.8834
+        },
+        {
+          "date": "2026-09-10",
+          "value": 118.0787
+        },
+        {
+          "date": "2026-09-11",
+          "value": 118.2126
+        }
+      ],
       "latest_date": "2026-09-11",
       "latest_value": 118.2126,
       "one_month_ago_value": 119.1187,
@@ -480,6 +1639,104 @@
       "dimension": "risk",
       "unit": "dollars per barrel",
       "frequency_hint": "daily",
+      "recent_observations": [
+        {
+          "date": "2026-08-12",
+          "value": 84.97
+        },
+        {
+          "date": "2026-08-13",
+          "value": 82.77
+        },
+        {
+          "date": "2026-08-14",
+          "value": 83.99
+        },
+        {
+          "date": "2026-08-17",
+          "value": 86.04
+        },
+        {
+          "date": "2026-08-18",
+          "value": 86.48
+        },
+        {
+          "date": "2026-08-19",
+          "value": 87.28
+        },
+        {
+          "date": "2026-08-20",
+          "value": 89.75
+        },
+        {
+          "date": "2026-08-21",
+          "value": 87.21
+        },
+        {
+          "date": "2026-08-24",
+          "value": 86.34
+        },
+        {
+          "date": "2026-08-25",
+          "value": 83.9
+        },
+        {
+          "date": "2026-08-26",
+          "value": 83.46
+        },
+        {
+          "date": "2026-08-27",
+          "value": 84.81
+        },
+        {
+          "date": "2026-08-28",
+          "value": 84.57
+        },
+        {
+          "date": "2026-08-31",
+          "value": 87.03
+        },
+        {
+          "date": "2026-09-01",
+          "value": 91.48
+        },
+        {
+          "date": "2026-09-02",
+          "value": 92.15
+        },
+        {
+          "date": "2026-09-03",
+          "value": 92.55
+        },
+        {
+          "date": "2026-09-04",
+          "value": 92.69
+        },
+        {
+          "date": "2026-09-08",
+          "value": 94.21
+        },
+        {
+          "date": "2026-09-09",
+          "value": 97.26
+        },
+        {
+          "date": "2026-09-10",
+          "value": 103.57
+        },
+        {
+          "date": "2026-09-11",
+          "value": 101.27
+        },
+        {
+          "date": "2026-09-14",
+          "value": 102.42
+        },
+        {
+          "date": "2026-09-15",
+          "value": 107.02
+        }
+      ],
       "latest_date": "2026-09-15",
       "latest_value": 107.02,
       "one_month_ago_value": 83.99,
