@@ -875,7 +875,7 @@ def build_user_prompt(context: dict[str, Any], mode: str) -> str:
 - 必须先阅读 macro_regime：按经济周期、政策利率、通胀、流动性、风险偏好判断今天是进攻、平衡还是防守。
 - 如果 macro_regime.fred_enabled 为 true，宏观部分必须引用 FRED 指标的数据日期；如果缺失，则明确“宏观 FRED 数据不足”。
 - 必须阅读 market_sentiment：引用情绪分、Risk-on/Risk-off/Neutral 状态和主要拖累/支撑；但必须声明情绪只决定进攻/防守倾向，不能替代单股 R/R。
-- 必须阅读 policy_event：分别判断决定相对会前预期、后续利率路径以及会后两交易日的指数/美债/油价验证。不得把“加息必跌”“降息必涨”或“利空出尽”当成自动买入信号；数据缺口必须写明，历史事件不得作为今日买入过滤器。
+- 必须阅读 policy_event：分别判断决定相对会前预期、后续利率路径以及会后第一/第二交易日的指数/美债/油价验证。若只有首日数据，必须标为初步验证，不得宣称两日已确认；不得把“加息必跌”“降息必涨”或“利空出尽”当成自动买入信号。历史事件不得作为今日买入过滤器。
 - 必须阅读 fmp_research：把分析师预期、目标价共识、财报 surprise 和评级快照作为“市场预期”输入，但不得把 FMP 目标价当作你的最终目标价。
 - 如果 fmp_research.data_availability 显示 transcript/news 端点受限，必须写明电话会/新闻正文未接入，不得编造管理层表述。
 - 对 secondary_analysis_queue.deepseek_priority 中的股票全部覆盖；如果数量较多，先用表格逐只给结论，再挑最重要标的展开。

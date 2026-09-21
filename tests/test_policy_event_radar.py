@@ -17,8 +17,8 @@ CONFIG = Path(__file__).resolve().parents[1] / "config" / "policy_events.json"
 def sample_observations() -> dict[str, list[dict[str, object]]]:
     return {
         "SP500": [{"date": "2026-09-15", "value": 100}, {"date": "2026-09-16", "value": 99}, {"date": "2026-09-17", "value": 101}, {"date": "2026-09-18", "value": 102}],
-        "NASDAQCOM": [{"date": "2026-09-15", "value": 100}, {"date": "2026-09-18", "value": 103}],
-        "DJIA": [{"date": "2026-09-15", "value": 100}, {"date": "2026-09-18", "value": 98}],
+        "NASDAQCOM": [{"date": "2026-09-15", "value": 100}, {"date": "2026-09-17", "value": 101.5}, {"date": "2026-09-18", "value": 103}],
+        "DJIA": [{"date": "2026-09-15", "value": 100}, {"date": "2026-09-17", "value": 99}, {"date": "2026-09-18", "value": 98}],
         "DGS2": [{"date": "2026-09-15", "value": 4.0}, {"date": "2026-09-18", "value": 4.1}],
         "DGS10": [{"date": "2026-09-15", "value": 4.5}, {"date": "2026-09-18", "value": 4.55}],
         "DCOILWTICO": [{"date": "2026-09-15", "value": 100}, {"date": "2026-09-18", "value": 106}],
@@ -44,7 +44,9 @@ class PolicyEventRadarTests(unittest.TestCase):
 
         result = market_reaction(date(2026, 9, 16), sample_observations())
         self.assertEqual(result["status"], "mixed")
-        self.assertEqual(result["window"], {"start": "2026-09-15", "end": "2026-09-18"})
+        self.assertEqual(result["window"]["start"], "2026-09-15")
+        self.assertEqual(result["window"]["end"], "2026-09-18")
+        self.assertTrue(result["window"]["complete"])
         self.assertEqual(result["cross_assets"]["DGS2_change_bps"], 10.0)
 
     def test_missing_market_data_stays_unknown(self) -> None:
@@ -52,6 +54,18 @@ class PolicyEventRadarTests(unittest.TestCase):
         self.assertEqual(payload["market_reaction"]["status"], "unknown")
         self.assertEqual(payload["status"], "limited")
         self.assertTrue(payload["data_gaps"])
+
+    def test_one_post_session_is_provisional_and_uses_common_date(self) -> None:
+        from datetime import date
+
+        observations = sample_observations()
+        observations["SP500"] = [row for row in observations["SP500"] if row["date"] != "2026-09-18"]
+        result = market_reaction(date(2026, 9, 16), observations)
+        self.assertEqual(result["status"], "provisional_mixed")
+        self.assertEqual(result["window"]["end"], "2026-09-17")
+        self.assertFalse(result["window"]["complete"])
+        self.assertEqual(result["indices"]["NASDAQCOM"], 1.5)
+        self.assertIsNone(result["cross_assets"]["WTI_change_pct"])
 
     def test_policy_audit_reuses_daily_macro_observations(self) -> None:
         source_rows = sample_observations()

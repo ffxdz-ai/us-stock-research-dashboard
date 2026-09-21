@@ -95,17 +95,19 @@ def observation(rows: list[dict[str, Any]], on_date: str) -> float | None:
 
 
 def market_reaction(event_day: date, observations: dict[str, list[dict[str, Any]]]) -> dict[str, Any]:
-    """Compare pre-meeting close to second *post-meeting* trading close.
+    """Compare pre-meeting close to a common post-meeting trading close.
 
-    FRED close-to-close data are not intraday causal evidence. Index count is a
-    participation proxy, not exchange advance/decline breadth.
+    Use the second session only when available from S&P 500; otherwise show
+    the first session as provisional. Never mix different end dates across
+    series. Index count is not exchange advance/decline breadth.
     """
     sp_rows = observations.get("SP500") or []
     post_dates = sorted({str(row.get("date")) for row in sp_rows if str(row.get("date")) > event_day.isoformat()})
     pre_dates = sorted({str(row.get("date")) for row in sp_rows if str(row.get("date")) < event_day.isoformat()})
-    if not pre_dates or len(post_dates) < 2:
-        return {"status": "unknown", "label": "会后两个交易日的收盘数据不足", "window": None, "indices": {}, "cross_assets": {}}
-    start, end = pre_dates[-1], post_dates[1]
+    if not pre_dates or not post_dates:
+        return {"status": "unknown", "label": "会后首个交易日的收盘数据不足", "window": None, "indices": {}, "cross_assets": {}}
+    complete = len(post_dates) >= 2
+    start, end = pre_dates[-1], post_dates[1] if complete else post_dates[0]
     indices: dict[str, float | None] = {}
     for key in ("SP500", "NASDAQCOM", "DJIA"):
         before = observation(observations.get(key) or [], start)
@@ -128,7 +130,10 @@ def market_reaction(event_day: date, observations: dict[str, list[dict[str, Any]
         status, label = "broad_negative", "主要指数均未收复会前收盘"
     else:
         status, label = "mixed", "主要指数反应分化，不能概括为全面利好"
-    return {"status": status, "label": label, "window": {"start": start, "end": end}, "indices": indices, "cross_assets": cross_assets}
+    if not complete and status != "unknown":
+        status = "provisional_" + status
+        label = "会后首日初步验证：" + label + "；第二日同口径数据待确认"
+    return {"status": status, "label": label, "window": {"start": start, "end": end, "sessions_after_event": 2 if complete else 1, "complete": complete}, "indices": indices, "cross_assets": cross_assets}
 
 
 def observations_from_macro(macro: dict[str, Any]) -> tuple[dict[str, list[dict[str, Any]]], dict[str, str]]:
@@ -175,9 +180,11 @@ def build_radar(
     if path["status"] == "unknown":
         gaps.append("点阵图/利率路径缺少可比来源")
     if reaction["status"] == "unknown":
-        gaps.append("会前与会后两个交易日的 FRED 收盘数据不足")
+        gaps.append("会前与会后首个交易日的 FRED 收盘数据不足")
     elif any(value is None for value in reaction["indices"].values()):
         gaps.append("部分主要指数缺少同日期收盘数据")
+    if reaction["window"] and not reaction["window"]["complete"]:
+        gaps.append("会后第二交易日的标普收盘值尚未齐备；当前仅是首日初步验证")
     if reaction["window"] and any(value is None for value in reaction["cross_assets"].values()):
         gaps.append("会后美债收益率或 WTI 观察值尚未齐备，跨资产确认不完整")
     if fetch_errors:
@@ -228,7 +235,7 @@ def build_report(payload: dict[str, Any]) -> str:
         "| 维度 | 判断 |", "|---|---|",
         f"| 决定 vs 会前预期 | {surprise.get('label') or '待确认'} |",
         f"| 后续政策路径 | {path.get('label') or '待确认'} |",
-        f"| 会后两日市场确认 | {reaction.get('label') or '待确认'} |",
+        f"| 会后市场验证 | {reaction.get('label') or '待确认'} |",
         f"| 对选股的影响 | 不自动升级任何股票；仅提示重新核验行业、收益率敏感度及原有硬门槛 |",
         "", "## 可追溯证据", "",
     ]
