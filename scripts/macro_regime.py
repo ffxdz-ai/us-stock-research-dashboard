@@ -11,6 +11,7 @@ import argparse
 import json
 import math
 import os
+import time
 import urllib.error
 import urllib.parse
 import urllib.request
@@ -208,6 +209,7 @@ def summarize_series(series: dict[str, Any], rows: list[dict[str, Any]]) -> dict
         "dimension": series.get("dimension"),
         "unit": series.get("unit"),
         "frequency_hint": series.get("frequency_hint"),
+        "recent_observations": rows[-24:] if series.get("frequency_hint") == "daily" else [],
         "latest_date": latest["date"],
         "latest_value": round(latest_value, 4),
         "one_month_ago_value": round(one_month_value, 4) if one_month_value is not None else None,
@@ -501,6 +503,9 @@ def build_regime(config: dict[str, Any], api_key: str | None) -> dict[str, Any]:
                 "status": "error",
             }
             errors.append({"series_id": series_id, "error": str(exc)[:220]})
+        # FRED's API documents a 120-request/minute limit. Keep the macro and
+        # downstream event audit within a conservative shared request budget.
+        time.sleep(0.4)
 
     dimensions, rules = score_macro(indicators)
     composite = number(dimensions.get("composite")) or 0

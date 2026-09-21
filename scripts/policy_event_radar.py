@@ -17,8 +17,6 @@ from macro_regime import (
     DOCS_DATA_DIR,
     REPORTS_DIR,
     ROOT,
-    fetch_fred_series,
-    load_environment,
     load_json,
     now_local,
     number,
@@ -27,6 +25,7 @@ from macro_regime import (
 )
 
 DEFAULT_CONFIG = ROOT / "config" / "policy_events.json"
+DEFAULT_MACRO = DATA_DIR / "latest_macro_regime.json"
 DEFAULT_OUTPUT = DATA_DIR / "latest_policy_event_radar.json"
 DEFAULT_DOCS_OUTPUT = DOCS_DATA_DIR / "policy_event_radar.json"
 DEFAULT_REPORT = REPORTS_DIR / "latest-policy-event-radar.md"
@@ -132,6 +131,19 @@ def market_reaction(event_day: date, observations: dict[str, list[dict[str, Any]
     return {"status": status, "label": label, "window": {"start": start, "end": end}, "indices": indices, "cross_assets": cross_assets}
 
 
+def observations_from_macro(macro: dict[str, Any]) -> tuple[dict[str, list[dict[str, Any]]], dict[str, str]]:
+    indicators = macro.get("indicators") if isinstance(macro.get("indicators"), dict) else {}
+    observations: dict[str, list[dict[str, Any]]] = {}
+    errors: dict[str, str] = {}
+    for series_id in SERIES:
+        indicator = indicators.get(series_id) if isinstance(indicators.get(series_id), dict) else {}
+        rows = indicator.get("recent_observations") if isinstance(indicator.get("recent_observations"), list) else []
+        observations[series_id] = [row for row in rows if isinstance(row, dict)]
+        if not rows:
+            errors[series_id] = "宏观 FRED 快照缺少日观察值"
+    return observations, errors
+
+
 def build_radar(
     config: dict[str, Any],
     observations: dict[str, list[dict[str, Any]]],
@@ -164,8 +176,12 @@ def build_radar(
         gaps.append("点阵图/利率路径缺少可比来源")
     if reaction["status"] == "unknown":
         gaps.append("会前与会后两个交易日的 FRED 收盘数据不足")
+    elif any(value is None for value in reaction["indices"].values()):
+        gaps.append("部分主要指数缺少同日期收盘数据")
+    if reaction["window"] and any(value is None for value in reaction["cross_assets"].values()):
+        gaps.append("会后美债收益率或 WTI 观察值尚未齐备，跨资产确认不完整")
     if fetch_errors:
-        gaps.append("FRED 指数/利率请求失败：" + "、".join(f"{key} ({value})" for key, value in fetch_errors.items()))
+        gaps.append("FRED 宏观快照缺口：" + "、".join(f"{key} ({value})" for key, value in fetch_errors.items()))
     summary = f"{surprise['label']}；{path['label']}；{reaction['label']}。"
     if current_relevance == "historical":
         summary += "该事件已超过7天，仅作历史复盘，不作为今日买入过滤器。"
@@ -241,27 +257,12 @@ def build_report(payload: dict[str, Any]) -> str:
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--config", type=Path, default=DEFAULT_CONFIG)
+    parser.add_argument("--macro-regime", type=Path, default=DEFAULT_MACRO)
     parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT)
     parser.add_argument("--docs-output", type=Path, default=DEFAULT_DOCS_OUTPUT)
     parser.add_argument("--report", type=Path, default=DEFAULT_REPORT)
     args = parser.parse_args()
-    load_environment()
-    import os
-
-    api_key = os.getenv("FRED_API_KEY", "").strip()
-    observations: dict[str, list[dict[str, Any]]] = {}
-    fetch_errors: dict[str, str] = {}
-    if api_key:
-        for series_id in SERIES:
-            try:
-                observations[series_id] = fetch_fred_series(api_key, series_id, limit=90)
-            except Exception as exc:
-                reason = f"HTTP {exc.code}" if hasattr(exc, "code") else type(exc).__name__
-                print(f"FRED {series_id} unavailable: {reason}")
-                fetch_errors[series_id] = reason
-                observations[series_id] = []
-    else:
-        fetch_errors["all"] = "FRED_API_KEY 未配置"
+    observations, fetch_errors = observations_from_macro(load_json(args.macro_regime, {}))
     payload = build_radar(load_json(args.config, {}), observations, fetch_errors=fetch_errors)
     write_json(args.output, payload)
     write_json(args.docs_output, payload)

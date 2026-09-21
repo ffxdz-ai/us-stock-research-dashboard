@@ -7,7 +7,8 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
 
-from policy_event_radar import build_radar, load_json, market_reaction, policy_surprise
+from macro_regime import summarize_series
+from policy_event_radar import build_radar, load_json, market_reaction, observations_from_macro, policy_surprise
 
 
 CONFIG = Path(__file__).resolve().parents[1] / "config" / "policy_events.json"
@@ -51,6 +52,21 @@ class PolicyEventRadarTests(unittest.TestCase):
         self.assertEqual(payload["market_reaction"]["status"], "unknown")
         self.assertEqual(payload["status"], "limited")
         self.assertTrue(payload["data_gaps"])
+
+    def test_policy_audit_reuses_daily_macro_observations(self) -> None:
+        source_rows = sample_observations()
+        macro = {"indicators": {key: {"recent_observations": rows, "status": "ok"} for key, rows in source_rows.items()}}
+        observations, errors = observations_from_macro(macro)
+        self.assertFalse(errors)
+        payload = build_radar(self.config, observations, now=datetime(2026, 9, 21, tzinfo=timezone.utc))
+        self.assertEqual(payload["market_reaction"]["status"], "mixed")
+        self.assertEqual(payload["status"], "ready")
+
+    def test_macro_daily_series_retains_recent_rows(self) -> None:
+        rows = [{"date": f"2026-09-{day:02d}", "value": float(day)} for day in range(1, 27)]
+        summary = summarize_series({"id": "SP500", "frequency_hint": "daily"}, rows)
+        self.assertEqual(len(summary["recent_observations"]), 24)
+        self.assertEqual(summary["recent_observations"][-1]["date"], "2026-09-26")
 
     def test_old_event_is_historical_not_current_buy_filter(self) -> None:
         payload = build_radar(self.config, sample_observations(), now=datetime(2026, 10, 1, tzinfo=timezone.utc))
