@@ -30,6 +30,7 @@ const els = {
   marketStatusNote: document.querySelector("#marketStatusNote"),
   sentimentScore: document.querySelector("#sentimentScore"),
   sentimentNote: document.querySelector("#sentimentNote"),
+  policyEventPanel: document.querySelector("#policyEventPanel"),
   executableCount: document.querySelector("#executableCount"),
   trialEntryCount: document.querySelector("#trialEntryCount"),
   waitEntryCount: document.querySelector("#waitEntryCount"),
@@ -54,6 +55,7 @@ const els = {
 };
 
 const DASHBOARD_REPORT_TARGETS = [
+  { kind: "policy-event-radar", label: "最近一篇政策事件报告" },
   { kind: "market-sentiment", label: "最近一篇市场情绪报告" },
   { kind: "cross-market-intelligence", label: "最近一篇跨市场情报报告" },
   { kind: "secondary-queue", label: "最近一篇二次分析队列报告" },
@@ -731,7 +733,26 @@ function renderDecisionDashboard() {
   if (els.dataGapCount) els.dataGapCount.textContent = countLabel(metrics.dataGap);
   if (els.latestReportTime) els.latestReportTime.textContent = metrics.latestTime;
   if (els.pendingReviewCount) els.pendingReviewCount.textContent = countLabel(metrics.pendingReview);
+  renderPolicyEventPanel();
   renderDashboardReports();
+}
+
+function renderPolicyEventPanel() {
+  if (!els.policyEventPanel) return;
+  const data = state.archive?.policy_event;
+  const title = document.createElement("strong");
+  title.textContent = "政策预期差 · 会后验证";
+  const note = document.createElement("p");
+  if (!data || typeof data !== "object" || !data.event_date) {
+    els.policyEventPanel.dataset.status = "unknown";
+    note.textContent = "等待可追溯的会前预期、政策决定与会后市场数据；不按加息或降息方向直接选股。";
+  } else {
+    const historical = data.current_relevance === "historical";
+    els.policyEventPanel.dataset.status = historical ? "historical" : data.status === "ready" ? "ready" : "limited";
+    const prefix = historical ? "历史复盘 · " : "近期事件 · ";
+    note.textContent = `${prefix}${data.event_date}：${data.summary || "证据待确认"} 不自动升级任何股票的买入资格。`;
+  }
+  els.policyEventPanel.replaceChildren(title, note);
 }
 
 function gapCountLabel(value) {

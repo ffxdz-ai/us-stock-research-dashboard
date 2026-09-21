@@ -37,6 +37,7 @@ DEFAULT_CROSS_MARKET_PATH = ROOT / "docs" / "data" / "cross_market_intelligence.
 DEFAULT_SECONDARY_QUEUE_PATH = ROOT / "docs" / "data" / "secondary_analysis_queue.json"
 DEFAULT_FREE_DATA_FALLBACK_PATH = ROOT / "docs" / "data" / "free_data_fallback.json"
 DEFAULT_MARKET_SENTIMENT_PATH = ROOT / "docs" / "data" / "market_sentiment.json"
+DEFAULT_POLICY_EVENT_PATH = ROOT / "docs" / "data" / "policy_event_radar.json"
 
 PRIVATE_SECTION_MARKERS = (
     "持仓输入",
@@ -91,6 +92,7 @@ KIND_LABELS = {
     "free-data-fallback": "免费数据源",
     "macro-regime": "宏观雷达",
     "market-sentiment": "市场情绪",
+    "policy-event-radar": "政策事件",
     "fmp-research": "FMP预期",
     "secondary-queue": "二次分析队列",
     "daily": "每日分析",
@@ -105,6 +107,7 @@ ONE_REPORT_PER_DAY_KINDS = {
     "free-data-fallback",
     "macro-regime",
     "market-sentiment",
+    "policy-event-radar",
     "fmp-research",
     "secondary-queue",
 }
@@ -152,6 +155,8 @@ def report_kind(name: str) -> str:
         return "macro-regime"
     if "market-sentiment" in lowered or "market_sentiment" in lowered:
         return "market-sentiment"
+    if "policy-event-radar" in lowered or "policy_event_radar" in lowered:
+        return "policy-event-radar"
     if "fmp-research" in lowered or "fmp_research" in lowered:
         return "fmp-research"
     if "secondary-analysis" in lowered or "secondary_analysis" in lowered:
@@ -1735,6 +1740,24 @@ def derive_market_sentiment_summary() -> dict[str, Any] | None:
     }
 
 
+def derive_policy_event_summary() -> dict[str, Any] | None:
+    payload = load_json_file(DEFAULT_POLICY_EVENT_PATH)
+    if not payload:
+        return None
+    return {
+        "generated_at": payload.get("generated_at"),
+        "event_date": payload.get("event_date"),
+        "name": payload.get("name"),
+        "status": payload.get("status"),
+        "current_relevance": payload.get("current_relevance"),
+        "summary": payload.get("summary"),
+        "surprise": payload.get("surprise") or {},
+        "path": payload.get("path") or {},
+        "market_reaction": payload.get("market_reaction") or {},
+        "data_gaps": payload.get("data_gaps") or [],
+    }
+
+
 def build_split_index(payload: dict[str, Any]) -> dict[str, Any]:
     index_payload = {
         key: value
@@ -1826,6 +1849,9 @@ def build_archive(output: Path, limit: int = 80, merge_existing: bool = True) ->
     market_sentiment = derive_market_sentiment_summary()
     if market_sentiment:
         payload["market_sentiment"] = market_sentiment
+    policy_event = derive_policy_event_summary()
+    if policy_event:
+        payload["policy_event"] = policy_event
     return payload
 
 

@@ -972,6 +972,7 @@ h1 {
 
 .metric-card,
 .dashboard-report-card,
+.policy-event-panel,
 .gap-card,
 .gap-category,
 .health-card,
@@ -988,6 +989,20 @@ h1 {
   min-height: 128px;
   overflow: hidden;
 }
+
+.policy-event-panel {
+  margin-top: 16px;
+  padding: 14px 18px;
+  border: 1px solid rgba(135, 167, 178, 0.22);
+  border-left: 3px solid #fbbf24;
+  border-radius: 12px;
+  background: linear-gradient(180deg, rgba(18, 33, 43, 0.92), rgba(11, 22, 30, 0.94));
+}
+
+.policy-event-panel[data-status="ready"] { border-left-color: #22d3ee; }
+.policy-event-panel[data-status="historical"] { border-left-color: #94a3b8; }
+.policy-event-panel strong { color: #e7f7fa; font-size: 14px; }
+.policy-event-panel p { margin: 6px 0 0; color: #a9bfca; line-height: 1.55; }
 
 .metric-card::before {
   content: "";

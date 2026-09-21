@@ -33,6 +33,7 @@ DEFAULT_FREE_DATA_FALLBACK = DATA_DIR / "latest_free_data_fallback.json"
 DEFAULT_MACRO_REGIME = DATA_DIR / "latest_macro_regime.json"
 DEFAULT_FMP_RESEARCH = DATA_DIR / "latest_fmp_research.json"
 DEFAULT_MARKET_SENTIMENT = DATA_DIR / "latest_market_sentiment.json"
+DEFAULT_POLICY_EVENT = DATA_DIR / "latest_policy_event_radar.json"
 DEFAULT_API_URL = "https://api.deepseek.com/chat/completions"
 DEFAULT_MODEL = "deepseek-v4-pro"
 
@@ -622,6 +623,23 @@ def compact_market_sentiment(market_sentiment: dict[str, Any]) -> dict[str, Any]
     }
 
 
+def compact_policy_event(policy_event: dict[str, Any]) -> dict[str, Any]:
+    if not policy_event:
+        return {}
+    return {
+        "event_date": policy_event.get("event_date"),
+        "current_relevance": policy_event.get("current_relevance"),
+        "summary": policy_event.get("summary"),
+        "expectation": policy_event.get("expectation") or {},
+        "decision": policy_event.get("decision") or {},
+        "surprise": policy_event.get("surprise") or {},
+        "path": policy_event.get("path") or {},
+        "market_reaction": policy_event.get("market_reaction") or {},
+        "data_gaps": policy_event.get("data_gaps") or [],
+        "rule": "政策结果与会前预期、利率路径和会后市场确认分开判断；不因加息/降息方向或单日反弹自动升级个股买入资格。",
+    }
+
+
 def prepare_public_context(
     compact: dict[str, Any],
     pack: dict[str, Any],
@@ -634,6 +652,7 @@ def prepare_public_context(
     macro_regime: dict[str, Any],
     fmp_research: dict[str, Any],
     market_sentiment: dict[str, Any],
+    policy_event: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     """Drop private portfolio fields before sending context to DeepSeek."""
     market = compact.get("market") if isinstance(compact.get("market"), dict) else pack.get("market", {})
@@ -668,6 +687,7 @@ def prepare_public_context(
         "market": market,
         "macro_regime": compact_macro_regime(macro_regime),
         "market_sentiment": compact_market_sentiment(market_sentiment),
+        "policy_event": compact_policy_event(policy_event or {}),
         "fmp_research": compact_fmp_research(fmp_research),
         "prescreen": compact.get("prescreen", {}),
         "candidate_limit_note": "候选池为机械预筛和公开数据压缩输入；模型必须重新审查，不得把机械分数当作最终结论。",
@@ -749,6 +769,7 @@ def build_focus_brief(context: dict[str, Any]) -> str:
     review = context.get("opportunity_review_metrics") if isinstance(context.get("opportunity_review_metrics"), dict) else {}
     fmp = context.get("fmp_research") if isinstance(context.get("fmp_research"), dict) else {}
     sentiment = context.get("market_sentiment") if isinstance(context.get("market_sentiment"), dict) else {}
+    policy_event = context.get("policy_event") if isinstance(context.get("policy_event"), dict) else {}
 
     buyable_count = len(context.get("mechanical_buyable_now") or [])
     deepseek_priority = queue.get("deepseek_priority") if isinstance(queue.get("deepseek_priority"), list) else []
@@ -788,6 +809,7 @@ def build_focus_brief(context: dict[str, Any]) -> str:
         "|---|---|",
         f"| 总判断 | {macro_label}；{action_line} |",
         f"| 市场情绪 | {sentiment_label}；情绪分 {sentiment_score}/100；{sentiment_stance} |",
+        f"| 政策预期差 | {policy_event.get('summary') or '会前预期/会后验证待确认；不按加息或降息方向直接选股。'} |",
         f"| 市场快照 | {index_line} |",
         f"| 交易纪律 | 二次分析活跃 {active_count} 个；本轮退回观察 {retreated} 个；正式 R/R 不达 {load_risk_policy().formal_min_rr:.1f}:1 的标的不能正式买入。 |",
         f"| 机会发现 | 需求加速主题 {cross_summary.get('accelerating_theme_count', 0)} 个；跨市场信号 {cross_summary.get('cross_market_signal_count', 0)} 个；二次研究候选 {cross_summary.get('secondary_research_candidate_count', 0)} 个。 |",
@@ -853,6 +875,7 @@ def build_user_prompt(context: dict[str, Any], mode: str) -> str:
 - 必须先阅读 macro_regime：按经济周期、政策利率、通胀、流动性、风险偏好判断今天是进攻、平衡还是防守。
 - 如果 macro_regime.fred_enabled 为 true，宏观部分必须引用 FRED 指标的数据日期；如果缺失，则明确“宏观 FRED 数据不足”。
 - 必须阅读 market_sentiment：引用情绪分、Risk-on/Risk-off/Neutral 状态和主要拖累/支撑；但必须声明情绪只决定进攻/防守倾向，不能替代单股 R/R。
+- 必须阅读 policy_event：分别判断决定相对会前预期、后续利率路径以及会后两交易日的指数/美债/油价验证。不得把“加息必跌”“降息必涨”或“利空出尽”当成自动买入信号；数据缺口必须写明，历史事件不得作为今日买入过滤器。
 - 必须阅读 fmp_research：把分析师预期、目标价共识、财报 surprise 和评级快照作为“市场预期”输入，但不得把 FMP 目标价当作你的最终目标价。
 - 如果 fmp_research.data_availability 显示 transcript/news 端点受限，必须写明电话会/新闻正文未接入，不得编造管理层表述。
 - 对 secondary_analysis_queue.deepseek_priority 中的股票全部覆盖；如果数量较多，先用表格逐只给结论，再挑最重要标的展开。
@@ -1053,6 +1076,7 @@ def main() -> int:
     parser.add_argument("--macro-regime", type=Path, default=DEFAULT_MACRO_REGIME)
     parser.add_argument("--fmp-research", type=Path, default=DEFAULT_FMP_RESEARCH)
     parser.add_argument("--market-sentiment", type=Path, default=DEFAULT_MARKET_SENTIMENT)
+    parser.add_argument("--policy-event", type=Path, default=DEFAULT_POLICY_EVENT)
     parser.add_argument("--out-dir", type=Path, default=REPORTS_DIR)
     parser.add_argument("--dry-run", action="store_true", help="Write the sanitized prompt context without calling DeepSeek.")
     args = parser.parse_args()
@@ -1069,6 +1093,7 @@ def main() -> int:
     macro_regime = load_json(args.macro_regime, {})
     fmp_research = load_json(args.fmp_research, {})
     market_sentiment = load_json(args.market_sentiment, {})
+    policy_event = load_json(args.policy_event, {})
     context = prepare_public_context(
         compact,
         pack,
@@ -1081,6 +1106,7 @@ def main() -> int:
         macro_regime,
         fmp_research,
         market_sentiment,
+        policy_event,
     )
     context_text = json.dumps(context, ensure_ascii=False, indent=2)
     validate_public_text(context_text)
