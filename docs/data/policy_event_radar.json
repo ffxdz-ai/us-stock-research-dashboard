@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-09-21T16:49:31+08:00",
-  "generated_label": "2026-09-21 16:49",
+  "generated_at": "2026-09-21T16:59:30+08:00",
+  "generated_label": "2026-09-21 16:59",
   "data_boundary": "政策事件只提供风险情境；不直接给股票买点、不放宽入场/止损/目标价及 R/R 门槛。",
   "status": "limited",
   "id": "fomc-2026-09-16",
@@ -43,11 +43,24 @@
     "surprise_bps": 0.0
   },
   "market_reaction": {
-    "status": "unknown",
-    "label": "会后两个交易日的收盘数据不足",
-    "window": null,
-    "indices": {},
-    "cross_assets": {},
+    "status": "provisional_mixed",
+    "label": "会后首日初步验证：主要指数反应分化，不能概括为全面利好；第二日同口径数据待确认",
+    "window": {
+      "start": "2026-09-15",
+      "end": "2026-09-17",
+      "sessions_after_event": 1,
+      "complete": false
+    },
+    "indices": {
+      "SP500": 0.69,
+      "NASDAQCOM": 1.68,
+      "DJIA": -0.6
+    },
+    "cross_assets": {
+      "DGS2_change_bps": 0.0,
+      "DGS10_change_bps": -6.0,
+      "WTI_change_pct": null
+    },
     "source": "FRED",
     "source_urls": {
       "SP500": "https://fred.stlouisfed.org/series/SP500",
@@ -57,11 +70,12 @@
       "DGS10": "https://fred.stlouisfed.org/series/DGS10",
       "DCOILWTICO": "https://fred.stlouisfed.org/series/DCOILWTICO"
     },
-    "confidence": "low"
+    "confidence": "medium"
   },
-  "summary": "利率决定符合会前预期；年末利率路径上修；会后两个交易日的收盘数据不足。会后价格反应需要和收益率、油价及个股证据一同复核。",
+  "summary": "利率决定符合会前预期；年末利率路径上修；会后首日初步验证：主要指数反应分化，不能概括为全面利好；第二日同口径数据待确认。会后价格反应需要和收益率、油价及个股证据一同复核。",
   "data_gaps": [
-    "会前与会后两个交易日的 FRED 收盘数据不足"
+    "会后第二交易日的标普收盘值尚未齐备；当前仅是首日初步验证",
+    "会后美债收益率或 WTI 观察值尚未齐备，跨资产确认不完整"
   ],
   "source_note": "FRED 为公开日收盘观察值，不能识别日内政策因果；SP500/NASDAQCOM/DJIA 仅是指数参与度代理，不是真实涨跌家数。"
 }

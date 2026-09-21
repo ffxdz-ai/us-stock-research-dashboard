@@ -21,8 +21,8 @@
     "eod_max_age_days": 4,
     "fallback_execution_allowed": false
   },
-  "generated_at": "2026-09-21T16:51:06+08:00",
-  "generated_label": "2026-09-21 16:51",
+  "generated_at": "2026-09-21T17:02:26+08:00",
+  "generated_label": "2026-09-21 17:02",
   "data_boundary": {
     "role": "event, filing, earnings and evidence extraction; not trading instruction",
     "private_portfolio": "disabled",
@@ -30,13 +30,13 @@
   },
   "summary": {
     "symbol_count": 24,
-    "high_quality_evidence_count": 1,
-    "usable_evidence_count": 10,
-    "gap_count": 32,
-    "data_gap_count": 26,
+    "high_quality_evidence_count": 2,
+    "usable_evidence_count": 9,
+    "gap_count": 19,
+    "data_gap_count": 16,
     "entry_path_missing_count": 0,
     "rr_discipline_count": 3,
-    "permission_gap_count": 6,
+    "permission_gap_count": 3,
     "sec_fallback_used_count": 9
   },
   "cards": [
@@ -48,7 +48,7 @@
         "GPU / ASIC / HBM / 先进封装"
       ],
       "evidence_status": "证据较完整",
-      "evidence_score": 90.4,
+      "evidence_score": 82.5,
       "filing": {
         "available": true,
         "form": "8-K",
@@ -76,22 +76,22 @@
       },
       "fmp": {
         "available": true,
-        "coverage_status": "ok",
-        "expectation_score": 84.0,
-        "price_target_upside_pct": 54.05,
-        "eps_revision_pct": 0.0,
-        "revenue_revision_pct": 0.0,
-        "eps_surprise_pct": 6.22,
-        "rating": "A-",
+        "coverage_status": "stale",
+        "expectation_score": 57.0,
+        "price_target_upside_pct": 54.04,
+        "eps_revision_pct": null,
+        "revenue_revision_pct": null,
+        "eps_surprise_pct": null,
+        "rating": null,
         "annual_eps_estimate": 21.34756,
         "annual_revenue_estimate": 915079288987,
-        "score": 96.0,
+        "score": 63.0,
         "gaps": [],
-        "fallback_used": null
+        "fallback_used": "Alpha Vantage"
       },
       "price": {
         "available": true,
-        "price": 224.0892,
+        "price": 224.0992,
         "quote_time": "2026-09-19T04:00:00+08:00",
         "currency": null,
         "reward_risk": 2.08,
@@ -113,7 +113,7 @@
         "strict_entry": 204.98,
         "invalidation": 189.8,
         "mechanical_target": 236.54,
-        "starter_entry": 225.21,
+        "starter_entry": 225.22,
         "starter_stop": 212.31,
         "starter_target": 243.64,
         "starter_reward_risk": 1.43,
@@ -146,8 +146,8 @@
         "GPU / ASIC / HBM / 先进封装",
         "AI 光模块 / CPO / 数据中心网络"
       ],
-      "evidence_status": "证据可用但需补强",
-      "evidence_score": 75.4,
+      "evidence_status": "证据较完整",
+      "evidence_score": 79.6,
       "filing": {
         "available": true,
         "form": "10-Q",
@@ -174,8 +174,8 @@
         "score": 89.3
       },
       "fmp": {
-        "available": false,
-        "coverage_status": "restricted",
+        "available": true,
+        "coverage_status": "rate_limited",
         "expectation_score": null,
         "price_target_upside_pct": null,
         "eps_revision_pct": null,
@@ -185,16 +185,12 @@
         "annual_eps_estimate": null,
         "annual_revenue_estimate": null,
         "score": 35.0,
-        "gaps": [
-          "缺少年/季度分析师预期",
-          "缺少最近财报 surprise",
-          "FMP 部分端点受限：/analyst-estimates、/earnings、/price-target-consensus"
-        ],
-        "fallback_used": null
+        "gaps": [],
+        "fallback_used": "Alpha Vantage"
       },
       "price": {
         "available": true,
-        "price": 250.25,
+        "price": 250.41,
         "quote_time": "2026-09-19T04:00:00+08:00",
         "currency": null,
         "reward_risk": 11.81,
@@ -215,10 +211,10 @@
         "strict_entry": 175.93,
         "invalidation": 162.9,
         "mechanical_target": 329.88,
-        "starter_entry": 251.5,
-        "starter_stop": 230.23,
+        "starter_entry": 251.66,
+        "starter_stop": 230.38,
         "starter_target": 339.78,
-        "starter_reward_risk": 4.15,
+        "starter_reward_risk": 4.14,
         "starter_buyable": false,
         "breakout_trigger": 255.87,
         "breakout_stop": 237.96,
@@ -235,11 +231,197 @@
         "score": 100.0
       },
       "sec_fallback_used": false,
-      "gaps": [
-        "缺少年/季度分析师预期",
-        "缺少最近财报 surprise",
-        "FMP 部分端点受限：/analyst-estimates、/earnings、/price-target-consensus"
+      "gaps": [],
+      "action": "可交给 Buy-Side 做完整估值与入场路径复核。"
+    },
+    {
+      "code": "US.ANET",
+      "symbol": "ANET",
+      "name": "Arista Networks, Inc.",
+      "themes": [
+        "AI 光模块 / CPO / 数据中心网络"
       ],
+      "evidence_status": "证据可用但需补强",
+      "evidence_score": 75.0,
+      "filing": {
+        "available": true,
+        "form": "10-Q",
+        "filed": "2026-08-05",
+        "age_days": 47,
+        "accession": "0001596532-26-000175",
+        "recent_forms": [
+          "10-Q",
+          "8-K",
+          "8-K",
+          "10-Q",
+          "8-K"
+        ],
+        "score": 72
+      },
+      "financials": {
+        "available": true,
+        "revenue_growth_yoy": 0.286,
+        "net_margin": 0.3899,
+        "liabilities_to_assets": 0.3762,
+        "latest_annual_revenue": 9005700000,
+        "latest_annual_revenue_filed": "2026-02-17",
+        "latest_annual_fcf": 4356149000.0,
+        "score": 84.5
+      },
+      "fmp": {
+        "available": true,
+        "coverage_status": "rate_limited",
+        "expectation_score": null,
+        "price_target_upside_pct": null,
+        "eps_revision_pct": null,
+        "revenue_revision_pct": null,
+        "eps_surprise_pct": null,
+        "rating": null,
+        "annual_eps_estimate": null,
+        "annual_revenue_estimate": null,
+        "score": 35.0,
+        "gaps": [],
+        "fallback_used": "Alpha Vantage"
+      },
+      "price": {
+        "available": true,
+        "price": 203.49,
+        "quote_time": "2026-09-19T04:00:00+08:00",
+        "currency": null,
+        "reward_risk": 3.86,
+        "entry_path_complete": true,
+        "entry_path_fallback": null,
+        "trend_score": 88.0,
+        "entry_score": 95.7,
+        "data_confidence": 0.8075,
+        "price_freshness": "fresh",
+        "execution_allowed": true,
+        "technical_data_complete": true,
+        "future_function_audit": "PASS",
+        "gate_failures": [
+          "opportunity_score_below_threshold",
+          "crowding_score_above_threshold"
+        ],
+        "source": "Futu OpenD authenticated bridge",
+        "strict_entry": 167.12,
+        "invalidation": 154.74,
+        "mechanical_target": 214.89,
+        "starter_entry": 204.51,
+        "starter_stop": 188.0,
+        "starter_target": 221.34,
+        "starter_reward_risk": 1.02,
+        "starter_buyable": false,
+        "breakout_trigger": 207.16,
+        "breakout_stop": 192.66,
+        "breakout_target": 225.63,
+        "breakout_reward_risk": 1.27,
+        "breakout_buyable": false,
+        "entry_path_type": "wait",
+        "ma20": 193.8155,
+        "ma50": 187.5296,
+        "ma200": 155.1138,
+        "high20": 206.13,
+        "high60": 214.89,
+        "high252": 214.89,
+        "score": 100.0
+      },
+      "sec_fallback_used": false,
+      "gaps": [],
+      "action": "保留观察，等待财务、价格或事件证据补强。"
+    },
+    {
+      "code": "US.LITE",
+      "symbol": "LITE",
+      "name": "Lumentum Holdings Inc.",
+      "themes": [
+        "AI 光模块 / CPO / 数据中心网络"
+      ],
+      "evidence_status": "证据可用但需补强",
+      "evidence_score": 70.7,
+      "filing": {
+        "available": true,
+        "form": "10-K",
+        "filed": "2026-08-17",
+        "age_days": 35,
+        "accession": "0001628280-26-057358",
+        "recent_forms": [
+          "10-K",
+          "8-K",
+          "8-K",
+          "8-K",
+          "10-Q"
+        ],
+        "score": 90
+      },
+      "financials": {
+        "available": true,
+        "revenue_growth_yoy": 0.8322,
+        "net_margin": -2.301,
+        "liabilities_to_assets": 0.3645,
+        "latest_annual_revenue": 3014000000,
+        "latest_annual_revenue_filed": "2026-08-17",
+        "latest_annual_fcf": 300100000.0,
+        "score": 61.0
+      },
+      "fmp": {
+        "available": true,
+        "coverage_status": "rate_limited",
+        "expectation_score": null,
+        "price_target_upside_pct": null,
+        "eps_revision_pct": null,
+        "revenue_revision_pct": null,
+        "eps_surprise_pct": null,
+        "rating": null,
+        "annual_eps_estimate": null,
+        "annual_revenue_estimate": null,
+        "score": 35.0,
+        "gaps": [],
+        "fallback_used": "Alpha Vantage"
+      },
+      "price": {
+        "available": true,
+        "price": 953.9,
+        "quote_time": "2026-09-19T04:00:00+08:00",
+        "currency": null,
+        "reward_risk": 9.31,
+        "entry_path_complete": true,
+        "entry_path_fallback": null,
+        "trend_score": 76.0,
+        "entry_score": 92.1,
+        "data_confidence": 0.8075,
+        "price_freshness": "fresh",
+        "execution_allowed": true,
+        "technical_data_complete": true,
+        "future_function_audit": "PASS",
+        "gate_failures": [
+          "opportunity_score_below_threshold",
+          "crowding_score_above_threshold"
+        ],
+        "source": "Futu OpenD authenticated bridge",
+        "strict_entry": 642.43,
+        "invalidation": 594.84,
+        "mechanical_target": 1085.68,
+        "starter_entry": 958.67,
+        "starter_stop": 877.59,
+        "starter_target": 1118.25,
+        "starter_reward_risk": 1.97,
+        "starter_buyable": false,
+        "breakout_trigger": 1031.89,
+        "breakout_stop": 959.66,
+        "breakout_target": 1139.96,
+        "breakout_reward_risk": 1.5,
+        "breakout_buyable": false,
+        "entry_path_type": "wait",
+        "ma20": 900.1843,
+        "ma50": 841.7723,
+        "ma200": 713.7278,
+        "high20": 1026.76,
+        "high60": 1026.76,
+        "high252": 1085.68,
+        "score": 95.0
+      },
+      "sec_fallback_used": false,
+      "gaps": [],
       "action": "保留观察，等待财务、价格或事件证据补强。"
     },
     {
@@ -250,7 +432,7 @@
         "GPU / ASIC / HBM / 先进封装"
       ],
       "evidence_status": "证据可用但需补强",
-      "evidence_score": 72.1,
+      "evidence_score": 70.6,
       "filing": {
         "available": true,
         "form": "8-K",
@@ -278,22 +460,22 @@
       },
       "fmp": {
         "available": true,
-        "coverage_status": "ok",
-        "expectation_score": 45.0,
-        "price_target_upside_pct": 4.19,
-        "eps_revision_pct": 0.0,
-        "revenue_revision_pct": 0.0,
-        "eps_surprise_pct": 2.47,
-        "rating": "B",
+        "coverage_status": "stale",
+        "expectation_score": 39.0,
+        "price_target_upside_pct": 4.18,
+        "eps_revision_pct": null,
+        "revenue_revision_pct": null,
+        "eps_surprise_pct": null,
+        "rating": null,
         "annual_eps_estimate": 22.87474,
         "annual_revenue_estimate": 123068458707,
-        "score": 45.0,
+        "score": 39.0,
         "gaps": [],
-        "fallback_used": null
+        "fallback_used": "Alpha Vantage"
       },
       "price": {
         "available": true,
-        "price": 574.1637,
+        "price": 574.25,
         "quote_time": "2026-09-19T04:00:00+08:00",
         "currency": null,
         "reward_risk": 2.64,
@@ -316,8 +498,8 @@
         "strict_entry": 397.18,
         "invalidation": 326.25,
         "mechanical_target": 584.73,
-        "starter_entry": 577.03,
-        "starter_stop": 528.23,
+        "starter_entry": 577.12,
+        "starter_stop": 528.31,
         "starter_target": 602.27,
         "starter_reward_risk": 0.52,
         "starter_buyable": false,
@@ -338,210 +520,6 @@
       "sec_fallback_used": false,
       "gaps": [
         "R/R 未达 3.0:1，不能进入正式买入"
-      ],
-      "action": "保留观察，等待财务、价格或事件证据补强。"
-    },
-    {
-      "code": "US.ANET",
-      "symbol": "ANET",
-      "name": "Arista Networks, Inc.",
-      "themes": [
-        "AI 光模块 / CPO / 数据中心网络"
-      ],
-      "evidence_status": "证据可用但需补强",
-      "evidence_score": 70.8,
-      "filing": {
-        "available": true,
-        "form": "10-Q",
-        "filed": "2026-08-05",
-        "age_days": 47,
-        "accession": "0001596532-26-000175",
-        "recent_forms": [
-          "10-Q",
-          "8-K",
-          "8-K",
-          "10-Q",
-          "8-K"
-        ],
-        "score": 72
-      },
-      "financials": {
-        "available": true,
-        "revenue_growth_yoy": 0.286,
-        "net_margin": 0.3899,
-        "liabilities_to_assets": 0.3762,
-        "latest_annual_revenue": 9005700000,
-        "latest_annual_revenue_filed": "2026-02-17",
-        "latest_annual_fcf": 4356149000.0,
-        "score": 84.5
-      },
-      "fmp": {
-        "available": false,
-        "coverage_status": "restricted",
-        "expectation_score": null,
-        "price_target_upside_pct": null,
-        "eps_revision_pct": null,
-        "revenue_revision_pct": null,
-        "eps_surprise_pct": null,
-        "rating": null,
-        "annual_eps_estimate": null,
-        "annual_revenue_estimate": null,
-        "score": 35.0,
-        "gaps": [
-          "缺少年/季度分析师预期",
-          "缺少最近财报 surprise",
-          "FMP 部分端点受限：/analyst-estimates、/earnings、/price-target-consensus"
-        ],
-        "fallback_used": null
-      },
-      "price": {
-        "available": true,
-        "price": 203.16,
-        "quote_time": "2026-09-19T04:00:00+08:00",
-        "currency": null,
-        "reward_risk": 3.86,
-        "entry_path_complete": true,
-        "entry_path_fallback": null,
-        "trend_score": 88.0,
-        "entry_score": 95.7,
-        "data_confidence": 0.95,
-        "price_freshness": "fresh",
-        "execution_allowed": true,
-        "technical_data_complete": true,
-        "future_function_audit": "PASS",
-        "gate_failures": [
-          "opportunity_score_below_threshold",
-          "crowding_score_above_threshold"
-        ],
-        "source": "Futu OpenD authenticated bridge",
-        "strict_entry": 167.12,
-        "invalidation": 154.74,
-        "mechanical_target": 214.89,
-        "starter_entry": 204.18,
-        "starter_stop": 188.0,
-        "starter_target": 221.34,
-        "starter_reward_risk": 1.06,
-        "starter_buyable": false,
-        "breakout_trigger": 207.16,
-        "breakout_stop": 192.66,
-        "breakout_target": 225.63,
-        "breakout_reward_risk": 1.27,
-        "breakout_buyable": false,
-        "entry_path_type": "wait",
-        "ma20": 193.8155,
-        "ma50": 187.5296,
-        "ma200": 155.1138,
-        "high20": 206.13,
-        "high60": 214.89,
-        "high252": 214.89,
-        "score": 100.0
-      },
-      "sec_fallback_used": false,
-      "gaps": [
-        "缺少年/季度分析师预期",
-        "缺少最近财报 surprise",
-        "FMP 部分端点受限：/analyst-estimates、/earnings、/price-target-consensus"
-      ],
-      "action": "保留观察，等待财务、价格或事件证据补强。"
-    },
-    {
-      "code": "US.LITE",
-      "symbol": "LITE",
-      "name": "Lumentum Holdings Inc.",
-      "themes": [
-        "AI 光模块 / CPO / 数据中心网络"
-      ],
-      "evidence_status": "证据可用但需补强",
-      "evidence_score": 67.9,
-      "filing": {
-        "available": true,
-        "form": "10-K",
-        "filed": "2026-08-17",
-        "age_days": 35,
-        "accession": "0001628280-26-057358",
-        "recent_forms": [
-          "10-K",
-          "8-K",
-          "8-K",
-          "8-K",
-          "10-Q"
-        ],
-        "score": 90
-      },
-      "financials": {
-        "available": true,
-        "revenue_growth_yoy": 0.8322,
-        "net_margin": -2.301,
-        "liabilities_to_assets": 0.3645,
-        "latest_annual_revenue": 3014000000,
-        "latest_annual_revenue_filed": "2026-08-17",
-        "latest_annual_fcf": 300100000.0,
-        "score": 61.0
-      },
-      "fmp": {
-        "available": false,
-        "coverage_status": "rate_limited",
-        "expectation_score": null,
-        "price_target_upside_pct": null,
-        "eps_revision_pct": null,
-        "revenue_revision_pct": null,
-        "eps_surprise_pct": null,
-        "rating": null,
-        "annual_eps_estimate": null,
-        "annual_revenue_estimate": null,
-        "score": 35.0,
-        "gaps": [
-          "缺少年/季度分析师预期",
-          "缺少最近财报 surprise"
-        ],
-        "fallback_used": null
-      },
-      "price": {
-        "available": true,
-        "price": 954.14,
-        "quote_time": "2026-09-19T04:00:00+08:00",
-        "currency": null,
-        "reward_risk": 9.31,
-        "entry_path_complete": true,
-        "entry_path_fallback": null,
-        "trend_score": 76.0,
-        "entry_score": 92.1,
-        "data_confidence": 0.8075,
-        "price_freshness": "fresh",
-        "execution_allowed": true,
-        "technical_data_complete": true,
-        "future_function_audit": "PASS",
-        "gate_failures": [
-          "opportunity_score_below_threshold",
-          "crowding_score_above_threshold"
-        ],
-        "source": "Futu OpenD authenticated bridge",
-        "strict_entry": 642.43,
-        "invalidation": 594.84,
-        "mechanical_target": 1085.68,
-        "starter_entry": 958.91,
-        "starter_stop": 877.81,
-        "starter_target": 1118.25,
-        "starter_reward_risk": 1.96,
-        "starter_buyable": false,
-        "breakout_trigger": 1031.89,
-        "breakout_stop": 959.66,
-        "breakout_target": 1139.96,
-        "breakout_reward_risk": 1.5,
-        "breakout_buyable": false,
-        "entry_path_type": "wait",
-        "ma20": 900.1843,
-        "ma50": 841.7723,
-        "ma200": 713.7278,
-        "high20": 1026.76,
-        "high60": 1026.76,
-        "high252": 1085.68,
-        "score": 95.0
-      },
-      "sec_fallback_used": false,
-      "gaps": [
-        "缺少年/季度分析师预期",
-        "缺少最近财报 surprise"
       ],
       "action": "保留观察，等待财务、价格或事件证据补强。"
     },
@@ -599,7 +577,7 @@
       },
       "price": {
         "available": true,
-        "price": 326.74,
+        "price": 327.26,
         "quote_time": "2026-09-19T04:00:00+08:00",
         "currency": null,
         "reward_risk": 11.42,
@@ -620,10 +598,10 @@
         "strict_entry": 238.33,
         "invalidation": 220.68,
         "mechanical_target": 440.0,
-        "starter_entry": 328.37,
-        "starter_stop": 300.6,
+        "starter_entry": 328.9,
+        "starter_stop": 301.08,
         "starter_target": 453.2,
-        "starter_reward_risk": 4.49,
+        "starter_reward_risk": 4.47,
         "starter_buyable": false,
         "breakout_trigger": 317.28,
         "breakout_stop": 295.07,
@@ -645,6 +623,198 @@
         "缺少最近财报 surprise"
       ],
       "action": "保留观察，等待财务、价格或事件证据补强。"
+    },
+    {
+      "code": "US.AVGO",
+      "symbol": "AVGO",
+      "name": "Broadcom Inc.",
+      "themes": [
+        "GPU / ASIC / HBM / 先进封装"
+      ],
+      "evidence_status": "证据可用但需补强",
+      "evidence_score": 65.9,
+      "filing": {
+        "available": true,
+        "form": "10-Q",
+        "filed": "2026-09-10",
+        "age_days": 11,
+        "accession": "0001730168-26-000080",
+        "recent_forms": [
+          "10-Q",
+          "8-K",
+          "8-K",
+          "8-K",
+          "8-K"
+        ],
+        "score": 90
+      },
+      "financials": {
+        "available": true,
+        "revenue_growth_yoy": 0.2387,
+        "net_margin": 0.362,
+        "liabilities_to_assets": 0.4702,
+        "latest_annual_revenue": 63887000000,
+        "latest_annual_revenue_filed": "2025-12-18",
+        "latest_annual_fcf": 26914000000.0,
+        "score": 79.8
+      },
+      "fmp": {
+        "available": true,
+        "coverage_status": "rate_limited",
+        "expectation_score": null,
+        "price_target_upside_pct": null,
+        "eps_revision_pct": null,
+        "revenue_revision_pct": null,
+        "eps_surprise_pct": null,
+        "rating": null,
+        "annual_eps_estimate": null,
+        "annual_revenue_estimate": null,
+        "score": 35.0,
+        "gaps": [],
+        "fallback_used": "Alpha Vantage"
+      },
+      "price": {
+        "available": true,
+        "price": 363.0,
+        "quote_time": "2026-09-19T04:00:00+08:00",
+        "currency": null,
+        "reward_risk": 10.92,
+        "entry_path_complete": true,
+        "entry_path_fallback": null,
+        "trend_score": 20.0,
+        "entry_score": 64.2,
+        "data_confidence": 0.95,
+        "price_freshness": "fresh",
+        "execution_allowed": true,
+        "technical_data_complete": true,
+        "future_function_audit": "PASS",
+        "gate_failures": [
+          "opportunity_score_below_threshold",
+          "trend_score_below_threshold",
+          "crowding_score_above_threshold"
+        ],
+        "source": "Futu OpenD authenticated bridge",
+        "strict_entry": 352.61,
+        "invalidation": 339.57,
+        "mechanical_target": 495.0,
+        "starter_entry": 364.81,
+        "starter_stop": 356.97,
+        "starter_target": 509.85,
+        "starter_reward_risk": 18.49,
+        "starter_buyable": false,
+        "breakout_trigger": 378.47,
+        "breakout_stop": 351.98,
+        "breakout_target": 519.75,
+        "breakout_reward_risk": 5.33,
+        "breakout_buyable": false,
+        "entry_path_type": "wait",
+        "ma20": 359.3177,
+        "ma50": 379.7549,
+        "ma200": 369.0967,
+        "high20": 376.59,
+        "high60": 432.73,
+        "high252": 495.0,
+        "score": 45.0
+      },
+      "sec_fallback_used": false,
+      "gaps": [],
+      "action": "保留观察，等待财务、价格或事件证据补强。"
+    },
+    {
+      "code": "US.FLEX",
+      "symbol": "FLEX",
+      "name": "FLEX LTD.",
+      "themes": [
+        "高速 PCB / 覆铜板 / 电子布 / 铜箔"
+      ],
+      "evidence_status": "证据可用但需补强",
+      "evidence_score": 63.0,
+      "filing": {
+        "available": true,
+        "form": "8-K",
+        "filed": "2026-09-15",
+        "age_days": 6,
+        "accession": "0000866374-26-000036",
+        "recent_forms": [
+          "8-K",
+          "8-K",
+          "8-K",
+          "10-Q",
+          "8-K"
+        ],
+        "score": 90
+      },
+      "financials": {
+        "available": true,
+        "revenue_growth_yoy": 0.0814,
+        "net_margin": 0.0315,
+        "liabilities_to_assets": 0.7817,
+        "latest_annual_revenue": 27914000000,
+        "latest_annual_revenue_filed": "2026-05-20",
+        "latest_annual_fcf": 1052000000.0,
+        "score": 52.3
+      },
+      "fmp": {
+        "available": true,
+        "coverage_status": "rate_limited",
+        "expectation_score": null,
+        "price_target_upside_pct": null,
+        "eps_revision_pct": null,
+        "revenue_revision_pct": null,
+        "eps_surprise_pct": null,
+        "rating": null,
+        "annual_eps_estimate": null,
+        "annual_revenue_estimate": null,
+        "score": 35.0,
+        "gaps": [],
+        "fallback_used": "Alpha Vantage"
+      },
+      "price": {
+        "available": true,
+        "price": 110.43,
+        "quote_time": "2026-09-19T03:59:59+08:00",
+        "currency": null,
+        "reward_risk": 7.57,
+        "entry_path_complete": true,
+        "entry_path_fallback": null,
+        "trend_score": 42.0,
+        "entry_score": 80.3,
+        "data_confidence": 0.95,
+        "price_freshness": "fresh",
+        "execution_allowed": true,
+        "technical_data_complete": true,
+        "future_function_audit": "PASS",
+        "gate_failures": [
+          "opportunity_score_below_threshold",
+          "trend_score_below_threshold",
+          "crowding_score_above_threshold"
+        ],
+        "source": "Futu OpenD authenticated bridge",
+        "strict_entry": 107.36,
+        "invalidation": 99.5,
+        "mechanical_target": 166.86,
+        "starter_entry": 110.98,
+        "starter_stop": 109.83,
+        "starter_target": 171.87,
+        "starter_reward_risk": 52.91,
+        "starter_buyable": true,
+        "breakout_trigger": 118.27,
+        "breakout_stop": 109.99,
+        "breakout_target": 175.2,
+        "breakout_reward_risk": 6.88,
+        "breakout_buyable": false,
+        "entry_path_type": "starter",
+        "ma20": 109.798,
+        "ma50": 116.842,
+        "ma200": 97.231,
+        "high20": 117.68,
+        "high60": 165.8899,
+        "high252": 166.86,
+        "score": 69.0
+      },
+      "sec_fallback_used": false,
+      "gaps": [],
+      "action": "可进入试仓观察：已有入场/止损/目标/R/R，需小仓位并盘中确认。"
     },
     {
       "code": "US.PWR",
@@ -747,314 +917,6 @@
       "action": "保留观察，等待财务、价格或事件证据补强。"
     },
     {
-      "code": "US.AVGO",
-      "symbol": "AVGO",
-      "name": "Broadcom Inc.",
-      "themes": [
-        "GPU / ASIC / HBM / 先进封装"
-      ],
-      "evidence_status": "证据可用但需补强",
-      "evidence_score": 61.7,
-      "filing": {
-        "available": true,
-        "form": "10-Q",
-        "filed": "2026-09-10",
-        "age_days": 11,
-        "accession": "0001730168-26-000080",
-        "recent_forms": [
-          "10-Q",
-          "8-K",
-          "8-K",
-          "8-K",
-          "8-K"
-        ],
-        "score": 90
-      },
-      "financials": {
-        "available": true,
-        "revenue_growth_yoy": 0.2387,
-        "net_margin": 0.362,
-        "liabilities_to_assets": 0.4702,
-        "latest_annual_revenue": 63887000000,
-        "latest_annual_revenue_filed": "2025-12-18",
-        "latest_annual_fcf": 26914000000.0,
-        "score": 79.8
-      },
-      "fmp": {
-        "available": false,
-        "coverage_status": "rate_limited",
-        "expectation_score": null,
-        "price_target_upside_pct": null,
-        "eps_revision_pct": null,
-        "revenue_revision_pct": null,
-        "eps_surprise_pct": null,
-        "rating": null,
-        "annual_eps_estimate": null,
-        "annual_revenue_estimate": null,
-        "score": 35.0,
-        "gaps": [
-          "缺少年/季度分析师预期",
-          "缺少最近财报 surprise",
-          "FMP 部分端点受限：/analyst-estimates、/earnings、/price-target-consensus"
-        ],
-        "fallback_used": null
-      },
-      "price": {
-        "available": true,
-        "price": 362.93,
-        "quote_time": "2026-09-19T04:00:00+08:00",
-        "currency": null,
-        "reward_risk": 10.92,
-        "entry_path_complete": true,
-        "entry_path_fallback": null,
-        "trend_score": 20.0,
-        "entry_score": 64.2,
-        "data_confidence": 0.95,
-        "price_freshness": "fresh",
-        "execution_allowed": true,
-        "technical_data_complete": true,
-        "future_function_audit": "PASS",
-        "gate_failures": [
-          "opportunity_score_below_threshold",
-          "trend_score_below_threshold",
-          "crowding_score_above_threshold"
-        ],
-        "source": "Futu OpenD authenticated bridge",
-        "strict_entry": 352.61,
-        "invalidation": 339.57,
-        "mechanical_target": 495.0,
-        "starter_entry": 364.74,
-        "starter_stop": 356.97,
-        "starter_target": 509.85,
-        "starter_reward_risk": 18.66,
-        "starter_buyable": false,
-        "breakout_trigger": 378.47,
-        "breakout_stop": 351.98,
-        "breakout_target": 519.75,
-        "breakout_reward_risk": 5.33,
-        "breakout_buyable": false,
-        "entry_path_type": "wait",
-        "ma20": 359.3177,
-        "ma50": 379.7549,
-        "ma200": 369.0967,
-        "high20": 376.59,
-        "high60": 432.73,
-        "high252": 495.0,
-        "score": 45.0
-      },
-      "sec_fallback_used": false,
-      "gaps": [
-        "缺少年/季度分析师预期",
-        "缺少最近财报 surprise",
-        "FMP 部分端点受限：/analyst-estimates、/earnings、/price-target-consensus"
-      ],
-      "action": "保留观察，等待财务、价格或事件证据补强。"
-    },
-    {
-      "code": "US.FLEX",
-      "symbol": "FLEX",
-      "name": "FLEX LTD.",
-      "themes": [
-        "高速 PCB / 覆铜板 / 电子布 / 铜箔"
-      ],
-      "evidence_status": "证据可用但需补强",
-      "evidence_score": 60.2,
-      "filing": {
-        "available": true,
-        "form": "8-K",
-        "filed": "2026-09-15",
-        "age_days": 6,
-        "accession": "0000866374-26-000036",
-        "recent_forms": [
-          "8-K",
-          "8-K",
-          "8-K",
-          "10-Q",
-          "8-K"
-        ],
-        "score": 90
-      },
-      "financials": {
-        "available": true,
-        "revenue_growth_yoy": 0.0814,
-        "net_margin": 0.0315,
-        "liabilities_to_assets": 0.7817,
-        "latest_annual_revenue": 27914000000,
-        "latest_annual_revenue_filed": "2026-05-20",
-        "latest_annual_fcf": 1052000000.0,
-        "score": 52.3
-      },
-      "fmp": {
-        "available": false,
-        "coverage_status": "rate_limited",
-        "expectation_score": null,
-        "price_target_upside_pct": null,
-        "eps_revision_pct": null,
-        "revenue_revision_pct": null,
-        "eps_surprise_pct": null,
-        "rating": null,
-        "annual_eps_estimate": null,
-        "annual_revenue_estimate": null,
-        "score": 35.0,
-        "gaps": [
-          "缺少年/季度分析师预期",
-          "缺少最近财报 surprise"
-        ],
-        "fallback_used": null
-      },
-      "price": {
-        "available": true,
-        "price": 110.43,
-        "quote_time": "2026-09-19T03:59:59+08:00",
-        "currency": null,
-        "reward_risk": 7.57,
-        "entry_path_complete": true,
-        "entry_path_fallback": null,
-        "trend_score": 42.0,
-        "entry_score": 80.3,
-        "data_confidence": 0.95,
-        "price_freshness": "fresh",
-        "execution_allowed": true,
-        "technical_data_complete": true,
-        "future_function_audit": "PASS",
-        "gate_failures": [
-          "opportunity_score_below_threshold",
-          "trend_score_below_threshold",
-          "crowding_score_above_threshold"
-        ],
-        "source": "Futu OpenD authenticated bridge",
-        "strict_entry": 107.36,
-        "invalidation": 99.5,
-        "mechanical_target": 166.86,
-        "starter_entry": 110.98,
-        "starter_stop": 109.83,
-        "starter_target": 171.87,
-        "starter_reward_risk": 52.91,
-        "starter_buyable": true,
-        "breakout_trigger": 118.27,
-        "breakout_stop": 109.99,
-        "breakout_target": 175.2,
-        "breakout_reward_risk": 6.88,
-        "breakout_buyable": false,
-        "entry_path_type": "starter",
-        "ma20": 109.798,
-        "ma50": 116.842,
-        "ma200": 97.231,
-        "high20": 117.68,
-        "high60": 165.8899,
-        "high252": 166.86,
-        "score": 69.0
-      },
-      "sec_fallback_used": false,
-      "gaps": [
-        "缺少年/季度分析师预期",
-        "缺少最近财报 surprise"
-      ],
-      "action": "可进入试仓观察：已有入场/止损/目标/R/R，需小仓位并盘中确认。"
-    },
-    {
-      "code": "US.ISRG",
-      "symbol": "ISRG",
-      "name": "INTUITIVE SURGICAL INC",
-      "themes": [
-        "Physical AI / 机器人 / 自动化"
-      ],
-      "evidence_status": "证据可用但需补强",
-      "evidence_score": 59.3,
-      "filing": {
-        "available": true,
-        "form": "8-K",
-        "filed": "2026-07-27",
-        "age_days": 56,
-        "accession": "0001035267-26-000063",
-        "recent_forms": [
-          "8-K",
-          "10-Q",
-          "8-K",
-          "8-K",
-          "8-K"
-        ],
-        "score": 72
-      },
-      "financials": {
-        "available": true,
-        "revenue_growth_yoy": 0.2051,
-        "net_margin": 0.2838,
-        "liabilities_to_assets": 0.1235,
-        "latest_annual_revenue": 10064700000,
-        "latest_annual_revenue_filed": "2026-02-03",
-        "latest_annual_fcf": null,
-        "score": 63.5
-      },
-      "fmp": {
-        "available": false,
-        "coverage_status": "rate_limited",
-        "expectation_score": null,
-        "price_target_upside_pct": null,
-        "eps_revision_pct": null,
-        "revenue_revision_pct": null,
-        "eps_surprise_pct": null,
-        "rating": null,
-        "annual_eps_estimate": null,
-        "annual_revenue_estimate": null,
-        "score": 35.0,
-        "gaps": [
-          "缺少年/季度分析师预期",
-          "缺少最近财报 surprise"
-        ],
-        "fallback_used": null
-      },
-      "price": {
-        "available": true,
-        "price": 394.0,
-        "quote_time": "2026-09-19T04:00:00+08:00",
-        "currency": null,
-        "reward_risk": 9.47,
-        "entry_path_complete": true,
-        "entry_path_fallback": null,
-        "trend_score": 19.7,
-        "entry_score": 62.9,
-        "data_confidence": 0.95,
-        "price_freshness": "fresh",
-        "execution_allowed": true,
-        "technical_data_complete": true,
-        "future_function_audit": "PASS",
-        "gate_failures": [
-          "opportunity_score_below_threshold",
-          "trend_score_below_threshold",
-          "crowding_score_above_threshold"
-        ],
-        "source": "Futu OpenD authenticated bridge",
-        "strict_entry": 354.86,
-        "invalidation": 328.57,
-        "mechanical_target": 603.88,
-        "starter_entry": 395.97,
-        "starter_stop": 362.48,
-        "starter_target": 622.0,
-        "starter_reward_risk": 6.75,
-        "starter_buyable": false,
-        "breakout_trigger": 400.98,
-        "breakout_stop": 372.92,
-        "breakout_target": 634.07,
-        "breakout_reward_risk": 8.3,
-        "breakout_buyable": false,
-        "entry_path_type": "wait",
-        "ma20": 371.805,
-        "ma50": 373.4891,
-        "ma200": 455.1056,
-        "high20": 394.91,
-        "high60": 443.84,
-        "high252": 603.88,
-        "score": 65.0
-      },
-      "sec_fallback_used": false,
-      "gaps": [
-        "缺少年/季度分析师预期",
-        "缺少最近财报 surprise"
-      ],
-      "action": "保留观察，等待财务、价格或事件证据补强。"
-    },
-    {
       "code": "US.ETN",
       "symbol": "ETN",
       "name": "Eaton",
@@ -1107,7 +969,7 @@
       },
       "price": {
         "available": true,
-        "price": 432.28,
+        "price": 428.8,
         "quote_time": "2026-09-19T04:00:00+08:00",
         "currency": null,
         "reward_risk": 3.18,
@@ -1129,10 +991,10 @@
         "strict_entry": 386.78,
         "invalidation": 358.12,
         "mechanical_target": 478.0,
-        "starter_entry": 434.44,
-        "starter_stop": 397.7,
+        "starter_entry": 430.94,
+        "starter_stop": 395.58,
         "starter_target": 492.34,
-        "starter_reward_risk": 1.58,
+        "starter_reward_risk": 1.74,
         "starter_buyable": false,
         "breakout_trigger": 432.4,
         "breakout_stop": 402.13,
@@ -1153,6 +1015,108 @@
         "缺少 FMP 预期/财报快照"
       ],
       "action": "保留观察，等待财务、价格或事件证据补强。"
+    },
+    {
+      "code": "US.JBL",
+      "symbol": "JBL",
+      "name": "JABIL INC",
+      "themes": [
+        "高速 PCB / 覆铜板 / 电子布 / 铜箔"
+      ],
+      "evidence_status": "证据不足",
+      "evidence_score": 56.7,
+      "filing": {
+        "available": true,
+        "form": "10-Q",
+        "filed": "2026-06-30",
+        "age_days": 83,
+        "accession": "0001628280-26-046138",
+        "recent_forms": [
+          "10-Q",
+          "8-K",
+          "8-K",
+          "10-Q",
+          "8-K"
+        ],
+        "score": 72
+      },
+      "financials": {
+        "available": true,
+        "revenue_growth_yoy": 0.0318,
+        "net_margin": 0.022,
+        "liabilities_to_assets": 0.9443,
+        "latest_annual_revenue": 29802000000,
+        "latest_annual_revenue_filed": "2025-10-17",
+        "latest_annual_fcf": 1172000000.0,
+        "score": 48.3
+      },
+      "fmp": {
+        "available": false,
+        "coverage_status": "rate_limited",
+        "expectation_score": null,
+        "price_target_upside_pct": null,
+        "eps_revision_pct": null,
+        "revenue_revision_pct": null,
+        "eps_surprise_pct": null,
+        "rating": null,
+        "annual_eps_estimate": null,
+        "annual_revenue_estimate": null,
+        "score": 35.0,
+        "gaps": [
+          "缺少年/季度分析师预期",
+          "缺少最近财报 surprise"
+        ],
+        "fallback_used": null
+      },
+      "price": {
+        "available": true,
+        "price": 305.5,
+        "quote_time": "2026-09-19T03:59:59+08:00",
+        "currency": null,
+        "reward_risk": 5.78,
+        "entry_path_complete": true,
+        "entry_path_fallback": null,
+        "trend_score": 50.0,
+        "entry_score": 80.7,
+        "data_confidence": 0.95,
+        "price_freshness": "fresh",
+        "execution_allowed": true,
+        "technical_data_complete": true,
+        "future_function_audit": "PASS",
+        "gate_failures": [
+          "opportunity_score_below_threshold",
+          "trend_score_below_threshold",
+          "crowding_score_above_threshold"
+        ],
+        "source": "Futu OpenD authenticated bridge",
+        "strict_entry": 306.9,
+        "invalidation": 285.8,
+        "mechanical_target": 428.93,
+        "starter_entry": 307.03,
+        "starter_stop": 299.61,
+        "starter_target": 441.8,
+        "starter_reward_risk": 18.17,
+        "starter_buyable": true,
+        "breakout_trigger": 325.4,
+        "breakout_stop": 302.63,
+        "breakout_target": 450.38,
+        "breakout_reward_risk": 5.49,
+        "breakout_buyable": false,
+        "entry_path_type": "strict",
+        "ma20": 305.187,
+        "ma50": 318.7332,
+        "ma200": 297.3987,
+        "high20": 321.4842,
+        "high60": 386.38,
+        "high252": 428.9322,
+        "score": 73.0
+      },
+      "sec_fallback_used": false,
+      "gaps": [
+        "缺少年/季度分析师预期",
+        "缺少最近财报 surprise"
+      ],
+      "action": "可进入试仓观察：已有入场/止损/目标/R/R，需小仓位并盘中确认。"
     },
     {
       "code": "US.PH",
@@ -1308,7 +1272,7 @@
       },
       "price": {
         "available": true,
-        "price": 255.5,
+        "price": 255.52,
         "quote_time": "2026-09-19T04:00:00+08:00",
         "currency": null,
         "reward_risk": 8.16,
@@ -1331,10 +1295,10 @@
         "strict_entry": 238.29,
         "invalidation": 220.92,
         "mechanical_target": 379.94,
-        "starter_entry": 256.78,
+        "starter_entry": 256.8,
         "starter_stop": 255.17,
         "starter_target": 391.33,
-        "starter_reward_risk": 83.45,
+        "starter_reward_risk": 82.41,
         "starter_buyable": false,
         "breakout_trigger": 296.82,
         "breakout_stop": 276.04,
@@ -1449,6 +1413,106 @@
         "high60": 219.8,
         "high252": 223.83,
         "score": 69.0
+      },
+      "sec_fallback_used": false,
+      "gaps": [
+        "缺少 FMP 预期/财报快照"
+      ],
+      "action": "保留观察，等待财务、价格或事件证据补强。"
+    },
+    {
+      "code": "US.ISRG",
+      "symbol": "ISRG",
+      "name": "INTUITIVE SURGICAL INC",
+      "themes": [
+        "Physical AI / 机器人 / 自动化"
+      ],
+      "evidence_status": "证据不足",
+      "evidence_score": 52.3,
+      "filing": {
+        "available": true,
+        "form": "8-K",
+        "filed": "2026-07-27",
+        "age_days": 56,
+        "accession": "0001035267-26-000063",
+        "recent_forms": [
+          "8-K",
+          "10-Q",
+          "8-K",
+          "8-K",
+          "8-K"
+        ],
+        "score": 72
+      },
+      "financials": {
+        "available": true,
+        "revenue_growth_yoy": 0.2051,
+        "net_margin": 0.2838,
+        "liabilities_to_assets": 0.1235,
+        "latest_annual_revenue": 10064700000,
+        "latest_annual_revenue_filed": "2026-02-03",
+        "latest_annual_fcf": null,
+        "score": 63.5
+      },
+      "fmp": {
+        "available": false,
+        "coverage_status": null,
+        "expectation_score": null,
+        "price_target_upside_pct": null,
+        "eps_revision_pct": null,
+        "revenue_revision_pct": null,
+        "eps_surprise_pct": null,
+        "rating": null,
+        "annual_eps_estimate": null,
+        "annual_revenue_estimate": null,
+        "score": 0,
+        "gaps": [
+          "缺少 FMP 预期/财报快照"
+        ],
+        "fallback_used": null
+      },
+      "price": {
+        "available": true,
+        "price": 393.27,
+        "quote_time": "2026-09-19T04:00:00+08:00",
+        "currency": null,
+        "reward_risk": 9.47,
+        "entry_path_complete": true,
+        "entry_path_fallback": null,
+        "trend_score": 19.7,
+        "entry_score": 62.9,
+        "data_confidence": 0.95,
+        "price_freshness": "fresh",
+        "execution_allowed": true,
+        "technical_data_complete": true,
+        "future_function_audit": "PASS",
+        "gate_failures": [
+          "opportunity_score_below_threshold",
+          "trend_score_below_threshold",
+          "crowding_score_above_threshold"
+        ],
+        "source": "Futu OpenD authenticated bridge",
+        "strict_entry": 354.86,
+        "invalidation": 328.57,
+        "mechanical_target": 603.88,
+        "starter_entry": 395.24,
+        "starter_stop": 361.81,
+        "starter_target": 622.0,
+        "starter_reward_risk": 6.78,
+        "starter_buyable": false,
+        "breakout_trigger": 400.98,
+        "breakout_stop": 372.92,
+        "breakout_target": 634.07,
+        "breakout_reward_risk": 8.3,
+        "breakout_buyable": false,
+        "entry_path_type": "wait",
+        "ma20": 371.805,
+        "ma50": 373.4891,
+        "ma200": 455.1056,
+        "high20": 394.91,
+        "high60": 443.84,
+        "high252": 603.88,
+        "score": 65.0
       },
       "sec_fallback_used": false,
       "gaps": [
@@ -1609,7 +1673,7 @@
       },
       "price": {
         "available": true,
-        "price": 359.71,
+        "price": 358.5,
         "quote_time": "2026-09-19T04:00:00+08:00",
         "currency": null,
         "reward_risk": 19.92,
@@ -1631,10 +1695,10 @@
         "strict_entry": 327.18,
         "invalidation": 311.6,
         "mechanical_target": 637.51,
-        "starter_entry": 361.51,
+        "starter_entry": 360.29,
         "starter_stop": 345.53,
         "starter_target": 656.64,
-        "starter_reward_risk": 18.47,
+        "starter_reward_risk": 20.08,
         "starter_buyable": false,
         "breakout_trigger": 420.81,
         "breakout_stop": 391.36,
@@ -1653,205 +1717,6 @@
       "sec_fallback_used": false,
       "gaps": [
         "缺少 FMP 预期/财报快照"
-      ],
-      "action": "保留观察，等待财务、价格或事件证据补强。"
-    },
-    {
-      "code": "US.JBL",
-      "symbol": "JBL",
-      "name": "JABIL INC",
-      "themes": [
-        "高速 PCB / 覆铜板 / 电子布 / 铜箔"
-      ],
-      "evidence_status": "证据不足",
-      "evidence_score": 49.7,
-      "filing": {
-        "available": true,
-        "form": "10-Q",
-        "filed": "2026-06-30",
-        "age_days": 83,
-        "accession": "0001628280-26-046138",
-        "recent_forms": [
-          "10-Q",
-          "8-K",
-          "8-K",
-          "10-Q",
-          "8-K"
-        ],
-        "score": 72
-      },
-      "financials": {
-        "available": true,
-        "revenue_growth_yoy": 0.0318,
-        "net_margin": 0.022,
-        "liabilities_to_assets": 0.9443,
-        "latest_annual_revenue": 29802000000,
-        "latest_annual_revenue_filed": "2025-10-17",
-        "latest_annual_fcf": 1172000000.0,
-        "score": 48.3
-      },
-      "fmp": {
-        "available": false,
-        "coverage_status": null,
-        "expectation_score": null,
-        "price_target_upside_pct": null,
-        "eps_revision_pct": null,
-        "revenue_revision_pct": null,
-        "eps_surprise_pct": null,
-        "rating": null,
-        "annual_eps_estimate": null,
-        "annual_revenue_estimate": null,
-        "score": 0,
-        "gaps": [
-          "缺少 FMP 预期/财报快照"
-        ],
-        "fallback_used": null
-      },
-      "price": {
-        "available": true,
-        "price": 306.93,
-        "quote_time": "2026-09-19T03:59:59+08:00",
-        "currency": null,
-        "reward_risk": 5.78,
-        "entry_path_complete": true,
-        "entry_path_fallback": null,
-        "trend_score": 50.0,
-        "entry_score": 80.7,
-        "data_confidence": 0.8075,
-        "price_freshness": "fresh",
-        "execution_allowed": true,
-        "technical_data_complete": true,
-        "future_function_audit": "PASS",
-        "gate_failures": [
-          "opportunity_score_below_threshold",
-          "trend_score_below_threshold",
-          "crowding_score_above_threshold"
-        ],
-        "source": "Futu OpenD authenticated bridge",
-        "strict_entry": 306.9,
-        "invalidation": 285.8,
-        "mechanical_target": 428.93,
-        "starter_entry": 308.46,
-        "starter_stop": 299.61,
-        "starter_target": 441.8,
-        "starter_reward_risk": 15.06,
-        "starter_buyable": true,
-        "breakout_trigger": 325.4,
-        "breakout_stop": 302.63,
-        "breakout_target": 450.38,
-        "breakout_reward_risk": 5.49,
-        "breakout_buyable": false,
-        "entry_path_type": "strict",
-        "ma20": 305.187,
-        "ma50": 318.7332,
-        "ma200": 297.3987,
-        "high20": 321.4842,
-        "high60": 386.38,
-        "high252": 428.9322,
-        "score": 73.0
-      },
-      "sec_fallback_used": false,
-      "gaps": [
-        "缺少 FMP 预期/财报快照"
-      ],
-      "action": "可进入试仓观察：已有入场/止损/目标/R/R，需小仓位并盘中确认。"
-    },
-    {
-      "code": "US.TSM",
-      "symbol": "TSM",
-      "name": "TAIWAN SEMICONDUCTOR MANUFACTURING CO LTD",
-      "themes": [
-        "GPU / ASIC / HBM / 先进封装"
-      ],
-      "evidence_status": "证据不足",
-      "evidence_score": 49.6,
-      "filing": {
-        "available": true,
-        "form": "20-F",
-        "filed": "2026-04-16",
-        "age_days": 158,
-        "accession": "0001628280-26-025362",
-        "recent_forms": [
-          "20-F",
-          "20-F",
-          "20-F",
-          "20-F",
-          "20-F"
-        ],
-        "score": 45
-      },
-      "financials": {
-        "available": false,
-        "revenue_growth_yoy": null,
-        "net_margin": null,
-        "liabilities_to_assets": null,
-        "latest_annual_revenue": null,
-        "latest_annual_revenue_filed": null,
-        "latest_annual_fcf": null,
-        "score": 0,
-        "coverage_note": "ADR/foreign issuer; SEC companyfacts is optional and should be checked against company IR/FMP."
-      },
-      "fmp": {
-        "available": true,
-        "coverage_status": "ok",
-        "expectation_score": 71.0,
-        "price_target_upside_pct": 31.71,
-        "eps_revision_pct": 0.0,
-        "revenue_revision_pct": 0.0,
-        "eps_surprise_pct": 11.37,
-        "rating": "B+",
-        "annual_eps_estimate": 697.94984,
-        "annual_revenue_estimate": 7227666424876,
-        "score": 83.0,
-        "gaps": [],
-        "fallback_used": null
-      },
-      "price": {
-        "available": true,
-        "price": 439.18,
-        "quote_time": "2026-09-19T04:00:00+08:00",
-        "currency": null,
-        "reward_risk": 2.56,
-        "entry_path_complete": true,
-        "entry_path_fallback": null,
-        "trend_score": 76.0,
-        "entry_score": null,
-        "data_confidence": 0.8143,
-        "price_freshness": "fresh",
-        "execution_allowed": true,
-        "technical_data_complete": true,
-        "future_function_audit": "PASS",
-        "gate_failures": [
-          "rr_below_3",
-          "crowding_score_above_threshold",
-          "valid_path_false"
-        ],
-        "source": "Futu OpenD authenticated bridge",
-        "strict_entry": 402.54,
-        "invalidation": 372.72,
-        "mechanical_target": 479.0,
-        "starter_entry": 441.38,
-        "starter_stop": 409.81,
-        "starter_target": 493.37,
-        "starter_reward_risk": 1.65,
-        "starter_buyable": false,
-        "breakout_trigger": 446.51,
-        "breakout_stop": 415.26,
-        "breakout_target": 502.95,
-        "breakout_reward_risk": 1.81,
-        "breakout_buyable": false,
-        "entry_path_type": "wait",
-        "ma20": 422.4885,
-        "ma50": 417.3738,
-        "ma200": 379.325,
-        "high20": 444.29,
-        "high60": 479.0,
-        "high252": 479.0,
-        "score": 65.0
-      },
-      "sec_fallback_used": true,
-      "gaps": [
-        "R/R 未达 3.0:1，不能进入正式买入"
       ],
       "action": "保留观察，等待财务、价格或事件证据补强。"
     },
@@ -2009,7 +1874,7 @@
       },
       "price": {
         "available": true,
-        "price": 369.5,
+        "price": 369.6288,
         "quote_time": "2026-09-19T04:00:00+08:00",
         "currency": null,
         "reward_risk": 7.47,
@@ -2032,10 +1897,10 @@
         "strict_entry": 321.17,
         "invalidation": 297.38,
         "mechanical_target": 498.83,
-        "starter_entry": 371.35,
+        "starter_entry": 371.48,
         "starter_stop": 348.81,
         "starter_target": 513.79,
-        "starter_reward_risk": 6.32,
+        "starter_reward_risk": 6.28,
         "starter_buyable": false,
         "breakout_trigger": 385.96,
         "breakout_stop": 358.94,
@@ -2157,6 +2022,105 @@
       "sec_fallback_used": true,
       "gaps": [
         "缺少 FMP 预期/财报快照"
+      ],
+      "action": "保留观察，等待财务、价格或事件证据补强。"
+    },
+    {
+      "code": "US.TSM",
+      "symbol": "TSM",
+      "name": "TAIWAN SEMICONDUCTOR MANUFACTURING CO LTD",
+      "themes": [
+        "GPU / ASIC / HBM / 先进封装"
+      ],
+      "evidence_status": "证据不足",
+      "evidence_score": 44.8,
+      "filing": {
+        "available": true,
+        "form": "20-F",
+        "filed": "2026-04-16",
+        "age_days": 158,
+        "accession": "0001628280-26-025362",
+        "recent_forms": [
+          "20-F",
+          "20-F",
+          "20-F",
+          "20-F",
+          "20-F"
+        ],
+        "score": 45
+      },
+      "financials": {
+        "available": false,
+        "revenue_growth_yoy": null,
+        "net_margin": null,
+        "liabilities_to_assets": null,
+        "latest_annual_revenue": null,
+        "latest_annual_revenue_filed": null,
+        "latest_annual_fcf": null,
+        "score": 0,
+        "coverage_note": "ADR/foreign issuer; SEC companyfacts is optional and should be checked against company IR/FMP."
+      },
+      "fmp": {
+        "available": true,
+        "coverage_status": "stale",
+        "expectation_score": 57.0,
+        "price_target_upside_pct": 31.59,
+        "eps_revision_pct": null,
+        "revenue_revision_pct": null,
+        "eps_surprise_pct": null,
+        "rating": null,
+        "annual_eps_estimate": 697.94984,
+        "annual_revenue_estimate": 7227666424876,
+        "score": 63.0,
+        "gaps": [],
+        "fallback_used": "Alpha Vantage"
+      },
+      "price": {
+        "available": true,
+        "price": 439.58,
+        "quote_time": "2026-09-19T04:00:00+08:00",
+        "currency": null,
+        "reward_risk": 2.56,
+        "entry_path_complete": true,
+        "entry_path_fallback": null,
+        "trend_score": 76.0,
+        "entry_score": null,
+        "data_confidence": 0.8143,
+        "price_freshness": "fresh",
+        "execution_allowed": true,
+        "technical_data_complete": true,
+        "future_function_audit": "PASS",
+        "gate_failures": [
+          "rr_below_3",
+          "crowding_score_above_threshold",
+          "valid_path_false"
+        ],
+        "source": "Futu OpenD authenticated bridge",
+        "strict_entry": 402.54,
+        "invalidation": 372.72,
+        "mechanical_target": 479.0,
+        "starter_entry": 441.78,
+        "starter_stop": 409.81,
+        "starter_target": 493.37,
+        "starter_reward_risk": 1.61,
+        "starter_buyable": false,
+        "breakout_trigger": 446.51,
+        "breakout_stop": 415.26,
+        "breakout_target": 502.95,
+        "breakout_reward_risk": 1.81,
+        "breakout_buyable": false,
+        "entry_path_type": "wait",
+        "ma20": 422.4885,
+        "ma50": 417.3738,
+        "ma200": 379.325,
+        "high20": 444.29,
+        "high60": 479.0,
+        "high252": 479.0,
+        "score": 65.0
+      },
+      "sec_fallback_used": true,
+      "gaps": [
+        "R/R 未达 3.0:1，不能进入正式买入"
       ],
       "action": "保留观察，等待财务、价格或事件证据补强。"
     },
@@ -2438,9 +2402,9 @@
     {
       "theme": "GPU / ASIC / HBM / 先进封装",
       "symbol_count": 5,
-      "avg_evidence_score": 69.8,
-      "median_evidence_score": 72.1,
-      "gap_count": 9,
+      "avg_evidence_score": 68.7,
+      "median_evidence_score": 70.6,
+      "gap_count": 3,
       "top_symbols": [
         "US.NVDA",
         "US.MRVL",
@@ -2452,9 +2416,9 @@
     {
       "theme": "AI 光模块 / CPO / 数据中心网络",
       "symbol_count": 5,
-      "avg_evidence_score": 66.4,
-      "median_evidence_score": 67.9,
-      "gap_count": 11,
+      "avg_evidence_score": 68.7,
+      "median_evidence_score": 70.7,
+      "gap_count": 3,
       "top_symbols": [
         "US.MRVL",
         "US.ANET",
@@ -2480,9 +2444,9 @@
     {
       "theme": "Physical AI / 机器人 / 自动化",
       "symbol_count": 5,
-      "avg_evidence_score": 50.3,
+      "avg_evidence_score": 48.9,
       "median_evidence_score": 48.4,
-      "gap_count": 6,
+      "gap_count": 5,
       "top_symbols": [
         "US.ISRG",
         "US.SYM",
@@ -2494,13 +2458,13 @@
     {
       "theme": "高速 PCB / 覆铜板 / 电子布 / 铜箔",
       "symbol_count": 5,
-      "avg_evidence_score": 46.7,
-      "median_evidence_score": 49.7,
-      "gap_count": 4,
+      "avg_evidence_score": 48.7,
+      "median_evidence_score": 53.0,
+      "gap_count": 3,
       "top_symbols": [
         "US.FLEX",
-        "US.TTMI",
         "US.JBL",
+        "US.TTMI",
         "HK.01888",
         "HK.00148"
       ]
@@ -2527,9 +2491,9 @@
     }
   ],
   "evidence_gap_breakdown": {
-    "original_total": 35,
-    "data_gap": 26,
-    "permission_limited": 6,
+    "original_total": 22,
+    "data_gap": 16,
+    "permission_limited": 3,
     "entry_path_missing": 0,
     "rr_discipline": 3,
     "other": 0,
@@ -2546,9 +2510,9 @@
           "US.PH",
           "US.VRT",
           "US.TTMI",
+          "US.ISRG",
           "US.SYM",
           "US.CIEN",
-          "US.JBL",
           "US.HON",
           "US.TSLA",
           "US.EMR",
@@ -2561,15 +2525,10 @@
         "label": "缺少年/季度分析师预期",
         "group": "data",
         "group_label": "数据缺口",
-        "count": 7,
+        "count": 2,
         "affected_symbols": [
-          "US.MRVL",
-          "US.ANET",
-          "US.LITE",
           "US.COHR",
-          "US.AVGO",
-          "US.FLEX",
-          "US.ISRG"
+          "US.JBL"
         ],
         "fallback": "优先 FMP analyst-estimates；失败时使用 Finnhub estimates。"
       },
@@ -2578,30 +2537,12 @@
         "label": "缺少最近财报 surprise",
         "group": "data",
         "group_label": "数据缺口",
-        "count": 7,
+        "count": 2,
         "affected_symbols": [
-          "US.MRVL",
-          "US.ANET",
-          "US.LITE",
           "US.COHR",
-          "US.AVGO",
-          "US.FLEX",
-          "US.ISRG"
+          "US.JBL"
         ],
         "fallback": "优先 FMP earnings；失败时使用 Nasdaq earnings calendar。"
-      },
-      {
-        "key": "fmp_symbol_permission_limited",
-        "label": "FMP 个股端点受限",
-        "group": "permission",
-        "group_label": "权限受限",
-        "count": 3,
-        "affected_symbols": [
-          "US.MRVL",
-          "US.ANET",
-          "US.AVGO"
-        ],
-        "fallback": "降低 FMP 预期层置信度；等待额度恢复或升级套餐。"
       },
       {
         "key": "permission_limited",
