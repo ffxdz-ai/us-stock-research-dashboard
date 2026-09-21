@@ -67,6 +67,27 @@
       "frequency_hint": "monthly"
     },
     {
+      "id": "SP500",
+      "name": "标普500指数收盘值",
+      "dimension": "policy_event_market",
+      "unit": "index",
+      "frequency_hint": "daily"
+    },
+    {
+      "id": "NASDAQCOM",
+      "name": "纳斯达克综合指数收盘值",
+      "dimension": "policy_event_market",
+      "unit": "index",
+      "frequency_hint": "daily"
+    },
+    {
+      "id": "DJIA",
+      "name": "道琼斯工业指数收盘值",
+      "dimension": "policy_event_market",
+      "unit": "index",
+      "frequency_hint": "daily"
+    },
+    {
       "id": "DGS10",
       "name": "10年期美债收益率",
       "dimension": "rates",

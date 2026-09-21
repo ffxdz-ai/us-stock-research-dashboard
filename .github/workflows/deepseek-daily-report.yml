@@ -182,7 +182,7 @@ jobs:
           python scripts/market_sentiment_radar.py --market-pack "$MARKET_PACK" --macro-regime data/latest_macro_regime.json
 
       - name: Generate policy expectation and confirmation radar
-        run: python scripts/policy_event_radar.py
+        run: python scripts/policy_event_radar.py --macro-regime data/latest_macro_regime.json
 
       - name: Generate FMP expectations radar
         shell: bash
