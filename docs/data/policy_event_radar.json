@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-09-21T16:34:38+08:00",
+  "generated_label": "2026-09-21 16:34",
+  "data_boundary": "政策事件只提供风险情境；不直接给股票买点、不放宽入场/止损/目标价及 R/R 门槛。",
+  "status": "limited",
+  "id": "fomc-2026-09-16",
+  "name": "2026-09-16 FOMC",
+  "event_date": "2026-09-16",
+  "current_relevance": "recent",
+  "expectation": {
+    "expected_change_bps": 25,
+    "expectation_as_of": null,
+    "expectation_as_of_date": "2026-09-16",
+    "expectation_session": "morning_pre_release",
+    "expectation_note": "会前市场预计加息25基点的概率超过90%；来源仅标注当日上午，未提供精确发布时刻。",
+    "expectation_source": "Nasdaq Dorsey Wright",
+    "expectation_source_url": "https://dorseywright.nasdaq.com/research/bigwire/2026/09/15/09-15-2026",
+    "source_type": "vendor_fallback",
+    "confidence": "medium"
+  },
+  "decision": {
+    "actual_change_bps": 25,
+    "decision_source": "Federal Reserve",
+    "decision_source_url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20260916a.htm",
+    "source_type": "official",
+    "confidence": "high"
+  },
+  "path": {
+    "status": "hawkish",
+    "label": "年末利率路径上修",
+    "revision_pp": 0.3,
+    "current_pct": 4.1,
+    "prior_pct": 3.8,
+    "source": "Federal Reserve SEP",
+    "source_url": "https://www.federalreserve.gov/monetarypolicy/fomcprojtabl20260916.htm",
+    "source_type": "official",
+    "confidence": "high"
+  },
+  "surprise": {
+    "status": "as_expected",
+    "label": "利率决定符合会前预期",
+    "surprise_bps": 0.0
+  },
+  "market_reaction": {
+    "status": "unknown",
+    "label": "会后两个交易日的收盘数据不足",
+    "window": null,
+    "indices": {},
+    "cross_assets": {},
+    "source": "FRED",
+    "source_urls": {
+      "SP500": "https://fred.stlouisfed.org/series/SP500",
+      "NASDAQCOM": "https://fred.stlouisfed.org/series/NASDAQCOM",
+      "DJIA": "https://fred.stlouisfed.org/series/DJIA",
+      "DGS2": "https://fred.stlouisfed.org/series/DGS2",
+      "DGS10": "https://fred.stlouisfed.org/series/DGS10",
+      "DCOILWTICO": "https://fred.stlouisfed.org/series/DCOILWTICO"
+    },
+    "confidence": "low"
+  },
+  "summary": "利率决定符合会前预期；年末利率路径上修；会后两个交易日的收盘数据不足。会后价格反应需要和收益率、油价及个股证据一同复核。",
+  "data_gaps": [
+    "会前与会后两个交易日的 FRED 收盘数据不足",
+    "FRED 指数/利率请求失败：SP500 (HTTP 400)、NASDAQCOM (HTTP 400)、DJIA (HTTP 400)、DGS2 (HTTP 400)、DGS10 (HTTP 400)、DCOILWTICO (HTTP 400)"
+  ],
+  "source_note": "FRED 为公开日收盘观察值，不能识别日内政策因果；SP500/NASDAQCOM/DJIA 仅是指数参与度代理，不是真实涨跌家数。"
+}
