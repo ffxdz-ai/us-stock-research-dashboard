@@ -21,8 +21,8 @@
     "eod_max_age_days": 4,
     "fallback_execution_allowed": false
   },
-  "generated_at": "2026-09-24T11:56:02+08:00",
-  "generated_label": "2026-09-24 11:56",
+  "generated_at": "2026-09-24T12:26:50+08:00",
+  "generated_label": "2026-09-24 12:26",
   "data_boundary": {
     "role": "opportunity discovery, not trading instruction",
     "buy_side_gate": "正式买入 R/R >= 3.0:1；试仓 R/R >= 2.5:1；同时通过 PIT、数据质量与整股约束。",
@@ -39,7 +39,7 @@
     "expectation_gap_count": 0,
     "confirming_count": 1,
     "crowded_count": 0,
-    "security_change_count": 7,
+    "security_change_count": 0,
     "secondary_candidate_count": 1,
     "completed_review_count": 0,
     "next_review_count": 0
@@ -1111,20 +1111,7 @@
         "US.MRVL：机会分 76.8，景气强但拥挤，等待回踩或新催化",
         "US.TSM：机会分 72.4，保留观察，等待估值/趋势/催化进一步确认"
       ],
-      "changes": [
-        {
-          "type": "metric_change",
-          "code": "US.MRVL",
-          "name": "Marvell",
-          "detected_at": "2026-09-24T11:56:02+08:00",
-          "metric": "valuation_pe",
-          "label": "估值 PE",
-          "previous": 35.8709,
-          "current": 44.9898,
-          "change_pct": 25.42,
-          "note": "估值 PE变化超过阈值，需确认是机会扩大、逻辑兑现还是风险暴露。"
-        }
-      ],
+      "changes": [],
       "securities": [
         {
           "code": "US.NVDA",
@@ -1174,7 +1161,7 @@
             "filed": "2026-09-03",
             "accession": "0001045810-26-000078"
           },
-          "secondary_status": "retreated",
+          "secondary_status": "active",
           "source": "Futu OpenD authenticated bridge",
           "company_type": "semiconductor",
           "sector_etf": "SMH",
@@ -1394,7 +1381,7 @@
             "filed": "2026-04-16",
             "accession": "0001628280-26-025362"
           },
-          "secondary_status": "retreated",
+          "secondary_status": "active",
           "source": "Futu OpenD authenticated bridge",
           "company_type": "semiconductor",
           "sector_etf": "SMH",
@@ -2073,20 +2060,7 @@
         "US.ANET：机会分 69.4，保留观察，等待估值/趋势/催化进一步确认",
         "US.LITE：机会分 69.4，保留观察，等待估值/趋势/催化进一步确认"
       ],
-      "changes": [
-        {
-          "type": "metric_change",
-          "code": "US.MRVL",
-          "name": "Marvell",
-          "detected_at": "2026-09-24T11:56:02+08:00",
-          "metric": "valuation_pe",
-          "label": "估值 PE",
-          "previous": 35.8709,
-          "current": 44.9898,
-          "change_pct": 25.42,
-          "note": "估值 PE变化超过阈值，需确认是机会扩大、逻辑兑现还是风险暴露。"
-        }
-      ],
+      "changes": [],
       "securities": [
         {
           "code": "US.MRVL",
@@ -4115,44 +4089,7 @@
         "US.SYM：机会分 43.0，普通观察",
         "US.ROK：机会分 0.0，普通观察"
       ],
-      "changes": [
-        {
-          "type": "metric_change",
-          "code": "US.SYM",
-          "name": "Symbotic",
-          "detected_at": "2026-09-24T11:56:02+08:00",
-          "metric": "valuation_pe",
-          "label": "估值 PE",
-          "previous": 43.9692,
-          "current": 60.4764,
-          "change_pct": 37.54,
-          "note": "估值 PE变化超过阈值，需确认是机会扩大、逻辑兑现还是风险暴露。"
-        },
-        {
-          "type": "metric_change",
-          "code": "US.SYM",
-          "name": "Symbotic",
-          "detected_at": "2026-09-24T11:56:02+08:00",
-          "metric": "trend_score",
-          "label": "趋势确认",
-          "previous": 18.6,
-          "current": 25.5,
-          "change_pct": 37.1,
-          "note": "趋势确认变化超过阈值，需确认是机会扩大、逻辑兑现还是风险暴露。"
-        },
-        {
-          "type": "metric_change",
-          "code": "US.TSLA",
-          "name": "Tesla",
-          "detected_at": "2026-09-24T11:56:02+08:00",
-          "metric": "valuation_pe",
-          "label": "估值 PE",
-          "previous": 145.9029,
-          "current": 174.4285,
-          "change_pct": 19.55,
-          "note": "估值 PE变化超过阈值，需确认是机会扩大、逻辑兑现还是风险暴露。"
-        }
-      ],
+      "changes": [],
       "securities": [
         {
           "code": "US.ISRG",
@@ -5008,32 +4945,7 @@
         "US.ETN：机会分 0.0，普通观察",
         "US.PWR：机会分 0.0，普通观察"
       ],
-      "changes": [
-        {
-          "type": "metric_change",
-          "code": "US.PWR",
-          "name": "Quanta Services",
-          "detected_at": "2026-09-24T11:56:02+08:00",
-          "metric": "valuation_pe",
-          "label": "估值 PE",
-          "previous": 42.205,
-          "current": 34.1722,
-          "change_pct": -19.03,
-          "note": "估值 PE变化超过阈值，需确认是机会扩大、逻辑兑现还是风险暴露。"
-        },
-        {
-          "type": "metric_change",
-          "code": "US.PWR",
-          "name": "Quanta Services",
-          "detected_at": "2026-09-24T11:56:02+08:00",
-          "metric": "trend_score",
-          "label": "趋势确认",
-          "previous": 76.0,
-          "current": 50.0,
-          "change_pct": -34.21,
-          "note": "趋势确认变化超过阈值，需确认是机会扩大、逻辑兑现还是风险暴露。"
-        }
-      ],
+      "changes": [],
       "securities": [
         {
           "code": "US.VRT",
@@ -5837,92 +5749,7 @@
     }
   ],
   "filing_changes": [],
-  "metric_changes": [
-    {
-      "type": "metric_change",
-      "code": "US.MRVL",
-      "name": "Marvell",
-      "detected_at": "2026-09-24T11:56:02+08:00",
-      "metric": "valuation_pe",
-      "label": "估值 PE",
-      "previous": 35.8709,
-      "current": 44.9898,
-      "change_pct": 25.42,
-      "note": "估值 PE变化超过阈值，需确认是机会扩大、逻辑兑现还是风险暴露。"
-    },
-    {
-      "type": "metric_change",
-      "code": "US.MRVL",
-      "name": "Marvell",
-      "detected_at": "2026-09-24T11:56:02+08:00",
-      "metric": "valuation_pe",
-      "label": "估值 PE",
-      "previous": 35.8709,
-      "current": 44.9898,
-      "change_pct": 25.42,
-      "note": "估值 PE变化超过阈值，需确认是机会扩大、逻辑兑现还是风险暴露。"
-    },
-    {
-      "type": "metric_change",
-      "code": "US.PWR",
-      "name": "Quanta Services",
-      "detected_at": "2026-09-24T11:56:02+08:00",
-      "metric": "valuation_pe",
-      "label": "估值 PE",
-      "previous": 42.205,
-      "current": 34.1722,
-      "change_pct": -19.03,
-      "note": "估值 PE变化超过阈值，需确认是机会扩大、逻辑兑现还是风险暴露。"
-    },
-    {
-      "type": "metric_change",
-      "code": "US.PWR",
-      "name": "Quanta Services",
-      "detected_at": "2026-09-24T11:56:02+08:00",
-      "metric": "trend_score",
-      "label": "趋势确认",
-      "previous": 76.0,
-      "current": 50.0,
-      "change_pct": -34.21,
-      "note": "趋势确认变化超过阈值，需确认是机会扩大、逻辑兑现还是风险暴露。"
-    },
-    {
-      "type": "metric_change",
-      "code": "US.SYM",
-      "name": "Symbotic",
-      "detected_at": "2026-09-24T11:56:02+08:00",
-      "metric": "valuation_pe",
-      "label": "估值 PE",
-      "previous": 43.9692,
-      "current": 60.4764,
-      "change_pct": 37.54,
-      "note": "估值 PE变化超过阈值，需确认是机会扩大、逻辑兑现还是风险暴露。"
-    },
-    {
-      "type": "metric_change",
-      "code": "US.SYM",
-      "name": "Symbotic",
-      "detected_at": "2026-09-24T11:56:02+08:00",
-      "metric": "trend_score",
-      "label": "趋势确认",
-      "previous": 18.6,
-      "current": 25.5,
-      "change_pct": 37.1,
-      "note": "趋势确认变化超过阈值，需确认是机会扩大、逻辑兑现还是风险暴露。"
-    },
-    {
-      "type": "metric_change",
-      "code": "US.TSLA",
-      "name": "Tesla",
-      "detected_at": "2026-09-24T11:56:02+08:00",
-      "metric": "valuation_pe",
-      "label": "估值 PE",
-      "previous": 145.9029,
-      "current": 174.4285,
-      "change_pct": 19.55,
-      "note": "估值 PE变化超过阈值，需确认是机会扩大、逻辑兑现还是风险暴露。"
-    }
-  ],
+  "metric_changes": [],
   "review_due": [],
   "completed_reviews": [],
   "secondary_candidates": [
