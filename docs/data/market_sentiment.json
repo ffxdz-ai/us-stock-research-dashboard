@@ -1,25 +1,25 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-09-23T16:14:26+08:00",
-  "generated_label": "2026-09-23 16:14",
+  "generated_at": "2026-09-24T11:55:17+08:00",
+  "generated_label": "2026-09-24 11:55",
   "data_boundary": "公开脱敏市场情绪层；只用于判断风险环境，不生成交易指令，不替代个股 R/R 纪律。",
-  "score": 66.5,
+  "score": 67.5,
   "status": "risk_on",
   "status_label": "Risk-on",
   "stance": "风险偏好偏强，可提高进攻观察权重",
-  "summary": "综合情绪分 66.5，状态 Risk-on。最强支撑来自波动率压力（90.4）。主要拖累来自油价/通胀压力（52.0）。该结论只决定仓位/进攻性倾向，不直接给个股买点。",
+  "summary": "综合情绪分 67.5，状态 Risk-on。最强支撑来自波动率压力（94.2）。主要拖累来自油价/通胀压力（52.0）。该结论只决定仓位/进攻性倾向，不直接给个股买点。",
   "components": [
     {
       "key": "volatility",
       "name": "波动率压力",
-      "score": 90.4,
+      "score": 94.2,
       "weight": 0.25,
       "status": "risk_on",
-      "value": 14.87,
+      "value": 14.21,
       "message": "VIX 越低代表恐慌越少，但过低也可能意味着拥挤。",
       "source": "FRED",
       "source_type": "official",
-      "updated_at": "2026-09-21",
+      "updated_at": "2026-09-22",
       "confidence": "high"
     },
     {
@@ -29,10 +29,10 @@
       "weight": 0.25,
       "status": "neutral",
       "value": {
-        "SPY": 0.13,
-        "QQQ": 0.85,
-        "DIA": -0.21,
-        "IWM": 0.44
+        "SPY": 0.12,
+        "QQQ": 0.84,
+        "DIA": -0.19,
+        "IWM": 0.43
       },
       "message": "用 SPY/QQQ/DIA/IWM 涨跌幅判断当天股票风险偏好。",
       "source": "public market quote",
@@ -48,7 +48,7 @@
       "status": "neutral",
       "value": {
         "QQQ_minus_SPY": 0.72,
-        "IWM_minus_SPY": 0.31
+        "IWM_minus_SPY": 0.32
       },
       "message": "成长股和小盘股相对大盘越强，风险偏好通常越高。",
       "source": "public market quote",
@@ -59,12 +59,12 @@
     {
       "key": "defensive_flow",
       "name": "避险资产相对表现",
-      "score": 54.6,
+      "score": 54.5,
       "weight": 0.1,
       "status": "neutral",
       "value": {
-        "SPY": 0.13,
-        "TLT": -0.06,
+        "SPY": 0.12,
+        "TLT": -0.07,
         "GLD": -0.59
       },
       "message": "股票强于长债/黄金代表风险偏好改善；反之提示避险。",
@@ -76,7 +76,7 @@
     {
       "key": "macro_liquidity_credit",
       "name": "宏观流动性/信用背景",
-      "score": 68.4,
+      "score": 68.8,
       "weight": 0.2,
       "status": "risk_on",
       "value": {
@@ -87,7 +87,7 @@
       "message": "FRED 流动性、金融条件和信用利差用于判断风险资产背景。",
       "source": "FRED",
       "source_type": "official",
-      "updated_at": "2026-09-23 16:14",
+      "updated_at": "2026-09-24 11:55",
       "confidence": "high"
     },
     {
@@ -97,8 +97,8 @@
       "weight": 0.05,
       "status": "neutral",
       "value": {
-        "USO_change_pct": -2.26,
-        "WTI_3m_change_pct": 26.4265
+        "USO_change_pct": -2.8,
+        "WTI_3m_change_pct": 22.1307
       },
       "message": "油价快速上涨会压低情绪分，因为它可能强化通胀和利率压力。",
       "source": "public market quote/FRED",
@@ -108,7 +108,7 @@
     }
   ],
   "rules_triggered": [
-    "VIX 14.87 低于 15，风险偏好较强但需警惕拥挤。",
+    "VIX 14.21 低于 15，风险偏好较强但需警惕拥挤。",
     "FRED 流动性/信用背景偏友好，支持结构性风险资产。"
   ],
   "data_gaps": [

@@ -1,13 +1,13 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-09-23T16:14:27+08:00",
-  "generated_label": "2026-09-23 16:14",
+  "generated_at": "2026-09-24T11:55:17+08:00",
+  "generated_label": "2026-09-24 11:55",
   "data_boundary": "政策事件只提供风险情境；不直接给股票买点、不放宽入场/止损/目标价及 R/R 门槛。",
-  "status": "limited",
+  "status": "ready",
   "id": "fomc-2026-09-16",
   "name": "2026-09-16 FOMC",
   "event_date": "2026-09-16",
-  "current_relevance": "recent",
+  "current_relevance": "historical",
   "expectation": {
     "expected_change_bps": 25,
     "expectation_as_of": null,
@@ -59,7 +59,7 @@
     "cross_assets": {
       "DGS2_change_bps": 9.0,
       "DGS10_change_bps": 1.0,
-      "WTI_change_pct": null
+      "WTI_change_pct": -5.21
     },
     "source": "FRED",
     "source_urls": {
@@ -72,9 +72,7 @@
     },
     "confidence": "medium"
   },
-  "summary": "利率决定符合会前预期；年末利率路径上修；主要指数反应分化，不能概括为全面利好。会后价格反应需要和收益率、油价及个股证据一同复核。",
-  "data_gaps": [
-    "会后美债收益率或 WTI 观察值尚未齐备，跨资产确认不完整"
-  ],
+  "summary": "利率决定符合会前预期；年末利率路径上修；主要指数反应分化，不能概括为全面利好。该事件已超过7天，仅作历史复盘，不作为今日买入过滤器。",
+  "data_gaps": [],
   "source_note": "FRED 为公开日收盘观察值，不能识别日内政策因果；SP500/NASDAQCOM/DJIA 仅是指数参与度代理，不是真实涨跌家数。"
 }
