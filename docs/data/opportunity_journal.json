@@ -1,16 +1,16 @@
 {
   "schema_version": 2,
-  "generated_at": "2026-10-01T08:35:47+08:00",
-  "generated_label": "2026-10-01 08:35",
+  "generated_at": "2026-10-02T10:25:20+08:00",
+  "generated_label": "2026-10-02 10:25",
   "opportunities": {
     "ai_advanced_packaging_hbm": {
       "id": "ai_advanced_packaging_hbm",
       "name": "GPU / ASIC / HBM / 先进封装",
       "first_seen_at": "2026-06-21T04:10:31+08:00",
-      "last_seen_at": "2026-10-01T08:35:47+08:00",
+      "last_seen_at": "2026-10-02T10:25:20+08:00",
       "initial_score": 70.8,
-      "previous_score": 74.1,
-      "last_score": 74.5,
+      "previous_score": 74.5,
+      "last_score": 74.3,
       "stage": "确认中",
       "initial_prices": {
         "US.NVDA": 210.69,
@@ -46,18 +46,6 @@
         }
       ],
       "history": [
-        {
-          "at": "2026-09-03T11:41:12+08:00",
-          "score": 65.6,
-          "stage": "观察跟踪",
-          "top_candidates": [
-            "US.NVDA",
-            "US.AVGO",
-            "US.AMD",
-            "US.MRVL",
-            "US.MU"
-          ]
-        },
         {
           "at": "2026-09-04T11:42:02+08:00",
           "score": 65.4,
@@ -525,6 +513,18 @@
             "US.AVGO",
             "US.AMD"
           ]
+        },
+        {
+          "at": "2026-10-02T10:25:20+08:00",
+          "score": 74.3,
+          "stage": "确认中",
+          "top_candidates": [
+            "US.NVDA",
+            "US.MRVL",
+            "US.TSM",
+            "US.AMD",
+            "US.AVGO"
+          ]
         }
       ]
     },
@@ -532,10 +532,10 @@
       "id": "ai_datacenter_power_cooling",
       "name": "AI 数据中心电力 / 液冷 / 配电",
       "first_seen_at": "2026-06-21T04:10:31+08:00",
-      "last_seen_at": "2026-10-01T08:35:47+08:00",
+      "last_seen_at": "2026-10-02T10:25:20+08:00",
       "initial_score": 66.4,
-      "previous_score": 48.1,
-      "last_score": 48.2,
+      "previous_score": 48.2,
+      "last_score": 48.4,
       "stage": "观察跟踪",
       "initial_prices": {
         "US.PH": 953.27,
@@ -570,18 +570,6 @@
         }
       ],
       "history": [
-        {
-          "at": "2026-09-03T11:41:12+08:00",
-          "score": 33.8,
-          "stage": "观察跟踪",
-          "top_candidates": [
-            "US.VRT",
-            "US.ETN",
-            "US.PWR",
-            "US.EMR",
-            "US.PH"
-          ]
-        },
         {
           "at": "2026-09-04T11:42:02+08:00",
           "score": 37.2,
@@ -1049,6 +1037,18 @@
             "US.EMR",
             "US.PH"
           ]
+        },
+        {
+          "at": "2026-10-02T10:25:20+08:00",
+          "score": 48.4,
+          "stage": "观察跟踪",
+          "top_candidates": [
+            "US.VRT",
+            "US.ETN",
+            "US.PWR",
+            "US.EMR",
+            "US.PH"
+          ]
         }
       ]
     },
@@ -1056,10 +1056,10 @@
       "id": "ai_optical_cpo_networking",
       "name": "AI 光模块 / CPO / 数据中心网络",
       "first_seen_at": "2026-06-21T04:10:31+08:00",
-      "last_seen_at": "2026-10-01T08:35:47+08:00",
+      "last_seen_at": "2026-10-02T10:25:20+08:00",
       "initial_score": 67.2,
-      "previous_score": 60.7,
-      "last_score": 63.0,
+      "previous_score": 63.0,
+      "last_score": 65.2,
       "stage": "观察跟踪",
       "initial_prices": {
         "US.ANET": 169.67,
@@ -1095,18 +1095,6 @@
         }
       ],
       "history": [
-        {
-          "at": "2026-09-03T11:41:12+08:00",
-          "score": 55.2,
-          "stage": "观察跟踪",
-          "top_candidates": [
-            "US.ANET",
-            "US.MRVL",
-            "US.COHR",
-            "US.LITE",
-            "US.CIEN"
-          ]
-        },
         {
           "at": "2026-09-04T11:42:02+08:00",
           "score": 55.3,
@@ -1574,6 +1562,18 @@
             "US.COHR",
             "US.CIEN"
           ]
+        },
+        {
+          "at": "2026-10-02T10:25:20+08:00",
+          "score": 65.2,
+          "stage": "观察跟踪",
+          "top_candidates": [
+            "US.MRVL",
+            "US.ANET",
+            "US.LITE",
+            "US.COHR",
+            "US.CIEN"
+          ]
         }
       ]
     },
@@ -1581,10 +1581,10 @@
       "id": "ai_pcb_ccl_materials",
       "name": "高速 PCB / 覆铜板 / 电子布 / 铜箔",
       "first_seen_at": "2026-06-21T04:10:31+08:00",
-      "last_seen_at": "2026-10-01T08:35:47+08:00",
+      "last_seen_at": "2026-10-02T10:25:20+08:00",
       "initial_score": 61.8,
-      "previous_score": 62.3,
-      "last_score": 56.1,
+      "previous_score": 56.1,
+      "last_score": 62.3,
       "stage": "观察跟踪",
       "initial_prices": {
         "US.TTMI": 216.44,
@@ -1621,18 +1621,6 @@
         }
       ],
       "history": [
-        {
-          "at": "2026-09-03T11:41:12+08:00",
-          "score": 46.8,
-          "stage": "观察跟踪",
-          "top_candidates": [
-            "US.TTMI",
-            "US.JBL",
-            "US.FLEX",
-            "HK.01888",
-            "HK.00148"
-          ]
-        },
         {
           "at": "2026-09-04T11:42:02+08:00",
           "score": 46.8,
@@ -2100,6 +2088,18 @@
             "HK.01888",
             "HK.00148"
           ]
+        },
+        {
+          "at": "2026-10-02T10:25:20+08:00",
+          "score": 62.3,
+          "stage": "观察跟踪",
+          "top_candidates": [
+            "US.FLEX",
+            "US.TTMI",
+            "US.JBL",
+            "HK.01888",
+            "HK.00148"
+          ]
         }
       ]
     },
@@ -2107,10 +2107,10 @@
       "id": "physical_ai_robotics",
       "name": "Physical AI / 机器人 / 自动化",
       "first_seen_at": "2026-06-21T04:10:31+08:00",
-      "last_seen_at": "2026-10-01T08:35:47+08:00",
+      "last_seen_at": "2026-10-02T10:25:20+08:00",
       "initial_score": 62.4,
       "previous_score": 50.0,
-      "last_score": 50.0,
+      "last_score": 50.2,
       "stage": "观察跟踪",
       "initial_prices": {
         "US.HON": 229.01,
@@ -2143,18 +2143,6 @@
         }
       ],
       "history": [
-        {
-          "at": "2026-09-03T11:41:12+08:00",
-          "score": 42.2,
-          "stage": "观察跟踪",
-          "top_candidates": [
-            "US.ISRG",
-            "US.ROK",
-            "US.HON",
-            "US.SYM",
-            "US.TSLA"
-          ]
-        },
         {
           "at": "2026-09-04T11:42:02+08:00",
           "score": 42.2,
@@ -2622,6 +2610,18 @@
             "US.HON",
             "US.TSLA"
           ]
+        },
+        {
+          "at": "2026-10-02T10:25:20+08:00",
+          "score": 50.2,
+          "stage": "观察跟踪",
+          "top_candidates": [
+            "US.ISRG",
+            "US.SYM",
+            "US.ROK",
+            "US.HON",
+            "US.TSLA"
+          ]
         }
       ]
     }
@@ -2631,16 +2631,16 @@
       "code": "HK.00148",
       "name": "建滔集团",
       "first_seen_at": "2026-06-21T04:10:31+08:00",
-      "last_seen_at": "2026-10-01T08:35:47+08:00",
+      "last_seen_at": "2026-10-02T10:25:20+08:00",
       "latest_filing_accession": null,
       "latest_filing_form": null,
       "latest_filing_date": null,
-      "price": 55.75,
+      "price": 56.85,
       "valuation_pe": null,
       "opportunity_score": 0.0,
       "entry_score": null,
       "trend_score": 68.0,
-      "alpha_percentile": 31.1,
+      "alpha_percentile": 29.7,
       "universe_rank": 20,
       "factor_snapshot": {
         "factors": {
@@ -2850,6 +2850,10 @@
         {
           "date": "2026-10-01",
           "price": 55.75
+        },
+        {
+          "date": "2026-10-02",
+          "price": 56.85
         }
       ],
       "rank_history": [
@@ -3028,6 +3032,10 @@
         {
           "date": "2026-10-01",
           "rank": 20
+        },
+        {
+          "date": "2026-10-02",
+          "rank": 20
         }
       ],
       "signals": [
@@ -3057,16 +3065,16 @@
       "code": "HK.00981",
       "name": "中芯国际",
       "first_seen_at": "2026-06-21T04:10:31+08:00",
-      "last_seen_at": "2026-10-01T08:35:47+08:00",
+      "last_seen_at": "2026-10-02T10:25:20+08:00",
       "latest_filing_accession": null,
       "latest_filing_form": null,
       "latest_filing_date": null,
-      "price": 60.65,
+      "price": 59.9,
       "valuation_pe": null,
       "opportunity_score": 0.0,
       "entry_score": null,
       "trend_score": 12.0,
-      "alpha_percentile": 31.1,
+      "alpha_percentile": 29.7,
       "universe_rank": 27,
       "factor_snapshot": {
         "factors": {
@@ -3276,6 +3284,10 @@
         {
           "date": "2026-10-01",
           "price": 60.65
+        },
+        {
+          "date": "2026-10-02",
+          "price": 59.9
         }
       ],
       "rank_history": [
@@ -3454,6 +3466,10 @@
         {
           "date": "2026-10-01",
           "rank": 27
+        },
+        {
+          "date": "2026-10-02",
+          "rank": 27
         }
       ],
       "signals": [
@@ -3483,16 +3499,16 @@
       "code": "HK.01347",
       "name": "华虹半导体",
       "first_seen_at": "2026-06-21T04:10:31+08:00",
-      "last_seen_at": "2026-10-01T08:35:47+08:00",
+      "last_seen_at": "2026-10-02T10:25:20+08:00",
       "latest_filing_accession": null,
       "latest_filing_form": null,
       "latest_filing_date": null,
-      "price": 105.4,
+      "price": 104.9,
       "valuation_pe": null,
       "opportunity_score": 0.0,
       "entry_score": null,
       "trend_score": 12.0,
-      "alpha_percentile": 31.1,
+      "alpha_percentile": 29.7,
       "universe_rank": 26,
       "factor_snapshot": {
         "factors": {
@@ -3702,6 +3718,10 @@
         {
           "date": "2026-10-01",
           "price": 105.4
+        },
+        {
+          "date": "2026-10-02",
+          "price": 104.9
         }
       ],
       "rank_history": [
@@ -3880,6 +3900,10 @@
         {
           "date": "2026-10-01",
           "rank": 26
+        },
+        {
+          "date": "2026-10-02",
+          "rank": 26
         }
       ],
       "signals": [
@@ -3909,16 +3933,16 @@
       "code": "HK.01888",
       "name": "建滔积层板",
       "first_seen_at": "2026-06-21T04:10:31+08:00",
-      "last_seen_at": "2026-10-01T08:35:47+08:00",
+      "last_seen_at": "2026-10-02T10:25:20+08:00",
       "latest_filing_accession": null,
       "latest_filing_form": null,
       "latest_filing_date": null,
-      "price": 48.54,
+      "price": 49.62,
       "valuation_pe": null,
       "opportunity_score": 0.0,
       "entry_score": null,
       "trend_score": 68.0,
-      "alpha_percentile": 31.1,
+      "alpha_percentile": 29.7,
       "universe_rank": 19,
       "factor_snapshot": {
         "factors": {
@@ -4128,6 +4152,10 @@
         {
           "date": "2026-10-01",
           "price": 48.54
+        },
+        {
+          "date": "2026-10-02",
+          "price": 49.62
         }
       ],
       "rank_history": [
@@ -4306,6 +4334,10 @@
         {
           "date": "2026-10-01",
           "rank": 19
+        },
+        {
+          "date": "2026-10-02",
+          "rank": 19
         }
       ],
       "signals": [
@@ -4335,7 +4367,7 @@
       "code": "SH.600183",
       "name": "生益科技",
       "first_seen_at": "2026-06-21T04:10:31+08:00",
-      "last_seen_at": "2026-10-01T08:35:47+08:00",
+      "last_seen_at": "2026-10-02T10:25:20+08:00",
       "latest_filing_accession": null,
       "latest_filing_form": null,
       "latest_filing_date": null,
@@ -4344,7 +4376,7 @@
       "opportunity_score": 0.0,
       "entry_score": null,
       "trend_score": 42.0,
-      "alpha_percentile": 31.1,
+      "alpha_percentile": 29.7,
       "universe_rank": 21,
       "factor_snapshot": {
         "factors": {
@@ -4554,6 +4586,10 @@
         {
           "date": "2026-10-01",
           "price": 129.96
+        },
+        {
+          "date": "2026-10-02",
+          "price": 129.96
         }
       ],
       "rank_history": [
@@ -4732,6 +4768,10 @@
         {
           "date": "2026-10-01",
           "rank": 21
+        },
+        {
+          "date": "2026-10-02",
+          "rank": 21
         }
       ],
       "signals": [
@@ -4761,7 +4801,7 @@
       "code": "SH.603256",
       "name": "宏和科技",
       "first_seen_at": "2026-06-21T04:10:31+08:00",
-      "last_seen_at": "2026-10-01T08:35:47+08:00",
+      "last_seen_at": "2026-10-02T10:25:20+08:00",
       "latest_filing_accession": null,
       "latest_filing_form": null,
       "latest_filing_date": null,
@@ -4770,7 +4810,7 @@
       "opportunity_score": 0.0,
       "entry_score": null,
       "trend_score": 42.0,
-      "alpha_percentile": 31.1,
+      "alpha_percentile": 29.7,
       "universe_rank": 24,
       "factor_snapshot": {
         "factors": {
@@ -4980,6 +5020,10 @@
         {
           "date": "2026-10-01",
           "price": 130.7
+        },
+        {
+          "date": "2026-10-02",
+          "price": 130.7
         }
       ],
       "rank_history": [
@@ -5158,6 +5202,10 @@
         {
           "date": "2026-10-01",
           "rank": 24
+        },
+        {
+          "date": "2026-10-02",
+          "rank": 24
         }
       ],
       "signals": [
@@ -5187,7 +5235,7 @@
       "code": "SH.688183",
       "name": "生益电子",
       "first_seen_at": "2026-06-21T04:10:31+08:00",
-      "last_seen_at": "2026-10-01T08:35:47+08:00",
+      "last_seen_at": "2026-10-02T10:25:20+08:00",
       "latest_filing_accession": null,
       "latest_filing_form": null,
       "latest_filing_date": null,
@@ -5196,7 +5244,7 @@
       "opportunity_score": 0.0,
       "entry_score": null,
       "trend_score": 50.0,
-      "alpha_percentile": 31.1,
+      "alpha_percentile": 29.7,
       "universe_rank": 22,
       "factor_snapshot": {
         "factors": {
@@ -5406,6 +5454,10 @@
         {
           "date": "2026-10-01",
           "price": 108.0
+        },
+        {
+          "date": "2026-10-02",
+          "price": 108.0
         }
       ],
       "rank_history": [
@@ -5584,6 +5636,10 @@
         {
           "date": "2026-10-01",
           "rank": 22
+        },
+        {
+          "date": "2026-10-02",
+          "rank": 22
         }
       ],
       "signals": [
@@ -5613,7 +5669,7 @@
       "code": "SH.688322",
       "name": "奥比中光",
       "first_seen_at": "2026-06-21T04:10:31+08:00",
-      "last_seen_at": "2026-10-01T08:35:47+08:00",
+      "last_seen_at": "2026-10-02T10:25:20+08:00",
       "latest_filing_accession": null,
       "latest_filing_form": null,
       "latest_filing_date": null,
@@ -5665,7 +5721,7 @@
       "code": "SZ.002335",
       "name": "科华数据",
       "first_seen_at": "2026-06-21T04:10:31+08:00",
-      "last_seen_at": "2026-10-01T08:35:47+08:00",
+      "last_seen_at": "2026-10-02T10:25:20+08:00",
       "latest_filing_accession": null,
       "latest_filing_form": null,
       "latest_filing_date": null,
@@ -5674,7 +5730,7 @@
       "opportunity_score": 0.0,
       "entry_score": null,
       "trend_score": 12.0,
-      "alpha_percentile": 31.1,
+      "alpha_percentile": 29.7,
       "universe_rank": 33,
       "factor_snapshot": {
         "factors": {
@@ -5884,6 +5940,10 @@
         {
           "date": "2026-10-01",
           "price": 29.93
+        },
+        {
+          "date": "2026-10-02",
+          "price": 29.93
         }
       ],
       "rank_history": [
@@ -6062,6 +6122,10 @@
         {
           "date": "2026-10-01",
           "rank": 33
+        },
+        {
+          "date": "2026-10-02",
+          "rank": 33
         }
       ],
       "signals": [
@@ -6091,7 +6155,7 @@
       "code": "SZ.002747",
       "name": "埃斯顿",
       "first_seen_at": "2026-06-21T04:10:31+08:00",
-      "last_seen_at": "2026-10-01T08:35:47+08:00",
+      "last_seen_at": "2026-10-02T10:25:20+08:00",
       "latest_filing_accession": null,
       "latest_filing_form": null,
       "latest_filing_date": null,
@@ -6143,7 +6207,7 @@
       "code": "SZ.300308",
       "name": "中际旭创",
       "first_seen_at": "2026-06-21T04:10:31+08:00",
-      "last_seen_at": "2026-10-01T08:35:47+08:00",
+      "last_seen_at": "2026-10-02T10:25:20+08:00",
       "latest_filing_accession": null,
       "latest_filing_form": null,
       "latest_filing_date": null,
@@ -6152,8 +6216,8 @@
       "opportunity_score": 0.0,
       "entry_score": null,
       "trend_score": 12.0,
-      "alpha_percentile": 31.1,
-      "universe_rank": 15,
+      "alpha_percentile": 29.7,
+      "universe_rank": 16,
       "factor_snapshot": {
         "factors": {
           "quality": null,
@@ -6362,6 +6426,10 @@
         {
           "date": "2026-10-01",
           "price": 808.44
+        },
+        {
+          "date": "2026-10-02",
+          "price": 808.44
         }
       ],
       "rank_history": [
@@ -6540,6 +6608,10 @@
         {
           "date": "2026-10-01",
           "rank": 15
+        },
+        {
+          "date": "2026-10-02",
+          "rank": 16
         }
       ],
       "signals": [
@@ -6569,7 +6641,7 @@
       "code": "SZ.300394",
       "name": "天孚通信",
       "first_seen_at": "2026-06-21T04:10:31+08:00",
-      "last_seen_at": "2026-10-01T08:35:47+08:00",
+      "last_seen_at": "2026-10-02T10:25:20+08:00",
       "latest_filing_accession": null,
       "latest_filing_form": null,
       "latest_filing_date": null,
@@ -6578,8 +6650,8 @@
       "opportunity_score": 0.0,
       "entry_score": null,
       "trend_score": 68.0,
-      "alpha_percentile": 31.1,
-      "universe_rank": 17,
+      "alpha_percentile": 29.7,
+      "universe_rank": 18,
       "factor_snapshot": {
         "factors": {
           "quality": null,
@@ -6788,6 +6860,10 @@
         {
           "date": "2026-10-01",
           "price": 260.77
+        },
+        {
+          "date": "2026-10-02",
+          "price": 260.77
         }
       ],
       "rank_history": [
@@ -6966,6 +7042,10 @@
         {
           "date": "2026-10-01",
           "rank": 17
+        },
+        {
+          "date": "2026-10-02",
+          "rank": 18
         }
       ],
       "signals": [
@@ -6995,7 +7075,7 @@
       "code": "SZ.300476",
       "name": "胜宏科技",
       "first_seen_at": "2026-06-21T04:10:31+08:00",
-      "last_seen_at": "2026-10-01T08:35:47+08:00",
+      "last_seen_at": "2026-10-02T10:25:20+08:00",
       "latest_filing_accession": null,
       "latest_filing_form": null,
       "latest_filing_date": null,
@@ -7004,7 +7084,7 @@
       "opportunity_score": 0.0,
       "entry_score": null,
       "trend_score": 12.0,
-      "alpha_percentile": 31.1,
+      "alpha_percentile": 29.7,
       "universe_rank": 23,
       "factor_snapshot": {
         "factors": {
@@ -7214,6 +7294,10 @@
         {
           "date": "2026-10-01",
           "price": 210.3
+        },
+        {
+          "date": "2026-10-02",
+          "price": 210.3
         }
       ],
       "rank_history": [
@@ -7392,6 +7476,10 @@
         {
           "date": "2026-10-01",
           "rank": 23
+        },
+        {
+          "date": "2026-10-02",
+          "rank": 23
         }
       ],
       "signals": [
@@ -7421,7 +7509,7 @@
       "code": "SZ.300499",
       "name": "高澜股份",
       "first_seen_at": "2026-06-21T04:10:31+08:00",
-      "last_seen_at": "2026-10-01T08:35:47+08:00",
+      "last_seen_at": "2026-10-02T10:25:20+08:00",
       "latest_filing_accession": null,
       "latest_filing_form": null,
       "latest_filing_date": null,
@@ -7430,7 +7518,7 @@
       "opportunity_score": 0.0,
       "entry_score": null,
       "trend_score": 38.0,
-      "alpha_percentile": 31.1,
+      "alpha_percentile": 29.7,
       "universe_rank": 34,
       "factor_snapshot": {
         "factors": {
@@ -7640,6 +7728,10 @@
         {
           "date": "2026-10-01",
           "price": 31.41
+        },
+        {
+          "date": "2026-10-02",
+          "price": 31.41
         }
       ],
       "rank_history": [
@@ -7818,6 +7910,10 @@
         {
           "date": "2026-10-01",
           "rank": 34
+        },
+        {
+          "date": "2026-10-02",
+          "rank": 34
         }
       ],
       "signals": [
@@ -7847,7 +7943,7 @@
       "code": "SZ.300502",
       "name": "新易盛",
       "first_seen_at": "2026-06-21T04:10:31+08:00",
-      "last_seen_at": "2026-10-01T08:35:47+08:00",
+      "last_seen_at": "2026-10-02T10:25:20+08:00",
       "latest_filing_accession": null,
       "latest_filing_form": null,
       "latest_filing_date": null,
@@ -7856,8 +7952,8 @@
       "opportunity_score": 0.0,
       "entry_score": null,
       "trend_score": 12.0,
-      "alpha_percentile": 31.1,
-      "universe_rank": 16,
+      "alpha_percentile": 29.7,
+      "universe_rank": 17,
       "factor_snapshot": {
         "factors": {
           "quality": null,
@@ -8066,6 +8162,10 @@
         {
           "date": "2026-10-01",
           "price": 389.0
+        },
+        {
+          "date": "2026-10-02",
+          "price": 389.0
         }
       ],
       "rank_history": [
@@ -8244,6 +8344,10 @@
         {
           "date": "2026-10-01",
           "rank": 16
+        },
+        {
+          "date": "2026-10-02",
+          "rank": 17
         }
       ],
       "signals": [
@@ -8273,14 +8377,14 @@
       "code": "US.AMD",
       "name": "AMD",
       "first_seen_at": "2026-06-21T04:10:31+08:00",
-      "last_seen_at": "2026-10-01T08:35:47+08:00",
+      "last_seen_at": "2026-10-02T10:25:20+08:00",
       "latest_filing_accession": "0000002488-26-000182",
       "latest_filing_form": "8-K",
       "latest_filing_date": "2026-09-28",
-      "price": 609.1,
+      "price": 619.16,
       "valuation_pe": 46.1861,
-      "opportunity_score": 67.2,
-      "entry_score": 87.5,
+      "opportunity_score": 67.3,
+      "entry_score": null,
       "trend_score": 88.0,
       "alpha_percentile": 79.7,
       "universe_rank": 8,
@@ -8288,23 +8392,23 @@
         "factors": {
           "quality": 71.9,
           "growth": 98.1,
-          "earnings_revision": 49.1,
+          "earnings_revision": 50.0,
           "valuation": 36.6,
           "momentum": 100.0,
           "catalyst": 57.4,
-          "crowding": 18.0,
+          "crowding": 16.4,
           "data_quality": 95.0
         },
         "factor_coverage": 1.0,
         "missing_factors": [],
-        "raw_alpha_score": 67.2,
+        "raw_alpha_score": 67.3,
         "confidence_multiplier": 1.0,
-        "opportunity_score": 67.2,
+        "opportunity_score": 67.3,
         "valuation_detail": {
           "company_type": "semiconductor",
           "metrics": {
             "forward_pe": 46.1861,
-            "price_sales": 24.2083
+            "price_sales": 24.3688
           },
           "method": "semiconductor_forward_pe"
         }
@@ -8487,6 +8591,10 @@
         {
           "date": "2026-10-01",
           "price": 609.1
+        },
+        {
+          "date": "2026-10-02",
+          "price": 619.16
         }
       ],
       "rank_history": [
@@ -8665,6 +8773,10 @@
         {
           "date": "2026-10-01",
           "rank": 8
+        },
+        {
+          "date": "2026-10-02",
+          "rank": 8
         }
       ],
       "signals": [
@@ -8694,14 +8806,14 @@
       "code": "US.ANET",
       "name": "Arista Networks",
       "first_seen_at": "2026-06-21T04:10:31+08:00",
-      "last_seen_at": "2026-10-01T08:35:47+08:00",
+      "last_seen_at": "2026-10-02T10:25:20+08:00",
       "latest_filing_accession": "0001596532-26-000175",
       "latest_filing_form": "10-Q",
       "latest_filing_date": "2026-08-05",
-      "price": 203.87,
-      "valuation_pe": 49.55634426604203,
-      "opportunity_score": 69.6,
-      "entry_score": 94.3,
+      "price": 205.56,
+      "valuation_pe": 49.77541548682615,
+      "opportunity_score": 69.4,
+      "entry_score": 94.7,
       "trend_score": 88.0,
       "alpha_percentile": 87.8,
       "universe_rank": 5,
@@ -8710,10 +8822,10 @@
           "quality": 78.3,
           "growth": 90.0,
           "earnings_revision": null,
-          "valuation": 13.9,
+          "valuation": 13.4,
           "momentum": 100.0,
           "catalyst": null,
-          "crowding": 32.2,
+          "crowding": 31.6,
           "data_quality": 95.0
         },
         "factor_coverage": 0.7,
@@ -8721,14 +8833,14 @@
           "earnings_revision",
           "catalyst"
         ],
-        "raw_alpha_score": 69.6,
+        "raw_alpha_score": 69.4,
         "confidence_multiplier": 1.0,
-        "opportunity_score": 69.6,
+        "opportunity_score": 69.4,
         "valuation_detail": {
           "company_type": "industrial",
           "metrics": {
-            "forward_pe": 49.55634426604203,
-            "price_sales": 24.2725
+            "forward_pe": 49.77541548682615,
+            "price_sales": 24.3599
           },
           "method": "industrial_forward_pe"
         }
@@ -8911,6 +9023,10 @@
         {
           "date": "2026-10-01",
           "price": 203.87
+        },
+        {
+          "date": "2026-10-02",
+          "price": 205.56
         }
       ],
       "rank_history": [
@@ -9089,6 +9205,10 @@
         {
           "date": "2026-10-01",
           "rank": 5
+        },
+        {
+          "date": "2026-10-02",
+          "rank": 5
         }
       ],
       "signals": [
@@ -9118,26 +9238,26 @@
       "code": "US.AVGO",
       "name": "Broadcom",
       "first_seen_at": "2026-06-21T04:10:31+08:00",
-      "last_seen_at": "2026-10-01T08:35:47+08:00",
+      "last_seen_at": "2026-10-02T10:25:20+08:00",
       "latest_filing_accession": "0001730168-26-000080",
       "latest_filing_form": "10-Q",
       "latest_filing_date": "2026-09-10",
-      "price": 351.95,
+      "price": 345.81,
       "valuation_pe": 19.00524,
-      "opportunity_score": 67.8,
-      "entry_score": 59.4,
-      "trend_score": 20.0,
-      "alpha_percentile": 82.4,
-      "universe_rank": 7,
+      "opportunity_score": 66.9,
+      "entry_score": 57.2,
+      "trend_score": 12.0,
+      "alpha_percentile": 77.0,
+      "universe_rank": 9,
       "factor_snapshot": {
         "factors": {
           "quality": 75.8,
           "growth": 83.4,
           "earnings_revision": null,
           "valuation": 91.0,
-          "momentum": 12.7,
+          "momentum": 8.0,
           "catalyst": null,
-          "crowding": 65.5,
+          "crowding": 66.9,
           "data_quality": 95.0
         },
         "factor_coverage": 0.7,
@@ -9145,14 +9265,14 @@
           "earnings_revision",
           "catalyst"
         ],
-        "raw_alpha_score": 67.8,
+        "raw_alpha_score": 66.9,
         "confidence_multiplier": 1.0,
-        "opportunity_score": 67.8,
+        "opportunity_score": 66.9,
         "valuation_detail": {
           "company_type": "semiconductor",
           "metrics": {
             "forward_pe": 19.00524,
-            "price_sales": 18.9249
+            "price_sales": 18.7599
           },
           "method": "semiconductor_forward_pe"
         }
@@ -9335,6 +9455,10 @@
         {
           "date": "2026-10-01",
           "price": 351.95
+        },
+        {
+          "date": "2026-10-02",
+          "price": 345.81
         }
       ],
       "rank_history": [
@@ -9513,6 +9637,10 @@
         {
           "date": "2026-10-01",
           "rank": 7
+        },
+        {
+          "date": "2026-10-02",
+          "rank": 9
         }
       ],
       "signals": [
@@ -9542,26 +9670,26 @@
       "code": "US.CIEN",
       "name": "Ciena",
       "first_seen_at": "2026-06-21T04:10:31+08:00",
-      "last_seen_at": "2026-10-01T08:35:47+08:00",
+      "last_seen_at": "2026-10-02T10:25:20+08:00",
       "latest_filing_accession": "0001628280-26-060361",
       "latest_filing_form": "10-Q",
       "latest_filing_date": "2026-09-03",
-      "price": 351.55,
-      "valuation_pe": 49.09735362445004,
-      "opportunity_score": 45.7,
-      "entry_score": null,
-      "trend_score": 12.0,
-      "alpha_percentile": 66.2,
-      "universe_rank": 13,
+      "price": 382.7,
+      "valuation_pe": 52.90992738665791,
+      "opportunity_score": 41.0,
+      "entry_score": 49.0,
+      "trend_score": 38.0,
+      "alpha_percentile": 60.8,
+      "universe_rank": 15,
       "factor_snapshot": {
         "factors": {
           "quality": 56.5,
           "growth": 76.3,
           "earnings_revision": null,
-          "valuation": 14.8,
-          "momentum": 12.0,
+          "valuation": 7.2,
+          "momentum": 0.7,
           "catalyst": null,
-          "crowding": 65.7,
+          "crowding": 56.7,
           "data_quality": 95.0
         },
         "factor_coverage": 0.7,
@@ -9569,14 +9697,14 @@
           "earnings_revision",
           "catalyst"
         ],
-        "raw_alpha_score": 45.7,
+        "raw_alpha_score": 41.0,
         "confidence_multiplier": 1.0,
-        "opportunity_score": 45.7,
+        "opportunity_score": 41.0,
         "valuation_detail": {
           "company_type": "industrial",
           "metrics": {
-            "forward_pe": 49.09735362445004,
-            "price_sales": 8.2435
+            "forward_pe": 52.90992738665791,
+            "price_sales": 8.2965
           },
           "method": "industrial_forward_pe"
         }
@@ -9759,6 +9887,10 @@
         {
           "date": "2026-10-01",
           "price": 351.55
+        },
+        {
+          "date": "2026-10-02",
+          "price": 382.7
         }
       ],
       "rank_history": [
@@ -9937,6 +10069,10 @@
         {
           "date": "2026-10-01",
           "rank": 13
+        },
+        {
+          "date": "2026-10-02",
+          "rank": 15
         }
       ],
       "signals": [
@@ -9966,41 +10102,41 @@
       "code": "US.COHR",
       "name": "Coherent",
       "first_seen_at": "2026-06-21T04:10:31+08:00",
-      "last_seen_at": "2026-10-01T08:35:47+08:00",
+      "last_seen_at": "2026-10-02T10:25:20+08:00",
       "latest_filing_accession": "0001193125-26-375462",
       "latest_filing_form": "8-K",
       "latest_filing_date": "2026-08-31",
-      "price": 286.1,
-      "valuation_pe": 30.471894571331557,
-      "opportunity_score": 47.2,
-      "entry_score": 48.5,
-      "trend_score": 12.0,
-      "alpha_percentile": 68.9,
-      "universe_rank": 12,
+      "price": 321.01,
+      "valuation_pe": 33.79425325118418,
+      "opportunity_score": 68.1,
+      "entry_score": 89.2,
+      "trend_score": 76.0,
+      "alpha_percentile": 82.4,
+      "universe_rank": 7,
       "factor_snapshot": {
         "factors": {
           "quality": 48.7,
           "growth": 81.5,
           "earnings_revision": null,
-          "valuation": 52.1,
-          "momentum": 1.6,
+          "valuation": 45.4,
+          "momentum": 93.9,
           "catalyst": null,
-          "crowding": 62.8,
-          "data_quality": 80.8
+          "crowding": 50.1,
+          "data_quality": 95.0
         },
         "factor_coverage": 0.7,
         "missing_factors": [
           "earnings_revision",
           "catalyst"
         ],
-        "raw_alpha_score": 49.7,
-        "confidence_multiplier": 0.95,
-        "opportunity_score": 47.2,
+        "raw_alpha_score": 68.1,
+        "confidence_multiplier": 1.0,
+        "opportunity_score": 68.1,
         "valuation_detail": {
           "company_type": "industrial",
           "metrics": {
-            "forward_pe": 30.471894571331557,
-            "price_sales": 7.8766
+            "forward_pe": 33.79425325118418,
+            "price_sales": 7.9026
           },
           "method": "industrial_forward_pe"
         }
@@ -10183,6 +10319,10 @@
         {
           "date": "2026-10-01",
           "price": 286.1
+        },
+        {
+          "date": "2026-10-02",
+          "price": 321.01
         }
       ],
       "rank_history": [
@@ -10361,6 +10501,10 @@
         {
           "date": "2026-10-01",
           "rank": 12
+        },
+        {
+          "date": "2026-10-02",
+          "rank": 7
         }
       ],
       "signals": [
@@ -10390,16 +10534,16 @@
       "code": "US.EMR",
       "name": "Emerson",
       "first_seen_at": "2026-06-21T04:10:31+08:00",
-      "last_seen_at": "2026-10-01T08:35:47+08:00",
+      "last_seen_at": "2026-10-02T10:25:20+08:00",
       "latest_filing_accession": null,
       "latest_filing_form": null,
       "latest_filing_date": null,
-      "price": 155.1,
+      "price": 158.16,
       "valuation_pe": 21.25865,
       "opportunity_score": 0.0,
       "entry_score": null,
       "trend_score": 88.0,
-      "alpha_percentile": 31.1,
+      "alpha_percentile": 29.7,
       "universe_rank": 31,
       "factor_snapshot": {
         "factors": {
@@ -10409,7 +10553,7 @@
           "valuation": 78.5,
           "momentum": 100.0,
           "catalyst": null,
-          "crowding": 48.6,
+          "crowding": 46.6,
           "data_quality": 54.3
         },
         "factor_coverage": 0.4,
@@ -10419,14 +10563,14 @@
           "earnings_revision",
           "catalyst"
         ],
-        "raw_alpha_score": 79.8,
+        "raw_alpha_score": 79.5,
         "confidence_multiplier": 0.0,
         "opportunity_score": 0.0,
         "valuation_detail": {
           "company_type": "automation",
           "metrics": {
             "forward_pe": 21.25865,
-            "price_sales": 4.7166
+            "price_sales": 4.6817
           },
           "method": "automation_forward_pe"
         }
@@ -10609,6 +10753,10 @@
         {
           "date": "2026-10-01",
           "price": 155.1
+        },
+        {
+          "date": "2026-10-02",
+          "price": 158.16
         }
       ],
       "rank_history": [
@@ -10787,6 +10935,10 @@
         {
           "date": "2026-10-01",
           "rank": 31
+        },
+        {
+          "date": "2026-10-02",
+          "rank": 31
         }
       ],
       "signals": [
@@ -10816,16 +10968,16 @@
       "code": "US.ETN",
       "name": "Eaton",
       "first_seen_at": "2026-06-21T04:10:31+08:00",
-      "last_seen_at": "2026-10-01T08:35:47+08:00",
+      "last_seen_at": "2026-10-02T10:25:20+08:00",
       "latest_filing_accession": null,
       "latest_filing_form": null,
       "latest_filing_date": null,
-      "price": 429.99,
+      "price": 438.5,
       "valuation_pe": 28.83915,
       "opportunity_score": 0.0,
-      "entry_score": 90.0,
+      "entry_score": 90.1,
       "trend_score": 76.0,
-      "alpha_percentile": 31.1,
+      "alpha_percentile": 29.7,
       "universe_rank": 29,
       "factor_snapshot": {
         "factors": {
@@ -10835,7 +10987,7 @@
           "valuation": 55.3,
           "momentum": 100.0,
           "catalyst": null,
-          "crowding": 46.6,
+          "crowding": 44.5,
           "data_quality": 54.3
         },
         "factor_coverage": 0.4,
@@ -10845,14 +10997,14 @@
           "earnings_revision",
           "catalyst"
         ],
-        "raw_alpha_score": 70.8,
+        "raw_alpha_score": 70.6,
         "confidence_multiplier": 0.0,
         "opportunity_score": 0.0,
         "valuation_detail": {
           "company_type": "industrial",
           "metrics": {
             "forward_pe": 28.83915,
-            "price_sales": 5.5745
+            "price_sales": 5.5564
           },
           "method": "industrial_forward_pe"
         }
@@ -11035,6 +11187,10 @@
         {
           "date": "2026-10-01",
           "price": 429.99
+        },
+        {
+          "date": "2026-10-02",
+          "price": 438.5
         }
       ],
       "rank_history": [
@@ -11213,6 +11369,10 @@
         {
           "date": "2026-10-01",
           "rank": 29
+        },
+        {
+          "date": "2026-10-02",
+          "rank": 29
         }
       ],
       "signals": [
@@ -11242,14 +11402,14 @@
       "code": "US.FLEX",
       "name": "Flex",
       "first_seen_at": "2026-06-21T04:10:31+08:00",
-      "last_seen_at": "2026-10-01T08:35:47+08:00",
+      "last_seen_at": "2026-10-02T10:25:20+08:00",
       "latest_filing_accession": "0000866374-26-000036",
       "latest_filing_form": "8-K",
       "latest_filing_date": "2026-09-15",
-      "price": 110.5,
+      "price": 112.7,
       "valuation_pe": 19.71739,
-      "opportunity_score": 57.8,
-      "entry_score": 73.6,
+      "opportunity_score": 65.0,
+      "entry_score": 80.5,
       "trend_score": 42.0,
       "alpha_percentile": 74.3,
       "universe_rank": 10,
@@ -11259,24 +11419,24 @@
           "growth": 61.4,
           "earnings_revision": null,
           "valuation": 73.6,
-          "momentum": 48.6,
+          "momentum": 64.4,
           "catalyst": null,
-          "crowding": 62.4,
-          "data_quality": 80.8
+          "crowding": 60.2,
+          "data_quality": 95.0
         },
         "factor_coverage": 0.7,
         "missing_factors": [
           "earnings_revision",
           "catalyst"
         ],
-        "raw_alpha_score": 60.8,
-        "confidence_multiplier": 0.95,
-        "opportunity_score": 57.8,
+        "raw_alpha_score": 65.0,
+        "confidence_multiplier": 1.0,
+        "opportunity_score": 65.0,
         "valuation_detail": {
           "company_type": "industrial",
           "metrics": {
             "forward_pe": 19.71739,
-            "price_sales": 1.3919
+            "price_sales": 1.4268
           },
           "method": "industrial_forward_pe"
         }
@@ -11459,6 +11619,10 @@
         {
           "date": "2026-10-01",
           "price": 110.5
+        },
+        {
+          "date": "2026-10-02",
+          "price": 112.7
         }
       ],
       "rank_history": [
@@ -11637,6 +11801,10 @@
         {
           "date": "2026-10-01",
           "rank": 10
+        },
+        {
+          "date": "2026-10-02",
+          "rank": 10
         }
       ],
       "signals": [
@@ -11666,16 +11834,16 @@
       "code": "US.HON",
       "name": "Honeywell",
       "first_seen_at": "2026-06-21T04:10:31+08:00",
-      "last_seen_at": "2026-10-01T08:35:47+08:00",
+      "last_seen_at": "2026-10-02T10:25:20+08:00",
       "latest_filing_accession": null,
       "latest_filing_form": null,
       "latest_filing_date": null,
-      "price": 211.35,
+      "price": 214.33,
       "valuation_pe": 22.37243,
       "opportunity_score": 0.0,
       "entry_score": null,
       "trend_score": 0.0,
-      "alpha_percentile": 31.1,
+      "alpha_percentile": 29.7,
       "universe_rank": 36,
       "factor_snapshot": {
         "factors": {
@@ -11685,7 +11853,7 @@
           "valuation": 76.3,
           "momentum": 0.0,
           "catalyst": null,
-          "crowding": 82.4,
+          "crowding": 81.7,
           "data_quality": 54.3
         },
         "factor_coverage": 0.4,
@@ -11695,14 +11863,14 @@
           "earnings_revision",
           "catalyst"
         ],
-        "raw_alpha_score": 45.7,
+        "raw_alpha_score": 45.6,
         "confidence_multiplier": 0.0,
         "opportunity_score": 0.0,
         "valuation_detail": {
           "company_type": "automation",
           "metrics": {
             "forward_pe": 22.37243,
-            "price_sales": 1.7064
+            "price_sales": 1.713
           },
           "method": "automation_forward_pe"
         }
@@ -11885,6 +12053,10 @@
         {
           "date": "2026-10-01",
           "price": 211.35
+        },
+        {
+          "date": "2026-10-02",
+          "price": 214.33
         }
       ],
       "rank_history": [
@@ -12063,6 +12235,10 @@
         {
           "date": "2026-10-01",
           "rank": 36
+        },
+        {
+          "date": "2026-10-02",
+          "rank": 36
         }
       ],
       "signals": [
@@ -12092,26 +12268,26 @@
       "code": "US.ISRG",
       "name": "Intuitive Surgical",
       "first_seen_at": "2026-06-21T04:10:31+08:00",
-      "last_seen_at": "2026-10-01T08:35:47+08:00",
+      "last_seen_at": "2026-10-02T10:25:20+08:00",
       "latest_filing_accession": "0001035267-26-000063",
       "latest_filing_form": "8-K",
       "latest_filing_date": "2026-07-27",
-      "price": 406.63,
+      "price": 401.58,
       "valuation_pe": 34.27433,
-      "opportunity_score": 65.7,
-      "entry_score": 71.1,
-      "trend_score": 38.0,
-      "alpha_percentile": 77.0,
-      "universe_rank": 9,
+      "opportunity_score": 64.2,
+      "entry_score": 67.8,
+      "trend_score": 30.7,
+      "alpha_percentile": 71.6,
+      "universe_rank": 11,
       "factor_snapshot": {
         "factors": {
           "quality": 86.3,
           "growth": 78.7,
           "earnings_revision": null,
           "valuation": 52.5,
-          "momentum": 38.0,
+          "momentum": 30.7,
           "catalyst": null,
-          "crowding": 57.8,
+          "crowding": 59.3,
           "data_quality": 95.0
         },
         "factor_coverage": 0.7,
@@ -12119,14 +12295,14 @@
           "earnings_revision",
           "catalyst"
         ],
-        "raw_alpha_score": 65.7,
+        "raw_alpha_score": 64.2,
         "confidence_multiplier": 1.0,
-        "opportunity_score": 65.7,
+        "opportunity_score": 64.2,
         "valuation_detail": {
           "company_type": "automation",
           "metrics": {
             "forward_pe": 34.27433,
-            "price_sales": 13.1135
+            "price_sales": 13.0747
           },
           "method": "automation_forward_pe"
         }
@@ -12309,6 +12485,10 @@
         {
           "date": "2026-10-01",
           "price": 406.63
+        },
+        {
+          "date": "2026-10-02",
+          "price": 401.58
         }
       ],
       "rank_history": [
@@ -12487,6 +12667,10 @@
         {
           "date": "2026-10-01",
           "rank": 9
+        },
+        {
+          "date": "2026-10-02",
+          "rank": 11
         }
       ],
       "signals": [
@@ -12516,41 +12700,41 @@
       "code": "US.JBL",
       "name": "Jabil",
       "first_seen_at": "2026-06-21T04:10:31+08:00",
-      "last_seen_at": "2026-10-01T08:35:47+08:00",
+      "last_seen_at": "2026-10-02T10:25:20+08:00",
       "latest_filing_accession": "0001628280-26-063890",
       "latest_filing_form": "8-K",
       "latest_filing_date": "2026-09-30",
-      "price": 288.65,
+      "price": 300.0,
       "valuation_pe": 18.39565,
-      "opportunity_score": 0.0,
-      "entry_score": 57.8,
+      "opportunity_score": 50.7,
+      "entry_score": 53.2,
       "trend_score": 12.0,
-      "alpha_percentile": 31.1,
-      "universe_rank": 18,
+      "alpha_percentile": 66.2,
+      "universe_rank": 13,
       "factor_snapshot": {
         "factors": {
           "quality": 47.6,
           "growth": 54.5,
           "earnings_revision": null,
           "valuation": 76.2,
-          "momentum": 10.4,
+          "momentum": 5.2,
           "catalyst": null,
-          "crowding": 68.6,
-          "data_quality": 47.5
+          "crowding": 64.8,
+          "data_quality": 95.0
         },
         "factor_coverage": 0.7,
         "missing_factors": [
           "earnings_revision",
           "catalyst"
         ],
-        "raw_alpha_score": 48.7,
-        "confidence_multiplier": 0.0,
-        "opportunity_score": 0.0,
+        "raw_alpha_score": 50.7,
+        "confidence_multiplier": 1.0,
+        "opportunity_score": 50.7,
         "valuation_detail": {
           "company_type": "industrial",
           "metrics": {
             "forward_pe": 18.39565,
-            "price_sales": 0.907
+            "price_sales": 0.9291
           },
           "method": "industrial_forward_pe"
         }
@@ -12733,6 +12917,10 @@
         {
           "date": "2026-10-01",
           "price": 288.65
+        },
+        {
+          "date": "2026-10-02",
+          "price": 300.0
         }
       ],
       "rank_history": [
@@ -12911,6 +13099,10 @@
         {
           "date": "2026-10-01",
           "rank": 18
+        },
+        {
+          "date": "2026-10-02",
+          "rank": 13
         }
       ],
       "signals": [
@@ -12940,15 +13132,15 @@
       "code": "US.LITE",
       "name": "Lumentum",
       "first_seen_at": "2026-06-21T04:10:31+08:00",
-      "last_seen_at": "2026-10-01T08:35:47+08:00",
+      "last_seen_at": "2026-10-02T10:25:20+08:00",
       "latest_filing_accession": "0001628280-26-057358",
       "latest_filing_form": "10-K",
       "latest_filing_date": "2026-08-17",
-      "price": 967.19,
+      "price": 1051.02,
       "valuation_pe": 39.13663,
-      "opportunity_score": 69.3,
-      "entry_score": 93.1,
-      "trend_score": 76.0,
+      "opportunity_score": 68.6,
+      "entry_score": 93.0,
+      "trend_score": 88.0,
       "alpha_percentile": 85.1,
       "universe_rank": 6,
       "factor_snapshot": {
@@ -12959,7 +13151,7 @@
           "valuation": 34.7,
           "momentum": 100.0,
           "catalyst": null,
-          "crowding": 34.8,
+          "crowding": 24.9,
           "data_quality": 95.0
         },
         "factor_coverage": 0.7,
@@ -12967,14 +13159,14 @@
           "earnings_revision",
           "catalyst"
         ],
-        "raw_alpha_score": 69.3,
+        "raw_alpha_score": 68.6,
         "confidence_multiplier": 1.0,
-        "opportunity_score": 69.3,
+        "opportunity_score": 68.6,
         "valuation_detail": {
           "company_type": "industrial",
           "metrics": {
             "forward_pe": 39.13663,
-            "price_sales": 28.5325
+            "price_sales": 31.181
           },
           "method": "industrial_forward_pe"
         }
@@ -13157,6 +13349,10 @@
         {
           "date": "2026-10-01",
           "price": 967.19
+        },
+        {
+          "date": "2026-10-02",
+          "price": 1051.02
         }
       ],
       "rank_history": [
@@ -13335,6 +13531,10 @@
         {
           "date": "2026-10-01",
           "rank": 6
+        },
+        {
+          "date": "2026-10-02",
+          "rank": 6
         }
       ],
       "signals": [
@@ -13364,14 +13564,14 @@
       "code": "US.MRVL",
       "name": "Marvell",
       "first_seen_at": "2026-06-21T04:10:31+08:00",
-      "last_seen_at": "2026-10-01T08:35:47+08:00",
+      "last_seen_at": "2026-10-02T10:25:20+08:00",
       "latest_filing_accession": "0001628280-26-063592",
       "latest_filing_form": "8-K",
       "latest_filing_date": "2026-09-25",
-      "price": 262.68,
+      "price": 270.1,
       "valuation_pe": 44.98982,
-      "opportunity_score": 76.9,
-      "entry_score": 95.7,
+      "opportunity_score": 76.8,
+      "entry_score": 95.8,
       "trend_score": 76.0,
       "alpha_percentile": 94.6,
       "universe_rank": 2,
@@ -13383,7 +13583,7 @@
           "valuation": 39.0,
           "momentum": 100.0,
           "catalyst": null,
-          "crowding": 27.6,
+          "crowding": 24.9,
           "data_quality": 95.0
         },
         "factor_coverage": 0.7,
@@ -13391,14 +13591,14 @@
           "earnings_revision",
           "catalyst"
         ],
-        "raw_alpha_score": 76.9,
+        "raw_alpha_score": 76.8,
         "confidence_multiplier": 1.0,
-        "opportunity_score": 76.9,
+        "opportunity_score": 76.8,
         "valuation_detail": {
           "company_type": "semiconductor",
           "metrics": {
             "forward_pe": 44.98982,
-            "price_sales": 24.5162
+            "price_sales": 24.8753
           },
           "method": "semiconductor_forward_pe"
         }
@@ -13581,6 +13781,10 @@
         {
           "date": "2026-10-01",
           "price": 262.68
+        },
+        {
+          "date": "2026-10-02",
+          "price": 270.1
         }
       ],
       "rank_history": [
@@ -13759,6 +13963,10 @@
         {
           "date": "2026-10-01",
           "rank": 3
+        },
+        {
+          "date": "2026-10-02",
+          "rank": 3
         }
       ],
       "signals": [
@@ -13788,16 +13996,16 @@
       "code": "US.MU",
       "name": "Micron",
       "first_seen_at": "2026-06-21T04:10:31+08:00",
-      "last_seen_at": "2026-10-01T08:35:47+08:00",
+      "last_seen_at": "2026-10-02T10:25:20+08:00",
       "latest_filing_accession": null,
       "latest_filing_form": null,
       "latest_filing_date": null,
-      "price": 1061.0,
+      "price": 1091.89,
       "valuation_pe": 6.52257,
       "opportunity_score": 0.0,
-      "entry_score": 96.3,
+      "entry_score": 96.4,
       "trend_score": 76.0,
-      "alpha_percentile": 31.1,
+      "alpha_percentile": 29.7,
       "universe_rank": 25,
       "factor_snapshot": {
         "factors": {
@@ -13807,7 +14015,7 @@
           "valuation": 100.0,
           "momentum": 100.0,
           "catalyst": null,
-          "crowding": 39.0,
+          "crowding": 36.0,
           "data_quality": 54.3
         },
         "factor_coverage": 0.4,
@@ -13817,14 +14025,14 @@
           "earnings_revision",
           "catalyst"
         ],
-        "raw_alpha_score": 86.7,
+        "raw_alpha_score": 86.3,
         "confidence_multiplier": 0.0,
         "opportunity_score": 0.0,
         "valuation_detail": {
           "company_type": "semiconductor",
           "metrics": {
             "forward_pe": 6.52257,
-            "price_sales": 13.4136
+            "price_sales": 8.872
           },
           "method": "semiconductor_forward_pe"
         }
@@ -14007,6 +14215,10 @@
         {
           "date": "2026-10-01",
           "price": 1061.0
+        },
+        {
+          "date": "2026-10-02",
+          "price": 1091.89
         }
       ],
       "rank_history": [
@@ -14185,6 +14397,10 @@
         {
           "date": "2026-10-01",
           "rank": 25
+        },
+        {
+          "date": "2026-10-02",
+          "rank": 25
         }
       ],
       "signals": [
@@ -14214,13 +14430,13 @@
       "code": "US.NVDA",
       "name": "NVIDIA",
       "first_seen_at": "2026-06-21T04:10:31+08:00",
-      "last_seen_at": "2026-10-01T08:35:47+08:00",
+      "last_seen_at": "2026-10-02T10:25:20+08:00",
       "latest_filing_accession": "0001045810-26-000078",
       "latest_filing_form": "8-K",
       "latest_filing_date": "2026-09-03",
-      "price": 229.02,
+      "price": 231.5,
       "valuation_pe": 17.02191,
-      "opportunity_score": 80.2,
+      "opportunity_score": 80.1,
       "entry_score": null,
       "trend_score": 88.0,
       "alpha_percentile": 98.6,
@@ -14229,23 +14445,23 @@
         "factors": {
           "quality": 80.7,
           "growth": 100.0,
-          "earnings_revision": 50.0,
+          "earnings_revision": 49.9,
           "valuation": 95.0,
           "momentum": 100.0,
           "catalyst": 68.7,
-          "crowding": 44.4,
+          "crowding": 43.3,
           "data_quality": 95.0
         },
         "factor_coverage": 1.0,
         "missing_factors": [],
-        "raw_alpha_score": 80.2,
+        "raw_alpha_score": 80.1,
         "confidence_multiplier": 1.0,
-        "opportunity_score": 80.2,
+        "opportunity_score": 80.1,
         "valuation_detail": {
           "company_type": "semiconductor",
           "metrics": {
             "forward_pe": 17.02191,
-            "price_sales": 18.3306
+            "price_sales": 18.3553
           },
           "method": "semiconductor_forward_pe"
         }
@@ -14428,6 +14644,10 @@
         {
           "date": "2026-10-01",
           "price": 229.02
+        },
+        {
+          "date": "2026-10-02",
+          "price": 231.5
         }
       ],
       "rank_history": [
@@ -14606,6 +14826,10 @@
         {
           "date": "2026-10-01",
           "rank": 1
+        },
+        {
+          "date": "2026-10-02",
+          "rank": 1
         }
       ],
       "signals": [
@@ -14635,16 +14859,16 @@
       "code": "US.PH",
       "name": "Parker-Hannifin",
       "first_seen_at": "2026-06-21T04:10:31+08:00",
-      "last_seen_at": "2026-10-01T08:35:47+08:00",
+      "last_seen_at": "2026-10-02T10:25:20+08:00",
       "latest_filing_accession": null,
       "latest_filing_form": null,
       "latest_filing_date": null,
-      "price": 955.42,
+      "price": 965.88,
       "valuation_pe": 26.80737,
       "opportunity_score": 0.0,
-      "entry_score": 88.6,
+      "entry_score": 87.3,
       "trend_score": 50.0,
-      "alpha_percentile": 31.1,
+      "alpha_percentile": 29.7,
       "universe_rank": 32,
       "factor_snapshot": {
         "factors": {
@@ -14652,9 +14876,9 @@
           "growth": null,
           "earnings_revision": null,
           "valuation": 59.4,
-          "momentum": 74.8,
+          "momentum": 73.6,
           "catalyst": null,
-          "crowding": 53.5,
+          "crowding": 52.3,
           "data_quality": 54.3
         },
         "factor_coverage": 0.4,
@@ -14664,14 +14888,14 @@
           "earnings_revision",
           "catalyst"
         ],
-        "raw_alpha_score": 63.8,
+        "raw_alpha_score": 63.2,
         "confidence_multiplier": 0.0,
         "opportunity_score": 0.0,
         "valuation_detail": {
           "company_type": "industrial",
           "metrics": {
             "forward_pe": 26.80737,
-            "price_sales": 5.6645
+            "price_sales": 5.6154
           },
           "method": "industrial_forward_pe"
         }
@@ -14854,6 +15078,10 @@
         {
           "date": "2026-10-01",
           "price": 955.42
+        },
+        {
+          "date": "2026-10-02",
+          "price": 965.88
         }
       ],
       "rank_history": [
@@ -15032,6 +15260,10 @@
         {
           "date": "2026-10-01",
           "rank": 32
+        },
+        {
+          "date": "2026-10-02",
+          "rank": 32
         }
       ],
       "signals": [
@@ -15061,16 +15293,16 @@
       "code": "US.PWR",
       "name": "Quanta Services",
       "first_seen_at": "2026-06-21T04:10:31+08:00",
-      "last_seen_at": "2026-10-01T08:35:47+08:00",
+      "last_seen_at": "2026-10-02T10:25:20+08:00",
       "latest_filing_accession": null,
       "latest_filing_form": null,
       "latest_filing_date": null,
-      "price": 642.51,
+      "price": 664.1,
       "valuation_pe": 34.1722,
       "opportunity_score": 0.0,
-      "entry_score": 95.0,
+      "entry_score": 96.7,
       "trend_score": 76.0,
-      "alpha_percentile": 31.1,
+      "alpha_percentile": 29.7,
       "universe_rank": 30,
       "factor_snapshot": {
         "factors": {
@@ -15078,9 +15310,9 @@
           "growth": null,
           "earnings_revision": null,
           "valuation": 44.7,
-          "momentum": 92.1,
+          "momentum": 96.3,
           "catalyst": null,
-          "crowding": 51.0,
+          "crowding": 47.5,
           "data_quality": 54.3
         },
         "factor_coverage": 0.4,
@@ -15090,14 +15322,14 @@
           "earnings_revision",
           "catalyst"
         ],
-        "raw_alpha_score": 64.5,
+        "raw_alpha_score": 65.6,
         "confidence_multiplier": 0.0,
         "opportunity_score": 0.0,
         "valuation_detail": {
           "company_type": "industrial",
           "metrics": {
             "forward_pe": 34.1722,
-            "price_sales": 2.9456
+            "price_sales": 2.9342
           },
           "method": "industrial_forward_pe"
         }
@@ -15280,6 +15512,10 @@
         {
           "date": "2026-10-01",
           "price": 642.51
+        },
+        {
+          "date": "2026-10-02",
+          "price": 664.1
         }
       ],
       "rank_history": [
@@ -15458,6 +15694,10 @@
         {
           "date": "2026-10-01",
           "rank": 30
+        },
+        {
+          "date": "2026-10-02",
+          "rank": 30
         }
       ],
       "signals": [
@@ -15487,16 +15727,16 @@
       "code": "US.ROK",
       "name": "Rockwell Automation",
       "first_seen_at": "2026-06-21T04:10:31+08:00",
-      "last_seen_at": "2026-10-01T08:35:47+08:00",
+      "last_seen_at": "2026-10-02T10:25:20+08:00",
       "latest_filing_accession": null,
       "latest_filing_form": null,
       "latest_filing_date": null,
-      "price": 435.33,
+      "price": 442.99,
       "valuation_pe": 28.86352,
       "opportunity_score": 0.0,
-      "entry_score": 82.8,
-      "trend_score": 72.6,
-      "alpha_percentile": 31.1,
+      "entry_score": 95.1,
+      "trend_score": 100.0,
+      "alpha_percentile": 29.7,
       "universe_rank": 35,
       "factor_snapshot": {
         "factors": {
@@ -15504,9 +15744,9 @@
           "growth": null,
           "earnings_revision": null,
           "valuation": 63.3,
-          "momentum": 72.6,
+          "momentum": 100.0,
           "catalyst": null,
-          "crowding": 51.1,
+          "crowding": 49.1,
           "data_quality": 54.3
         },
         "factor_coverage": 0.4,
@@ -15516,14 +15756,14 @@
           "earnings_revision",
           "catalyst"
         ],
-        "raw_alpha_score": 64.1,
+        "raw_alpha_score": 74.2,
         "confidence_multiplier": 0.0,
         "opportunity_score": 0.0,
         "valuation_detail": {
           "company_type": "automation",
           "metrics": {
             "forward_pe": 28.86352,
-            "price_sales": 5.423
+            "price_sales": 5.3835
           },
           "method": "automation_forward_pe"
         }
@@ -15706,6 +15946,10 @@
         {
           "date": "2026-10-01",
           "price": 435.33
+        },
+        {
+          "date": "2026-10-02",
+          "price": 442.99
         }
       ],
       "rank_history": [
@@ -15884,6 +16128,10 @@
         {
           "date": "2026-10-01",
           "rank": 35
+        },
+        {
+          "date": "2026-10-02",
+          "rank": 35
         }
       ],
       "signals": [
@@ -15913,15 +16161,15 @@
       "code": "US.SYM",
       "name": "Symbotic",
       "first_seen_at": "2026-06-21T04:10:31+08:00",
-      "last_seen_at": "2026-10-01T08:35:47+08:00",
+      "last_seen_at": "2026-10-02T10:25:20+08:00",
       "latest_filing_accession": "0001837240-26-000043",
       "latest_filing_form": "10-Q",
       "latest_filing_date": "2026-08-05",
-      "price": 42.07,
+      "price": 43.25,
       "valuation_pe": 60.47644,
-      "opportunity_score": 41.7,
-      "entry_score": 52.3,
-      "trend_score": 2.4,
+      "opportunity_score": 45.7,
+      "entry_score": 61.5,
+      "trend_score": 21.9,
       "alpha_percentile": 63.5,
       "universe_rank": 14,
       "factor_snapshot": {
@@ -15930,9 +16178,9 @@
           "growth": 85.9,
           "earnings_revision": null,
           "valuation": 0.0,
-          "momentum": 2.4,
+          "momentum": 21.9,
           "catalyst": null,
-          "crowding": 64.8,
+          "crowding": 62.3,
           "data_quality": 95.0
         },
         "factor_coverage": 0.7,
@@ -15940,14 +16188,14 @@
           "earnings_revision",
           "catalyst"
         ],
-        "raw_alpha_score": 41.7,
+        "raw_alpha_score": 45.7,
         "confidence_multiplier": 1.0,
-        "opportunity_score": 41.7,
+        "opportunity_score": 45.7,
         "valuation_detail": {
           "company_type": "automation",
           "metrics": {
             "forward_pe": 60.47644,
-            "price_sales": 9.4561
+            "price_sales": 9.5836
           },
           "method": "automation_forward_pe"
         }
@@ -16130,6 +16378,10 @@
         {
           "date": "2026-10-01",
           "price": 42.07
+        },
+        {
+          "date": "2026-10-02",
+          "price": 43.25
         }
       ],
       "rank_history": [
@@ -16308,6 +16560,10 @@
         {
           "date": "2026-10-01",
           "rank": 14
+        },
+        {
+          "date": "2026-10-02",
+          "rank": 14
         }
       ],
       "signals": [
@@ -16337,16 +16593,16 @@
       "code": "US.TSLA",
       "name": "Tesla",
       "first_seen_at": "2026-06-21T04:10:31+08:00",
-      "last_seen_at": "2026-10-01T08:35:47+08:00",
+      "last_seen_at": "2026-10-02T10:25:20+08:00",
       "latest_filing_accession": null,
       "latest_filing_form": null,
       "latest_filing_date": null,
-      "price": 354.17,
+      "price": 355.6,
       "valuation_pe": 174.42851,
       "opportunity_score": 0.0,
-      "entry_score": 57.4,
-      "trend_score": 11.1,
-      "alpha_percentile": 31.1,
+      "entry_score": 57.5,
+      "trend_score": 11.0,
+      "alpha_percentile": 29.7,
       "universe_rank": 37,
       "factor_snapshot": {
         "factors": {
@@ -16354,9 +16610,9 @@
           "growth": null,
           "earnings_revision": null,
           "valuation": 0.0,
-          "momentum": 11.1,
+          "momentum": 11.0,
           "catalyst": null,
-          "crowding": 48.5,
+          "crowding": 47.9,
           "data_quality": 54.3
         },
         "factor_coverage": 0.4,
@@ -16366,14 +16622,14 @@
           "earnings_revision",
           "catalyst"
         ],
-        "raw_alpha_score": 17.0,
+        "raw_alpha_score": 16.9,
         "confidence_multiplier": 0.0,
         "opportunity_score": 0.0,
         "valuation_detail": {
           "company_type": "automation",
           "metrics": {
             "forward_pe": 174.42851,
-            "price_sales": 13.4489
+            "price_sales": 13.524
           },
           "method": "automation_forward_pe"
         }
@@ -16556,6 +16812,10 @@
         {
           "date": "2026-10-01",
           "price": 354.17
+        },
+        {
+          "date": "2026-10-02",
+          "price": 355.6
         }
       ],
       "rank_history": [
@@ -16734,6 +16994,10 @@
         {
           "date": "2026-10-01",
           "rank": 37
+        },
+        {
+          "date": "2026-10-02",
+          "rank": 37
         }
       ],
       "signals": [
@@ -16763,13 +17027,13 @@
       "code": "US.TSM",
       "name": "TSMC ADR",
       "first_seen_at": "2026-06-21T04:10:31+08:00",
-      "last_seen_at": "2026-10-01T08:35:47+08:00",
+      "last_seen_at": "2026-10-02T10:25:20+08:00",
       "latest_filing_accession": "0001628280-26-025362",
       "latest_filing_form": "20-F",
       "latest_filing_date": "2026-04-16",
-      "price": 455.46,
+      "price": 458.84,
       "valuation_pe": 18.88111,
-      "opportunity_score": 72.4,
+      "opportunity_score": 72.5,
       "entry_score": null,
       "trend_score": 88.0,
       "alpha_percentile": 90.5,
@@ -16778,11 +17042,11 @@
         "factors": {
           "quality": null,
           "growth": null,
-          "earnings_revision": 50.4,
+          "earnings_revision": 50.7,
           "valuation": 91.2,
           "momentum": 100.0,
           "catalyst": 84.1,
-          "crowding": 42.6,
+          "crowding": 42.0,
           "data_quality": 81.4
         },
         "factor_coverage": 0.7,
@@ -16790,14 +17054,14 @@
           "quality",
           "growth"
         ],
-        "raw_alpha_score": 76.2,
+        "raw_alpha_score": 76.3,
         "confidence_multiplier": 0.95,
-        "opportunity_score": 72.4,
+        "opportunity_score": 72.5,
         "valuation_detail": {
           "company_type": "semiconductor",
           "metrics": {
             "forward_pe": 18.88111,
-            "price_sales": 14.3606
+            "price_sales": 14.3896
           },
           "method": "semiconductor_forward_pe"
         }
@@ -16980,6 +17244,10 @@
         {
           "date": "2026-10-01",
           "price": 455.46
+        },
+        {
+          "date": "2026-10-02",
+          "price": 458.84
         }
       ],
       "rank_history": [
@@ -17158,6 +17426,10 @@
         {
           "date": "2026-10-01",
           "rank": 4
+        },
+        {
+          "date": "2026-10-02",
+          "rank": 4
         }
       ],
       "signals": [
@@ -17187,26 +17459,26 @@
       "code": "US.TTMI",
       "name": "TTM Technologies",
       "first_seen_at": "2026-06-21T04:10:31+08:00",
-      "last_seen_at": "2026-10-01T08:35:47+08:00",
+      "last_seen_at": "2026-10-02T10:25:20+08:00",
       "latest_filing_accession": "0001193125-26-409136",
       "latest_filing_form": "8-K",
       "latest_filing_date": "2026-09-30",
-      "price": 122.84,
+      "price": 126.0,
       "valuation_pe": 20.15956,
-      "opportunity_score": 54.8,
-      "entry_score": null,
-      "trend_score": 12.0,
-      "alpha_percentile": 71.6,
-      "universe_rank": 11,
+      "opportunity_score": 63.2,
+      "entry_score": 73.3,
+      "trend_score": 68.0,
+      "alpha_percentile": 68.9,
+      "universe_rank": 12,
       "factor_snapshot": {
         "factors": {
           "quality": 39.6,
           "growth": 76.6,
           "earnings_revision": null,
           "valuation": 72.7,
-          "momentum": 12.0,
+          "momentum": 52.3,
           "catalyst": null,
-          "crowding": 69.3,
+          "crowding": 66.7,
           "data_quality": 95.0
         },
         "factor_coverage": 0.7,
@@ -17214,14 +17486,14 @@
           "earnings_revision",
           "catalyst"
         ],
-        "raw_alpha_score": 54.8,
+        "raw_alpha_score": 63.2,
         "confidence_multiplier": 1.0,
-        "opportunity_score": 54.8,
+        "opportunity_score": 63.2,
         "valuation_detail": {
           "company_type": "industrial",
           "metrics": {
             "forward_pe": 20.15956,
-            "price_sales": 3.7987
+            "price_sales": 3.772
           },
           "method": "industrial_forward_pe"
         }
@@ -17404,6 +17676,10 @@
         {
           "date": "2026-10-01",
           "price": 122.84
+        },
+        {
+          "date": "2026-10-02",
+          "price": 126.0
         }
       ],
       "rank_history": [
@@ -17582,6 +17858,10 @@
         {
           "date": "2026-10-01",
           "rank": 11
+        },
+        {
+          "date": "2026-10-02",
+          "rank": 12
         }
       ],
       "signals": [
@@ -17611,16 +17891,16 @@
       "code": "US.VRT",
       "name": "Vertiv",
       "first_seen_at": "2026-06-21T04:10:31+08:00",
-      "last_seen_at": "2026-10-01T08:35:47+08:00",
+      "last_seen_at": "2026-10-02T10:25:20+08:00",
       "latest_filing_accession": null,
       "latest_filing_form": null,
       "latest_filing_date": null,
-      "price": 242.78,
+      "price": 247.0,
       "valuation_pe": 28.30812,
       "opportunity_score": 0.0,
       "entry_score": null,
       "trend_score": 12.0,
-      "alpha_percentile": 31.1,
+      "alpha_percentile": 29.7,
       "universe_rank": 28,
       "factor_snapshot": {
         "factors": {
@@ -17630,8 +17910,8 @@
           "valuation": 56.4,
           "momentum": 12.0,
           "catalyst": null,
-          "crowding": 67.8,
-          "data_quality": 46.1
+          "crowding": 65.9,
+          "data_quality": 54.3
         },
         "factor_coverage": 0.4,
         "missing_factors": [
@@ -17640,14 +17920,14 @@
           "earnings_revision",
           "catalyst"
         ],
-        "raw_alpha_score": 39.9,
+        "raw_alpha_score": 40.7,
         "confidence_multiplier": 0.0,
         "opportunity_score": 0.0,
         "valuation_detail": {
           "company_type": "industrial",
           "metrics": {
             "forward_pe": 28.30812,
-            "price_sales": 8.3285
+            "price_sales": 8.0927
           },
           "method": "industrial_forward_pe"
         }
@@ -17830,6 +18110,10 @@
         {
           "date": "2026-10-01",
           "price": 242.78
+        },
+        {
+          "date": "2026-10-02",
+          "price": 247.0
         }
       ],
       "rank_history": [
@@ -18008,6 +18292,10 @@
         {
           "date": "2026-10-01",
           "rank": 28
+        },
+        {
+          "date": "2026-10-02",
+          "rank": 28
         }
       ],
       "signals": [
@@ -18039,82 +18327,108 @@
       "type": "metric_change",
       "code": "US.COHR",
       "name": "Coherent",
-      "detected_at": "2026-10-01T08:35:47+08:00",
-      "metric": "trend_score",
-      "label": "趋势确认",
-      "previous": 42.0,
-      "current": 12.0,
-      "change_pct": -71.43,
-      "note": "趋势确认变化超过阈值，需确认是机会扩大、逻辑兑现还是风险暴露。"
+      "detected_at": "2026-10-02T10:25:20+08:00",
+      "metric": "price",
+      "label": "价格",
+      "previous": 286.1,
+      "current": 321.01,
+      "change_pct": 12.2,
+      "note": "价格变化超过阈值，需确认是机会扩大、逻辑兑现还是风险暴露。"
     },
     {
       "type": "metric_change",
-      "code": "SZ.300502",
-      "name": "新易盛",
-      "detected_at": "2026-10-01T08:35:47+08:00",
-      "metric": "trend_score",
-      "label": "趋势确认",
-      "previous": 42.0,
-      "current": 12.0,
-      "change_pct": -71.43,
-      "note": "趋势确认变化超过阈值，需确认是机会扩大、逻辑兑现还是风险暴露。"
-    },
-    {
-      "type": "new_filing",
-      "code": "US.TTMI",
-      "name": "TTM Technologies",
-      "detected_at": "2026-10-01T08:35:47+08:00",
-      "form": "8-K",
-      "filed": "2026-09-30",
-      "accession": "0001193125-26-409136",
-      "previous_accession": "0001193125-26-401013",
-      "note": "SEC 最新申报发生变化，需要检查是否改变业绩、订单、资本开支或风险假设。"
-    },
-    {
-      "type": "new_filing",
-      "code": "US.JBL",
-      "name": "Jabil",
-      "detected_at": "2026-10-01T08:35:47+08:00",
-      "form": "8-K",
-      "filed": "2026-09-30",
-      "accession": "0001628280-26-063890",
-      "previous_accession": "0001628280-26-046138",
-      "note": "SEC 最新申报发生变化，需要检查是否改变业绩、订单、资本开支或风险假设。"
-    },
-    {
-      "type": "metric_change",
-      "code": "US.JBL",
-      "name": "Jabil",
-      "detected_at": "2026-10-01T08:35:47+08:00",
+      "code": "US.COHR",
+      "name": "Coherent",
+      "detected_at": "2026-10-02T10:25:20+08:00",
       "metric": "opportunity_score",
       "label": "个股机会分",
-      "previous": 68.4,
-      "current": 0.0,
-      "change_pct": -100.0,
+      "previous": 47.2,
+      "current": 68.1,
+      "change_pct": 44.28,
       "note": "个股机会分变化超过阈值，需确认是机会扩大、逻辑兑现还是风险暴露。"
     },
     {
       "type": "metric_change",
-      "code": "US.JBL",
-      "name": "Jabil",
-      "detected_at": "2026-10-01T08:35:47+08:00",
+      "code": "US.COHR",
+      "name": "Coherent",
+      "detected_at": "2026-10-02T10:25:20+08:00",
       "metric": "trend_score",
       "label": "趋势确认",
-      "previous": 76.0,
-      "current": 12.0,
-      "change_pct": -84.21,
+      "previous": 12.0,
+      "current": 76.0,
+      "change_pct": 533.33,
       "note": "趋势确认变化超过阈值，需确认是机会扩大、逻辑兑现还是风险暴露。"
     },
     {
       "type": "metric_change",
-      "code": "SZ.002335",
-      "name": "科华数据",
-      "detected_at": "2026-10-01T08:35:47+08:00",
+      "code": "US.CIEN",
+      "name": "Ciena",
+      "detected_at": "2026-10-02T10:25:20+08:00",
+      "metric": "trend_score",
+      "label": "趋势确认",
+      "previous": 12.0,
+      "current": 38.0,
+      "change_pct": 216.67,
+      "note": "趋势确认变化超过阈值，需确认是机会扩大、逻辑兑现还是风险暴露。"
+    },
+    {
+      "type": "metric_change",
+      "code": "US.TTMI",
+      "name": "TTM Technologies",
+      "detected_at": "2026-10-02T10:25:20+08:00",
+      "metric": "trend_score",
+      "label": "趋势确认",
+      "previous": 12.0,
+      "current": 68.0,
+      "change_pct": 466.67,
+      "note": "趋势确认变化超过阈值，需确认是机会扩大、逻辑兑现还是风险暴露。"
+    },
+    {
+      "type": "metric_change",
+      "code": "US.AVGO",
+      "name": "Broadcom",
+      "detected_at": "2026-10-02T10:25:20+08:00",
+      "metric": "trend_score",
+      "label": "趋势确认",
+      "previous": 20.0,
+      "current": 12.0,
+      "change_pct": -40.0,
+      "note": "趋势确认变化超过阈值，需确认是机会扩大、逻辑兑现还是风险暴露。"
+    },
+    {
+      "type": "metric_change",
+      "code": "US.ISRG",
+      "name": "Intuitive Surgical",
+      "detected_at": "2026-10-02T10:25:20+08:00",
       "metric": "trend_score",
       "label": "趋势确认",
       "previous": 38.0,
-      "current": 12.0,
-      "change_pct": -68.42,
+      "current": 30.7,
+      "change_pct": -19.21,
+      "note": "趋势确认变化超过阈值，需确认是机会扩大、逻辑兑现还是风险暴露。"
+    },
+    {
+      "type": "metric_change",
+      "code": "US.SYM",
+      "name": "Symbotic",
+      "detected_at": "2026-10-02T10:25:20+08:00",
+      "metric": "trend_score",
+      "label": "趋势确认",
+      "previous": 2.4,
+      "current": 21.9,
+      "change_pct": 812.5,
+      "note": "趋势确认变化超过阈值，需确认是机会扩大、逻辑兑现还是风险暴露。"
+    },
+    {
+      "type": "metric_change",
+      "code": "US.ROK",
+      "name": "Rockwell Automation",
+      "detected_at": "2026-10-02T10:25:20+08:00",
+      "metric": "trend_score",
+      "label": "趋势确认",
+      "previous": 72.6,
+      "current": 100.0,
+      "change_pct": 37.74,
       "note": "趋势确认变化超过阈值，需确认是机会扩大、逻辑兑现还是风险暴露。"
     }
   ],
