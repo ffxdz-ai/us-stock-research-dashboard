@@ -5,8 +5,11 @@ const assert = require("node:assert/strict");
 const {
   assessQuoteFreshness,
   calculateLivePlanMetrics,
+  evaluateLiveExecution,
   normalizeSnapshot,
 } = require("../docs/live-quotes.js");
+
+const EXECUTION_CONTRACT = require("./fixtures/execution_contract.json");
 
 const NOW = Date.parse("2026-09-09T00:30:00+08:00");
 
@@ -104,4 +107,24 @@ test("computes live distance and R/R from fixed research levels", () => {
   assert.match(above.entryText, /需回落 4\.2%/);
 
   assert.equal(calculateLivePlanMetrics(plan, 99).rrText.includes("计划止损"), true);
+});
+
+test("T19 frontend matches the shared Python and Worker execution fixture", () => {
+  for (const row of EXECUTION_CONTRACT.cases) {
+    const now = Date.parse(row.now);
+    const snapshot = normalizeSnapshot({
+      received_at: new Date(now - 10000).toISOString(),
+      quotes: {
+        [EXECUTION_CONTRACT.candidate.symbol]: {
+          last_price: row.price,
+          exchange_quote_time: row.quote_time,
+          live_session: row.live_session,
+          timestamp_kind: "exchange",
+        },
+      },
+    }, now);
+    const quote = snapshot.quotes.get(EXECUTION_CONTRACT.candidate.symbol);
+    const result = evaluateLiveExecution(EXECUTION_CONTRACT.candidate, quote, snapshot, now);
+    assert.equal(result.qualified, row.expected_execution, row.name);
+  }
 });

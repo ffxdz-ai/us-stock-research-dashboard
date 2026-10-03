@@ -8,7 +8,7 @@ import json
 from pathlib import Path
 from typing import Any
 
-from model_v2 import build_entry_path, evaluate_risk_gate, future_function_audit, load_risk_policy
+from model_v2 import build_entry_path, evaluate_plan_qualification, first_number, future_function_audit, load_risk_policy
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -46,7 +46,7 @@ def validate_market_pack(payload: dict[str, Any]) -> list[str]:
         paths = item.get("entry_paths") if isinstance(item.get("entry_paths"), dict) else {}
         formal = paths.get("formal") if isinstance(paths.get("formal"), dict) else {}
         path = build_entry_path("formal", formal.get("entry"), formal.get("stop"), formal.get("target"), policy.formal_min_rr)
-        gate = evaluate_risk_gate({**item, "valid_path": path.valid}, path, policy=policy)
+        gate = evaluate_plan_qualification({**item, "valid_path": path.valid}, path, policy=policy)
         if item.get("formal_qualified") is True and not gate.qualified:
             errors.append(f"{ticker}: formal_qualified bypassed hard gate: {','.join(gate.gate_failures)}")
         if item.get("future_function_audit") == "BLOCK" and item.get("buyable_now") is True:
@@ -67,8 +67,6 @@ def validate_public_index(payload: dict[str, Any]) -> list[str]:
         symbol = str(item.get("symbol") or "unknown")
         if item.get("formal_qualified") is True:
             required = {
-                "price_freshness": "fresh",
-                "execution_allowed": True,
                 "technical_data_complete": True,
                 "future_function_audit": "PASS",
             }
@@ -80,26 +78,46 @@ def validate_public_index(payload: dict[str, Any]) -> list[str]:
             confidence = item.get("data_confidence")
             if not isinstance(confidence, (int, float)) or float(confidence) < load_risk_policy().min_data_confidence:
                 errors.append(f"{symbol}: formal signal data_confidence below policy")
+            coverage = item.get("factor_coverage")
+            if not isinstance(coverage, (int, float)) or float(coverage) < load_risk_policy().minimum_factor_coverage:
+                errors.append(f"{symbol}: formal plan factor_coverage below policy")
+            if item.get("missing_required_factors"):
+                errors.append(f"{symbol}: formal plan is missing required factors")
             path = build_entry_path(
                 "formal",
-                item.get("entry_price") or item.get("safe_entry_price"),
+                first_number(item.get("entry_price"), item.get("safe_entry_price")),
                 item.get("stop_loss"),
                 item.get("target_price"),
                 load_risk_policy().formal_min_rr,
             )
             if not path.valid:
                 errors.append(f"{symbol}: formal signal has invalid R/R path: {path.failures}")
-        if item.get("execution_allowed") is True and item.get("price_freshness") != "fresh":
-            errors.append(f"{symbol}: execution allowed on non-fresh price")
+        if item.get("execution_allowed") is True:
+            execution_requirements = {
+                "plan_qualified": True,
+                "price_triggered": True,
+                "execution_quote_valid": True,
+                "portfolio_permission": "approved",
+            }
+            for key, expected in execution_requirements.items():
+                if item.get(key) != expected:
+                    errors.append(f"{symbol}: execution allowed with {key}={item.get(key)!r}, expected {expected!r}")
     return errors
 
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--market-pack", type=Path, default=ROOT / "data" / "latest_market_pack.json")
+    parser.add_argument("--market-pack", type=Path)
     parser.add_argument("--public-index", type=Path)
     args = parser.parse_args()
-    errors = validate_market_pack(load_json(args.market_pack))
+    if args.market_pack is None and args.public_index is None:
+        args.market_pack = ROOT / "data" / "latest_market_pack.json"
+    errors: list[str] = []
+    if args.market_pack:
+        if args.market_pack.exists():
+            errors.extend(validate_market_pack(load_json(args.market_pack)))
+        else:
+            errors.append(f"market pack does not exist: {args.market_pack}")
     if args.public_index and args.public_index.exists():
         errors.extend(validate_public_index(load_json(args.public_index)))
     if errors:

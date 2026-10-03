@@ -26,7 +26,7 @@ from model_v2 import (
     build_technical_snapshot,
     calculate_data_confidence,
     entry_score,
-    evaluate_risk_gate,
+    evaluate_plan_qualification,
     factor_snapshot,
     future_function_audit,
     infer_company_type,
@@ -1285,7 +1285,12 @@ def evaluate_candidate(
         "data_confidence": data_confidence,
         "data_confidence_components": data_confidence_components,
         "price_freshness": freshness.get("price_freshness"),
+        "research_data_valid": freshness.get("research_data_valid"),
+        "execution_quote_valid": freshness.get("execution_quote_valid"),
+        "quote_age_seconds": freshness.get("quote_age_seconds"),
         "quote_age_minutes": freshness.get("quote_age_minutes"),
+        "market_session": freshness.get("market_session"),
+        "freshness_reason_codes": freshness.get("reason_codes") or [],
         "execution_allowed": freshness.get("execution_allowed"),
         "bar_count": chart.get("bar_count"),
         "technical_data_complete": technical_data_complete,
@@ -1323,6 +1328,11 @@ def evaluate_candidate(
     factors = factor_snapshot(result)
     result["company_type"] = company_type
     result["factor_snapshot"] = factors
+    result["factor_coverage"] = factors.get("factor_coverage")
+    result["missing_required_factors"] = factors.get("missing_required_factors")
+    result["research_only"] = factors.get("research_only")
+    result["score_completeness"] = factors.get("score_completeness")
+    result["data_quality_dimensions"] = factors.get("data_quality_dimensions")
     result["opportunity_score"] = factors.get("opportunity_score")
     result["overall_score"] = factors.get("opportunity_score")
     formal_path = build_entry_path("formal", strict_entry, invalidation, mechanical_target, policy.formal_min_rr)
@@ -1338,11 +1348,27 @@ def evaluate_candidate(
     result["future_function_audit"] = audit["status"]
     result["future_function_audit_detail"] = audit
     result["valid_path"] = formal_path.valid
-    gate = evaluate_risk_gate(result, formal_path, path_type="formal", policy=policy)
+    path_gates = {
+        "formal": evaluate_plan_qualification(result, formal_path, path_type="formal", policy=policy),
+        "starter": evaluate_plan_qualification(result, starter_path, path_type="starter", policy=policy),
+        "breakout": evaluate_plan_qualification(result, breakout_path, path_type="breakout", policy=policy),
+    }
+    result["path_qualifications"] = {key: value.to_dict() for key, value in path_gates.items()}
+    gate = path_gates["formal"]
     result["formal_qualified"] = gate.qualified
     result["gate_failures"] = gate.gate_failures
     result["risk_policy_version"] = gate.policy_version
-    result["buyable_now"] = bool(gate.qualified and freshness.get("execution_allowed"))
+    formal_price_triggered = bool(price and strict_entry and invalidation and invalidation < price <= strict_entry)
+    starter_price_triggered = bool(price and starter_entry and starter_stop and starter_stop < price <= starter_entry)
+    breakout_price_triggered = bool(price and breakout_trigger and price >= breakout_trigger and price <= breakout_trigger * (1 + policy.breakout_buffer))
+    result["price_triggered_by_path"] = {
+        "formal": formal_price_triggered,
+        "starter": starter_price_triggered,
+        "breakout": breakout_price_triggered,
+    }
+    result["portfolio_permission"] = "pending_local_review"
+    result["buyable_now"] = False
+    result["execution_reason_codes"] = ["portfolio_permission_required"]
     result["strict_buyable_now"] = result["buyable_now"]
     return result
 

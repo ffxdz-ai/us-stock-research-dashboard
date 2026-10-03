@@ -14,7 +14,10 @@ from zoneinfo import ZoneInfo
 
 from model_v2 import (
     assess_price_freshness,
+    build_signal_identifiers,
     build_entry_path,
+    canonical_content_hash,
+    evaluate_plan_qualification,
     evaluate_risk_gate,
     load_risk_policy,
     risk_policy_public,
@@ -738,7 +741,7 @@ def formal_entry_path(
     rr = path.rr
     premium = ((price / entry) - 1) * 100 if price is not None and entry is not None and entry > 0 else None
     gate_input = {**item, "valid_path": path.valid}
-    gate = evaluate_risk_gate(gate_input, path, path_type="formal", policy=policy)
+    gate = evaluate_plan_qualification(gate_input, path, path_type="formal", policy=policy)
     failures = list(gate.gate_failures)
     if market_entry_blocker(market_status):
         failures.append("market_regime_blocks_new_entry")
@@ -970,6 +973,12 @@ def entry_gate_failures(item: dict[str, Any], guardrails: dict[str, float], mark
     policy = load_risk_policy()
     if confidence is None or confidence < policy.min_data_confidence:
         failures.append(f"数据置信度未达到 {policy.min_data_confidence:.2f}。")
+    coverage = number(item.get("factor_coverage"))
+    if coverage is None or coverage < policy.minimum_factor_coverage:
+        failures.append(f"因子覆盖率未达到 {policy.minimum_factor_coverage:.0%}（暂定工程门槛）。")
+    missing_required = item.get("missing_required_factors")
+    if isinstance(missing_required, list) and missing_required:
+        failures.append(f"缺少策略必需因子：{', '.join(str(value) for value in missing_required)}。")
     if item.get("price_freshness") != "fresh":
         failures.append("行情新鲜度未通过；公开 fallback 只能观察，不能执行。")
     if item.get("technical_data_complete") is not True:
@@ -1216,6 +1225,46 @@ def finalize_opportunities(
         item["avoid_conditions"] = unique_list([*(item.get("avoid_conditions") or []), *avoid], limit=5)
         item["invalid_conditions"] = unique_list([*(item.get("invalid_conditions") or []), *invalid], limit=5)
         item["why_changed"] = unique_list(item.get("why_changed") or [], limit=6)
+        strategy_id = clean_text(item.get("strategy_id")) or (
+            "fundamental_breakout_v1" if item.get("signal_type") == "breakout" else "fundamental_pullback_v1"
+        )
+        snapshot_payload = {
+            "symbol": item.get("symbol"),
+            "updated_at": item.get("updated_at"),
+            "field_provenance": item.get("field_provenance") or {},
+            "price_time": item.get("price_time"),
+        }
+        data_snapshot_id = clean_text(item.get("data_snapshot_id")) or f"snapshot-{canonical_content_hash(snapshot_payload)[:24]}"
+        identifier_path = build_entry_path(
+            clean_text(item.get("signal_type")) or "formal",
+            item.get("entry_price") if item.get("entry_price") is not None else item.get("strict_entry"),
+            item.get("stop_loss") if item.get("stop_loss") is not None else item.get("invalidation"),
+            item.get("target_price") if item.get("target_price") is not None else item.get("mechanical_target"),
+            number(item.get("rr_required")) or guardrails["formal_min_rr"],
+        )
+        identifiers = build_signal_identifiers(
+            item,
+            identifier_path,
+            signal_time=item.get("updated_at") or item.get("price_time") or "unknown",
+            strategy_id=strategy_id,
+            data_snapshot_id=data_snapshot_id,
+        )
+        plan_qualified = bool(item.get("formal_qualified") or item.get("status") == "trial_entry")
+        price_triggered = bool(
+            item.get("entry_execution_status") == "in_zone"
+            or item.get("status") == "trial_entry"
+            or (item.get("signal_type") == "breakout" and item.get("status") == "executable")
+        )
+        quote_valid = item.get("execution_quote_valid") is True or item.get("execution_allowed") is True
+        portfolio_permission = clean_text(item.get("portfolio_permission")) or "pending_local_review"
+        final_execution_allowed = bool(plan_qualified and price_triggered and quote_valid and portfolio_permission == "approved")
+        execution_reasons = unique_list([
+            *(item.get("reason_codes") or []),
+            *([] if plan_qualified else ["plan_not_qualified"]),
+            *([] if price_triggered else ["price_trigger_not_met"]),
+            *([] if quote_valid else ["execution_quote_invalid"]),
+            *([] if portfolio_permission == "approved" else ["portfolio_permission_required"]),
+        ], limit=16)
         finalized.append(
             {
                 "symbol": item.get("symbol"),
@@ -1234,18 +1283,34 @@ def finalize_opportunities(
                 "entry_score": item.get("entry_score"),
                 "trend_score": item.get("trend_score"),
                 "crowding_score": item.get("crowding_score"),
+                "price_overheating_proxy": item.get("crowding_score"),
+                "crowding_data_status": "proxy_only",
                 "data_confidence": item.get("data_confidence"),
                 "alpha_percentile": item.get("alpha_percentile"),
                 "sector_rank_percentile": item.get("sector_rank_percentile"),
                 "universe_rank": item.get("universe_rank"),
                 "factor_coverage": item.get("factor_coverage"),
+                "minimum_factor_coverage": load_risk_policy().minimum_factor_coverage,
+                "missing_required_factors": item.get("missing_required_factors") or [],
+                "score_completeness": item.get("score_completeness") or ("partial" if (number(item.get("factor_coverage")) or 0) < load_risk_policy().minimum_factor_coverage else "complete"),
+                "research_only": bool(item.get("research_only") or not plan_qualified),
                 "price_freshness": item.get("price_freshness") or "unknown",
+                "research_data_valid": item.get("research_data_valid") is True,
+                "execution_quote_valid": quote_valid,
                 "quote_age_minutes": item.get("quote_age_minutes"),
-                "execution_allowed": item.get("execution_allowed") is True,
+                "quote_age_seconds": item.get("quote_age_seconds"),
+                "market_session": item.get("market_session") or "unknown",
+                "quote_received_at": item.get("received_at"),
+                "plan_qualified": plan_qualified,
+                "price_triggered": price_triggered,
+                "portfolio_permission": portfolio_permission,
+                "execution_allowed": final_execution_allowed,
+                "execution_reason_codes": execution_reasons,
                 "technical_data_complete": item.get("technical_data_complete") is True,
                 "future_function_audit": item.get("future_function_audit") or "BLOCK",
                 "gate_failures": unique_list(item.get("gate_failures") or [], limit=12),
                 "risk_policy_version": item.get("risk_policy_version") or load_risk_policy().policy_version,
+                **identifiers,
                 "rr_ratio": item.get("rr_ratio"),
                 "rr_required": item.get("rr_required") or guardrails["formal_min_rr"],
                 "entry_price": item.get("entry_price") or item.get("strict_entry"),
@@ -1256,6 +1321,13 @@ def finalize_opportunities(
                 "trial_entry_price": item.get("trial_entry_price"),
                 "stop_loss": item.get("stop_loss") or item.get("invalidation"),
                 "target_price": item.get("target_price") or item.get("mechanical_target"),
+                "target_method": item.get("target_method") or "legacy_unspecified",
+                "target_evidence": item.get("target_evidence") or [],
+                "target_as_of": item.get("target_as_of"),
+                "target_horizon": item.get("target_horizon"),
+                "target_scenarios": item.get("target_scenarios") or {},
+                "cost_adjusted_rr": item.get("cost_adjusted_rr"),
+                "order_type": item.get("order_type") or ("buy_stop" if item.get("signal_type") == "breakout" else "limit"),
                 "signal_type": item.get("signal_type"),
                 "entry_tier": item.get("entry_tier"),
                 "formal_qualified": bool(item.get("formal_qualified")),
@@ -1341,6 +1413,9 @@ def derive_opportunities() -> list[dict[str, Any]]:
                     "sector_rank_percentile": number(candidate.get("sector_rank_percentile")),
                     "universe_rank": number(candidate.get("universe_rank")),
                     "factor_coverage": number(candidate.get("factor_coverage")),
+                    "missing_required_factors": candidate.get("missing_required_factors") or [],
+                    "research_only": candidate.get("research_only") is True,
+                    "score_completeness": clean_text(candidate.get("score_completeness")),
                     "price_freshness": clean_text(candidate.get("price_freshness")),
                     "execution_allowed": candidate.get("execution_allowed") is True,
                     "technical_data_complete": candidate.get("technical_data_complete") is True,
@@ -1390,6 +1465,9 @@ def derive_opportunities() -> list[dict[str, Any]]:
                 "sector_rank_percentile": number(candidate.get("sector_rank_percentile")),
                 "universe_rank": number(candidate.get("universe_rank")),
                 "factor_coverage": number(candidate.get("factor_coverage")),
+                "missing_required_factors": candidate.get("missing_required_factors") or [],
+                "research_only": candidate.get("research_only") is True,
+                "score_completeness": clean_text(candidate.get("score_completeness")),
                 "price_freshness": clean_text(candidate.get("price_freshness")),
                 "execution_allowed": candidate.get("execution_allowed") is True,
                 "technical_data_complete": candidate.get("technical_data_complete") is True,
@@ -1449,6 +1527,9 @@ def derive_opportunities() -> list[dict[str, Any]]:
                     "sector_rank_percentile": number(security.get("sector_rank_percentile")),
                     "universe_rank": number(security.get("universe_rank")),
                     "factor_coverage": number(security.get("factor_coverage")),
+                    "missing_required_factors": security.get("missing_required_factors") or [],
+                    "research_only": security.get("research_only") is True,
+                    "score_completeness": clean_text(security.get("score_completeness")),
                     "price_freshness": clean_text(security.get("price_freshness")),
                     "execution_allowed": security.get("execution_allowed") is True,
                     "technical_data_complete": security.get("technical_data_complete") is True,

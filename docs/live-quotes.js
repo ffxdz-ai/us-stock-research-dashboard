@@ -130,11 +130,37 @@
     };
   }
 
+  function isMarketRegularClock(symbol, now) {
+    const code = String(symbol || "").toUpperCase();
+    const market = code.startsWith("US.")
+      ? { timeZone: "America/New_York", windows: [[570, 960]] }
+      : code.startsWith("HK.")
+        ? { timeZone: "Asia/Hong_Kong", windows: [[570, 720], [780, 960]] }
+        : /^(?:CN|SH|SZ)\./.test(code)
+          ? { timeZone: "Asia/Shanghai", windows: [[570, 690], [780, 900]] }
+          : null;
+    if (!market) return false;
+    const date = new Date(finiteNumber(now) || Date.now());
+    const parts = new Intl.DateTimeFormat("en-US", {
+      timeZone: market.timeZone,
+      weekday: "short",
+      hourCycle: "h23",
+      hour: "2-digit",
+      minute: "2-digit",
+    }).formatToParts(date);
+    const weekday = parts.find((part) => part.type === "weekday")?.value || "";
+    if (["Sat", "Sun"].includes(weekday)) return false;
+    const hour = Number(parts.find((part) => part.type === "hour")?.value || 0);
+    const minute = Number(parts.find((part) => part.type === "minute")?.value || 0);
+    const minutes = hour * 60 + minute;
+    return market.windows.some(([start, end]) => minutes >= start && minutes < end);
+  }
+
   function assessQuoteFreshness(quote, snapshot, now, options) {
     const currentTime = finiteNumber(now) || Date.now();
     const config = {
-      maxQuoteAgeMs: 180000,
-      maxTransportAgeMs: 90000,
+      maxQuoteAgeMs: 60000,
+      maxTransportAgeMs: 60000,
       futureToleranceMs: 30000,
       ...(options || {}),
     };
@@ -190,7 +216,10 @@
     if (quoteAge > config.maxQuoteAgeMs) {
       return { status: "delayed", label: "行情已延迟", executable: false, reason: "实际报价时间已超过实时阈值", quoteAgeMs: quoteAge, transportAgeMs: transportAge };
     }
-    return { status: "live", label: "实时", executable: true, reason: "OpenD 实时报价同步正常", quoteAgeMs: quoteAge, transportAgeMs: transportAge };
+    if (!["regular", "rth"].includes(quote.session) || !isMarketRegularClock(quote.symbol, currentTime)) {
+      return { status: "watch_only", label: `${quote.sessionLabel}仅观察`, executable: false, reason: "默认仅允许常规交易时段执行", quoteAgeMs: quoteAge, transportAgeMs: transportAge };
+    }
+    return { status: "live", label: "实时", executable: true, reason: "OpenD 常规时段实时报价同步正常", quoteAgeMs: quoteAge, transportAgeMs: transportAge };
   }
 
   function planLevels(opportunity) {
@@ -252,9 +281,37 @@
     return result;
   }
 
+  function evaluateLiveExecution(opportunity, quote, snapshot, now, options) {
+    const item = opportunity && typeof opportunity === "object" ? opportunity : {};
+    const freshness = assessQuoteFreshness(quote, snapshot, now, options);
+    if (!freshness.executable) return { qualified: false, status: freshness.status, freshness };
+    if (item.status !== "waiting_entry" || item.entry_tier !== "formal" || item.signal_type !== "formal"
+      || item.formal_qualified !== true || item.entry_execution_status !== "wait_pullback"
+      || item.plan_qualified !== true || item.portfolio_permission !== "approved"
+      || item.research_data_valid !== true || item.technical_data_complete !== true
+      || item.future_function_audit !== "PASS" || item.research_only === true
+      || item.partial_factor_snapshot === true || (Array.isArray(item.gate_failures) && item.gate_failures.length)) {
+      return { qualified: false, status: "research_ineligible", freshness };
+    }
+    const coverage = finiteNumber(item.factor_coverage);
+    const minimumCoverage = finiteNumber(item.minimum_factor_coverage) ?? 0.8;
+    if (coverage === null || coverage < minimumCoverage
+      || (Array.isArray(item.missing_required_factors) && item.missing_required_factors.length)) {
+      return { qualified: false, status: "factor_coverage_incomplete", freshness };
+    }
+    const metrics = calculateLivePlanMetrics(item, quote?.price);
+    const required = finiteNumber(item.rr_required);
+    if (metrics.entryState !== "inside") return { qualified: false, status: "outside_zone", freshness, metrics };
+    if (metrics.rr === null || required === null || metrics.rr < required) {
+      return { qualified: false, status: "rr_below_required", freshness, metrics };
+    }
+    return { qualified: true, status: "qualified", freshness, metrics };
+  }
+
   return {
     assessQuoteFreshness,
     calculateLivePlanMetrics,
+    evaluateLiveExecution,
     finiteNumber,
     normalizeQuote,
     normalizeSnapshot,

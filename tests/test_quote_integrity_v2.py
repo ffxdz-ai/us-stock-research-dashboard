@@ -41,13 +41,13 @@ class QuoteIntegrityV2Tests(unittest.TestCase):
         )
 
     def test_authenticated_broker_quote_can_be_executable(self) -> None:
-        now = datetime.now(timezone.utc)
+        now = datetime(2026, 10, 2, 14, 0, tzinfo=timezone.utc)
         result = assess_price_freshness(now.isoformat(), "Futu OpenD authenticated bridge", now)
         self.assertEqual(result["price_freshness"], "fresh")
         self.assertTrue(result["execution_allowed"])
 
     def test_local_snapshot_fallback_is_not_executable(self) -> None:
-        now = datetime.now(timezone.utc)
+        now = datetime(2026, 10, 2, 14, 0, tzinfo=timezone.utc)
         result = assess_price_freshness(now.isoformat(), "Futu OpenD local snapshot fallback", now)
         self.assertEqual(result["price_freshness"], "fallback_only")
         self.assertFalse(result["execution_allowed"])

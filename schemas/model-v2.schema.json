@@ -14,13 +14,75 @@
         "data_gap": {"type": ["string", "null"]}
       }
     },
-    "MarketQuote": {"type": "object", "required": ["symbol", "price", "quote_time", "price_freshness", "execution_allowed"]},
+    "MarketQuote": {
+      "type": "object",
+      "required": ["symbol", "price", "quote_time", "received_at", "research_data_valid", "execution_quote_valid", "execution_allowed", "quote_age_seconds", "market_session", "reason_codes"],
+      "properties": {
+        "symbol": {"type": "string"},
+        "price": {"type": ["number", "null"]},
+        "quote_time": {"type": ["string", "null"]},
+        "received_at": {"type": ["string", "null"]},
+        "research_data_valid": {"type": "boolean"},
+        "execution_quote_valid": {"type": "boolean"},
+        "execution_allowed": {"type": "boolean"},
+        "quote_age_seconds": {"type": ["number", "null"]},
+        "market_session": {"enum": ["pre_market", "regular", "post_market", "closed", "unknown"]},
+        "reason_codes": {"type": "array", "items": {"type": "string"}}
+      }
+    },
     "TechnicalSnapshot": {"type": "object", "required": ["bar_count", "ma20", "ma50", "ma200", "prior_high20", "prior_high60", "prior_high252", "technical_data_complete"]},
     "FundamentalSnapshot": {"type": "object", "required": ["as_of", "source_fields"]},
-    "FactorSnapshot": {"type": "object", "required": ["factors", "factor_coverage", "missing_factors", "raw_alpha_score", "opportunity_score"]},
+    "FactorSnapshot": {
+      "type": "object",
+      "required": ["factors", "factor_coverage", "missing_factors", "required_factors", "missing_required_factors", "research_only", "score_completeness", "raw_alpha_score", "opportunity_score"],
+      "properties": {
+        "factor_coverage": {"type": "number", "minimum": 0, "maximum": 1},
+        "missing_required_factors": {"type": "array", "items": {"type": "string"}},
+        "research_only": {"type": "boolean"},
+        "score_completeness": {"enum": ["complete", "partial"]}
+      }
+    },
     "EntryPath": {"type": "object", "required": ["path_type", "entry", "stop", "target", "rr", "valid", "failures"]},
     "RiskGateResult": {"type": "object", "required": ["qualified", "gate_failures", "policy_version"]},
-    "Opportunity": {"type": "object", "required": ["symbol", "opportunity_score", "entry_score", "formal_qualified", "gate_failures"]},
+    "Opportunity": {
+      "type": "object",
+      "required": ["symbol", "signal_id", "plan_id", "strategy_id", "policy_version", "model_version", "data_snapshot_id", "opportunity_score", "entry_score", "factor_coverage", "missing_required_factors", "score_completeness", "research_only", "research_data_valid", "plan_qualified", "price_triggered", "execution_quote_valid", "portfolio_permission", "execution_allowed", "gate_failures"],
+      "properties": {
+        "portfolio_permission": {"enum": ["approved", "denied", "pending_local_review"]},
+        "execution_allowed": {"type": "boolean"},
+        "research_only": {"type": "boolean"},
+        "research_data_valid": {"type": "boolean"},
+        "factor_coverage": {"type": ["number", "null"], "minimum": 0, "maximum": 1},
+        "missing_required_factors": {"type": "array", "items": {"type": "string"}},
+        "score_completeness": {"enum": ["complete", "partial", "unknown"]},
+        "plan_qualified": {"type": "boolean"},
+        "price_triggered": {"type": "boolean"},
+        "execution_quote_valid": {"type": "boolean"},
+        "target_method": {"type": ["string", "null"]},
+        "cost_adjusted_rr": {"type": ["number", "null"]}
+      }
+    },
+    "PerformanceSummary": {
+      "type": "object",
+      "required": ["maximum_drawdown_pct", "sharpe", "sharpe_reason", "information_ratio", "information_ratio_reason", "sample_count"],
+      "properties": {
+        "annualized_return_pct": {"type": ["number", "null"]},
+        "annualized_return_reason": {"type": ["string", "null"]},
+        "maximum_drawdown_pct": {"type": ["number", "null"]},
+        "annualized_volatility_pct": {"type": ["number", "null"]},
+        "annualized_volatility_reason": {"type": ["string", "null"]},
+        "sharpe": {"type": ["number", "null"]},
+        "sharpe_reason": {"type": ["string", "null"]},
+        "information_ratio": {"type": ["number", "null"]},
+        "information_ratio_reason": {"type": ["string", "null"]},
+        "sample_count": {"type": "integer", "minimum": 0},
+        "turnover_pct_of_average_equity": {"type": ["number", "null"]},
+        "average_cash_utilization_pct": {"type": ["number", "null"]},
+        "maximum_gross_exposure_pct": {"type": ["number", "null"]},
+        "average_holding_sessions": {"type": ["number", "null"]},
+        "benchmark_metrics": {"type": "object"}
+      }
+    },
     "ReviewRecord": {"type": "object", "required": ["symbol", "signal_time", "signal_price", "signal_score", "signal_rank", "signal_factors", "signal_data_snapshot_id"]},
     "LLMCommentary": {"type": "object", "required": ["market_view", "stock_commentary"]}
   }

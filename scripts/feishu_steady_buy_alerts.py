@@ -64,11 +64,19 @@ def qualifies_for_steady_buy_alert(item: dict[str, Any]) -> bool:
         return False
     if item.get("status") != "executable" or item.get("entry_tier") != "formal":
         return False
+    if item.get("plan_qualified") is not True or item.get("price_triggered") is not True:
+        return False
+    if item.get("portfolio_permission") != "approved" or item.get("execution_quote_valid") is not True:
+        return False
     if item.get("execution_allowed") is not True or item.get("technical_data_complete") is not True:
         return False
     if item.get("future_function_audit") != "PASS" or item.get("price_freshness") != "fresh":
         return False
     if item.get("gate_failures"):
+        return False
+    coverage = number(item.get("factor_coverage"))
+    minimum_coverage = number(item.get("minimum_factor_coverage")) or 0.8
+    if coverage is None or coverage < minimum_coverage or item.get("missing_required_factors"):
         return False
     if not valid_trade_path(item):
         return False
@@ -99,13 +107,19 @@ def qualifies_for_candidate_alert(item: dict[str, Any]) -> bool:
         return False
     if item.get("signal_type") != "formal" or item.get("formal_qualified") is not True:
         return False
+    if item.get("plan_qualified") is not True:
+        return False
     if item.get("entry_execution_status") != "wait_pullback":
         return False
-    if item.get("execution_allowed") is not True or item.get("technical_data_complete") is not True:
+    if item.get("research_data_valid") is not True or item.get("technical_data_complete") is not True:
         return False
-    if item.get("future_function_audit") != "PASS" or item.get("price_freshness") != "fresh":
+    if item.get("future_function_audit") != "PASS" or item.get("research_only") is True:
         return False
-    if item.get("gate_failures") or not valid_trade_path(item):
+    if item.get("partial_factor_snapshot") is True or item.get("gate_failures") or not valid_trade_path(item):
+        return False
+    coverage = number(item.get("factor_coverage"))
+    minimum_coverage = number(item.get("minimum_factor_coverage")) or 0.8
+    if coverage is None or coverage < minimum_coverage or item.get("missing_required_factors"):
         return False
     if any(number(item.get(field)) is None for field in ("price", "opportunity_score", "trend_score", "crowding_score")):
         return False

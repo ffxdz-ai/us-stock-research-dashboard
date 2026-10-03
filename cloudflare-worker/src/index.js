@@ -10,7 +10,7 @@ const FUTU_FEISHU_CONFIG_KEY = "encrypted_futu_feishu_config_v1";
 const FUTU_LIVE_ALERT_STATE_KEY = "futu_live_steady_buy_state_v1";
 const FUTU_SNAPSHOT_TTL_SECONDS = 12 * 60 * 60;
 const FUTU_LIVE_ALERT_STATE_TTL_SECONDS = 30 * 24 * 60 * 60;
-const MAX_LIVE_QUOTE_AGE_MS = 90 * 1000;
+const MAX_LIVE_QUOTE_AGE_MS = 60 * 1000;
 const FUTU_KV_BACKUP_INTERVAL_MS = 5 * 60 * 1000;
 const LIVE_QUOTE_STORE_NAME = "global-live-quotes";
 const LIVE_RESEARCH_CACHE_MS = 2 * 60 * 1000;
@@ -137,9 +137,9 @@ async function handleFeishuConfig(request, env) {
   }
 }
 
-function newYorkMinutes(now) {
+function zonedMinutes(now, timeZone) {
   const parts = new Intl.DateTimeFormat("en-US", {
-    timeZone: "America/New_York",
+    timeZone,
     hourCycle: "h23",
     hour: "2-digit",
     minute: "2-digit",
@@ -183,6 +183,28 @@ export function quoteIsFresh(quote, now = new Date()) {
   return age >= -5 * 60 * 1000 && age <= MAX_LIVE_QUOTE_AGE_MS;
 }
 
+function newYorkMinutes(now) {
+  return zonedMinutes(now, "America/New_York");
+}
+
+function quoteIsRegularSession(quote, symbol, now = new Date()) {
+  const explicit = String(quote?.live_session || "").trim().toLowerCase();
+  if (explicit && !["regular", "rth"].includes(explicit)) return false;
+  const code = String(symbol || "").toUpperCase();
+  const market = code.startsWith("US.")
+    ? { timeZone: "America/New_York", windows: [[570, 960]] }
+    : code.startsWith("HK.")
+      ? { timeZone: "Asia/Hong_Kong", windows: [[570, 720], [780, 960]] }
+      : /^(?:CN|SH|SZ)\./.test(code)
+        ? { timeZone: "Asia/Shanghai", windows: [[570, 690], [780, 900]] }
+        : null;
+  if (!market) return false;
+  const weekday = new Intl.DateTimeFormat("en-US", { timeZone: market.timeZone, weekday: "short" }).format(now);
+  if (["Sat", "Sun"].includes(weekday)) return false;
+  const minutes = zonedMinutes(now, market.timeZone);
+  return market.windows.some(([start, end]) => minutes >= start && minutes < end);
+}
+
 function validLiveTradePath(item) {
   const entry = finiteNumber(item?.entry_price ?? item?.safe_entry_price);
   const stop = finiteNumber(item?.stop_loss);
@@ -206,16 +228,23 @@ export function liveRiskReward(item, livePrice) {
 export function evaluateLiveSteadyBuyPlan(item, quote, now = new Date()) {
   if (!item || typeof item !== "object" || !quote) return { qualified: false, status: "quote_missing" };
   if (!quoteIsFresh(quote, now)) return { qualified: false, status: "quote_stale" };
+  if (!quoteIsRegularSession(quote, item.symbol, now)) return { qualified: false, status: "market_session_not_executable" };
   if (item.status !== "waiting_entry" || item.entry_tier !== "formal" || item.signal_type !== "formal"
     || item.formal_qualified !== true || item.entry_execution_status !== "wait_pullback"
-    || item.execution_allowed !== true || item.technical_data_complete !== true
-    || item.future_function_audit !== "PASS" || item.price_freshness !== "fresh"
-    || item.gate_failures?.length) {
+    || item.plan_qualified !== true || item.portfolio_permission !== "approved"
+    || item.research_data_valid !== true || item.technical_data_complete !== true
+    || item.future_function_audit !== "PASS" || item.research_only === true
+    || item.partial_factor_snapshot === true || item.gate_failures?.length) {
     return { qualified: false, status: "research_ineligible" };
   }
   if (!validLiveTradePath(item)) return { qualified: false, status: "trade_path_invalid" };
   if (["opportunity_score", "trend_score", "crowding_score"].some((field) => finiteNumber(item[field]) === null)) {
     return { qualified: false, status: "score_missing" };
+  }
+  const coverage = finiteNumber(item.factor_coverage);
+  const minimumCoverage = finiteNumber(item.minimum_factor_coverage) ?? 0.8;
+  if (coverage === null || coverage < minimumCoverage || item.missing_required_factors?.length) {
+    return { qualified: false, status: "factor_coverage_incomplete" };
   }
 
   const price = liveQuotePrice(item.symbol, quote, now);

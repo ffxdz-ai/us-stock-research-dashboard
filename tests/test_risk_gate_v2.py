@@ -15,6 +15,8 @@ def base_candidate() -> dict:
         "trend_score": 78,
         "crowding_score": 25,
         "data_confidence": 0.90,
+        "factor_coverage": 1.0,
+        "missing_required_factors": [],
         "price_freshness": "fresh",
         "execution_allowed": True,
         "technical_data_complete": True,

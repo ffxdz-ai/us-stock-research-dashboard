@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "policy_version": "2.1.0",
+  "candidate": {
+    "symbol": "US.TEST",
+    "status": "waiting_entry",
+    "entry_tier": "formal",
+    "signal_type": "formal",
+    "formal_qualified": true,
+    "plan_qualified": true,
+    "price_triggered": false,
+    "entry_execution_status": "wait_pullback",
+    "portfolio_permission": "approved",
+    "research_data_valid": true,
+    "research_only": false,
+    "partial_factor_snapshot": false,
+    "execution_allowed": false,
+    "execution_quote_valid": false,
+    "technical_data_complete": true,
+    "future_function_audit": "PASS",
+    "price_freshness": "fresh",
+    "gate_failures": [],
+    "entry_price": 100,
+    "safe_entry_zone_low": 97,
+    "safe_entry_zone_high": 100,
+    "safe_entry_max_price": 101,
+    "stop_loss": 90,
+    "target_price": 130,
+    "rr_ratio": 3,
+    "rr_required": 3,
+    "opportunity_score": 90,
+    "trend_score": 90,
+    "crowding_score": 10,
+    "data_confidence": 1,
+    "factor_coverage": 1,
+    "minimum_factor_coverage": 0.8,
+    "missing_required_factors": []
+  },
+  "cases": [
+    {
+      "name": "regular_fresh",
+      "now": "2026-10-02T14:00:00Z",
+      "quote_time": "2026-10-02T13:59:30Z",
+      "live_session": "regular",
+      "price": 100,
+      "expected_execution": true
+    },
+    {
+      "name": "regular_stale",
+      "now": "2026-10-02T14:00:00Z",
+      "quote_time": "2026-10-02T13:55:00Z",
+      "live_session": "regular",
+      "price": 100,
+      "expected_execution": false
+    },
+    {
+      "name": "weekend_watch_only",
+      "now": "2026-10-03T14:00:00Z",
+      "quote_time": "2026-10-02T20:00:00Z",
+      "live_session": "closed",
+      "price": 100,
+      "expected_execution": false
+    }
+  ]
+}

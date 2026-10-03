@@ -19,9 +19,11 @@ import json
 import math
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
-from statistics import mean, median, pstdev
+from statistics import mean, median
 from typing import Any
 from zoneinfo import ZoneInfo
+
+from performance_metrics import maximum_drawdown, trade_path_excursions
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -156,8 +158,16 @@ def forward_metrics(signal_time: Any, signal_price: Any, bars: list[dict[str, An
     parsed = parse_time(signal_time)
     start_price = number(signal_price)
     if parsed is None or start_price is None or start_price <= 0 or not bars:
-        return {"missing_reason": "data_missing", **{f"return_{days}d": None for days in horizons}, "max_drawdown": None, "max_gain": None}
-    ordered: list[tuple[datetime, float]] = []
+        return {
+            "missing_reason": "data_missing",
+            **{f"return_{days}d": None for days in horizons},
+            "min_close_return_from_signal": None,
+            "max_drawdown": None,
+            "max_gain": None,
+            "mae": None,
+            "mfe": None,
+        }
+    ordered: list[tuple[datetime, float, dict[str, Any]]] = []
     for bar in bars:
         stamp = parse_time(bar.get("time"))
         close = number(bar.get("close"))
@@ -165,14 +175,24 @@ def forward_metrics(signal_time: Any, signal_price: Any, bars: list[dict[str, An
         # a future observation, even when the chart provider timestamps it at
         # midnight and the signal was produced later that day.
         if stamp and close is not None and close > 0 and stamp.date() > parsed.date():
-            ordered.append((stamp, close))
+            ordered.append((stamp, close, bar))
     ordered.sort(key=lambda row: row[0])
     returns: dict[str, Any] = {}
     for days in horizons:
         returns[f"return_{days}d"] = round((ordered[days - 1][1] / start_price - 1) * 100, 2) if len(ordered) >= days else None
-    observed = [price for _, price in ordered[: max(horizons)]]
-    returns["max_drawdown"] = round((min(observed) / start_price - 1) * 100, 2) if observed else None
+    holding_rows = ordered[: max(horizons)]
+    observed = [price for _, price, _ in holding_rows]
+    legacy_floor = round((min(observed) / start_price - 1) * 100, 2) if observed else None
+    drawdown = maximum_drawdown([start_price, *observed])
+    excursions = trade_path_excursions(start_price, [bar for _, _, bar in holding_rows])
+    returns["min_close_return_from_signal"] = legacy_floor
+    returns["legacy_metric_version"] = "v1_min_close_return_from_signal"
+    returns["max_drawdown"] = drawdown.get("value_pct")
+    returns["max_drawdown_reason"] = drawdown.get("reason")
     returns["max_gain"] = round((max(observed) / start_price - 1) * 100, 2) if observed else None
+    returns["mae"] = excursions.get("mae_pct")
+    returns["mfe"] = excursions.get("mfe_pct")
+    returns["excursion_price_granularity"] = excursions.get("price_granularity")
     returns["observed_trading_days"] = len(ordered)
     returns["missing_reason"] = None if observed else "data_missing"
     return returns
@@ -217,6 +237,23 @@ def subset_metrics(items: list[dict[str, Any]]) -> dict[str, Any]:
         "hit_rate_20d": round(sum(1 for item in hits if item.get("hit_20d")) / len(hits) * 100, 1) if hits else None,
         "average_forward_return_20d": round(mean(returns), 2) if returns else None,
         "average_spy_excess_20d": round(mean(excess), 2) if excess else None,
+    }
+
+
+def hit_rate_accounting(items: list[dict[str, Any]], horizon: int = 20) -> dict[str, Any]:
+    """Keep mature returns with missing benchmarks out of, not against, the hit denominator."""
+    return_key = f"return_{horizon}d"
+    hit_key = f"hit_{horizon}d"
+    mature = [item for item in items if item.get(return_key) is not None]
+    benchmark_complete = [item for item in mature if item.get(hit_key) is not None]
+    hits = sum(1 for item in benchmark_complete if item.get(hit_key) is True)
+    return {
+        "return_mature_count": len(mature),
+        "benchmark_complete_count": len(benchmark_complete),
+        "benchmark_missing_count": len(mature) - len(benchmark_complete),
+        "hit_count": hits,
+        "hit_rate_pct": round(hits / len(benchmark_complete) * 100, 1) if benchmark_complete else None,
+        "denominator": len(benchmark_complete),
     }
 
 
@@ -470,9 +507,11 @@ def build_payload(journal: dict[str, Any], opportunity_radar: dict[str, Any], ma
                 "return_120d": metrics.get("return_120d"),
                 **excess,
                 "max_drawdown": metrics.get("max_drawdown"),
+                "min_close_return_from_signal": metrics.get("min_close_return_from_signal"),
                 "max_gain": metrics.get("max_gain"),
-                "mae": metrics.get("max_drawdown"),
-                "mfe": metrics.get("max_gain"),
+                "mae": metrics.get("mae"),
+                "mfe": metrics.get("mfe"),
+                "excursion_price_granularity": metrics.get("excursion_price_granularity"),
                 "observed_trading_days": metrics.get("observed_trading_days"),
                 "benchmark_symbol": "SPY",
                 "sector_etf": sector_etf,
@@ -497,6 +536,7 @@ def build_payload(journal: dict[str, Any], opportunity_radar: dict[str, Any], ma
     scores20 = [float(item["signal_score"]) for item in completed_items if item.get("signal_score") is not None and item.get("return_20d") is not None]
     paired_returns = [float(item["return_20d"]) for item in completed_items if item.get("signal_score") is not None and item.get("return_20d") is not None]
     hit_values = [item for item in completed_items if item.get("hit_20d") is not None]
+    hit_accounting = hit_rate_accounting(review_items, 20)
     sorted_by_score = sorted([item for item in completed_items if item.get("signal_score") is not None and item.get("return_20d") is not None], key=lambda item: float(item["signal_score"]), reverse=True)
     decile = max(1, len(sorted_by_score) // 10) if sorted_by_score else 0
     top_decile_spread = None
@@ -506,7 +546,11 @@ def build_payload(journal: dict[str, Any], opportunity_radar: dict[str, Any], ma
         top_decile_spread = round(top - bottom, 2)
     turnover, turnover_status = top_bucket_turnover(security_state)
     metrics_summary = {
-        "hit_rate_20d": round(sum(1 for item in hit_values if item.get("hit_20d")) / len(hit_values) * 100, 1) if hit_values else None,
+        "hit_rate_20d": hit_accounting["hit_rate_pct"],
+        "hit_rate_denominator": hit_accounting["denominator"],
+        "return_mature_count": hit_accounting["return_mature_count"],
+        "benchmark_complete_count": hit_accounting["benchmark_complete_count"],
+        "benchmark_missing_count": hit_accounting["benchmark_missing_count"],
         "win_rate_20d": round(sum(1 for value in returns20 if value > 0) / len(returns20) * 100, 1) if returns20 else None,
         "average_forward_return_20d": round(mean(returns20), 2) if returns20 else None,
         "median_forward_return_20d": round(median(returns20), 2) if returns20 else None,
@@ -514,8 +558,10 @@ def build_payload(journal: dict[str, Any], opportunity_radar: dict[str, Any], ma
         "top_decile_spread_20d": top_decile_spread,
         "ic_20d": pearson(scores20, paired_returns),
         "rank_ic_20d": pearson(rank_values(scores20), rank_values(paired_returns)) if len(scores20) >= 3 else None,
-        "sharpe_20d": round(mean(returns20) / pstdev(returns20) * math.sqrt(252 / 20), 3) if len(returns20) >= 3 and pstdev(returns20) > 0 else None,
-        "information_ratio_20d": round(mean(excess20) / pstdev(excess20) * math.sqrt(252 / 20), 3) if len(excess20) >= 3 and pstdev(excess20) > 0 else None,
+        "sharpe_20d": None,
+        "sharpe_20d_reason": "portfolio_equity_curve_unavailable",
+        "information_ratio_20d": None,
+        "information_ratio_20d_reason": "aligned_portfolio_and_benchmark_curves_unavailable",
         "average_max_drawdown": round(mean([float(item["max_drawdown"]) for item in review_items if item.get("max_drawdown") is not None]), 2) if any(item.get("max_drawdown") is not None for item in review_items) else None,
         "average_max_gain": round(mean([float(item["max_gain"]) for item in review_items if item.get("max_gain") is not None]), 2) if any(item.get("max_gain") is not None for item in review_items) else None,
         "turnover": turnover,

@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "policy_version": "simulation-1.0.0",
+  "mode": "cash_long_only",
+  "initial_cash": 100000.0,
+  "commission_per_order": 1.0,
+  "slippage_bps": 5.0,
+  "spread_bps": 2.0,
+  "minimum_lot": 1,
+  "max_volume_participation": 0.05,
+  "default_order_tif_sessions": 5,
+  "same_bar_exit_rule": "stop_first_conservative",
+  "risk_budget": {
+    "per_trade_loss_pct": 0.005,
+    "max_single_position_pct": 0.1,
+    "max_theme_exposure_pct": 0.25,
+    "max_industry_exposure_pct": 0.2,
+    "max_total_stop_risk_pct": 0.03,
+    "earnings_risk_multiplier": 0.5,
+    "unknown_correlation_multiplier": 0.5,
+    "drawdown_reduce_at_pct": 0.08,
+    "drawdown_halt_at_pct": 0.12,
+    "cooldown_sessions": 5,
+    "calibration_status": "provisional"
+  }
+}

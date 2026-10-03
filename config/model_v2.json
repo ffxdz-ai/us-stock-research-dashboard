@@ -1,5 +1,6 @@
 {
-  "schema_version": 2,
+  "schema_version": 3,
+  "model_version": "2.1.0",
   "factor_weights": {
     "quality": 0.15,
     "growth": 0.15,
@@ -21,7 +22,28 @@
   "walk_forward": {
     "train_end": "2023-12-31",
     "validation_end": "2024-12-31",
-    "oos_start": "2025-01-01"
+    "oos_start": "2025-01-01",
+    "label_horizon_trading_days": 20,
+    "embargo_trading_days": 5,
+    "parameter_frozen_at": "2026-10-03T00:00:00+08:00",
+    "validation_status": "forward_validation_required"
+  },
+  "strategy_definitions": {
+    "fundamental_pullback_v1": {
+      "family": "pullback",
+      "required_factors": ["quality", "growth", "valuation", "momentum"],
+      "status": "provisional"
+    },
+    "fundamental_breakout_v1": {
+      "family": "breakout",
+      "required_factors": ["quality", "growth", "valuation", "momentum"],
+      "status": "provisional"
+    },
+    "earnings_revision_pullback_v1": {
+      "family": "pullback",
+      "required_factors": ["quality", "growth", "earnings_revision", "valuation", "momentum"],
+      "status": "provisional"
+    }
   },
   "sector_etf_map": {
     "semiconductor": "SMH",

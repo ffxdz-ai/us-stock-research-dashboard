@@ -86,8 +86,9 @@ const LIVE_QUOTE_CONFIG = {
   endpoint: String(document.querySelector('meta[name="live-quote-url"]')?.content || `${MANUAL_UPDATE_CONFIG.triggerApi}/futu/quotes`).trim(),
   pollVisibleMs: 15000,
   requestTimeoutMs: 8000,
-  maxQuoteAgeMs: 180000,
-  maxTransportAgeMs: 90000,
+  maxQuoteAgeMs: 60000,
+  maxTransportAgeMs: 60000,
+  futureToleranceMs: 300000,
 };
 
 let manualUpdatePollTimer = null;
@@ -1326,6 +1327,7 @@ function normalizeStructuredOpportunity(item) {
     entry_score: parseLooseNumber(item.entry_score),
     trend_score: parseLooseNumber(item.trend_score),
     crowding_score: parseLooseNumber(item.crowding_score),
+    price_overheating_proxy: parseLooseNumber(item.price_overheating_proxy ?? item.crowding_score),
     rr_ratio: parseLooseNumber(item.rr_ratio),
     rr_required: parseLooseNumber(item.rr_required),
     entry_price: parseLooseNumber(item.entry_price),
@@ -1355,6 +1357,27 @@ function normalizeStructuredOpportunity(item) {
     sector_rank_percentile: parseLooseNumber(item.sector_rank_percentile),
     universe_rank: parseLooseNumber(item.universe_rank),
     factor_coverage: parseLooseNumber(item.factor_coverage),
+    minimum_factor_coverage: parseLooseNumber(item.minimum_factor_coverage),
+    missing_required_factors: normalizeList(item.missing_required_factors),
+    score_completeness: cleanCellText(item.score_completeness || "unknown"),
+    research_only: item.research_only === true,
+    research_data_valid: item.research_data_valid === true,
+    execution_quote_valid: item.execution_quote_valid === true,
+    quote_age_seconds: parseLooseNumber(item.quote_age_seconds),
+    market_session: cleanCellText(item.market_session || "unknown"),
+    plan_qualified: item.plan_qualified === true,
+    price_triggered: item.price_triggered === true,
+    portfolio_permission: cleanCellText(item.portfolio_permission || "pending_local_review"),
+    execution_reason_codes: normalizeList(item.execution_reason_codes),
+    strategy_id: cleanCellText(item.strategy_id || ""),
+    signal_id: cleanCellText(item.signal_id || ""),
+    plan_id: cleanCellText(item.plan_id || ""),
+    data_snapshot_id: cleanCellText(item.data_snapshot_id || ""),
+    model_version: cleanCellText(item.model_version || ""),
+    target_method: cleanCellText(item.target_method || ""),
+    target_horizon: cleanCellText(item.target_horizon || ""),
+    cost_adjusted_rr: parseLooseNumber(item.cost_adjusted_rr),
+    order_type: cleanCellText(item.order_type || ""),
     field_provenance: item.field_provenance && typeof item.field_provenance === "object" ? item.field_provenance : {},
     score_delta: scoreDelta,
     why_changed: normalizeList(item.why_changed),
@@ -1595,6 +1618,9 @@ function formatEntryPlan(opportunity) {
   }
   if (opportunity.stop_loss !== null && opportunity.stop_loss !== undefined) lines.push(`止损 ${formatPlanPrice(opportunity.stop_loss, opportunity.currency)}`);
   if (opportunity.target_price !== null && opportunity.target_price !== undefined) lines.push(`目标 ${formatPlanPrice(opportunity.target_price, opportunity.currency)}`);
+  if (opportunity.strategy_id) lines.push(`策略：${opportunity.strategy_id}${opportunity.order_type ? ` · ${opportunity.order_type}` : ""}`);
+  if (opportunity.target_method) lines.push(`目标依据：${opportunity.target_method}${opportunity.target_horizon ? ` · ${opportunity.target_horizon}` : ""}`);
+  if (opportunity.cost_adjusted_rr !== null && opportunity.cost_adjusted_rr !== undefined) lines.push(`成本后 R/R ${Number(opportunity.cost_adjusted_rr).toFixed(2)}:1`);
   if (opportunity.one_share_risk !== null && opportunity.one_share_risk !== undefined) {
     const riskPct = opportunity.one_share_risk_pct === null || opportunity.one_share_risk_pct === undefined ? "" : ` / ${Number(opportunity.one_share_risk_pct).toFixed(1)}%`;
     lines.push(`单股最大风险 ${formatPlanPrice(opportunity.one_share_risk, opportunity.currency)}${riskPct}`);
@@ -1628,6 +1654,20 @@ const GATE_FAILURE_LABELS = {
   invalid_or_incomplete_path: "入场/止损/目标路径不完整",
   valid_path_false: "交易路径无效",
   market_regime_blocks_new_entry: "市场状态阻止新增仓位",
+  factor_coverage_unknown: "因子覆盖率未知",
+  factor_coverage_below_threshold: "因子覆盖率未达暂定门槛",
+  missing_required_factors: "缺少策略必需因子",
+  execution_quote_invalid: "当前执行行情无效",
+  price_trigger_not_met: "尚未触发计划价",
+  portfolio_permission_required: "待本地组合复核",
+  quote_stale: "实时报价已过期",
+  market_session_not_executable: "当前时段仅观察",
+  research_ineligible: "研究硬门槛未通过",
+  factor_coverage_incomplete: "因子覆盖不完整",
+  outside_zone: "尚未进入计划价区",
+  rr_below_required: "实时成本后 R/R 未达标",
+  qualified: "全部条件通过",
+  research_data_invalid: "研究数据未覆盖最近已完成交易日",
 };
 
 function formatGateFailure(value) {
@@ -1646,10 +1686,15 @@ function renderModelAudit(opportunity) {
     : `${(Number(opportunity.data_confidence) * 100).toFixed(1)}%`;
   const states = [
     [`数据置信度 ${confidence}`, Number(opportunity.data_confidence) >= (parseLooseNumber(activeRiskPolicy().min_data_confidence) || 0.68)],
-    [`行情 ${opportunity.price_freshness || "unknown"}`, opportunity.price_freshness === "fresh"],
+    [`因子覆盖 ${opportunity.factor_coverage === null ? "待确认" : `${(Number(opportunity.factor_coverage) * 100).toFixed(0)}%`}`, Number(opportunity.factor_coverage) >= (opportunity.minimum_factor_coverage || parseLooseNumber(activeRiskPolicy().minimum_factor_coverage) || 0.8)],
+    [opportunity.plan_qualified ? "计划合格" : "计划未合格", opportunity.plan_qualified],
+    [opportunity.price_triggered ? "价格已触发" : "价格未触发", opportunity.price_triggered],
+    [opportunity.research_data_valid ? "研究数据有效" : "研究数据待复核", opportunity.research_data_valid],
+    [opportunity.execution_quote_valid ? `执行行情有效 · ${opportunity.market_session}` : `执行行情无效 · ${opportunity.market_session}`, opportunity.execution_quote_valid],
     [opportunity.technical_data_complete ? "技术窗口完整" : "技术窗口不完整", opportunity.technical_data_complete],
     [`PIT ${opportunity.future_function_audit || "BLOCK"}`, opportunity.future_function_audit === "PASS"],
-    [opportunity.execution_allowed ? "数据允许执行" : "仅供观察", opportunity.execution_allowed],
+    [opportunity.portfolio_permission === "approved" ? "组合许可通过" : "待本地组合复核", opportunity.portfolio_permission === "approved"],
+    [opportunity.execution_allowed ? "当前可执行" : "仅供观察", opportunity.execution_allowed],
   ];
   states.forEach(([label, passed]) => {
     const badge = document.createElement("span");
@@ -1797,18 +1842,27 @@ function updateLiveQuoteElement(container, opportunity) {
   appendLiveQuoteRow(container, "时段/来源：", `${quote.sessionLabel} · ${quote.source}`);
 
   const metrics = utils.calculateLivePlanMetrics(opportunity, quote.price);
+  const execution = typeof utils.evaluateLiveExecution === "function"
+    ? utils.evaluateLiveExecution(opportunity, quote, state.liveQuoteSnapshot, Date.now(), LIVE_QUOTE_CONFIG)
+    : { qualified: false, status: "contract_unavailable" };
   const metricBox = document.createElement("div");
   metricBox.className = "live-quote-metrics";
   const distance = document.createElement("span");
   distance.textContent = metrics.entryText;
   const rr = document.createElement("span");
   rr.textContent = metrics.rrText;
-  metricBox.append(distance, rr);
+  const executionLabel = document.createElement("span");
+  executionLabel.textContent = execution.qualified
+    ? "执行复核：全部条件已通过"
+    : `执行复核：未放行（${formatGateFailure(execution.status)}）`;
+  metricBox.append(distance, rr, executionLabel);
   container.appendChild(metricBox);
   if (metrics.entryState === "inside") container.classList.add("in-entry-zone");
 
   const note = document.createElement("small");
-  if (freshness.status === "live") {
+  if (execution.qualified) {
+    note.textContent = "实时价格、研究硬门槛与组合许可均已通过；仍不自动下单。";
+  } else if (freshness.status === "live") {
     note.textContent = "仅动态监控价格；即使进入计划价区，也必须继续满足卡片中的原有硬门槛。";
   } else if (freshness.status === "push") {
     note.textContent = "扩展时段仅确认 Futu 推送接收时点，不能冒充交易所成交时间；不会自动升级买入信号。";
@@ -1977,7 +2031,7 @@ function renderOpportunityCards() {
       formatScoreMetric("机会发现分", opportunity.opportunity_score, delta.opportunity_score),
       formatScoreMetric("入场执行分", opportunity.entry_score, delta.entry_score),
       formatScoreMetric("趋势确认", opportunity.trend_score, delta.trend_score),
-      formatScoreMetric("拥挤度", opportunity.crowding_score, delta.crowding_score),
+      formatScoreMetric("价格过热代理", opportunity.price_overheating_proxy, delta.crowding_score),
       formatScoreMetric("R/R", opportunity.rr_ratio, delta.rr_ratio, { rr: true }),
     ];
     if (opportunity.alpha_percentile !== null && opportunity.alpha_percentile !== undefined) scoreLines.push(`全市场分位 ${opportunity.alpha_percentile}%`);
@@ -2073,6 +2127,16 @@ function renderList() {
 
 async function loadArchive() {
   state.archive = await loadArchiveIndex();
+  const executionPolicy = activeRiskPolicy();
+  const maxAgeSeconds = parseLooseNumber(executionPolicy.execution_quote_max_age_seconds);
+  const futureToleranceSeconds = parseLooseNumber(executionPolicy.future_timestamp_tolerance_seconds);
+  if (maxAgeSeconds !== null && maxAgeSeconds > 0) {
+    LIVE_QUOTE_CONFIG.maxQuoteAgeMs = maxAgeSeconds * 1000;
+    LIVE_QUOTE_CONFIG.maxTransportAgeMs = maxAgeSeconds * 1000;
+  }
+  if (futureToleranceSeconds !== null && futureToleranceSeconds >= 0) {
+    LIVE_QUOTE_CONFIG.futureToleranceMs = futureToleranceSeconds * 1000;
+  }
   state.reports = Array.isArray(state.archive) ? state.archive : (Array.isArray(state.archive.reports) ? state.archive.reports : []);
   els.generatedAt.textContent = `更新 ${latestReportTimeLabel()}`;
   await preloadFallbackReportContent();

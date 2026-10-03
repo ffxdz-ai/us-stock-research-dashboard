@@ -136,6 +136,11 @@ jobs:
         with:
           python-version: "3.12"
 
+      - name: Set up Node.js for cross-language contracts
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
       - name: Ensure required secret exists
         shell: bash
         run: |
@@ -167,6 +172,9 @@ jobs:
 
       - name: Run deterministic V2 unit tests
         run: python -m unittest discover -s tests -p "test_*.py" -v
+
+      - name: Run frontend and Worker execution-contract tests
+        run: node --test tests/*.test.js cloudflare-worker/test/*.test.js
 
       - name: Generate FRED macro regime
         run: python scripts/macro_regime.py

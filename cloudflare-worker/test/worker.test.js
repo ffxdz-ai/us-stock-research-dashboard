@@ -16,6 +16,13 @@ function liveCandidate(overrides = {}) {
     entry_tier: "formal",
     signal_type: "formal",
     formal_qualified: true,
+    plan_qualified: true,
+    price_triggered: false,
+    portfolio_permission: "approved",
+    research_data_valid: true,
+    research_only: false,
+    partial_factor_snapshot: false,
+    execution_quote_valid: true,
     entry_execution_status: "wait_pullback",
     execution_allowed: true,
     technical_data_complete: true,
@@ -35,6 +42,9 @@ function liveCandidate(overrides = {}) {
     trend_score: 70,
     crowding_score: 45,
     risk_policy_version: "2.0.0",
+    factor_coverage: 1,
+    minimum_factor_coverage: 0.8,
+    missing_required_factors: [],
     ...overrides,
   };
 }
@@ -360,7 +370,14 @@ test("live formal entry requires fresh authenticated prices and every hard resea
   assert.equal(qualifiesLiveSteadyBuyPlan({ ...plan, technical_data_complete: false }, quote, now), false);
   assert.equal(qualifiesLiveSteadyBuyPlan({ ...plan, gate_failures: ["data_gap"] }, quote, now), false);
   assert.equal(qualifiesLiveSteadyBuyPlan({ ...plan, rr_ratio: 1.5 }, quote, now), false);
-  assert.equal(qualifiesLiveSteadyBuyPlan({ ...plan, price_freshness: "stale" }, quote, now), false);
+  assert.equal(qualifiesLiveSteadyBuyPlan({ ...plan, price_freshness: "stale" }, quote, now), true);
+  assert.equal(qualifiesLiveSteadyBuyPlan({ ...plan, research_data_valid: false }, quote, now), false);
+  assert.equal(qualifiesLiveSteadyBuyPlan({ ...plan, portfolio_permission: "pending_review" }, quote, now), false);
+  assert.equal(qualifiesLiveSteadyBuyPlan(plan, {
+    ...quote,
+    quote_time: "2026-08-29T14:00:00Z",
+    live_session: "regular",
+  }, new Date("2026-08-29T14:00:30Z")), false);
 });
 
 test("live entry recomputes R/R from the current quote without changing research levels", () => {
@@ -409,6 +426,12 @@ test("US live quotes use the correct extended trading session", () => {
 });
 
 test("Futu entry sends once, rearms after leaving its safe zone, and never exposes credentials", async () => {
+  const RealDate = globalThis.Date;
+  const fixedNow = RealDate.parse("2026-08-25T14:00:00Z");
+  globalThis.Date = class FixedDate extends RealDate {
+    constructor(...args) { super(...(args.length ? args : [fixedNow])); }
+    static now() { return fixedNow; }
+  };
   const env = memoryEnvironment();
   const webhook = "https://open.feishu.cn/open-apis/bot/v2/hook/test-only-webhook";
   const secret = "test-only-signing-secret";
@@ -441,6 +464,7 @@ test("Futu entry sends once, rearms after leaving its safe zone, and never expos
           after_price: price,
           overnight_price: price,
           quote_time: quoteTime,
+          live_session: "regular",
         },
       },
     }),
@@ -474,6 +498,7 @@ test("Futu entry sends once, rearms after leaving its safe zone, and never expos
     assert.equal(delivered.length, 2);
   } finally {
     globalThis.fetch = originalFetch;
+    globalThis.Date = RealDate;
   }
 });
 
@@ -495,7 +520,7 @@ test("expired research cannot generate a live Futu buy notification", async () =
       body: JSON.stringify({
         generated_at: new Date().toISOString(),
         opend: { connected: true },
-        quotes: { "US.MU": { last_price: 100, quote_time: new Date().toISOString() } },
+        quotes: { "US.MU": { last_price: 100, quote_time: new Date().toISOString(), live_session: "regular" } },
       }),
     }), env);
     assert.equal((await response.json()).live_alerts.status, "research_expired");

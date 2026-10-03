@@ -1,6 +1,6 @@
 {
   "schema_version": 2,
-  "policy_version": "2.0.0",
+  "policy_version": "2.1.0",
   "formal_min_rr": 3.0,
   "starter_min_rr": 2.5,
   "breakout_min_rr": 3.0,
@@ -17,5 +17,17 @@
   "breakout_buffer": 0.005,
   "intraday_quote_max_age_minutes": 5,
   "eod_max_age_days": 4,
-  "fallback_execution_allowed": false
+  "fallback_execution_allowed": false,
+  "minimum_factor_coverage": 0.8,
+  "minimum_factor_coverage_status": "provisional",
+  "required_factors_by_strategy": {
+    "fundamental_pullback_v1": ["quality", "growth", "valuation", "momentum"],
+    "fundamental_breakout_v1": ["quality", "growth", "valuation", "momentum"],
+    "earnings_revision_pullback_v1": ["quality", "growth", "earnings_revision", "valuation", "momentum"]
+  },
+  "execution_quote_max_age_seconds": 60,
+  "future_timestamp_tolerance_seconds": 300,
+  "after_hours_execution_allowed": false,
+  "plan_ttl_hours": 24,
+  "minimum_cost_adjusted_rr": 3.0
 }

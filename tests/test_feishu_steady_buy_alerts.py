@@ -20,6 +20,13 @@ def candidate(**overrides):
         "entry_tier": "formal",
         "signal_type": "formal",
         "formal_qualified": True,
+        "plan_qualified": True,
+        "price_triggered": True,
+        "portfolio_permission": "approved",
+        "research_data_valid": True,
+        "research_only": False,
+        "partial_factor_snapshot": False,
+        "execution_quote_valid": True,
         "entry_execution_status": "in_zone",
         "execution_allowed": True,
         "technical_data_complete": True,
@@ -39,6 +46,9 @@ def candidate(**overrides):
         "trend_score": 70.0,
         "crowding_score": 45.0,
         "risk_policy_version": "2.0.0",
+        "factor_coverage": 1.0,
+        "minimum_factor_coverage": 0.8,
+        "missing_required_factors": [],
     }
     value.update(overrides)
     return value
@@ -86,7 +96,8 @@ class FeishuSteadyBuyAlertTests(unittest.TestCase):
         self.assertFalse(qualifies_for_candidate_alert(candidate()))
         self.assertFalse(qualifies_for_candidate_alert({**item, "price": 100}))
         self.assertFalse(qualifies_for_candidate_alert({**item, "future_function_audit": "BLOCK"}))
-        self.assertFalse(qualifies_for_candidate_alert({**item, "price_freshness": "stale"}))
+        self.assertTrue(qualifies_for_candidate_alert({**item, "price_freshness": "stale"}))
+        self.assertFalse(qualifies_for_candidate_alert({**item, "research_data_valid": False}))
         self.assertFalse(qualifies_for_candidate_alert({**item, "gate_failures": ["missing_fundamentals"]}))
         self.assertFalse(qualifies_for_candidate_alert({**item, "formal_qualified": False}))
 

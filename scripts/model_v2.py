@@ -12,6 +12,8 @@ import json
 import math
 import re
 import statistics
+import calendar
+import hashlib
 from dataclasses import asdict, dataclass, field
 from datetime import date, datetime, time, timedelta, timezone
 from pathlib import Path
@@ -121,6 +123,14 @@ class RiskPolicy:
     intraday_quote_max_age_minutes: int
     eod_max_age_days: int
     fallback_execution_allowed: bool
+    minimum_factor_coverage: float
+    minimum_factor_coverage_status: str
+    required_factors_by_strategy: dict[str, list[str]]
+    execution_quote_max_age_seconds: int
+    future_timestamp_tolerance_seconds: int
+    after_hours_execution_allowed: bool
+    plan_ttl_hours: int
+    minimum_cost_adjusted_rr: float
 
 
 def load_risk_policy(path: Path = RISK_POLICY_PATH) -> RiskPolicy:
@@ -404,6 +414,123 @@ def select_best_field_value(candidates: Iterable[dict[str, Any]]) -> dict[str, A
     return dict(max(valid, key=rank))
 
 
+def first_number(*values: Any) -> float | None:
+    """Return the first numeric value while preserving a legitimate zero."""
+    for value in values:
+        parsed = _number(value)
+        if parsed is not None:
+            return parsed
+    return None
+
+
+def _observed_holiday(day: date) -> date:
+    if day.weekday() == 5:
+        return day - timedelta(days=1)
+    if day.weekday() == 6:
+        return day + timedelta(days=1)
+    return day
+
+
+def _nth_weekday(year: int, month: int, weekday: int, occurrence: int) -> date:
+    first = date(year, month, 1)
+    offset = (weekday - first.weekday()) % 7
+    return first + timedelta(days=offset + 7 * (occurrence - 1))
+
+
+def _last_weekday(year: int, month: int, weekday: int) -> date:
+    last = date(year, month, calendar.monthrange(year, month)[1])
+    return last - timedelta(days=(last.weekday() - weekday) % 7)
+
+
+def _easter_sunday(year: int) -> date:
+    """Gregorian computus; used only to derive the NYSE Good Friday closure."""
+    a = year % 19
+    b, c = divmod(year, 100)
+    d, e = divmod(b, 4)
+    f = (b + 8) // 25
+    g = (b - f + 1) // 3
+    h = (19 * a + b - d - g + 15) % 30
+    i, k = divmod(c, 4)
+    ell = (32 + 2 * e + 2 * i - h - k) % 7
+    m = (a + 11 * h + 22 * ell) // 451
+    month = (h + ell - 7 * m + 114) // 31
+    day = (h + ell - 7 * m + 114) % 31 + 1
+    return date(year, month, day)
+
+
+def us_exchange_holidays(year: int) -> set[date]:
+    """NYSE full-day holidays for deterministic offline freshness checks."""
+    holidays = {
+        _observed_holiday(date(year, 1, 1)),
+        _nth_weekday(year, 1, 0, 3),       # Martin Luther King Jr. Day
+        _nth_weekday(year, 2, 0, 3),       # Washington's Birthday
+        _easter_sunday(year) - timedelta(days=2),
+        _last_weekday(year, 5, 0),
+        _observed_holiday(date(year, 6, 19)),
+        _observed_holiday(date(year, 7, 4)),
+        _nth_weekday(year, 9, 0, 1),
+        _nth_weekday(year, 11, 3, 4),
+        _observed_holiday(date(year, 12, 25)),
+    }
+    # New Year's Day can be observed in the prior calendar year.
+    holidays.add(_observed_holiday(date(year + 1, 1, 1)))
+    return {value for value in holidays if value.year == year}
+
+
+def is_us_trading_day(day: date) -> bool:
+    return day.weekday() < 5 and day not in us_exchange_holidays(day.year)
+
+
+def us_session_close(day: date) -> time:
+    """Return the scheduled close, including common NYSE 13:00 early closes."""
+    thanksgiving = _nth_weekday(day.year, 11, 3, 4)
+    early = {thanksgiving + timedelta(days=1)}
+    if date(day.year, 12, 24).weekday() < 5 and is_us_trading_day(date(day.year, 12, 24)):
+        early.add(date(day.year, 12, 24))
+    july_fourth = date(day.year, 7, 4)
+    candidate = july_fourth - timedelta(days=1)
+    while candidate.weekday() >= 5 or not is_us_trading_day(candidate):
+        candidate -= timedelta(days=1)
+    early.add(candidate)
+    return time(13, 0) if day in early else time(16, 0)
+
+
+def us_market_session(value: Any) -> str:
+    instant = parse_timestamp(value)
+    if instant is None:
+        return "unknown"
+    eastern = instant.astimezone(ZoneInfo("America/New_York"))
+    if not is_us_trading_day(eastern.date()):
+        return "closed"
+    minute = eastern.hour * 60 + eastern.minute
+    close = us_session_close(eastern.date())
+    close_minute = close.hour * 60 + close.minute
+    if 4 * 60 <= minute < 9 * 60 + 30:
+        return "pre_market"
+    if 9 * 60 + 30 <= minute < close_minute:
+        return "regular"
+    if close_minute <= minute < 20 * 60:
+        return "post_market"
+    return "closed"
+
+
+def most_recent_completed_us_session(value: Any) -> tuple[date, datetime]:
+    instant = parse_timestamp(value) or datetime.now(timezone.utc)
+    eastern = instant.astimezone(ZoneInfo("America/New_York"))
+    cursor = eastern.date()
+    if is_us_trading_day(cursor):
+        close_at = datetime.combine(cursor, us_session_close(cursor), ZoneInfo("America/New_York"))
+        if eastern >= close_at:
+            return cursor, close_at.astimezone(timezone.utc)
+        cursor -= timedelta(days=1)
+    else:
+        cursor -= timedelta(days=1)
+    while not is_us_trading_day(cursor):
+        cursor -= timedelta(days=1)
+    close_at = datetime.combine(cursor, us_session_close(cursor), ZoneInfo("America/New_York"))
+    return cursor, close_at.astimezone(timezone.utc)
+
+
 def assess_price_freshness(
     quote_time: Any,
     source: Any,
@@ -411,28 +538,90 @@ def assess_price_freshness(
     *,
     mode: str = "eod",
     policy: RiskPolicy | None = None,
+    received_at: Any = None,
+    market: str = "US",
+    delayed: bool = False,
+    bid: Any = None,
+    ask: Any = None,
 ) -> dict[str, Any]:
     policy = policy or load_risk_policy()
     signal = parse_timestamp(signal_time) or datetime.now(timezone.utc)
     quote = parse_timestamp(quote_time)
+    received = parse_timestamp(received_at)
     source_text = str(source or "")
     is_broker = "futu opend" in source_text.lower() and "fallback" not in source_text.lower() and "snapshot" not in source_text.lower()
+    session = us_market_session(signal) if market.upper().startswith("US") else "unknown"
+    reasons: list[str] = []
     if quote is None:
-        return {"price_freshness": "unknown", "quote_age_minutes": None, "execution_allowed": False}
-    age_minutes = max(0.0, (signal - quote).total_seconds() / 60)
-    if quote > signal + timedelta(minutes=5):
-        status = "stale"
-    elif mode == "intraday":
-        status = "fresh" if age_minutes <= policy.intraday_quote_max_age_minutes else "stale"
-    else:
-        status = "fresh" if age_minutes <= policy.eod_max_age_days * 24 * 60 else "stale"
+        reasons.append("quote_time_unknown")
+        return {
+            "price_freshness": "unknown",
+            "research_data_valid": False,
+            "execution_quote_valid": False,
+            "execution_allowed": False,
+            "quote_age_seconds": None,
+            "quote_age_minutes": None,
+            "market_session": session,
+            "quote_time": None,
+            "received_at": received.isoformat() if received else None,
+            "reason_codes": reasons,
+        }
+    raw_age_seconds = (signal - quote).total_seconds()
+    age_seconds = max(0.0, raw_age_seconds)
+    if quote > signal + timedelta(seconds=policy.future_timestamp_tolerance_seconds):
+        reasons.append("future_quote_timestamp")
+    if delayed:
+        reasons.append("delayed_quote")
     if not is_broker:
-        status = "fallback_only" if status == "fresh" else status
-    execution_allowed = bool(status == "fresh" and is_broker)
+        reasons.append("source_not_execution_grade")
+    if session != "regular" and not policy.after_hours_execution_allowed:
+        reasons.append("market_session_not_executable")
+    if age_seconds > policy.execution_quote_max_age_seconds:
+        reasons.append("execution_quote_stale")
+    if received and received + timedelta(seconds=policy.execution_quote_max_age_seconds) < signal:
+        reasons.append("transport_receipt_stale")
+    numeric_bid, numeric_ask = _number(bid), _number(ask)
+    if (bid is not None or ask is not None) and (
+        numeric_bid is None or numeric_ask is None or numeric_bid <= 0 or numeric_ask < numeric_bid
+    ):
+        reasons.append("invalid_bid_ask")
+
+    research_data_valid = False
+    if market.upper().startswith("US"):
+        completed_day, _ = most_recent_completed_us_session(signal)
+        quote_day = quote.astimezone(ZoneInfo("America/New_York")).date()
+        research_data_valid = quote_day >= completed_day and quote <= signal + timedelta(seconds=policy.future_timestamp_tolerance_seconds)
+        if not research_data_valid:
+            reasons.append("latest_completed_session_not_covered")
+    else:
+        research_data_valid = age_seconds <= policy.eod_max_age_days * 86400
+        if not research_data_valid:
+            reasons.append("research_data_stale")
+
+    execution_quote_valid = not any(code in reasons for code in {
+        "quote_time_unknown", "future_quote_timestamp", "delayed_quote", "source_not_execution_grade",
+        "market_session_not_executable", "execution_quote_stale", "transport_receipt_stale", "invalid_bid_ask",
+    })
+    execution_allowed = bool(execution_quote_valid and is_broker)
+    if execution_quote_valid:
+        status = "fresh"
+    elif research_data_valid and not is_broker:
+        status = "fallback_only"
+    elif research_data_valid:
+        status = "research_only"
+    else:
+        status = "stale"
     return {
         "price_freshness": status,
-        "quote_age_minutes": round(age_minutes, 1),
+        "research_data_valid": research_data_valid,
+        "execution_quote_valid": execution_quote_valid,
         "execution_allowed": execution_allowed,
+        "quote_age_seconds": round(age_seconds, 1),
+        "quote_age_minutes": round(age_seconds / 60, 1),
+        "market_session": session,
+        "quote_time": quote.isoformat(),
+        "received_at": received.isoformat() if received else None,
+        "reason_codes": list(dict.fromkeys(reasons)),
     }
 
 
@@ -496,7 +685,7 @@ def evaluate_risk_gate(
     policy = policy or load_risk_policy()
     failures = list(path.failures)
     opportunity = _number(candidate.get("opportunity_score"))
-    trend = _number(candidate.get("trend_score") or candidate.get("technical_score_v2"))
+    trend = first_number(candidate.get("trend_score"), candidate.get("technical_score_v2"))
     crowding = _number(candidate.get("crowding_score"))
     confidence = _number(candidate.get("data_confidence"))
     if path_type == "starter":
@@ -519,6 +708,20 @@ def evaluate_risk_gate(
         failures.append("crowding_score_above_threshold")
     if confidence is None or confidence < policy.min_data_confidence:
         failures.append("data_confidence_below_threshold")
+    coverage = _number(candidate.get("factor_coverage"))
+    if coverage is None:
+        snapshot = candidate.get("factor_snapshot") if isinstance(candidate.get("factor_snapshot"), dict) else {}
+        coverage = _number(snapshot.get("factor_coverage"))
+    missing_required = candidate.get("missing_required_factors")
+    if not isinstance(missing_required, list):
+        snapshot = candidate.get("factor_snapshot") if isinstance(candidate.get("factor_snapshot"), dict) else {}
+        missing_required = snapshot.get("missing_required_factors")
+    if coverage is None:
+        failures.append("factor_coverage_unknown")
+    elif coverage < policy.minimum_factor_coverage:
+        failures.append("factor_coverage_below_threshold")
+    if isinstance(missing_required, list) and missing_required:
+        failures.append("missing_required_factors")
     if candidate.get("price_freshness") != "fresh":
         failures.append("price_freshness_not_pass")
     if candidate.get("technical_data_complete") is not True:
@@ -531,6 +734,115 @@ def evaluate_risk_gate(
         failures.append("valid_path_false")
     deduped = list(dict.fromkeys(failures))
     return RiskGateResult(not deduped, deduped, policy.policy_version)
+
+
+def evaluate_plan_qualification(
+    candidate: dict[str, Any],
+    path: EntryPath,
+    *,
+    path_type: str = "formal",
+    policy: RiskPolicy | None = None,
+) -> RiskGateResult:
+    """Evaluate research-plan quality without pretending the quote is executable."""
+    plan_candidate = {
+        **candidate,
+        "price_freshness": "fresh",
+        "execution_allowed": True,
+    }
+    result = evaluate_risk_gate(plan_candidate, path, path_type=path_type, policy=policy)
+    failures = list(result.gate_failures)
+    if candidate.get("research_data_valid") is not True:
+        failures.append("research_data_invalid")
+    failures = list(dict.fromkeys(failures))
+    return RiskGateResult(not failures, failures, result.policy_version)
+
+
+def canonical_content_hash(payload: Any) -> str:
+    encoded = json.dumps(payload, ensure_ascii=False, sort_keys=True, separators=(",", ":"), default=str).encode("utf-8")
+    return hashlib.sha256(encoded).hexdigest()
+
+
+def build_signal_identifiers(
+    candidate: dict[str, Any],
+    path: EntryPath,
+    *,
+    signal_time: Any,
+    strategy_id: str,
+    data_snapshot_id: str,
+    model_version: str | None = None,
+    policy: RiskPolicy | None = None,
+) -> dict[str, str]:
+    policy = policy or load_risk_policy()
+    symbol = str(candidate.get("symbol") or candidate.get("ticker") or "UNKNOWN").upper()
+    model_version = str(model_version or load_model_config().get("model_version") or "2.0.0")
+    plan_payload = {
+        "symbol": symbol,
+        "strategy_id": strategy_id,
+        "path": path.to_dict(),
+        "policy_version": policy.policy_version,
+        "model_version": model_version,
+    }
+    plan_id = canonical_content_hash(plan_payload)[:24]
+    signal_payload = {
+        **plan_payload,
+        "signal_time": parse_timestamp(signal_time).isoformat() if parse_timestamp(signal_time) else str(signal_time),
+        "data_snapshot_id": data_snapshot_id,
+    }
+    return {
+        "signal_id": canonical_content_hash(signal_payload)[:24],
+        "plan_id": plan_id,
+        "strategy_id": strategy_id,
+        "policy_version": policy.policy_version,
+        "model_version": model_version,
+        "data_snapshot_id": data_snapshot_id,
+    }
+
+
+def evaluate_plan_execution(
+    candidate: dict[str, Any],
+    path: EntryPath,
+    *,
+    current_price: Any,
+    path_type: str = "formal",
+    portfolio_permission: bool | None = None,
+    policy: RiskPolicy | None = None,
+) -> dict[str, Any]:
+    """Keep plan qualification, price trigger, quote and portfolio permission independent."""
+    policy = policy or load_risk_policy()
+    plan = evaluate_plan_qualification(candidate, path, path_type=path_type, policy=policy)
+    price = _number(current_price)
+    price_triggered = False
+    trigger_reason = "current_price_missing"
+    if price is not None and path.entry is not None:
+        if path_type == "breakout":
+            upper = path.entry * (1 + policy.breakout_buffer)
+            price_triggered = path.entry <= price <= upper
+            trigger_reason = "breakout_triggered" if price_triggered else "breakout_not_triggered_or_overextended"
+        else:
+            price_triggered = path.stop is not None and path.stop < price <= path.entry
+            trigger_reason = "pullback_triggered" if price_triggered else "pullback_not_in_entry_zone"
+    quote_valid = candidate.get("execution_quote_valid") is True or (
+        candidate.get("price_freshness") == "fresh" and candidate.get("execution_allowed") is True
+    )
+    portfolio_state = "approved" if portfolio_permission is True else "denied" if portfolio_permission is False else "pending_local_review"
+    reasons = [*plan.gate_failures]
+    if not price_triggered:
+        reasons.append(trigger_reason)
+    if not quote_valid:
+        reasons.append("execution_quote_invalid")
+    if portfolio_permission is not True:
+        reasons.append("portfolio_permission_required" if portfolio_permission is None else "portfolio_permission_denied")
+    return {
+        "plan_qualified": plan.qualified,
+        "price_triggered": price_triggered,
+        "execution_quote_valid": quote_valid,
+        "portfolio_permission": portfolio_state,
+        "execution_allowed": bool(plan.qualified and price_triggered and quote_valid and portfolio_permission is True),
+        "reason_codes": list(dict.fromkeys(reasons)),
+        "path_type": path_type,
+        "plan_rr": path.rr,
+        "current_price": price,
+    }
 
 
 def future_function_audit(candidate: dict[str, Any], signal_time: Any) -> dict[str, Any]:
@@ -599,24 +911,34 @@ def load_factor_weights() -> dict[str, float]:
 def infer_company_type(candidate: dict[str, Any]) -> str:
     text = " ".join(str(candidate.get(key) or "") for key in ("theme", "layer", "role", "industry")).lower()
     ticker = str(candidate.get("ticker") or candidate.get("symbol") or "").upper()
+    explicit = str(candidate.get("company_type") or candidate.get("classification_override") or "").strip().lower()
+    allowed = {"storage", "chip_design", "semiconductor_equipment", "software", "platform", "industrial_automation", "semiconductor", "automation", "industrial"}
+    if explicit in allowed:
+        return explicit
+    if any(key in text for key in ("存储", "memory", "hbm", "dram", "nand")) or ticker in {"MU", "US.MU"}:
+        return "storage"
+    if any(key in text for key in ("半导体设备", "lithography", "wafer equipment")) or ticker in {"ASML", "AMAT", "LRCX", "KLAC"}:
+        return "semiconductor_equipment"
+    if any(key in text for key in ("芯片设计", "fabless", "asic")) or ticker in {"NVDA", "AMD", "AVGO", "QCOM"}:
+        return "chip_design"
     if any(key in text for key in ("软件", "software", "saas")) or ticker in {"MSFT", "GOOGL", "ORCL", "PLTR", "SNPS", "CDNS"}:
         return "software"
-    if any(key in text for key in ("半导体", "gpu", "asic", "hbm", "芯片", "晶圆")) or ticker in {"NVDA", "AMD", "AVGO", "MU", "TSM", "ASML", "AMAT"}:
+    if any(key in text for key in ("半导体", "gpu", "芯片", "晶圆")) or ticker in {"TSM"}:
         return "semiconductor"
     if any(key in text for key in ("机器人", "自动化", "automation")):
-        return "automation"
-    return "industrial"
+        return "industrial_automation"
+    return "unknown"
 
 
 def valuation_score(candidate: dict[str, Any], company_type: str | None = None) -> tuple[float | None, dict[str, Any]]:
     company_type = company_type or infer_company_type(candidate)
     metrics = {
-        "forward_pe": _number(candidate.get("forward_pe") or candidate.get("valuation_pe")),
+        "forward_pe": first_number(candidate.get("forward_pe"), candidate.get("valuation_pe")),
         "ev_ebitda": _number(candidate.get("ev_ebitda")),
         "ev_sales": _number(candidate.get("ev_sales")),
         "fcf_yield": _number(candidate.get("fcf_yield")),
         "peg": _number(candidate.get("peg")),
-        "price_sales": _number(candidate.get("price_sales") or candidate.get("finnhub_ps")),
+        "price_sales": first_number(candidate.get("price_sales"), candidate.get("finnhub_ps")),
         "historical_percentile": _number(candidate.get("valuation_history_percentile")),
         "sector_percentile": _number(candidate.get("valuation_sector_percentile")),
     }
@@ -631,10 +953,10 @@ def valuation_score(candidate: dict[str, Any], company_type: str | None = None) 
         score, method = clamp(90 - metrics["ev_sales"] * 5), "software_ev_sales"
     elif company_type == "software" and metrics["price_sales"] is not None:
         score, method = clamp(88 - metrics["price_sales"] * 5), "software_price_sales_fallback"
-    elif company_type in {"semiconductor", "industrial", "automation"} and metrics["forward_pe"] is not None and metrics["forward_pe"] > 0:
+    elif company_type in {"storage", "chip_design", "semiconductor_equipment", "semiconductor", "industrial", "industrial_automation", "automation"} and metrics["forward_pe"] is not None and metrics["forward_pe"] > 0:
         config = load_model_config()
         anchors = config.get("valuation_anchors") if isinstance(config.get("valuation_anchors"), dict) else {}
-        anchor = _number(anchors.get(f"{company_type}_forward_pe")) or _number(anchors.get("default_forward_pe")) or 26
+        anchor = first_number(anchors.get(f"{company_type}_forward_pe"), anchors.get("semiconductor_forward_pe") if company_type in {"storage", "chip_design", "semiconductor_equipment"} else None, anchors.get("automation_forward_pe") if company_type == "industrial_automation" else None, anchors.get("default_forward_pe")) or 26
         score, method = clamp(65 + (anchor - metrics["forward_pe"]) * 2), f"{company_type}_forward_pe"
     elif metrics["fcf_yield"] is not None:
         score, method = clamp(50 + metrics["fcf_yield"] * 500), "fcf_yield"
@@ -661,11 +983,21 @@ def _fundamental_factor(candidate: dict[str, Any]) -> tuple[float | None, float 
     return quality, growth
 
 
-def factor_snapshot(candidate: dict[str, Any]) -> dict[str, Any]:
+def required_factors_for_strategy(strategy_id: str, policy: RiskPolicy | None = None) -> list[str]:
+    policy = policy or load_risk_policy()
+    required = policy.required_factors_by_strategy.get(strategy_id)
+    if not isinstance(required, list):
+        required = policy.required_factors_by_strategy.get("fundamental_pullback_v1", [])
+    return [str(value) for value in required if str(value) in FACTOR_NAMES]
+
+
+def factor_snapshot(candidate: dict[str, Any], strategy_id: str | None = None) -> dict[str, Any]:
     weights = load_factor_weights()
+    policy = load_risk_policy()
+    strategy_id = str(strategy_id or candidate.get("strategy_id") or "fundamental_pullback_v1")
     quality, growth = _fundamental_factor(candidate)
     valuation, valuation_detail = valuation_score(candidate)
-    momentum = _number(candidate.get("technical_score_v2") or candidate.get("trend_score"))
+    momentum = first_number(candidate.get("technical_score_v2"), candidate.get("trend_score"))
     revision = _number(candidate.get("earnings_revision_score"))
     catalyst = _number(candidate.get("catalyst_score"))
     crowding = _number(candidate.get("crowding_score"))
@@ -682,15 +1014,34 @@ def factor_snapshot(candidate: dict[str, Any]) -> dict[str, Any]:
     }
     available_weight = sum(weights[key] for key, value in factors.items() if value is not None)
     missing = [key for key, value in factors.items() if value is None]
+    required = required_factors_for_strategy(strategy_id, policy)
+    missing_required = [key for key in required if factors.get(key) is None]
     raw = None
     if available_weight > 0:
         raw = sum(float(factors[key]) * weights[key] for key in factors if factors[key] is not None) / available_weight
     multiplier = confidence_multiplier(confidence)
     opportunity = round(raw * multiplier, 1) if raw is not None else None
+    research_only = bool(available_weight < policy.minimum_factor_coverage or missing_required)
+    quality_dimensions = {
+        "market_data": "complete" if momentum is not None else "missing",
+        "fundamentals": "complete" if quality is not None and growth is not None and valuation is not None else "partial",
+        "expectations": "complete" if revision is not None else "missing",
+        "events": "complete" if catalyst is not None else "missing",
+    }
     return {
         "factors": factors,
         "factor_coverage": round(available_weight, 2),
         "missing_factors": missing,
+        "required_factors": required,
+        "missing_required_factors": missing_required,
+        "minimum_factor_coverage": policy.minimum_factor_coverage,
+        "coverage_threshold_status": policy.minimum_factor_coverage_status,
+        "research_only": research_only,
+        "score_completeness": "partial" if research_only else "complete",
+        "data_quality_dimensions": quality_dimensions,
+        "strategy_id": strategy_id,
+        "model_version": str(load_model_config().get("model_version") or "2.0.0"),
+        "policy_version": policy.policy_version,
         "raw_alpha_score": round(raw, 1) if raw is not None else None,
         "confidence_multiplier": multiplier,
         "opportunity_score": opportunity,
@@ -699,7 +1050,7 @@ def factor_snapshot(candidate: dict[str, Any]) -> dict[str, Any]:
 
 
 def entry_score(candidate: dict[str, Any], paths: Iterable[EntryPath]) -> float | None:
-    trend = _number(candidate.get("technical_score_v2") or candidate.get("trend_score"))
+    trend = first_number(candidate.get("technical_score_v2"), candidate.get("trend_score"))
     valid_rr = [path.rr for path in paths if path.valid and path.rr is not None]
     if trend is None or not valid_rr:
         return None
