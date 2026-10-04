@@ -1034,7 +1034,11 @@ async function handleRequest(request, env) {
         return jsonResponse({ ...current, code: "already_running", message: "更新任务已经在运行。" }, 409, origin);
       }
       await dispatchWorkflow(env);
-      return jsonResponse({ ok: true, code: "accepted", message: "强制更新任务已提交；本次完成后可再次运行。" }, 202, origin);
+      return jsonResponse({
+        ok: true,
+        code: "accepted",
+        message: "更新任务已提交；仅在新的美股交易日收盘后且 Futu OpenD 在线时生成，否则安全跳过。",
+      }, 202, origin);
     } catch (error) {
       console.error("workflow dispatch failed", error);
       return jsonResponse({ ok: false, code: "trigger_failed", message: "暂时无法提交更新，请稍后重试。" }, 502, origin);

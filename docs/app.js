@@ -1188,10 +1188,10 @@ function renderManualUpdateControl(run = null, message = "") {
     : awaitingPages
       ? "本次工作流已成功，GitHub Pages 数据正在同步；完成后按钮会重新开放。"
       : updatedToday
-        ? `最近更新：${latestReportTimeLabel()}；如需重跑可随时再次点击。`
+        ? `最近更新：${latestReportTimeLabel()}；同一美股交易日可申请重跑，但仍需 Futu OpenD 在线。`
         : failed
           ? "本次任务未成功；可以直接重新提交，无需登录 GitHub。"
-          : "北京时间今日尚未更新；点击即可生成，完成后仍可再次运行。";
+          : "仅在新的美股交易日收盘后且 Futu OpenD 在线时生成；休市或行情心跳失效会安全跳过。";
   els.manualUpdateStatus.textContent = message || defaultMessage;
 }
 
@@ -1276,7 +1276,7 @@ async function handleManualUpdateClick() {
   els.manualUpdateButton.disabled = true;
   els.manualUpdateButton.setAttribute("aria-busy", "true");
   els.manualUpdateButton.textContent = "正在提交";
-  els.manualUpdateStatus.textContent = "正在安全提交强制更新任务…";
+  els.manualUpdateStatus.textContent = "正在提交；系统将先校验美股交易日和 Futu OpenD 在线状态…";
   try {
     const result = await requestManualUpdate();
     if (result.code === "already_running") {

@@ -2,9 +2,10 @@ name: DeepSeek daily report watchdog
 
 on:
   schedule:
-    # 08:00 Asia/Shanghai = 00:00 UTC. The lightweight watchdog dispatches
-    # exactly one full report only when today's DeepSeek report is missing.
-    - cron: "0 0 * * *"
+    # 08:00 Asia/Shanghai = 00:00 UTC, Tuesday-Saturday. These runs map to
+    # Monday-Friday US closes. The report workflow separately rejects NYSE
+    # holidays and requires a live, authenticated Futu OpenD heartbeat.
+    - cron: "0 0 * * 2-6"
   workflow_dispatch:
 
 permissions:
