@@ -16,10 +16,15 @@ on:
           - full
           - weekly
       force:
-        description: "Re-run the same completed US session; trading-session and Futu gates still apply"
+        description: "Re-run the same trading-day slot; trading-week and Futu gates still apply"
         type: boolean
         required: false
         default: false
+      scheduled_slot:
+        description: "Logical Beijing schedule time supplied by the watchdog"
+        type: string
+        required: false
+        default: ""
 
 concurrency:
   group: deepseek-daily-report
@@ -38,6 +43,7 @@ jobs:
       reason: ${{ steps.gate.outputs.reason }}
       code: ${{ steps.gate.outputs.code }}
       session_date: ${{ steps.gate.outputs.session_date }}
+      report_slot: ${{ steps.gate.outputs.report_slot }}
     env:
       FUTU_BRIDGE_URL: ${{ vars.FUTU_BRIDGE_URL }}
       FUTU_BRIDGE_TOKEN: ${{ secrets.FUTU_BRIDGE_TOKEN }}
@@ -62,14 +68,15 @@ jobs:
         id: gate
         env:
           FORCE_REPORT: ${{ github.event.inputs.force || 'false' }}
+          SCHEDULED_SLOT: ${{ github.event.inputs.scheduled_slot || '' }}
         run: |
           python scripts/report_update_gate.py check \
             --index docs/data/index.json \
             --state docs/data/report_update_state.json \
             --snapshot data/latest_futu_local_snapshot.json \
             --force "$FORCE_REPORT" \
+            --window-time "$SCHEDULED_SLOT" \
             --max-snapshot-age-minutes 5 \
-            --max-session-close-age-hours 16 \
             --github-output "$GITHUB_OUTPUT"
 
       - name: Show update decision
@@ -264,7 +271,8 @@ jobs:
           python scripts/report_update_gate.py stamp \
             --state docs/data/report_update_state.json \
             --snapshot data/latest_futu_local_snapshot.json \
-            --session-date "${{ needs.update-eligibility.outputs.session_date }}"
+            --session-date "${{ needs.update-eligibility.outputs.session_date }}" \
+            --report-slot "${{ needs.update-eligibility.outputs.report_slot }}"
 
       - name: Validate public archive
         shell: bash

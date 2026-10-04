@@ -1,14 +1,16 @@
 #!/usr/bin/env python3
-"""Gate daily report generation on a new US session and live Futu OpenD.
+"""Gate report generation on the Beijing-time US trading week and Futu OpenD.
 
-The dashboard is generated after the US market closes (08:00 Asia/Shanghai).
-A workflow may be dispatched every day or manually, but it must not mutate the
-public archive unless all of the following are true:
+The system's trading week is Monday 08:00 through Saturday 08:00 in
+Asia/Shanghai.  The 08:00 boundary follows the user's Futu session convention:
+Monday opens the overnight week and Saturday closes Friday post-market.  US
+exchange holidays are still excluded.  A workflow may be dispatched every day
+or manually, but it must not mutate the public archive unless:
 
-* the most recent US exchange session closed recently;
-* that session has not already been reported (unless a manual re-run is used);
-* an authenticated cloud snapshot proves Futu OpenD is connected now; and
-* at least one US benchmark quote covers the completed session.
+* the logical run time is inside that trading-week window;
+* the corresponding US market date is an exchange trading date;
+* that daily slot has not already been reported (unless manually re-run); and
+* an authenticated cloud snapshot proves Futu OpenD is connected now.
 
 The command intentionally exits successfully when a gate is closed.  A closed
 gate is a safe no-op, not an infrastructure failure.
@@ -21,12 +23,12 @@ import json
 import os
 import re
 from dataclasses import asdict, dataclass
-from datetime import date, datetime, timezone
+from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any
 from zoneinfo import ZoneInfo
 
-from model_v2 import is_us_trading_day, most_recent_completed_us_session
+from model_v2 import is_us_trading_day
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -34,8 +36,7 @@ DEFAULT_INDEX = ROOT / "docs" / "data" / "index.json"
 DEFAULT_STATE = ROOT / "docs" / "data" / "report_update_state.json"
 DEFAULT_SNAPSHOT = ROOT / "data" / "latest_futu_local_snapshot.json"
 BEIJING = ZoneInfo("Asia/Shanghai")
-NEW_YORK = ZoneInfo("America/New_York")
-BENCHMARKS = ("US.SPY", "US.QQQ", "US.DIA", "US.IWM")
+TRADING_DAY_BOUNDARY_MINUTES = 8 * 60
 
 
 @dataclass(frozen=True)
@@ -45,6 +46,8 @@ class GateDecision:
     reason: str
     session_date: str
     previous_session_date: str
+    report_slot: str
+    previous_report_slot: str
     snapshot_age_minutes: float | None = None
 
 
@@ -71,13 +74,39 @@ def parse_datetime(value: Any, *, default_tz: ZoneInfo | timezone = timezone.utc
     return parsed.astimezone(timezone.utc)
 
 
-def parse_session_date(value: Any) -> date | None:
+def parse_date(value: Any) -> date | None:
     text = str(value or "").strip()[:10]
     try:
         parsed = date.fromisoformat(text)
     except ValueError:
         return None
-    return parsed if is_us_trading_day(parsed) else None
+    return parsed
+
+
+def parse_session_date(value: Any) -> date | None:
+    parsed = parse_date(value)
+    return parsed if parsed is not None and is_us_trading_day(parsed) else None
+
+
+def trading_week_market_date(value: datetime) -> date | None:
+    """Map a Beijing instant to its Futu-style US market date.
+
+    Monday before 08:00, Saturday after 08:00, and all Sunday are outside the
+    continuous trading week.  Before 08:00 Tuesday-Friday still belongs to the
+    prior US market date; Saturday 08:00 is the Friday post-market boundary.
+    """
+    local = value.astimezone(BEIJING)
+    minute = local.hour * 60 + local.minute
+    weekday = local.weekday()
+    if weekday == 6 or (weekday == 0 and minute < TRADING_DAY_BOUNDARY_MINUTES):
+        return None
+    if weekday == 5:
+        if minute > TRADING_DAY_BOUNDARY_MINUTES:
+            return None
+        return local.date() - timedelta(days=1)
+    if minute < TRADING_DAY_BOUNDARY_MINUTES:
+        return local.date() - timedelta(days=1)
+    return local.date()
 
 
 def report_timestamp(report: dict[str, Any]) -> datetime | None:
@@ -98,12 +127,14 @@ def report_timestamp(report: dict[str, Any]) -> datetime | None:
     return local.astimezone(timezone.utc)
 
 
-def latest_reported_session(index: dict[str, Any], state: dict[str, Any]) -> date | None:
+def latest_reported_slot(index: dict[str, Any], state: dict[str, Any]) -> date | None:
     for candidate in (
-        state.get("last_completed_session"),
-        index.get("market_session_date"),
+        state.get("last_report_slot"),
+        state.get("last_market_date"),
+        state.get("last_completed_session"),  # schema v1 compatibility
+        index.get("report_update_slot"),
     ):
-        parsed = parse_session_date(candidate)
+        parsed = parse_date(candidate)
         if parsed is not None:
             return parsed
 
@@ -113,26 +144,14 @@ def latest_reported_session(index: dict[str, Any], state: dict[str, Any]) -> dat
     for report in reports:
         if not isinstance(report, dict) or report.get("kind") != "deepseek-cloud":
             continue
-        explicit = parse_session_date(report.get("market_session_date"))
+        explicit = parse_date(report.get("report_update_slot") or report.get("market_session_date"))
         if explicit is not None:
             return explicit
         timestamp = report_timestamp(report)
         if timestamp is not None:
-            session, _ = most_recent_completed_us_session(timestamp)
-            return session
-    return None
-
-
-def quote_session_date(quote: dict[str, Any]) -> date | None:
-    direct = parse_session_date(quote.get("data_date"))
-    if direct is not None:
-        return direct
-    for key in ("exchange_quote_time", "quote_time", "live_quote_time", "update_time"):
-        timestamp = parse_datetime(quote.get(key), default_tz=BEIJING)
-        if timestamp is not None:
-            local_date = timestamp.astimezone(NEW_YORK).date()
-            if is_us_trading_day(local_date):
-                return local_date
+            inferred = trading_week_market_date(timestamp)
+            if inferred is not None and is_us_trading_day(inferred):
+                return inferred
     return None
 
 
@@ -140,7 +159,6 @@ def snapshot_status(
     snapshot: dict[str, Any],
     *,
     now: datetime,
-    session_date: date,
     max_age_minutes: float,
 ) -> tuple[bool, str, str, float | None]:
     if not snapshot:
@@ -167,68 +185,65 @@ def snapshot_status(
     quotes = snapshot.get("quotes")
     if not isinstance(quotes, dict) or not quotes:
         return False, "futu_quotes_empty", "Futu OpenD 已连接但行情快照为空", round(age_minutes, 2)
-
-    benchmark_dates = {
-        symbol: quote_session_date(quotes.get(symbol) or {})
-        for symbol in BENCHMARKS
-        if isinstance(quotes.get(symbol), dict)
-    }
-    if not any(value == session_date for value in benchmark_dates.values()):
-        covered = sorted({str(value) for value in benchmark_dates.values() if value is not None})
-        suffix = f"（现有基准行情日期：{', '.join(covered)}）" if covered else ""
-        return (
-            False,
-            "futu_session_not_covered",
-            f"Futu 基准行情尚未覆盖 {session_date.isoformat()} 美股交易日{suffix}",
-            round(age_minutes, 2),
-        )
-    return True, "eligible", "Futu OpenD 在线且行情覆盖最新交易日", round(age_minutes, 2)
+    return True, "eligible", "Futu OpenD 在线且云端心跳新鲜", round(age_minutes, 2)
 
 
 def evaluate_gate(
     *,
     now: datetime,
+    window_time: datetime | None = None,
     index: dict[str, Any],
     state: dict[str, Any],
     snapshot: dict[str, Any],
     force: bool = False,
     max_snapshot_age_minutes: float = 5.0,
-    max_session_close_age_hours: float = 16.0,
 ) -> GateDecision:
     current = now if now.tzinfo is not None else now.replace(tzinfo=timezone.utc)
     current = current.astimezone(timezone.utc)
-    session_date, close_at = most_recent_completed_us_session(current)
-    previous = latest_reported_session(index, state)
+    logical = window_time or current
+    logical = logical if logical.tzinfo is not None else logical.replace(tzinfo=timezone.utc)
+    logical = logical.astimezone(timezone.utc)
+    session_date = trading_week_market_date(logical)
+    previous = latest_reported_slot(index, state)
     previous_text = previous.isoformat() if previous else ""
-    close_age_hours = (current - close_at).total_seconds() / 3600
 
-    # This window maps the 08:00 Beijing run to the US session that just
-    # finished, while rejecting Sunday/Monday and post-holiday stale sessions.
-    if close_age_hours < 0 or close_age_hours > max_session_close_age_hours:
+    if session_date is None:
         return GateDecision(
             False,
-            "outside_post_session_window",
-            (
-                f"最近美股交易日 {session_date.isoformat()} 已收盘 {close_age_hours:.1f} 小时，"
-                "当前不是日报更新窗口"
-            ),
-            session_date.isoformat(),
+            "outside_trading_week",
+            "当前不在北京时间周一 08:00 至周六 08:00 的美股交易周窗口",
+            "",
+            previous_text,
+            "",
+            previous_text,
+        )
+
+    slot_text = session_date.isoformat()
+    if not is_us_trading_day(session_date):
+        return GateDecision(
+            False,
+            "us_exchange_closed",
+            f"{slot_text} 为美股休市日，不更新日报",
+            slot_text,
+            previous_text,
+            slot_text,
             previous_text,
         )
 
     if not force and previous is not None and previous >= session_date:
         return GateDecision(
             False,
-            "session_already_reported",
-            f"美股交易日 {session_date.isoformat()} 已生成过报告",
-            session_date.isoformat(),
+            "report_slot_already_updated",
+            f"美股交易日 {slot_text} 已生成过日报",
+            slot_text,
+            previous_text,
+            slot_text,
             previous_text,
         )
 
     healthy, code, reason, age_minutes = snapshot_status(
         snapshot,
         now=current,
-        session_date=session_date,
         max_age_minutes=max_snapshot_age_minutes,
     )
     if not healthy:
@@ -236,7 +251,9 @@ def evaluate_gate(
             False,
             code,
             reason,
-            session_date.isoformat(),
+            slot_text,
+            previous_text,
+            slot_text,
             previous_text,
             age_minutes,
         )
@@ -245,8 +262,10 @@ def evaluate_gate(
     return GateDecision(
         True,
         "eligible",
-        f"美股交易日 {session_date.isoformat()} 已完成，Futu OpenD 在线{rerun}",
-        session_date.isoformat(),
+        f"当前属于美股交易日 {slot_text}，Futu OpenD 在线{rerun}",
+        slot_text,
+        previous_text,
+        slot_text,
         previous_text,
         age_minutes,
     )
@@ -263,6 +282,8 @@ def write_github_output(path: Path, decision: GateDecision) -> None:
         "reason": decision.reason,
         "session_date": decision.session_date,
         "previous_session_date": decision.previous_session_date,
+        "report_slot": decision.report_slot,
+        "previous_report_slot": decision.previous_report_slot,
         "snapshot_age_minutes": "" if decision.snapshot_age_minutes is None else decision.snapshot_age_minutes,
     }
     with path.open("a", encoding="utf-8") as output:
@@ -271,14 +292,21 @@ def write_github_output(path: Path, decision: GateDecision) -> None:
             output.write(f"{key}={clean}\n")
 
 
-def stamp_state(path: Path, *, session_date: date, snapshot: dict[str, Any]) -> dict[str, Any]:
+def stamp_state(
+    path: Path,
+    *,
+    session_date: date,
+    report_slot: date,
+    snapshot: dict[str, Any],
+) -> dict[str, Any]:
     now = datetime.now(timezone.utc)
     payload = {
-        "schema_version": 1,
+        "schema_version": 2,
         "market": "US",
-        "last_completed_session": session_date.isoformat(),
+        "last_market_date": session_date.isoformat(),
+        "last_report_slot": report_slot.isoformat(),
         "updated_at": now.isoformat(timespec="seconds"),
-        "update_policy": "completed US trading session plus authenticated live Futu OpenD",
+        "update_policy": "Beijing Monday 08:00-Saturday 08:00 trading week plus authenticated live Futu OpenD",
         "futu_snapshot_generated_at": snapshot.get("generated_at"),
         "futu_bridge_authenticated": bool((snapshot.get("bridge") or {}).get("authenticated")),
     }
@@ -297,30 +325,34 @@ def main() -> int:
     check.add_argument("--index", type=Path, default=DEFAULT_INDEX)
     check.add_argument("--state", type=Path, default=DEFAULT_STATE)
     check.add_argument("--snapshot", type=Path, default=DEFAULT_SNAPSHOT)
-    check.add_argument("--now", help="ISO timestamp override for deterministic tests")
-    check.add_argument("--force", default="false", help="allow a same-session manual re-run")
+    check.add_argument("--now", help="actual ISO timestamp override for deterministic tests")
+    check.add_argument("--window-time", help="logical scheduled time; snapshot age still uses actual time")
+    check.add_argument("--force", default="false", help="allow a same-slot manual re-run")
     check.add_argument("--max-snapshot-age-minutes", type=float, default=5.0)
-    check.add_argument("--max-session-close-age-hours", type=float, default=16.0)
     check.add_argument("--github-output", type=Path)
 
     stamp = subparsers.add_parser("stamp", help="record the successfully published market session")
     stamp.add_argument("--state", type=Path, default=DEFAULT_STATE)
     stamp.add_argument("--snapshot", type=Path, default=DEFAULT_SNAPSHOT)
     stamp.add_argument("--session-date", required=True)
+    stamp.add_argument("--report-slot", required=True)
 
     args = parser.parse_args()
     if args.command == "check":
         now = parse_datetime(args.now) if args.now else datetime.now(timezone.utc)
         if now is None:
             parser.error("--now must be a valid ISO timestamp")
+        window_time = parse_datetime(args.window_time) if args.window_time else None
+        if args.window_time and window_time is None:
+            parser.error("--window-time must be a valid ISO timestamp")
         decision = evaluate_gate(
             now=now,
+            window_time=window_time,
             index=load_json(args.index),
             state=load_json(args.state),
             snapshot=load_json(args.snapshot),
             force=bool_value(args.force),
             max_snapshot_age_minutes=max(0.5, args.max_snapshot_age_minutes),
-            max_session_close_age_hours=max(1.0, args.max_session_close_age_hours),
         )
         if args.github_output:
             write_github_output(args.github_output, decision)
@@ -330,10 +362,18 @@ def main() -> int:
     session_date = parse_session_date(args.session_date)
     if session_date is None:
         parser.error("--session-date must be a valid US trading date")
+    report_slot = parse_date(args.report_slot)
+    if report_slot is None:
+        parser.error("--report-slot must be a valid ISO date")
     snapshot = load_json(args.snapshot)
     if not snapshot or not (snapshot.get("opend") or {}).get("connected"):
         parser.error("cannot stamp state without a connected Futu snapshot")
-    payload = stamp_state(args.state, session_date=session_date, snapshot=snapshot)
+    payload = stamp_state(
+        args.state,
+        session_date=session_date,
+        report_slot=report_slot,
+        snapshot=snapshot,
+    )
     print(json.dumps(payload, ensure_ascii=False, indent=2))
     return 0
 

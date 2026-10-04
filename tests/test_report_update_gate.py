@@ -12,7 +12,7 @@ sys.path.insert(0, str(ROOT / "scripts"))
 from report_update_gate import evaluate_gate  # noqa: E402
 
 
-def snapshot(*, generated_at: str, data_date: str, connected: bool = True, authenticated: bool = True):
+def snapshot(*, generated_at: str, connected: bool = True, authenticated: bool = True):
     return {
         "generated_at": generated_at,
         "opend": {"connected": connected},
@@ -21,8 +21,7 @@ def snapshot(*, generated_at: str, data_date: str, connected: bool = True, authe
             "US.SPY": {
                 "code": "US.SPY",
                 "last_price": 700.0,
-                "quote_time": f"{data_date}T16:00:00-04:00",
-                "data_date": data_date,
+                "quote_time": generated_at,
             }
         },
     }
@@ -30,21 +29,19 @@ def snapshot(*, generated_at: str, data_date: str, connected: bool = True, authe
 
 class ReportUpdateGateTests(unittest.TestCase):
     def setUp(self):
-        self.now = datetime(2026, 10, 6, 0, 0, tzinfo=timezone.utc)
+        # Monday 08:00 Beijing: the Futu-style weekly trading window opens.
+        self.now = datetime(2026, 10, 5, 0, 0, tzinfo=timezone.utc)
         self.index = {
             "reports": [
                 {
                     "kind": "deepseek-cloud",
-                    "published_label": "2026-10-03 12:21",
+                    "published_label": "2026-10-02 08:10",
                 }
             ]
         }
-        self.live_snapshot = snapshot(
-            generated_at="2026-10-05T23:58:30+00:00",
-            data_date="2026-10-05",
-        )
+        self.live_snapshot = snapshot(generated_at="2026-10-04T23:58:30+00:00")
 
-    def test_new_completed_session_with_live_futu_is_eligible(self):
+    def test_monday_0800_opens_trading_week(self):
         decision = evaluate_gate(
             now=self.now,
             index=self.index,
@@ -52,34 +49,69 @@ class ReportUpdateGateTests(unittest.TestCase):
             snapshot=self.live_snapshot,
         )
         self.assertTrue(decision.should_update)
-        self.assertEqual(decision.session_date, "2026-10-05")
-        self.assertEqual(decision.previous_session_date, "2026-10-02")
+        self.assertEqual(decision.report_slot, "2026-10-05")
 
-    def test_weekend_is_outside_post_session_window(self):
+    def test_monday_before_0800_is_closed(self):
+        decision = evaluate_gate(
+            now=datetime(2026, 10, 4, 23, 59, tzinfo=timezone.utc),
+            index=self.index,
+            state={},
+            snapshot=snapshot(generated_at="2026-10-04T23:58:00+00:00"),
+        )
+        self.assertFalse(decision.should_update)
+        self.assertEqual(decision.code, "outside_trading_week")
+
+    def test_sunday_is_outside_trading_week(self):
         decision = evaluate_gate(
             now=datetime(2026, 10, 4, 9, 0, tzinfo=timezone.utc),
             index=self.index,
             state={},
-            snapshot=snapshot(
-                generated_at="2026-10-04T08:59:00+00:00",
-                data_date="2026-10-02",
-            ),
+            snapshot=snapshot(generated_at="2026-10-04T08:59:00+00:00"),
         )
         self.assertFalse(decision.should_update)
-        self.assertEqual(decision.code, "outside_post_session_window")
+        self.assertEqual(decision.code, "outside_trading_week")
 
-    def test_exchange_holiday_is_not_treated_as_a_new_session(self):
+    def test_saturday_0800_is_friday_postmarket_boundary(self):
         decision = evaluate_gate(
-            now=datetime(2026, 7, 4, 0, 0, tzinfo=timezone.utc),
+            now=datetime(2026, 10, 10, 0, 0, tzinfo=timezone.utc),
             index={"reports": []},
             state={},
-            snapshot=snapshot(
-                generated_at="2026-07-03T23:59:00+00:00",
-                data_date="2026-07-02",
-            ),
+            snapshot=snapshot(generated_at="2026-10-09T23:59:00+00:00"),
+        )
+        self.assertTrue(decision.should_update)
+        self.assertEqual(decision.report_slot, "2026-10-09")
+
+    def test_saturday_after_0800_is_closed(self):
+        decision = evaluate_gate(
+            now=datetime(2026, 10, 10, 0, 1, tzinfo=timezone.utc),
+            index={"reports": []},
+            state={},
+            snapshot=snapshot(generated_at="2026-10-10T00:00:30+00:00"),
         )
         self.assertFalse(decision.should_update)
-        self.assertEqual(decision.code, "outside_post_session_window")
+        self.assertEqual(decision.code, "outside_trading_week")
+
+    def test_delayed_scheduled_run_uses_logical_0800_but_actual_futu_age(self):
+        decision = evaluate_gate(
+            now=datetime(2026, 10, 10, 0, 10, tzinfo=timezone.utc),
+            window_time=datetime(2026, 10, 10, 0, 0, tzinfo=timezone.utc),
+            index={"reports": []},
+            state={},
+            snapshot=snapshot(generated_at="2026-10-10T00:09:00+00:00"),
+        )
+        self.assertTrue(decision.should_update)
+        self.assertEqual(decision.report_slot, "2026-10-09")
+
+    def test_us_exchange_holiday_is_skipped(self):
+        # Friday 2026-07-03 observes Independence Day and is a NYSE holiday.
+        decision = evaluate_gate(
+            now=datetime(2026, 7, 3, 0, 0, tzinfo=timezone.utc),
+            index={"reports": []},
+            state={},
+            snapshot=snapshot(generated_at="2026-07-02T23:59:00+00:00"),
+        )
+        self.assertFalse(decision.should_update)
+        self.assertEqual(decision.code, "us_exchange_closed")
 
     def test_disconnected_futu_blocks_report(self):
         decision = evaluate_gate(
@@ -87,8 +119,7 @@ class ReportUpdateGateTests(unittest.TestCase):
             index=self.index,
             state={},
             snapshot=snapshot(
-                generated_at="2026-10-05T23:59:00+00:00",
-                data_date="2026-10-05",
+                generated_at="2026-10-04T23:59:00+00:00",
                 connected=False,
             ),
         )
@@ -100,29 +131,13 @@ class ReportUpdateGateTests(unittest.TestCase):
             now=self.now,
             index=self.index,
             state={},
-            snapshot=snapshot(
-                generated_at="2026-10-05T23:40:00+00:00",
-                data_date="2026-10-05",
-            ),
+            snapshot=snapshot(generated_at="2026-10-04T23:40:00+00:00"),
         )
         self.assertFalse(decision.should_update)
         self.assertEqual(decision.code, "futu_snapshot_stale")
 
-    def test_wrong_exchange_session_blocks_report(self):
-        decision = evaluate_gate(
-            now=self.now,
-            index=self.index,
-            state={},
-            snapshot=snapshot(
-                generated_at="2026-10-05T23:59:00+00:00",
-                data_date="2026-10-02",
-            ),
-        )
-        self.assertFalse(decision.should_update)
-        self.assertEqual(decision.code, "futu_session_not_covered")
-
-    def test_existing_session_is_skipped_but_force_can_rerun(self):
-        state = {"last_completed_session": "2026-10-05"}
+    def test_existing_slot_is_skipped_but_force_can_rerun(self):
+        state = {"last_report_slot": "2026-10-05"}
         normal = evaluate_gate(
             now=self.now,
             index=self.index,
@@ -137,7 +152,7 @@ class ReportUpdateGateTests(unittest.TestCase):
             force=True,
         )
         self.assertFalse(normal.should_update)
-        self.assertEqual(normal.code, "session_already_reported")
+        self.assertEqual(normal.code, "report_slot_already_updated")
         self.assertTrue(forced.should_update)
 
 

@@ -2,10 +2,11 @@ name: DeepSeek daily report watchdog
 
 on:
   schedule:
-    # 08:00 Asia/Shanghai = 00:00 UTC, Tuesday-Saturday. These runs map to
-    # Monday-Friday US closes. The report workflow separately rejects NYSE
-    # holidays and requires a live, authenticated Futu OpenD heartbeat.
-    - cron: "0 0 * * 2-6"
+    # 08:00 Asia/Shanghai = 00:00 UTC, Monday-Saturday. This follows the
+    # configured Futu trading week from Monday 08:00 overnight open through
+    # Saturday 08:00 Friday post-market close. NYSE holidays and disconnected
+    # Futu OpenD heartbeats are rejected by the report workflow.
+    - cron: "0 0 * * 1-6"
   workflow_dispatch:
 
 permissions:
@@ -99,7 +100,8 @@ jobs:
         run: |
           gh workflow run deepseek-daily-report.yml \
             --repo "$GITHUB_REPOSITORY" \
-            -f mode=full
+            -f mode=full \
+            -f scheduled_slot="${{ steps.freshness.outputs.today }}T08:00:00+08:00"
           echo "dispatched deepseek-daily-report.yml for ${{ steps.freshness.outputs.today }}"
 
       - name: Skip dispatch because active run exists

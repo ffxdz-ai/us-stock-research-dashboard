@@ -1188,10 +1188,10 @@ function renderManualUpdateControl(run = null, message = "") {
     : awaitingPages
       ? "本次工作流已成功，GitHub Pages 数据正在同步；完成后按钮会重新开放。"
       : updatedToday
-        ? `最近更新：${latestReportTimeLabel()}；同一美股交易日可申请重跑，但仍需 Futu OpenD 在线。`
+        ? `最近更新：${latestReportTimeLabel()}；交易周内可申请重跑，但仍需 Futu OpenD 在线。`
         : failed
           ? "本次任务未成功；可以直接重新提交，无需登录 GitHub。"
-          : "仅在新的美股交易日收盘后且 Futu OpenD 在线时生成；休市或行情心跳失效会安全跳过。";
+          : "仅在北京时间周一 08:00 至周六 08:00 的美股交易周内、且 Futu OpenD 在线时生成；休市或心跳失效会安全跳过。";
   els.manualUpdateStatus.textContent = message || defaultMessage;
 }
 

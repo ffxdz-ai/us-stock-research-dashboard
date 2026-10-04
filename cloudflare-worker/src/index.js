@@ -1037,7 +1037,7 @@ async function handleRequest(request, env) {
       return jsonResponse({
         ok: true,
         code: "accepted",
-        message: "更新任务已提交；仅在新的美股交易日收盘后且 Futu OpenD 在线时生成，否则安全跳过。",
+        message: "更新任务已提交；仅在北京时间周一 08:00 至周六 08:00 的交易周内且 Futu OpenD 在线时生成，否则安全跳过。",
       }, 202, origin);
     } catch (error) {
       console.error("workflow dispatch failed", error);
