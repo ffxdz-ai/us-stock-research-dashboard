@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
-  "generated_at": "2026-10-05T11:02:11+08:00",
-  "generated_label": "2026-10-05 11:02",
+  "generated_at": "2026-10-05T22:54:38+08:00",
+  "generated_label": "2026-10-05 22:54",
   "data_boundary": {
     "role": "opportunity discovery feedback loop; not trading instruction",
     "hit_rate_rule": "20D 命中要求未来收益为正，并同时跑赢 SPY、QQQ 与行业 ETF；score_delta 不参与命中判定。",
@@ -17,7 +17,7 @@
     "completed_review_count": 0,
     "due_checkpoint_count": 0,
     "pending_checkpoint_count": 0,
-    "avg_live_return_pct": -5.33,
+    "avg_live_return_pct": -5.36,
     "best_theme": "AI 光模块 / CPO / 数据中心网络",
     "tracked_security_count": 38,
     "completed_security_count": 23,
@@ -1910,23 +1910,23 @@
       "first_seen_at": "2026-06-21T04:10:31+08:00",
       "age_days": 106,
       "initial_score": 67.2,
-      "current_score": 53.9,
-      "score_delta": -13.3,
+      "current_score": 67.9,
+      "score_delta": 0.7,
       "tracked_security_count": 8,
       "priced_security_count": 5,
-      "avg_return_pct": 4.23,
-      "median_return_pct": -7.85,
+      "avg_return_pct": 3.02,
+      "median_return_pct": -8.46,
       "best_security": {
         "code": "US.LITE",
         "initial_price": 850.0,
-        "current_price": 1102.25,
-        "return_pct": 29.68
+        "current_price": 1089.98,
+        "return_pct": 28.23
       },
       "worst_security": {
         "code": "US.COHR",
         "initial_price": 389.57,
-        "current_price": 341.28,
-        "return_pct": -12.4
+        "current_price": 331.95,
+        "return_pct": -14.79
       },
       "completed_checkpoint_count": 3,
       "due_checkpoint_count": 0,
@@ -1938,32 +1938,32 @@
         {
           "code": "US.LITE",
           "initial_price": 850.0,
-          "current_price": 1102.25,
-          "return_pct": 29.68
+          "current_price": 1089.98,
+          "return_pct": 28.23
         },
         {
           "code": "US.ANET",
           "initial_price": 169.67,
-          "current_price": 208.5,
-          "return_pct": 22.89
+          "current_price": 207.89,
+          "return_pct": 22.53
         },
         {
           "code": "US.CIEN",
           "initial_price": 428.22,
-          "current_price": 394.59,
-          "return_pct": -7.85
+          "current_price": 391.99,
+          "return_pct": -8.46
         },
         {
           "code": "US.MRVL",
           "initial_price": 310.58,
-          "current_price": 275.96,
-          "return_pct": -11.15
+          "current_price": 272.0,
+          "return_pct": -12.42
         },
         {
           "code": "US.COHR",
           "initial_price": 389.57,
-          "current_price": 341.28,
-          "return_pct": -12.4
+          "current_price": 331.95,
+          "return_pct": -14.79
         }
       ]
     },
@@ -1973,23 +1973,23 @@
       "first_seen_at": "2026-06-21T04:10:31+08:00",
       "age_days": 106,
       "initial_score": 70.8,
-      "current_score": 61.5,
-      "score_delta": -9.3,
+      "current_score": 73.5,
+      "score_delta": 2.7,
       "tracked_security_count": 8,
       "priced_security_count": 6,
-      "avg_return_pct": 0.79,
-      "median_return_pct": -0.92,
+      "avg_return_pct": 0.56,
+      "median_return_pct": -0.99,
       "best_security": {
         "code": "US.AMD",
         "initial_price": 537.37,
-        "current_price": 638.62,
-        "return_pct": 18.84
+        "current_price": 631.045,
+        "return_pct": 17.43
       },
       "worst_security": {
-        "code": "US.AVGO",
-        "initial_price": 411.35,
-        "current_price": 358.7,
-        "return_pct": -12.8
+        "code": "US.MRVL",
+        "initial_price": 310.58,
+        "current_price": 272.0,
+        "return_pct": -12.42
       },
       "completed_checkpoint_count": 3,
       "due_checkpoint_count": 0,
@@ -2001,38 +2001,38 @@
         {
           "code": "US.AMD",
           "initial_price": 537.37,
-          "current_price": 638.62,
-          "return_pct": 18.84
+          "current_price": 631.045,
+          "return_pct": 17.43
         },
         {
           "code": "US.NVDA",
           "initial_price": 210.69,
-          "current_price": 235.37,
-          "return_pct": 11.71
+          "current_price": 237.12,
+          "return_pct": 12.54
         },
         {
           "code": "US.TSM",
           "initial_price": 462.12,
-          "current_price": 476.73,
-          "return_pct": 3.16
+          "current_price": 480.845,
+          "return_pct": 4.05
         },
         {
           "code": "US.MU",
           "initial_price": 1133.99,
-          "current_price": 1077.33,
-          "return_pct": -5.0
-        },
-        {
-          "code": "US.MRVL",
-          "initial_price": 310.58,
-          "current_price": 275.96,
-          "return_pct": -11.15
+          "current_price": 1065.61,
+          "return_pct": -6.03
         },
         {
           "code": "US.AVGO",
           "initial_price": 411.35,
-          "current_price": 358.7,
-          "return_pct": -12.8
+          "current_price": 361.04,
+          "return_pct": -12.23
+        },
+        {
+          "code": "US.MRVL",
+          "initial_price": 310.58,
+          "current_price": 272.0,
+          "return_pct": -12.42
         }
       ]
     },
@@ -2042,23 +2042,23 @@
       "first_seen_at": "2026-06-21T04:10:31+08:00",
       "age_days": 106,
       "initial_score": 66.4,
-      "current_score": 39.5,
-      "score_delta": -26.9,
+      "current_score": 48.3,
+      "score_delta": -18.1,
       "tracked_security_count": 7,
       "priced_security_count": 5,
-      "avg_return_pct": -2.81,
-      "median_return_pct": 2.02,
+      "avg_return_pct": -2.27,
+      "median_return_pct": 2.1,
       "best_security": {
         "code": "US.EMR",
         "initial_price": 150.66,
-        "current_price": 161.61,
-        "return_pct": 7.27
+        "current_price": 162.53,
+        "return_pct": 7.88
       },
       "worst_security": {
         "code": "US.VRT",
         "initial_price": 333.05,
-        "current_price": 254.18,
-        "return_pct": -23.68
+        "current_price": 257.05,
+        "return_pct": -22.82
       },
       "completed_checkpoint_count": 3,
       "due_checkpoint_count": 0,
@@ -2070,32 +2070,32 @@
         {
           "code": "US.EMR",
           "initial_price": 150.66,
-          "current_price": 161.61,
-          "return_pct": 7.27
+          "current_price": 162.53,
+          "return_pct": 7.88
         },
         {
           "code": "US.ETN",
           "initial_price": 421.77,
-          "current_price": 438.09,
-          "return_pct": 3.87
+          "current_price": 438.045,
+          "return_pct": 3.86
         },
         {
           "code": "US.PH",
           "initial_price": 953.27,
-          "current_price": 972.55,
-          "return_pct": 2.02
+          "current_price": 973.29,
+          "return_pct": 2.1
         },
         {
           "code": "US.PWR",
           "initial_price": 702.25,
-          "current_price": 677.34,
-          "return_pct": -3.55
+          "current_price": 685.53,
+          "return_pct": -2.38
         },
         {
           "code": "US.VRT",
           "initial_price": 333.05,
-          "current_price": 254.18,
-          "return_pct": -23.68
+          "current_price": 257.05,
+          "return_pct": -22.82
         }
       ]
     },
@@ -2105,23 +2105,23 @@
       "first_seen_at": "2026-06-21T04:10:31+08:00",
       "age_days": 106,
       "initial_score": 62.4,
-      "current_score": 40.2,
-      "score_delta": -22.2,
+      "current_score": 50.0,
+      "score_delta": -12.4,
       "tracked_security_count": 5,
       "priced_security_count": 5,
-      "avg_return_pct": -3.34,
-      "median_return_pct": -3.91,
+      "avg_return_pct": -3.13,
+      "median_return_pct": -4.25,
       "best_security": {
         "code": "US.SYM",
         "initial_price": 41.68,
-        "current_price": 43.55,
-        "return_pct": 4.49
+        "current_price": 42.94,
+        "return_pct": 3.02
       },
       "worst_security": {
-        "code": "US.TSLA",
-        "initial_price": 400.49,
-        "current_price": 372.22,
-        "return_pct": -7.06
+        "code": "US.HON",
+        "initial_price": 229.01,
+        "current_price": 213.88,
+        "return_pct": -6.61
       },
       "completed_checkpoint_count": 3,
       "due_checkpoint_count": 0,
@@ -2133,32 +2133,32 @@
         {
           "code": "US.SYM",
           "initial_price": 41.68,
-          "current_price": 43.55,
-          "return_pct": 4.49
+          "current_price": 42.94,
+          "return_pct": 3.02
         },
         {
           "code": "US.ISRG",
           "initial_price": 406.78,
-          "current_price": 391.87,
-          "return_pct": -3.67
+          "current_price": 400.315,
+          "return_pct": -1.59
         },
         {
           "code": "US.ROK",
           "initial_price": 473.79,
-          "current_price": 455.26,
-          "return_pct": -3.91
-        },
-        {
-          "code": "US.HON",
-          "initial_price": 229.01,
-          "current_price": 213.99,
-          "return_pct": -6.56
+          "current_price": 453.66,
+          "return_pct": -4.25
         },
         {
           "code": "US.TSLA",
           "initial_price": 400.49,
-          "current_price": 372.22,
-          "return_pct": -7.06
+          "current_price": 375.505,
+          "return_pct": -6.24
+        },
+        {
+          "code": "US.HON",
+          "initial_price": 229.01,
+          "current_price": 213.88,
+          "return_pct": -6.61
         }
       ]
     },
@@ -2168,23 +2168,23 @@
       "first_seen_at": "2026-06-21T04:10:31+08:00",
       "age_days": 106,
       "initial_score": 61.8,
-      "current_score": 52.2,
-      "score_delta": -9.6,
+      "current_score": 65.1,
+      "score_delta": 3.3,
       "tracked_security_count": 9,
       "priced_security_count": 3,
-      "avg_return_pct": -25.5,
-      "median_return_pct": -20.17,
+      "avg_return_pct": -24.99,
+      "median_return_pct": -19.77,
       "best_security": {
         "code": "US.JBL",
         "initial_price": 371.88,
-        "current_price": 305.15,
-        "return_pct": -17.94
+        "current_price": 304.02,
+        "return_pct": -18.25
       },
       "worst_security": {
         "code": "US.TTMI",
         "initial_price": 216.44,
-        "current_price": 133.34,
-        "return_pct": -38.39
+        "current_price": 136.495,
+        "return_pct": -36.94
       },
       "completed_checkpoint_count": 3,
       "due_checkpoint_count": 0,
@@ -2196,20 +2196,20 @@
         {
           "code": "US.JBL",
           "initial_price": 371.88,
-          "current_price": 305.15,
-          "return_pct": -17.94
+          "current_price": 304.02,
+          "return_pct": -18.25
         },
         {
           "code": "US.FLEX",
           "initial_price": 147.61,
-          "current_price": 117.84,
-          "return_pct": -20.17
+          "current_price": 118.43,
+          "return_pct": -19.77
         },
         {
           "code": "US.TTMI",
           "initial_price": 216.44,
-          "current_price": 133.34,
-          "return_pct": -38.39
+          "current_price": 136.495,
+          "return_pct": -36.94
         }
       ]
     }

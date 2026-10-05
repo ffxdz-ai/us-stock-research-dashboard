@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-05T10:59:27+08:00",
-  "generated_label": "2026-10-05 10:59",
+  "generated_at": "2026-10-05T22:52:11+08:00",
+  "generated_label": "2026-10-05 22:52",
   "fred_enabled": true,
   "data_boundary": "FRED 官方宏观数据层；只用于市场环境和风险偏好判断，不直接生成股票买卖指令。",
   "data_sources": [
@@ -1399,10 +1399,6 @@
       "frequency_hint": "daily",
       "recent_observations": [
         {
-          "date": "2026-08-31",
-          "value": 14.92
-        },
-        {
           "date": "2026-09-01",
           "value": 16.34
         },
@@ -1493,23 +1489,27 @@
         {
           "date": "2026-10-01",
           "value": 16.39
+        },
+        {
+          "date": "2026-10-02",
+          "value": 15.31
         }
       ],
-      "latest_date": "2026-10-01",
-      "latest_value": 16.39,
-      "one_month_ago_value": 14.43,
-      "three_month_ago_value": 16.59,
-      "six_month_ago_value": 24.54,
-      "one_year_ago_value": 16.28,
-      "one_month_change": 1.96,
-      "three_month_change": -0.2,
-      "six_month_change": -8.15,
-      "one_year_change": 0.11,
-      "one_month_pct_change": 13.5828,
-      "three_month_pct_change": -1.2055,
-      "six_month_pct_change": -33.2111,
-      "yoy_pct_change": 0.6757,
-      "three_month_annualized_pct": -4.7357,
+      "latest_date": "2026-10-02",
+      "latest_value": 15.31,
+      "one_month_ago_value": 14.92,
+      "three_month_ago_value": 16.15,
+      "six_month_ago_value": 23.87,
+      "one_year_ago_value": 16.29,
+      "one_month_change": 0.39,
+      "three_month_change": -0.84,
+      "six_month_change": -8.56,
+      "one_year_change": -0.98,
+      "one_month_pct_change": 2.6139,
+      "three_month_pct_change": -5.2012,
+      "six_month_pct_change": -35.8609,
+      "yoy_pct_change": -6.016,
+      "three_month_annualized_pct": -19.2373,
       "status": "ok"
     },
     "DTWEXBGS": {
@@ -1840,7 +1840,7 @@
       "dimension": "risk",
       "label": "VIX 低位",
       "contribution": 9,
-      "detail": "16.39"
+      "detail": "15.31"
     },
     {
       "dimension": "risk",
