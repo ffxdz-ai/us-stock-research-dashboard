@@ -1,13 +1,13 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-04T13:03:23+08:00",
-  "generated_label": "2026-10-04 13:03",
+  "generated_at": "2026-10-05T10:59:44+08:00",
+  "generated_label": "2026-10-05 10:59",
   "data_boundary": "公开脱敏市场情绪层；只用于判断风险环境，不生成交易指令，不替代个股 R/R 纪律。",
-  "score": 64.0,
-  "status": "neutral",
-  "status_label": "Neutral",
-  "stance": "情绪中性，等待方向确认",
-  "summary": "综合情绪分 64.0，状态 Neutral。最强支撑来自波动率压力（82.6）。主要拖累来自油价/通胀压力（47.0）。该结论只决定仓位/进攻性倾向，不直接给个股买点。",
+  "score": 65.9,
+  "status": "risk_on",
+  "status_label": "Risk-on",
+  "stance": "风险偏好偏强，可提高进攻观察权重",
+  "summary": "综合情绪分 65.9，状态 Risk-on。最强支撑来自波动率压力（82.6）。主要拖累来自油价/通胀压力（47.0）。该结论只决定仓位/进攻性倾向，不直接给个股买点。",
   "components": [
     {
       "key": "volatility",
@@ -25,14 +25,14 @@
     {
       "key": "equity_tape",
       "name": "股票指数短线表现",
-      "score": 56.2,
+      "score": 59.9,
       "weight": 0.25,
       "status": "neutral",
       "value": {
-        "SPY": 0.42,
-        "QQQ": 0.65,
-        "DIA": 0.4,
-        "IWM": 0.59
+        "SPY": 0.76,
+        "QQQ": 1.14,
+        "DIA": 0.47,
+        "IWM": 0.93
       },
       "message": "用 SPY/QQQ/DIA/IWM 涨跌幅判断当天股票风险偏好。",
       "source": "public market quote",
@@ -43,12 +43,12 @@
     {
       "key": "growth_leadership",
       "name": "成长/小盘相对强弱",
-      "score": 52.9,
+      "score": 54.4,
       "weight": 0.15,
       "status": "neutral",
       "value": {
-        "QQQ_minus_SPY": 0.23,
-        "IWM_minus_SPY": 0.17
+        "QQQ_minus_SPY": 0.39,
+        "IWM_minus_SPY": 0.18
       },
       "message": "成长股和小盘股相对大盘越强，风险偏好通常越高。",
       "source": "public market quote",
@@ -59,13 +59,13 @@
     {
       "key": "defensive_flow",
       "name": "避险资产相对表现",
-      "score": 52.7,
+      "score": 61.1,
       "weight": 0.1,
       "status": "neutral",
       "value": {
-        "SPY": 0.42,
-        "TLT": 0.01,
-        "GLD": 0.28
+        "SPY": 0.76,
+        "TLT": 0.1,
+        "GLD": -0.81
       },
       "message": "股票强于长债/黄金代表风险偏好改善；反之提示避险。",
       "source": "public market quote",
@@ -87,7 +87,7 @@
       "message": "FRED 流动性、金融条件和信用利差用于判断风险资产背景。",
       "source": "FRED",
       "source_type": "official",
-      "updated_at": "2026-10-04 13:03",
+      "updated_at": "2026-10-05 10:59",
       "confidence": "high"
     },
     {
@@ -97,7 +97,7 @@
       "weight": 0.05,
       "status": "neutral",
       "value": {
-        "USO_change_pct": -3.15,
+        "USO_change_pct": -3.29,
         "WTI_3m_change_pct": 33.7971
       },
       "message": "油价快速上涨会压低情绪分，因为它可能强化通胀和利率压力。",
