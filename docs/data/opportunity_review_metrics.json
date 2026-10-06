@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
-  "generated_at": "2026-10-05T22:54:38+08:00",
-  "generated_label": "2026-10-05 22:54",
+  "generated_at": "2026-10-06T10:09:56+08:00",
+  "generated_label": "2026-10-06 10:09",
   "data_boundary": {
     "role": "opportunity discovery feedback loop; not trading instruction",
     "hit_rate_rule": "20D 命中要求未来收益为正，并同时跑赢 SPY、QQQ 与行业 ETF；score_delta 不参与命中判定。",
@@ -17,7 +17,7 @@
     "completed_review_count": 0,
     "due_checkpoint_count": 0,
     "pending_checkpoint_count": 0,
-    "avg_live_return_pct": -5.36,
+    "avg_live_return_pct": -5.47,
     "best_theme": "AI 光模块 / CPO / 数据中心网络",
     "tracked_security_count": 38,
     "completed_security_count": 23,
@@ -41,7 +41,7 @@
     "information_ratio_20d": null,
     "information_ratio_20d_reason": "aligned_portfolio_and_benchmark_curves_unavailable",
     "average_max_drawdown": -29.22,
-    "average_max_gain": 25.25,
+    "average_max_gain": 25.47,
     "turnover": 0.0,
     "turnover_status": "top-decile membership turnover",
     "coverage_pct": 60.5
@@ -827,7 +827,7 @@
       "mae": -11.472,
       "mfe": 34.7572,
       "excursion_price_granularity": "daily_high_low",
-      "observed_trading_days": 73,
+      "observed_trading_days": 74,
       "benchmark_symbol": "SPY",
       "sector_etf": "SMH",
       "evaluation_split": "oos",
@@ -875,7 +875,7 @@
       "mae": -19.5613,
       "mfe": 11.7066,
       "excursion_price_granularity": "daily_high_low",
-      "observed_trading_days": 73,
+      "observed_trading_days": 74,
       "benchmark_symbol": "SPY",
       "sector_etf": "XLI",
       "evaluation_split": "oos",
@@ -923,7 +923,7 @@
       "mae": -11.8388,
       "mfe": 13.6043,
       "excursion_price_granularity": "daily_high_low",
-      "observed_trading_days": 73,
+      "observed_trading_days": 74,
       "benchmark_symbol": "SPY",
       "sector_etf": "SMH",
       "evaluation_split": "oos",
@@ -971,7 +971,7 @@
       "mae": -21.8146,
       "mfe": 24.0854,
       "excursion_price_granularity": "daily_high_low",
-      "observed_trading_days": 73,
+      "observed_trading_days": 74,
       "benchmark_symbol": "SPY",
       "sector_etf": "XLI",
       "evaluation_split": "oos",
@@ -1019,7 +1019,7 @@
       "mae": -28.6172,
       "mfe": 42.2222,
       "excursion_price_granularity": "daily_high_low",
-      "observed_trading_days": 73,
+      "observed_trading_days": 74,
       "benchmark_symbol": "SPY",
       "sector_etf": "XLI",
       "evaluation_split": "oos",
@@ -1067,7 +1067,7 @@
       "mae": -15.6429,
       "mfe": 5.0753,
       "excursion_price_granularity": "daily_high_low",
-      "observed_trading_days": 73,
+      "observed_trading_days": 74,
       "benchmark_symbol": "SPY",
       "sector_etf": "XLI",
       "evaluation_split": "oos",
@@ -1115,7 +1115,7 @@
       "mae": -16.778,
       "mfe": 11.0788,
       "excursion_price_granularity": "daily_high_low",
-      "observed_trading_days": 73,
+      "observed_trading_days": 74,
       "benchmark_symbol": "SPY",
       "sector_etf": "XLI",
       "evaluation_split": "oos",
@@ -1163,7 +1163,7 @@
       "mae": -17.4822,
       "mfe": 37.5766,
       "excursion_price_granularity": "daily_high_low",
-      "observed_trading_days": 73,
+      "observed_trading_days": 74,
       "benchmark_symbol": "SPY",
       "sector_etf": "XLI",
       "evaluation_split": "oos",
@@ -1211,7 +1211,7 @@
       "mae": -13.8584,
       "mfe": 107.6092,
       "excursion_price_granularity": "daily_high_low",
-      "observed_trading_days": 73,
+      "observed_trading_days": 74,
       "benchmark_symbol": "SPY",
       "sector_etf": "XLI",
       "evaluation_split": "oos",
@@ -1259,7 +1259,7 @@
       "mae": -17.4385,
       "mfe": 11.526,
       "excursion_price_granularity": "daily_high_low",
-      "observed_trading_days": 73,
+      "observed_trading_days": 74,
       "benchmark_symbol": "SPY",
       "sector_etf": "XLI",
       "evaluation_split": "oos",
@@ -1307,7 +1307,7 @@
       "mae": -16.8231,
       "mfe": 13.1497,
       "excursion_price_granularity": "daily_high_low",
-      "observed_trading_days": 73,
+      "observed_trading_days": 74,
       "benchmark_symbol": "SPY",
       "sector_etf": "XLI",
       "evaluation_split": "oos",
@@ -1351,11 +1351,11 @@
       "sector_excess_120d": null,
       "max_drawdown": -32.6178,
       "min_close_return_from_signal": -31.12,
-      "max_gain": 24.12,
+      "max_gain": 24.83,
       "mae": -31.9797,
-      "mfe": 24.8262,
+      "mfe": 28.5757,
       "excursion_price_granularity": "daily_high_low",
-      "observed_trading_days": 73,
+      "observed_trading_days": 74,
       "benchmark_symbol": "SPY",
       "sector_etf": "XLI",
       "evaluation_split": "oos",
@@ -1403,7 +1403,7 @@
       "mae": -23.8287,
       "mfe": 46.9053,
       "excursion_price_granularity": "daily_high_low",
-      "observed_trading_days": 73,
+      "observed_trading_days": 74,
       "benchmark_symbol": "SPY",
       "sector_etf": "SMH",
       "evaluation_split": "oos",
@@ -1451,7 +1451,7 @@
       "mae": -21.1512,
       "mfe": 34.1075,
       "excursion_price_granularity": "daily_high_low",
-      "observed_trading_days": 73,
+      "observed_trading_days": 74,
       "benchmark_symbol": "SPY",
       "sector_etf": "SMH",
       "evaluation_split": "oos",
@@ -1495,11 +1495,11 @@
       "sector_excess_120d": null,
       "max_drawdown": -13.6711,
       "min_close_return_from_signal": -13.67,
-      "max_gain": 6.29,
+      "max_gain": 8.54,
       "mae": -13.7665,
-      "mfe": 8.0781,
+      "mfe": 9.086,
       "excursion_price_granularity": "daily_high_low",
-      "observed_trading_days": 73,
+      "observed_trading_days": 74,
       "benchmark_symbol": "SPY",
       "sector_etf": "SMH",
       "evaluation_split": "oos",
@@ -1547,7 +1547,7 @@
       "mae": -12.2032,
       "mfe": 5.9581,
       "excursion_price_granularity": "daily_high_low",
-      "observed_trading_days": 73,
+      "observed_trading_days": 74,
       "benchmark_symbol": "SPY",
       "sector_etf": "XLI",
       "evaluation_split": "oos",
@@ -1595,7 +1595,7 @@
       "mae": -20.8626,
       "mfe": 6.074,
       "excursion_price_granularity": "daily_high_low",
-      "observed_trading_days": 73,
+      "observed_trading_days": 74,
       "benchmark_symbol": "SPY",
       "sector_etf": "XLI",
       "evaluation_split": "oos",
@@ -1643,7 +1643,7 @@
       "mae": -6.6162,
       "mfe": 14.1388,
       "excursion_price_granularity": "daily_high_low",
-      "observed_trading_days": 73,
+      "observed_trading_days": 74,
       "benchmark_symbol": "SPY",
       "sector_etf": "XLI",
       "evaluation_split": "oos",
@@ -1691,7 +1691,7 @@
       "mae": -6.7673,
       "mfe": 19.3616,
       "excursion_price_granularity": "daily_high_low",
-      "observed_trading_days": 73,
+      "observed_trading_days": 74,
       "benchmark_symbol": "SPY",
       "sector_etf": "XLI",
       "evaluation_split": "oos",
@@ -1739,7 +1739,7 @@
       "mae": -11.9057,
       "mfe": 28.2282,
       "excursion_price_granularity": "daily_high_low",
-      "observed_trading_days": 73,
+      "observed_trading_days": 74,
       "benchmark_symbol": "SPY",
       "sector_etf": "XLI",
       "evaluation_split": "oos",
@@ -1783,11 +1783,11 @@
       "sector_excess_120d": null,
       "max_drawdown": -21.5466,
       "min_close_return_from_signal": -9.23,
-      "max_gain": 15.7,
+      "max_gain": 17.7,
       "mae": -9.6997,
-      "mfe": 16.0492,
+      "mfe": 18.1013,
       "excursion_price_granularity": "daily_high_low",
-      "observed_trading_days": 73,
+      "observed_trading_days": 74,
       "benchmark_symbol": "SPY",
       "sector_etf": "SMH",
       "evaluation_split": "oos",
@@ -1835,7 +1835,7 @@
       "mae": -19.8821,
       "mfe": 80.7924,
       "excursion_price_granularity": "daily_high_low",
-      "observed_trading_days": 73,
+      "observed_trading_days": 74,
       "benchmark_symbol": "SPY",
       "sector_etf": "XLI",
       "evaluation_split": "oos",
@@ -1883,7 +1883,7 @@
       "mae": -18.8495,
       "mfe": 31.7024,
       "excursion_price_granularity": "daily_high_low",
-      "observed_trading_days": 73,
+      "observed_trading_days": 74,
       "benchmark_symbol": "SPY",
       "sector_etf": "XLI",
       "evaluation_split": "oos",
@@ -1908,25 +1908,25 @@
       "theme_id": "ai_optical_cpo_networking",
       "theme_name": "AI 光模块 / CPO / 数据中心网络",
       "first_seen_at": "2026-06-21T04:10:31+08:00",
-      "age_days": 106,
+      "age_days": 107,
       "initial_score": 67.2,
-      "current_score": 67.9,
-      "score_delta": 0.7,
+      "current_score": 51.4,
+      "score_delta": -15.8,
       "tracked_security_count": 8,
       "priced_security_count": 5,
-      "avg_return_pct": 3.02,
-      "median_return_pct": -8.46,
+      "avg_return_pct": 2.9,
+      "median_return_pct": -8.93,
       "best_security": {
         "code": "US.LITE",
         "initial_price": 850.0,
-        "current_price": 1089.98,
-        "return_pct": 28.23
+        "current_price": 1089.9,
+        "return_pct": 28.22
       },
       "worst_security": {
         "code": "US.COHR",
         "initial_price": 389.57,
-        "current_price": 331.95,
-        "return_pct": -14.79
+        "current_price": 332.55,
+        "return_pct": -14.64
       },
       "completed_checkpoint_count": 3,
       "due_checkpoint_count": 0,
@@ -1938,32 +1938,32 @@
         {
           "code": "US.LITE",
           "initial_price": 850.0,
-          "current_price": 1089.98,
-          "return_pct": 28.23
+          "current_price": 1089.9,
+          "return_pct": 28.22
         },
         {
           "code": "US.ANET",
           "initial_price": 169.67,
-          "current_price": 207.89,
-          "return_pct": 22.53
+          "current_price": 207.43,
+          "return_pct": 22.25
         },
         {
           "code": "US.CIEN",
           "initial_price": 428.22,
-          "current_price": 391.99,
-          "return_pct": -8.46
+          "current_price": 390.0,
+          "return_pct": -8.93
         },
         {
           "code": "US.MRVL",
           "initial_price": 310.58,
-          "current_price": 272.0,
-          "return_pct": -12.42
+          "current_price": 272.06,
+          "return_pct": -12.4
         },
         {
           "code": "US.COHR",
           "initial_price": 389.57,
-          "current_price": 331.95,
-          "return_pct": -14.79
+          "current_price": 332.55,
+          "return_pct": -14.64
         }
       ]
     },
@@ -1971,25 +1971,25 @@
       "theme_id": "ai_advanced_packaging_hbm",
       "theme_name": "GPU / ASIC / HBM / 先进封装",
       "first_seen_at": "2026-06-21T04:10:31+08:00",
-      "age_days": 106,
+      "age_days": 107,
       "initial_score": 70.8,
-      "current_score": 73.5,
-      "score_delta": 2.7,
+      "current_score": 61.7,
+      "score_delta": -9.1,
       "tracked_security_count": 8,
       "priced_security_count": 6,
-      "avg_return_pct": 0.56,
+      "avg_return_pct": 0.85,
       "median_return_pct": -0.99,
       "best_security": {
         "code": "US.AMD",
         "initial_price": 537.37,
-        "current_price": 631.045,
-        "return_pct": 17.43
+        "current_price": 631.76,
+        "return_pct": 17.57
       },
       "worst_security": {
         "code": "US.MRVL",
         "initial_price": 310.58,
-        "current_price": 272.0,
-        "return_pct": -12.42
+        "current_price": 272.06,
+        "return_pct": -12.4
       },
       "completed_checkpoint_count": 3,
       "due_checkpoint_count": 0,
@@ -2001,101 +2001,38 @@
         {
           "code": "US.AMD",
           "initial_price": 537.37,
-          "current_price": 631.045,
-          "return_pct": 17.43
+          "current_price": 631.76,
+          "return_pct": 17.57
         },
         {
           "code": "US.NVDA",
           "initial_price": 210.69,
-          "current_price": 237.12,
-          "return_pct": 12.54
+          "current_price": 239.42,
+          "return_pct": 13.64
         },
         {
           "code": "US.TSM",
           "initial_price": 462.12,
-          "current_price": 480.845,
-          "return_pct": 4.05
+          "current_price": 482.63,
+          "return_pct": 4.44
         },
         {
           "code": "US.MU",
           "initial_price": 1133.99,
-          "current_price": 1065.61,
-          "return_pct": -6.03
+          "current_price": 1061.23,
+          "return_pct": -6.42
         },
         {
           "code": "US.AVGO",
           "initial_price": 411.35,
-          "current_price": 361.04,
-          "return_pct": -12.23
+          "current_price": 363.17,
+          "return_pct": -11.71
         },
         {
           "code": "US.MRVL",
           "initial_price": 310.58,
-          "current_price": 272.0,
-          "return_pct": -12.42
-        }
-      ]
-    },
-    {
-      "theme_id": "ai_datacenter_power_cooling",
-      "theme_name": "AI 数据中心电力 / 液冷 / 配电",
-      "first_seen_at": "2026-06-21T04:10:31+08:00",
-      "age_days": 106,
-      "initial_score": 66.4,
-      "current_score": 48.3,
-      "score_delta": -18.1,
-      "tracked_security_count": 7,
-      "priced_security_count": 5,
-      "avg_return_pct": -2.27,
-      "median_return_pct": 2.1,
-      "best_security": {
-        "code": "US.EMR",
-        "initial_price": 150.66,
-        "current_price": 162.53,
-        "return_pct": 7.88
-      },
-      "worst_security": {
-        "code": "US.VRT",
-        "initial_price": 333.05,
-        "current_price": 257.05,
-        "return_pct": -22.82
-      },
-      "completed_checkpoint_count": 3,
-      "due_checkpoint_count": 0,
-      "pending_checkpoint_count": 0,
-      "mature": true,
-      "hit": false,
-      "status": "继续验证",
-      "returns": [
-        {
-          "code": "US.EMR",
-          "initial_price": 150.66,
-          "current_price": 162.53,
-          "return_pct": 7.88
-        },
-        {
-          "code": "US.ETN",
-          "initial_price": 421.77,
-          "current_price": 438.045,
-          "return_pct": 3.86
-        },
-        {
-          "code": "US.PH",
-          "initial_price": 953.27,
-          "current_price": 973.29,
-          "return_pct": 2.1
-        },
-        {
-          "code": "US.PWR",
-          "initial_price": 702.25,
-          "current_price": 685.53,
-          "return_pct": -2.38
-        },
-        {
-          "code": "US.VRT",
-          "initial_price": 333.05,
-          "current_price": 257.05,
-          "return_pct": -22.82
+          "current_price": 272.06,
+          "return_pct": -12.4
         }
       ]
     },
@@ -2103,25 +2040,25 @@
       "theme_id": "physical_ai_robotics",
       "theme_name": "Physical AI / 机器人 / 自动化",
       "first_seen_at": "2026-06-21T04:10:31+08:00",
-      "age_days": 106,
+      "age_days": 107,
       "initial_score": 62.4,
-      "current_score": 50.0,
-      "score_delta": -12.4,
+      "current_score": 40.2,
+      "score_delta": -22.2,
       "tracked_security_count": 5,
       "priced_security_count": 5,
-      "avg_return_pct": -3.13,
-      "median_return_pct": -4.25,
+      "avg_return_pct": -2.49,
+      "median_return_pct": -3.63,
       "best_security": {
         "code": "US.SYM",
         "initial_price": 41.68,
-        "current_price": 42.94,
-        "return_pct": 3.02
+        "current_price": 42.83,
+        "return_pct": 2.76
       },
       "worst_security": {
         "code": "US.HON",
         "initial_price": 229.01,
-        "current_price": 213.88,
-        "return_pct": -6.61
+        "current_price": 214.39,
+        "return_pct": -6.38
       },
       "completed_checkpoint_count": 3,
       "due_checkpoint_count": 0,
@@ -2133,32 +2070,95 @@
         {
           "code": "US.SYM",
           "initial_price": 41.68,
-          "current_price": 42.94,
-          "return_pct": 3.02
+          "current_price": 42.83,
+          "return_pct": 2.76
         },
         {
           "code": "US.ISRG",
           "initial_price": 406.78,
-          "current_price": 400.315,
-          "return_pct": -1.59
+          "current_price": 406.5,
+          "return_pct": -0.07
         },
         {
           "code": "US.ROK",
           "initial_price": 473.79,
-          "current_price": 453.66,
-          "return_pct": -4.25
+          "current_price": 456.57,
+          "return_pct": -3.63
         },
         {
           "code": "US.TSLA",
           "initial_price": 400.49,
-          "current_price": 375.505,
-          "return_pct": -6.24
+          "current_price": 380.03,
+          "return_pct": -5.11
         },
         {
           "code": "US.HON",
           "initial_price": 229.01,
-          "current_price": 213.88,
-          "return_pct": -6.61
+          "current_price": 214.39,
+          "return_pct": -6.38
+        }
+      ]
+    },
+    {
+      "theme_id": "ai_datacenter_power_cooling",
+      "theme_name": "AI 数据中心电力 / 液冷 / 配电",
+      "first_seen_at": "2026-06-21T04:10:31+08:00",
+      "age_days": 107,
+      "initial_score": 66.4,
+      "current_score": 39.5,
+      "score_delta": -26.9,
+      "tracked_security_count": 7,
+      "priced_security_count": 5,
+      "avg_return_pct": -2.65,
+      "median_return_pct": 2.35,
+      "best_security": {
+        "code": "US.EMR",
+        "initial_price": 150.66,
+        "current_price": 162.33,
+        "return_pct": 7.75
+      },
+      "worst_security": {
+        "code": "US.VRT",
+        "initial_price": 333.05,
+        "current_price": 254.36,
+        "return_pct": -23.63
+      },
+      "completed_checkpoint_count": 3,
+      "due_checkpoint_count": 0,
+      "pending_checkpoint_count": 0,
+      "mature": true,
+      "hit": false,
+      "status": "继续验证",
+      "returns": [
+        {
+          "code": "US.EMR",
+          "initial_price": 150.66,
+          "current_price": 162.33,
+          "return_pct": 7.75
+        },
+        {
+          "code": "US.ETN",
+          "initial_price": 421.77,
+          "current_price": 432.78,
+          "return_pct": 2.61
+        },
+        {
+          "code": "US.PH",
+          "initial_price": 953.27,
+          "current_price": 975.68,
+          "return_pct": 2.35
+        },
+        {
+          "code": "US.PWR",
+          "initial_price": 702.25,
+          "current_price": 686.0,
+          "return_pct": -2.31
+        },
+        {
+          "code": "US.VRT",
+          "initial_price": 333.05,
+          "current_price": 254.36,
+          "return_pct": -23.63
         }
       ]
     },
@@ -2166,25 +2166,25 @@
       "theme_id": "ai_pcb_ccl_materials",
       "theme_name": "高速 PCB / 覆铜板 / 电子布 / 铜箔",
       "first_seen_at": "2026-06-21T04:10:31+08:00",
-      "age_days": 106,
+      "age_days": 107,
       "initial_score": 61.8,
-      "current_score": 65.1,
-      "score_delta": 3.3,
+      "current_score": 51.9,
+      "score_delta": -9.9,
       "tracked_security_count": 9,
       "priced_security_count": 3,
-      "avg_return_pct": -24.99,
-      "median_return_pct": -19.77,
+      "avg_return_pct": -25.97,
+      "median_return_pct": -20.73,
       "best_security": {
         "code": "US.JBL",
         "initial_price": 371.88,
-        "current_price": 304.02,
-        "return_pct": -18.25
+        "current_price": 301.61,
+        "return_pct": -18.9
       },
       "worst_security": {
         "code": "US.TTMI",
         "initial_price": 216.44,
-        "current_price": 136.495,
-        "return_pct": -36.94
+        "current_price": 133.6,
+        "return_pct": -38.27
       },
       "completed_checkpoint_count": 3,
       "due_checkpoint_count": 0,
@@ -2196,20 +2196,20 @@
         {
           "code": "US.JBL",
           "initial_price": 371.88,
-          "current_price": 304.02,
-          "return_pct": -18.25
+          "current_price": 301.61,
+          "return_pct": -18.9
         },
         {
           "code": "US.FLEX",
           "initial_price": 147.61,
-          "current_price": 118.43,
-          "return_pct": -19.77
+          "current_price": 117.01,
+          "return_pct": -20.73
         },
         {
           "code": "US.TTMI",
           "initial_price": 216.44,
-          "current_price": 136.495,
-          "return_pct": -36.94
+          "current_price": 133.6,
+          "return_pct": -38.27
         }
       ]
     }

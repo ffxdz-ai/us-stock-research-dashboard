@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-05T22:52:11+08:00",
-  "generated_label": "2026-10-05 22:52",
+  "generated_at": "2026-10-06T10:07:36+08:00",
+  "generated_label": "2026-10-06 10:07",
   "fred_enabled": true,
   "data_boundary": "FRED 官方宏观数据层；只用于市场环境和风险偏好判断，不直接生成股票买卖指令。",
   "data_sources": [
@@ -9,7 +9,7 @@
     "config/macro_fred_series.json"
   ],
   "as_of": {
-    "freshest_observation_date": "2026-10-02",
+    "freshest_observation_date": "2026-10-05",
     "oldest_latest_observation_date": "2026-04-01",
     "note": "不同宏观指标发布频率不同，日报必须引用各指标自己的 latest_date。"
   },
@@ -238,10 +238,6 @@
       "frequency_hint": "daily",
       "recent_observations": [
         {
-          "date": "2026-08-31",
-          "value": 7686.14
-        },
-        {
           "date": "2026-09-01",
           "value": 7631.47
         },
@@ -332,23 +328,27 @@
         {
           "date": "2026-10-02",
           "value": 7722.72
+        },
+        {
+          "date": "2026-10-05",
+          "value": 7773.95
         }
       ],
-      "latest_date": "2026-10-02",
-      "latest_value": 7722.72,
-      "one_month_ago_value": 7686.14,
+      "latest_date": "2026-10-05",
+      "latest_value": 7773.95,
+      "one_month_ago_value": 7747.71,
       "three_month_ago_value": 7483.24,
       "six_month_ago_value": 6582.69,
-      "one_year_ago_value": 6711.2,
-      "one_month_change": 36.58,
-      "three_month_change": 239.48,
-      "six_month_change": 1140.03,
-      "one_year_change": 1011.52,
-      "one_month_pct_change": 0.4759,
-      "three_month_pct_change": 3.2002,
-      "six_month_pct_change": 17.3186,
-      "yoy_pct_change": 15.0721,
-      "three_month_annualized_pct": 13.4286,
+      "one_year_ago_value": 6715.79,
+      "one_month_change": 26.24,
+      "three_month_change": 290.71,
+      "six_month_change": 1191.26,
+      "one_year_change": 1058.16,
+      "one_month_pct_change": 0.3387,
+      "three_month_pct_change": 3.8848,
+      "six_month_pct_change": 18.0969,
+      "yoy_pct_change": 15.7563,
+      "three_month_annualized_pct": 16.4684,
       "status": "ok"
     },
     "NASDAQCOM": {
@@ -480,10 +480,6 @@
       "frequency_hint": "daily",
       "recent_observations": [
         {
-          "date": "2026-08-31",
-          "value": 53185.9
-        },
-        {
           "date": "2026-09-01",
           "value": 52766.88
         },
@@ -574,23 +570,27 @@
         {
           "date": "2026-10-02",
           "value": 51176.96
+        },
+        {
+          "date": "2026-10-05",
+          "value": 51267.9
         }
       ],
-      "latest_date": "2026-10-02",
-      "latest_value": 51176.96,
-      "one_month_ago_value": 53185.9,
+      "latest_date": "2026-10-05",
+      "latest_value": 51267.9,
+      "one_month_ago_value": 53686.11,
       "three_month_ago_value": 52900.07,
       "six_month_ago_value": 46504.67,
-      "one_year_ago_value": 46441.1,
-      "one_month_change": -2008.94,
-      "three_month_change": -1723.11,
-      "six_month_change": 4672.29,
-      "one_year_change": 4735.86,
-      "one_month_pct_change": -3.7772,
-      "three_month_pct_change": -3.2573,
-      "six_month_pct_change": 10.0469,
-      "yoy_pct_change": 10.1976,
-      "three_month_annualized_pct": -12.4063,
+      "one_year_ago_value": 46758.28,
+      "one_month_change": -2418.21,
+      "three_month_change": -1632.17,
+      "six_month_change": 4763.23,
+      "one_year_change": 4509.62,
+      "one_month_pct_change": -4.5043,
+      "three_month_pct_change": -3.0854,
+      "six_month_pct_change": 10.2425,
+      "yoy_pct_change": 9.6445,
+      "three_month_annualized_pct": -11.782,
       "status": "ok"
     },
     "DGS10": {
@@ -600,10 +600,6 @@
       "unit": "percent",
       "frequency_hint": "daily",
       "recent_observations": [
-        {
-          "date": "2026-08-28",
-          "value": 4.73
-        },
         {
           "date": "2026-08-31",
           "value": 4.75
@@ -695,23 +691,27 @@
         {
           "date": "2026-10-01",
           "value": 5.24
+        },
+        {
+          "date": "2026-10-02",
+          "value": 5.28
         }
       ],
-      "latest_date": "2026-10-01",
-      "latest_value": 5.24,
-      "one_month_ago_value": 4.73,
-      "three_month_ago_value": 4.48,
-      "six_month_ago_value": 4.33,
-      "one_year_ago_value": 4.16,
-      "one_month_change": 0.51,
-      "three_month_change": 0.76,
-      "six_month_change": 0.91,
-      "one_year_change": 1.08,
-      "one_month_pct_change": 10.7822,
-      "three_month_pct_change": 16.9643,
-      "six_month_pct_change": 21.0162,
-      "yoy_pct_change": 25.9615,
-      "three_month_annualized_pct": 87.16,
+      "latest_date": "2026-10-02",
+      "latest_value": 5.28,
+      "one_month_ago_value": 4.75,
+      "three_month_ago_value": 4.49,
+      "six_month_ago_value": 4.31,
+      "one_year_ago_value": 4.12,
+      "one_month_change": 0.53,
+      "three_month_change": 0.79,
+      "six_month_change": 0.97,
+      "one_year_change": 1.16,
+      "one_month_pct_change": 11.1579,
+      "three_month_pct_change": 17.5947,
+      "six_month_pct_change": 22.5058,
+      "yoy_pct_change": 28.1553,
+      "three_month_annualized_pct": 91.2275,
       "status": "ok"
     },
     "DGS2": {
@@ -721,10 +721,6 @@
       "unit": "percent",
       "frequency_hint": "daily",
       "recent_observations": [
-        {
-          "date": "2026-08-28",
-          "value": 4.34
-        },
         {
           "date": "2026-08-31",
           "value": 4.34
@@ -816,23 +812,27 @@
         {
           "date": "2026-10-01",
           "value": 4.78
+        },
+        {
+          "date": "2026-10-02",
+          "value": 4.83
         }
       ],
-      "latest_date": "2026-10-01",
-      "latest_value": 4.78,
+      "latest_date": "2026-10-02",
+      "latest_value": 4.83,
       "one_month_ago_value": 4.34,
-      "three_month_ago_value": 4.17,
-      "six_month_ago_value": 3.81,
-      "one_year_ago_value": 3.6,
-      "one_month_change": 0.44,
-      "three_month_change": 0.61,
-      "six_month_change": 0.97,
-      "one_year_change": 1.18,
-      "one_month_pct_change": 10.1382,
-      "three_month_pct_change": 14.6283,
-      "six_month_pct_change": 25.4593,
-      "yoy_pct_change": 32.7778,
-      "three_month_annualized_pct": 72.6503,
+      "three_month_ago_value": 4.14,
+      "six_month_ago_value": 3.79,
+      "one_year_ago_value": 3.55,
+      "one_month_change": 0.49,
+      "three_month_change": 0.69,
+      "six_month_change": 1.04,
+      "one_year_change": 1.28,
+      "one_month_pct_change": 11.2903,
+      "three_month_pct_change": 16.6667,
+      "six_month_pct_change": 27.4406,
+      "yoy_pct_change": 36.0563,
+      "three_month_annualized_pct": 85.2623,
       "status": "ok"
     },
     "DGS3MO": {
@@ -842,10 +842,6 @@
       "unit": "percent",
       "frequency_hint": "daily",
       "recent_observations": [
-        {
-          "date": "2026-08-28",
-          "value": 3.9
-        },
         {
           "date": "2026-08-31",
           "value": 3.91
@@ -937,23 +933,27 @@
         {
           "date": "2026-10-01",
           "value": 4.17
+        },
+        {
+          "date": "2026-10-02",
+          "value": 4.19
         }
       ],
-      "latest_date": "2026-10-01",
-      "latest_value": 4.17,
-      "one_month_ago_value": 3.9,
-      "three_month_ago_value": 3.85,
+      "latest_date": "2026-10-02",
+      "latest_value": 4.19,
+      "one_month_ago_value": 3.91,
+      "three_month_ago_value": 3.82,
       "six_month_ago_value": 3.7,
-      "one_year_ago_value": 4.02,
-      "one_month_change": 0.27,
-      "three_month_change": 0.32,
-      "six_month_change": 0.47,
-      "one_year_change": 0.15,
-      "one_month_pct_change": 6.9231,
-      "three_month_pct_change": 8.3117,
-      "six_month_pct_change": 12.7027,
-      "yoy_pct_change": 3.7313,
-      "three_month_annualized_pct": 37.6263,
+      "one_year_ago_value": 4.01,
+      "one_month_change": 0.28,
+      "three_month_change": 0.37,
+      "six_month_change": 0.49,
+      "one_year_change": 0.18,
+      "one_month_pct_change": 7.1611,
+      "three_month_pct_change": 9.6859,
+      "six_month_pct_change": 13.2432,
+      "yoy_pct_change": 4.4888,
+      "three_month_annualized_pct": 44.7447,
       "status": "ok"
     },
     "T10Y2Y": {
@@ -963,10 +963,6 @@
       "unit": "percent",
       "frequency_hint": "daily",
       "recent_observations": [
-        {
-          "date": "2026-08-31",
-          "value": 0.41
-        },
         {
           "date": "2026-09-01",
           "value": 0.4
@@ -1058,23 +1054,27 @@
         {
           "date": "2026-10-02",
           "value": 0.45
+        },
+        {
+          "date": "2026-10-05",
+          "value": 0.47
         }
       ],
-      "latest_date": "2026-10-02",
-      "latest_value": 0.45,
-      "one_month_ago_value": 0.41,
+      "latest_date": "2026-10-05",
+      "latest_value": 0.47,
+      "one_month_ago_value": 0.43,
       "three_month_ago_value": 0.35,
-      "six_month_ago_value": 0.52,
-      "one_year_ago_value": 0.57,
+      "six_month_ago_value": 0.51,
+      "one_year_ago_value": 0.55,
       "one_month_change": 0.04,
-      "three_month_change": 0.1,
-      "six_month_change": -0.07,
-      "one_year_change": -0.12,
-      "one_month_pct_change": 9.7561,
-      "three_month_pct_change": 28.5714,
-      "six_month_pct_change": -13.4615,
-      "yoy_pct_change": -21.0526,
-      "three_month_annualized_pct": 173.2611,
+      "three_month_change": 0.12,
+      "six_month_change": -0.04,
+      "one_year_change": -0.08,
+      "one_month_pct_change": 9.3023,
+      "three_month_pct_change": 34.2857,
+      "six_month_pct_change": -7.8431,
+      "yoy_pct_change": -14.5455,
+      "three_month_annualized_pct": 225.1766,
       "status": "ok"
     },
     "T10Y3M": {
@@ -1084,10 +1084,6 @@
       "unit": "percent",
       "frequency_hint": "daily",
       "recent_observations": [
-        {
-          "date": "2026-08-31",
-          "value": 0.84
-        },
         {
           "date": "2026-09-01",
           "value": 0.87
@@ -1179,22 +1175,26 @@
         {
           "date": "2026-10-02",
           "value": 1.09
+        },
+        {
+          "date": "2026-10-05",
+          "value": 1.09
         }
       ],
-      "latest_date": "2026-10-02",
+      "latest_date": "2026-10-05",
       "latest_value": 1.09,
-      "one_month_ago_value": 0.84,
+      "one_month_ago_value": 0.88,
       "three_month_ago_value": 0.67,
-      "six_month_ago_value": 0.61,
-      "one_year_ago_value": 0.11,
-      "one_month_change": 0.25,
+      "six_month_ago_value": 0.64,
+      "one_year_ago_value": 0.1,
+      "one_month_change": 0.21,
       "three_month_change": 0.42,
-      "six_month_change": 0.48,
-      "one_year_change": 0.98,
-      "one_month_pct_change": 29.7619,
+      "six_month_change": 0.45,
+      "one_year_change": 0.99,
+      "one_month_pct_change": 23.8636,
       "three_month_pct_change": 62.6866,
-      "six_month_pct_change": 78.6885,
-      "yoy_pct_change": 890.9091,
+      "six_month_pct_change": 70.3125,
+      "yoy_pct_change": 990.0,
       "three_month_annualized_pct": 600.4978,
       "status": "ok"
     },
@@ -1277,10 +1277,6 @@
       "unit": "percent",
       "frequency_hint": "daily",
       "recent_observations": [
-        {
-          "date": "2026-08-28",
-          "value": 1.54
-        },
         {
           "date": "2026-08-31",
           "value": 1.59
@@ -1372,23 +1368,27 @@
         {
           "date": "2026-10-01",
           "value": 1.49
+        },
+        {
+          "date": "2026-10-02",
+          "value": 1.47
         }
       ],
-      "latest_date": "2026-10-01",
-      "latest_value": 1.49,
-      "one_month_ago_value": 1.54,
+      "latest_date": "2026-10-02",
+      "latest_value": 1.47,
+      "one_month_ago_value": 1.59,
       "three_month_ago_value": 1.54,
-      "six_month_ago_value": 1.75,
-      "one_year_ago_value": 1.67,
-      "one_month_change": -0.05,
-      "three_month_change": -0.05,
-      "six_month_change": -0.26,
-      "one_year_change": -0.18,
-      "one_month_pct_change": -3.2468,
-      "three_month_pct_change": -3.2468,
-      "six_month_pct_change": -14.8571,
-      "yoy_pct_change": -10.7784,
-      "three_month_annualized_pct": -12.3681,
+      "six_month_ago_value": 1.74,
+      "one_year_ago_value": 1.69,
+      "one_month_change": -0.12,
+      "three_month_change": -0.07,
+      "six_month_change": -0.27,
+      "one_year_change": -0.22,
+      "one_month_pct_change": -7.5472,
+      "three_month_pct_change": -4.5455,
+      "six_month_pct_change": -15.5172,
+      "yoy_pct_change": -13.0178,
+      "three_month_annualized_pct": -16.9793,
       "status": "ok"
     },
     "VIXCLS": {
@@ -1520,26 +1520,6 @@
       "frequency_hint": "daily",
       "recent_observations": [
         {
-          "date": "2026-08-24",
-          "value": 118.3195
-        },
-        {
-          "date": "2026-08-25",
-          "value": 118.2283
-        },
-        {
-          "date": "2026-08-26",
-          "value": 118.4461
-        },
-        {
-          "date": "2026-08-27",
-          "value": 118.3583
-        },
-        {
-          "date": "2026-08-28",
-          "value": 118.7479
-        },
-        {
           "date": "2026-08-31",
           "value": 118.5679
         },
@@ -1614,23 +1594,43 @@
         {
           "date": "2026-09-25",
           "value": 120.33
+        },
+        {
+          "date": "2026-09-28",
+          "value": 120.6958
+        },
+        {
+          "date": "2026-09-29",
+          "value": 121.0296
+        },
+        {
+          "date": "2026-09-30",
+          "value": 120.9693
+        },
+        {
+          "date": "2026-10-01",
+          "value": 121.7882
+        },
+        {
+          "date": "2026-10-02",
+          "value": 121.3848
         }
       ],
-      "latest_date": "2026-09-25",
-      "latest_value": 120.33,
-      "one_month_ago_value": 118.3195,
-      "three_month_ago_value": 121.0559,
-      "six_month_ago_value": 120.389,
-      "one_year_ago_value": 120.1707,
-      "one_month_change": 2.0105,
-      "three_month_change": -0.7259,
-      "six_month_change": -0.059,
-      "one_year_change": 0.1593,
-      "one_month_pct_change": 1.6992,
-      "three_month_pct_change": -0.5996,
-      "six_month_pct_change": -0.049,
-      "yoy_pct_change": 0.1326,
-      "three_month_annualized_pct": -2.3771,
+      "latest_date": "2026-10-02",
+      "latest_value": 121.3848,
+      "one_month_ago_value": 118.5679,
+      "three_month_ago_value": 120.6902,
+      "six_month_ago_value": 120.503,
+      "one_year_ago_value": 120.1502,
+      "one_month_change": 2.8169,
+      "three_month_change": 0.6946,
+      "six_month_change": 0.8818,
+      "one_year_change": 1.2346,
+      "one_month_pct_change": 2.3758,
+      "three_month_pct_change": 0.5755,
+      "six_month_pct_change": 0.7318,
+      "yoy_pct_change": 1.0275,
+      "three_month_annualized_pct": 2.322,
       "status": "ok"
     },
     "DCOILWTICO": {
@@ -1810,7 +1810,7 @@
       "dimension": "policy",
       "label": "长端利率上行压估值",
       "contribution": -9,
-      "detail": "3个月 0.76pct"
+      "detail": "3个月 0.79pct"
     },
     {
       "dimension": "policy",
@@ -1834,7 +1834,7 @@
       "dimension": "liquidity",
       "label": "信用利差低",
       "contribution": 7,
-      "detail": "1.49pct"
+      "detail": "1.47pct"
     },
     {
       "dimension": "risk",
