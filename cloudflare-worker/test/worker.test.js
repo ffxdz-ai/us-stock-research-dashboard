@@ -5,6 +5,7 @@ import worker, {
   allowedRequestOrigin, archiveDeepseekState, beijingDayKey, encryptFeishuConfig,
   evaluateLiveSteadyBuyPlan, LiveQuoteStore, liveQuotePrice, liveRiskReward,
   publicLiveQuoteSnapshot, qualifiesLiveSteadyBuyPlan, quoteIsFresh, sanitizeFutuSnapshot,
+  workflowUpdateOutcome, futuHeartbeatStatus,
 } from "../src/index.js";
 
 function liveCandidate(overrides = {}) {
@@ -59,6 +60,16 @@ function memoryEnvironment() {
       async put(key, value) { saved.set(key, value); },
     },
   };
+}
+
+function environmentWithHeartbeat() {
+  const env = memoryEnvironment();
+  env.GITHUB_TOKEN = "test-only-token";
+  env.ALLOWED_ORIGIN = "https://ffxdz-ai.github.io";
+  env.saved.set("latest_futu_public_quote_snapshot", JSON.stringify({
+    generated_at: new Date().toISOString(), opend: { connected: true }, quotes: { "US.MU": { last_price: 100 } },
+  }));
+  return env;
 }
 
 function memoryDurableEnvironment() {
@@ -123,7 +134,7 @@ test("manual report refresh can run repeatedly on the same Beijing day and alway
     }
     throw new Error(`Unexpected mocked request: ${url}`);
   };
-  const env = { GITHUB_TOKEN: "test-only-token", ALLOWED_ORIGIN: "https://ffxdz-ai.github.io" };
+  const env = environmentWithHeartbeat();
   const request = () => new Request("https://worker.example/trigger", {
     method: "POST",
     headers: { Origin: "https://ffxdz-ai.github.io", "Content-Type": "application/json" },
@@ -193,6 +204,61 @@ test("archive freshness follows the latest DeepSeek report, not an unrelated arc
   assert.equal(archiveDeepseekState(archive, "2026-08-23T12:00:00+08:00").updated_today, false);
   archive.reports[1].published_at = "2026-08-23T09:00:00+08:00";
   assert.equal(archiveDeepseekState(archive, "2026-08-23T12:00:00+08:00").updated_today, true);
+});
+
+test("legacy Beijing report labels take precedence over an incorrectly UTC-labelled export", () => {
+  const archive = { reports: [{ kind: "deepseek-cloud", id: "old", published_label: "2026-10-09 12:22", published_at: "2026-10-09T12:22+00:00" }] };
+  assert.equal(archiveDeepseekState(archive).generated_at, "2026-10-09T12:22+08:00");
+});
+
+test("successful gate with a skipped generation job is blocked, never deployed", () => {
+  const result = workflowUpdateOutcome({ status: "completed", conclusion: "success" }, [
+    { name: "update-eligibility", conclusion: "success" },
+    { name: "generate-and-deploy", conclusion: "skipped", steps: [] },
+    { name: "update-skipped: Futu OpenD 心跳已过期", conclusion: "success" },
+  ]);
+  assert.equal(result.outcome, "blocked");
+  assert.equal(result.deployment_confirmed, false);
+  assert.equal(result.reason, "Futu OpenD 心跳已过期");
+});
+
+test("only a successful Pages step and generation job prove deployment", () => {
+  const run = { status: "completed", conclusion: "success" };
+  assert.equal(workflowUpdateOutcome(run, []).outcome, "unverified");
+  const jobs = [{ name: "generate-and-deploy", conclusion: "success", steps: [{ name: "Deploy to GitHub Pages", conclusion: "success" }] },
+    { name: "update-skipped: eligible", conclusion: "skipped" }];
+  assert.equal(workflowUpdateOutcome(run, jobs).deployment_confirmed, true);
+  assert.equal(workflowUpdateOutcome({ status: "in_progress" }, [{ name: "generate-and-deploy", steps: [{ name: "Deploy to GitHub Pages", status: "in_progress" }] }]).outcome, "deploying");
+});
+
+test("heartbeat readiness uses transport time, including during overnight trading", () => {
+  const now = Date.now();
+  const snapshot = { generated_at: new Date(now).toISOString(), opend: { connected: true }, quotes: { "US.MU": { quote_time: "2026-10-09T16:00:00-04:00" } } };
+  assert.equal(futuHeartbeatStatus(snapshot, now).ready, true);
+  assert.equal(futuHeartbeatStatus(snapshot, now + 6 * 60000).ready, false);
+  assert.equal(futuHeartbeatStatus(null, now).ready, false);
+});
+
+test("expired heartbeat rejects manual trigger before dispatch and explains the cause", async () => {
+  const env = environmentWithHeartbeat();
+  env.saved.set("latest_futu_public_quote_snapshot", JSON.stringify({ generated_at: "2026-10-01T00:00:00Z", opend: { connected: true }, quotes: { "US.MU": {} } }));
+  let dispatched = false;
+  const originalFetch = globalThis.fetch;
+  globalThis.fetch = async (resource) => {
+    const url = String(resource);
+    if (url.includes("/data/index.json")) return Response.json({ reports: [] });
+    if (url.includes("/runs")) return Response.json({ workflow_runs: [] });
+    dispatched = true;
+    throw new Error("must not dispatch when heartbeat is stale");
+  };
+  try {
+    const response = await worker.fetch(new Request("https://worker.example/trigger", { method: "POST", headers: { Origin: env.ALLOWED_ORIGIN } }), env);
+    const payload = await response.json();
+    assert.equal(response.status, 409);
+    assert.equal(payload.code, "futu_unavailable");
+    assert.match(payload.message, /心跳已过期/);
+    assert.equal(dispatched, false);
+  } finally { globalThis.fetch = originalFetch; }
 });
 
 test("Futu snapshot sanitizer keeps only public market quote fields", () => {

@@ -848,12 +848,16 @@ export function allowedRequestOrigin(request, env = {}) {
 export function archiveDeepseekState(archive, now = new Date()) {
   const reports = Array.isArray(archive?.reports) ? archive.reports : [];
   const latestDeepseek = reports.find((report) => report && report.kind === "deepseek-cloud") || null;
-  const reportTimestamp = latestDeepseek?.published_at
+  // Legacy exports labelled Beijing wall time with the runner's UTC offset.
+  const label = String(latestDeepseek?.published_label || "");
+  const reportTimestamp = (/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}(?::\d{2})?$/.test(label) ? `${label.replace(" ", "T")}+08:00` : "")
+    || latestDeepseek?.published_at
     || latestDeepseek?.published_label
     || latestDeepseek?.id
     || "";
   return {
     generated_at: reportTimestamp,
+    report_id: latestDeepseek?.id || "",
     updated_today: Boolean(reportTimestamp && beijingDayKey(reportTimestamp) === beijingDayKey(now)),
   };
 }
@@ -936,13 +940,60 @@ async function readLatestWorkflowRun(env) {
   const payload = await response.json();
   const run = Array.isArray(payload.workflow_runs) ? payload.workflow_runs[0] : null;
   if (!run) return null;
-  return {
+  const result = {
     id: run.id,
     status: run.status,
     conclusion: run.conclusion,
     created_at: run.created_at,
     updated_at: run.updated_at,
   };
+  try {
+    const jobsResponse = await fetch(`https://api.github.com/repos/${owner}/${repo}/actions/runs/${run.id}/jobs?filter=latest&per_page=100`, {
+      headers: githubHeaders(env, Boolean(env.GITHUB_TOKEN)),
+      cache: "no-store",
+    });
+    if (!jobsResponse.ok) throw new Error(`GitHub jobs HTTP ${jobsResponse.status}`);
+    const jobs = (await jobsResponse.json()).jobs;
+    return { ...result, ...workflowUpdateOutcome(result, jobs) };
+  } catch {
+    // Workflow success alone is not proof that report generation or Pages ran.
+    return { ...result, outcome: runIsActive(result) ? "running" : "unverified", deployment_confirmed: false,
+      reason: "暂时无法核验生成和部署结果；请稍后检查。" };
+  }
+}
+
+export function workflowUpdateOutcome(run, jobs) {
+  const list = Array.isArray(jobs) ? jobs : [];
+  const generated = list.find((job) => job.name === "generate-and-deploy");
+  const skipped = list.find((job) => String(job.name || "").startsWith("update-skipped:") && job.conclusion === "success");
+  const deployment = (generated?.steps || []).find((step) => step.name === "Deploy to GitHub Pages");
+  if (skipped || generated?.conclusion === "skipped") {
+    return { outcome: "blocked", deployment_confirmed: false,
+      reason: skipped ? skipped.name.slice("update-skipped:".length).trim() : "更新条件未满足，本次未生成报告、未部署。请检查 Futu 云端心跳和交易日。" };
+  }
+  if (run.status === "completed" && run.conclusion !== "success") {
+    return { outcome: "failed", deployment_confirmed: false, reason: "更新任务失败，请查看任务记录后重试。" };
+  }
+  if (deployment?.conclusion === "success" && generated?.conclusion === "success") {
+    return { outcome: "deployed", deployment_confirmed: true, reason: "报告生成与 GitHub Pages 部署均已完成。" };
+  }
+  if (runIsActive(run)) {
+    return { outcome: deployment?.status === "in_progress" ? "deploying" : "running", deployment_confirmed: false,
+      reason: deployment?.status === "in_progress" ? "报告已生成，正在部署。" : "正在检查更新条件或生成报告。" };
+  }
+  return { outcome: "unverified", deployment_confirmed: false, reason: "任务已结束，但未找到成功部署记录；网站尚未确认更新。" };
+}
+
+export function futuHeartbeatStatus(snapshot, now = Date.now()) {
+  const generated = Date.parse(snapshot?.generated_at || "");
+  const age = Number.isFinite(generated) ? (now - generated) / 60000 : null;
+  const connected = snapshot?.opend?.connected === true;
+  const ready = connected && age !== null && age >= -5 && age <= 5 && Object.keys(snapshot?.quotes || {}).length > 0;
+  return { connected, ready, updated_at: snapshot?.generated_at || null,
+    age_minutes: age === null ? null : Math.round(age * 10) / 10,
+    message: ready ? "Futu 云端心跳正常" : age !== null && age > 5
+      ? `Futu 云端心跳已过期（${Math.round(age)} 分钟）；请检查本机行情上传进程。`
+      : "尚未收到有效 Futu 云端心跳；请连接 OpenD 并检查行情上传进程。" };
 }
 
 async function dispatchWorkflow(env) {
@@ -966,15 +1017,18 @@ function runIsActive(run) {
 }
 
 async function statusPayload(env) {
-  const [archive, latestRun] = await Promise.all([
+  const [archive, latestRun, snapshot] = await Promise.all([
     readArchiveState(env),
     readLatestWorkflowRun(env),
+    readStoredSnapshot(env).catch(() => null),
   ]);
   return {
     ok: true,
     archive_updated_today: archive.updated_today,
     archive_generated_at: archive.generated_at,
+    archive_report_id: archive.report_id,
     latest_run: latestRun,
+    futu_status: futuHeartbeatStatus(snapshot),
     can_trigger: !runIsActive(latestRun),
     repeat_trigger_allowed: true,
     time_zone: BEIJING_TIME_ZONE,
@@ -1032,6 +1086,9 @@ async function handleRequest(request, env) {
       const current = await statusPayload(env);
       if (runIsActive(current.latest_run)) {
         return jsonResponse({ ...current, code: "already_running", message: "更新任务已经在运行。" }, 409, origin);
+      }
+      if (!current.futu_status.ready) {
+        return jsonResponse({ ...current, code: "futu_unavailable", message: current.futu_status.message }, 409, origin);
       }
       await dispatchWorkflow(env);
       return jsonResponse({

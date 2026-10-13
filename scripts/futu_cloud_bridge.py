@@ -130,7 +130,10 @@ def request_bridge(
     body = None if payload is None else json.dumps(payload, ensure_ascii=False).encode("utf-8")
     request = urllib.request.Request(bridge_endpoint(path), data=body, headers=bridge_headers(), method=method)
     try:
-        with urllib.request.urlopen(request, timeout=30) as response:
+        # urlopen's global opener caches proxy settings. A long-running Windows
+        # uploader must pick up proxy changes after a VPN/proxy restart.
+        opener = urllib.request.build_opener(urllib.request.ProxyHandler())
+        with opener.open(request, timeout=30) as response:
             result = json.loads(response.read().decode("utf-8"))
     except urllib.error.HTTPError as exc:
         raise RuntimeError(f"Futu quote bridge returned HTTP {exc.code}") from exc

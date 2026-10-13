@@ -9,6 +9,10 @@ const state = {
   opportunityStatus: "all",
   opportunityQuery: "",
   manualUpdateRequestedAt: 0,
+  manualUpdateReportId: "",
+  manualUpdateArchiveVersion: "",
+  manualUpdateRunId: null,
+  updateService: null,
   liveQuoteSnapshot: null,
   liveQuoteError: "",
 };
@@ -1122,7 +1126,7 @@ function archiveGeneratedTimestamp() {
 
 function archiveDeepseekTimestamp() {
   const report = state.reports.find((item) => item && item.kind === "deepseek-cloud");
-  return (report && (report.published_at || report.published_label || report.id)) || archiveGeneratedTimestamp();
+  return window.UpdateStatusUtils.reportTimestamp(report) || archiveGeneratedTimestamp();
 }
 
 function archiveUpdatedToday() {
@@ -1141,28 +1145,38 @@ function runIsActive(run) {
 
 function runStartedAfterManualRequest(run) {
   if (!run || !state.manualUpdateRequestedAt) return false;
+  if (state.manualUpdateRunId && run.id === state.manualUpdateRunId) return true;
   const startedAt = parsedTimestamp(run.created_at);
   return Boolean(startedAt && startedAt >= state.manualUpdateRequestedAt - 15000);
 }
 
 function archiveIncludesManualUpdate() {
   if (!state.manualUpdateRequestedAt) return true;
-  return parsedTimestamp(archiveDeepseekTimestamp()) >= state.manualUpdateRequestedAt;
+  const latest = state.reports.find((item) => item?.kind === "deepseek-cloud");
+  if (state.manualUpdateReportId && latest?.id === state.manualUpdateReportId
+    && archiveGeneratedTimestamp() === state.manualUpdateArchiveVersion) return false;
+  // Report metadata is minute-precision; the report can be generated in the
+  // same minute as the request. Require a changed archive as well.
+  return parsedTimestamp(archiveDeepseekTimestamp()) >= state.manualUpdateRequestedAt - 60000;
 }
 
 function renderManualUpdateControl(run = null, message = "") {
   if (!els.manualUpdateButton || !els.manualUpdateStatus) return;
   const updatedToday = archiveUpdatedToday();
   const requestedRunVisible = runStartedAfterManualRequest(run);
-  const waitingForRun = Boolean(state.manualUpdateRequestedAt && !archiveIncludesManualUpdate() && !requestedRunVisible);
-  const running = runIsActive(run);
-  const failed = Boolean(requestedRunVisible && run.status === "completed" && run.conclusion !== "success");
-  const awaitingPages = Boolean(
-    requestedRunVisible
-    && run.status === "completed"
-    && run.conclusion === "success"
-    && !archiveIncludesManualUpdate()
+  const service = state.updateService;
+  const latest = state.reports.find((item) => item?.kind === "deepseek-cloud");
+  const archiveConfirmed = service?.archive_report_id
+    ? latest?.id === service.archive_report_id && parsedTimestamp(archiveDeepseekTimestamp()) >= parsedTimestamp(run?.created_at) - 60000
+    : archiveIncludesManualUpdate() && updatedToday;
+  const phase = window.UpdateStatusUtils.updatePhase(
+    state.manualUpdateRequestedAt && !requestedRunVisible ? null : run,
+    { requested: Boolean(state.manualUpdateRequestedAt), archiveConfirmed },
   );
+  const waitingForRun = phase === "waiting";
+  const running = phase === "running";
+  const failed = phase === "failed" || phase === "blocked" || phase === "unverified";
+  const awaitingPages = phase === "deploying" || phase === "syncing";
   const busy = waitingForRun || running || awaitingPages;
   els.manualUpdateButton.classList.toggle("is-current", updatedToday && !running);
   els.manualUpdateButton.classList.toggle("is-stale", !updatedToday && !running && !failed);
@@ -1175,7 +1189,11 @@ function renderManualUpdateControl(run = null, message = "") {
     : running
     ? "正在更新"
     : awaitingPages
-      ? "正在部署"
+      ? phase === "syncing" ? "等待网站同步" : "正在部署"
+      : phase === "blocked"
+        ? "更新被拦截 · 重试"
+      : phase === "unverified"
+        ? "检查更新结果"
       : updatedToday
         ? "再次更新"
         : failed
@@ -1186,13 +1204,22 @@ function renderManualUpdateControl(run = null, message = "") {
     : running
     ? "任务运行中；完成后本页会自动读取最新报告。"
     : awaitingPages
-      ? "本次工作流已成功，GitHub Pages 数据正在同步；完成后按钮会重新开放。"
+      ? phase === "syncing" ? "部署已完成，正在确认网站读取到新报告。" : "报告已生成，正在部署到网站。"
+      : phase === "blocked"
+        ? `本次未生成报告、未部署：${run.reason || "更新条件未满足"}。${service?.futu_status?.ready === false ? service.futu_status.message : ""}`
+      : phase === "unverified"
+        ? run.reason || "任务已结束，但未确认部署；请稍后检查。"
+      : phase === "updated"
+        ? `网站已更新：${latestReportTimeLabel()}`
       : updatedToday
         ? `最近更新：${latestReportTimeLabel()}；交易周内可申请重跑，但仍需 Futu OpenD 在线。`
         : failed
           ? "本次任务未成功；可以直接重新提交，无需登录 GitHub。"
           : "仅在北京时间周一 08:00 至周六 08:00 的美股交易周内、且 Futu OpenD 在线时生成；休市或心跳失效会安全跳过。";
   els.manualUpdateStatus.textContent = message || defaultMessage;
+  if (!message && phase === "idle" && service?.futu_status?.ready === false) {
+    els.manualUpdateStatus.textContent = service.futu_status.message;
+  }
 }
 
 async function fetchUpdateServiceStatus() {
@@ -1225,6 +1252,7 @@ async function checkManualUpdateStatus({ reloadArchive = false } = {}) {
   if (els.manualUpdateStatus) els.manualUpdateStatus.textContent = "正在检查手动更新状态…";
   try {
     const service = await fetchUpdateServiceStatus();
+    state.updateService = service;
     const run = service.latest_run || null;
     const serviceArchiveIsNewer = parsedTimestamp(service.archive_generated_at) > parsedTimestamp(archiveDeepseekTimestamp());
     const completedRequestedRun = Boolean(
@@ -1232,12 +1260,16 @@ async function checkManualUpdateStatus({ reloadArchive = false } = {}) {
       && state.manualUpdateRequestedAt
       && runStartedAfterManualRequest(run)
       && run.status === "completed"
-      && run.conclusion === "success"
+      && run.deployment_confirmed === true
     );
-    if (serviceArchiveIsNewer || completedRequestedRun) {
+    const differentReport = service.archive_report_id && service.archive_report_id !== state.reports.find((item) => item?.kind === "deepseek-cloud")?.id;
+    if (serviceArchiveIsNewer || differentReport || completedRequestedRun) {
       await loadArchive();
     }
-    if (state.manualUpdateRequestedAt && archiveIncludesManualUpdate()) state.manualUpdateRequestedAt = 0;
+    const terminal = ["blocked", "failed", "unverified"].includes(run?.outcome);
+    if (runStartedAfterManualRequest(run) && (terminal || (run.deployment_confirmed && archiveIncludesManualUpdate()))) {
+      state.manualUpdateRequestedAt = 0;
+    }
     renderManualUpdateControl(run);
     if (
       run
@@ -1257,7 +1289,7 @@ async function checkManualUpdateStatus({ reloadArchive = false } = {}) {
 
 function startManualUpdatePolling() {
   if (manualUpdatePollTimer) clearInterval(manualUpdatePollTimer);
-  let checksRemaining = 30;
+  let checksRemaining = 80;
   manualUpdatePollTimer = setInterval(async () => {
     checksRemaining -= 1;
     const run = await checkManualUpdateStatus({ reloadArchive: true });
@@ -1267,12 +1299,19 @@ function startManualUpdatePolling() {
     ) {
       clearInterval(manualUpdatePollTimer);
       manualUpdatePollTimer = null;
+      if (checksRemaining <= 0) {
+        state.manualUpdateRequestedAt = 0;
+        renderManualUpdateControl(null, "本次自动检查已到时限；请再次检查更新状态，网站会保留最近一份报告。");
+      }
     }
   }, 30000);
 }
 
 async function handleManualUpdateClick() {
   state.manualUpdateRequestedAt = Date.now();
+  state.manualUpdateReportId = state.reports.find((item) => item?.kind === "deepseek-cloud")?.id || "";
+  state.manualUpdateArchiveVersion = archiveGeneratedTimestamp();
+  state.manualUpdateRunId = null;
   els.manualUpdateButton.disabled = true;
   els.manualUpdateButton.setAttribute("aria-busy", "true");
   els.manualUpdateButton.textContent = "正在提交";
@@ -1280,7 +1319,7 @@ async function handleManualUpdateClick() {
   try {
     const result = await requestManualUpdate();
     if (result.code === "already_running") {
-      state.manualUpdateRequestedAt = 0;
+      state.manualUpdateRunId = result.latest_run?.id || null;
       renderManualUpdateControl(result.latest_run || null, "已有更新任务正在运行；完成后即可再次点击。 ");
       startManualUpdatePolling();
       return;

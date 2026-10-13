@@ -82,6 +82,17 @@ jobs:
       - name: Show update decision
         run: echo "${{ steps.gate.outputs.reason }}"
 
+  update-skipped:
+    needs: update-eligibility
+    if: needs.update-eligibility.outputs.should_update == 'false'
+    name: "update-skipped: ${{ needs.update-eligibility.outputs.reason }}"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Explain why no report was generated or deployed
+        env:
+          SKIP_REASON: ${{ needs.update-eligibility.outputs.reason }}
+        run: printf '%s\n' "$SKIP_REASON" >> "$GITHUB_STEP_SUMMARY"
+
   generate-and-deploy:
     needs: update-eligibility
     if: needs.update-eligibility.outputs.should_update == 'true'
